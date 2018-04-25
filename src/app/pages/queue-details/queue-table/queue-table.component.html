@@ -1,0 +1,37 @@
+<nb-card>
+  <nb-card-body>
+    <table style="width:98%">
+      <tbody>
+        <tr *ngIf="dataFromService==1">
+          <th *ngFor="let k of sms_calls_headings; let i = index">
+            {{sms_calls_headings[i]}}
+          </th>
+        </tr>
+        <tr *ngIf="dataFromService==2">
+          <th *ngFor="let k of history_headings; let i = index">
+            {{history_headings[i]}}
+          </th>
+        </tr>
+        <tr *ngIf="dataFromService==12">
+          <th *ngFor="let k of ticket_headings; let i = index">
+            {{ticket_headings[i]}}
+          </th>
+        </tr>
+        <tr *ngFor="let i of tableData; let j = index">
+        
+          <td *ngFor="let key of keyValues; let k = index">
+          
+            <label *ngIf="tableData[j].com_type=='Call' && keyValues[k]=='message'; else label">
+            
+              <a href={{tableData[j].message}} target="_blank">
+                <img src="https://www.clker.com/cliparts/z/w/L/x/K/Z/orange-play.svg" width="20px" height="20px">
+              </a>
+              </label>
+          
+            <ng-template #label>{{tableData[j][keyValues[k]]}}</ng-template>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+  </nb-card-body>
+</nb-card>

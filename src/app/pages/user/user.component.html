@@ -1,0 +1,194 @@
+<div class="example-container">
+  <div class="row">
+    <div class="col-md-12 col-lg-12">
+      <nb-card size="large">
+        <nb-tabset (changeTab)="tabChanged($event)">
+          <nb-tab tabTitle="Add User" *ngIf="checkgrpadmin || checksvcadmin" id=1>
+            <div class="row">
+              <div class="col-md-6 mx-auto">
+                <form novalidate #f="ngForm" (ngSubmit)="onSubmit(f)">
+                  <div style="width:100%;margin-left:auto;margin-right:auto">
+
+                    <!-- Employee Name -->
+                    <div class="form-group" style="display:inline-block;min-width:15%;">
+                        <select  id="salutation1" class="form-control"  name="salutation1" [(ngModel)]="user.salutation" #salutation1="ngModel" required>
+                            <option *ngFor = "let s of salutation" [value] = "s.type"> {{s.type}}</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="display:inline-block;min-width:70%;">
+                      <input type="text" class="form-control" name="name" [(ngModel)]="model.name" required #name="ngModel" minlength="3" style="text-transform: capitalize;">
+                      <label class="form-control-placeholder" for="name">Name*</label>
+                    </div>
+
+
+                    <div class="form-control-feedback" *ngIf="name.errors && (name.dirty || name.touched)">
+                      <p *ngIf="name.errors.required"> Name is required</p>
+                      <p *ngIf="name.errors.minlength">3 character</p>
+                    </div>
+
+                    <!-- Employee Mobile -->
+
+                    <div class="container1">
+                      <div class="form-group" style="display:inline-block;max-width: 16%;">
+                        <label for="countrycode" style="font-size: 12px;padding-left: 2%;margin-bottom: 0px;">Country Code</label>
+                        <input type="text" class="form-control" id="code" name="code" OnlyNumber="true"  [readonly]="true"
+                          [(ngModel)]="countrycode1" >
+
+                      </div>
+                      <div class="form-group" style="display:inline-block;min-width: 70%;">
+                        <input type="text" class="form-control" name="mobile1" [(ngModel)]="model.mobile1" maxlength="10" required #mobile1="ngModel"
+                          pattern="^[0-9]{10}$">
+                        <label class="form-control-placeholder"  for="mobile1">Mobile Number*</label>
+                      </div>
+                      <div style="display:inline-block;margin:3%">
+                        <button (click)="show=!show" class="addnumber">
+                          <i class="fa" [ngClass]="{'fa-plus': !show, 'fa-minus': show}" style="color:#ffa100" aria-hidden="true"></i>
+                        </button>
+                      </div>
+                      <div class="form-control-feedback" *ngIf="mobile1.errors && (mobile1.dirty || mobile1.touched)">
+                        <p *ngIf="mobile1.errors.required">mobile is required</p>
+                        <p *ngIf="!mobile1.errors.valid">mobile must contain digits only</p>
+                      </div>
+                      <div *ngIf="show">
+                        <div class="row">
+                          <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                            <div class="form-group" style="display:inline-block;max-width: 16%;">
+                              <label for="countrycode" style="font-size: 12px;padding-left: 2%;margin-bottom: 0px;">Country Code</label>
+                              <input type="text" name="code1" id="code1" OnlyNumber="true" maxlength="3" [readonly]="true"
+                                [(ngModel)]="countrycode1" required>
+
+                            </div>
+                            <div class="form-group" style="display:inline-block;min-width: 70%;">
+                              <input type="text" class="form-control" name="mobile2" maxlength="10" [(ngModel)]="model.mobile2" required #mobile2="ngModel"
+                                pattern="^[0-9]{10}$">
+                              <label class="form-control-placeholder" for="mobile2">Mobile2 Number*</label>
+                            </div>
+                            <div class="form-control-feedback" *ngIf="mobile2.errors && (mobile2.dirty || mobile2.touched)">
+                              <p *ngIf="mobile2.errors.required">mobile is required</p>
+                              <p *ngIf="!mobile2.errors.valid">mobile must contain digits only</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <input type="text" class="form-control" id="email" name="email" [(ngModel)]="model.email" required #email="ngModel" pattern="^([a-zA-Z0-9_\.\-])+@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$">
+                      <label class="form-control-placeholder" for="email">Employee Email</label>
+                    </div>
+
+                    <div class="form-control-feedback" *ngIf="email.errors && (email.dirty || email.touched)">
+                      <p *ngIf="email.errors.required">Email is required</p>
+                      <p *ngIf="!email.errors.valid">Email must contain at least the @ character</p>
+                    </div>
+
+
+                    <div class="form-group">
+                      <select name="desgination" id="desgination" class="form-control" [(ngModel)]="model.desgination" required #desgination="ngModel">
+                        <option *ngFor="let d of designation" [value]="d.id"> {{d.type}}</option>
+                      </select>
+                      <label class="form-control-placeholder" for="desgination">Designation*</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary" [disabled]="f.invalid">Submit</button>
+                  </div>
+
+                </form>
+              </div>
+            </div>
+          </nb-tab>
+          <nb-tab tabTitle="User List" id=2>
+            <div class="row" style="width:100%">
+              <div class="col-lg-12 col-md-12">
+                <div class="container">
+                  <!-- <div *ngIf="message">
+                    {{message}}
+                  </div> -->
+                  <table class="table table-striped">
+                    <thead style="border-top:0px;">
+                      <th>Name</th>
+                      <th>Number</th>
+                      <th>Email Id</th>
+                      <th>Designation</th>
+                      <th *ngIf="checkgrpadmin || checksvcadmin">Delete</th>
+                      <th *ngIf="checkgrpadmin || checksvcadmin">Edit</th>
+
+                    </thead>
+                    <tbody>
+
+                      <tr *ngFor="let e of userList">
+                        <!-- <td>{{e.id}}</td> -->
+                        <td>{{e.first_name}}</td>
+                        <td>{{e.mobilenumber}}</td>
+                        <td>{{e.email}}</td>
+                        <td>{{e.designation}}</td>
+                        <td>
+                          <button (click)="delete(e)" style="background-color: white;border-color: orange;" *ngIf="checkgrpadmin || checksvcadmin">
+                            <i class="fa fa-trash" style="color:#ffa100" aria-hidden="true"></i>
+                          </button>
+                        </td>
+                        <td>
+                          <button (click)="showLargeModal(e)" style="background-color: white;border-color: orange;" *ngIf="checkgrpadmin || checksvcadmin">
+                            <i class="fa fa-pencil" style="color:#ffa100" aria-hidden="true"></i>
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+
+
+                </div>
+
+              </div>
+
+            </div>
+          </nb-tab>
+          <nb-tab tabTitle="Enabled User" *ngIf="checkgrpadmin || checksvcadmin" id=3>
+            <div class="row" style="width:100%">
+              <div class="col-lg-12 col-md-12">
+                <div class="container">
+                  <!-- <div *ngIf="message">
+                    {{message}}
+                  </div> -->
+                  <table class="table table-striped">
+                    <thead style="border-top:0px;">
+                      <th>Name</th>
+                      <th>Number</th>
+                      <th>Email Id</th>
+                      <th>Designation</th>
+                      <th *ngIf="checkgrpadmin || checksvcadmin">Enable</th>
+                      
+
+                    </thead>
+                    <tbody>
+
+                      <tr *ngFor="let e of userDisable">
+                        <!-- <td>{{e.id}}</td> -->
+                        <td>{{e.first_name}}</td>
+                        <td>{{e.mobilenumber}}</td>
+                        <td>{{e.email}}</td>
+                        <td>{{e.designation}}</td>
+                        <td>
+                          <button class="btn btn-warning"  *ngIf="checkgrpadmin || checksvcadmin" (click)="enableuser(e)">
+                           Enable
+                          </button>
+                        </td>
+                        <!-- <td>
+                          <button (click)="showLargeModal(e)" style="background-color: white;border-color: orange;" *ngIf="checkgrpadmin || checksvcadmin">
+                            <i class="fa fa-pencil" style="color:#ffa100" aria-hidden="true"></i>
+                          </button>
+                        </td> -->
+                      </tr>
+                    </tbody>
+                  </table>
+
+
+                </div>
+
+              </div>
+
+            </div>
+          </nb-tab>
+        </nb-tabset>
+      </nb-card>
+    </div>
+  </div>

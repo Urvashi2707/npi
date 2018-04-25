@@ -1,0 +1,75 @@
+<div class="container">
+        <toaster-container [toasterconfig]="config"></toaster-container>
+        <div *ngIf="show2"> {{message1}}</div>
+  <div>
+    <form novalidate #f="ngForm">
+        <div class="row">
+            <div class="col-md-10 col-sm-10 col-lg-10 col-xs-10">
+                <div class="form-group">
+                  <input type="text" id="mobile" name="mobile" OnlyNumber="true" maxlength="10" class="form-control" required  pattern="^[0-9]*$" [(ngModel)]="user.mobile" #mob="ngModel">
+                  <label class="form-control-placeholder" for="mobile">Mobile</label>
+                </div>
+                <div class=" form-control-feedback " *ngIf="mob.errors && (mob.dirty || mob.touched)">
+                    <p *ngIf="mob.errors.required">Mobile is required</p>
+                </div>
+            </div>
+            <div class="col-md-2 col-sm-2 col-lg-2" style="margin-top:6%">
+                <button  type="button" class="btn btn-primary"  style="float:center" [disabled]="!user.mobile || disable" (click)="sendOtp()">Send OTP</button>
+            </div>
+          </div>
+          <div *ngIf="show">
+              <div class="row">
+                  <div class="col-md-10 col-sm-10 col-lg-10 col-xs-10">
+                      <div class="form-group">
+                        <input type="text" id="otp" name="otp" OnlyNumber="true" maxlength="4" class="form-control" required  pattern="^[0-9]*$" [(ngModel)]="user.otp" #otp="ngModel">
+                        <label class="form-control-placeholder" for="otp">OTP</label>
+                      </div>
+                      <div class="form-control-feedback"*ngIf="otp.errors && (otp.dirty || otp.touched)">
+                          <p *ngIf="otp.errors.required">Otp is required</p>
+                          <p *ngIf="!otp.errors.valid">Otp length is 4</p>
+                      </div>
+                  </div>
+                  <div class="col-md-2 col-sm-2 col-lg-2" style="margin-top:6%">
+                      <button  type="button" class="btn btn-primary"  style="float:center" [disabled]="!user.otp || disable1" (click)="verifyOtp()">Verify</button>
+                  </div>
+                </div>
+                <!-- <div *ngIf="veri"> {{message}}</div> -->
+               
+                <div *ngIf="show1">
+                    <div class="row">
+                        <div class="col-md-10 col-sm-10 col-lg-10 col-xs-10">
+                            <div class="form-group">
+                              <input type="password" id="pwd1" name="pwd1" class="form-control" required   [(ngModel)]="user.pwd1" #pwd1="ngModel">
+                              <label class="form-control-placeholder" for="pwd1">Password</label>
+                            </div>
+                            <div class="form-control-feedback"*ngIf="pwd1.errors && (pwd1.dirty || pwd1.touched)">
+                                <p *ngIf="pwd1.errors.required">password is required</p>
+                                <p *ngIf="!pwd1.errors.valid">Password pattern</p>
+                            </div>
+                        </div>
+                      </div>
+                       
+                  <div class="row">
+                      <div class="col-md-10 col-sm-10 col-lg-10 col-xs-10">
+                          <div class="form-group">
+                            <input type="password" id="pwd2" name="pwd2"  class="form-control" required   [(ngModel)]="user.pwd2" #pwd2="ngModel">
+                            <label class="form-control-placeholder" for="pwd2">Confirm Password</label>
+                          </div>
+                          <div class="form-control-feedback" *ngIf="pwd2.errors && (pwd2.dirty || pwd2.touched)">
+                              <p *ngIf="pwd2.errors.required">password is required</p>
+                              <p *ngIf="!pwd2.errors.valid">Password pattern</p>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-10 col-sm-10 col-lg-10" style="margin-top:10%">
+                          <button  type="button" class="btn btn-primary" [disabled]="disable3" (click)="resetPassword()" style="float:center">Reset</button>
+                        </div>
+                    </div>
+                </div>
+              
+            
+          </div>
+    </form>
+  </div>
+</div>

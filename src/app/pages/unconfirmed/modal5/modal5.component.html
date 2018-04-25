@@ -1,0 +1,348 @@
+<div class="modal-header">
+  <span>{{ modalHeader }}</span>
+  <button class="close" aria-label="Close" (click)="closeModal()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<form novalidate #f="ngForm" (ngSubmit)="onSubmit(f)" style="padding: 4%;">
+
+  <div class="row">
+    <div class="col-sm-8 col-lg-8 col-xs-8 col-md-8">
+      <div class="form-group">
+        <input type="text" id="num" name="num" class="form-control" style=" text-transform: uppercase" [(ngModel)]="queue.veh_number"
+          #num="ngModel" />
+        <label class="form-control-placeholder" for="num">Registration Number*</label>
+      </div>
+      <div class="form-control-feedback" *ngIf="num.errors && (num.dirty || num.touched)">
+        <p *ngIf="num.errors.required">Registration Number is required</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-8 col-lg-8 col-sm-8 col-xs-8">
+      <div class="form-group">
+        <select name="model" id="model" class="form-control" (change)="onSelectModel($event.value)" [(ngModel)]="selectedModel" #model="ngModel"
+          required>
+          <option *ngFor="let ma of Models" [value]="ma.model_id"> {{ma.model_name}}</option>
+        </select>
+        <label class="form-control-placeholder" for="model">Vehicle Model*</label>
+      </div>
+    </div>
+
+    <div class="col-md-6 col-lg-6 col-sm-6">
+      <div class="form-control-feedback" *ngIf="model.errors && (model.dirty || model.touched)">
+        <p *ngIf="model.errors.required">Model is required</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-8 col-lg-8 col-sm-8 col-xs-8">
+      <div class="form-group">
+        <select name="variant" id="variant" class="form-control" (change)="onSelectVariant($event.value)" [(ngModel)]="selectedVariant"
+          #variant="ngModel" required>
+          <option *ngFor="let va of Variant" [value]="va.variant_id"> {{va.variant_name}}</option>
+        </select>
+        <label class="form-control-placeholder" for="ServiceAdvisor">Vehicle Variant*</label>
+      </div>
+    </div>
+    <div class="col-md-8 col-lg-8 col-sm-8 col-xs-8">
+      <div class="form-control-feedback" *ngIf="variant.errors && (variant.dirty || variant.touched)">
+        <p *ngIf="variant.errors.required">Variant is required</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-8 col-lg-8 col-sm-8 col-xs-8">
+      <div class="form-group" style="display:inline-block;min-width:15%;">
+        <select id="salutation1" class="form-control" name="salutation1" [(ngModel)]="queue.salutation" #salutation1="ngModel" required>
+          <option *ngFor="let s of salutation"   [value]="s.type" [selected]="s == 'Mr'"> {{s.type}}</option>
+        </select>
+      </div>
+      <div class="form-group" style="display:inline-block;min-width:84%;">
+        <input type="text" id="Cus_name" class="form-control" required [(ngModel)]="queue.cust_name" name="Cus_name" #Cus_name="ngModel"
+          style="text-transform: capitalize;">
+        <label class="form-control-placeholder" for="Cus_name">Customer Name*</label>
+      </div>
+      <div class="form-control-feedback" *ngIf="Cus_name.errors && (Cus_name.dirty || Cus_name.touched)">
+        <p *ngIf="Cus_name.errors.required">Customer Name is required</p>
+      </div>
+    </div>
+
+
+
+  </div>
+
+  <div class="container1">
+    <div class="row">
+      <div class="col-md-8 col-lg-8 col-sm-8 col-xs-8">
+        <div class="form-group" style="display:inline-block;max-width: 16%;">
+          <label for="countrycode" style="font-size: 12px;padding-left: 2%;margin-bottom: 0px;">Country Code</label>
+          <input type="text" class="form-control" name="countrycode" OnlyNumber="true" [readonly]="true" value="+91" [(ngModel)]="countrycode1"
+            required #countrycode>
+        </div>
+        <div class="form-group" style="display:inline-block;min-width:70%;">
+          <input type="text" class="form-control" name="mobile1" maxlength="10" [(ngModel)]="queue.customermobile1" required OnlyNumber="true"
+            #mobile1="ngModel" pattern="^[0-9]{10}$">
+          <label class="form-control-placeholder" for="mobile1">Mobile Number*</label>
+        </div>
+        <div style="display:inline-block;margin:3%">
+          <button type="button" (click)="show1=!show1" class="addnumber">
+            <i class="fa" [ngClass]="{'fa-plus': !show1, 'fa-minus': show1}" style="color:#ffa100" aria-hidden="true"></i>
+          </button>
+        </div>
+        <div class="form-control-feedback" *ngIf="mobile1.errors && (mobile1.dirty || mobile1.touched)">
+          <p *ngIf="mobile1.errors.required">mobile is required</p>
+          <p *ngIf="!mobile1.errors.valid">mobile must contain digits only</p>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="show1 ">
+      <div class="row">
+        <div class="col-md-8 col-lg-8 col-sm-8 col-xs-8">
+          <div class="form-group" style="display:inline-block;max-width: 16%;">
+            <label for="countrycode" style="font-size: 12px;padding-left: 2%;margin-bottom: 0px;">Country Code</label>
+            <input type="text" class="form-control" name="countrycode" OnlyNumber="true" [readonly]="true" value="+91" [(ngModel)]="countrycode1"
+              required #countrycode="ngModel">
+          </div>
+          <div class="form-group" style="display:inline-block;min-width:70%;">
+            <input type="text" class="form-control" name="mobile2" maxlength="10" [(ngModel)]="queue.customermobile2" OnlyNumber="true"
+              #mobile2="ngModel" pattern="^[0-9]{10}$">
+            <label class="form-control-placeholder" for="mobile2">Mobile2 Number*</label>
+          </div>
+          <div class="form-control-feedback" *ngIf="mobile2.errors && (mobile2.dirty || mobile2.touched)">
+
+            <p *ngIf="!mobile2.errors.valid">mobile must contain digits only</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="row">
+    <div class="col-md-8 col-lg-8 col-sm-8 col-xs-8">
+      <div class="form-group">
+        <input type="text" id="email" class="form-control" name="email" [(ngModel)]="queue.customeremail" #email="ngModel" required
+          pattern="^([a-zA-Z0-9_\.\-])+@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$">
+        <label class="form-control-placeholder" for="email">Email Id*</label>
+      </div>
+      <div class="form-control-feedback" *ngIf="email.errors && (email.dirty || email.touched)">
+        <p *ngIf="email.errors.required">Email is required</p>
+        <p *ngIf="!email.errors.valid">Email must contain at least the @ character</p>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="row">
+    <div class="col-sm-8 col-lg-8 col-xs-8 col-md-8">
+      <div class="form-group" style="display:inline-block;min-width:80%;">
+        <label style="font-size: 12px;padding-left: 2%;margin-bottom: 0px;" for="num">Queue Time</label>
+
+        <input type="text" id="tym" name="tym" class="form-control" [readonly]="true" [(ngModel)]="queue.queue_time" #tym="ngModel"/>
+
+      </div>
+      <div  style="display:inline-block;margin:3%">
+        <button class="edit" style="background-color: white;border-color: white;" (click)="show2=!show2">
+          <i class="fa fa-pencil" style="color:#ffa100" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+   
+  </div>
+
+
+  <div class="row"  *ngIf="show2">
+    <div class="col-md-8 col-lg-8 col-sm-8 col-xs-8">
+      <div class="form-group">
+        <div class="input-group">
+          <input class="form-control" name="dp" [ngModel]="model1" [readonly]="true" [maxDate]="maxDate" 
+            placeholder="{{model | date: 'yyyy-MM-dd'}}" (ngModelChange)="onSelectDate($event)" ngbDatepicker #d="ngbDatepicker">
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary dateButton" (click)="d.toggle()" type="button">
+              <span>
+                <i class="fa fa-calendar"></i>
+              </span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row" *ngIf="show2">
+    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+      <table cellspacing="20" *ngIf="show3" class="table table-condensed table-responsive">
+        <tr *ngFor="let row of buildArr(slot);let i = index">
+          <td *ngFor="let s of row" class="timeRow">
+            <a (click)=check(s.time_format,s.slothour) class="timeAnchor">
+              <span>{{s.time_format}}</span>
+            </a>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+      <input class="form-control" name="slot" [readonly]="true" *ngIf="slot_time" [(ngModel)]="slot_time" />
+    </div>
+  </div>
+
+  <div class="row" style="margin-bottom: 2%;">
+    <div class="col-lg-6 col-md-6 col-sm-6">
+      <label class="switch" style="margin-bottom: -0.5rem;">
+        <input type="checkbox" checked name="amb" #amb (click)="some(amb.checked)" [(ngModel)]="queue.assignambassador">
+        <span class="slider round"></span>
+      </label>
+      <label style="margin-left:1.5rem;margin-bottom: -0.5rem;">Assign to 21North Ambassador</label>
+    </div>
+  </div>
+
+  <div style="margin-bottom:1.5rem;">
+    <div class="row">
+      <div class="col-md-6 col-lg-6 col-sm-6">
+        <div class="form-group">
+          <input type="text" id="pickuploc" class="form-control" name="pickuploc" placeholder="Pickup Location" (ngModelChange)="saverange($event)"
+            [(ngModel)]="queue.pickuplocationaddress" #pickuploc="ngModel">
+          <label class="form-control-placeholder" for="pickuploc">Pickup Location*</label>
+        </div>
+
+      </div>
+      <div class="col-md-6 col-lg-6 col-sm-6">
+        <div class="form-group">
+          <input type="text" id="id" class="form-control" name="picklatlong" #picklatlong="ngModel" [(ngModel)]="queue.pickuplatlong"
+            pattern="^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?),\s*[-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)$">
+          <label class="form-control-placeholder" for="id">Pickup lat/long</label>
+        </div>
+        <div class="form-control-feedback" *ngIf="picklatlong.errors && (picklatlong.dirty || picklatlong.touched)">
+          <p *ngIf="!picklatlong.errors.valid">format is wrong</p>
+        </div>
+      </div>
+    </div>
+    <div>
+      <label class="custom-control custom-checkbox">
+        <input type="checkbox" class="custom-control-input" name="sameas" #same (click)="sameas(same.checked)">
+        <span class="custom-control-indicator"></span>
+        <span class="custom-control-description">Drop Location is same as Pickup</span>
+      </label>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6 col-lg-6 col-sm-6">
+      <div class="form-group">
+        <input type="text" id="droploc" class="form-control" name="droploc" [(ngModel)]="queue.dropofflocationaddress" #droploc="ngModel"
+          required>
+        <label class="form-control-placeholder" for="droploc">Drop-off Location*</label>
+      </div>
+      <div class="form-control-feedback" *ngIf="droploc.errors && (droploc.dirty || droploc.touched)">
+        <p *ngIf="droploc.errors.required">Drop-off Location is required</p>
+      </div>
+    </div>
+    <div class="col-md-6 col-lg-6 col-sm-6">
+      <div class="form-group">
+        <input type="text" id="droplatlong" class="form-control" name="droplatlong" [(ngModel)]="queue.dropofflatlong" #droplatlong="ngModel"
+          pattern="^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?),\s*[-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)$">
+        <label class="form-control-placeholder" for="droplatlong">Drop-off lat/long</label>
+      </div>
+      <div class="form-control-feedback" *ngIf="droplatlong.errors && (droplatlong.dirty || droplatlong.touched)">
+        <p *ngIf="droplatlong.errors.required">Drop-off Lat/long is required</p>
+        <p *ngIf="!droplatlong.errors.valid">format is wrong</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6 col-lg-6 col-sm-6">
+      <div class="form-group">
+        <select name="serviceType" id="serviceType" class="form-control" name="service_type" [(ngModel)]="queue.service_type" #servicetype="ngModel"
+          required>
+          <option *ngFor="let s of service_type" [value]="s.id"> {{s.type}}</option>
+        </select>
+        <label class="form-control-placeholder" for="serviceType">Service Type*</label>
+      </div>
+      <div class="form-control-feedback" *ngIf="servicetype.errors && (servicetype.dirty || servicetype.touched)">
+        <p *ngIf="servicetype.errors.required">Service Type is required</p>
+      </div>
+    </div>
+
+    <div class="col-md-6 col-lg-6 col-sm-6">
+      <div class="form-group">
+        <select name="creName" id="creName" class="form-control" [(ngModel)]="selectedcre" #creName="ngModel" required>
+          <option *ngFor="let ca of cre" [value]="ca.id"> {{ca.first_name}} - {{ca.mobile_number}}</option>
+        </select>
+        <label class="form-control-placeholder" for="cre">Cre*</label>
+      </div>
+      <div class="form-control-feedback" *ngIf="cre.errors && (cre.dirty || cre.touched)">
+        <p *ngIf="cre.errors.required">CRE is required</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6 col-lg-6 col-sm-6">
+      <div class="form-group">
+        <select name="ServiceAdvisor" id="ServiceAdvisor" class="form-control" required name="ServiceAdvisor" [(ngModel)]="selectedadv" #ServiceAdvisor="ngModel"
+          required>
+          <option *ngFor="let sa of serviceadv" [value]="sa.id"> {{sa.first_name}} - {{sa.mobile_number}}</option>
+        </select>
+        <label class="form-control-placeholder" for="ServiceAdvisor">Service Advisor*</label>
+      </div>
+      <div class="form-control-feedback" *ngIf="ServiceAdvisor.errors && (ServiceAdvisor.dirty || ServiceAdvisor.touched)">
+        <p *ngIf="ServiceAdvisor.errors.required">Service Advisor is required</p>
+      </div>
+    </div>
+
+    <div class="col-md-6 col-lg-6 col-sm-6">
+      <div class="form-group">
+        <input type="text" id="notes" class="form-control" name="notes" [(ngModel)]="queue.notes" placeholder="Notes" #notes="ngModel">
+        <label class="form-control-placeholder" for="notes">Notes</label>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+        <div class="form-group">
+            <angular2-multiselect [data]="itemList" 
+            [(ngModel)]="selectedItems" 
+            [settings]="settings" 
+            name="something"
+            #comp
+            (onSelect)="onItemSelect($event)"
+            (onDeSelect)="OnItemDeSelect($event)" 
+            (onSelectAll)="onSelectAll($event)" 
+            (onDeSelectAll)="onDeSelectAll($event)"
+            required>
+            </angular2-multiselect> </div>
+    </div>
+    <div class="col-md-6 col-lg-6 col-sm-6">
+      <label class="custom-control custom-checkbox" style="    margin-top: 7%;">
+        <input type="checkbox" class="custom-control-input" name="confirm" checked [(ngModel)]="queue.confirm" #confirm="ngModel">
+        <span class="custom-control-indicator"></span>
+        <span class="custom-control-description">Confirmed Booking</span>
+      </label>
+    </div>
+    <!-- <div class="col-md-6 col-lg-6 col-sm-6">
+            <div class="form-group">
+              <input type="text" id="amt" class="form-control" name="amt" [(ngModel)]="queue.cfeeclient"  #amt="ngModel">
+              <label class="form-control-placeholder" for="amt">Amount</label>
+            </div> -->
+    <!-- </div> -->
+  </div>
+ 
+  <!-- <div>{{f.valid }}</div> -->
+
+  <div class="row">
+    <div class="col-md-12 col-lg-12 col-sm-12">
+      <div style="float:right">
+        <button type="submit" class="btn btn-primary" >Schedule</button>
+      </div>
+    </div>
+  </div>
+
+
+</form>

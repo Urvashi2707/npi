@@ -1,0 +1,34 @@
+<nb-card>
+    <nb-card-header>
+        Escalation Matrix
+    </nb-card-header>
+    <nb-card-body>
+        <table style="width:100%" class="table table-striped">
+            <thead>
+                <tr style="font-weight:700">
+                    <td>1st point of contact</td>
+                    <td>Escalation Level 1</td>
+                    <td>Escalation Level 2</td>
+                    <td>Escalation Level 3</td>
+                    <td>Accounts</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td *ngFor="let m of matrix">{{m.matrix_name}}</td>
+
+
+                </tr>
+                <tr>
+                    <td *ngFor="let a of matrix">{{a.first_name}}</td>
+                </tr>
+                <tr>
+                    <td *ngFor="let m of matrix">{{m.email}}</td>
+                </tr>
+                <tr>
+                    <td *ngFor="let m of matrix">{{m.first_number}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </nb-card-body>
+</nb-card>

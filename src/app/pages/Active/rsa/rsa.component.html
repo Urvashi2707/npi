@@ -1,0 +1,21 @@
+<nb-card>
+    <nb-card-body>
+        <table style="width:100%">
+            <thead>
+
+                <tr>
+                    <th *ngFor="let k of pickup_headings; let i = index">
+                        {{pickup_headings[i]}}
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let i of tableData; let j = index">
+                    <td *ngFor="let key of keyValues; let k = index">
+                        {{tableData[j][keyValues[k]]}}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </nb-card-body>
+</nb-card>

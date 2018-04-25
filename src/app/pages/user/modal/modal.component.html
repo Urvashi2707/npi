@@ -1,0 +1,97 @@
+<div class="modal-header">
+  <span style="text-align:center;">{{ modalHeader }}</span>
+  <button class="close" aria-label="Close" (click)="closeModal()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+<div class="modal-body">
+<form novalidate #f="ngForm" (ngSubmit)="onSubmit(f)">
+  <div style="width:100%;margin-left:auto;margin-right:auto">
+
+
+   
+
+<!-- Employee Name -->
+<div class="row">
+  <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+    <div class="form-group">
+      <input type="text" class="form-control" name="name" [(ngModel)]="modalContent.first_name" required #name="ngModel" style="text-transform: capitalize;" minlength="3">
+      <label class="form-control-placeholder" for="name">Name*</label>
+    </div>
+   <div class="form-control-feedback" *ngIf="name.errors && (name.dirty || name.touched)">
+         <p *ngIf="name.errors.required"> name is required</p>
+         <p *ngIf="name.errors.minlength">3 character</p>
+     </div>
+  </div>
+</div>
+ 
+
+<!-- Employee Mobile -->
+
+<div class="container1">
+  <div class="row">
+    <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6">
+      <div class="form-group" style="display:inline-block;min-width: 82%;">
+        <input type="text" class="form-control" name="mobile1" [(ngModel)]="modalContent.mobilenumber" required #mobile1="ngModel" pattern="^[0-9]{10}$">
+        <label class="form-control-placeholder" for="mobile1">Mobile Number*</label>
+      </div>
+      <div class="form-control-feedback" *ngIf="mobile1.errors && (mobile1.dirty || mobile1.touched)">
+          <p *ngIf="mobile1.errors.required">mobile is required</p>
+          <p *ngIf="!mobile1.errors.valid">mobile must contain digits only</p>
+      </div>
+
+      </div>
+    </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+    <div class="form-group">
+      <input type="text"class="form-control" id = "email" name="email" [(ngModel)]="modalContent.email" required #email="ngModel" pattern="^([a-zA-Z0-9_\.\-])+@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$">
+      <label class="form-control-placeholder" for="email">Employee Email*</label>
+    </div>
+    
+    <div class="form-control-feedback" *ngIf="email.errors && (email.dirty || email.touched)">
+        <p *ngIf="email.errors.required">Email is required</p>
+        <p *ngIf="!email.errors.valid">Email must contain at least the @ character</p>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+      <div class="form-group">
+        <!-- <input type="text"class="form-control" id = "designation" name="designation" [(ngModel)]="modalContent.designation" required #designation="ngModel">
+        <label class="form-control-placeholder" for="designation">Employee Designation</label> -->
+        <select name="permission" id="permission" class="form-control" [(ngModel)]="modalContent.permission_type" required #permission="ngModel">
+            <option *ngFor="let d of designation" [value]="d.id"> {{d.type}}</option>
+        </select>
+        <label class="form-control-placeholder" for="permission">Designation*</label>
+      </div>
+      
+      <div class="form-control-feedback" *ngIf="permission.errors && (permission.dirty || permission.touched)">
+          <p *ngIf="permission.errors.required">Designation is required</p>
+      </div>
+    </div>
+  </div>
+
+<button type="submit" class="btn btn-primary" [disabled]="f.invalid">Update User </button>
+<!-- <button type="button" class="btn btn-success" (click)="deleteUser()" style="margin-left:8%;">Delete User</button> -->
+
+
+
+</div>
+
+</form>
+</div>
+
+<div class="modal-footer">
+    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+      <!-- <button type="submit" class="btn btn-primary" [disabled]="f.invalid">Edit User </button>
+      <button type="button" class="btn btn-success" (click)="deleteUser()" style="margin-left:8%;">Delete User</button> -->
+ 
+      <hr/>
+      <div ></div>
+  </div>
+</div>

@@ -1,0 +1,54 @@
+@import '../../../@theme/styles/themes';
+@import '~bootstrap/scss/mixins/breakpoints';
+@import '~@nebular/theme/styles/global/bootstrap/breakpoints';
+
+.form-group {
+  position: relative;
+  margin-bottom: 1.5rem;
+  margin-top: 1.5em;
+}
+
+.form-control-placeholder {
+  position: absolute;
+  top: 0;
+  padding: 7px 0 0 13px;
+  transition: all 200ms;
+  opacity: 0.5;
+}
+a:hover{
+  color:blue !important;
+  cursor: pointer
+}
+
+.addnumber{
+  display:inline-block;
+
+}
+.btn.btn-warning{
+  margin-top: 1.5em;
+}
+.dateButton{
+  height: 102%;
+  border-radius: 0px;
+}
+.addnumber button{
+  width: 128%;
+  height: 82%;
+  border-radius:82%;
+  padding-top: 22%;
+  margin-top: 37%;
+  color: white;
+  background-color: orange;
+  border-color: orange;
+}
+.myclass{
+border-color: #d7dbe0;
+}
+.addnumber button:focus {outline:0;}
+
+.form-control:focus + .form-control-placeholder,
+.form-control:valid + .form-control-placeholder {
+  font-size: 75%;
+  transform: translate3d(0, -100%, 0);
+  opacity: 1;
+}

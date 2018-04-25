@@ -1,0 +1,61 @@
+<nb-card>
+    <nb-card-body>
+        <div>
+            <div class="row">
+                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input class="form-control" name="dp" [ngModel]="model1" (ngModelChange)="onSelectDate1($event)" placeholder="{{pastdate | date: 'yyyy-MM-dd'}}" ngbDatepicker #d1="ngbDatepicker">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary dateButton" (click)="d1.toggle()" type="button" style="height: 100%;border-radius: 0px;">
+                                    <span>
+                                        <i class="fa fa-calendar"></i>
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input class="form-control" name="dp" [ngModel]="model" (ngModelChange)="onSelectDate($event)" placeholder="{{today | date: 'yyyy-MM-dd'}}" ngbDatepicker #d="ngbDatepicker">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary dateButton" (click)="d.toggle()" type="button" style="height: 100%;border-radius: 0px;">
+                                    <span>
+                                        <i class="fa fa-calendar"></i>
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                    <button type="button" class="btn btn-primary" (click)="FilterCheck()">Apply</button>
+                </div>
+            </div>
+        </div>
+        <table style="width:100%">
+            <thead>
+                <tr>
+                    <th *ngFor="let i of pickup_headings; let j = index">
+                        {{pickup_headings[j]}}
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let j of tableData; let k = index">
+                    <td *ngFor="let key of keyValues; let l = index" (click)="openQDetails(k)">
+                        <label *ngIf="keyValues[l]=='upload_button' && tableData[k][service_status] != '3'; else content">
+                            <button id={{k}} class="btn btn-warning" (click)="uploadFiles($event,tableData[k])">{{tableData[k][keyValues[l]]}}</button>
+                        </label>
+                        <ng-template #content>{{tableData[k][keyValues[l]]}}</ng-template>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table *ngIf="message">
+            {{message}}
+        </table>
+    </nb-card-body>
+</nb-card>

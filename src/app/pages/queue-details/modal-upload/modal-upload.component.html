@@ -1,0 +1,128 @@
+<div class="modal-header">
+  <span>{{ modalHeader }}</span>
+  <button class="close" aria-label="Close" (click)="closeModal()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<!--  -->
+<div *ngIf="showAnimation == '1'">
+  <div class="modal-body">
+    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130.2 130.2">
+      <circle class="path circle" fill="none" stroke="#73AF55" stroke-width="6" stroke-miterlimit="10" cx="65.1" cy="65.1" r="62.1"
+      />
+      <polyline class="path check" fill="none" stroke="#73AF55" stroke-width="6" stroke-linecap="round" stroke-miterlimit="10"
+        points="100.2,40.2 51.5,88.8 29.8,67.5 " />
+    </svg>
+    <p class="success">Successfull!</p>
+  </div>
+</div>
+<div>
+  <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6" style="margin-left: 18%">
+    <div class="form-group">
+      <label>Queue Id</label>
+      <input type="text" id="amt" class="form-control" name="QID" [(ngModel)]="modalContent.queue_id" #amt="ngModel" disabled>
+    </div>
+  </div>
+
+  <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6" style="margin-left: 18%">
+    <div class="form-group">
+      <label>Drop-off Slot</label>
+      <input type="text" id="amt" class="form-control" name="dropSlot" [(ngModel)]="modalContent.queue_time" #amt="ngModel" disabled>
+    </div>
+  </div>
+  <div *ngIf="showSlot == '1'" class="col-lg-10 col-md-10 col-sm-10 col-xs-10" style="margin-left: 18%">
+    <table cellspacing="20" class="table table-condensed table-responsive">
+      <tr *ngFor="let row of buildArr(slot);let i = index">
+        <td *ngFor="let s of row" class="timeRow">
+          <a (click)=check(s.slothour) class="timeAnchor">{{s.slothour}}</a>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div>
+    <div class="row">
+      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6" style="margin-left: 18%">
+        <div class="form-group">
+          <input type="text" id="amt" class="form-control" name="amt" [(ngModel)]="modalContent.amt" #amt="ngModel" required>
+
+          <label *ngIf="modalContent.type_of_service == 1; else esti_amount " class="form-control-placeholder" for="droploc">Invoice Amount</label>
+          <ng-template #esti_amount>
+            <label class="form-control-placeholder" for="droploc">Estimated Amount</label>
+
+          </ng-template>
+        </div>
+      </div>
+      <!-- <input type="text" placeholder="Total Amount" name="amt" [(ngModel)]="modalContent.amt"/> -->
+      <!-- <input type="text" placeholder="Invoice Id" name="invoice_Id" [(ngModel)]="modalContent.invoiceid"/> -->
+    </div>
+    <div class="row">
+      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6" style="margin-left: 18%">
+        <div class="form-group">
+          <input type="text" id="invoice_Id" class="form-control" name="invoice_Id" [(ngModel)]="modalContent.invoiceid" #invoice_Id="ngModel"
+            required>
+          <label *ngIf="modalContent.type_of_service == 1; else esti " class="form-control-placeholder" for="droploc">Invoice Id</label>
+          <ng-template #esti>
+            <label class="form-control-placeholder" for="droploc">Estimate Id</label>
+
+          </ng-template>
+        </div>
+      </div>
+    </div>
+    <ng-container>
+      <div class="row">
+        <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6" style="margin-left: 18%">
+          <input type="file" id="file" multiple style="margin-bottom: 5%;" (change)="getFileDetails($event)" accept="image/jpg,application/pdf,image/jpeg,image/png">
+        </div>
+      </div>
+      <div style="margin-left: 18%">
+        <label>Maximium Number of file Upload is 3</label>
+      </div>
+      <div class="row">
+        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" style="margin-left: 18%">
+          <table width="57%">
+            <tr *ngFor="let file of myFiles">
+              <td style="margin-right: 9%;padding: 1%;">{{file.name}}</td>
+              <td>
+                <button (click)=removefile(file) style="background-color: white;border-color: orange;">
+                  <i class="fa fa-remove" aria-hidden="true" style="color:#ffa100"></i>
+                </button>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <button (click)="uploadFiles()" class="btn btn-warning" style="margin-left: 18%" [disabled]="disable">Upload</button>
+    </ng-container>
+  </div>
+</div>
+
+<div *ngIf="modalContent.queue_exists == 1">
+  <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130.2 130.2">
+    <circle class="path circle" fill="none" stroke="#D06079" stroke-width="6" stroke-miterlimit="10" cx="65.1" cy="65.1" r="62.1"
+    />
+    <line class="path line" fill="none" stroke="#D06079" stroke-width="6" stroke-linecap="round" stroke-miterlimit="10" x1="34.4"
+      y1="37.9" x2="95.8" y2="92.3" />
+    <line class="path line" fill="none" stroke="#D06079" stroke-width="6" stroke-linecap="round" stroke-miterlimit="10" x1="95.8"
+      y1="38" x2="34.4" y2="92.2" />
+  </svg>
+  <p class="error">Unsuceessful!</p>
+</div>
+
+<div *ngIf="modalContent.queue_exists == 1">
+  <span class="textExist" style="margin-left: 40%">Booking Already exists</span>
+  <table style="margin-left: 32%;margin-bottom: 5%;">
+    <tr>
+      <th>Queue Id</th>
+      <td style="padding: 5%;">{{modalContent.queue_id }}</td>
+    </tr>
+    <tr>
+      <th>Queue Time</th>
+      <td style="padding: 5%;">{{ modalContent.queue_time }}</td>
+    </tr>
+  </table>
+</div>
+
+<div class="modal-footer">
+  <button class="btn btn-md btn-primary" [hidden]="modalContent.queue_exists == 0 && modalContent.type_of_service == 1 " (click)="closeModal()">Done</button>
+</div>

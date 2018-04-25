@@ -1,0 +1,242 @@
+<div class="modal-header">
+    <span>{{ modalHeader }}</span>
+    <button class="close" aria-label="Close" (click)="closeModal()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div *ngIf="visible">
+    <div *ngIf="showAnimation == '1' ">
+        <div class="modal-body">
+            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130.2 130.2">
+            <circle class="path circle" fill="none" stroke="#73AF55" stroke-width="6" stroke-miterlimit="10" cx="65.1" cy="65.1" r="62.1"/>
+            <polyline class="path check" fill="none" stroke="#73AF55" stroke-width="6" stroke-linecap="round" stroke-miterlimit="10" points="100.2,40.2 51.5,88.8 29.8,67.5 "/>
+          </svg>
+            <p class="success">Successful!</p>
+        </div>
+    </div>
+    <div *ngIf="showAnimation == '0' ">
+        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130.2 130.2">
+                <circle class="path circle" fill="none" stroke="#D06079" stroke-width="6" stroke-miterlimit="10" cx="65.1" cy="65.1" r="62.1"/>
+                <line class="path line" fill="none" stroke="#D06079" stroke-width="6" stroke-linecap="round" stroke-miterlimit="10" x1="34.4" y1="37.9" x2="95.8" y2="92.3"/>
+                <line class="path line" fill="none" stroke="#D06079" stroke-width="6" stroke-linecap="round" stroke-miterlimit="10" x1="95.8" y1="38" x2="34.4" y2="92.2"/>
+              </svg>
+        <p class="error">Unsuccessful!</p>
+    </div>
+</div>
+
+<div *ngIf="!visible">
+    <div style="margin-left: 18%" *ngIf="modalContent.service_status == 1 || modalContent.service_status == 2">
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                <div class="form-group">
+                    <label style="font-size: 12px;padding-left: 2%;margin-bottom: 0px;" for="queue_id">Queue ID</label>
+                    <input type="text" id="queue_id" class="form-control" [readonly]="true" name="queue_id" [(ngModel)]="modalContent.id" #queue_id="ngModel" required>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 col-lg-6 col-sm-6">
+                <div class="form-group">
+                    <div class="input-group">
+                        <input class="form-control" name="dp" [ngModel]="model" [startDate]="startDate" [maxDate]="maxDate" [minDate]="startDate" placeholder="{{modalContent.queue_date | date: 'yyyy-MM-dd'}}" (ngModelChange)="onSelectDate($event)" ngbDatepicker #d="ngbDatepicker">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary dateButton" (click)="d.toggle()" type="button" style="height: 100%;border-radius: 0px;">
+                                <span><i class="fa fa-calendar"></i></span>
+                              </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-control-feedback" *ngIf="d.errors && (d.dirty || d.touched)">
+                    <p *ngIf="d.errors.required">Date is required</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+            <table cellspacing="20" class="table table-condensed table-responsive">
+                <tr *ngFor="let row of buildArr(slot);let i = index">
+                    <td *ngFor="let s of row " class="timeRow"><a (click)=check(s.slothour,s.time_format) class="timeAnchor"><span>{{s.time_format}}</span></a></td>
+                </tr>
+            </table>
+        </div>
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                <div class="form-group">
+                    <label style="font-size: 12px;padding-left: 2%;margin-bottom: 0px;" for="queue_time">Queue Time</label>
+                    <input type="text" id="queue_time" class="form-control" name="queue_time" [readonly]="true" [(ngModel)]="modalContent.queue_time" #queue_time="ngModel" required>
+                    <!-- <label class="form-control-placeholder" for="queue_time">Queue Time</label> -->
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                <div class="form-group">
+                    <input type="text" id="amt" class="form-control" name="amt" OnlyNumber="true" [(ngModel)]="modalContent.amt" #amt="ngModel" required>
+                    <label class="form-control-placeholder" for="droploc">Amount*</label>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                <div class="form-group">
+                    <input type="text" id="invoice_Id" class="form-control" name="invoice_Id" [(ngModel)]="modalContent.invoiceid" #invoice_Id="ngModel" required>
+                    <label class="form-control-placeholder" for="droploc">Invoice Id*</label>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                <div class="form-group">
+                    <select name="ServiceAdvisor" id="ServiceAdvisor" class="form-control" name="ServiceAdvisor" [(ngModel)]="modalContent.service_advisor" #ServiceAdvisor="ngModel" required>
+                        <option *ngFor = "let sa of serviceadv" [value] = "sa.id"> {{sa.first_name}} - {{sa.mobile_number}}</option>
+                    </select>
+                    <label class="form-control-placeholder" for="ServiceAdvisor">Service Advisor*</label>
+                </div>
+                <div class="form-control-feedback" *ngIf="ServiceAdvisor.errors && (ServiceAdvisor.dirty || ServiceAdvisor.touched)">
+                    <p *ngIf="ServiceAdvisor.errors.required">Service Advisor is required</p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                <div class="form-group">
+                    <input type="text" id="notes" class="form-control" name="notes" [(ngModel)]="modalContent.notes" #notes="ngModel" required>
+                    <label class="form-control-placeholder" for="notes">Notes</label>
+                </div>
+            </div>
+        </div>
+
+        <ng-container>
+            <div class="row">
+                <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6">
+                    <label class="fileContainer">
+                    <i class="fa fa-paperclip" style="font-size: 22px;"></i>
+                    <input type="file" id="file" multiple style="margin-bottom: 5%;"
+                    (change)="getFileDetails($event)" multiple accept="image/jpg,application/pdf,image/jpeg,image/png" >
+                </label>
+
+                </div>
+            </div>
+            <div><label>Maximium Number of file Upload is 3</label></div>
+            <div class="row">
+                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                    <table width="57%">
+                        <tr *ngFor="let file of myFiles">
+                            <td style="margin-right: 9%;padding: 1%;">{{file.name}}</td>
+                            <td><button (click)=removefile(file) style="background-color: white;border-color: orange;"><i class="fa fa-remove" aria-hidden="true" style="color:#ffa100"></i></button></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <button (click)="uploadFilesInv()" class="btn btn-warning" style="margin:2%" [disabled]="disable || !modalContent.service_advisor">Submit</button>
+        </ng-container>
+
+    </div>
+    <div style="margin-left: 18%" *ngIf="modalContent.service_status == 0 ">
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                <div class="form-group">
+                    <label style="font-size: 12px;padding-left: 2%;margin-bottom: 0px;" for="queue_id">Queue ID</label>
+                    <input type="text" id="queue_id" class="form-control" name="queue_id" [readonly]="true" [(ngModel)]="modalContent.id" #queue_id="ngModel" required>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 col-lg-6 col-sm-6">
+                <div class="form-group">
+                    <div class="input-group">
+                        <input class="form-control" name="dp" [ngModel]="model" placeholder="{{modalContent.queue_date | date: 'yyyy-MM-dd'}}" [startDate]="startDate" [maxDate]="maxDate" [minDate]="startDate" (ngModelChange)="onSelectDate($event)" ngbDatepicker #d="ngbDatepicker">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary dateButton" style="height: 100%;border-radius: 0px;" (click)="d.toggle()" type="button">
+                                <span><i class="fa fa-calendar"></i></span>
+                              </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-control-feedback" *ngIf="d.errors && (d.dirty || d.touched)">
+                    <p *ngIf="d.errors.required">Date is required</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <table cellspacing="20" class="table table-condensed table-responsive">
+                <tr *ngFor="let row of buildArr(slot);let i = index">
+                    <td *ngFor="let s of row" class="timeRow"><a (click)=check(s.slothour,s.time_format) class="timeAnchor"><span>{{s.time_format}}</span></a></td>
+                </tr>
+            </table>
+        </div>
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                <div class="form-group">
+                    <label style="font-size: 12px;padding-left: 2%;margin-bottom: 0px;" for="queue_time">Estimate Time</label>
+                    <input type="text" id="queue_time" class="form-control" name="queue_time" [readonly]="true" [(ngModel)]="modalContent.queue_time" #queue_time="ngModel" required>
+                    <!-- <label class="form-control-placeholder" for="queue_time">Estimate Time</label> -->
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                <div class="form-group">
+                    <input type="text" id="amt" class="form-control" name="amt" OnlyNumber="true" [(ngModel)]="modalContent.amt" #amt="ngModel" required>
+                    <label class="form-control-placeholder" for="amt">Estimate Amount*</label>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                <div class="form-group">
+                    <input type="text" id="invoice_Id" class="form-control" name="invoice_Id" [(ngModel)]="modalContent.invoiceid" #invoice_Id="ngModel" required>
+                    <label class="form-control-placeholder" for="invoice_Id">Estimate Id*</label>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                <div class="form-group">
+                    <select name="ServiceAdvisor" id="ServiceAdvisor" class="form-control" name="ServiceAdvisor" [(ngModel)]="modalContent.service_advisor" #ServiceAdvisor="ngModel" required>
+                        <option *ngFor = "let sa of serviceadv" [value] = "sa.id"> {{sa.first_name}} - {{sa.mobile_number}}</option>
+                    </select>
+                    <label class="form-control-placeholder" for="ServiceAdvisor">Service Advisor*</label>
+                </div>
+                <div class="form-control-feedback" *ngIf="ServiceAdvisor.errors && (ServiceAdvisor.dirty || ServiceAdvisor.touched)">
+                    <p *ngIf="ServiceAdvisor.errors.required">Service Advisor is required</p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                <div class="form-group">
+                    <input type="text" id="notes" class="form-control" name="notes" [(ngModel)]="modalContent.notes" #notes="ngModel" required>
+                    <label class="form-control-placeholder" for="notes">Notes</label>
+                </div>
+            </div>
+        </div>
+        <ng-container>
+            <div class="row">
+                <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6">
+                    <label class="fileContainer">
+                  <i class="fa fa-paperclip" style="font-size: 22px;"></i>
+                  <input type="file" id="file" multiple style="margin-bottom: 5%;"
+                  (change)="getFileDetails($event)" multiple accept="image/jpg,application/pdf,image/jpeg,image/png" >
+              </label>
+
+                </div>
+            </div>
+            <div><label>Maximium Number of file Upload is 3</label></div>
+            <div class="row">
+                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                    <table width="57%">
+                        <tr *ngFor="let file of myFiles">
+                            <td style="margin-right: 9%;padding: 1%;">{{file.name}}</td>
+                            <td><button (click)=removefile(file) style="background-color: white;border-color: orange;"><i class="fa fa-remove" aria-hidden="true" style="color:#ffa100"></i></button></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <button (click)="uploadFilesEst()" class="btn btn-warning" style="margin:2%" [disabled]="disable || !modalContent.service_advisor">Submit</button>
+        </ng-container>
+    </div>
+
+
+</div>

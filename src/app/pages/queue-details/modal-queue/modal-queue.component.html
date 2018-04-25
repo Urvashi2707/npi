@@ -1,0 +1,20 @@
+<nb-card>
+  <nb-card-header>
+    Select Cancel Reason
+  </nb-card-header>
+  <nb-card-body>
+    <div *ngIf="games">
+      <div class="form-group">
+        <select class="form-control" name="game" [(ngModel)]="selectedGame" required>
+          <option *ngFor="let game of games" [ngValue]="game.id"> {{game.description}} </option>
+        </select>
+      </div>
+    </div>
+<div>
+  <label>{{errorMsg}}</label>
+</div>
+    <div>
+      <button class="btn btn-warning" (click)="cancelBooking(selectedGame)">Yes</button>
+    </div>
+  </nb-card-body>
+</nb-card>

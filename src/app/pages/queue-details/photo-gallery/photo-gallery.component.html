@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<style>
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    font-family: Arial;
+  }
+
+  .header {
+    text-align: center;
+    padding: 32px;
+  }
+
+  .row {
+    display: -ms-flexbox;
+    /* IE10 */
+    display: flex;
+    -ms-flex-wrap: wrap;
+    /* IE10 */
+    flex-wrap: wrap;
+    padding: 0 4px;
+  }
+
+  /* Create four equal columns that sits next to each other */
+
+  .column {
+    -ms-flex: 20%;
+    /* IE10 */
+    flex: 20%;
+    max-width: 20%;
+    padding: 0 4px;
+  }
+
+  .column img {
+    margin-top: 8px;
+    vertical-align: middle;
+  }
+
+  /* Responsive layout - makes a two column-layout instead of four columns */
+
+  @media (max-width: 800px) {
+    .column {
+      -ms-flex: 50%;
+      flex: 50%;
+      max-width: 50%;
+    }
+  }
+
+  /* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
+
+  @media (max-width: 600px) {
+    .column {
+      -ms-flex: 100%;
+      flex: 100%;
+      max-width: 100%;
+    }
+  }
+</style>
+
+<body>
+  <nb-card>
+
+    <ngb-accordion [closeOthers]="true" (panelChange)="beforeChange($event)">
+      <ngb-panel *ngFor="let i of states; let k = index" id={{states[k][keyForState[0]]}}>
+        <ng-template ngbPanelTitle>
+          <div class="row">
+            <h6>{{states[k][keyForState[1]]}}</h6>
+          </div>
+        </ng-template>
+        <ng-template ngbPanelContent>
+          <div class="row">
+            <div class="column" *ngFor="let image of tableData; let i = index">
+              <img src="{{photoLink}}{{tableData[i][keyValues[1]]}}" (click)="onViewerVisibilityChanged(i)" style="width:100%">
+              <div>
+                <label>{{tableData[i][keyValues[2]]}}</label>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </ngb-panel>
+    </ngb-accordion>
+  </nb-card>
+  <div class="row" *ngIf="showbutton" style="margin-left: 1%;margin-bottom: 2%;">
+    <div class="finput-group col-lg-4 col-md-4 col-xs-4 col-sm-4">
+      <button class="btn btn-warning" title="Upload" id="uploadInvocie" (click)="sendImages()">Send Images</button>
+    </div>
+  </div>
+</body>
+
+</html>

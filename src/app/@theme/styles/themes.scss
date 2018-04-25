@@ -1,0 +1,35 @@
+// @nebular theming framework
+@import '~@nebular/theme/styles/theming';
+// @nebular out of the box themes
+@import '~@nebular/theme/styles/themes';
+@import '~@nebular/auth/styles/all'; // or @import '~@nebular/auth/styles/{theme-name}';
+
+// ...
+
+// @include nb-install() {
+//   @include nb-theme-global();
+//   @include nb-auth-global(); // append the install mixin inside of the nb-install
+// };
+
+// which themes you what to enable (empty to enable all)
+$nb-enabled-themes: (default, cosmic);
+
+$nb-themes: nb-register-theme((
+ // app wise variables for each theme
+  sidebar-header-gap: 2rem,
+  sidebar-header-height: initial,
+  layout-content-width: 1400px,
+
+  font-main: Roboto,
+  font-secondary: Exo,
+), default, default);
+
+$nb-themes: nb-register-theme((
+  // app wise variables for each theme
+  sidebar-header-gap: 2rem,
+  sidebar-header-height: initial,
+  layout-content-width: 1400px,
+
+  font-main: Roboto,
+  font-secondary: Exo,
+), cosmic, cosmic);

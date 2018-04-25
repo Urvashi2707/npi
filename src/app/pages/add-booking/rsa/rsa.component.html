@@ -1,0 +1,395 @@
+<div class="row">
+  <div class="col-md-12 col-lg-12 col-sm-12">
+    <nb-card class="nb-icons">
+      <nb-card-header>
+        RSA
+      </nb-card-header>
+      <nb-card-body>
+
+        <!-- Registration Number  -->
+        <form novalidate #f="ngForm" (ngSubmit)="onSubmit(f)">
+          <div class="row">
+            <div class="col-md-5 col-sm-5 col-lg-5">
+              <div class="form-group">
+                <input type="text" id="num" name="num" class="form-control" required [(ngModel)]="registrationNumber" #num="ngModel" style=" text-transform: uppercase">
+                <label class="form-control-placeholder" for="num">Registration Number</label>
+              </div>
+              <div class="form-control-feedback" *ngIf="num.errors && (num.dirty || num.touched)">
+                <p *ngIf="num.errors.required">Registration Number is required</p>
+              </div>
+            </div>
+            <div class="col-md-5 col-sm-5 col-lg-5">
+              <div class="form-group">
+                <input type="text" id="mobile1" name="mobile1" class="form-control" maxlength="10" OnlyNumber="true" required [(ngModel)]="user.mobile1"
+                  #mobile1="ngModel">
+                <label class="form-control-placeholder" for="mobile1">Customer Mobile Number</label>
+              </div>
+            </div>
+            <div class="col-md-2 col-sm-2 col-lg-2">
+              <div>
+                <button type="button" class="btn btn-warning" (click)='getcustinfo();eligibiltycheck1()' [disabled]="!registrationNumber || !user.mobile1">Next</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="row" *ngIf="showstep1">
+            <div class="col-md-4 col-sm-4 col-lg-4">
+              <div class="form-group">
+                <input type="text" id="vin" name="vin" class="form-control" [(ngModel)]="user.vin" #vin="ngModel">
+                <label class="form-control-placeholder" for="vin">Vin/chassis number</label>
+              </div>
+              <div class="form-control-feedback" *ngIf="vin.errors && (vin.dirty || vin.touched)">
+                <p *ngIf="vin.errors.required">Vin/chassis number is required</p>
+              </div>
+            </div>
+            <div class="col-md-4 col-sm-4 col-lg-4">
+              <div class="form-group">
+                <input type="text" id="policy" name="policy" class="form-control" [(ngModel)]="user.policy" #policy="ngModel">
+                <label class="form-control-placeholder" for="policy">Policy Number</label>
+              </div>
+              <div class="form-control-feedback" *ngIf="policy.errors && (policy.dirty || policy.touched)">
+                <p *ngIf="policy.errors.required">Policy Number is required</p>
+              </div>
+            </div>
+            <div class="col-md-2 col-sm-2 col-lg-2">
+              <div>
+                <button type="button" class="btn btn-warning" [disabled]= "!user.vin || !user.policy" (click)=" eligibiltycheck2()">Next</button>
+              </div>
+            </div>
+            <div class="col-md-1 col-sm-1 col-lg-1">
+              <div>
+                <button type="button" class="btn btn-warning">Skip</button>
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="showstep2">
+            <!-- Vehicle Details -->
+            <div class="line">
+              <h4>
+                <span>Vehicle Details</span>
+              </h4>
+            </div>
+
+            <!-- <div class="row">
+              <div class="col-md-6 col-lg-6 col-sm-6">
+                <div class="form-group">
+                  <input type="text" id="brand" name="brand" class="form-control" (ngModel)="selectedBrand.id" #brand="ngModel" required>
+                  <label class="form-control-placeholder" for="brand">Vehicle Brand</label>
+                </div>
+              </div>
+              <div class="col-md-6 col-lg-6 col-sm-6">
+                <div class="form-control-feedback"*ngIf="brand.errors && (brand.dirty || brand.touched)" style="display:inline-block">
+                    <p *ngIf="brand.errors.required">Brand is required</p>
+                </div>
+              </div>
+            </div> -->
+
+            <div class="row">
+              <div class="col-md-6 col-lg-6 col-sm-6">
+                <div class="form-group">
+                  <select name="model" id="model" class="form-control" (ngModel)="selectedModel.id" #model="ngModel" required>
+                    <option *ngFor="let sa of vehicle" [value]="sa.model"> {{sa.model}}</option>
+                  </select>
+                  <label class="form-control-placeholder" for="ServiceAdvisor">Vehicle Model</label>
+                </div>
+              </div>
+
+              <div class="col-md-6 col-lg-6 col-sm-6">
+                <div class="form-control-feedback" *ngIf="model.errors && (model.dirty || model.touched)">
+                  <p *ngIf="model.errors.required">Model is required</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 col-lg-6 col-sm-6">
+                <div class="form-group">
+                  <select name="variant" id="variant" class="form-control" (ngModel)="selectedVariant.id" #variant="ngModel" required>
+                    <option *ngFor="let sa of service_advisor" [value]="sa"> {{sa}}</option>
+                  </select>
+                  <label class="form-control-placeholder" for="ServiceAdvisor">Vehicle Variant</label>
+                </div>
+              </div>
+              <div class="col-md-6 col-lg-6 col-sm-6">
+                <div class="form-control-feedback" *ngIf="variant.errors && (variant.dirty || variant.touched)">
+                  <p *ngIf="variant.errors.required">Variant is required</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Customer Details -->
+            <h5>
+              <span>Customer Details</span>
+            </h5>
+            <div class="row">
+              <div class="col-md-8 col-lg-8 col-sm-8 col-xs-8">
+                <div class="form-group" style="display:inline-block;min-width:15%;">
+                  <select id="salutation1" class="form-control" name="salutation1" [(ngModel)]="user.salutation" #salutation1="ngModel" required>
+                    <option *ngFor="let s of salutation" [value]="s.type"> {{s.type}}</option>
+                  </select>
+                </div>
+                <div class="form-group" style="display:inline-block;min-width:59%;">
+                  <input type="text" id="Cus_name" class="form-control" required [(ngModel)]="cust_details.first_name" name="Cus_name" #Cus_name="ngModel"
+                    style="text-transform: capitalize;">
+                  <label class="form-control-placeholder" for="Cus_name">Customer Name*</label>
+                </div>
+              </div>
+              <div class="col-md-6 col-lg-6 col-sm-6">
+                <div class="form-control-feedback" *ngIf="Cus_name.errors && (Cus_name.dirty || Cus_name.touched)">
+                  <p *ngIf="Cus_name.errors.required">Customer Name is required</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="container1">
+              <div class="row">
+                <div class="col-md-8 col-lg-8 col-sm-8 col-xs-8">
+                  <div class="form-group" style="display:inline-block;max-width: 16%;">
+                    <label for="countrycode" style="font-size: 12px;padding-left: 2%;margin-bottom: 0px;">Country Code</label>
+                    <input type="text" class="form-control" name="countrycode" OnlyNumber="true" [readonly]="true" value="+91" [(ngModel)]="countrycode1"
+                      required #countrycode>
+                  </div>
+                  <div class="form-group" style="display:inline-block;min-width:58%;">
+                    <input type="text" class="form-control" name="mobile1" maxlength="10" [(ngModel)]="cust_details.mobile" required OnlyNumber="true"
+                      #mobile1="ngModel" pattern="^[0-9]{10}$">
+                    <label class="form-control-placeholder" for="mobile1">Mobile Number*</label>
+                  </div>
+                  <div style="display:inline-block;margin:3%">
+                    <button type="button" (click)="show1=!show1" class="addnumber">
+                      <i class="fa" [ngClass]="{'fa-plus': !show1, 'fa-minus': show1}" style="color:#ffa100" aria-hidden="true"></i>
+                    </button>
+                  </div>
+                  <div class="form-control-feedback" *ngIf="mobile1.errors && (mobile1.dirty || mobile1.touched)">
+                    <p *ngIf="mobile1.errors.required">mobile is required</p>
+                    <p *ngIf="!mobile1.errors.valid">mobile must contain digits only</p>
+                  </div>
+                </div>
+              </div>
+
+              <div *ngIf="show1 ">
+                <div class="row">
+                  <div class="col-md-8 col-lg-8 col-sm-8 col-xs-8">
+                    <div class="form-group" style="display:inline-block;max-width: 16%;">
+                      <label for="countrycode" style="font-size: 12px;padding-left: 2%;margin-bottom: 0px;">Country Code</label>
+                      <input type="text" class="form-control" name="countrycode" OnlyNumber="true" [readonly]="true" value="+91" [(ngModel)]="countrycode1"
+                        required #countrycode="ngModel">
+                    </div>
+                    <div class="form-group" style="display:inline-block;min-width:58%;">
+                      <input type="text" class="form-control" name="mobile2" maxlength="10" [(ngModel)]="cust_details.mobile2" OnlyNumber="true"
+                        #mobile2="ngModel" pattern="^[0-9]{10}$">
+                      <label class="form-control-placeholder" for="mobile2">Mobile2 Number*</label>
+                    </div>
+                    <div class="form-control-feedback" *ngIf="mobile2.errors && (mobile2.dirty || mobile2.touched)">
+
+                      <p *ngIf="!mobile2.errors.valid">mobile must contain digits only</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="row">
+              <div class="col-md-6 col-lg-6 col-sm-6">
+                <div class="form-group">
+                  <input type="text" id="email" class="form-control" name="email" [(ngModel)]="cust_details.email" #email="ngModel" required
+                    pattern="^([a-zA-Z0-9_\.\-])+@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$">
+                  <label class="form-control-placeholder" for="email">Email Id*</label>
+                </div>
+              </div>
+              <div class="col-md-6 col-lg-6 col-sm-6">
+                <div class="form-control-feedback" *ngIf="email.errors && (email.dirty || email.touched)">
+                  <p *ngIf="email.errors.required">Email is required</p>
+                  <p *ngIf="!email.errors.valid">Email must contain at least the @ character</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Slot and Location Details -->
+            <h6>
+              <span>Service Details</span>
+            </h6>
+            <div class="row" style="margin-bottom: 2%;">
+              <div class="col-lg-3 col-sm-3 col-md-3">
+                <label class="custom-control custom-radio">
+                  <input type="radio" class="custom-control-input" #towing [(ngModel)]="yourBoolean" value="towing" name="customRadio">
+                  <span class="custom-control-indicator"></span>
+                  <span class="custom-control-description">Towing </span>
+                </label>
+              </div>
+              <div class="col-lg-3 col-sm-3 col-md-3">
+                <label class="custom-control custom-radio">
+                  <input type="radio" class="custom-control-input" #onspotservice [(ngModel)]="yourBoolean" value="onSpot" name="customRadio" checked="checked">
+                  <span class="custom-control-indicator"></span>
+                  <span class="custom-control-description">On Spot Service</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 col-lg-6 col-sm-6">
+                <div class="form-group">
+                  <div class="input-group">
+                    <input class="form-control" id="servicingDate" placeholder="Date" name="servicing_Date" (change)="textAreaEmpty(d.value)"
+                      ngbDatepicker #d="ngbDatepicker" required>
+                    <label class="form-control-placeholder" for="servicingDate">Date</label>
+                    <div class="input-group-append">
+                      <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button" style="height:52px;border-radius:0px">
+                        <span>
+                          <i class="fa fa-calendar"></i>
+                        </span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-control-feedback" *ngIf="d.errors && (d.dirty || d.touched)">
+                  <p *ngIf="d.errors.required">Date is required</p>
+                </div>
+              </div>
+
+              <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6" *ngIf="yourBoolean === 'onSpot'">
+                <div class="form-group">
+                  <select name="serviceType" id="serviceType" class="form-control" name="serviceType" #serviceType required>
+                    <option *ngFor="let c of serviceType" [value]="c"> {{c}}</option>
+                  </select>
+                  <label class="form-control-placeholder" for="serviceType">Service Type</label>
+                </div>
+              </div>
+
+              <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6" *ngIf="yourBoolean === 'towing'">
+                <div class="form-group">
+                  <select name="TowingTruck" id="TowingTruck" class="form-control" name="TowingTruck" #TowingTruck required>
+                    <option *ngFor="let d of TowingTruck" [value]="d"> {{d}}</option>
+                  </select>
+                  <label class="form-control-placeholder" for="TowingTruck">Select Towing Truck Type</label>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="row">
+              <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                <table cellspacing="20" *ngIf="show3" class="table table-condensed table-responsive">
+                  <tr *ngFor="let row of buildArr(slot);let i = index">
+                    <td *ngFor="let s of row" class="timeRow">
+                      <a (click)=check(s.time_format,s.slothour) class="timeAnchor">
+                        <span>{{s.time_format}}</span>
+                      </a>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+              <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                <input class="form-control" name="slot" [readonly]="true" *ngIf="slot_time" [(ngModel)]="slothour" />
+              </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-6 col-lg-6 col-sm-6">
+                  <div class="form-group">
+                    <input type="text" id="custloc" class="form-control" name="custloc" [(ngModel)]="user.custloc" #custloc="ngModel" required>
+                    <label class="form-control-placeholder" for="custloc">Customer Location*</label>
+                  </div>
+                  <div class="form-control-feedback" *ngIf="custloc.errors && (custloc.dirty || custloc.touched)">
+                      <p *ngIf="custloc.errors.required">Customer Location is required</p>
+                  </div>
+                </div>
+                <div class="col-md-6 col-lg-6 col-sm-6">
+                  <div class="form-group">
+                    <input type="text" id="custlatlong" class="form-control" name="custlatlong" [(ngModel)]="user.custlatlong" #custlatlong="ngModel" pattern="^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?),\s*[-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)$">
+                    <label class="form-control-placeholder" for="droplatlong">Customer lat/long</label>
+                  </div>
+                  <div class="form-control-feedback" *ngIf="custlatlong.errors && (custlatlong.dirty || custlatlong.touched)">
+                      <p *ngIf="!custlatlong.errors.valid">format is wrong</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6 col-lg-6 col-sm-6">
+                    <div *ngIf="yourBoolean === 'towing'">
+                        <label class="custom-control custom-checkbox" >
+                          <input type="checkbox" class="custom-control-input"  name="svc" #svc>
+                          <span class="custom-control-indicator"></span>
+                          <span class="custom-control-description">Service Centre</span>
+                        </label>
+                      </div>
+                </div>
+              </div>
+
+            
+
+            
+            <div class="row" *ngIf="svc.checked">
+                <div class="col-md-6 col-lg-6 col-sm-6">
+                  <div class="form-group">
+                    <input type="text" id="custloc" class="form-control" name="custloc" [(ngModel)]="user.custloc" #custloc="ngModel" required>
+                    <label class="form-control-placeholder" for="custloc">Drop-off Location*</label>
+                  </div>
+                  <div class="form-control-feedback" *ngIf="custloc.errors && (custloc.dirty || custloc.touched)">
+                      <p *ngIf="custloc.errors.required">Drop-off Location is required</p>
+                  </div>
+                </div>
+                <div class="col-md-6 col-lg-6 col-sm-6">
+                  <div class="form-group">
+                    <input type="text" id="custlatlong" class="form-control" name="custlatlong" [(ngModel)]="user.custlatlong" #custlatlong="ngModel" pattern="^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?),\s*[-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)$">
+                    <label class="form-control-placeholder" for="droplatlong">Drop-off lat/long</label>
+                  </div>
+                  <div class="form-control-feedback" *ngIf="custlatlong.errors && (custlatlong.dirty || custlatlong.touched)">
+                      <p *ngIf="!custlatlong.errors.valid">format is wrong</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6 col-lg-6 col-sm-6">
+                    <div class="form-group">
+                        <select name="creName" id="creName" class="form-control"  [(ngModel)]="user.cre" #creName="ngModel" required>
+                            <option *ngFor = "let ca of cre" [value] = "ca.id"> {{ca.first_name}} - {{ca.mobile_number}}</option>
+                        </select>
+                        <label class="form-control-placeholder" for="cre">CRE*</label>
+                      </div>
+                      <div class="form-control-feedback"*ngIf="cre.errors && (cre.dirty || cre.touched)">
+                          <p *ngIf="cre.errors.required">CRE is required</p>
+                      </div>
+                </div>
+                <div class="col-md-6 col-lg-6 col-sm-6">
+                    <div class="form-group">
+                        <input type="text" id="notes" class="form-control" name="notes" [(ngModel)]="user.notes" placeholder="Notes" #notes="ngModel">
+                        <label class="form-control-placeholder" for="notes">Notes</label>
+                      </div>
+                  </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6 col-lg-6 col-sm-6">
+                    <div class="form-group">
+                        <input type="text" id="notes" class="form-control" name="notes" [(ngModel)]="user.notes" placeholder="Notes" #notes="ngModel">
+                        <label class="form-control-placeholder" for="notes">Notes</label>
+                      </div>
+                </div>
+              </div>
+
+
+
+
+
+            <!-- <div class="row">
+                  <div class="col-md-12 col-lg-12 col-sm-12">
+                    <div style="float:right">
+                      <button  type="submit" class="btn btn-primary" [disabled]="f.invalid">Schedule</button>
+                    </div>
+                  </div>
+                </div> -->
+
+          </div>
+        </form>
+      </nb-card-body>
+      <nb-card-footer>
+
+      </nb-card-footer>
+    </nb-card>
+  </div>
+</div>

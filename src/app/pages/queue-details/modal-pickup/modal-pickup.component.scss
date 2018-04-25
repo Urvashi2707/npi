@@ -1,0 +1,19 @@
+input[readonly]
+{
+    background-color:#ececec;
+}
+.timeAnchor{
+    padding:10px;
+    border: 1px solid #ececec;
+    border-radius: 5px;
+   }
+   .timeRow a:hover{
+    background-color:#dadde6;
+   }
+   .timeRow a:visited{
+    background-color:#ffcc00;
+    
+   }
+   .timeRow a:active{
+    background-color:green;
+   }

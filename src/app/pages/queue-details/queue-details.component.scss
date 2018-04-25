@@ -1,0 +1,88 @@
+@import '../../@theme/styles/themes';
+@import '~bootstrap/scss/mixins/breakpoints';
+@import '~@nebular/theme/styles/global/bootstrap/breakpoints';
+.star {
+    position: relative;
+    display: inline-block;
+    font-size: 1.8rem;
+    color: #d3d3d3;
+}
+
+.full {
+    color: orange;
+}
+
+.half {
+    position: absolute;
+    display: inline-block;
+    overflow: hidden;
+    color: orange;
+}
+
+h1 {
+    margin-left: 30%;
+    color: aqua;
+}
+
+h6 {
+    margin-left: 1%;
+}
+
+.space {
+    margin-left: 20px;
+}
+
+.marginLeft {
+    margin: 25px 50px 75px 100px;
+}
+
+:host {
+    background: nb-theme(card-bg); // and use it
+}
+
+.form-control {
+    position: relative;
+    margin-bottom: 0.5rem;
+    margin-top: 0.5em;
+}
+
+.labels {
+    margin-top: 1em;
+    font-size: 18px;
+}
+
+.panelheadings {
+    /* symbol for "opening" panels */
+    font-family: 'Glyphicons Halflings';
+    /* essential for enabling glyphicon */
+    content: "\e114";
+    /* adjust as needed, taken from bootstrap.css */
+    float: right;
+    /* adjust as needed */
+    color: grey;
+}
+
+.accordion:active {
+    content: "f0da";
+}
+
+@include media-breakpoint-down(sm) {
+    .star {
+        position: relative;
+        display: inline-block;
+        font-size: 1.0rem;
+        color: #d3d3d3;
+    }
+    .full {
+        color: orange;
+    }
+    .half {
+        position: absolute;
+        display: inline-block;
+        overflow: hidden;
+        color: orange;
+    }
+    .question {
+        font-size: 13px;
+    }
+}
