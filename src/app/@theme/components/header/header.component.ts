@@ -11,12 +11,14 @@ import { AnalyticsService } from '../../../@core/utils/analytics.service';
 })
 export class HeaderComponent implements OnInit {
 
+  credit:string;
 
   @Input() position = 'normal';
 
   user: any;
   public name =sessionStorage.getItem('username');
-  
+  // credit:number = 4534536;
+  show = false;
 
   userMenu = [{ title: 'Profile' ,link: 'profile'}, { title: 'Log out',link: '/auth/logout'}];
 
@@ -32,6 +34,8 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
     this.userService.getUsers()
       .subscribe((users: any) => this.user = users.nick);
+      this.credit = JSON.parse(sessionStorage.getItem('credit'));
+
   }
 
   toggleSidebar(): boolean {
@@ -46,6 +50,11 @@ export class HeaderComponent implements OnInit {
 
   goToHome() {
     this.menuService.navigateHome();
+  }
+
+  shownotification(){
+    console.log('notification shown');
+    
   }
 
   startSearch() {

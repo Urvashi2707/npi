@@ -161,11 +161,9 @@ export class QueueDetailsComponent implements OnInit {
     window.open(this.est_link, "_blank");
   }
 
-
   viewInv() {
     window.open(this.invoice_link, "_blank");
   }
-
   cancelBooking() {
     const reqpara3 = {
       requesttype: 'cancelreasons',
@@ -188,7 +186,6 @@ export class QueueDetailsComponent implements OnInit {
     const activeModal = this.modalService.open(Modal4Component, { size: 'lg', container: 'nb-layout' });
 
     this.datatopass = { queue_id:  sessionStorage.getItem('QueueId'),  queue_exists:  "0", type_of_service: '1',  queue_time:  this.dropSlotTime, service_status: this.service_status };
-
     this.dataForModal = { service_status: this.service_status,advName:this.advInfo[0].adv_name, id: sessionStorage.getItem('QueueId'), queue_date: new Date }
     activeModal.componentInstance.modalHeader = 'Upload File';
     activeModal.componentInstance.modalContent = this.dataForModal;
@@ -289,7 +286,6 @@ export class QueueDetailsComponent implements OnInit {
       const reqpara3 = {
         requesttype: 'getqueuebasichistory',
         queueidvar: sessionStorage.getItem('QueueId'),
-        
       }
       const as3 = JSON.stringify(reqpara3);
       this._data.createUser(as3).subscribe(res => {

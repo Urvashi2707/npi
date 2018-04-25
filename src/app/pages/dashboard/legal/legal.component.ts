@@ -25,12 +25,15 @@ export class LegalComponent implements OnInit {
   svcname:string;
   acceptBtn = true;
   cityname:string;
+
   constructor(private datePipe: DatePipe,private router: Router,private activeModal: NgbActiveModal,private servicing: ServicingService) { }
 
   ngOnInit() {
      var date = new Date();
      this.today = this.datePipe.transform(date,"fullDate");
+
      this.cityname = sessionStorage.getItem('city_name');
+
     if(sessionStorage.getItem('selectedsvc')){
       this.svcid = sessionStorage.getItem('selectedsvc');
      }
@@ -71,6 +74,7 @@ export class LegalComponent implements OnInit {
         this.activeModal.close();
       });
     }
+
 
 }
 

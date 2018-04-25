@@ -1,6 +1,5 @@
 import { NgModule , CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import {ServicingService} from './services/addServicing.service';
-// import {ChauffeurService} from './services/chauffeur.service.service';
 import { PagesComponent } from './pages.component';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { PagesRoutingModule } from './pages-routing.module';
@@ -41,11 +40,13 @@ import { UnconfirmedComponent } from './unconfirmed/unconfirmed.component';
 import { Modal5Component } from './unconfirmed/modal5/modal5.component';
 import { TitleCasePipe } from '@angular/common';
 import { OptionComponent } from './dashboard/option/option.component';
-// import { AuthComponent } from './auth/auth.component';
 import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown/angular2-multiselect-dropdown';
 import { ModalAdvComponent } from './queue-details/modal-adv/modal-adv.component';
 import { OnlyNumber } from './number.directive';
 import { NotcheckedinComponent } from './notcheckedin/notcheckedin.component';
+
+import {columnPipe,rowPipe,searchPipe} from './pipe.pipe'
+import { Ng2OrderModule } from 'ng2-order-pipe'; 
 
 const PAGES_COMPONENTS = [
   PagesComponent,
@@ -59,7 +60,7 @@ const PAGES_COMPONENTS = [
     MaterialModule,
     Ng2SearchPipeModule,
     AngularMultiSelectModule,
-    // ModalComponent
+    Ng2OrderModule
   ],
   declarations: [
     ...PAGES_COMPONENTS,
@@ -93,11 +94,9 @@ const PAGES_COMPONENTS = [
     ModalDropoffComponent,
     ModalAdvComponent,
     OnlyNumber,
-    NotcheckedinComponent  
-    // OptionComponent
-  // OnlyNumber,
+    NotcheckedinComponent,
+    columnPipe,rowPipe,searchPipe
   ],
-  // exports:[ModalComponent],
   entryComponents: [
     ModalComponent,
     ModalPhotoComponent,
@@ -109,7 +108,7 @@ const PAGES_COMPONENTS = [
     ModalPickupComponent,
     ModalDropoffComponent,
     ModalAdvComponent
-    // OptionComponent
+
   ],
   providers: [
     ServicingService,

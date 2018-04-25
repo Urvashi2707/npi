@@ -172,7 +172,14 @@ export class ServicingComponent implements OnInit {
     this.getAdvisor();
     this.getCre();
     this.getcreadv();
-  }
+
+   
+;  }
+
+public opt={
+  headers: new HttpHeaders().set('x-auth-token', this.ServicingService.getter())
+}
+
 
   showLargeModal(res: any, notes: string) {
     const activeModal = this.modalService.open(Modal1Component, { size: 'lg', container: 'nb-layout' });
@@ -224,33 +231,26 @@ export class ServicingComponent implements OnInit {
     }
   }
 
+
   eligibiltycheck1(){
     const reqpara0 =
     {
-      requesttype: 'geteligibilitycheckstepone',
+      
       customerMobileNumber:this.user.mobile1,
-      vehicleRegNumber:this.registrationNumber,
+      vehicleRegNumbe:this.registrationNumber,
       typeofservice:1
     }
     console.log(reqpara0);
     const as0 = JSON.stringify(reqpara0);
-    this.ServicingService.check(as0).subscribe(
+    this.ServicingService.Initialcheck(as0).subscribe(
       res => {
-        console.log(res[0].eligible);
-        console.log(res[0].eligible[0].eligible);
-        const eligible = res[0].eligible[0].eligible;
-        if(JSON.parse(eligible)){
-          console.log("true");
-          this.showstep1 = true;
-        }
-        else{
-          console.log("false");
-          this.showstep2 = true;
-          this.showToast('Message', 'Not Eligible ', 'Customer is not Eligible for step 2');
-        }
+        console.log(res);
       }
     )
   }
+
+
+
 
   skip(){
     this.showToast('Message', 'Skip Message', 'Customer will not be eligilble for any benefits');
@@ -261,16 +261,20 @@ export class ServicingComponent implements OnInit {
   eligibiltycheck2(){
     const reqpara01 =
     {
-      requesttype: 'geteligibilitychecksteptwo',
+
+      
       customerMobileNumber:this.user.mobile1,
       vehicleRegNumber:this.registrationNumber,
+      policyNumber:this.user.policy,
+      chassisNo:this.user.vin,
       typeofservice:1,
-      policynumber:this.user.policy,
-      vinnumber:this.user.vin
+      
+      
     }
     console.log(reqpara01);
     const as01 = JSON.stringify(reqpara01);
-    this.ServicingService.check(as01).subscribe(
+    this.ServicingService.Finalcheck(as01).subscribe(
+
       res => {
         console.log(res[0].eligible);
         console.log(res[0].eligible[0].eligible);
@@ -675,8 +679,10 @@ export class ServicingComponent implements OnInit {
       }
     }
     else {
+
       this.user.dropoff_location = null ;
       this.user.dropofflatlong = null ;
+
     }
 
   }

@@ -98,7 +98,7 @@ export class DropOffComponent implements OnInit {
     
   }
   FilterCheck(){
-
+    this.message = "";
     const reqpara3 = {
       requesttype: 'getqueueinfonew',
       servicetype: '3',

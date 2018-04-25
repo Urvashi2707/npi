@@ -21,9 +21,15 @@ import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown/angular2
 import { CookieService } from 'ngx-cookie-service';
 import {RatingModule} from "ngx-rating";
 
+import { FilterPipe} from './pages/filter.pipe';
+import { Ng2OrderModule } from 'ng2-order-pipe'; 
+// import {columnPipe,rowPipe,searchPipe} from './pages/pipe.pipe'
+
+
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent,FilterPipe],
+
   imports: [
     BrowserModule,
     AngularMultiSelectModule,
@@ -31,7 +37,6 @@ import {RatingModule} from "ngx-rating";
     HttpModule,
     AppRoutingModule,
     MaterialModule,
-    
    
     NgbModule.forRoot(),
     ThemeModule.forRoot(),

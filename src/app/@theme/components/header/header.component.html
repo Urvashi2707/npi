@@ -3,16 +3,28 @@
         <a (click)="toggleSidebar()" href="#" class="navigation"><i class="nb-menu"></i></a>
         <div class="logo" (click)="goToHome()"><img src="/assets/images/logo.png" class="img-responsive"></div>
     </div>
+
+    <div class="credits">
+        <span>Chauffeur Credit</span>
+        <span>{{credit}}</span>
+    </div>
+
+
     <ngx-theme-switcher></ngx-theme-switcher>
 </div>
 
 <nb-actions size="medium" class="header-container" [class.right]="position === 'normal'" [class.left]="position === 'inverse'">
 
     <nb-action>
-        <nb-action class="control-item" disabled icon="nb-notifications"></nb-action>
+
+        <nb-action class="control-item" icon="nb-notifications" (click)="show=!show;shownotification();"></nb-action>
+
         <nb-user [menu]="userMenu" [name]="name"></nb-user>
     </nb-action>
     <nb-action class="control-item">
         <nb-search type="rotate-layout" (click)="startSearch()" tag="header-search"></nb-search>
     </nb-action>
+
 </nb-actions>
+
+<div *ngIf="show">hidden/show</div>

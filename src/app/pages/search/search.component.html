@@ -1,46 +1,57 @@
 <div class="row">
-  <div class="col-md-12 col-lg-12 col-sm-12">
-    <nb-card class="nb-icons">
-      <nb-card-header>
-        Search Result
-      </nb-card-header>
-      <nb-card-body>
-          <!-- <toaster-container [toasterconfig]="config"></toaster-container> -->
-        <div>
-          <div>
-            <table class="table">
-              <tr>
-                <th>Queue Id</th>
-                <th>Queue Date</th>
-                <th>Queue Time</th>
-                <th>Customer Name</th>
-                <th>Customer Number</th>
-                <!-- <th>LIC Plate</th> -->
-                <th>Status</th>
-                <th>Upload</th>
-              </tr>
-              <tr *ngFor="let r of report" (click)="openQDetails(r.id)">
-                <td>{{r.id}}</td>
-                <td>{{r.queue_date}}</td>
-                <td>{{r.queue_time}}</td>
-                <td>{{r.cust_name}}</td>
-                <td>{{r.cust_number}}</td>
-                <!-- <td>{{r.veh_number}}</td> -->
-                <td>{{r.queue_status}}</td>
-                <td *ngIf="r.upload_button"><button class="btn btn-warning" (click)="showModal(r)">{{r.upload_button}}</button></td>
-                <!-- <td>{{r.upload_button}}</td> -->
-              </tr>
-            </table>
-          </div>
-        </div>
-       
-   
-       
-      </nb-card-body>
-      <nb-card-footer>
+    <div class="col-md-12 col-lg-12 col-sm-12">
+        <nb-card class="nb-icons">
+            <nb-card-header>
+                Search Result
+            </nb-card-header>
+            <nb-card-body>
+                <!-- <toaster-container [toasterconfig]="config"></toaster-container> -->
+                <div>
+                    <div>
+                        <input [(ngModel)]="searchText" placeholder="search">
+                        <table class="table">
+                            <tr>
+                                <th (click)="sort('id')">Queue Id
+                                    <span><i class="fa" *ngIf="key =='id'" [ngClass]="{'fa-sort-alpha-asc':reverse, 'fa-sort-alpha-desc':!reverse}" style="color:#ffa100" aria-hidden="true"></i></span>
+                                </th>
+                                <th (click)="sort('queue_date')">Queue Date
+                                    <span><i class="fa" *ngIf="key =='queue_date'" [ngClass]="{'fa-sort-alpha-asc':reverse, 'fa-sort-alpha-desc':!reverse}" style="color:#ffa100" aria-hidden="true"></i></span>
+                                </th>
+                                <th (click)="sort('queue_time')">Queue Time
+                                    <span><i class="fa" *ngIf="key =='queue_time'" [ngClass]="{'fa-sort-alpha-asc':reverse, 'fa-sort-alpha-desc':!reverse}" style="color:#ffa100" aria-hidden="true"></i></span>
+                                </th>
+                                <th (click)="sort('cust_name')">Customer Name
+                                    <span><i class="fa" *ngIf="key =='cust_name'" [ngClass]="{'fa-sort-alpha-asc':reverse, 'fa-sort-alpha-desc':!reverse}" style="color:#ffa100" aria-hidden="true"></i></span>
+                                </th>
+                                <th (click)="sort('cust_number')">Customer Number
+                                    <span><i class="fa" *ngIf="key =='cust_number'" [ngClass]="{'fa-sort-alpha-asc':reverse, 'fa-sort-alpha-desc':!reverse}" style="color:#ffa100" aria-hidden="true"></i></span>
+                                </th>
 
-        </nb-card-footer>
-      </nb-card>
+                                <th (click)="sort('queue_status')">Status
+                                    <span><i class="fa" *ngIf="key =='queue_status'" [ngClass]="{'fa-sort-alpha-asc':reverse, 'fa-sort-alpha-desc':!reverse}" style="color:#ffa100" aria-hidden="true"></i></span>
+                                </th>
+                                <th>Upload</th>
+                            </tr>
+                            <tr *ngFor="let r of report  | orderBy: key : reverse | filter : searchText" (click)="openQDetails(r.id)">
+                                <td>{{r.id}}</td>
+                                <td>{{r.queue_date}}</td>
+                                <td>{{r.queue_time}}</td>
+                                <td>{{r.cust_name}}</td>
+                                <td>{{r.cust_number}}</td>
+                                <td>{{r.queue_status}}</td>
+                                <td *ngIf="r.upload_button"><button class="btn btn-warning" (click)="showModal(r)">{{r.upload_button}}</button></td>
+
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+
+
+            </nb-card-body>
+            <nb-card-footer>
+
+            </nb-card-footer>
+        </nb-card>
     </div>
-  </div>
-
+</div>

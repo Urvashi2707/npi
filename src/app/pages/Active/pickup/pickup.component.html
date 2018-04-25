@@ -1,5 +1,63 @@
 <nb-card>
     <nb-card-body>
+<<<<<<< HEAD
+        <div>
+            <div class="row">
+                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input class="form-control" name="dp" [ngModel]="model1" (ngModelChange)="onSelectDate1($event)" placeholder="{{pastdate | date: 'yyyy-MM-dd'}}" ngbDatepicker #d1="ngbDatepicker">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary dateButton" (click)="d1.toggle()" type="button" style="height: 100%;border-radius: 0px;">
+                                            <span><i class="fa fa-calendar"></i></span>
+                                          </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input class="form-control" name="dp" [ngModel]="model" (ngModelChange)="onSelectDate($event)" placeholder="{{today | date: 'yyyy-MM-dd'}}" ngbDatepicker #d="ngbDatepicker">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary dateButton" (click)="d.toggle()" type="button" style="height: 100%;border-radius: 0px;">
+                                            <span><i class="fa fa-calendar"></i></span>
+                                          </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                    <button type="button" class="btn btn-primary" (click)="FilterCheck()">Apply</button>
+                </div>
+            </div>
+        </div>
+        <div>
+            <div>
+                <input [(ngModel)]="term" placeholder="search">
+            </div>
+        </div>
+        <table style="width:100%">
+            <thead>
+                <tr>
+                    <th (click)="sort('queueid')">ID
+                        <span><i class="fa" *ngIf="key =='queueid'" [ngClass]="{'fa-sort-alpha-desc':reverse, 'fa-sort-alpha-asc':!reverse}" style="color:#ffa100" aria-hidden="true"></i></span>
+                    </th>
+                    <th (click)="sort('queue_time')">Queue Time
+                        <span><i class="fa" *ngIf="key =='queue_time'" [ngClass]="{'fa-sort-alpha-asc':reverse, 'fa-sort-alpha-desc':!reverse}" style="color:#ffa100" aria-hidden="true"></i></span>
+                    </th>
+                    <th (click)="sort('cust_name')">Customer Name
+                        <span><i class="fa" *ngIf="key =='cust_name'" [ngClass]="{'fa-sort-alpha-asc':reverse, 'fa-sort-alpha-desc':!reverse}" style="color:#ffa100" aria-hidden="true"></i></span>
+                    </th>
+                    <th (click)="sort('veh_number')">LIC Plate
+                        <span><i class="fa" *ngIf="key =='veh_number'" [ngClass]="{'fa-sort-alpha-asc':reverse, 'fa-sort-alpha-desc':!reverse}" style="color:#ffa100" aria-hidden="true"></i></span>
+                    </th>
+                    <th (click)="sort('cre_name')">CRE
+                        <span><i class="fa" *ngIf="key =='cre_name'" [ngClass]="{'fa-sort-alpha-asc':reverse, 'fa-sort-alpha-desc':!reverse}" style="color:#ffa100" aria-hidden="true"></i></span>
+                    </th>
+                    <th (click)="sort('queue_status')">Status
+                        <span><i class="fa" *ngIf="key =='queue_status'" [ngClass]="{'fa-sort-alpha-asc':reverse, 'fa-sort-alpha-desc':!reverse}" style="color:#ffa100" aria-hidden="true"></i></span>
+=======
             <div>
                     <div class="row">
                         <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
@@ -38,14 +96,25 @@
                 <tr>
                     <th *ngFor="let k of pickup_headings; let i = index">
                         {{pickup_headings[i]}}
+>>>>>>> First commit
                     </th>
                 </tr>
             </thead>
             <tbody>
+<<<<<<< HEAD
+                <tr *ngFor="let i of pickup  | orderBy: key : reverse |  filter:term; let j = index" (click)="openQDetails(i.queueid)">
+                    <td>{{i.queueid}}</td>
+                    <td>{{i.queue_time}}</td>
+                    <td>{{i.cust_name}}</td>
+                    <td>{{i.veh_number}}</td>
+                    <td>{{i.cre_name}}</td>
+                    <td>{{i.queue_status}}</td>
+=======
                 <tr *ngFor="let i of tableData |  filter:term; let j = index" (click)="openQDetails(j)">
                     <td *ngFor="let key of keyValues ; let k = index">
                         {{tableData[j][keyValues[k]]}}
                     </td>
+>>>>>>> First commit
                 </tr>
             </tbody>
         </table>

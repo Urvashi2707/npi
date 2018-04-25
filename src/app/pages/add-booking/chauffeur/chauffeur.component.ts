@@ -23,8 +23,8 @@ export class ChauffeurComponent implements OnInit {
   private Slot: any=[];
   public slot:any = [];
   svcid:string;
-  slotcheck = true;
-  public slothour:string;
+slotcheck = true;
+public slothour:string;
   public selectedVariant: any = [];
   public selectedCoordinator: any = [];
   public service_type:any =[];
@@ -73,7 +73,6 @@ export class ChauffeurComponent implements OnInit {
   isHideOnClick = true;
   isDuplicatesPrevented = false;
   public globalsvcid:string;
- 
   public selectedsvcid:string;
   isCloseButton = true;
   config: ToasterConfig;
@@ -100,7 +99,6 @@ export class ChauffeurComponent implements OnInit {
       this.svcid = JSON.parse(sessionStorage.getItem('globalsvcid'));
       // console.log(this.svcid);
     }
-  
     this.service_type  = [
       { id: 1, type: 'Stock Yard' },
       { id: 2, type: 'Test Drive' },
@@ -113,6 +111,7 @@ export class ChauffeurComponent implements OnInit {
     { id: 3, type: 'Ms' },
   ];
   this.user.salutation = 'Mr';
+
   this.countrycode1 = "+91";
   this.getBrands();
   this.getCoordinator();
@@ -214,6 +213,7 @@ export class ChauffeurComponent implements OnInit {
     this.slot_time=time;
     this.slothour = value;
     this.slotcheck = false;
+
     }
 
    onSelectBrand(brandsId) {
@@ -269,15 +269,19 @@ export class ChauffeurComponent implements OnInit {
 
   onCoordinator(Id){
     this.selectedCoordinator = null;
+
     for (let i = 0; i < this.Coordinator.length; i++) {
       if (this.Coordinator[i].id === Id) {
         this.selectedCoordinator = this.Coordinator[i];
+
       }
     }
     console.log(this.selectedCoordinator);
   }
 
+
   getSaleExceutive(){
+
     const reqpara8={
       requesttype:'getspecificsvcusers',
       usertype:7,
@@ -290,15 +294,19 @@ export class ChauffeurComponent implements OnInit {
         this.router.navigate(['/auth/login']);
       }
       else{
+
         this.SaleExceutive = res[0].users
         console.log(this.SaleExceutive);
+
       }
       
    
     });
   }
 
+
   getCoordinator(){
+
     const reqpara7={
       requesttype:'getspecificsvcusers',
       usertype:13,
@@ -311,9 +319,11 @@ export class ChauffeurComponent implements OnInit {
         this.router.navigate(['/auth/login']);
       }
       else{
+
         this.Coordinator = res[0].users
         console.log(this.Coordinator);
      
+
       }
      
     });
@@ -352,15 +362,19 @@ export class ChauffeurComponent implements OnInit {
           }
         }
         else{
+
           this.user.droploc = null;
           this.user.droplatlong = null;
+
         }
     
       }
 
+
       modelChanged(event){
         console.log(event);
       }
+
 
       onSelectDate(date: NgbDateStruct){
         if (date != null) {

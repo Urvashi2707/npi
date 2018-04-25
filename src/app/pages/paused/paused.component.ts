@@ -29,6 +29,9 @@ export class PausedComponent implements OnInit {
   constructor(private datePipe:DatePipe,private ngbDateParserFormatter: NgbDateParserFormatter,private _detailsTable: QueueTableService, private _data: ListService, private _tableService: QueueTableService, private router: Router) { 
     this._tableService.clickedID.subscribe(value => {
       this.tableData = _tableService.table_data;
+
+      console.log(this.tableData);
+
       this.keyValues = ['queueid', 'cust_name', 'veh_number', 'queue_time', 'cre_name', '(select description from 21N_queue_pause_reasons where id = (select reasonid from 21N_queue_pause_reasons_list where queueid = 21N_queue.id order by id desc limit 1))'];
 
     });
@@ -36,6 +39,7 @@ export class PausedComponent implements OnInit {
     this.today = this.datePipe.transform(date,"yyyy-MM-dd");
     console.log(this.today)
     var numberOfDays = 1;
+
     var days = date.setDate(date.getDate() - numberOfDays);
     this.pastdate = this.datePipe.transform(days,"yyyy-MM-dd");
     console.log(this.pastdate);

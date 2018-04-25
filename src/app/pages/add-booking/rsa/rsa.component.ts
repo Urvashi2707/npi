@@ -3,6 +3,9 @@ import {FormsModule} from '@angular/forms';
 import {IServicing} from '../../model/AddServicing';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
+
+import { HttpClient, HttpHeaders, HttpErrorResponse, HttpRequest } from '@angular/common/http';
+
 import { OnlyNumber } from '../../number.directive';
 import { ToasterService, ToasterConfig, Toast, BodyOutputType } from 'angular2-toaster';
 import 'style-loader!angular2-toaster/toaster.css';
@@ -48,7 +51,9 @@ export class RsaComponent implements OnInit {
   toastsLimit = 5;
   slothour:string;
 
+
   constructor( private toasterService: ToasterService, private router: Router,private ServicingService: ServicingService,) { }
+
 
   ngOnInit() {
     if(sessionStorage.getItem('selectedsvc')){
@@ -63,6 +68,10 @@ export class RsaComponent implements OnInit {
     this.TowingTruck =  ['Flat bed', 'Winch'];
     this.serviceType =  ['Flat Tyre', 'Jump Start', 'Lock out','Out of Gas','Others'];
     this.creName = ['Rohnit','Mohit','Nitin','Add CRE'];
+  }
+
+  public opt={
+    headers: new HttpHeaders().set('x-auth-token', JSON.stringify(localStorage.getItem('token')))
   }
 
   getModelds(ModelId: number) {
@@ -140,7 +149,9 @@ export class RsaComponent implements OnInit {
     }
     console.log(reqpara0);
     const as0 = JSON.stringify(reqpara0);
-    this.ServicingService.check(as0).subscribe(
+
+    this.ServicingService.Finalcheck(as0).subscribe(
+
       res => {
         console.log(res[0].eligible);
         console.log(res[0].eligible[0].eligible);
@@ -176,7 +187,9 @@ export class RsaComponent implements OnInit {
     }
     console.log(reqpara01);
     const as01 = JSON.stringify(reqpara01);
-    this.ServicingService.check(as01).subscribe(
+
+    this.ServicingService.Finalcheck(as01).subscribe(
+
       res => {
         console.log(res[0].eligible);
         console.log(res[0].eligible[0].eligible);

@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+
+import { Component ,OnInit} from '@angular/core';
+
 
 // TODO: move layouts into the framework
 @Component({
@@ -33,5 +35,11 @@ import { Component } from '@angular/core';
     </nb-layout>
   `,
 })
-export class TwoColumnsLayoutComponent {
+
+export class TwoColumnsLayoutComponent implements OnInit {
+
+  ngOnInit(){
+    console.log('sidebar2');
+  }
+
 }

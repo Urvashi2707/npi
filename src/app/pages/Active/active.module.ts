@@ -11,13 +11,18 @@ import { DropOffComponent } from './drop-off/drop-off.component';
 import { RsaComponent } from './rsa/rsa.component';
 import { ChauffeurComponent } from './chauffeur/chauffeur.component';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { Ng2OrderModule } from 'ng2-order-pipe'; 
+
 @NgModule({
   imports: [
     CommonModule,
     ActiveRoutingModule,
     NgbModule.forRoot(),
     ThemeModule.forRoot(),
-    Ng2SearchPipeModule
+
+    Ng2SearchPipeModule,
+    Ng2OrderModule
+
   ],
   declarations: [
     PickupComponent, 

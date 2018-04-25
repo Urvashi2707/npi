@@ -23,6 +23,9 @@ export class CancelledComponent implements OnInit {
   model1: NgbDateStruct;
   message:string;
   pastdate:string;
+
+  searchText:string;
+
   svcadmin:string;
   checksvcadmin :boolean;
   checkgrpadmin :boolean;
@@ -37,7 +40,9 @@ export class CancelledComponent implements OnInit {
     var date = new Date();
     this.today = this.datePipe.transform(date,"yyyy-MM-dd");
     console.log(this.today)
+
     var numberOfDays = 2;
+
     var days = date.setDate(date.getDate() - numberOfDays);
     this.pastdate = this.datePipe.transform(days,"yyyy-MM-dd");
     console.log(this.pastdate);

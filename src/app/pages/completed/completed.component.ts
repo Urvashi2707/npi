@@ -13,7 +13,9 @@ import { NgbDateAdapter, NgbDateStruct, NgbDatepickerConfig, NgbDateParserFormat
 })
 export class CompletedComponent implements OnInit {
 
+
   pickup_headings: String[] = ['ID', 'Customer Name', 'License Plate',  'Payment Status','Amount', 'Rating'];
+
   tableData: any[];
   keyValues: any[];
   today: string;
@@ -33,7 +35,9 @@ export class CompletedComponent implements OnInit {
     var date = new Date();
     this.today = this.datePipe.transform(date, "yyyy-MM-dd");
     console.log(this.today)
+
     var numberOfDays = 2;
+
     var days = date.setDate(date.getDate() - numberOfDays);
     this.pastdate = this.datePipe.transform(days, "yyyy-MM-dd");
     console.log(this.pastdate);
@@ -70,6 +74,7 @@ export class CompletedComponent implements OnInit {
          this._detailsTable.setTableData(res, 10);
        }
     });
+
   }
   onSelectDate(date: NgbDateStruct) {
     if (date != null) {

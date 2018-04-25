@@ -28,6 +28,7 @@ export class AtCentreComponent implements OnInit {
   message:string;
   svcid:string;
   advisorName:string;
+
   constructor(private datePipe:DatePipe, private router:Router,private ngbDateParserFormatter: NgbDateParserFormatter,private modalService: NgbModal, private _detailsTable: QueueTableService, private _data: ListService, private _tableService: QueueTableService) {
     this._tableService.clickedID.subscribe(value => {
       this.tableData = _tableService.table_data;
@@ -77,28 +78,27 @@ export class AtCentreComponent implements OnInit {
        else{
          this.advisorName = res[1].service_advisor;
          console.log(this.advisorName );
+
          this._detailsTable.setTableData(res, 4);
        }
     });
   }
   datatopass:any;
   dataForUpload: any;
+
   uploadFiles(event : any,data:any){
     console.log(data);
     console.log(data.service_advisor)
     console.log(this.tableData[event.currentTarget.id].service_status)
-    // console.log(this.tableData[event.currentTarget.id].service_advisor)
-  
-    // var target = event.target || event.srcElement || event.currentTarget;
-    // var idAttr = target..id;
-    // var value = idAttr.nodeValue;
+
   //  console.log(id);
     const activeModal = this.modalService.open(Modal4Component, { size: 'lg', container: 'nb-layout' });
 
-    this.datatopass = {id:data.queueid, queue_exists: "0", type_of_service:data.service_status, queue_time:data.queue_time, service_status: '0',service_advisor:data.service_advisor};
+    this.datatopass = {id:data.queueid, queue_exists: "0", service_status:data.service_status, queue_time:data.queue_time,service_advisor:data.service_advisor};
     this.dataForUpload = { id: sessionStorage.getItem('QueueId'), queue_date: new Date, service_status: this.tableData[event.currentTarget.id].service_status}
     activeModal.componentInstance.modalHeader = 'Upload File';
     activeModal.componentInstance.modalContent = this.datatopass;
+
   }
   onSelectDate(date: NgbDateStruct){
     if (date != null) {
@@ -120,7 +120,9 @@ export class AtCentreComponent implements OnInit {
 
   }
   openQDetails(indexId: any) {
+
     console.log(indexId);
+
     sessionStorage.setItem('QueueId', this.tableData[indexId][this.keyValues[0]])
     sessionStorage.setItem('QueueTime', this.tableData[indexId][this.keyValues[3]])
     console.log(this.tableData[indexId][this.keyValues[3]]);
@@ -130,10 +132,12 @@ export class AtCentreComponent implements OnInit {
 
   }
 
+
   // getdetails(){}
 
   FilterCheck(){
     this.message=" ";
+
     const reqpara3 = {
       requesttype: 'getqueueinfonew',
       servicetype: '1',
@@ -151,8 +155,10 @@ export class AtCentreComponent implements OnInit {
         this.message = 'No Data';
        }
        else{
+
         this.advisorName = res[1].service_advisor;
         console.log(this.advisorName );
+
          this._detailsTable.setTableData(res, 4);
        }
     });

@@ -25,6 +25,9 @@ import 'style-loader!angular2-toaster/toaster.css';
       public userList: any = [];
       public userDisable: any = [];
       public user = [];
+
+      searchText:string;
+
       public svcid:string;
       isNewestOnTop = true;
       isHideOnClick = true;
@@ -42,7 +45,10 @@ import 'style-loader!angular2-toaster/toaster.css';
       checksvcadmin :boolean;
       checkgrpadmin :boolean;
       groupadmin:string;
-      
+
+      key: string = 'id'; 
+      reverse: boolean = false;
+
       constructor(private toasterService: ToasterService,
                     private modalService: NgbModal,
                     private _data:ListService,
@@ -61,7 +67,9 @@ import 'style-loader!angular2-toaster/toaster.css';
         }
         this._data.getUser().subscribe(data => this.user = data);
         this. getUserType();
+
         this.getUserList();
+
         this.countrycode1="+91";
         this.svcadmin = JSON.parse(sessionStorage.getItem('svcadmin'));
         console.log(this.svcadmin);
@@ -85,6 +93,13 @@ import 'style-loader!angular2-toaster/toaster.css';
           { id: 3, type: 'Ms' },
         ];
        }
+
+
+       sort(key){
+        this.key = key;
+        this.reverse = !this.reverse;
+      }
+
 
        private showToast(type: string, title: string, body: string) {
         this.config = new ToasterConfig({

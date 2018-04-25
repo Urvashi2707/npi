@@ -1,84 +1,79 @@
 @import '../../@theme/styles/themes';
 @import '~bootstrap/scss/mixins/breakpoints';
 @import '~@nebular/theme/styles/global/bootstrap/breakpoints';
-
 @include nb-install-component() {
-  .solar-card nb-card-header {
-    border: none;
-    padding-bottom: 0;
-  }
-
-  @include media-breakpoint-down(sm) {
-    ngx-traffic {
-      display: none;
+    .solar-card nb-card-header {
+        border: none;
+        padding-bottom: 0;
     }
-  }
-
-  @include media-breakpoint-down(xs) {
-    .firstcard{
-      margin-top:6%;
-      padding-top: 20%;
+    @include media-breakpoint-down(sm) {
+        ngx-traffic {
+            display: none;
+        }
     }
-  }
-
-  @include media-breakpoint-down(is) {
-    /deep/ nb-card.large-card {
-      height: nb-theme(card-height-medium);
+    @include media-breakpoint-down(xs) {
+        .firstcard {
+            margin-top: 6%;
+            padding-top: 20%;
+        }
     }
-  }
+    @include media-breakpoint-down(is) {
+        /deep/ nb-card.large-card {
+            height: nb-theme(card-height-medium);
+        }
+    }
 }
+
 .star {
-  position: relative;  
-  display: inline-block;
-  font-size: 1.8rem;
-  color: #d3d3d3;
+    position: relative;
+    display: inline-block;
+    font-size: 1.8rem;
+    color: #d3d3d3;
 }
+
 .full {
-  color:orange;
+    color: orange;
 }
+
 .half {
-  position: absolute;
-  display: inline-block;
-  overflow: hidden;
-  color:orange;
+    position: absolute;
+    display: inline-block;
+    overflow: hidden;
+    color: orange;
 }
+
 ngx-charts-legend.chart-legend {
-  width: auto;
-  clear: both;
-  display: block;
-  margin:0 auto;
-
-  & > div {
-    display:block;
-    width: auto !important;
-  }
-  .legend-wrap {
-    min-width:200px;
-    text-align:center;
-    margin:0 auto;
-    float:none;
-  }
-  .legend-title{
-    display:none;
-  }
-  .legend-labels{
     width: auto;
-    display:inline-block;
-    text-align:center;
-    margin:0 auto;
-    background:none;
-    float:none;
-    padding:0;
-    margin-left: -13%;
-    margin-top: -13%;
-  }
+    clear: both;
+    display: block;
+    margin: 0 auto;
+    &>div {
+        display: block;
+        width: auto !important;
+    }
+    .legend-wrap {
+        min-width: 200px;
+        text-align: center;
+        margin: 0 auto;
+        float: none;
+    }
+    .legend-title {
+        display: none;
+    }
+    .legend-labels {
+        width: auto;
+        display: inline-block;
+        text-align: center;
+        margin: 0 auto;
+        background: none;
+        float: none;
+        padding: 0;
+        margin-left: -13%;
+        margin-top: -13%;
+    }
 }
-.edit{
-  color: orange;
-  background-color: white;
+
+.edit {
+    color: orange;
+    background-color: white;
 }
-// .ngx-charts-legend div{
-//   width: 0px;
-// }
-
-

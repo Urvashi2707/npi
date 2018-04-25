@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
 import {User,Ilogin} from '../user';
+import { ServicingService } from '../../services/addServicing.service';
 import {HttpClient,HttpHeaders,HttpErrorResponse} from '@angular/common/http';
 import {NgForm} from '@angular/forms';
 import { CookieService } from 'ngx-cookie-service';
@@ -24,7 +25,9 @@ export class LoginComponent implements OnInit {
   animationType = 'fade';
   timeout = 5000;
   toastsLimit = 5;
-  constructor( private toasterService: ToasterService,private http: HttpClient,private router: Router,private _cookieService:CookieService) { 
+
+  constructor( private ServicingService: ServicingService,private toasterService: ToasterService,private http: HttpClient,private router: Router,private _cookieService:CookieService) { 
+
     if(_cookieService.get('mobile')){
       this.user.mobile=this._cookieService.get('mobile');
       this.user.password=this._cookieService.get('password');
@@ -32,8 +35,9 @@ export class LoginComponent implements OnInit {
   }
   loggedIn = false;
   ngOnInit() {
-    console.log('hii');
-    this._cookieService.set('test','cookie_testing');
+
+    // this.getSession();
+
   }
 
   user:Ilogin={
@@ -90,11 +94,9 @@ goTo(){
         sessionStorage.setItem('currentUser',JSON.stringify(response[0]));
         sessionStorage.setItem('globalsvcid',JSON.stringify(response[0].login[0].svcid));
         sessionStorage.setItem('svcname',JSON.stringify(response[0].login[0].svcname));
-        sessionStorage.setItem('city_name',JSON.stringify(response[0].login[0].city_name));
         sessionStorage.setItem('terms',JSON.stringify(response[0].login[0].terms_status));
-        // sessionStorage.setItem('terms',"0");
-        // sessionStorage.setItem('accmanager',JSON.stringify(response[0].login[0].account_manager_name));
-        // sessionStorage.setItem('managernumber',JSON.stringify(response[0].login[0].account_manager_mobile));
+        sessionStorage.setItem('city_name',JSON.stringify(response[0].login[0].city_name));
+        sessionStorage.setItem('credit',JSON.stringify(response[0].login[0].balance_credits));
         sessionStorage.setItem('svcadmin',JSON.stringify(response[0].login[0].issvcadmin));
         sessionStorage.setItem('groupadmin',JSON.stringify(response[0].login[0].isgroupadminvar));
         console.log(response[0].login[0].first_name);
@@ -118,6 +120,15 @@ goTo(){
      );
    // this.form.reset();
   }
+  // getSession(){
+  //   this.ServicingService.session().subscribe(res =>{
+  //     console.log(res)
+  //     console.log(res["sId"]);
+  //     localStorage.setItem('token',res["sId"]);
+  //     localStorage.setItem('auth-user',res["userName"]);
+  //     this.ServicingService.setter(res["sId"]);
+  //   });
+  // }
  Remmeber(value){
   console.log(value);
   if(value == true){

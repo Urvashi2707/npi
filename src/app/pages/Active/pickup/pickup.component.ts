@@ -17,6 +17,9 @@ export class PickupComponent implements OnInit {
   tableData: any[];
   keyValues: any[];
   term:string;
+
+  public pickup : any =[];
+
   today:string;
   dateString: string;
   dateString1: string;
@@ -26,6 +29,10 @@ export class PickupComponent implements OnInit {
   message:string;
   globalsvcid:string;
   svcid:string;
+
+  key: string = 'id'; 
+  reverse: boolean = false;
+
   constructor(private datePipe:DatePipe,private ngbDateParserFormatter: NgbDateParserFormatter,private _detailsTable: QueueTableService, private _data: ListService, private _tableService: QueueTableService, private router: Router) {
 
     this._tableService.clickedID.subscribe(value => {
@@ -64,16 +71,30 @@ export class PickupComponent implements OnInit {
     const as3 = JSON.stringify(reqpara3);
     console.log(as3);
     this._data.createUser(as3).subscribe(res => {
+
+      if(res[0].login === 0){
+        sessionStorage.removeItem('currentUser');
+        this.router.navigate(['/auth/login']);
+      }
+      else{
+
       if(res[0].pagecount[0].hasOwnProperty('noqueues')){
         console.log('No queue');
         this.message = 'No Data';
        }
        else{
-         this._detailsTable.setTableData(res, 3);
+
+        this.pickup = res[1].activepickup;
+        console.log(this.pickup)
        }
-    });
-    
+    }});
+  
   }
+  sort(key){
+    this.key = key;
+    this.reverse = !this.reverse;
+  }
+ 
   onSelectDate(date: NgbDateStruct){
     if (date != null) {
             this.model = date;
@@ -95,12 +116,15 @@ export class PickupComponent implements OnInit {
   }
   openQDetails(indexId: any){
     sessionStorage.removeItem('clickedOn');
-    sessionStorage.setItem('QueueId',this.tableData[indexId][this.keyValues[0]])
-    this._detailsTable.queueID = this.tableData[indexId][this.keyValues[0]];
+
+    sessionStorage.setItem('QueueId',indexId)
+    this._detailsTable.queueID = indexId;
     this.router.navigate(['/pages/queue-details']);
   }
+
   FilterCheck(){
     this.message = "";
+
     const reqpara3 = {
       requesttype: 'getqueueinfonew',
       servicetype: '0',
@@ -112,15 +136,27 @@ export class PickupComponent implements OnInit {
     const as3 = JSON.stringify(reqpara3);
     console.log(as3);
     this._data.createUser(as3).subscribe(res => {
+
+      if(res[0].login === 0){
+        sessionStorage.removeItem('currentUser');
+        this.router.navigate(['/auth/login']);
+      }
+      else{
+
       console.log(res);
+
       if(res[0].pagecount[0].hasOwnProperty('noqueues')){
         console.log('No queue');
         this.message = 'No Data';
        }
        else{
-         this._detailsTable.setTableData(res, 3);
+
+        this.pickup = res[1].activepickup;
+        console.log(this.pickup)
        }
-      // this._detailsTable.setTableData(res, 4);
-    });
+
+    }
   }
-}
+);
+}}
+

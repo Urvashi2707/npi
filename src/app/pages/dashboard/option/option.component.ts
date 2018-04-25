@@ -20,9 +20,12 @@ export class OptionComponent implements OnInit {
   public selectedsvcid:string;
   svcid:string;
   changedsvc:any;
+  chngdsvcid:any;
   constructor(private router: Router,private activeModal: NgbActiveModal,private servicing: ServicingService) { }
 
   ngOnInit() {
+   
+
     if(sessionStorage.getItem('selectedsvc')){
       this.svcid = sessionStorage.getItem('selectedsvc');
      }
@@ -32,7 +35,9 @@ export class OptionComponent implements OnInit {
     }
     this.selectedSvcid = this.globalsvcid;
     this.getList();
+ 
     }
+    
   closeModal() {
     this.activeModal.close();
   }
@@ -53,6 +58,18 @@ export class OptionComponent implements OnInit {
         else {
           this.List = res[0].svclist;
           console.log(this.List);
+          if(sessionStorage.getItem('selectedsvc')) {
+            this.chngdsvcid = sessionStorage.getItem('selectedsvc');
+            console.log(sessionStorage.getItem('selectedsvc'));
+            console.log( this.List.length);
+            for ( var i = 0; i <  this.List.length; i++){
+              if (this.List[i].id === this.chngdsvcid) {
+                this.selectedSvcid = this.List[i].id;
+                console.log(this.selectedSvcid );
+          }
+          
+            }
+          }
          
         }
 

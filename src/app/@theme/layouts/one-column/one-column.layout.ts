@@ -27,7 +27,9 @@ import { Component ,OnInit} from '@angular/core';
 })
 export class OneColumnLayoutComponent {
   ngOnInit(){
+
     console.log('sidebar');
+
   }
   onClick( value:any){
     console.log(value);

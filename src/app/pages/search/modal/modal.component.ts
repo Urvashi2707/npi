@@ -27,12 +27,15 @@ export class Modal4Component implements OnInit {
   sMsg: string = '';
   filename: string;
   requesttype= 'uploadfilev2';
+
   est = '0';
   inv = '1';
   disable = true;
   model: NgbDateStruct;
   dateString: string;
+
   public serviceadv: any = [];
+
   public slot:any = [];
   isNewestOnTop = true;
   isHideOnClick = true;
@@ -53,6 +56,7 @@ export class Modal4Component implements OnInit {
   public minDate;
   public maxDate;
   visible = false;
+
   public details:any=[];
   queuetime:string;
   svcid:string;
@@ -69,6 +73,7 @@ export class Modal4Component implements OnInit {
       this.svcid = JSON.parse(sessionStorage.getItem('globalsvcid'));
       // console.log(this.svcid);
     }
+
     this.modalContent.amt = 0;
     const now = new Date();
     this.startDate = { year: now.getFullYear(), month: now.getMonth() + 1, day: now.getDate() };
@@ -80,10 +85,11 @@ export class Modal4Component implements OnInit {
     console.log(this.maxDate);
     this.globalsvcid = JSON.parse(sessionStorage.getItem('globalsvcid'));
     console.log(this.globalsvcid);
+
     this.getAdvisor();
     this.getDetails()
     // console.log(this.serviceadv.length);
-   
+  
   }
   public httpOptions = {
     // headers: new HttpHeaders({'Content-Type':  'multipart/form-data'}),
@@ -217,6 +223,7 @@ export class Modal4Component implements OnInit {
       }
     }
 
+
     getDetails(){
       const reqpara10 = {
         requesttype: 'getqueuebasichistory',
@@ -271,6 +278,7 @@ export class Modal4Component implements OnInit {
   
       });
     }
+
   
     uploadFilesInv () {
       const frmData: FormData = new FormData();
@@ -296,6 +304,7 @@ export class Modal4Component implements OnInit {
       frmData.append('estorinvoice', this.inv);
       frmData.append('notes',this.modalContent.notes);
       frmData.append('advisor',this.modalContent.service_advisor);
+
       for ( var i = 0; i < this.myFiles.length; i++)  { 
         frmData.append('file' + i, this.myFiles[i]);
       }
@@ -354,6 +363,7 @@ export class Modal4Component implements OnInit {
     frmData.append('estorinvoice', this.est);
     frmData.append('notes',this.modalContent.notes);
     frmData.append('advisor',this.modalContent.service_advisor);
+
     for ( var i = 0; i < this.myFiles.length; i++)  { 
       frmData.append('file' + i, this.myFiles[i]);
     }

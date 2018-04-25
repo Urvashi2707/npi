@@ -9,7 +9,7 @@
                             <div class="col-md-6 mx-auto">
                                 <form novalidate #f="ngForm" (ngSubmit)="onSubmit(f)">
                                     <div style="width:100%;margin-left:auto;margin-right:auto">
-                                        
+
                                         <div class="form-group">
                                             <input type="text" class="form-control" name="svcname" [(ngModel)]="user.svcname" required #svcname="ngModel" minlength="3" style="text-transform: capitalize;">
                                             <label class="form-control-placeholder" for="svcname">Centre Name*</label>
@@ -33,7 +33,7 @@
                                         </div>
 
                                         <div class="form-group">
-                                            <input type="text" class="form-control" name="add2" [(ngModel)]="user.add2"  #add2="ngModel" minlength="3" maxlength="40">
+                                            <input type="text" class="form-control" name="add2" [(ngModel)]="user.add2" #add2="ngModel" minlength="3" maxlength="40">
                                             <label class="form-control-placeholder" for="add2">Address 2</label>
                                         </div>
 
@@ -56,8 +56,7 @@
                                         </div>
 
                                         <div class="form-group">
-                                            <input type="text" class="form-control" name="pincode" OnlyNumber="true" maxlength="6" [(ngModel)]="user.pincode"  pattern="^[0-9]{6}$" required
-                                                #pincode="ngModel">
+                                            <input type="text" class="form-control" name="pincode" OnlyNumber="true" maxlength="6" [(ngModel)]="user.pincode" pattern="^[0-9]{6}$" required #pincode="ngModel">
                                             <label class="form-control-placeholder" for="pincode">Pincode*</label>
                                         </div>
 
@@ -69,14 +68,14 @@
                                         </div>
 
                                         <div class="form-group">
-                                            <input type="text" class="form-control" name="capacity"  [(ngModel)]="user.capacity" required  #capacity="ngModel" OnlyNumber="true" maxlength="4">
+                                            <input type="text" class="form-control" name="capacity" [(ngModel)]="user.capacity" required #capacity="ngModel" OnlyNumber="true" maxlength="4">
+
                                             <label class="form-control-placeholder" for="capacity">Capacity*</label>
                                         </div>
 
 
                                         <div class="form-control-feedback" *ngIf="capacity.errors && (capacity.dirty || capacity.touched)">
                                             <p *ngIf="capacity.errors.required">capacity is required</p>
-           
                                         </div>
 
                                         <div class="form-group">
@@ -92,8 +91,7 @@
                                         </div>
 
                                         <div class="form-group">
-                                            <input type="text" class="form-control" name="latlong" [(ngModel)]="user.latlong"  #latlong="ngModel"
-                                            pattern="^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?),\s*[-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)$" >
+                                            <input type="text" class="form-control" name="latlong" [(ngModel)]="user.latlong" #latlong="ngModel" pattern="^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?),\s*[-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)$">
                                             <label class="form-control-placeholder" for="latlong">lat,long (12.99,77.6611)</label>
                                         </div>
 
@@ -124,8 +122,7 @@
                                         </div>
 
                                         <div class="form-group">
-                                            <input type="text" class="form-control" name="bank_pincode" [(ngModel)]="user.bank_pincode"  required #bank_pincode="ngModel"
-                                                maxlength="6">
+                                            <input type="text" class="form-control" name="bank_pincode" [(ngModel)]="user.bank_pincode" required #bank_pincode="ngModel" maxlength="6">
                                             <label class="form-control-placeholder" for="bank_pincode">Pincode*</label>
                                         </div>
 
@@ -178,20 +175,30 @@
 
                         <div class="row">
                             <div class="col-md-12 col-lg-12 col-sm-12">
+                                <input [(ngModel)]="term" placeholder="search">
 
                                 <div>
                                     <!-- <input type="text" [(ngModel)]="term"> -->
                                     <div>
                                         <table class="table table-striped">
                                             <tr>
-                                                <th>Name</th>
-                                                <th>Centre Manager Name</th>
-                                                <th>Centre Manager Number</th>
-                                                <th>Centre Manager Email</th>
+                                                <th (click)="sort('name')">Name
+                                                    <span><i class="fa" *ngIf="key =='name'" [ngClass]="{'fa-sort-alpha-asc':reverse, 'fa-sort-alpha-desc':!reverse}" style="color:#ffa100" aria-hidden="true"></i></span>
+                                                </th>
+                                                <th (click)="sort('manager_name')">Centre Manager Name
+                                                    <span><i class="fa" *ngIf="key =='manager_name'" [ngClass]="{'fa-sort-alpha-asc':reverse, 'fa-sort-alpha-desc':!reverse}" style="color:#ffa100" aria-hidden="true"></i></span>
+                                                </th>
+                                                <th (click)="sort('manager_mobile')">Centre Manager Number
+                                                    <span><i class="fa" *ngIf="key =='manager_mobile'" [ngClass]="{'fa-sort-alpha-asc':reverse, 'fa-sort-alpha-desc':!reverse}" style="color:#ffa100" aria-hidden="true"></i></span>
+                                                </th>
+                                                <th (click)="sort('manager_email')">Centre Manager Email
+                                                    <span><i class="fa" *ngIf="key =='manager_email'" [ngClass]="{'fa-sort-alpha-asc':reverse, 'fa-sort-alpha-desc':!reverse}" style="color:#ffa100" aria-hidden="true"></i></span>
+                                                </th>
 
                                                 <th *ngIf="checksvcadmin">Edit</th>
                                             </tr>
-                                            <tr *ngFor="let list of List | filter:term">
+                                            <tr *ngFor="let list of List | orderBy: key : reverse | filter : term">
+
                                                 <td>{{list.name}}</td>
                                                 <td>{{list.manager_name}}</td>
                                                 <td>{{list.manager_mobile}}</td>
@@ -206,11 +213,6 @@
                                         </table>
                                     </div>
                                 </div>
-
-
-
-
-
                             </div>
                         </div>
                     </nb-tab>

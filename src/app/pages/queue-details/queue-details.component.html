@@ -587,9 +587,6 @@
                                                     <div *ngIf="service_status == 2" class="finput-group col-lg-4 col-md-4 col-xs-4 col-sm-4">
                                                         <button class="btn btn-warning" title="Upload" id="uploadInvocie" (click)="viewInvoice()">Reupload Invoice</button>
                                                     </div>
-
-
-
                                                     <div class="finput-group col-lg-4 col-md-4 col-xs-4 col-sm-4" *ngIf="service_status==1">
                                                         <button class="btn btn-warning" title="view_estimate" (click)="viewEstimate()" id="viewEstimate">View Estimate</button>
                                                     </div>
@@ -892,6 +889,7 @@
                                                         </ng-template>
 
                                                         <ngb-rating [(rate)]="f.rating" [starTemplate]="t" [readonly]="true" max="5" style="float: right;"></ngb-rating>
+
                                                     </tr>
                                                 </tbody>
                                             </table>

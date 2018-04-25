@@ -15,11 +15,7 @@ import { Modal2Component } from './modal/modal.component';
   templateUrl: './manage.component.html',
   styleUrls: ['./manage.component.scss']
 })
-
-
-
 export class ManageComponent implements OnInit {
-
   constructor(private titlecasePipe:TitleCasePipe,private http: HttpClient, private router: Router, private servicing: ServicingService, private modalService: NgbModal) { }
   public term: string;
   public List: any = [];
@@ -38,6 +34,10 @@ export class ManageComponent implements OnInit {
   public globalsvcid:string;
   public selectedsvcid:string;
   svcid:string;
+  searchText:string;
+  key: string = 'id'; 
+  reverse: boolean = false;
+
   ngOnInit() {
     if(sessionStorage.getItem('selectedsvc')){
       // console.log(sessionStorage.getItem('selectedsvc'));
@@ -74,15 +74,16 @@ export class ManageComponent implements OnInit {
     this.getList();
     this.getCity();
   }
+  sort(key){
+    this.key = key;
+    this.reverse = !this.reverse;
+  }
 
   showLargeModal(res: any) {
     const activeModal = this.modalService.open(Modal2Component, { size: 'lg', container: 'nb-layout' });
     activeModal.componentInstance.modalHeader = 'Edit Service Centre';
     activeModal.componentInstance.modalContent = res;
   }
-
-
-
   getList() {
     const reqpara1 =
       {

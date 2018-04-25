@@ -20,6 +20,9 @@ export class SearchComponent implements OnInit {
   public report : any=[];
   public upload:string;
   isNewestOnTop = true;
+
+  searchText:string;
+
   isHideOnClick = true;
   isDuplicatesPrevented = false;
   isCloseButton = true;
@@ -31,6 +34,10 @@ export class SearchComponent implements OnInit {
   public globalsvcid:string;
   public selectedsvcid:string;
   svcid:string;
+
+  key: string = 'id'; 
+  reverse: boolean = false;
+
   ngOnInit() {
     if(sessionStorage.getItem('selectedsvc')){
       // console.log(sessionStorage.getItem('selectedsvc'));
@@ -45,6 +52,11 @@ export class SearchComponent implements OnInit {
     console.log(this.globalsvcid);
     // this.vehnumber = "";
     this.getData();
+  }
+
+  sort(key){
+    this.key = key;
+    this.reverse = !this.reverse;
   }
 
   openQDetails(indexId: any){
@@ -107,7 +119,5 @@ export class SearchComponent implements OnInit {
     }
   );
   }
-
-
 
 }

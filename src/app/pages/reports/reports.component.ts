@@ -97,9 +97,9 @@ export class ReportsComponent implements OnInit {
 
     return this.ngbDateParserFormatter.parse(startYear + "-" + startMonth.toString() + "-" + startDay);
   }
-
   search() {  
     this.message = "";
+
     if(this.dateString){
       
       this.date2 = this.dateString

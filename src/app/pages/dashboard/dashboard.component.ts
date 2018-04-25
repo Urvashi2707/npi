@@ -81,6 +81,9 @@ export class DashboardComponent implements OnInit{
   view1: any[] = [500, 300];
 
   ngOnInit() {
+
+    this.getSession();
+
     this.terms = JSON.parse(sessionStorage.getItem('terms'));
     this.svcadmin = JSON.parse(sessionStorage.getItem('svcadmin'));
     console.log(this.svcadmin);
@@ -204,6 +207,17 @@ export class DashboardComponent implements OnInit{
        );
    }
 
+  getSession(){
+    this.service.session().subscribe(res =>{
+      console.log(res)
+      console.log(res["sId"]);
+      localStorage.setItem('token',res["sId"]);
+      localStorage.setItem('auth-user',res["userName"]);
+      this.service.setter(res["sId"]);
+    });
+  }
+
+
    getsvclist() {
     const activeModal = this.modalService.open(OptionComponent, { size: 'lg', container: 'nb-layout' });
     activeModal.componentInstance.modalHeader = 'Select Service Centre';
@@ -212,6 +226,7 @@ export class DashboardComponent implements OnInit{
   getterms() {
     const activeModal = this.modalService.open(LegalComponent, { size: 'lg', container: 'nb-layout' , backdrop : 'static',
     keyboard : false});
+
     activeModal.componentInstance.modalHeader = 'Terms and Condition';
   }
 
