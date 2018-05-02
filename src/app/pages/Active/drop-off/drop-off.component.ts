@@ -16,7 +16,12 @@ export class DropOffComponent implements OnInit {
   pickup_headings: String[] = ['ID', 'Customer', 'License Plate', 'Advisor', 'Amb Name', 'Amb Number', 'Status'];
   tableData: any[];
   keyValues: any[];
+  term:string;
+  public dropoff : any =[];
   today:string;
+  advisorName:string;
+  key: string = 'queueid'; 
+  reverse: boolean = false; 
   dateString: string;
   dateString1: string;
   model: NgbDateStruct;
@@ -62,13 +67,22 @@ export class DropOffComponent implements OnInit {
     const as3 = JSON.stringify(reqpara3);
     console.log(as3);
     this._data.createUser(as3).subscribe(res => {
+      if(res[0].login === 0){
+        sessionStorage.removeItem('currentUser');
+        this.router.navigate(['/auth/login']);
+      }
+      else{
+
       if(res[0].pagecount[0].hasOwnProperty('noqueues')){
         console.log('No queue');
         this.message = 'No Data';
        }
        else{
-         this._detailsTable.setTableData(res, 5);
+
+        this.dropoff = res[1].activedropoff;
+        console.log(this.dropoff)
        }
+    }
     });
   }
   onSelectDate(date: NgbDateStruct){
@@ -80,7 +94,10 @@ export class DropOffComponent implements OnInit {
         
 
   }
-
+  sort(key){
+    this.key = key;
+    this.reverse = !this.reverse;
+  }
   onSelectDate1(date: NgbDateStruct){
     if (date != null) {
             this.model1 = date;
@@ -90,12 +107,26 @@ export class DropOffComponent implements OnInit {
         
 
   }
-  openQDetails(indexId: any){
-    sessionStorage.removeItem('clickedOn');
-    sessionStorage.setItem('QueueId',this.tableData[indexId][this.keyValues[0]])
-    this._detailsTable.queueID = this.tableData[indexId][this.keyValues[0]];
-    this.router.navigate(['/pages/queue-details']);
+  // openQDetails(indexId: any){
+  //   sessionStorage.removeItem('clickedOn');
+  //   sessionStorage.setItem('QueueId',this.tableData[indexId][this.keyValues[0]])
+  //   this._detailsTable.queueID = this.tableData[indexId][this.keyValues[0]];
+  //   this.router.navigate(['/pages/queue-details']);
     
+  // }
+  openQDetails(details:any) {
+
+    console.log(details);
+
+    sessionStorage.setItem('QueueId',details.queueid);
+    this._detailsTable.queueID = details.queueid;
+    // sessionStorage.setItem('QueueId', this.tableData[indexId][this.keyValues[0]])
+    // sessionStorage.setItem('QueueTime', this.tableData[indexId][this.keyValues[3]])
+    // console.log(this.tableData[indexId][this.keyValues[3]]);
+    // this._detailsTable.queueID = this.tableData[indexId][this.keyValues[0]];
+    sessionStorage.removeItem('clickedOn');
+    this.router.navigate(['/pages/queue-details']);
+
   }
   FilterCheck(){
     this.message = "";
@@ -110,14 +141,22 @@ export class DropOffComponent implements OnInit {
     const as3 = JSON.stringify(reqpara3);
     console.log(as3);
     this._data.createUser(as3).subscribe(res => {
-      console.log(res);
+      if(res[0].login === 0){
+        sessionStorage.removeItem('currentUser');
+        this.router.navigate(['/auth/login']);
+      }
+      else{
+
       if(res[0].pagecount[0].hasOwnProperty('noqueues')){
         console.log('No queue');
         this.message = 'No Data';
        }
        else{
-         this._detailsTable.setTableData(res, 5);
+
+        this.dropoff = res[1].activedropoff;
+        console.log(this.dropoff)
        }
+    }
     });
   }
 }

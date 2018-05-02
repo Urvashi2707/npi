@@ -23,6 +23,30 @@
     }
 }
 
+.search {
+    float: right;
+    margin-bottom: 5%;
+    margin-right: 4%;
+    border: 2px solid #e9ecef;
+    border-radius: 4px;
+    height: 60%;
+    width: 50%;
+}
+
+table,
+th,
+td {
+    border: 1px solid rgb(218, 223, 230);
+}
+
+.sort-span {
+    float: right;
+}
+
+table {
+    border-collapse: collapse;
+}
+
 .form-group {
     position: relative;
     margin-bottom: 1.5rem;

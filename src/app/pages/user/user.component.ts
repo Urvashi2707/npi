@@ -68,7 +68,7 @@ import 'style-loader!angular2-toaster/toaster.css';
         this._data.getUser().subscribe(data => this.user = data);
         this. getUserType();
 
-        this.getUserList();
+        // this.getUserList();
 
         this.countrycode1="+91";
         this.svcadmin = JSON.parse(sessionStorage.getItem('svcadmin'));
@@ -153,7 +153,7 @@ import 'style-loader!angular2-toaster/toaster.css';
         this._data.updateUser(ua1).subscribe(data => {
           console.log(data);
           window.location.reload();
-          this.getUserList();
+          
         });
       }
 
@@ -275,7 +275,7 @@ import 'style-loader!angular2-toaster/toaster.css';
         const ua1 = JSON.stringify(reqpara1);
         this._data.updateUser(ua1).subscribe(data => {
           console.log(data);
-          this.getUserList();
+         
         });
       }
 
@@ -293,7 +293,7 @@ import 'style-loader!angular2-toaster/toaster.css';
         const as3 = JSON.stringify(reqpara3);
         this._data.createUser(as3).subscribe(res =>{
           console.log(res);
-          this.getUserList();
+         
           if(res[0].userexists[0].does_exist == 0){
             console.log('created');
             this.success("0");

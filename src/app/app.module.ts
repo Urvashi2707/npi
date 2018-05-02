@@ -20,7 +20,7 @@ import {LoginComponent} from './pages/auth/login/login.component';
 import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown/angular2-multiselect-dropdown';
 import { CookieService } from 'ngx-cookie-service';
 import {RatingModule} from "ngx-rating";
-
+import {NgxPaginationModule} from 'ngx-pagination';
 import { FilterPipe} from './pages/filter.pipe';
 import { Ng2OrderModule } from 'ng2-order-pipe'; 
 // import {columnPipe,rowPipe,searchPipe} from './pages/pipe.pipe'
@@ -37,7 +37,7 @@ import { Ng2OrderModule } from 'ng2-order-pipe';
     HttpModule,
     AppRoutingModule,
     MaterialModule,
-   
+    NgxPaginationModule,
     NgbModule.forRoot(),
     ThemeModule.forRoot(),
     CoreModule.forRoot(),

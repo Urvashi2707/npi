@@ -14,6 +14,20 @@ td {
     padding: 15px;
 }
 
+.search {
+    float: right;
+    margin-bottom: 5%;
+    margin-right: 4%;
+    border: 2px solid #e9ecef;
+    border-radius: 4px;
+    height: 60%;
+    width: 50%;
+}
+
+.sort-span {
+    float: right;
+}
+
 tbody tr:hover {
     background-color: lightyellow;
     @import '../../@theme/styles/themes';

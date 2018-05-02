@@ -37,24 +37,55 @@
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-md-6 col-lg-6 col-sm-6">
+
+            </div>
+            <div class="col-md-6 col-lg-6 col-sm-6">
+                <input type="text" class="search" [(ngModel)]="term" placeholder="search">
+            </div>
+        </div>
         <table style="width:100%">
             <thead>
                 <tr>
-                    <th *ngFor="let i of pickup_headings; let j = index">
-                        {{pickup_headings[j]}}
+                    <th (click)="sort('queueid')">ID
+                        <span class="sort-span"><i class="fa"  [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i></span>
                     </th>
+                    <th (click)="sort('queueid')">License Plate
+                        <span class="sort-span"><i class="fa"  [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i></span>
+                    </th>
+                    <th (click)="sort('veh_number')">Customer
+                        <span class="sort-span"><i class="fa"  [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i></span>
+                    </th>
+                    <th (click)="sort('cust_name')">Pickup Date
+                        <span class="sort-span"><i class="fa"  [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i></span>
+                    </th>
+                    <th (click)="sort('queue_time')">ETD
+                        <span class="sort-span"><i class="fa"  [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i></span>
+                    </th>
+                    <th (click)="sort('dropoff_time')">Paid/Unpaid
+                        <span class="sort-span"><i class="fa"  [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i></span>
+                    </th>
+                    <th (click)="sort('payment_status')">Amount
+                        <span class="sort-span"><i class="fa"  [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i></span>
+                    </th>
+                    <th (click)="sort('queue_total')">Status
+                        <span class="sort-span"><i class="fa"  [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i></span>
+                    </th>
+                    <th (click)="sort('queue_state')">Upload</th>
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let j of tableData; let k = index">
-                    <td *ngFor="let key of keyValues; let l = index" (click)="openQDetails(k)">
-                        <label *ngIf="keyValues[l]=='upload_button' && tableData[k][service_status] != '3'; else content">
-
-                            <button id={{k}} class="btn btn-warning" (click)="uploadFiles($event,tableData[k])">{{tableData[k][keyValues[l]]}}</button>
-
-                        </label>
-                        <ng-template #content>{{tableData[k][keyValues[l]]}}</ng-template>
-                    </td>
+                <tr *ngFor="let i of atcentre | filter:term | orderBy: key : reverse ;">
+                    <td (click)="openQDetails(i)">{{i.queueid}}</td>
+                    <td (click)="openQDetails(i)">{{i.veh_number}}</td>
+                    <td (click)="openQDetails(i)">{{i.cust_name}}</td>
+                    <td (click)="openQDetails(i)">{{i.queue_time}}</td>
+                    <td (click)="openQDetails(i)">{{i.dropoff_time}}</td>
+                    <td (click)="openQDetails(i)">{{i.payment_status}}</td>
+                    <td (click)="openQDetails(i)">{{i.queue_total}}</td>
+                    <td (click)="openQDetails(i)">{{i.queue_state}}</td>
+                    <td><button type="button" class="upload-button" (click)="uploadFiles(i)">{{i.upload_button}}</button></td>
                 </tr>
             </tbody>
         </table>

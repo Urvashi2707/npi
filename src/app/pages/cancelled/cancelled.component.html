@@ -32,20 +32,49 @@
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-md-6 col-lg-6 col-sm-6">
 
+            </div>
+            <div class="col-md-6 col-lg-6 col-sm-6">
+                <input type="text" class="search" [(ngModel)]="term" placeholder="search">
+            </div>
+        </div>
         <table style="width:100%">
             <thead>
                 <tr>
-                    <th *ngFor="let k of pickup_headings; let i = index">
-                        {{pickup_headings[i]}}
+                    <th (click)="sort('cre_name')">ID
+                        <span class="sort-span"><i class="fa"  [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i></span>
+                    </th>
+                    <th (click)="sort('cre_name')">Customer Name
+                        <span class="sort-span"><i class="fa"  [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i></span>
+                    </th>
+                    <th (click)="sort('cre_name')">License Plate
+                        <span class="sort-span"><i class="fa"  [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i></span>
+                    </th>
+                    <th (click)="sort('cre_name')">Slot
+                        <span class="sort-span"><i class="fa"  [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i></span>
+                    </th>
+                    <th (click)="sort('cre_name')">CRE
+                        <span class="sort-span"><i class="fa"  [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i></span>
+                    </th>
+                    <th (click)="sort('queueid')">Reason
+                        <span class="sort-span"><i class="fa"  [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i></span>
+                    </th>
+                    <th (click)="sort('queueid')">Cancelled By
+                        <span class="sort-span"><i class="fa"  [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i></span>
                     </th>
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let i of tableData ; let j = index" (click)="openQDetails(j)">
-                    <td *ngFor="let key of keyValues; let k = index ">
-                        {{tableData[j][keyValues[k]]}}
-                    </td>
+                <tr *ngFor="let i of cancelled |  filter:term | orderBy: key : reverse ; let j = index" (click)="openQDetails(i)">
+                    <td>{{i.queueid}}</td>
+                    <td>{{i.cust_name}}</td>
+                    <td>{{i.veh_number}}</td>
+                    <td>{{i.queue_time}}</td>
+                    <td>{{i.cre_name}}</td>
+                    <td>{{i.pause_reason}}</td>
+                    <td>{{i.paused_by}}</td>
                 </tr>
             </tbody>
         </table>

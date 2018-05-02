@@ -26,6 +26,8 @@ export class PaymentComponent implements OnInit {
   public term:string;
   today:string;
   dateString: string;
+  key: string = 'queueid'; 
+  reverse: boolean = false;
   dateString1: string;
   model: NgbDateStruct;
   model1: NgbDateStruct;
@@ -63,7 +65,10 @@ export class PaymentComponent implements OnInit {
     var file = new File([url],"invoice.pdf",{type:"application/pdf"});
 
   }
-
+  sort(key){
+    this.key = key;
+    this.reverse = !this.reverse;
+  }
   getData(){
     const reqpara1 = 
     {

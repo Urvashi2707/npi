@@ -14,6 +14,8 @@ export class ReportsComponent implements OnInit {
   public service_type = [];
   public status = [];
   public report: any = [];
+  key: string = 'id'; 
+  reverse: boolean = false;
   model: NgbDateStruct;
   model1: NgbDateStruct;
   dateString: string;
@@ -88,7 +90,10 @@ export class ReportsComponent implements OnInit {
 
 
   }
-
+  sort(key){
+    this.key = key;
+    this.reverse = !this.reverse;
+  }
   setDefaultDate(): NgbDateStruct {
     var startDate = new Date();
     let startYear = startDate.getFullYear().toString();

@@ -87,7 +87,8 @@ export class PickupComponent implements OnInit {
         this.pickup = res[1].activepickup;
         console.log(this.pickup)
        }
-    }});
+    }
+  });
   
   }
   sort(key){

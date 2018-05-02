@@ -16,9 +16,13 @@ export class PausedComponent implements OnInit {
 
   pickup_headings: String[] = ['ID', 'Customer Name', 'License Plate','Slot','CRE','Reason'];
   tableData: any[];
+  term:string;
   keyValues: any[];
   today:string;
+  public paused : any =[];
   message:string;
+  key: string = 'queueid'; 
+  reverse: boolean = false;
   dateString: string;
   dateString1: string;
   model: NgbDateStruct;
@@ -68,13 +72,21 @@ export class PausedComponent implements OnInit {
     const as3 = JSON.stringify(reqpara3);
     console.log(as3);
     this._data.createUser(as3).subscribe(res => {
-      if(res[0].pagecount[0].hasOwnProperty('noqueues')){
-        console.log('No queue');
-        this.message = 'No Data';
-        }
-       else{
-         this._detailsTable.setTableData(res, 8);
-       }
+      if(res[0].login === 0){
+        sessionStorage.removeItem('currentUser');
+        this.router.navigate(['/auth/login']);
+      }
+      else{
+        if(res[0].pagecount[0].hasOwnProperty('noqueues')){
+          console.log('No queue');
+          this.message = "No Data" ;
+         }
+         else{
+          this.paused = res[1].paused;
+         }
+      //   this.unconfirmed = res[1].unconfirmed;
+      // console.log(this.unconfirmed);
+      }
     });
   }
   onSelectDate(date: NgbDateStruct){
@@ -96,11 +108,23 @@ export class PausedComponent implements OnInit {
         
 
   }
-  openQDetails(indexId: any){
+  
+  openQDetails(data:any){
     sessionStorage.removeItem('clickedOn');
-    sessionStorage.setItem('QueueId',this.tableData[indexId][this.keyValues[0]])
-    this._detailsTable.queueID = this.tableData[indexId][this.keyValues[0]];
+
+    sessionStorage.setItem('QueueId',data.queueid)
+    this._detailsTable.queueID = data.queueid;
     this.router.navigate(['/pages/queue-details']);
+  }
+  // openQDetails(indexId: any){
+  //   sessionStorage.removeItem('clickedOn');
+  //   sessionStorage.setItem('QueueId',this.tableData[indexId][this.keyValues[0]])
+  //   this._detailsTable.queueID = this.tableData[indexId][this.keyValues[0]];
+  //   this.router.navigate(['/pages/queue-details']);
+  // }
+  sort(key){
+    this.key = key;
+    this.reverse = !this.reverse;
   }
   FilterCheck(){
     this.message = " ";
@@ -116,12 +140,20 @@ export class PausedComponent implements OnInit {
     console.log(as3);
     this._data.createUser(as3).subscribe(res => {
       console.log(res);
-      if(res[0].pagecount[0].hasOwnProperty('noqueues')){
-       console.log('No queue');
-       this.message = "No Data" ;
+      if(res[0].login === 0){
+        sessionStorage.removeItem('currentUser');
+        this.router.navigate(['/auth/login']);
       }
       else{
-        this._detailsTable.setTableData(res, 8);
+        if(res[0].pagecount[0].hasOwnProperty('noqueues')){
+          console.log('No queue');
+          this.message = "No Data" ;
+         }
+         else{
+          this.paused = res[1].paused;
+         }
+      //   this.unconfirmed = res[1].unconfirmed;
+      // console.log(this.unconfirmed);
       }
   
     });

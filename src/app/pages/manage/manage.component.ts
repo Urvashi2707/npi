@@ -35,7 +35,7 @@ export class ManageComponent implements OnInit {
   public selectedsvcid:string;
   svcid:string;
   searchText:string;
-  key: string = 'id'; 
+  key: string = 'name'; 
   reverse: boolean = false;
 
   ngOnInit() {

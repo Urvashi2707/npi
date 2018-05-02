@@ -13,13 +13,17 @@ import {NgbDateAdapter, NgbDateStruct, NgbDatepickerConfig, NgbDateParserFormatt
 })
 export class ChauffeurComponent implements OnInit {
 
-  pickup_headings: String[] = ['ID', 'Customer Name', 'License Plate','PickUp Location','Drop-off Location','Started At','Chauffer Name', 'Chauffeur No', 'Service'];
+  pickup_headings: String[] = ['ID', 'Customer', 'License Plate','PickUp Location','Drop-off Location','Started At','Chauffer Name', 'Chauffeur No', 'Service'];
   tableData: any[];
   keyValues: any[];
   today:string;
+  public chauffeur : any =[];
   dateString: string;
   dateString1: string;
   model: NgbDateStruct;
+  term:string;
+  key: string = 'queueid'; 
+  reverse: boolean = false; 
   model1: NgbDateStruct;
   pastdate:string;
   message:string;
@@ -62,13 +66,22 @@ export class ChauffeurComponent implements OnInit {
     const as3 = JSON.stringify(reqpara3);
     console.log(as3);
     this._data.createUser(as3).subscribe(res => {
+      if(res[0].login === 0){
+        sessionStorage.removeItem('currentUser');
+        this.router.navigate(['/auth/login']);
+      }
+      else{
+
       if(res[0].pagecount[0].hasOwnProperty('noqueues')){
         console.log('No queue');
         this.message = 'No Data';
        }
        else{
-         this._detailsTable.setTableData(res, 6);
+
+        this.chauffeur = res[1].activechauf;
+        console.log(this.chauffeur)
        }
+    }
       // this._detailsTable.setTableData(res, 6);
     });
   }
@@ -91,12 +104,30 @@ export class ChauffeurComponent implements OnInit {
         
 
   }
-  openQDetails(indexId: any){
-    sessionStorage.setItem('QueueId',this.tableData[indexId][this.keyValues[0]]);
-    sessionStorage.removeItem('clickedOn');
-    this._detailsTable.queueID = this.tableData[indexId][this.keyValues[0]];
-    this.router.navigate(['/pages/queue-details']);
+  // openQDetails(indexId: any){
+  //   sessionStorage.setItem('QueueId',this.tableData[indexId][this.keyValues[0]]);
+  //   sessionStorage.removeItem('clickedOn');
+  //   this._detailsTable.queueID = this.tableData[indexId][this.keyValues[0]];
+  //   this.router.navigate(['/pages/queue-details']);
     
+  // }
+  openQDetails(details:any) {
+
+    console.log(details);
+
+    sessionStorage.setItem('QueueId',details.queueid);
+    this._detailsTable.queueID = details.queueid;
+    // sessionStorage.setItem('QueueId', this.tableData[indexId][this.keyValues[0]])
+    // sessionStorage.setItem('QueueTime', this.tableData[indexId][this.keyValues[3]])
+    // console.log(this.tableData[indexId][this.keyValues[3]]);
+    // this._detailsTable.queueID = this.tableData[indexId][this.keyValues[0]];
+    sessionStorage.removeItem('clickedOn');
+    this.router.navigate(['/pages/queue-details']);
+
+  }
+  sort(key){
+    this.key = key;
+    this.reverse = !this.reverse;
   }
   FilterCheck(){
     this.message = " ";
@@ -113,13 +144,22 @@ export class ChauffeurComponent implements OnInit {
     console.log(as3);
     this._data.createUser(as3).subscribe(res => {
       console.log(res);
+      if(res[0].login === 0){
+        sessionStorage.removeItem('currentUser');
+        this.router.navigate(['/auth/login']);
+      }
+      else{
+
       if(res[0].pagecount[0].hasOwnProperty('noqueues')){
         console.log('No queue');
         this.message = 'No Data';
        }
        else{
-         this._detailsTable.setTableData(res, 6);
+
+        this.chauffeur = res[1].activechauf;
+        console.log(this.chauffeur)
        }
+    }
     });
   }
 }

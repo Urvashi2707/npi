@@ -441,38 +441,7 @@ public slothour:string;
 
 
   someFunction(){
-    console.log(this.registrationNumber);
-    const reqpara = {
-        requesttype: 'getcustinfo',
-        vehnumber: this.registrationNumber,
-      }
-      const as = JSON.stringify(reqpara)
-      this._data.getCustinfo(as).subscribe(data => {
-        if(data[0].login === 0){
-          sessionStorage.removeItem('currentUser');
-          this.router.navigate(['/auth/login']);
-        }
-        else{
-          if(data[1].custinfo[0].hasOwnProperty('no_records')){
-
-          }
-          else {
-            this.customer = data,
-        this.cust_details = this.customer[1].custinfo[0];
-          }
-          
-        }
-
-    },
-       (err: HttpErrorResponse) => {
-         if (err.error instanceof Error) {
-             console.log("Client-side error occured.");
-           }
-         else {
-           console.log("Server-side error occured.");
-           }
-         }
-       );
+   
 
        this.show = true;
 

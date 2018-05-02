@@ -18,12 +18,16 @@ export class UpcomingComponent implements OnInit {
   tableData: any[];
   keyValues: any[];
   today:string;
+  term:string
+  public upcoming : any =[];
   dateString: string;
   dateString1: string;
   model: NgbDateStruct;
   model1: NgbDateStruct;
   futuredate:string;
   message:string;
+  key: string = 'queueid'; 
+  reverse: boolean = false;
   globalsvcid:string;
   svcid:string;
   constructor(private datePipe:DatePipe,private ngbDateParserFormatter: NgbDateParserFormatter,private _detailsTable: QueueTableService, private _data: ListService, private _tableService: QueueTableService, private router: Router) { 
@@ -63,22 +67,41 @@ export class UpcomingComponent implements OnInit {
     const as3 = JSON.stringify(reqpara3);
     console.log(as3);
     this._data.createUser(as3).subscribe(res => {
-      if(res[0].pagecount[0].hasOwnProperty('noqueues')){
-        console.log('No queue');
-        this.message = "No Queue" ;
-       }
-       else{
-         this._detailsTable.setTableData(res, 7);
-       }
+      if(res[0].login === 0){
+        sessionStorage.removeItem('currentUser');
+        this.router.navigate(['/auth/login']);
+      }
+      else{
+        if(res[0].pagecount[0].hasOwnProperty('noqueues')){
+          console.log('No queue');
+          this.message = "No Data" ;
+         }
+         else{
+          this.upcoming = res[1].upcoming;
+         }
+      //   this.unconfirmed = res[1].unconfirmed;
+      // console.log(this.unconfirmed);
+      }
       // this._detailsTable.setTableData(res, 7);
     });
   }
-  openQDetails(indexId: any){
-    sessionStorage.setItem('QueueId',this.tableData[indexId][this.keyValues[0]])
-    sessionStorage.setItem('clickedOn', '7')
-    this._detailsTable.queueID = this.tableData[indexId][this.keyValues[0]];
+  sort(key){
+    this.key = key;
+    this.reverse = !this.reverse;
+  }
+  openQDetails(data:any){
+    sessionStorage.removeItem('clickedOn');
+
+    sessionStorage.setItem('QueueId',data.queueid)
+    this._detailsTable.queueID = data.queueid;
     this.router.navigate(['/pages/queue-details']);
   }
+  // openQDetails(indexId: any){
+  //   sessionStorage.setItem('QueueId',this.tableData[indexId][this.keyValues[0]])
+  //   sessionStorage.setItem('clickedOn', '7')
+  //   this._detailsTable.queueID = this.tableData[indexId][this.keyValues[0]];
+  //   this.router.navigate(['/pages/queue-details']);
+  // }
   onSelectDate(date: NgbDateStruct){
     if (date != null) {
             this.model = date;
@@ -111,13 +134,21 @@ export class UpcomingComponent implements OnInit {
     const as3 = JSON.stringify(reqpara3);
     console.log(as3);
     this._data.createUser(as3).subscribe(res => {
-      if(res[0].pagecount[0].hasOwnProperty('noqueues')){
-        console.log('No queue');
-        this.message = "No Data" ;
-       }
-       else{
-         this._detailsTable.setTableData(res, 7);
-       }
+      if(res[0].login === 0){
+        sessionStorage.removeItem('currentUser');
+        this.router.navigate(['/auth/login']);
+      }
+      else{
+        if(res[0].pagecount[0].hasOwnProperty('noqueues')){
+          console.log('No queue');
+          this.message = "No Data" ;
+         }
+         else{
+          this.upcoming = res[1].upcoming;
+         }
+      //   this.unconfirmed = res[1].unconfirmed;
+      // console.log(this.unconfirmed);
+      }
       // this._detailsTable.setTableData(res, 7);
     });
   }

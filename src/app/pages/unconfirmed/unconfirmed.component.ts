@@ -29,6 +29,8 @@ export class UnconfirmedComponent implements OnInit {
   model: NgbDateStruct;
   model1: NgbDateStruct;
   pastdate:string;
+  key: string = 'queueid'; 
+  reverse: boolean = false;
   message:string;
   globalsvcid:string;
   svcid:string;
@@ -59,6 +61,10 @@ export class UnconfirmedComponent implements OnInit {
     const activeModal = this.modalService.open(Modal5Component, { size: 'lg', container: 'nb-layout' });
     activeModal.componentInstance.modalHeader = 'Confirmed Booking';
     activeModal.componentInstance.modalContent = res;
+  }
+  sort(key){
+    this.key = key;
+    this.reverse = !this.reverse;
   }
   getData(){
     const reqpara1 = 

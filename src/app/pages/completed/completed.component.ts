@@ -15,15 +15,18 @@ export class CompletedComponent implements OnInit {
 
 
   pickup_headings: String[] = ['ID', 'Customer Name', 'License Plate',  'Payment Status','Amount', 'Rating'];
-
+  term:string;
   tableData: any[];
   keyValues: any[];
   today: string;
+  public completed : any =[];
   dateString: string;
   dateString1: string;
   model: NgbDateStruct;
   model1: NgbDateStruct;
   message:string;
+  key: string = 'queueid'; 
+  reverse: boolean = false;
   pastdate: string;
   globalsvcid:string;
   svcid:string;
@@ -66,13 +69,21 @@ export class CompletedComponent implements OnInit {
     const as3 = JSON.stringify(reqpara3);
     console.log(as3);
     this._data.createUser(as3).subscribe(res => {
+      if(res[0].login === 0){
+        sessionStorage.removeItem('currentUser');
+        this.router.navigate(['/auth/login']);
+      }
+      else{
+
       if(res[0].pagecount[0].hasOwnProperty('noqueues')){
         console.log('No queue');
-        this.message = "No Data" ;
+        this.message = 'No Data';
        }
        else{
-         this._detailsTable.setTableData(res, 10);
-       }
+
+        this.completed = res[1].completed;
+        console.log(this.completed)
+       }}
     });
 
   }
@@ -83,7 +94,10 @@ export class CompletedComponent implements OnInit {
       console.log(this.dateString);
     }
   }
-
+  sort(key){
+    this.key = key;
+    this.reverse = !this.reverse;
+  }
   onSelectDate1(date: NgbDateStruct) {
     if (date != null) {
       this.model1 = date;
@@ -91,12 +105,19 @@ export class CompletedComponent implements OnInit {
       console.log(this.dateString1);
     }
   }
-  openQDetails(indexId: any) {
+  openQDetails(data:any){
     sessionStorage.removeItem('clickedOn');
-    sessionStorage.setItem('QueueId', this.tableData[indexId][this.keyValues[0]])
-    this._detailsTable.queueID = this.tableData[indexId][this.keyValues[0]];
+
+    sessionStorage.setItem('QueueId',data.queueid)
+    this._detailsTable.queueID = data.queueid;
     this.router.navigate(['/pages/queue-details']);
   }
+  // openQDetails(indexId: any) {
+  //   sessionStorage.removeItem('clickedOn');
+  //   sessionStorage.setItem('QueueId', this.tableData[indexId][this.keyValues[0]])
+  //   this._detailsTable.queueID = this.tableData[indexId][this.keyValues[0]];
+  //   this.router.navigate(['/pages/queue-details']);
+  // }
 
   FilterCheck() {
     this.message= "";
@@ -112,13 +133,21 @@ export class CompletedComponent implements OnInit {
     console.log(as3);
     this._data.createUser(as3).subscribe(res => {
       console.log(res);
+      if(res[0].login === 0){
+        sessionStorage.removeItem('currentUser');
+        this.router.navigate(['/auth/login']);
+      }
+      else{
+
       if(res[0].pagecount[0].hasOwnProperty('noqueues')){
         console.log('No queue');
-        this.message = "No Queue";
+        this.message = 'No Data';
        }
        else{
-         this._detailsTable.setTableData(res, 10);
-       }
+
+        this.completed = res[1].completed;
+        console.log(this.completed)
+       }}
       // this._detailsTable.setTableData(res, 10);
     });
   }

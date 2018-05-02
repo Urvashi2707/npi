@@ -31,37 +31,43 @@
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-md-6 col-lg-6 col-sm-6">
+
+            </div>
+            <div class="col-md-6 col-lg-6 col-sm-6">
+                <input type="text" class="search" [(ngModel)]="term" placeholder="search">
+            </div>
+        </div>
         <table style="width:100%">
             <thead>
                 <tr>
                     <th (click)="sort('queueid')">ID
                         <span><i class="fa" *ngIf="key =='queueid'" [ngClass]="{'fa-sort-alpha-desc':reverse, 'fa-sort-alpha-asc':!reverse}" style="color:#ffa100" aria-hidden="true"></i></span>
                     </th>
-                    <th (click)="sort('queue_time')">Queue Time
-                        <span><i class="fa" *ngIf="key =='queue_time'" [ngClass]="{'fa-sort-alpha-asc':reverse, 'fa-sort-alpha-desc':!reverse}" style="color:#ffa100" aria-hidden="true"></i></span>
-                    </th>
-                    <th (click)="sort('cust_name')">Customer Name
-                        <span><i class="fa" *ngIf="key =='cust_name'" [ngClass]="{'fa-sort-alpha-asc':reverse, 'fa-sort-alpha-desc':!reverse}" style="color:#ffa100" aria-hidden="true"></i></span>
-                    </th>
                     <th (click)="sort('veh_number')">LIC Plate
                         <span><i class="fa" *ngIf="key =='veh_number'" [ngClass]="{'fa-sort-alpha-asc':reverse, 'fa-sort-alpha-desc':!reverse}" style="color:#ffa100" aria-hidden="true"></i></span>
                     </th>
-                    <th (click)="sort('cre_name')">CRE
-                        <span><i class="fa" *ngIf="key =='cre_name'" [ngClass]="{'fa-sort-alpha-asc':reverse, 'fa-sort-alpha-desc':!reverse}" style="color:#ffa100" aria-hidden="true"></i></span>
+                    <th (click)="sort('cust_name')">Customer
+                        <span><i class="fa" *ngIf="key =='cust_name'" [ngClass]="{'fa-sort-alpha-asc':reverse, 'fa-sort-alpha-desc':!reverse}" style="color:#ffa100" aria-hidden="true"></i></span>
                     </th>
-                    <th (click)="sort('queue_status')">Status
-                        <span><i class="fa" *ngIf="key =='queue_status'" [ngClass]="{'fa-sort-alpha-asc':reverse, 'fa-sort-alpha-desc':!reverse}" style="color:#ffa100" aria-hidden="true"></i></span>
+                    <th (click)="sort('queue_time')">Queue Time
+                        <span><i class="fa" *ngIf="key =='queue_time'" [ngClass]="{'fa-sort-alpha-asc':reverse, 'fa-sort-alpha-desc':!reverse}" style="color:#ffa100" aria-hidden="true"></i></span>
                     </th>
+                    <th (click)="sort('queue_total')">Amount
+                        <span><i class="fa" *ngIf="key =='queue_total'" [ngClass]="{'fa-sort-alpha-asc':reverse, 'fa-sort-alpha-desc':!reverse}" style="color:#ffa100" aria-hidden="true"></i></span>
+                    </th>
+                    <th>Upload</th>
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let i of notcheckedin">
-                    <td>{{i.queueid}}</td>
-                    <td>{{i.queue_time}}</td>
-                    <td>{{i.cust_name}}</td>
-                    <td>{{i.veh_number}}</td>
-                    <!-- <td>{{i.cre_name}}</td> -->
-                    <td>{{i.queue_status}}</td>
+                <tr *ngFor="let i of notcheckedin | filter:term;">
+                    <td (click)="openQDetails(i)">{{i.queueid}}</td>
+                    <td (click)="openQDetails(i)">{{i.veh_number}}</td>
+                    <td (click)="openQDetails(i)"> {{i.cust_name}}</td>
+                    <td (click)="openQDetails(i)">{{i.queue_time}}</td>
+                    <td (click)="openQDetails(i)">{{i.queue_total}}</td>
+                    <td><button class="btn btn-warning" (click)="uploadFiles(i)">{{i.upload_button}}</button></td>
                 </tr>
             </tbody>
         </table>

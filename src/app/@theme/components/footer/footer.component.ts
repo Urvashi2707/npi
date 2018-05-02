@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
   selector: 'ngx-footer',
   styleUrls: ['./footer.component.scss'],
   template: `
-    <span class="created-by">© <b><a href="http://www.21north.in/" target="_blank">21North</a></b> 2018 v:0.023</span>
+    <span class="created-by">© <b><a href="http://www.21north.in/" target="_blank">21North</a></b> 2018 v:1.01</span>
     <div class="socials">
       <!-- <a href="#" target="_blank" class="ion ion-social-github"></a>-->
       <!-- <a href="#" target="_blank" class="ion ion-social-facebook"></a>-->

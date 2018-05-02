@@ -1,158 +1,209 @@
 @import '../../@theme/styles/themes';
 @import '~bootstrap/scss/mixins/breakpoints';
 @import '~@nebular/theme/styles/global/bootstrap/breakpoints';
+.line h6 {
+    width: 100%;
+    text-align: center;
+    line-height: 0.1em;
+    margin: 10px 0 20px;
+}
 
-.line h6 { width:100%; text-align:center;  line-height:0.1em; margin:10px 0 20px; }
-.line h6 span { padding:0 10px; }
+.line h6 span {
+    padding: 0 10px;
+}
+
 .upload-btn-wrapper {
-  position: relative;
-  overflow: hidden;
-  display: inline-block;
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
 }
+
 .upload-btn-wrapper input[type=file] {
-  font-size: 100px;
-  position: absolute;
-  left: 0;
-  top: 0;
-  opacity: 0;
+    font-size: 100px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
 }
+
 .form-group {
-  position: relative;
-  margin-bottom: 1.5rem;
-  margin-top: 1.5em;
+    position: relative;
+    margin-bottom: 1.5rem;
+    margin-top: 1.5em;
 }
 
 .form-control-placeholder {
-  position: absolute;
-  top: 0;
-  padding: 7px 0 0 13px;
-  transition: all 200ms;
-  opacity: 0.5;
+    position: absolute;
+    top: 0;
+    padding: 7px 0 0 13px;
+    transition: all 200ms;
+    opacity: 0.5;
 }
 
-.addnumber{
-  display:inline-block;
+.addnumber {
+    display: inline-block;
+}
 
+.btn.btn-warning {
+    margin-top: 1.5em;
 }
-.btn.btn-warning{
-  margin-top: 1.5em;
-}
-.dateButton{
-  height: 102%;
-  border-radius: 0px;
-}
-.addnumber button{
-  width: 128%;
-  height: 82%;
-  border-radius:82%;
-  padding-top: 22%;
-  margin-top: 37%;
-  color: white;
-  background-color: orange;
-  border-color: orange;
-}
-.myclass{
-border-color: #d7dbe0;
-}
-.addnumber button:focus {outline:0;}
 
-.form-control:focus + .form-control-placeholder,
-.form-control:valid + .form-control-placeholder {
-  font-size: 75%;
-  transform: translate3d(0, -100%, 0);
-  opacity: 1;
+.dateButton {
+    height: 102%;
+    border-radius: 0px;
 }
+
+table,
+th,
+td {
+    border: 1px solid rgb(218, 223, 230);
+    border-collapse: collapse;
+}
+
+th,
+td {
+    padding: 15px;
+}
+
+.sort-span {
+    float: right;
+}
+
+.addnumber button {
+    width: 128%;
+    height: 82%;
+    border-radius: 82%;
+    padding-top: 22%;
+    margin-top: 37%;
+    color: white;
+    background-color: orange;
+    border-color: orange;
+}
+
+.search {
+    float: right;
+    margin-bottom: 5%;
+    margin-right: 4%;
+    border: 2px solid #e9ecef;
+    border-radius: 4px;
+    height: 60%;
+    width: 50%;
+}
+
+.myclass {
+    border-color: #d7dbe0;
+}
+
+.addnumber button:focus {
+    outline: 0;
+}
+
+.form-control:focus+.form-control-placeholder,
+.form-control:valid+.form-control-placeholder {
+    font-size: 75%;
+    transform: translate3d(0, -100%, 0);
+    opacity: 1;
+}
+
 .switch {
-  position: relative;
-  display: inline-block;
-  width: 60px;
-  height: 34px;
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
 }
 
-.switch input {display:none;}
+.switch input {
+    display: none;
+}
 
 .slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #ccc;
-  -webkit-transition: .4s;
-  transition: .4s;
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
 }
 
 .slider:before {
-  position: absolute;
-  content: "";
-  height: 26px;
-  width: 26px;
-  left: 4px;
-  bottom: 4px;
-  background-color: white;
-  -webkit-transition: .4s;
-  transition: .4s;
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
 }
 
-input:checked + .slider {
-  background-color: #4dd831
+input:checked+.slider {
+    background-color: #4dd831
 }
 
-input:focus + .slider {
-  box-shadow: 0 0 1px #2196F3;
+input:focus+.slider {
+    box-shadow: 0 0 1px #2196F3;
 }
 
-input:checked + .slider:before {
-  -webkit-transform: translateX(26px);
-  -ms-transform: translateX(26px);
-  transform: translateX(26px);
+input:checked+.slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
 }
+
 
 /* Rounded sliders */
+
 .slider.round {
-  border-radius: 34px;
+    border-radius: 34px;
 }
 
 .slider.round:before {
-  border-radius: 50%;
+    border-radius: 50%;
 }
 
-.form-control-feedback{
-  padding: 10px;
+.form-control-feedback {
+    padding: 10px;
 }
+
 .button {
-  display: block;
-  width: 115px;
-  height: 41px;
-  background: orange;
-  padding: 10px;
-  text-align: center;
-  border-radius: 5px;
-  color: white;
-  font-weight: bold;
- 
+    display: block;
+    width: 115px;
+    height: 41px;
+    background: orange;
+    padding: 10px;
+    text-align: center;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
 }
- :host >>> angular2-multiselect > div.c-btn {
-   width: 100%;
-   height: 20%;
- }
 
- .timeRow{
-  padding:20px;
- }
+ :host>>>angular2-multiselect>div.c-btn {
+    width: 100%;
+    height: 20%;
+}
 
- .timeAnchor{
-  padding:10px;
-  border: 1px solid red;
-  border-radius: 5px;
- }
- .timeAnchor :hover{
-   background-color: #4dd831;
- }
- .timeRow a:hover{
-  background-color: #4dd831;
- }
- .timeRow a:active{
-  background-color:orange;
- }
+.timeRow {
+    padding: 20px;
+}
+
+.timeAnchor {
+    padding: 10px;
+    border: 1px solid red;
+    border-radius: 5px;
+}
+
+.timeAnchor :hover {
+    background-color: #4dd831;
+}
+
+.timeRow a:hover {
+    background-color: #4dd831;
+}
+
+.timeRow a:active {
+    background-color: orange;
+}

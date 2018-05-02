@@ -16,6 +16,10 @@ export class MishapsComponent implements OnInit {
   pickup_headings: String[] = ['ID', 'Date of Mishap', 'Customer Name', 'License Plate','Estimate', 'Status'];
   tableData: any[];
   keyValues: any[];
+  term:string;
+  key: string = 'queueid'; 
+  reverse: boolean = false;
+  public mishap : any =[];
   today:string;
   dateString: string;
   dateString1: string;
@@ -62,15 +66,27 @@ export class MishapsComponent implements OnInit {
     const as3 = JSON.stringify(reqpara3);
     console.log(as3);
     this._data.createUser(as3).subscribe(res => {
+      if(res[0].login === 0){
+        sessionStorage.removeItem('currentUser');
+        this.router.navigate(['/auth/login']);
+      }
+      else{
+
       if(res[0].pagecount[0].hasOwnProperty('noqueues')){
         console.log('No queue');
-        this.message = "No Data" ;
+        this.message = 'No Data';
        }
        else{
-         this._detailsTable.setTableData(res, 11);
-       }
+
+        this.mishap = res[1].mishaps;
+        console.log(this.mishap)
+       }}
       // this._detailsTable.setTableData(res, 11);
     });
+  }
+  sort(key){
+    this.key = key;
+    this.reverse = !this.reverse;
   }
   onSelectDate(date: NgbDateStruct){
     if (date != null) {
