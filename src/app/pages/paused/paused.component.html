@@ -1,4 +1,7 @@
 <nb-card>
+        <nb-card-header>
+                Paused
+               </nb-card-header>
     <nb-card-body>
         <div>
             <div class="row">
@@ -27,7 +30,7 @@
                     </div>
                 </div>
                 <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                    <button type="button" class="btn btn-primary" (click)="FilterCheck()">Apply</button>
+                    <button type="button" class="btn btn-primary" (click)="FilterCheck(1)">Apply</button>
                 </div>
             </div>
         </div>
@@ -63,18 +66,25 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let i of paused | orderBy: key : reverse |filter:term; let j = index" (click)="openQDetails(i)">
+                <tr *ngFor="let i of paused | orderBy: key : reverse | filter:term | paginate: { id: 'server', itemsPerPage:dataperpage, currentPage: p + 1, totalItems: record_count }; let j = index" (click)="openQDetails(i)">
                     <td>{{i.queueid}}</td>
                     <td>{{i.cust_name}}</td>
                     <td>{{i.veh_number}}</td>
                     <td>{{i.queue_time}}</td>
                     <td>{{i.cre_name}}</td>
+                    <td>{{i.description}}</td>
+                    
                     <!-- <td>{{i.(select description from 21N_queue_pause_reasons where id = (select reasonid from 21N_queue_pause_reasons_list where queueid = 21N_queue.id order by id desc limit 1))}}</td> -->
                 </tr>
             </tbody>
         </table>
         <table *ngIf="message">
-            {{message}}
-        </table>
+                {{message}}
+            </table>
+        <ngx-spinner bdColor = "rgba(51,51,51,0.09)" size = "large" color = "#ea5810" type = "ball-clip-rotate-pulse"></ngx-spinner>
+        <div class="paginate">
+            <pagination-controls (pageChange)="FilterCheck($event)" id="server"></pagination-controls>
+        </div>
+  
     </nb-card-body>
 </nb-card>

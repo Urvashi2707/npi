@@ -1,30 +1,46 @@
 <div class="header-container" [class.left]="position === 'normal'" [class.right]="position === 'inverse'">
     <div class="logo-containter">
         <a (click)="toggleSidebar()" href="#" class="navigation"><i class="nb-menu"></i></a>
-        <div class="logo" (click)="goToHome()"><img src="/assets/images/logo.png" class="img-responsive"></div>
+        <div class="logo" (click)="goToHome()" *ngIf="brandid === '19'"><img src="/assets/images/Hyundai1.jpeg"  style="height: 44px;" class="img-responsive" ></div>
+        <div class="logo" (click)="goToHome()" *ngIf="brandid != '19' && brandid != '27'"><img src="/assets/images/logo.png" class="img-responsive"></div>
     </div>
 
-    <div class="credits">
-        <span>Credit</span>
-        <span>{{credit}}</span>
-    </div>
-
-
-    <ngx-theme-switcher></ngx-theme-switcher>
+<ngx-theme-switcher></ngx-theme-switcher>
 </div>
-
+<div class="credits" style="padding-top: 1.1%;">
+    <span style="padding-right: 15%;margin-left: -126%;">Credit</span>
+    <span>{{credit}}</span>
+</div>
 <nb-actions size="medium" class="header-container" [class.right]="position === 'normal'" [class.left]="position === 'inverse'">
 
     <nb-action>
 
-        <nb-action class="control-item" icon="nb-notifications" (click)="show=!show;shownotification();"></nb-action>
-
+        <!-- <nb-action class="control-item" icon="nb-notifications" (click)="show=!show; shownotification();"></nb-action> -->
+        <div class="dropdown">
+            <div class="col">
+                <div ngbDropdown class="d-inline-block" (openChange)="toggled($event)">
+                  <button class="btn btn-outline" id="dropdownBasic1" ngbDropdownToggle>
+                        <div style="position:relative"><span class="button__badge">{{notificationCount}}</span><i class="fa fa-bell-o" style="color:#d3d3d3;font-size: 1.5rem;" aria-hidden="true"></i></div>
+                   </button>
+                  <ul ngbDropdownMenu aria-labelledby="dropdownBasic1" class="dropdown-menu">
+                    <li class="dropdown-item" *ngFor="let n of notification" > 
+                        <!-- <div *ngIf="noNotification">{{message}}</div> -->
+                        <div style="font-weight: bold;">{{n.title}}<span style="float:right">{{n.release_date}}</span></div>
+                        <div>{{n.description}}</div>
+                    </li>
+                    <!-- <li class="dropdown-item">Something else is here</li> -->
+                  </ul>
+                </div>
+              </div></div>
         <nb-user [menu]="userMenu" [name]="name"></nb-user>
     </nb-action>
     <nb-action class="control-item">
         <nb-search type="rotate-layout" (click)="startSearch()" tag="header-search"></nb-search>
     </nb-action>
-
+   
 </nb-actions>
 
-<div *ngIf="show">hidden/show</div>
+<!-- <div *ngIf="show">hidden/show</div>
+<script>
+    console.log('javascript');
+</script> -->

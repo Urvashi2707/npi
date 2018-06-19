@@ -1,17 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'ngx-footer',
   styleUrls: ['./footer.component.scss'],
   template: `
     <span class="created-by">© <b><a href="http://www.21north.in/" target="_blank">21North</a></b> 2018 v:1.01</span>
-    <div class="socials">
-      <!-- <a href="#" target="_blank" class="ion ion-social-github"></a>-->
-      <!-- <a href="#" target="_blank" class="ion ion-social-facebook"></a>-->
-      <!-- <a href="#" target="_blank" class="ion ion-social-twitter"></a>-->
-      <!-- <a href="#" target="_blank" class="ion ion-social-linkedin"></a>-->
+    <div>
+    <div class="logo" *ngIf="brandid === '19' || brandid === '27'"><img src="/assets/images/logo.png" class="img-responsive" style="height: 33px;"></div>
     </div>
   `,
 })
-export class FooterComponent {
+export class FooterComponent implements OnInit{
+  brandid:string;
+  ngOnInit() {
+    this.brandid = sessionStorage.getItem('brandid');
+  }
 }

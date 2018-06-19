@@ -6,14 +6,14 @@
                     <nb-tab tabTitle="Add User" *ngIf="checkgrpadmin || checksvcadmin" id=1>
                         <div class="row">
                             <div class="col-md-6 mx-auto">
-                                <form novalidate #f="ngForm" (ngSubmit)="onSubmit(f)">
+                                <form ngNativeValidate #f="ngForm" (ngSubmit)="onSubmit(f)">
                                     <div style="width:100%;margin-left:auto;margin-right:auto">
 
                                         <!-- Employee Name -->
                                         <div class="form-group" style="display:inline-block;min-width:15%;">
                                             <select id="salutation1" class="form-control" name="salutation1" [(ngModel)]="user.salutation" #salutation1="ngModel" required>
-                            <option *ngFor = "let s of salutation" [value] = "s.type"> {{s.type}}</option>
-                        </select>
+                                                <option *ngFor="let s of salutation" [value]="s.type"> {{s.type}}</option>
+                                            </select>
                                         </div>
                                         <div class="form-group" style="display:inline-block;min-width:70%;">
                                             <input type="text" class="form-control" name="name" [(ngModel)]="model.name" required #name="ngModel" minlength="3" style="text-transform: capitalize;">
@@ -22,8 +22,8 @@
 
 
                                         <div class="form-control-feedback" *ngIf="name.errors && (name.dirty || name.touched)">
-                                            <p *ngIf="name.errors.required"> Name is required</p>
-                                            <p *ngIf="name.errors.minlength">3 character</p>
+                                            <p *ngIf="name.errors.required" class="haserror"> Name is required</p>
+                                            <p *ngIf="name.errors.minlength" class="haserror">3 character</p>
                                         </div>
 
                                         <!-- Employee Mobile -->
@@ -35,33 +35,36 @@
 
                                             </div>
                                             <div class="form-group" style="display:inline-block;min-width: 70%;">
-                                                <input type="text" class="form-control" name="mobile1" [(ngModel)]="model.mobile1" maxlength="10" required #mobile1="ngModel" pattern="^[0-9]{10}$">
+                                                <input type="text" class="form-control" name="mobile1" [(ngModel)]="model.mobile1" maxlength="10" required #mobile1="ngModel"
+                                                    pattern="^[0-9]{10}$">
                                                 <label class="form-control-placeholder" for="mobile1">Mobile Number*</label>
                                             </div>
                                             <div style="display:inline-block;margin:3%">
                                                 <button (click)="show=!show" class="addnumber">
-                          <i class="fa" [ngClass]="{'fa-plus': !show, 'fa-minus': show}" style="color:#ffa100" aria-hidden="true"></i>
-                        </button>
+                                                    <i class="fa" [ngClass]="{'fa-plus': !show, 'fa-minus': show}" style="color:#ffa100" aria-hidden="true"></i>
+                                                </button>
                                             </div>
                                             <div class="form-control-feedback" *ngIf="mobile1.errors && (mobile1.dirty || mobile1.touched)">
-                                                <p *ngIf="mobile1.errors.required">mobile is required</p>
-                                                <p *ngIf="!mobile1.errors.valid">mobile must contain digits only</p>
+                                                <p *ngIf="mobile1.errors.required" class="haserror">mobile is required</p>
+                                                <p *ngIf="!mobile1.errors.valid" class="haserror">mobile must contain digits only</p>
                                             </div>
                                             <div *ngIf="show">
                                                 <div class="row">
                                                     <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
                                                         <div class="form-group" style="display:inline-block;max-width: 16%;">
                                                             <label for="countrycode" style="font-size: 12px;padding-left: 2%;margin-bottom: 0px;">Country Code</label>
-                                                            <input type="text" name="code1" id="code1" OnlyNumber="true" maxlength="3" [readonly]="true" [(ngModel)]="countrycode1" required>
+                                                            <input type="text" name="code1" id="code1" OnlyNumber="true" maxlength="3" [readonly]="true" [(ngModel)]="countrycode1" OnlyNumber="true"
+                                                                required>
 
                                                         </div>
                                                         <div class="form-group" style="display:inline-block;min-width: 70%;">
-                                                            <input type="text" class="form-control" name="mobile2" maxlength="10" [(ngModel)]="model.mobile2" required #mobile2="ngModel" pattern="^[0-9]{10}$">
+                                                            <input type="text" class="form-control" name="mobile2" maxlength="10" [(ngModel)]="model.mobile2" required #mobile2="ngModel"
+                                                                OnlyNumber="true" pattern="^[0-9]{10}$">
                                                             <label class="form-control-placeholder" for="mobile2">Mobile2 Number*</label>
                                                         </div>
                                                         <div class="form-control-feedback" *ngIf="mobile2.errors && (mobile2.dirty || mobile2.touched)">
-                                                            <p *ngIf="mobile2.errors.required">mobile is required</p>
-                                                            <p *ngIf="!mobile2.errors.valid">mobile must contain digits only</p>
+                                                            <p *ngIf="mobile2.errors.required" class="haserror">mobile is required</p>
+                                                            <p *ngIf="!mobile2.errors.valid" class="haserror">mobile must contain digits only</p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -74,18 +77,18 @@
                                         </div>
 
                                         <div class="form-control-feedback" *ngIf="email.errors && (email.dirty || email.touched)">
-                                            <p *ngIf="email.errors.required">Email is required</p>
-                                            <p *ngIf="!email.errors.valid">Email must contain at least the @ character</p>
+                                            <p *ngIf="email.errors.required" class="haserror">Email is required</p>
+                                            <p *ngIf="!email.errors.valid" class="haserror">Email must contain at least the @ character</p>
                                         </div>
 
 
                                         <div class="form-group">
                                             <select name="desgination" id="desgination" class="form-control" [(ngModel)]="model.desgination" required #desgination="ngModel">
-                        <option *ngFor="let d of designation" [value]="d.id"> {{d.type}}</option>
-                      </select>
+                                                <option *ngFor="let d of designation" [value]="d.id"> {{d.type}}</option>
+                                            </select>
                                             <label class="form-control-placeholder" for="desgination">Designation*</label>
                                         </div>
-                                        <button type="submit" class="btn btn-primary" [disabled]="f.invalid">Submit</button>
+                                        <button type="submit" class="btn btn-primary">Submit</button>
                                     </div>
 
                                 </form>
@@ -97,11 +100,11 @@
                             <div class="col-lg-12 col-md-12 col-sm-12">
                                 <div class="container">
                                     <div class="row">
-                                        <div class="col-md-6 col-lg-6 col-sm-6">
+                                        <div class="col-md-8 col-lg-8 col-sm-8" >
 
                                         </div>
-                                        <div class="col-md-6 col-lg-6 col-sm-6">
-                                            <input type="text" class="search" [(ngModel)]="searchText" placeholder="search">
+                                        <div class="col-md-4 col-lg-4 col-sm-4" style="padding-bottom: 4%">
+                                            <input type="text" class="search" [(ngModel)]="searchText" placeholder="search" style="height: 104%;">
                                         </div>
                                     </div>
 
@@ -109,16 +112,28 @@
                                     <table class="table table-striped">
                                         <thead style="border-top:0px;">
                                             <th (click)="sort('first_name')">Name
-                                                <span><i class="fa" *ngIf="key =='first_name'" [ngClass]="{'fa-sort-alpha-asc':reverse, 'fa-sort-alpha-desc':!reverse}" style="color:#ffa100" aria-hidden="true"></i></span>
+                                                <span>
+                                                    <i class="fa" *ngIf="key =='first_name'" [ngClass]="{'fa-sort-alpha-asc':reverse, 'fa-sort-alpha-desc':!reverse}"
+                                                        style="color:#ffa100" aria-hidden="true"></i>
+                                                </span>
                                             </th>
                                             <th (click)="sort('mobilenumber')">Number
-                                                <span><i class="fa" *ngIf="key =='mobilenumber'" [ngClass]="{'fa-sort-alpha-asc':reverse, 'fa-sort-alpha-desc':!reverse}" style="color:#ffa100" aria-hidden="true"></i></span>
+                                                <span>
+                                                    <i class="fa" *ngIf="key =='mobilenumber'" [ngClass]="{'fa-sort-alpha-asc':reverse, 'fa-sort-alpha-desc':!reverse}"
+                                                        style="color:#ffa100" aria-hidden="true"></i>
+                                                </span>
                                             </th>
                                             <th (click)="sort('email')">Email Id
-                                                <span><i class="fa" *ngIf="key =='email'" [ngClass]="{'fa-sort-alpha-asc':reverse, 'fa-sort-alpha-desc':!reverse}" style="color:#ffa100" aria-hidden="true"></i></span>
+                                                <span>
+                                                    <i class="fa" *ngIf="key =='email'" [ngClass]="{'fa-sort-alpha-asc':reverse, 'fa-sort-alpha-desc':!reverse}"
+                                                        style="color:#ffa100" aria-hidden="true"></i>
+                                                </span>
                                             </th>
                                             <th (click)="sort('designation')">Designation
-                                                <span><i class="fa" *ngIf="key =='designation'" [ngClass]="{'fa-sort-alpha-asc':reverse, 'fa-sort-alpha-desc':!reverse}" style="color:#ffa100" aria-hidden="true"></i></span>
+                                                <span>
+                                                    <i class="fa" *ngIf="key =='designation'" [ngClass]="{'fa-sort-alpha-asc':reverse, 'fa-sort-alpha-desc':!reverse}"
+                                                        style="color:#ffa100" aria-hidden="true"></i>
+                                                </span>
                                             </th>
                                             <th *ngIf="checkgrpadmin || checksvcadmin">Delete</th>
                                             <th *ngIf="checkgrpadmin || checksvcadmin">Edit</th>
@@ -126,27 +141,27 @@
                                         </thead>
                                         <tbody>
 
-                                            <tr *ngFor="let e of userList | orderBy: key : reverse | filter : searchText">
+                                            <tr *ngFor="let e of userList | orderBy: key : reverse | filter : searchText;let i = index; ">
                                                 <!-- <td>{{e.id}}</td> -->
                                                 <td>{{e.first_name}}</td>
                                                 <td>{{e.mobilenumber}}</td>
                                                 <td>{{e.email}}</td>
                                                 <td>{{e.designation}}</td>
                                                 <td>
-                                                    <button (click)="delete(e)" style="background-color: white;border-color: orange;" *ngIf="checkgrpadmin || checksvcadmin">
-                            <i class="fa fa-trash" style="color:#ffa100" aria-hidden="true"></i>
-                          </button>
+                                                    <button (click)="delete(e,i)" style="background-color: white;border-color: orange;" *ngIf="checkgrpadmin || checksvcadmin">
+                                                        <i class="fa fa-trash" style="color:#ffa100" aria-hidden="true"></i>
+                                                    </button>
                                                 </td>
                                                 <td>
                                                     <button (click)="showLargeModal(e)" style="background-color: white;border-color: orange;" *ngIf="checkgrpadmin || checksvcadmin">
-                            <i class="fa fa-pencil" style="color:#ffa100" aria-hidden="true"></i>
-                          </button>
+                                                        <i class="fa fa-pencil" style="color:#ffa100" aria-hidden="true"></i>
+                                                    </button>
                                                 </td>
                                             </tr>
                                         </tbody>
                                     </table>
 
-
+                                    <!-- <pagination-controls (pageChange)="p = $event"></pagination-controls> -->
                                 </div>
 
                             </div>
@@ -158,11 +173,11 @@
                             <div class="col-lg-12 col-md-12">
                                 <div class="container">
                                     <div class="row">
-                                        <div class="col-md-6 col-lg-6 col-sm-6">
+                                        <div class="col-md-8 col-lg-8 col-sm-8 col-xs-8">
 
                                         </div>
-                                        <div class="col-md-6 col-lg-6 col-sm-6">
-                                            <input type="text" class="search" [(ngModel)]="searchText" placeholder="search">
+                                        <div class="col-md-4 col-lg-4 col-sm-4 col-xs-4" style="padding-bottom: 4%">
+                                            <input type="text" class="search" [(ngModel)]="searchText" placeholder="search" style="height: 104%">
                                         </div>
                                     </div>
                                     <table class="table table-striped">
@@ -175,16 +190,16 @@
                                         </thead>
                                         <tbody>
 
-                                            <tr *ngFor="let e of userDisable | filter : searchText">
+                                            <tr *ngFor="let e of userDisable| filter : searchText;let i = index ">
                                                 <!-- <td>{{e.id}}</td> -->
                                                 <td>{{e.first_name}}</td>
                                                 <td>{{e.mobilenumber}}</td>
                                                 <td>{{e.email}}</td>
                                                 <td>{{e.designation}}</td>
                                                 <td>
-                                                    <button class="btn btn-warning" *ngIf="checkgrpadmin || checksvcadmin" (click)="enableuser(e)">
-                           Enable
-                          </button>
+                                                    <button class="btn btn-warning enableButton" *ngIf="checkgrpadmin || checksvcadmin" (click)="enableuser(e,i)">
+                                                        Enable
+                                                    </button>
                                                 </td>
                                             </tr>
                                         </tbody>

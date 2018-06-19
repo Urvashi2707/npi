@@ -11,11 +11,12 @@ import { NgbDatepickerConfig, NgbDateParserFormatter } from '@ng-bootstrap/ng-bo
 import { CustomNgbDateParserFormatter } from './ngb-date-fr-parser-formatter';
 import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown/angular2-multiselect-dropdown';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import { Modal1Component } from './modal/modal1/modal1.component';
+import { BookingDetails } from './modal/BookingDetails/BookingDetails.component';
 import { ToasterModule } from 'angular2-toaster';
+import {NgbModal,NgbActiveModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import { ToasterService, ToasterConfig, Toast, BodyOutputType } from 'angular2-toaster';
-import { OnlyNumber } from '../number.directive';
-import { Modal3Component } from './modal/modal2/modal2.component';
+import { OnlyNumber } from '.././number.directive';
+import { AddEmployee } from './modal/AddEmployee/AddEmployee.component';
 // import { ModalComponent } from './modal/modal.component';
 @NgModule({
   imports: [
@@ -31,8 +32,9 @@ import { Modal3Component } from './modal/modal2/modal2.component';
     RsaComponent,
     ChauffeurComponent,
       ...routedComponents,
-      Modal1Component,
-      Modal3Component
+      BookingDetails,
+      AddEmployee,
+     
       // ModalComponent,
 
   ],
@@ -40,11 +42,12 @@ import { Modal3Component } from './modal/modal2/modal2.component';
     ServicingService,
     ChauffeurService,
     ToasterService,
+    NgbActiveModal,
     {provide: NgbDateParserFormatter, useFactory: () => new CustomNgbDateParserFormatter('yyyy-MM-dd')}
   ],
   entryComponents: [
-    Modal1Component,
-    Modal3Component
+    BookingDetails,
+    AddEmployee
   ],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })

@@ -1,13 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
 import {ServicingService } from '../services/addServicing.service';
-// import {multi1, multi} from './data';
 import { DatePipe } from '@angular/common';
 import { NbThemeService } from '@nebular/theme';
-import { NgbModal ,NgbModalOptions} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import { OptionComponent } from './option/option.component';
 import { LegalComponent } from './legal/legal.component';
-import {HttpClient,HttpHeaders,HttpErrorResponse,HttpRequest} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 @Component({
   selector: 'ngx-dashboard',
   styleUrls: ['./dashboard.component.scss'],
@@ -25,9 +24,6 @@ export class DashboardComponent implements OnInit{
   public globalsvcid:string;
   public selectedsvcid:string;
   single: any[];
-  // multi: any
-  // multi1: any
-  // multi2: any
   public multi:any = [];
   public multi1:any = [];
   public multi2:any = [];
@@ -36,7 +32,6 @@ export class DashboardComponent implements OnInit{
   starRate = 2;
   heartRate = 4;
   rating:number;
-// options
    today:string;
    pastdate:string;
    changedsvc:string;
@@ -53,6 +48,8 @@ export class DashboardComponent implements OnInit{
   currentRate = 4.93;
   yAxisLabel = 'Slot Count';
   autoScale = true;
+  showPickupPie = true;
+  showDropoffPie = true;
   svcadmin:string;
   checksvcadmin :boolean;
   checkgrpadmin :boolean;
@@ -64,8 +61,7 @@ export class DashboardComponent implements OnInit{
     { name: 'Awaiting CheckedIn', value: 40 },
     { name: 'CheckedIn', value: 20 },
   ];
-
-  results1 = [
+results1 = [
     { name: 'Awaiting Amb', value: 20 },
     { name: 'Active', value: 30 },
     { name: 'Awaiting CheckedIn', value: 10 },
@@ -78,17 +74,12 @@ export class DashboardComponent implements OnInit{
   colorScheme1 = {
     domain:['#ffa239', '#c8e6c9', '#81c784', '#4caf50','#ffe789']
   };
-  view1: any[] = [500, 300];
+  view1: any[] = [400, 300];
 
   ngOnInit() {
-
-    this.getSession();
-
     this.terms = JSON.parse(sessionStorage.getItem('terms'));
     this.svcadmin = JSON.parse(sessionStorage.getItem('svcadmin'));
-    console.log(this.svcadmin);
     this.groupadmin = JSON.parse(sessionStorage.getItem('groupadmin'));
-    console.log(this.groupadmin);
     if(this.svcadmin == "1"){
       this.checksvcadmin = true;
     }
@@ -103,19 +94,14 @@ export class DashboardComponent implements OnInit{
     }
     var date = new Date();
     this.today = this.datePipe.transform(date,"yyyy-MM-dd");
-    console.log(this.today)
     var numberOfDays = 1;
     var days = date.setDate(date.getDate() - numberOfDays);
     this.pastdate = this.datePipe.transform(days,"yyyy-MM-dd");
-    console.log(this.pastdate)
     if(sessionStorage.getItem('selectedsvc')){
-      // console.log(sessionStorage.getItem('selectedsvc'));
       this.svcid = sessionStorage.getItem('selectedsvc');
-      // console.log(this.svcid);
     }
     else{
       this.svcid = JSON.parse(sessionStorage.getItem('globalsvcid'));
-      // console.log(this.svcid);
     }
     if(sessionStorage.getItem('changedsvc')){
         this.visibleheader = true;
@@ -125,14 +111,14 @@ export class DashboardComponent implements OnInit{
       this.visibleheader = false;
     }
     this.svcname = JSON.parse(sessionStorage.getItem('svcname'));
-    console.log(this.svcname);
+    // console.log(this.svcname);
    
-    if(sessionStorage.getItem('selectedsvc')){
-      console.log(sessionStorage.getItem('selectedsvc'));
-    }
-    this.globalsvcid = JSON.parse(sessionStorage.getItem('globalsvcid'));
-    console.log(this.globalsvcid);
-    this.getData();
+    // if(sessionStorage.getItem('selectedsvc')){
+    //   console.log(sessionStorage.getItem('selectedsvc'));
+    // }
+    // this.globalsvcid = JSON.parse(sessionStorage.getItem('globalsvcid'));
+    // console.log(this.globalsvcid);
+    this.getDashboardData();
     this.getSlotPerformancedrop();
     this.getSlotPerformancePickup();
     this.getSlotUti();
@@ -163,61 +149,78 @@ export class DashboardComponent implements OnInit{
  
   }
 
-  constructor(private datePipe: DatePipe,private http:HttpClient,private router:Router,private service:ServicingService,private modalService: NgbModal,private theme: NbThemeService){
+  constructor(private datePipe: DatePipe,
+    private router:Router,
+    private service:ServicingService,
+    private modalService: NgbModal,
+    private theme: NbThemeService){
   }
-  onSelect(event) {
-    console.log(event);
+  onSelect(event) {  }
+
+  getColorDrop(country) { 
+    switch (country) {
+      case 'Awaiting':
+        return '#ffa239';
+      case 'To Service Centre':
+        return '#c8e6c9';
+      case 'To Customer':
+        return '#81c784';
+      case 'Active Dropoff':
+        return '#4caf50';
+      case 'Delivered Today':
+        return '#ffe789';
+    }
   }
 
-  getData(){
-    const reqpara1 = 
-         {
+  getColorPickup(country) { 
+    switch (country) {
+      case 'Awaiting':
+        return '#ffa239';
+      case 'Active Pickup':
+        return '#c8e6c9';
+      case 'Not Checked in':
+        return '#81c784';
+      case 'Checked In':
+        return '#4caf50';
+      case 'Picked Up Today':
+        return '#ffe789';
+    }
+  }
+
+  getDashboardData(){
+    const reqpara1 = {
            requesttype: 'dashboard',
            svcid:this.svcid
          }
       const as1 = JSON.stringify(reqpara1)
-      this.service.getBrands(as1).subscribe
-       (res => 
-         {
+      this.service.webServiceCall(as1).subscribe
+       (res => {
            if(res[0].login === 0){
              sessionStorage.removeItem('currentUser');
              this.router.navigate(['/auth/login']);
            }
            else{
-             this.cards=res[0].cards[0],
-             console.log(this.cards);
+             this.cards=res[0].cards[0]
              if(this.cards.cust_rating == null){
               this.rating = 0;
-              
              }
              else{
               this.rating = JSON.parse(this.cards.cust_rating);
-              console.log(this.rating);
              }
-             console.log(this.cards.queue_average);
-             this.pickup=res[1].pickup_details,
-             console.log(this.pickup);
-             this.dropoff=res[2].drop_details,
-             console.log(this.dropoff)
+             this.pickup=res[1].pickup_details;
+             if(this.pickup[0].value === "0" && this.pickup[1].value === "0" && this.pickup[2].value === "0" && this.pickup[3].value === "0" && this.pickup[4].value === "0"){
+              this.showPickupPie = false;
+              console.log('pickupfalse');
+             }
+             this.dropoff=res[2].drop_details;
+             if(this.dropoff[0].value === "0" && this.dropoff[1].value === "0" && this.dropoff[2].value === "0" && this.dropoff[3].value === "0" && this.dropoff[4].value === "0"){
+              this.showDropoffPie = false;
+              console.log('dropofffalse');
+             }
              this.notification=res[3].notification[0];
-             console.log(this.notification);
            }
-          
-         }
-       );
+        });
    }
-
-  getSession(){
-    this.service.session().subscribe(res =>{
-      console.log(res)
-      console.log(res["sId"]);
-      localStorage.setItem('token',res["sId"]);
-      localStorage.setItem('auth-user',res["userName"]);
-      this.service.setter(res["sId"]);
-    });
-  }
-
-
    getsvclist() {
     const activeModal = this.modalService.open(OptionComponent, { size: 'lg', container: 'nb-layout' });
     activeModal.componentInstance.modalHeader = 'Select Service Centre';
@@ -226,14 +229,11 @@ export class DashboardComponent implements OnInit{
   getterms() {
     const activeModal = this.modalService.open(LegalComponent, { size: 'lg', container: 'nb-layout' , backdrop : 'static',
     keyboard : false});
-
     activeModal.componentInstance.modalHeader = 'Terms and Condition';
   }
 
   getSlotPerformancePickup(){
-
-    const reqpara1 = 
-         {
+      const reqpara1 = {
           svcid:this.svcid,
           puord:0,
           mtd:0,
@@ -241,9 +241,7 @@ export class DashboardComponent implements OnInit{
          }
       const as1 = JSON.stringify(reqpara1)
       this.service.slot(reqpara1).subscribe
-       (res => 
-         {
-          //  console.log(res[0].login);
+       (res =>  {
            if(res[0].login === 0){
              sessionStorage.removeItem('currentUser');
              this.router.navigate(['/auth/login']);
@@ -251,16 +249,13 @@ export class DashboardComponent implements OnInit{
            else{
             this.multi2 = res;
            }
-          
-         }
-       );
+        });
+      }
 
-  }
+
 
   getSlotPerformancedrop(){
-
-    const reqpara1 = 
-         {
+      const reqpara1 = {
           svcid:this.svcid,
           puord:1,
           mtd:0,
@@ -268,9 +263,7 @@ export class DashboardComponent implements OnInit{
          }
       const as1 = JSON.stringify(reqpara1)
       this.service.slot(reqpara1).subscribe
-       (res => 
-         {
-          //  console.log(res[0].login);
+       (res => {
            if(res[0].login === 0){
              sessionStorage.removeItem('currentUser');
              this.router.navigate(['/auth/login']);
@@ -278,17 +271,12 @@ export class DashboardComponent implements OnInit{
            else{
             this.multi = res;
            }
-          
-         }
-       );
-
-  }
+         });
+        }
 
 
   getSlotUti(){
-
-    const reqpara1 = 
-         {
+      const reqpara1 =  {
           svcid:this.svcid,
           puord:0,
           mtd:1,
@@ -296,21 +284,16 @@ export class DashboardComponent implements OnInit{
          }
       const as1 = JSON.stringify(reqpara1)
       this.service.graphCall(as1).subscribe
-       (res => 
-         {
-          //  console.log(res[0].login);
-           if(res[0].login === 0){
+       (res =>  {
+            if(res[0].login === 0){
              sessionStorage.removeItem('currentUser');
              this.router.navigate(['/auth/login']);
            }
            else{
             this.multi1 = res;
            }
-          
-         }
-       );
-
-  }
+        });
+      }
 }
 
 

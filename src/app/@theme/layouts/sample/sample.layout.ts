@@ -114,6 +114,8 @@ export class SampleLayoutComponent  implements OnDestroy {
               protected bpService: NbMediaBreakpointsService,
               protected sidebarService: NbSidebarService) {
 
+                console.log('sample');
+
     this.layoutState$ = this.stateService.onLayoutState()
       .subscribe((layout: string) => this.layout = layout);
 

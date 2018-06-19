@@ -12,14 +12,17 @@ import { RsaComponent } from './rsa/rsa.component';
 import { ChauffeurComponent } from './chauffeur/chauffeur.component';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { Ng2OrderModule } from 'ng2-order-pipe'; 
-
+import {NgxPaginationModule} from 'ngx-pagination';
+import { NgxSpinnerModule } from 'ngx-spinner';
 @NgModule({
   imports: [
     CommonModule,
     ActiveRoutingModule,
     NgbModule.forRoot(),
     ThemeModule.forRoot(),
-
+    NgxPaginationModule,
+    NgxSpinnerModule,
+    
     Ng2SearchPipeModule,
     Ng2OrderModule
 

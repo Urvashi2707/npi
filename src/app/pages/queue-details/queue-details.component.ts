@@ -73,6 +73,10 @@ export class QueueDetailsComponent implements OnInit {
   complaints: String = 'No Data';
   cancelReasons: any;
   sysClicked: any = '0';
+  estAmount:string;
+  InvAmt:string;
+  Amt:string;
+  QueueTIme:string;
   custInfo: any = {};
   pickupInfo:any = {};
   dropInfo:any = {};
@@ -144,7 +148,7 @@ export class QueueDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.sysClicked = sessionStorage.getItem('clickedOn');
-    console.log(this.sysClicked);
+    // console.log(this.sysClicked);
     this.QueueID = sessionStorage.getItem('QueueId');
   }
   sendPaymentLink() {
@@ -174,7 +178,7 @@ export class QueueDetailsComponent implements OnInit {
       const check = res.valueOf();
       this.cancelReasons = check[0].reasons;
       this.showLargeModal(this.cancelReasons[0].description);
-      console.log(this.cancelReasons)
+      // console.log(this.cancelReasons);
     });
   }
   datatopass: any;
@@ -183,14 +187,38 @@ export class QueueDetailsComponent implements OnInit {
   on_time: any = "1";
 
   showUploadModal(name: string) {
-    const activeModal = this.modalService.open(Modal4Component, { size: 'lg', container: 'nb-layout' });
-
-    this.datatopass = { queue_id:  sessionStorage.getItem('QueueId'),  queue_exists:  "0", type_of_service: '1',  queue_time:  this.dropSlotTime, service_status: this.service_status };
-    this.dataForModal = { service_status: this.service_status,advName:this.advInfo[0].adv_name, id: sessionStorage.getItem('QueueId'), queue_date: new Date }
+    console.log(this.service_status);
+    console.log(this.advInfo[0].adv_name);
+    if(this.InvAmt != "0"){
+              this.Amt = this.InvAmt;
+              console.log(this.Amt)
+            }
+            else{
+              this.Amt = this.estAmount;
+              console.log(this.Amt)
+            }
+   
+   const activeModal = this.modalService.open(Modal4Component, { size: 'lg', container: 'nb-layout' });
+  this.datatopass = { queue_id:  sessionStorage.getItem('QueueId'),  queue_exists:  "0", type_of_service: '1',  queue_time:  this.dropSlotTime, service_status: this.service_status };
+    this.dataForModal = { service_status: this.service_status,amt:this.Amt,advName:this.advInfo[0].adv_name, id: sessionStorage.getItem('QueueId'), queue_time: this.QueueTIme }
+    console.log("urvashi urvi");
     activeModal.componentInstance.modalHeader = 'Upload File';
     activeModal.componentInstance.modalContent = this.dataForModal;
   }
+  // showUploadModal() {
+  //   if(this.InvAmt){
+  //         this.Amt = this.InvAmt;
+  //       }
+  //       else{
+  //         this.Amt = this.estAmount;
+  //       }
+  //   const activeModal = this.modalService.open(Modal4Component, { size: 'lg', container: 'nb-layout' });
+  //  this.dataForModal = { service_status: this.service_status,amt:this.Amt,advName:this.advInfo[0].adv_name, id: sessionStorage.getItem('QueueId'), queue_date: new Date }
+  //   activeModal.componentInstance.modalHeader = 'Upload File';
+  //   activeModal.componentInstance.modalContent ={ service_status: this.service_status,amt:this.Amt,advName:this.advInfo[0].adv_name, id: sessionStorage.getItem('QueueId'), queue_date: new Date };
+  // }
   showLargeModal(name: string) {
+  
     const activeModal = this.modalService.open(ModalQueueComponent, { size: 'lg', container: 'nb-layout' });
 
     activeModal.componentInstance.modalHeader = 'Cancel';
@@ -202,7 +230,7 @@ export class QueueDetailsComponent implements OnInit {
 
     activeModal.componentInstance.modalHeader = 'Pickup Details';
     activeModal.componentInstance.modalContent = res;
-     console.log(res);
+    //  console.log(res);
     // this._detailsTable.setCancelReasons(this.cancelReasons);
   }
   showdropoffModal(res:any){
@@ -210,7 +238,7 @@ export class QueueDetailsComponent implements OnInit {
 
     activeModal.componentInstance.modalHeader = 'DropOff Details';
     activeModal.componentInstance.modalContent = res;
-     console.log(res);
+    //  console.log(res);
     // this._detailsTable.setCancelReasons(this.cancelReasons);
   }
   showdAdv(res:any){
@@ -218,7 +246,7 @@ export class QueueDetailsComponent implements OnInit {
 
     activeModal.componentInstance.modalHeader = 'Select Advisor';
     activeModal.componentInstance.modalContent = res;
-     console.log(res);
+    //  console.log(res);
     // this._detailsTable.setCancelReasons(this.cancelReasons);
   }
   changeAmount(): boolean {
@@ -305,7 +333,7 @@ export class QueueDetailsComponent implements OnInit {
           if (check[1].hasOwnProperty('puinfo')) {
 
              this.pickupInfo = check[1].puinfo;
-            console.log(this.pickupInfo);
+            // console.log(this.pickupInfo);
             if (this.pickupInfo[0].hasOwnProperty('pu_address')) {
               this.showPickupCard = '1';
               let pick_address = this.pickCardForm.get('pickupAddress');
@@ -397,7 +425,7 @@ export class QueueDetailsComponent implements OnInit {
             }
           }
         }
-        if (objectlength > 3) {
+        if(objectlength > 3){
           if (check[3].hasOwnProperty('atsvc')) {
             const atSVC = check[3].atsvc;
             if (atSVC[0].hasOwnProperty('est_amount')) {
@@ -405,15 +433,21 @@ export class QueueDetailsComponent implements OnInit {
               let estAmount = this.vehicle_at_svc_formGroup.get('estAmount');
               if (atSVC[0].est_amount) {
                 estAmount.setValue(atSVC[0].est_amount);
+                this.estAmount = atSVC[0].est_amount;
+                console.log("EST",this.estAmount);
               }
             }
             if (atSVC[0].est_time) {
               let estTime = this.vehicle_at_svc_formGroup.get('ETD');
               estTime.setValue(atSVC[0].est_time);
+              this.QueueTIme = atSVC[0].est_time;
+              console.log(this.QueueTIme);
             }
             if (atSVC[0].queue_total) {
               let invoiceAmount = this.vehicle_at_svc_formGroup.get('invoiceAmount');
               invoiceAmount.setValue(atSVC[0].queue_total);
+              this.InvAmt = atSVC[0].queue_total;
+              console.log("INV",this.InvAmt)
             }
             if (atSVC[0].est_amount) {
 
@@ -429,6 +463,45 @@ export class QueueDetailsComponent implements OnInit {
             }
           }
         }
+        // if (objectlength > 3) {
+        //   if (check[3].hasOwnProperty('atsvc')) {
+        //     const atSVC = check[3].atsvc;
+        //     if (atSVC[0].hasOwnProperty('est_amount')) {
+        //       this.showAtSVCCard = '1';
+        //       let estAmount = this.vehicle_at_svc_formGroup.get('estAmount');
+        //       const EstAmt = estAmount;
+        //       if (atSVC[0].est_amount) {
+        //         estAmount.setValue(atSVC[0].est_amount);
+        //         this.estAmount = atSVC[0].est_amount;
+        //         console.log(this.estAmount);
+        //       }
+        //     }
+        //     if (atSVC[0].est_time) {
+        //       let estTime = this.vehicle_at_svc_formGroup.get('ETD');
+        //       estTime.setValue(atSVC[0].est_time);
+        //       this.QueueTIme = atSVC[0].est_time;
+
+        //     }
+        //     if (atSVC[0].queue_total) {
+        //       let invoiceAmount = this.vehicle_at_svc_formGroup.get('invoiceAmount');
+        //       invoiceAmount.setValue(atSVC[0].queue_total);
+        //       this.InvAmt = atSVC[0].queue_total;
+        //     }
+        //     if (atSVC[0].est_amount) {
+
+        //     }
+        //     if (atSVC[0].est_link) {
+        //       this.est_link = atSVC[0].est_link;
+        //     }
+        //     if (atSVC[0].inv_link) {
+        //       this.invoice_link = atSVC[0].inv_link;
+        //     }
+        //     if (atSVC[0].service_status) {
+        //       this.service_status = atSVC[0].service_status;
+        //       console.log(this.service_status);
+        //     }
+        //   }
+        // }
         if (objectlength > 4) {
           if (check[4].hasOwnProperty('notes')) {
             const notes = check[4].notes;
@@ -471,8 +544,9 @@ export class QueueDetailsComponent implements OnInit {
           }
         }
         if (objectlength > 7) {
-          if (check[7].hasOwnProperty('creinfo')) {
+          if (check[7].hasOwnProperty('creinfo') || check[8].hasOwnProperty('adviserinfo')) {
             const creInfo = check[7].creinfo;
+            this.advInfo = check[8].adviserinfo;
             if (creInfo[0].hasOwnProperty('cre_name')) {
               this.showCRECard = '1';
               let cre_name = this.creFormGroup.get('creName');
@@ -481,15 +555,21 @@ export class QueueDetailsComponent implements OnInit {
               let cre_number = this.creFormGroup.get('creNumber');
               cre_number.setValue(creInfo[0].cre_mobile);
 
-              this.advInfo = check[8].adviserinfo;
+            }
+            if(this.advInfo[0].hasOwnProperty('adv_name')){
+              this.showCRECard = '1';
               let adv_name = this.creFormGroup.get('advName');
               adv_name.setValue(this.advInfo[0].adv_name);
+              console.log('Adv_Name');
+              console.log(this.advInfo[0].adv_name);
 
               let adv_number = this.creFormGroup.get('advNumber');
               adv_number.setValue(this.advInfo[0].adv_mobile);
             }
+             
+            }
           }
-        }
+        
         if (objectlength > 10) {
           if (check[10].hasOwnProperty('complaints')) {
             const complaints1 = check[10].complaints;
@@ -538,16 +618,16 @@ export class QueueDetailsComponent implements OnInit {
         queueid: sessionStorage.getItem('QueueId'),
       }
       const amblink = JSON.stringify(reqpara3);
-      console.log(amblink);
+      // console.log(amblink);
       this._data.createUser(amblink).subscribe(res => {
         this.link = res[0].ambassadorposition[0].iframe_link;
-        console.log(this.link);
+        // console.log(this.link);
       });
     }
   };
   clicked(event: Event) {
     event.preventDefault();
-    console.log("Clicked");
+    // console.log("Clicked");
     event.stopPropagation();
   }
 

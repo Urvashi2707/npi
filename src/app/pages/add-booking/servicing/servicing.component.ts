@@ -1,37 +1,25 @@
-import { Component, OnInit, Injectable } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { IServicing, custinfo } from '../../model/AddServicing';
+import { Component, OnInit} from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { TitleCasePipe } from '@angular/common';
 import { ServicingService } from '../../services/addServicing.service';
-import { HttpClient, HttpHeaders, HttpErrorResponse, HttpRequest } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
-import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
-import { catchError, retry } from 'rxjs/operators';
-import { NgbDateAdapter, NgbDateStruct, NgbDatepickerConfig, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
-import { defaultIfEmpty } from 'rxjs/operator/defaultIfEmpty';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Modal1Component } from '../modal/modal1/modal1.component';
-import { Modal3Component } from '../modal/modal2/modal2.component';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import {NgbModal,NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
+import { NgbDateStruct, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
+import { BookingDetails } from '../modal/BookingDetails/BookingDetails.component';
+import { AddEmployee } from '../modal/AddEmployee/AddEmployee.component';
 import { ToasterService, ToasterConfig, Toast, BodyOutputType } from 'angular2-toaster';
 import 'style-loader!angular2-toaster/toaster.css';
 import { Router } from '@angular/router';
-import { OnlyNumber } from '../../number.directive';
-import { NgClass } from '@angular/common';
+import { NgxSpinnerService } from 'ngx-spinner';
 
-interface IModelsList {
-  brand_id: number
-  model_id: number
-  model_name: string
-}
 @Component({
   selector: 'app-servicing',
   templateUrl: './servicing.component.html',
   styleUrls: ['./servicing.component.scss']
 })
 
-
 export class ServicingComponent implements OnInit {
+  
   public registrationNumber: string;
   public mobile11: string;
   private brands: any = [];
@@ -53,6 +41,7 @@ export class ServicingComponent implements OnInit {
   public complaint_id: any = [];
   public pikup_lat: string;
   public carinfo: any = [];
+  counter:number = 0;
   public pikup_long: string;
   public dropoff_lat: string;
   public dropoff_long: string;
@@ -60,18 +49,36 @@ export class ServicingComponent implements OnInit {
   public slot_time: string;
   public notes: string;
   droplocation:string;
+  showAddress = false;
+  disableNext = false;
+  showAddressDropDown = false;
+  pickupdoor:string;
+  pickupstreet:string;
+  pickuparea:string;
+  pickuplandmark:string;
+  pickuppincode:string;
+  dropofffdoor:string;
+  dropoffstreet:string;
+  dropoffarea:string;
+  dropofflandmark:string;
+  addresstype_do:string;
+  addressdoprevious:string;
+  addresspuprevious:string;
+  dropoffpincode:string;
   public amt: string;
   public Sid: string;
   public droplatlong: string;
   slotcheck = true;
   model: NgbDateStruct;
   dateString: string;
+  addresstype_pu:string;
   yourBoolean = 'servicing';
   public pickup_drop: number;
   public mobile2: string;
   public message: any = [];
   public dropadd: string;
   public disabled = false;
+  editAddress = false;
   public sameasvalue: boolean;
   public isconfirm: string;
   public address: any = [];
@@ -85,12 +92,17 @@ export class ServicingComponent implements OnInit {
   public cus: any = {};
   user: any = {};
   customer: any = [];
+  showEditAddress = false;
   cust_details: any = {};
   show1 = false;
   show2 = false;
   show3 = true;
+  showtime = false;
+  ea_respondID : string;
+  message1:string;
   showstep1 = false;
   showstep2 = false;
+  showstep3 = false;
   public countrycode1: string;
   brand_id: string;
   valuedate = new Date();
@@ -104,6 +116,8 @@ export class ServicingComponent implements OnInit {
   public startDate;
   public minDate;
   public maxDate;
+  addressPickup:any;
+  addressDropoff:any;
   public salutation:any;
   public globalsvcid:string;
   public selectedsvcid:string;
@@ -112,6 +126,16 @@ export class ServicingComponent implements OnInit {
   timeout = 5000;
   toastsLimit = 5;
   slothour:string;
+  addresstype = [
+    {
+      "id": "1",
+      "type_of_address": "Home"
+    },
+    {
+      "id": "2",
+      "type_of_address": "Work"
+    }
+  ];
   date: {year: number, month: number};
 
   public httpOptions = {
@@ -125,7 +149,9 @@ export class ServicingComponent implements OnInit {
     private http: HttpClient,
     private ngbDateParserFormatter: NgbDateParserFormatter,
     private modalService: NgbModal,
-    private titlecasePipe:TitleCasePipe) { }
+    private titlecasePipe:TitleCasePipe,
+    private activeModal: NgbActiveModal,
+    private spinner: NgxSpinnerService) { }
 
 
   ngOnInit() {
@@ -135,7 +161,6 @@ export class ServicingComponent implements OnInit {
     else{
       this.svcid = JSON.parse(sessionStorage.getItem('globalsvcid'));
     }
-    
     this.user.confirm = true;
     this.countrycode1 = "+91";
     this.getBrands();
@@ -152,52 +177,54 @@ export class ServicingComponent implements OnInit {
     ];
     this.selectedItems = [];
     this.settings = {
-      text: 'Select Complaints*',
+      text: 'Select Complaints',
       selectAllText: 'Select All',
       unSelectAllText: 'UnSelect All',
       classes: 'myclass custom-class',
       maxHeight: 150
     };
-     
-    const now = new Date();
-    this.model = { year: now.getFullYear(), month: now.getMonth() + 1, day: now.getDate() };
+    const date = new Date();
+    // this.model = {day:date.getUTCDate(),month:date.getUTCMonth() + 1,year: date.getUTCFullYear() };
+    this.model = {year: date.getUTCFullYear(),month:date.getUTCMonth() + 1,day:date.getUTCDate() };
+    console.log(this.model);
+    this.dateString = this.model.year + '-' + this.model.month + '-' + this.model.day;
     this.startDate = this.model;
-    console.log(this.startDate);
-    this.minDate = { year: now.getFullYear(), month: now.getMonth() + 1, day: now.getDate() - 1 };
-    console.log(this.minDate);
-    this.maxDate = { year: now.getFullYear(), month: now.getMonth() + 1, day: now.getDate() + 15};
-    console.log(this.maxDate);
+    this.minDate = { year: date.getFullYear(), month: date.getMonth() + 1, day: date.getDate() - 1 };
+    this.maxDate = { year: date.getFullYear(), month: date.getMonth() + 1, day: date.getDate() + 15};
     this.globalsvcid = JSON.parse(sessionStorage.getItem('globalsvcid'));
-    console.log(this.globalsvcid);
     this.getAdvisor();
     this.getCre();
     this.getcreadv();
+  }
 
-   
-;  }
 
-public opt={
-  headers: new HttpHeaders().set('x-auth-token', this.ServicingService.getter())
-}
 
+public opt1={
+  headers: new HttpHeaders({'x-auth-token': sessionStorage.getItem('token'),'x-auth-user':sessionStorage.getItem('auth-user'),'Content-Type':  'application/json'})
+  }
+  receiveMessage($event) {
+    this.message1 = $event
+  }
 
   showLargeModal(res: any, notes: string) {
-    const activeModal = this.modalService.open(Modal1Component, { size: 'lg', container: 'nb-layout' });
+    const activeModal = this.modalService.open(BookingDetails, { size: 'lg', container: 'nb-layout' });
     activeModal.componentInstance.modalHeader = 'Booking Details';
     activeModal.componentInstance.modalContent = res;
     activeModal.componentInstance.modalNotes = notes;
   }
   showModal(Id:number) {
-    const activeModal = this.modalService.open(Modal3Component, { size: 'lg', container: 'nb-layout' });
+    const activeModal = this.modalService.open(AddEmployee, { size: 'lg', container: 'nb-layout' });
     activeModal.componentInstance.modalHeader = 'Add Employee';
     activeModal.componentInstance.modalContent = Id;
   }
+
   Addcre() {
     this.router.navigate(['pages/user']);
   }
   Addadv() {
     this.router.navigate(['pages/user']);
   }
+
   private showToast(type: string, title: string, body: string) {
     this.config = new ToasterConfig({
       positionClass: this.position,
@@ -219,88 +246,188 @@ public opt={
     this.toasterService.popAsync(toast);
   }
 
+  changepickupdoor(value:any){
+    if (this.sameasvalue == true){
+      this.user.dropofffdoor = value;
+    }
+  }
+
+  changepickupstreet(value:any){
+    if (this.sameasvalue == true){
+      this.user.dropoffstreet = value;
+    }
+  }
+
+  changepickuparea(value:any){
+    if (this.sameasvalue == true){
+    this.user.dropoffarea = value;
+    }
+  }
+
+  changepickuplandmark(value:any){
+    if (this.sameasvalue == true){
+      this.user.dropofflandmark = value;
+    }
+  }
+
+  changepickuppincode(value:any){
+    if (this.sameasvalue == true){
+      this.user.dropoffpincode = value;
+    }
+  }
+
+  changepickuplatlong(value:any){
+    if (this.sameasvalue == true){
+     this.user.droplatlong = value;
+    }
+  }
+
   saverange(value: any) {
-    console.log(value);
     if (this.sameasvalue == true) {
       this.user.dropoff_location = value;
-      console.log(this.user.dropoff_location);
       if (this.user.picklatlong) {
         this.user.dropofflatlong = this.user.picklatlong;
-        console.log(this.user.dropofflatlong);
       }
     }
   }
 
-
   eligibiltycheck1(){
+    this.spinner.show();
     const reqpara0 =
     {
-      
       customerMobileNumber:this.user.mobile1,
       vehicleRegNumbe:this.registrationNumber,
       typeofservice:1
     }
-    console.log(reqpara0);
     const as0 = JSON.stringify(reqpara0);
-    this.ServicingService.Initialcheck(as0).subscribe(
+    this.http.post('https://plsuat.europassistance.in:444/checkInitialEligibility',as0,this.opt1).subscribe(
       res => {
-        console.log(res);
-      }
-    )
+        if (res['message'] === 'policy is not valid'){
+          this.spinner.hide();
+          this.getinfowithMobile();
+          this.disableNext = true;
+          this.showToast('Message', 'Policy Message', 'Policy is not valid');
+          this.showstep3 = true;
+          this.ea_respondID = "0";
+        }
+        else if (res['message'] === 'policy is valid'){
+          this.spinner.hide();
+          this.getinfowithMobile();
+          this.disableNext = true;
+          this.showToast('Message', 'Policy Message', 'Policy is valid');
+        this.showstep2 = true;
+        this.ea_respondID = res['responseId'];
+        }
+        else{
+          this.spinner.hide();
+          this.getinfowithMobile();
+          this.showToast('Message', 'Policy Message', 'Something went wrong');
+          this.showstep3 = true;
+          this.disableNext = true;
+          this.ea_respondID = "0";
+        }
+      },(err: HttpErrorResponse) => {
+        if (err.error instanceof Error) {
+          this.spinner.hide();
+          this.getinfowithMobile();
+          this.disableNext = true;
+          this.showToast('Message', 'Policy Message', 'Something went wrong');
+          
+          this.ea_respondID = "0";
+        }
+        else {
+          this.spinner.hide();
+          this.getinfowithMobile();
+          this.disableNext = true;
+          this.showToast('Message', 'Policy Message', 'Something went wrong');
+       
+          this.ea_respondID = "0";
+        }
+      });
   }
-
-
-
 
   skip(){
     this.showToast('Message', 'Skip Message', 'Customer will not be eligilble for any benefits');
-    this.showstep2 = true;
+    this.showstep3 = true;
   }
 
 
   eligibiltycheck2(){
     const reqpara01 =
     {
-
-      
       customerMobileNumber:this.user.mobile1,
       vehicleRegNumber:this.registrationNumber,
       policyNumber:this.user.policy,
-      chassisNo:this.user.vin,
+      vin:this.user.vin,
       typeofservice:1,
-      
-      
-    }
-    console.log(reqpara01);
+      }
     const as01 = JSON.stringify(reqpara01);
-    this.ServicingService.Finalcheck(as01).subscribe(
-
-      res => {
-        console.log(res[0].eligible);
-        console.log(res[0].eligible[0].eligible);
-        const eligible = res[0].eligible[0].eligible;
-        if(JSON.parse(eligible)){
-          console.log("true");
-          this.showstep2 = true;
-        }
-        else{
-          console.log("false");
-          this.showstep2 = true;
-        }
+    this.http.post('https://plsuat.europassistance.in:444/checkFinalEligibility',as01,this.opt1).subscribe(
+        res => {
       }
     )
   }
 
-  getBrands() {
-    const reqpara1 =
-      {
+  EditAddress(){
+    this.editAddress = true;
+  }
+
+  changeEditpickupdoor(value:any){
+    this.counter ++;
+    this.editAddress = true;
+    if (this.sameasvalue == true){
+      this.user.dropofffdoor = value;
+    }
+  }
+
+  changeEditupstreet(value:any){
+    this.counter ++;
+    this.editAddress = true;
+    if (this.sameasvalue == true){
+      this.user.dropoffstreet = value;
+    }
+  }
+
+  changeEditpickuparea(value:any){
+    this.counter ++;
+    this.editAddress = true;
+    if (this.sameasvalue == true){
+    this.user.dropoffarea = value;
+    }
+  }
+
+  changeEditpickuplandmark(value:any){
+    this.counter ++;
+    this.editAddress = true;
+    if (this.sameasvalue == true){
+      this.user.dropofflandmark = value;
+    }
+  }
+
+  changeEditpickuppincode(value:any){
+    this.counter ++;
+    this.editAddress = true;
+    if (this.sameasvalue == true){
+      this.user.dropoffpincode = value;
+    }
+  }
+
+  changeEditpickuplatlong(value:any){
+    this.counter ++;
+    this.editAddress = true;
+    if (this.sameasvalue == true){
+     this.user.droplatlong = value;
+    }
+  }
+
+getBrands() {
+    const reqpara1 ={
         requesttype: 'getbrands',
         svcid:this.svcid
       }
     const as1 = JSON.stringify(reqpara1)
-    this.ServicingService.getBrands(as1).subscribe
+    this.ServicingService.webServiceCall(as1).subscribe
       (res => {
-        console.log(res[0].login);
         if (res[0].login === 0) {
           sessionStorage.removeItem('currentUser');
           this.router.navigate(['/auth/login']);
@@ -309,11 +436,8 @@ public opt={
           this.brands = res[0].brands,
             this.selectedBrand = this.brands[0].brand_id;
             this.getModelds(this.selectedBrand);
-         
         }
-
-      }
-      );
+      });
   }
 
   buildArr(theArr: any[]) {
@@ -331,58 +455,37 @@ public opt={
         arrOfarr.push(row);
       }
     }
-
     return arrOfarr;
   }
 
   some(value) {
-    console.log(value);
     this.amb = value;
-    console.log(this.amb);
+}
 
-  }
+  onItemSelect(item: any) {}
 
-  onItemSelect(item: any) {
-    console.log(item);
-    console.log(this.selectedItems);
-    console.log(this.selectedItems.length);
-  }
+  OnItemDeSelect(item: any) {}
 
-  OnItemDeSelect(item: any) {
-    console.log(item),
-      console.log(this.selectedItems);
+  onSelectAll(items: any) {}
 
-  }
-
-  onSelectAll(items: any) {
-    console.log(items);
-  }
-
-  onDeSelectAll(items: any) {
-    console.log(items);
-  }
+  onDeSelectAll(items: any) {}
 
 
   onSelectModel(modelId) {
-    // this.selectedModel = null;
     for (let i = 0; i < this.Models.length; i++) {
       if (this.Models[i].model_id == modelId) {
         this.selectedModel = this.Models[i];
       }
     }
-    console.log(this.selectedModel);
-    // this.getVariants(this.selectedModel.model_id);
     this.getVariants(this.selectedModel);
   }
 
   onSelectVariant(VariantId) {
-    // this.selectedVariant = null;
     for (let i = 0; i < this.Models.length; i++) {
       if (this.Variant[i].variant_id == VariantId) {
         this.selectedVariant = this.Variant[i];
       }
     }
-    console.log(this.selectedVariant);
   }
 
   getVariants(VariantId: number) {
@@ -391,16 +494,14 @@ public opt={
       brandid: VariantId
     }
     const as3 = JSON.stringify(reqpara3)
-    this.ServicingService.getVariant(as3).subscribe(res => {
+    this.ServicingService.webServiceCall(as3).subscribe(res => {
       if (res[0].login === 0) {
         sessionStorage.removeItem('currentUser');
         this.router.navigate(['/auth/login']);
       }
       else {
-        this.Variant = res[0].models,
-          console.log(this.Variant);
+        this.Variant = res[0].models
       }
-
     });
   }
 
@@ -410,83 +511,62 @@ public opt={
       brandid: this.selectedBrand
     }
     const as2 = JSON.stringify(reqpara2)
-    this.ServicingService.getModels(as2).subscribe(res => {
+    this.ServicingService.webServiceCall(as2).subscribe(res => {
       if (res[0].login === 0) {
         sessionStorage.removeItem('currentUser');
         this.router.navigate(['/auth/login']);
       }
       else {
-        this.Models = res[0].models,
-          console.log(this.Models);
-
-
-      }
-
+        this.Models = res[0].models;
+        console.log('model length' + this.Models.length);
+        if(this.Models.length === 1){
+          console.log("model length is 1");
+          var model_id = this.Models[0].model_id;
+          this.getVariants(model_id);
+        }
+        else{
+          console.log("model length is more than 1");
+        }
+     }
     });
   }
-
-  getDefault() {
-    const reqpara2 = {
-      requesttype: 'getmodels',
-      brandid: 39
-    }
-    const as2 = JSON.stringify(reqpara2)
-    this.ServicingService.getModels(as2).subscribe(res => {
-      if (res[0].login === 0) {
-        sessionStorage.removeItem('currentUser');
-        this.router.navigate(['/auth/login']);
-      }
-      else {
-        this.Models = res[0].models,
-          console.log(this.Models);
-
-
-      }
-
-    });
-  }
-
   getcreadv() {
     const reqpara4 = {
       requesttype: 'getcreadv',
       svcid:this.svcid
     }
     const as4 = JSON.stringify(reqpara4)
-    this.ServicingService.getCre(as4).subscribe(res => {
-      console.log(res[0].login === 0);
+    this.ServicingService.webServiceCall(as4).subscribe(res => {
       if (res[0].login === 0) {
         sessionStorage.removeItem('currentUser');
         this.router.navigate(['/auth/login']);
       }
       else {
         this.Svclist = res[0].svclist[0].id;
-        console.log(this.Svclist)
         this.creName = res[1].cre;
         this.service_advisor = res[2].advisor
         this.itemList = res[3].complaints
       }
-
     });
   }
-
-  getSlot(Date: string) {
+ getSlot(Date: string) {
+    this.showtime = true;
     if (this.yourBoolean === 'servicing' || this.yourBoolean === 'onlypickup') {
       this.pickup_drop = 0;
-      console.log(this.pickup_drop);
     }
     else {
       this.pickup_drop = 1;
-      console.log(this.pickup_drop);
     }
     if (Date) {
       const reqpara5 = {
-        requesttype: 'getslots',
+        requesttype: 'getslotsv2',
         reqdate: Date,
         pickup_drop: this.pickup_drop,
+        type_service:this.pickup_drop,
         svcid:this.svcid
       }
       const as5 = JSON.stringify(reqpara5)
-      this.ServicingService.getSlot(as5).subscribe(res => {
+      this.ServicingService.webServiceCall(as5).subscribe(res => {
         if (res[0].login === 0) {
           sessionStorage.removeItem('currentUser');
           this.router.navigate(['/auth/login']);
@@ -497,22 +577,13 @@ public opt={
           }
           else {
             this.slot = res[0].slots;
-            // this.showToast('default', 'Time', 'Please Select time');
-            console.log(this.slot);
           }
-
-
         }
-
-
       });
     }
-
   }
 
   doPickup() {
-    console.log(this.dateString)
-    console.log('drop')
     if (this.dateString.length > 0) {
       const reqpara10 = {
         requesttype: 'getslots',
@@ -521,26 +592,20 @@ public opt={
         svcid:this.svcid
       }
       const as10 = JSON.stringify(reqpara10)
-      this.ServicingService.getSlot(as10).subscribe(res => {
+      this.ServicingService.webServiceCall(as10).subscribe(res => {
         if (res[0].login === 0) {
           sessionStorage.removeItem('currentUser');
           this.router.navigate(['/auth/login']);
         }
         else {
           this.Slot = res[0],
-            console.log(this.Slot);
           this.slot = res[0].slots;
-          console.log(this.slot);
         }
-
-
       });
     }
   }
 
   doDrop() {
-    console.log(this.dateString)
-    console.log('drop')
     if (this.dateString.length > 0) {
       const reqpara11 = {
         requesttype: 'getslots',
@@ -549,24 +614,18 @@ public opt={
         svcid:this.svcid
       }
       const as11 = JSON.stringify(reqpara11)
-      this.ServicingService.getSlot(as11).subscribe(res => {
+      this.ServicingService.webServiceCall(as11).subscribe(res => {
         if (res[0].login === 0) {
           sessionStorage.removeItem('currentUser');
           this.router.navigate(['/auth/login']);
         }
         else {
           this.Slot = res[0],
-            console.log(this.Slot);
           this.slot = res[0].slots;
-          console.log(this.slot);
         }
-
-
       });
     }
-    else{
-      console.log('no date');
-    }
+    else{}
   }
 
   onBlurMethod(value: string) {
@@ -577,14 +636,9 @@ public opt={
     if (date != null) {
       this.model = date;
       this.dateString = this.ngbDateParserFormatter.format(date);
-      console.log(this.dateString);
     }
     this.show3 = true;
-    console.log(this.amb);
-    if(this.amb == true || this.datecheck == true){
-      //  this.showToast('default', 'Time', 'Please Select time');
-    }
-   
+    if(this.amb == true || this.datecheck == true){ }
     this.slot = [];
     this.getSlot(this.dateString);
   }
@@ -594,46 +648,127 @@ public opt={
     let startYear = startDate.getFullYear().toString();
     let startMonth = startDate.getMonth() + 1;
     let startDay = "1";
-
     return this.ngbDateParserFormatter.parse(startYear + "-" + startMonth.toString() + "-" + startDay);
   }
 
-
-  someFunction() {
-    // console.log(this.user.registrationNumber);
-
-    const reqpara = {
-      requesttype: 'getcustinfo',
-      vehnumber: this.registrationNumber,
-      mobilenumber: this.user.mobile1,
-      svcid:this.svcid
+  // at select pickup dropdown
+  onSelectPickup($event,id){
+    console.log($event);
+    console.log(id);
+    console.log(this.address[$event]);
+    var currentAddressPickup = this.address[$event];
+    this.user.addresspu = this.addressPickup;
+    console.log(this.user.addresspu);
+    this.user.pickupdoor = currentAddressPickup.doornumber;
+    this.user.pickupstreet = currentAddressPickup.street;
+    this.user.pickuparea = currentAddressPickup.area;
+    this.user.pickuplandmark = currentAddressPickup.landmark;
+    this.user.pickuppincode = currentAddressPickup.pincode;
+    this.user.picklatlong = currentAddressPickup.latitude + ',' + currentAddressPickup.longitude;
+    for(let i = 0; i < this.addresstype.length;i ++){
+      if(this.addresstype[i].id == id){
+        this.user.addresspu = this.addresstype[i].id;
+        this.user.addresstypepu = this.addresstype[i].id;
+      }
     }
-    const as = JSON.stringify(reqpara)
-    // console.log(as);
+  }
 
-    this.ServicingService.getCustinfo(as).subscribe(data => {
+   // at select dropoff dropdown
+  onSelectDropoff($event,id){
+    console.log($event);
+    console.log(id);
+    console.log(this.address[$event]);
+    var currentAddressDropoff = this.address[$event];
+    this.user.addresspu = this.addressPickup;
+    console.log(this.user.addresspu);
+    this.user.dropofffdoor = currentAddressDropoff.doornumber;
+    this.user.dropoffstreet = currentAddressDropoff.street;
+    this.user.dropoffarea = currentAddressDropoff.area;
+    this.user.dropofflandmark = currentAddressDropoff.landmark;
+    this.user.dropoffpincode = currentAddressDropoff.pincode;
+    this.user.droplatlong = currentAddressDropoff.latitude + ',' + currentAddressDropoff.longitude;
+    for(let i = 0; i < this.addresstype.length;i ++){
+      if(this.addresstype[i].id == id){
+        this.user.addresspu = this.addresstype[i].id;
+        this.user.addresstypepu = this.addresstype[i].id;
+      }
+    }
+  }
+
+
+  getinfowithMobile(){
+    const reqpara112 = {
+      requesttype:'getcustinfo_mobilev2',
+      mobilenumber:this.user.mobile1,
+      svcidvar:this.svcid,
+      vehnumber:this.registrationNumber
+    }
+    const as112 = JSON.stringify(reqpara112);
+    this.ServicingService.webServiceCall(as112).subscribe(data => {
       if (data[0].login === 0) {
         sessionStorage.removeItem('currentUser');
         this.router.navigate(['/auth/login']);
       }
       else {
-        this.customer = data
-        if (this.customer[1].custinfo[0].no_records) {
-          console.log('no records');
-          this.cust_details.mobile = this.user.mobile1
+        this.customer = data;
+        this.showstep3 = true;
+        if (this.customer[1].custinfo[0].hasOwnProperty('no_records')) {
+          this.cust_details.mobile = this.user.mobile1,
+          this.showAddress = true;
         }
         else {
-          this.cust_details = this.customer[1].custinfo[0],
-            this.address = this.customer[2].addresses[0]
-          this.user.pickuploc = this.address.paddy,
-            this.user.picklatlong = this.address.plat + ',' + this.address.plong
-          this.user.dropoff_location = this.address.daddy,
-            this.user.dropofflatlong = this.address.dlat + ',' + this.address.dlat,
-            this.carinfo = this.customer[3].carinfo[0]
-          // console.log(this.carinfo);
+          this.address = this.customer[2].addresses;
+          this.cust_details = this.customer[1].custinfo[0];
+         if(this.address[0].hasOwnProperty('no_records')){
+            this.showAddress = true;
+          }
+          else{
+              this.showAddressDropDown = true;
+              this.showEditAddress = true;
+              this.addressPickup = this.address[0];
+              this.user.addresspu = this.addressPickup;
+              this.user.pickupdoor = this.addressPickup.doornumber;
+              this.user.pickupstreet = this.addressPickup.street;
+              this.user.pickuparea = this.addressPickup.area;
+              this.user.pickuplandmark = this.addressPickup.landmark;
+              this.user.pickuppincode = this.addressPickup.pincode;
+              for(let i = 0; i < this.addresstype.length;i ++){
+                if(this.addresstype[i].id == this.addressPickup.address_id){
+                  this.user.addresspu = this.addresstype[i].id;
+                  this.user.addresstypepu = this.addresstype[i].id;
+                }
+              }
+              this.user.picklatlong = this.addressPickup.latitude + ',' +this.addressPickup.longitude;
+              this.user.address_typepu = this.addressPickup.address_id;
+              this.addressDropoff = this.address[0];
+                if(this.addressDropoff != undefined){
+                  this.user.dropofffdoor = this.addressDropoff.doornumber;
+                  this.user.dropoffstreet = this.addressDropoff.street;
+                  this.user.dropoffarea = this.addressDropoff.area;
+                  this.user.dropofflandmark = this.addressDropoff.landmark;
+                  this.user.dropoffpincode = this.addressDropoff.pincode;
+                  this.user.droplatlong = this.addressDropoff.latitude + ',' +this.addressDropoff.longitude;
+                  this.user.address_typedu = this.addressDropoff.address_id;
+                  for(let i = 0; i < this.addresstype.length;i ++){
+                    if(this.addresstype[i].id == this.addressDropoff.address_id){
+                      this.user.addressdu = this.addresstype[i].id;
+                      this.user.addresstypedu = this.addresstype[i].id;
+                    }
+                  }
+                }
+                else{
+                  this.user.dropofffdoor = null ;
+                  this.user.dropoffstreet = null;
+                  this.user.dropoffarea = null;
+                  this.user.dropofflandmark = null;
+                  this.user.dropoffpincode = null;
+                  this.user.droplatlong = null;
+                  this.user.address_typedu = null;
+                }
+          }
+          this.carinfo = this.customer[4].carinfo[0]
           this.selectedModel = this.carinfo.veh_model_id;
           this.selectedVariant = this.carinfo.veh_submodel_id;
-          console.log(this.selectedModel);
           this.getVariants(this.selectedModel);
           for (let i = 0; i < this.Models.length; i++) {
             if (this.Models[i].id === this.selectedModel) {
@@ -641,11 +776,7 @@ public opt={
             }
           }
         }
-
-      }
-
-
-    },
+      }},
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
           console.log("Client-side error occured.");
@@ -653,11 +784,7 @@ public opt={
         else {
           console.log("Server-side error occured.");
         }
-      }
-    );
-
-    this.showstep2 = true;
-
+      });
   }
 
   secondcheck() {
@@ -665,54 +792,69 @@ public opt={
   }
 
   sameas(value) {
-    console.log(value);
     this.sameasvalue = value;
     if (value == true) {
+      if (this.user.pickupdoor) {
+        this.user.dropofffdoor = this.user.pickupdoor;
+        if (this.user.pickupstreet) {
+          this.user.dropoffstreet = this.user.pickupstreet;
 
-      if (this.user.pickuploc) {
-        this.user.dropoff_location = this.user.pickuploc;
-        console.log(this.user.dropoff_location);
-        if (this.user.picklatlong) {
-          this.user.dropofflatlong = this.user.picklatlong;
-          console.log(this.user.dropofflatlong);
+        }
+        if(this.user.pickuparea){
+          this.user.dropoffarea = this.user.pickuparea;
+        }
+        if(this.user.pickuplandmark){
+          this.user.dropofflandmark = this.user.pickuplandmark;
+        }
+        if(this.user.pickuppincode){
+          this.user.dropoffpincode = this.user.pickuppincode;
+        }
+        if(this.user.picklatlong){
+          this.user.droplatlong = this.user.picklatlong;
+        }
+      console.log(this.user.addresstypepu)
+        if(this.user.addresstypepu){
+          for(let j = 0 ; j < this.addresstype.length;j++){
+            if(this.addresstype[j].id == this.user.addresstypepu){
+              this.user.addresstypedu = this.addresstype[j].id ;
+              console.log(this.user.addresstypedu);
+            }
+          }
         }
       }
     }
     else {
-
-      this.user.dropoff_location = null ;
-      this.user.dropofflatlong = null ;
-
+      this.user.dropofffdoor = null;
+      this.user.dropoffstreet = null;
+      this.user.dropoffarea = null;
+      this.user.dropoffpincode = null;
+      this.user.dropofflatlong = null;
+      this.user.dropofflandmark  = null;
     }
-
   }
 
   check(value: string,time:string) {
-    console.log(time);
     this.slothour = value;
     this.slot_time = time;
     this.slotcheck = false;
   }
 
 
-  getCre() {
+  getCre(){
     const reqpara7 = {
       requesttype: 'getspecificsvcusers',
       usertype: 2,
       svcid:this.svcid
     }
     const as4 = JSON.stringify(reqpara7)
-    this.ServicingService.getVariant(as4).subscribe(res => {
+    this.ServicingService.webServiceCall(as4).subscribe(res => {
       if (res[0].login === 0) {
         sessionStorage.removeItem('currentUser');
         this.router.navigate(['/auth/login']);
       }
       else {
-
         this.cre = res[0].users
-        console.log(this.cre);
       }
-
     });
   }
 
@@ -723,33 +865,312 @@ public opt={
       svcid:this.svcid
     }
     const as5 = JSON.stringify(reqpara8)
-    this.ServicingService.getVariant(as5).subscribe(res => {
+    this.ServicingService.webServiceCall(as5).subscribe(res => {
       if (res[0].login === 0) {
         sessionStorage.removeItem('currentUser');
         this.router.navigate(['/auth/login']);
       }
       else {
-
-        this.serviceadv = res[0].users
-        console.log(this.serviceadv);
+        this.serviceadv = res[0].users;
       }
-
     });
   }
 
 
   onSubmit(f: NgForm) {
-    console.log(f.value.confirm);
+    this.disabled = true;
+    this.registrationNumber = f.value.num.toUpperCase();
+    if(this.showAddressDropDown){
+      if(this.editAddress){
+        if(f.value.pickupdoor){
+          this.pickupdoor = f.value.pickupdoor;
+        }
+        else {
+          this.pickupdoor = f.value.dropofffdoor;
+        }
+        if(f.value.pickupstreet){
+          this.pickupstreet = f.value.pickupstreet;
+        }
+        else{
+          this.pickupstreet = f.value.dropoffstreet;
+        }
+        if(f.value.pickuparea){
+          this.pickuparea = f.value.pickuparea;
+        }
+        else{
+          this.pickuparea = f.value.dropoffarea;
+        }
+        if(f.value.pickuplandmark){
+          this.pickuplandmark = f.value.pickuplandmark;
+        }
+        else{
+          this.pickuplandmark = f.value.dropofflandmark;
+        }
+        if(f.value.pickuppincode){
+          this.pickuppincode = f.value.pickuppincode;
+        }
+        else{
+          this.pickuppincode = f.value.dropoffpincode;
+        }
+        if(f.value.dropoffarea){
+          this.dropoffarea = f.value.dropoffarea ;
+        }
+        else{
+          this.dropoffarea = f.value.pickuparea ;
+        }
+        if(f.value.dropofffdoor){
+          this.dropofffdoor = f.value.dropofffdoor;
+        }
+        else{
+          this.dropofffdoor = f.value.pickupdoor;
+        }
+        if(f.value.dropoffpincode){
+          this.dropoffpincode = f.value.dropoffpincode;
+        }
+        else{
+          this.dropoffpincode =  f.value.pickuppincode;
+        }
+        if(f.value.dropofflandmark){
+          this.dropofflandmark = f.value.dropofflandmark;
+        }
+        else{
+          this.dropofflandmark = f.value.pickuplandmark;
+        }
+        if(f.value.dropoffstreet){
+          this.dropoffstreet = f.value.dropoffstreet;
+        }
+        else{
+          this.dropoffstreet = f.value.pickupstreet;
+        }
+        this.addressdoprevious = "0";
+        this.addresspuprevious = "0";
+        if(f.value.addresstypepu){
+          this.addresstype_pu = this.user.addresstypepu;
+        }
+        else{
+          this.addresstype_pu = this.user.addresstypedu
+        }
+        if(f.value.addresstypedu){
+          this.addresstype_do = this.user.addresstypedu;
+        }
+        else{
+          this.addresstype_do= this.user.addresstypepu;
+        }
+        if (f.value.picklatlong) {
+          let x = f.value.picklatlong.split(/[ ,;]+/);
+          this.pikup_lat = x[0];
+          this.pikup_long = x[1];
+        }
+        else{
+          if(f.value.droplatlong){
+            let b = f.value.droplatlong.split(/[ ,;]+/);
+            this.pikup_lat= b[0];
+            this.pikup_long = b[1];
+          }
+          else{
+            this.pikup_lat = "0";
+            this.pikup_long = "0";
+          }
+         
+          }
+      
+        if(f.value.droplatlong){
+          let y = f.value.droplatlong.split(/[ ,;]+/);
+          this.dropoff_lat = y[0];
+          this.dropoff_long = y[1];
+        }
+        else {
+          if(f.value.picklatlong){
+            let c = f.value.picklatlong.split(/[ ,;]+/);
+            this.pikup_lat = c[0];
+            this.pikup_long = c[1];
+          }
+          else{
+            this.dropoff_lat = "0";
+          this.dropoff_long = "0";
+          }
+          
+        }
+      }
+      
+      else{
+        this.addressdoprevious = "1";
+        this.addresspuprevious = "1";
+        this.pickupdoor = "0";
+        this.pickupstreet = "0";
+        this.pickuparea = "0";
+        this.pickuplandmark = "0";
+        this.pickuppincode = "0";
+        this.pikup_lat = "0";
+        this.pikup_long = "0";
+        this.dropoffarea = "0";
+        this.dropofffdoor = "0";
+        this.dropoffpincode = "0";
+        this.dropofflandmark = "0";
+        this.dropoffstreet = "0";
+        this.dropoff_long = "0";
+        this.dropoff_lat = "0";
+        if(f.value.addresspu){
+          this.addresstype_pu = this.user.addresspu;
+        }
+        else{
+          this.addresstype_pu = this.user.addressdu
+        }
+        if(f.value.addressdu){
+          this.addresstype_do = this.user.addressdu;
+        }
+        else{
+          this.addresstype_do= this.user.addresspu;
+        }
+      }
+    }
+    if(this.showAddress){
+      if(f.value.pickupdoor){
+        this.pickupdoor = f.value.pickupdoor;
+        this.addresspuprevious = "0";
+      }
+      else{
+        this.pickupdoor = f.value.dropofffdoor;
+        this.addresspuprevious = "0";
+      }
+  
+      if(f.value.pickupstreet){
+        this.pickupstreet = f.value.pickupstreet;
+        this.addresspuprevious = "0";
+      }
+      else{
+        this.pickupstreet = f.value.dropoffstreet;
+        this.addresspuprevious = "0";
+      }
+  
+      if(f.value.pickuparea){
+        this.pickuparea = f.value.pickuparea;
+        this.addresspuprevious = "0";
+      }
+      else{
+        this.pickuparea = f.value.dropoffarea;
+        this.addresspuprevious = "0";
+      }
+      if (f.value.picklatlong) {
+        let x = f.value.picklatlong.split(/[ ,;]+/);
+        this.pikup_lat = x[0];
+        this.pikup_long = x[1];
+      }
+      else{
+        if (f.value.droplatlong){
+          let y = f.value.droplatlong.split(/[ ,;]+/);
+          this.pikup_lat = y[0];
+          this.pikup_long = y[1];
+        }
+        else{
+          this.pikup_lat = "0";
+          this.pikup_long = "0";
+        }
+       } 
+      if(f.value.pickuplandmark){
+        this.pickuplandmark = f.value.pickuplandmark;
+        this.addresspuprevious = "0";
+      }
+      else{
+        this.pickuplandmark = f.value.dropofflandmark;
+        this.addresspuprevious = "0";
+      }
+      if(f.value.addresstypepu){
+        this.addresstype_pu = f.value.addresstypepu;
+        this.addresspuprevious = "0";
+      }
+      else{
+        this.addresstype_pu = f.value.addresstypedu;
+        this.addresspuprevious = "0";
+      }
+      if(f.value.addresstypedu){
+        this.addresstype_do = f.value.addresstypedu;
+        this.addresspuprevious = "0";
+      }
+      else{
+        this.addresstype_do = f.value.addresstypedu;
+        this.addresspuprevious = "0";
+      }
+      if(f.value.pickuppincode){
+        this.pickuppincode = f.value.pickuppincode;
+        this.addresspuprevious = "0";
+      }
+      else{
+        this.pickuppincode = f.value.dropoffpincode;
+        this.addresspuprevious = "0";
+      }
+      if(f.value.dropoffarea){
+        this.dropoffarea = f.value.dropoffarea ;
+        this.addressdoprevious = "0";
+      }
+      else{
+        this.dropoffarea = f.value.pickuparea ;
+        this.addressdoprevious = "0";
+      }
+      if(f.value.dropofffdoor){
+        this.dropofffdoor = f.value.dropofffdoor;
+        this.addressdoprevious = "0";
+      }
+      else{
+        this.dropofffdoor = f.value.pickupdoor;
+        this.addressdoprevious = "0";
+      }
+      if(f.value.dropoffpincode){
+        this.dropoffpincode = f.value.dropoffpincode;
+        this.addressdoprevious = "0";
+      }
+      else{
+        this.dropoffpincode =f.value.pickuppincode;
+        this.addressdoprevious = "0";
+      }
+      if(f.value.dropofflandmark){
+        this.dropofflandmark = f.value.dropofflandmark;
+        this.addressdoprevious = "0";
+      }
+      else{
+        this.dropofflandmark = f.value.pickuplandmark;
+        this.addressdoprevious = "0";
+      }
+      if(f.value.dropoffstreet){
+        this.dropoffstreet = f.value.dropoffstreet;
+        this.addressdoprevious = "0";
+      }
+      else{
+        this.dropoffstreet = f.value.pickupstreet;
+        this.addressdoprevious = "0";
+      }
+      if(f.value.addresstypedu){
+        this.addresstype_do = f.value.addresstypedu;
+        this.addresspuprevious = "0";
+      }
+      else{
+        this.addresstype_do = f.value.addresstypepu;
+        this.addresspuprevious = "0";
+      }
+      if(f.value.droplatlong){
+        let y = f.value.droplatlong.split(/[ ,;]+/);
+        this.dropoff_lat = y[0];
+        this.dropoff_long = y[1];
+      }
+      else{
+        if(f.value.picklatlong){
+          let a = f.value.picklatlong.split(/[ ,;]+/);
+          this.dropoff_lat = a[0];
+          this.dropoff_long = a[1];
+        }
+        else{
+          this.dropoff_lat = "0";
+          this.dropoff_long = "0";
+        }
+      }
+    }
     if (f.value.confirm) {
       this.isconfirm = "1";
     }
     else {
       this.isconfirm = "0";
     }
-    this.disabled = true;
-    this.registrationNumber = f.value.num.toUpperCase();
-    console.log(this.registrationNumber);
-
+   
     if (this.user.time) {
       this.slot_time = this.user.time + ':00'
     }
@@ -758,44 +1179,11 @@ public opt={
       }
     }
 
-    if (f.value.droplatlong) {
-      let x = f.value.droplatlong.split(/[ ,;]+/);
-      console.log(x);
-      this.dropoff_lat = x[0];
-      this.dropoff_long = x[1];
-    }
-    else{
-      this.dropoff_lat = "0";
-      this.dropoff_long = "0";
-    }
-
-    if (f.value.picklatlong) {
-      let y = f.value.picklatlong.split(/[ ,;]+/);
-      console.log(y);
-      this.pickup_add = f.value.pickuploc;
-      this.pikup_lat = y[0];
-      this.pikup_long = y[1];
-    }
-    else {
-      this.pickup_add = f.value.droploc;
-      if (f.value.droplatlong){
-        this.pikup_lat = this.dropoff_lat;
-        this.pikup_long = this.dropoff_long;
-      }
-      else{
-        this.pikup_lat = "0";
-      this.pikup_long = "0";
-      }
-      
-    }
-
-    if (f.value.mobile2) {
-      this.mobile2 = f.value.mobile2;
-      console.log(this.mobile2);
+    if (f.value.mobile2) { 
+      this.mobile2 = f.value.mobile2; 
     }
     else {
       this.mobile2 = "0";
-      console.log("0");
     }
 
     if (f.value.notes) {
@@ -804,52 +1192,45 @@ public opt={
     else {
       this.notes = "-";
     }
-    if(f.value.droploc){
-      this.droplocation = f.value.droploc
-    }
-    else{
-      if(f.value.pickuploc){
-        this.droplocation = f.value.pickuploc
-      }
-      else{
-        this.droplocation = "0";
-      }
-    }
-
-    if (f.value.amt) {
+   
+   if (f.value.amt) {
       this.amt = f.value.amt;
     }
     else {
       this.amt = "0";
     }
-    if (this.slot_time) {
 
-    }
+    if (this.slot_time) {}
     else {
       this.slot_time = "0";
     }
     
     if (this.yourBoolean === 'servicing' || this.yourBoolean === 'onlypickup') {
       this.pickup_drop = 0;
-      console.log(this.pickup_drop);
     }
     else {
       this.pickup_drop = 1;
-      console.log(this.pickup_drop);
     }
-
-    for (var i = 0; i < this.selectedItems.length; i++) {
-      this.complaint_id.push(this.selectedItems[i].id);
-    }
-    if(this.selectedItems.length == 0)
-    {
-      this.complaint_id = ["0"];
-    }
-    console.log(this.complaint_id);
-
+  
+      console.log(this.selectedItems);
+      if (this.selectedItems === null ) {
+        this.complaint_id = ["0"];
+      }
+      else if (this.selectedItems.length > 0){
+        for (var i = 0; i < this.selectedItems.length; i++) {
+          this.complaint_id.push(this.selectedItems[i].id);
+        }
+      }  
+      else{
+        this.complaint_id = ["0"];
+      }
+       var cityId = JSON.parse(sessionStorage.getItem('city_id'));
+      console.log(cityId);
+    if(this.slot_time != "0"){
     const reqpara6 = {
-      requesttype: "createbooking",
+      requesttype: "createbookingv3",
       vehnumber: this.registrationNumber,
+      city: cityId,
       vehbrand: this.selectedBrand,
       carmodelid: f.value.model,
       carsubmodelid: f.value.variant,
@@ -858,63 +1239,89 @@ public opt={
       customermobile2: this.mobile2,
       customeremail: f.value.email,
       queuetime: this.dateString + ' ' + this.slot_time,
-      pickuplocationaddress: this.pickup_add,
-      pickuplat: this.pikup_lat,
-      pickuplong: this.pikup_long,
-      droplocationaddress: this.droplocation,
-      droplat: this.dropoff_lat,
-      droplong: this.dropoff_long,
-      servicetype: this.pickup_drop,
-      advisorid: f.value.ServiceAdvisor,
-      creid: f.value.creName,
-      assignambassador: this.amb,
-      selectedsvcid: this.svcid,
-      cfeeclient: this.amt,
-      notes: this.notes,
-      isconfirmed: this.isconfirm,
-      complaint: this.complaint_id
+      addresspuprevious:this.addresspuprevious,
+      doornumberpu:this.pickupdoor,
+      streetpu:this.pickupstreet,
+      areapu:this.pickuparea,
+      landmarkpu:this.pickuplandmark,
+      pincodepu:this.pickuppincode,
+      addresstypepu:this.addresstype_pu,
+      pickuplat:this.pikup_lat,
+      pickuplong:this.pikup_long,
+      addressdoprevious:this.addressdoprevious,
+      doornumberdo:this.dropofffdoor,
+      streetdo:this.dropoffstreet,
+      areado:this.dropoffarea,
+      landmarkdo:this.dropofflandmark,
+      pincodedo:this.dropoffpincode,
+      addresstypedo:this.addresstype_do,
+      droplat:this.dropoff_lat,
+      droplong:this.dropoff_long,
+      servicetype:this.pickup_drop,
+      advisorid:f.value.ServiceAdvisor,
+      creid:f.value.creName,
+      assignambassador:this.amb,
+      selectedsvcid:this.svcid,
+      cfeeclient:this.amt,
+      notes:this.notes,
+      isconfirmed:this.isconfirm,
+      eavalidcode:this.ea_respondID,
+      complaint:this.complaint_id
+     
     };
 
     const ua = JSON.stringify(reqpara6);
     console.log(ua);
-    this.ServicingService.AddSerivicng(ua).subscribe(data => {
+    this.ServicingService.webServiceCall(ua).subscribe(data => {
       if (data[0].login === 0) {
         sessionStorage.removeItem('currentUser');
         this.router.navigate(['/auth/login']);
-      } else {
+      } else if(data[0].hasOwnProperty('queue')) {
         this.message = data[0].queue,
           this.disabled = false;
         this.showLargeModal(this.message[0], this.notes);
-        console.log(this.message[0].queue_id);
-        // f.reset();
         this.slot_time = "0";
         this.show1 = false;
         this.show2 = false;
         this.show3 = false;
         this.showstep2 = false;
+        this.showstep3 = false;
+        this.showAddressDropDown = false;
+        this.showAddress = false;
         this.pickup_drop = 0;
-       
+        this.counter = 0;
+        this.slot = [];
         f.reset();
         this.countrycode1 = "+91";
         this.dateString = null;
         this.yourBoolean = 'servicing';
         this.user.salutation = 'Mr';
         this.user.confirm = true;
+        this.editAddress = false;
+        this.complaint_id = [];
         this.datecheck = false;
+        this.showtime = false;
+        this.disableNext = false;
+        this.user.mobile1 = null;
+      }
+      else if(data[0].hasOwnProperty('error')){
+        this.showToast('alert', 'Alert', 'Sorry !! Something went wrong');
       }
     },
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
-          console.log("Client-side error occured.");
+         
         }
         else {
-          console.log("Server-side error occured.");
+          
         }
       }
     );
-  };
-
-
+  }
+  else {
+    this.showToast('alert', 'Message', 'Please select Slot and date');
+  }
+  }
 
 }
 

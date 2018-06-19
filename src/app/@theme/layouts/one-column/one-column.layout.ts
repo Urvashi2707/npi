@@ -15,7 +15,8 @@ import { Component ,OnInit} from '@angular/core';
         <ng-content select="nb-menu" (click)="onClick($event)" ></ng-content>
       </nb-sidebar>
 
-      <nb-layout-column>
+      <nb-layout-column style="max-width: 100%;
+      overflow-x: hidden;">
         <ng-content select="router-outlet"></ng-content>
       </nb-layout-column>
 
@@ -28,7 +29,7 @@ import { Component ,OnInit} from '@angular/core';
 export class OneColumnLayoutComponent {
   ngOnInit(){
 
-    console.log('sidebar');
+    console.log('one-column');
 
   }
   onClick( value:any){

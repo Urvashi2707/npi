@@ -13,13 +13,17 @@ th,
 td {
     border: 1px solid rgb(218, 223, 230);
     border-collapse: collapse;
+    font-size:13px;
 }
 
 th,
 td {
     padding: 15px;
 }
-
+.paginate{
+    text-align: center;
+    padding-top: 5%;
+    }
 tbody tr:hover {
     background-color: lightyellow;
 }

@@ -39,7 +39,7 @@ import { Component ,OnInit} from '@angular/core';
 export class TwoColumnsLayoutComponent implements OnInit {
 
   ngOnInit(){
-    console.log('sidebar2');
+    console.log('2-column');
   }
 
 }

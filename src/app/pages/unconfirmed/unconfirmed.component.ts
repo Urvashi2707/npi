@@ -15,6 +15,7 @@ import * as FileSaver from "file-saver";
 import { DatePipe } from '@angular/common';
 import {NgbActiveModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import {Modal5Component} from './modal5/modal5.component';
+import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-unconfirmed',
   templateUrl: './unconfirmed.component.html',
@@ -24,6 +25,9 @@ export class UnconfirmedComponent implements OnInit {
   public unconfirmed : any =[];
   public term:string;
   today:string;
+  p:number=1;
+  record_count:string;
+  dataperpage:string;
   dateString: string;
   dateString1: string;
   model: NgbDateStruct;
@@ -34,7 +38,7 @@ export class UnconfirmedComponent implements OnInit {
   message:string;
   globalsvcid:string;
   svcid:string;
-  constructor(private modalService: NgbModal,private datePipe:DatePipe,private ngbDateParserFormatter: NgbDateParserFormatter,private router:Router,private service:ServicingService ) { }
+  constructor(private spinner: NgxSpinnerService,private modalService: NgbModal,private datePipe:DatePipe,private ngbDateParserFormatter: NgbDateParserFormatter,private router:Router,private service:ServicingService ) { }
 
   ngOnInit() {
     if(sessionStorage.getItem('selectedsvc')){
@@ -48,14 +52,20 @@ export class UnconfirmedComponent implements OnInit {
     }
     this.globalsvcid = JSON.parse(sessionStorage.getItem('globalsvcid'));
     console.log(this.globalsvcid);
-    var date = new Date();
+    const date = new Date();
+    this.model = {day:date.getUTCDate(),month:date.getUTCMonth() + 1,year: date.getUTCFullYear() };
+    this.dateString = this.model.year + '-' + this.model.month + '-' + this.model.day;
+    var numberOfDays = 5;
+    var dt = new Date();
+         dt.setDate( dt.getDate() - 5 );
+    this.model1 = { day: dt.getUTCDate(), month: dt.getUTCMonth() + 1, year: dt.getUTCFullYear()};
+    this.dateString1 = this.model1.year + '-' + this.model1.month + '-' + this.model1.day;
     this.today = this.datePipe.transform(date,"yyyy-MM-dd");
     console.log(this.today)
-    var numberOfDays = 5;
     var days = date.setDate(date.getDate() - numberOfDays);
     this.pastdate = this.datePipe.transform(days,"yyyy-MM-dd");
     console.log(this.pastdate);
-    this.getData();
+    this.FilterCheck(1);
   }
   showModal(res:any) {
     const activeModal = this.modalService.open(Modal5Component, { size: 'lg', container: 'nb-layout' });
@@ -65,39 +75,6 @@ export class UnconfirmedComponent implements OnInit {
   sort(key){
     this.key = key;
     this.reverse = !this.reverse;
-  }
-  getData(){
-    const reqpara1 = 
-    {
-      requesttype: 'getqueueinfonew',
-      servicetype:13,
-      starttime: this.pastdate,
-      endtime: this.today,
-      pagenumber: '0',
-      svcid:this.svcid
-    }
-      const as1 = JSON.stringify(reqpara1)
-      this.service.getBrands(as1).subscribe
-  (res => 
-    {
-      if(res[0].login === 0){
-        sessionStorage.removeItem('currentUser');
-        this.router.navigate(['/auth/login']);
-      }
-      else{
-        if(res[0].pagecount[0].hasOwnProperty('noqueues')){
-          console.log('No queue');
-          this.message = "No Data" ;
-         }
-         else{
-          this.unconfirmed = res[1].unconfirmed;
-         }
-      //   this.unconfirmed = res[1].unconfirmed;
-      // console.log(this.unconfirmed);
-      }
-
-    }
-  );
   }
   onSelectDate(date: NgbDateStruct){
     if (date != null) {
@@ -118,29 +95,37 @@ export class UnconfirmedComponent implements OnInit {
         
 
   }
-  FilterCheck(){
-
+  FilterCheck(p:number){
+    this.spinner.show();
+    this.p = p - 1 ;
+   this.message = "";
     const reqpara3 = {
       requesttype: 'getqueueinfonew',
       servicetype: '13',
       starttime: this.dateString1,
       endtime: this.dateString,
-      pagenumber: '0',
+      pagenumber: this.p,
       svcid:this.svcid
     }
     const as3 = JSON.stringify(reqpara3);
     console.log(as3);
-    this.service.getBrands(as3).subscribe(res => {
+    this.service.webServiceCall(as3).subscribe(res => {
       console.log(res);
       this.message="";
       if(res[0].pagecount[0].hasOwnProperty('noqueues')){
         console.log('No queue');
         this.message = "No Data" ;
+        this.spinner.hide();
        }
        else{
         this.unconfirmed = res[1].unconfirmed;
-       }
-      // console.log(this.unconfirmed);
+        this.record_count = res[0].pagecount[0].record_count;
+        this.dataperpage = res[0].pagecount[0].pagelimit;
+        console.log(this.record_count);
+        this.spinner.hide();
+       
+      }
+      
     });
   }
 

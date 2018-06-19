@@ -7,7 +7,7 @@
                     <nb-tab tabTitle="Add Centre" *ngIf="checkgrpadmin">
                         <div class="row">
                             <div class="col-md-6 mx-auto">
-                                <form novalidate #f="ngForm" (ngSubmit)="onSubmit(f)">
+                                <form ngNativeValidate #f="ngForm" (ngSubmit)="onSubmit(f)">
                                     <div style="width:100%;margin-left:auto;margin-right:auto">
 
                                         <div class="form-group">
@@ -17,8 +17,8 @@
 
 
                                         <div class="form-control-feedback" *ngIf="svcname.errors && (svcname.dirty || svcname.touched)">
-                                            <p *ngIf="svcname.errors.required">Service Centre Name is required</p>
-                                            <p *ngIf="svcname.errors.minlength">3 character</p>
+                                            <p *ngIf="svcname.errors.required" class="haserror">Service Centre Name is required</p>
+                                            <p *ngIf="svcname.errors.minlength" class="haserror">Minimum 3 character</p>
                                         </div>
 
                                         <div class="form-group">
@@ -28,8 +28,8 @@
 
 
                                         <div class="form-control-feedback" *ngIf="add1.errors && (add1.dirty || add1.touched)">
-                                            <p *ngIf="add1.errors.required">Address is required</p>
-                                            <p *ngIf="add1.errors.minlength">3 character</p>
+                                            <p *ngIf="add1.errors.required" class="haserror">Address is required</p>
+                                            <p *ngIf="add1.errors.minlength" class="haserror"> Minimum 3 character</p>
                                         </div>
 
                                         <div class="form-group">
@@ -39,8 +39,8 @@
 
 
                                         <div class="form-control-feedback" *ngIf="add2.errors && (add2.dirty || add2.touched)">
-                                            <p *ngIf="add2.errors.required">Address is required</p>
-                                            <p *ngIf="add2.errors.minlength">3 character</p>
+                                            <p *ngIf="add2.errors.required" class="haserror">Address is required</p>
+                                            <p *ngIf="add2.errors.minlength" class="haserror">Minimum 3 character</p>
                                         </div>
 
                                         <div class="form-group">
@@ -52,7 +52,7 @@
 
 
                                         <div class="form-control-feedback" *ngIf="city.errors && (city.dirty || city.touched)">
-                                            <p *ngIf="city.errors.required">City is required</p>
+                                            <p *ngIf="city.errors.required" class="haserror">City is required</p>
                                         </div>
 
                                         <div class="form-group">
@@ -62,9 +62,9 @@
 
 
                                         <div class="form-control-feedback" *ngIf="pincode.errors && (pincode.dirty || pincode.touched)">
-                                            <p *ngIf="pincode.errors.required">Pincode is required</p>
-                                            <p *ngIf="pincode.errors.maxlength">Length should be 6 </p>
-                                            <p *ngIf="!pincode.errors.valid">Please Enter number only</p>
+                                            <p *ngIf="pincode.errors.required" class="haserror">Pincode is required</p>
+                                            <p *ngIf="pincode.errors.maxlength" class="haserror">Length should be 6 </p>
+                                            <p *ngIf="!pincode.errors.valid" class="haserror">Please Enter number only</p>
                                         </div>
 
                                         <div class="form-group">
@@ -75,7 +75,7 @@
 
 
                                         <div class="form-control-feedback" *ngIf="capacity.errors && (capacity.dirty || capacity.touched)">
-                                            <p *ngIf="capacity.errors.required">capacity is required</p>
+                                            <p *ngIf="capacity.errors.required" class="haserror">capacity is required</p>
                                         </div>
 
                                         <div class="form-group">
@@ -87,7 +87,7 @@
 
 
                                         <div class="form-control-feedback" *ngIf="job.errors && (job.dirty || job.touched)">
-                                            <p *ngIf="job.errors.required">Job is required</p>
+                                            <p *ngIf="job.errors.required" class="haserror">Job is required</p>
                                         </div>
 
                                         <div class="form-group">
@@ -98,7 +98,7 @@
 
                                         <div class="form-control-feedback" *ngIf="latlong.errors && (latlong.dirty || latlong.touched)">
 
-                                            <p *ngIf="!latlong.errors.valid">Pattern is wrong</p>
+                                            <p *ngIf="!latlong.errors.valid" class="haserror">Pattern is wrong</p>
                                         </div>
                                         <h5 style="margin-bottom: 1.5em;">Bank Details</h5>
                                         <div class="form-group">
@@ -108,7 +108,7 @@
 
 
                                         <div class="form-control-feedback" *ngIf="bank_name.errors && (bank_name.dirty || bank_name.touched)">
-                                            <p *ngIf="bank_name.errors.required">Bank Name is required</p>
+                                            <p *ngIf="bank_name.errors.required" class="haserror">Bank Name is required</p>
                                         </div>
 
                                         <div class="form-group">
@@ -118,7 +118,7 @@
 
 
                                         <div class="form-control-feedback" *ngIf="bank_branch.errors && (bank_branch.dirty || bank_branch.touched)">
-                                            <p *ngIf="bank_branch.errors.required">bank_branch is required</p>
+                                            <p *ngIf="bank_branch.errors.required" class="haserror">bank_branch is required</p>
                                         </div>
 
                                         <div class="form-group">
@@ -128,8 +128,8 @@
 
 
                                         <div class="form-control-feedback" *ngIf="bank_pincode.errors && (bank_pincode.dirty || bank_pincode.touched)">
-                                            <p *ngIf="bank_pincode.errors.required">Pincode is required</p>
-                                            <p *ngIf="bank_pincode.errors.maxlength">Length should be 6 </p>
+                                            <p *ngIf="bank_pincode.errors.required" class="haserror">Pincode is required</p>
+                                            <p *ngIf="bank_pincode.errors.maxlength" class="haserror">Length should be 6 </p>
                                         </div>
 
                                         <div class="form-group">
@@ -139,7 +139,7 @@
 
 
                                         <div class="form-control-feedback" *ngIf="bank_account_name.errors && (bank_account_name.dirty || bank_account_name.touched)">
-                                            <p *ngIf="bank_account_name.errors.required">Account Name is required</p>
+                                            <p *ngIf="bank_account_name.errors.required" class="haserror">Account Name is required</p>
                                         </div>
 
                                         <div class="form-group">
@@ -149,7 +149,7 @@
 
 
                                         <div class="form-control-feedback" *ngIf="bank_account_number.errors && (bank_account_number.dirty || bank_account_number.touched)">
-                                            <p *ngIf="bank_account_number.errors.required">Acccount Number is required</p>
+                                            <p *ngIf="bank_account_number.errors.required" class="haserror">Acccount Number is required</p>
                                         </div>
 
                                         <div class="form-group">
@@ -159,11 +159,11 @@
 
 
                                         <div class="form-control-feedback" *ngIf="bank_ifsc_code.errors && (bank_ifsc_code.dirty || bank_ifsc_code.touched)">
-                                            <p *ngIf="bank_ifsc_code.errors.required">IFSC Code is required</p>
+                                            <p *ngIf="bank_ifsc_code.errors.required" class="haserror">IFSC Code is required</p>
                                         </div>
 
                                         <div>
-                                            <button type="submit" class="btn btn-primary" [disabled]="f.invalid">Submit</button>
+                                            <button type="submit" class="btn btn-primary" >Submit</button>
                                         </div>
 
                                     </div>
@@ -173,14 +173,14 @@
                     </nb-tab>
                     <nb-tab tabTitle="Centre List">
 
-                        <div class="row">
+                        <div class="row" >
                             <div class="col-md-12 col-lg-12 col-sm-12">
-                                <div class="row">
+                                <div class="row" style="padding-bottom: 4%">
                                     <div class="col-md-6 col-lg-6 col-sm-6">
 
                                     </div>
-                                    <div class="col-md-6 col-lg-6 col-sm-6">
-                                        <input type="text" class="search" [(ngModel)]="term" placeholder="search">
+                                    <div class="col-md-4 col-lg-4 col-sm-4">
+                                        <input type="text" class="search" [(ngModel)]="term" placeholder="search" style="height: 161%;">
                                     </div>
                                 </div>
 
@@ -188,7 +188,7 @@
                                 <div>
 
                                     <div>
-                                        <table class="table">
+                                        <table class="table" style="padding-top:10%">
                                             <tr>
                                                 <th (click)="sort('name')">Name
                                                     <span class="sort-span"><i class="fa"  [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i></span>
@@ -205,21 +205,22 @@
 
                                                 <th *ngIf="checkgrpadmin">Edit</th>
                                             </tr>
-                                            <tr *ngFor="let list of List | orderBy: key : reverse | filter : term | paginate: { itemsPerPage: 2, currentPage: p };">
+                                            <tr *ngFor="let list of List | orderBy: key : reverse | filter : term">
 
                                                 <td>{{list.name}}</td>
                                                 <td>{{list.manager_name}}</td>
                                                 <td>{{list.manager_mobile}}</td>
                                                 <td>{{list.manager_email}}</td>
 
-                                                <td>
-                                                    <button (click)="showLargeModal(list)" style="background-color: white;border-color: orange;" *ngIf="checkgrpadmin">
+                                                <td *ngIf="checkgrpadmin">
+                                                    <button (click)="showLargeModal(list)" style="background-color: white;border-color: orange;" >
                                                         <i class="fa fa-pencil" style="color:#ffa100" aria-hidden="true"></i>
                                                     </button>
                                                 </td>
                                             </tr>
-                                            <pagination-controls (pageChange)="p = $event"></pagination-controls>
+
                                         </table>
+                                        <!-- <pagination-controls (pageChange)="p = $event"></pagination-controls> -->
                                     </div>
                                 </div>
                             </div>

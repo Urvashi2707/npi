@@ -36,6 +36,11 @@ getCustinfo(reqpara){
     return this.http.post(this.url, reqpara, this.httpOptions);
   }
 
+
+  webServiceCall(reqpara){
+    return this.http.post(this.url, reqpara, this.httpOptions);
+  }
+
   createChauffeur(reqpara){
     return this.http.post(this.url, reqpara, this.httpOptions);
   }

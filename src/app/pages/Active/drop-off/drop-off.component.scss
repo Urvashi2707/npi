@@ -7,6 +7,7 @@ th,
 td {
     border: 1px solid rgb(218, 223, 230);
     border-collapse: collapse;
+    font-size:13px;
 }
 
 th,
@@ -17,11 +18,17 @@ td {
 tbody tr:hover {
     background-color: lightyellow;
 }
-
+.paginate{
+    text-align: center;
+    padding-top: 5%;
+    }
 .sort-span {
     float: right;
 }
-
+.paginate{
+    text-align: center;
+    padding-top: 5%;
+    }
 .search {
     float: right;
     margin-bottom: 5%;
@@ -30,4 +37,41 @@ tbody tr:hover {
     border-radius: 4px;
     height: 60%;
     width: 50%;
+}
+@media only screen and (max-width: 1050px) {
+    .desktopView {
+        display: none;
+    }
+}
+
+@media only screen and (min-width: 2000px) {
+    .mobileView {
+        display: none;
+    }
+   
+}
+
+@media only screen and (max-width: 320px) {
+    .desktopView {
+        display: none;
+    }
+    .mobileView{
+        max-width: 100%;
+        overflow-x: hidden;
+        color:black;
+    }
+    ul{
+        list-style-type: none;
+    }
+    .card{
+        color:black;
+    }
+    .container{
+        width: 100%;
+    }
+    .progressbar li{
+        list-style-type: none;
+        float: left;
+    }
+
 }

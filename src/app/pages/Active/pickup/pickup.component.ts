@@ -6,6 +6,7 @@ import { QueueTableService } from '../../services/queue-table.service';
 import { ListService } from '../../services/user.service';
 import { Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
+import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-pickup',
   templateUrl: './pickup.component.html',
@@ -17,9 +18,10 @@ export class PickupComponent implements OnInit {
   tableData: any[];
   keyValues: any[];
   term:string;
-
+  record_count:string;
+  dataperpage:string;
   public pickup : any =[];
-
+  p:number=1;
   today:string;
   dateString: string;
   dateString1: string;
@@ -33,19 +35,34 @@ export class PickupComponent implements OnInit {
   key: string = 'id'; 
   reverse: boolean = false;
 
-  constructor(private datePipe:DatePipe,private ngbDateParserFormatter: NgbDateParserFormatter,private _detailsTable: QueueTableService, private _data: ListService, private _tableService: QueueTableService, private router: Router) {
+  constructor(private spinner: NgxSpinnerService,private datePipe:DatePipe,private ngbDateParserFormatter: NgbDateParserFormatter,private _detailsTable: QueueTableService, private _data: ListService, private _tableService: QueueTableService, private router: Router) {
 
     this._tableService.clickedID.subscribe(value => {
       this.tableData = _tableService.table_data;
       this.keyValues = ['queueid', 'queue_time', 'cust_name', 'veh_number', 'cre_name', 'queue_status'];
     });
-    var date = new Date();
-    this.today = this.datePipe.transform(date,"yyyy-MM-dd");
-    console.log(this.today)
+    const date = new Date();
+    this.model = {day:date.getUTCDate(),month:date.getUTCMonth() + 1,year: date.getUTCFullYear() };
+    this.dateString = this.model.year + '-' + this.model.month + '-' + this.model.day;
     var numberOfDays = 5;
+    var dt = new Date();
+         dt.setDate( dt.getDate() - 5 );
+    this.model1 = { day: dt.getUTCDate(), month: dt.getUTCMonth() + 1, year: dt.getUTCFullYear()};
+    this.dateString1 = this.model1.year + '-' + this.model1.month + '-' + this.model1.day;
+    this.today = this.datePipe.transform(date,"yyyy-MM-dd");
+    
+    console.log(this.today)
+   
     var days = date.setDate(date.getDate() - numberOfDays);
     this.pastdate = this.datePipe.transform(days,"yyyy-MM-dd");
     console.log(this.pastdate);
+    // this.today = this.datePipe.transform(date,"yyyy-MM-dd");
+    // this.today = this.datePipe.transform(date,"yyyy-MM-dd");
+    // console.log(this.today)
+    
+    // var days = date.setDate(date.getDate() - numberOfDays);
+    // this.pastdate = this.datePipe.transform(days,"yyyy-MM-dd");
+    // console.log(this.pastdate);
   }
 
   ngOnInit() {
@@ -60,35 +77,7 @@ export class PickupComponent implements OnInit {
     }
     this.globalsvcid = JSON.parse(sessionStorage.getItem('globalsvcid'));
     console.log(this.globalsvcid);
-    const reqpara3 = {
-      requesttype: 'getqueueinfonew',
-      servicetype: '0',
-      starttime: this.pastdate,
-      endtime: this.today,
-      pagenumber: '0',
-      svcid:this.svcid 
-    }
-    const as3 = JSON.stringify(reqpara3);
-    console.log(as3);
-    this._data.createUser(as3).subscribe(res => {
-
-      if(res[0].login === 0){
-        sessionStorage.removeItem('currentUser');
-        this.router.navigate(['/auth/login']);
-      }
-      else{
-
-      if(res[0].pagecount[0].hasOwnProperty('noqueues')){
-        console.log('No queue');
-        this.message = 'No Data';
-       }
-       else{
-
-        this.pickup = res[1].activepickup;
-        console.log(this.pickup)
-       }
-    }
-  });
+    this.FilterCheck(1);
   
   }
   sort(key){
@@ -123,20 +112,22 @@ export class PickupComponent implements OnInit {
     this.router.navigate(['/pages/queue-details']);
   }
 
-  FilterCheck(){
-    this.message = "";
+  FilterCheck(p:number){
+    this.message=" ";
+    this.spinner.show();
+    this.p = p - 1 ;
 
     const reqpara3 = {
       requesttype: 'getqueueinfonew',
       servicetype: '0',
       starttime: this.dateString1,
       endtime: this.dateString,
-      pagenumber: '0',
+      pagenumber:this.p,
       svcid:this.svcid 
     }
     const as3 = JSON.stringify(reqpara3);
     console.log(as3);
-    this._data.createUser(as3).subscribe(res => {
+    this._data.webServiceCall(as3).subscribe(res => {
 
       if(res[0].login === 0){
         sessionStorage.removeItem('currentUser');
@@ -149,11 +140,16 @@ export class PickupComponent implements OnInit {
       if(res[0].pagecount[0].hasOwnProperty('noqueues')){
         console.log('No queue');
         this.message = 'No Data';
+        this.spinner.hide();
        }
        else{
 
         this.pickup = res[1].activepickup;
-        console.log(this.pickup)
+        console.log(this.pickup);
+        this.record_count = res[0].pagecount[0].record_count;
+        this.dataperpage = res[0].pagecount[0].pagelimit;
+        console.log(this.record_count);
+        this.spinner.hide();
        }
 
     }

@@ -44,10 +44,10 @@ import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown/angular2
 import { ModalAdvComponent } from './queue-details/modal-adv/modal-adv.component';
 import { OnlyNumber } from './number.directive';
 import { NotcheckedinComponent } from './notcheckedin/notcheckedin.component';
-
+import {NgxPaginationModule} from 'ngx-pagination';
 import {columnPipe,rowPipe,searchPipe} from './pipe.pipe'
 import { Ng2OrderModule } from 'ng2-order-pipe'; 
-
+import { NgxSpinnerModule } from 'ngx-spinner';
 const PAGES_COMPONENTS = [
   PagesComponent,
 ];
@@ -60,7 +60,10 @@ const PAGES_COMPONENTS = [
     MaterialModule,
     Ng2SearchPipeModule,
     AngularMultiSelectModule,
-    Ng2OrderModule
+    Ng2OrderModule,
+    NgxPaginationModule,
+    NgxSpinnerModule,
+   
   ],
   declarations: [
     ...PAGES_COMPONENTS,

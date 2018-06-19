@@ -59,7 +59,7 @@ export class ManageComponent implements OnInit {
       { id: 2, type: 'Mrs' },
       { id: 3, type: 'Ms' },
     ];
-    
+    this.user.salutation = 'Mr';
     this.svcadmin = JSON.parse(sessionStorage.getItem('svcadmin'));
     console.log(this.svcadmin);
     this.groupadmin = JSON.parse(sessionStorage.getItem('groupadmin'));
@@ -91,7 +91,7 @@ export class ManageComponent implements OnInit {
         svcid:this.svcid
       }
     const as1 = JSON.stringify(reqpara1)
-    this.servicing.getBrands(as1).subscribe
+    this.servicing.webServiceCall(as1).subscribe
       (res => {
         if (res[0].login === 0) {
           sessionStorage.removeItem('currentUser');
@@ -117,7 +117,7 @@ export class ManageComponent implements OnInit {
         requesttype: 'getcitylist',
       }
     const as1 = JSON.stringify(reqpara1)
-    this.servicing.getBrands(as1).subscribe
+    this.servicing.webServiceCall(as1).subscribe
       (res => {
         if (res[0].login === 0) {
           sessionStorage.removeItem('currentUser');

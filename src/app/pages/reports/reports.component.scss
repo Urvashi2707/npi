@@ -25,7 +25,10 @@
     top: 0;
     opacity: 0;
 }
-
+.paginate{
+    text-align: center;
+    padding-top: 5%;
+    }
 .form-group {
     position: relative;
     margin-bottom: 1.5rem;
@@ -49,11 +52,18 @@ th,
 td {
     border: 1px solid rgb(218, 223, 230);
     border-collapse: collapse;
+    font-size:13px;
+ 
 }
 
 th,
 td {
     padding: 15px;
+}
+
+
+tbody tr:hover {
+    background-color: lightyellow;
 }
 
 .sort-span {

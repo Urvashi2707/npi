@@ -1,14 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
-import {User,Ilogin} from '../user';
+import {Ilogin} from '../user';
 import { ServicingService } from '../../services/addServicing.service';
 import {HttpClient,HttpHeaders,HttpErrorResponse} from '@angular/common/http';
-import {NgForm} from '@angular/forms';
 import { CookieService } from 'ngx-cookie-service';
-import { RouterLink } from '@angular/router';
 import { ToasterService, ToasterConfig, Toast, BodyOutputType } from 'angular2-toaster';
-import 'style-loader!angular2-toaster/toaster.css';
-import { OnlyNumber } from '../../number.directive';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -25,31 +22,26 @@ export class LoginComponent implements OnInit {
   animationType = 'fade';
   timeout = 5000;
   toastsLimit = 5;
+  loggedIn = false;
+  showAlert = false;
 
   constructor( private ServicingService: ServicingService,private toasterService: ToasterService,private http: HttpClient,private router: Router,private _cookieService:CookieService) { 
-
-    if(_cookieService.get('mobile')){
-      this.user.mobile=this._cookieService.get('mobile');
-      this.user.password=this._cookieService.get('password');
-   }
+      if(_cookieService.get('mobile')){
+        this.user.mobile=this._cookieService.get('mobile');
+        this.user.password=this._cookieService.get('password');
+    }
   }
-  loggedIn = false;
-  ngOnInit() {
-
-    // this.getSession();
-
-  }
+  
+  ngOnInit() {}
 
   user:Ilogin={
     mobile:'',
     password:''
-   
-  }
+   }
 
   public httpOptions = {
   headers: new HttpHeaders({'Content-Type':  'application/json'}),
   withCredentials: true
-
 };
 
 private showToast(type: string, title: string, body: string) {
@@ -72,43 +64,57 @@ private showToast(type: string, title: string, body: string) {
   };
   this.toasterService.popAsync(toast);
 }
+
 goTo(){
   this.router.navigate(['auth/forgot']);
 }
-
- // public  options = new RequestOptions({ headers: this.httpOptions});
+closeAlert(){
+  this.showAlert = false;
+}
+ getSession(){
+  this.ServicingService.session().subscribe(res =>{
+    console.log(res)
+    console.log(res["sId"]);
+    sessionStorage.setItem('token',res["sId"]);
+    sessionStorage.setItem('auth-user',res["userName"]);
+    this.ServicingService.setter(res["sId"]);
+  });
+}
 
   onSubmit({ value, valid }: { value: Ilogin, valid: boolean }) {
-
-   const reqpara = {
-        requesttype: 'login',
-        mobile: value.mobile,
-        password: value.password,
+            sessionStorage.clear();
+            localStorage.clear();
+            this.getSession();
+            this.showAlert = false;
+            const reqpara = {
+                requesttype: 'login',
+                mobile: value.mobile,
+                password: value.password,
+         }
+        const ua = JSON.stringify(reqpara);
+        const req = this.http.post('http://m.21north.in/notify/svcwebservice.php',ua,this.httpOptions)
+          .subscribe(response => {
+              console.log(response[0].login[0].hasOwnProperty('userid'));
+              if(response[0].login[0].hasOwnProperty('userid')){
+                sessionStorage.setItem('currentUser',JSON.stringify(response[0]));
+                sessionStorage.setItem('globalsvcid',JSON.stringify(response[0].login[0].svcid));
+                sessionStorage.setItem('svcname',JSON.stringify(response[0].login[0].svcname));
+                sessionStorage.setItem('terms',JSON.stringify(response[0].login[0].terms_status));
+                sessionStorage.setItem('city_id',response[0].login[0].city_id);
+                sessionStorage.setItem('city_name',JSON.stringify(response[0].login[0].city_name));
+                sessionStorage.setItem('credit',JSON.stringify(response[0].login[0].balance_credits));
+                sessionStorage.setItem('svcadmin',JSON.stringify(response[0].login[0].issvcadmin));
+                sessionStorage.setItem('groupadmin',JSON.stringify(response[0].login[0].isgroupadminvar));
+                sessionStorage.setItem('brandid',response[0].login[0].brand_id);
+                console.log(response[0].login[0].first_name);
+                sessionStorage.setItem('username',(response[0].login[0].first_name));
+                sessionStorage.setItem('User',value.mobile);
+                this.router.navigate(['/pages']);
+            }  
+          else if (response[0].login[0].hasOwnProperty('failed')){
+            this.showAlert = true;
         }
-
-      const ua = JSON.stringify(reqpara);
-      const req = this.http.post('http://m.21north.in/notify/svcwebservice.php',ua,this.httpOptions)
-     .subscribe(response => {
-       console.log(response[0].login[0].hasOwnProperty('userid'));
-       if(response[0].login[0].hasOwnProperty('userid')){
-        sessionStorage.setItem('currentUser',JSON.stringify(response[0]));
-        sessionStorage.setItem('globalsvcid',JSON.stringify(response[0].login[0].svcid));
-        sessionStorage.setItem('svcname',JSON.stringify(response[0].login[0].svcname));
-        sessionStorage.setItem('terms',JSON.stringify(response[0].login[0].terms_status));
-        sessionStorage.setItem('city_name',JSON.stringify(response[0].login[0].city_name));
-        sessionStorage.setItem('credit',JSON.stringify(response[0].login[0].balance_credits));
-        sessionStorage.setItem('svcadmin',JSON.stringify(response[0].login[0].issvcadmin));
-        sessionStorage.setItem('groupadmin',JSON.stringify(response[0].login[0].isgroupadminvar));
-        console.log(response[0].login[0].first_name);
-        sessionStorage.setItem('username',(response[0].login[0].first_name));
-        sessionStorage.setItem('User',value.mobile);
-        this.router.navigate(['/pages']);
-       }
-       else if (response[0].login[0].hasOwnProperty('failed')){
-        this.showToast('default', 'Wrong Mobile number or Password', 'Please Enter Mobile number or Password');
-       }
-       
-     },
+      },
      (err: HttpErrorResponse) => {
        if (err.error instanceof Error) {
            console.log("Client-side error occured.");
@@ -118,17 +124,8 @@ goTo(){
          }
        }
      );
-   // this.form.reset();
   }
-  // getSession(){
-  //   this.ServicingService.session().subscribe(res =>{
-  //     console.log(res)
-  //     console.log(res["sId"]);
-  //     localStorage.setItem('token',res["sId"]);
-  //     localStorage.setItem('auth-user',res["userName"]);
-  //     this.ServicingService.setter(res["sId"]);
-  //   });
-  // }
+
  Remmeber(value){
   console.log(value);
   if(value == true){
@@ -141,7 +138,6 @@ goTo(){
  }
 }
 
-getname(value){
-  console.log(value);
-}
+getname(value){console.log(value);}
+
 }

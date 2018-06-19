@@ -8,6 +8,7 @@ import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModalUploadComponent } from '../../queue-details/modal-upload/modal-upload.component'
 import { DatePipe } from '@angular/common';
 import { Modal4Component } from '../../search/modal/modal.component';
+import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-at-centre',
   templateUrl: './at-centre.component.html',
@@ -18,6 +19,9 @@ export class AtCentreComponent implements OnInit {
   pickup_headings: String[] = ['ID', 'License Plate', 'Customer Name', 'Pickup Date', 'ETD', 'Paid/Unpaid', 'Amount','Status', 'Upload'];
   tableData: any[];
   keyValues: any[];
+  p:number=1;
+  record_count:string;
+  dataperpage:string;
   public atcentre : any =[];
   today:string;
   term:string;
@@ -32,7 +36,7 @@ export class AtCentreComponent implements OnInit {
   advisorName:string;
   key: string = 'queueid'; 
   reverse: boolean = false;
-  constructor(private datePipe:DatePipe, private router:Router,private ngbDateParserFormatter: NgbDateParserFormatter,private modalService: NgbModal, private _detailsTable: QueueTableService, private _data: ListService, private _tableService: QueueTableService) {
+  constructor(private spinner: NgxSpinnerService,private datePipe:DatePipe, private router:Router,private ngbDateParserFormatter: NgbDateParserFormatter,private modalService: NgbModal, private _detailsTable: QueueTableService, private _data: ListService, private _tableService: QueueTableService) {
     this._tableService.clickedID.subscribe(value => {
       this.tableData = _tableService.table_data;
       console.log(this.tableData)
@@ -41,10 +45,16 @@ export class AtCentreComponent implements OnInit {
         this.keyValues = ['queueid', 'veh_number', 'cust_name', 'queue_time', 'dropoff_time', 'payment_status', 'queue_total', 'queue_state', 'upload_button'];
       // }
     });
-    var date = new Date();
+    const date = new Date();
+    this.model = {day:date.getUTCDate(),month:date.getUTCMonth() + 1,year: date.getUTCFullYear() };
+    this.dateString = this.model.year + '-' + this.model.month + '-' + this.model.day;
+    var numberOfDays = 5;
+    var dt = new Date();
+         dt.setDate( dt.getDate() - 5 );
+    this.model1 = { day: dt.getUTCDate(), month: dt.getUTCMonth() + 1, year: dt.getUTCFullYear()};
+    this.dateString1 = this.model1.year + '-' + this.model1.month + '-' + this.model1.day;
     this.today = this.datePipe.transform(date,"yyyy-MM-dd");
     console.log(this.today)
-    var numberOfDays = 5;
     var days = date.setDate(date.getDate() - numberOfDays);
     this.pastdate = this.datePipe.transform(days,"yyyy-MM-dd");
     console.log(this.pastdate);
@@ -62,46 +72,7 @@ export class AtCentreComponent implements OnInit {
     }
     this.globalsvcid = JSON.parse(sessionStorage.getItem('globalsvcid'));
     console.log(this.globalsvcid);
-    const reqpara3 = {
-      requesttype: 'getqueueinfonew',
-      servicetype: '1',
-      starttime: this.pastdate,
-      endtime: this.today,
-      pagenumber: '0',
-      svcid:this.svcid 
-    }
-    const as3 = JSON.stringify(reqpara3);
-    console.log(as3);
-    this._data.createUser(as3).subscribe(res => {
-      if(res[0].login === 0){
-        sessionStorage.removeItem('currentUser');
-        this.router.navigate(['/auth/login']);
-      }
-      else{
-
-      if(res[0].pagecount[0].hasOwnProperty('noqueues')){
-        console.log('No queue');
-        this.message = 'No Data';
-       }
-       else{
-
-        this.atcentre = res[1].atsvc;
-        console.log(this.atcentre)
-       }
-    }
-      // console.log(res);
-      // if(res[0].pagecount[0].hasOwnProperty('noqueues')){
-      //   console.log('No queue');
-      //   this.message = 'No Data';
-      //  }
-      //  else{
-      //    this.advisorName = res[1].service_advisor;
-      //    console.log(this.advisorName );
-
-      //    this._detailsTable.setTableData(res, 4);
-      //  }
-    }
-  );
+    this.FilterCheck(1);
   }
   datatopass:any;
   dataForUpload: any;
@@ -114,7 +85,7 @@ export class AtCentreComponent implements OnInit {
   //  console.log(id);
     const activeModal = this.modalService.open(Modal4Component, { size: 'lg', container: 'nb-layout' });
 
-    this.datatopass = {id:data.queueid, queue_exists: "0", service_status:data.service_status, queue_time:data.queue_time,service_advisor:data.service_advisor};
+    this.datatopass = {id:data.queueid, queue_exists: "0",amt:data.queue_total, service_status:data.service_status, queue_time:data.queue_time,service_advisor:data.service_advisor};
     this.dataForUpload = { id: sessionStorage.getItem('QueueId'), queue_date: new Date, service_status: data.service_status}
     activeModal.componentInstance.modalHeader = 'Upload File';
     activeModal.componentInstance.modalContent = this.datatopass;
@@ -160,20 +131,21 @@ export class AtCentreComponent implements OnInit {
 
   // getdetails(){}
 
-  FilterCheck(){
+  FilterCheck(p:number){
     this.message=" ";
-
-    const reqpara3 = {
+    this.spinner.show();
+    this.p = p - 1 ;
+     const reqpara3 = {
       requesttype: 'getqueueinfonew',
       servicetype: '1',
       starttime: this.dateString1,
       endtime: this.dateString,
-      pagenumber: '0',
+      pagenumber: this.p,
       svcid:this.svcid 
     }
     const as3 = JSON.stringify(reqpara3);
     console.log(as3);
-    this._data.createUser(as3).subscribe(res => {
+    this._data.webServiceCall(as3).subscribe(res => {
       if(res[0].login === 0){
         sessionStorage.removeItem('currentUser');
         this.router.navigate(['/auth/login']);
@@ -183,11 +155,16 @@ export class AtCentreComponent implements OnInit {
       if(res[0].pagecount[0].hasOwnProperty('noqueues')){
         console.log('No queue');
         this.message = 'No Data';
+        this.spinner.hide();
        }
        else{
 
         this.atcentre = res[1].atsvc;
-        console.log(this.atcentre)
+        console.log(this.atcentre);
+        this.record_count = res[0].pagecount[0].record_count;
+        this.dataperpage = res[0].pagecount[0].pagelimit;
+        console.log(this.record_count);
+        this.spinner.hide();
        }
     }
     });

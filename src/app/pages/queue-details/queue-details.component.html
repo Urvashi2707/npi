@@ -846,7 +846,7 @@
                                             <form [formGroup]="notesFormGroup">
                                                 <div class="input-group">
                                                     <!-- <textarea rows="5" names="notes" formControlName="notesData" placeholder="21North" class="form-control"></textarea> -->
-                                                    <input type="text" class="form-control" formControlName="notesData" names="notesData" placeholder="No Data">
+                                                    <input type="text" class="form-control" formControlName="notesData" names="notesData" placeholder="No Data"  [readonly]="true">
                                                 </div>
                                             </form>
                                         </nb-card-body>

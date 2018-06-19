@@ -1,6 +1,11 @@
 <nb-card>
+        <nb-card-header>
+                Completed
+              </nb-card-header>
     <nb-card-body>
+            
         <div>
+                <toaster-container [toasterconfig]="config"></toaster-container>
             <div class="row">
                 <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
                     <div class="form-group">
@@ -27,7 +32,7 @@
                     </div>
                 </div>
                 <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                    <button type="button" class="btn btn-primary" (click)="FilterCheck()">Apply</button>
+                    <button type="button" class="btn btn-primary" (click)="FilterCheck(1)">Apply</button>
                 </div>
             </div>
         </div>
@@ -64,7 +69,7 @@
             </thead>
             <tbody>
 
-                <tr *ngFor="let i of completed  |  filter:term | orderBy: key : reverse ; let j = index" (click)="openQDetails(i)">
+                <tr *ngFor="let i of completed  |  filter:term | orderBy: key : reverse | paginate: { id: 'server', itemsPerPage:dataperpage, currentPage: p + 1, totalItems: record_count }; let j = index" (click)="openQDetails(i)">
                     <td>{{i.queueid}}</td>
                     <td>{{i.cust_name}}</td>
                     <td>{{i.veh_number}}</td>
@@ -77,5 +82,11 @@
         <table *ngIf="message">
             {{message}}
         </table>
+        <ngx-spinner bdColor = "rgba(51,51,51,0.09)" size = "large" color = "#ea5810" type = "ball-clip-rotate-pulse"></ngx-spinner>
+        <div class="paginate">
+            <pagination-controls (pageChange)="FilterCheck($event)" id="server"></pagination-controls>
+        </div>
+        
+        
     </nb-card-body>
 </nb-card>

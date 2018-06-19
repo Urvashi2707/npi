@@ -24,7 +24,7 @@ import 'style-loader!angular2-toaster/toaster.css';
       public designation: string[];
       public userList: any = [];
       public userDisable: any = [];
-      public user = [];
+      user: any = {};
 
       searchText:string;
 
@@ -65,7 +65,7 @@ import 'style-loader!angular2-toaster/toaster.css';
           this.svcid = JSON.parse(sessionStorage.getItem('globalsvcid'));
           // console.log(this.svcid);
         }
-        this._data.getUser().subscribe(data => this.user = data);
+        // this._data.getUser().subscribe(data => this.user = data);
         this. getUserType();
 
         // this.getUserList();
@@ -92,6 +92,7 @@ import 'style-loader!angular2-toaster/toaster.css';
           { id: 2, type: 'Mrs' },
           { id: 3, type: 'Ms' },
         ];
+        this.user.salutation = 'Mr';
        }
 
 
@@ -138,21 +139,25 @@ import 'style-loader!angular2-toaster/toaster.css';
     //     this.toasterService.pop('success', 'Args Title', 'Args Body');
     // }
 
-      delete(user){
+      delete(user,index){
         const reqpara1 = {
           requesttype: 'updateuser',
           useridvar: user.id,
           username: user.first_name,
           mobilenumber: user.mobilenumber,
           email:user.email,
-          designation:user.permission_type,
-          isenabled:0
+          isenabled:0,
+          designation:user.permission_type
+          
         };
         console.log(JSON.stringify(reqpara1));
         const ua1 = JSON.stringify(reqpara1);
-        this._data.updateUser(ua1).subscribe(data => {
+        this._data.webServiceCall(ua1).subscribe(data => {
           console.log(data);
-          window.location.reload();
+          this.userList= [];
+          this.userDisable = [];
+          this.enbuser(index);
+          // window.location.reload();
           
         });
       }
@@ -164,7 +169,7 @@ import 'style-loader!angular2-toaster/toaster.css';
           requesttype: 'getusertypes'
         }
           const as2 = JSON.stringify(reqpara2);
-             this._data.getUserType(as2).subscribe
+             this._data.webServiceCall(as2).subscribe
         (res => 
           {
             this.designation = res[0].usertype
@@ -181,7 +186,7 @@ import 'style-loader!angular2-toaster/toaster.css';
           servicecentreid:this.svcid,
         }
           const as1 = JSON.stringify(reqpara1);
-             this._data.getUserType(as1).subscribe
+             this._data.webServiceCall(as1).subscribe
         (res => 
           {
             for(var i = 0; i < res[0].userlist.length; i++ ){
@@ -203,14 +208,17 @@ import 'style-loader!angular2-toaster/toaster.css';
       }
 
       tabChanged(tabData: any){
+        this.userDisable = [];
+        this.userList = [];
         if (tabData.tabTitle == "User List"){
+         
           const reqpara1 = 
           {
             requesttype: 'getuserlist',
             servicecentreid:this.svcid,
           }
             const as1 = JSON.stringify(reqpara1);
-               this._data.getUserType(as1).subscribe
+               this._data.webServiceCall(as1).subscribe
           (res => 
             {
               for(var i = 0; i < res[0].userlist.length; i++ ){
@@ -232,13 +240,15 @@ import 'style-loader!angular2-toaster/toaster.css';
         }
 
         else if (tabData.tabTitle == "Enabled User"){
+          this.userDisable = [];
+          this.userList = [];
           const reqpara1 = 
         {
           requesttype: 'getuserlist',
           servicecentreid:this.svcid,
         }
           const as1 = JSON.stringify(reqpara1);
-             this._data.getUserType(as1).subscribe
+             this._data.webServiceCall(as1).subscribe
         (res => 
           {
             for(var i = 0; i < res[0].userlist.length; i++ ){
@@ -261,7 +271,7 @@ import 'style-loader!angular2-toaster/toaster.css';
 
       }
 
-      enableuser(user1){
+      enableuser(user1,index){
         const reqpara1 = {
           requesttype: 'updateuser',
           useridvar: user1.id,
@@ -275,8 +285,43 @@ import 'style-loader!angular2-toaster/toaster.css';
         const ua1 = JSON.stringify(reqpara1);
         this._data.updateUser(ua1).subscribe(data => {
           console.log(data);
+          this.userDisable = [];
+          this.userList = [];
+          this.enbuser(index);
          
         });
+      }
+
+      enbuser(i){
+        this.userDisable = [];
+        this.userList = [];
+        const reqpara1 = 
+        {
+          requesttype: 'getuserlist',
+          servicecentreid:this.svcid,
+        }
+          const as1 = JSON.stringify(reqpara1);
+             this._data.getUserType(as1).subscribe
+        (res => 
+          {
+            for(var i = 0; i < res[0].userlist.length; i++ ){
+              if(res[0].userlist[i].isenabled == '1'){
+              this.userList.push(res[0].userlist[i])
+              this.userDisable.splice(i,1);
+             
+              }
+            
+            else{
+              this.userDisable.push(res[0].userlist[i]);
+              this.userDisable.splice(i,1);
+            }
+            
+          }
+          console.log(this.userList);
+          console.log(this.userDisable);
+        }
+        );
+
       }
 
       onSubmit(f: NgForm) {
@@ -291,7 +336,7 @@ import 'style-loader!angular2-toaster/toaster.css';
           email:f.value.email
         }
         const as3 = JSON.stringify(reqpara3);
-        this._data.createUser(as3).subscribe(res =>{
+        this._data.webServiceCall(as3).subscribe(res =>{
           console.log(res);
          
           if(res[0].userexists[0].does_exist == 0){

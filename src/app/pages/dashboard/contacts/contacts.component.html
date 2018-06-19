@@ -1,5 +1,5 @@
 <nb-card item-height="210px">
-  <nb-tabset fullWidth>
+  <!-- <nb-tabset fullWidth>
     <nb-tab tabTitle="Chat (under development)">
         <div class="container" style="width: 80%;    margin-left: 10px;">
             <img src="assets/images/21north-logo.png" alt="Avatar" style="width:100%;">
@@ -7,7 +7,7 @@
             <span class="time-right">11:00</span>
           </div>
           <div class="container darker" style="margin-left: auto;width: 80%;    margin-right: 10px;">
-              <!-- <img src="/w3images/avatar_g2.jpg" alt="Avatar" class="right" style="width:100%;"> -->
+              
               <p>Share Ambassador details for Vinoth K</p>
               <span class="time-left">11:01</span>
             </div>
@@ -17,7 +17,7 @@
                 <span class="time-right">11:02</span>
               </div>
               <div class="container darker" style="margin-left: auto;width: 80%;    margin-right: 10px;">
-                  <!-- <img src="/w3images/avatar_g2.jpg" alt="Avatar" style="width:100%;"> -->
+                 
                   <p>Queue Id : 278983</p>
                   <span class="time-left">11:05</span>
                 </div>
@@ -28,5 +28,29 @@
                   </div>
   
     </nb-tab>
-  </nb-tabset>
+  </nb-tabset> -->
+  <div class="FixedHeightDiv">
+  <div class="title">
+    <span class="ChatSpan">Chat</span>
+      <select class="selectpicker"  title="Chat" name="chat" [(ngModel)]="type_of_chat" #chat="ngModel">
+        <option [value]="0">Support</option>
+        <option [value]="1">Finance</option>
+      </select>
+  </div>
+  <div class="chatbot">
+      <div class="talk-bubble tri-right left-top" *ngFor="let m of message" [class.right-top]="m.is_incoming == 0" [class.talk-bubbler]="m.is_incoming == 0">
+        <div class="talktext">
+            <p>{{m.chat}}</p>
+            <span class="timeSpan" style="float: right;" >{{m.creation_time}}</span>
+           
+        </div>
+       
+      </div>
+      
+    </div>
+    <div class="input-container">
+        <input type="text" class="input-message" [(ngModel)]="replyMessage" name="message" style="width: 82%;"/>
+        <button class="RplyButton" (click)="reply();">Send</button>
+      </div>
+  </div>
 </nb-card>

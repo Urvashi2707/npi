@@ -11,17 +11,17 @@ export class ServicingService {
 
   private getSession_url :string = 'https://plsuat.europassistance.in:444/getSession';
   private check1_url:string = 'https://plsuat.europassistance.in:444/checkInitialEligibility';
-  private check2_url:string = 'https://plsuat.europassistance.in:444/checkFinalEligibility ';
+  private check2_url:string = 'https://plsuat.europassistance.in:444/checkFinalEligibility';
 
   public url:string='http://m.21north.in/notify/svcwebservice.php';
   public logout_url:string = 'http://m.21north.in/notify/logout.php';
   public graph:string = 'http://m.21north.in/notify/svcgraph.php';
   public slotgraph =  'http://m.21north.in/notify/svcgraphslot.php';
   check_url = 'http://m.21north.in/notify/eaws.php';
-
+  public destroySession_url = 'https://plsuat.europassistance.in:444/destroysession';
   public data:string;
 
-
+  data1 = "vfdxvxd";
   public httpOptions = {
   headers: new HttpHeaders({'Content-Type':  'application/json'}),
   withCredentials: true
@@ -38,7 +38,7 @@ public opt={
 }
 
 public opt1={
-  headers: new HttpHeaders({'x-auth-token': JSON.stringify(localStorage.getItem('token')),'x-auth-user':JSON.stringify(localStorage.getItem('auth-user'))})
+  headers: new HttpHeaders({'x-auth-token': sessionStorage.getItem('token'),'x-auth-user':sessionStorage.getItem('auth-user'),'Content-Type':  'application/json'})
   
 }
 
@@ -49,7 +49,7 @@ public opt2={
 
  
 session(){
-  return this.http.post(this.getSession_url,this.opt2)
+  return this.http.post(this.getSession_url,this.options)
 }
 
 setter(Data){
@@ -67,9 +67,14 @@ Initialcheck(reqpara){
   return this.http.post(this.check1_url,reqpara,this.opt1)
 }
 Finalcheck(reqpara){
-  return this.http.post(this.check2_url,reqpara,this.opt )
+  return this.http.post(this.check2_url,reqpara,this.opt1 )
 }
 
+destroySession(){
+  console.log(this.opt1);
+  const reqpara = {}
+  return this.http.post(this.destroySession_url,reqpara,this.opt1 )
+}
 
 graphCall(reqpara){
   return this.http.post(this.graph, reqpara, this.httpOptions)
@@ -84,7 +89,13 @@ slot(reqpara){
   }
 
   logout(){
-    return this.http.post(this.logout_url,this.options)
+    console.log(this.httpOptions);
+    
+    return this.http.post(this.logout_url,this.data1,this.httpOptions)
+  }
+
+  webServiceCall(reqpara){
+    return this.http.post(this.url, reqpara, this.httpOptions);
   }
 
   getCustinfo(reqpara){
@@ -92,6 +103,7 @@ slot(reqpara){
   }
 
   getBrands(reqpara){
+   
     return this.http.post(this.url, reqpara, this.httpOptions);
   }
 

@@ -1,18 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Output, EventEmitter,OnInit } from '@angular/core';
 import {NgForm} from '@angular/forms';
 import { TitleCasePipe } from '@angular/common';
 import {ServicingService } from '../../../services/addServicing.service';
 import {NgbModal,NgbActiveModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-modal2',
-  templateUrl: './modal2.component.html',
-  styleUrls: ['./modal2.component.scss']
+  templateUrl: './AddEmployee.component.html',
+  styleUrls: ['./AddEmployee.component.scss']
 })
-export class Modal3Component implements OnInit {
+export class AddEmployee implements OnInit {
 
   constructor(private titlecasePipe:TitleCasePipe,private activeModal: NgbActiveModal,private _data:ServicingService) {
     // this.modalContent.permission="Coordinator";
    }
+   message: string = "Hola Mundo!";
+   @Output() messageEvent = new EventEmitter<string>();
+
   modalHeader: string;
   modalContent:any;
   modalId:number;
@@ -29,6 +32,7 @@ export class Modal3Component implements OnInit {
     else{
       this.svcid = JSON.parse(sessionStorage.getItem('globalsvcid'));
       // console.log(this.svcid);
+
     }
     
     this.salutation = [
@@ -49,11 +53,19 @@ export class Modal3Component implements OnInit {
     else {
       this.desingnation="Sales Executive";
     }
+
+    this.sendMessage();
     
   }
   closeModal() {
     this.activeModal.close();
   }
+
+  sendMessage() {
+    this.messageEvent.emit(this.message)
+  }
+  
+
   onSubmit(f: NgForm) {
     console.log(f.value.id);
     if(this.modalContent == 4 ){
@@ -103,10 +115,12 @@ export class Modal3Component implements OnInit {
 
   
     const as3 = JSON.stringify(reqpara3);
-    this._data.getBrands(as3).subscribe(res =>{
+    this._data.webServiceCall(as3).subscribe(res =>{
       console.log(res);
       f.reset();
       this.activeModal.close();
     });
        }
 }
+
+

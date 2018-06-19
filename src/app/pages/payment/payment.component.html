@@ -32,7 +32,7 @@
                             </div>
                         </div>
                         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                            <button type="button" class="btn btn-primary" (click)="FilterCheck()" style="margin-top: 1.5em;">Apply</button>
+                            <button type="button" class="btn btn-primary" (click)="FilterCheck(1)" style="margin-top: 1.5em;">Apply</button>
                         </div>
                     </div>
                 </div>
@@ -62,7 +62,7 @@
                                 </th>
                                 <th>Download</th>
                             </tr>
-                            <tr *ngFor="let pay of payment |  filter:term">
+                            <tr *ngFor="let pay of payment |  filter:term | paginate: { id: 'server', itemsPerPage:dataperpage, currentPage: p + 1, totalItems: record_count };">
                                 <td>{{pay.start_date}} - {{pay.end_date}}</td>
                                 <td>{{pay.date_released}}</td>
                                 <td>{{pay.neft_id}}</td>
@@ -74,6 +74,10 @@
                         <table *ngIf="message">
                             {{message}}
                         </table>
+                        <ngx-spinner bdColor = "rgba(51,51,51,0.09)" size = "large" color = "#ea5810" type = "ball-clip-rotate-pulse"></ngx-spinner>
+                        <div class="paginate">
+                            <pagination-controls (pageChange)="getData($event)" id="server"></pagination-controls>
+                        </div>
                     </div>
                 </div>
 

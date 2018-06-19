@@ -1,4 +1,7 @@
 <nb-card>
+        <nb-card-header>
+               Pickup
+             </nb-card-header>
     <nb-card-body>
         <div>
             <div class="row">
@@ -27,7 +30,7 @@
                     </div>
                 </div>
                 <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                    <button type="button" class="btn btn-primary" (click)="FilterCheck()">Apply</button>
+                    <button type="button" class="btn btn-primary" (click)="FilterCheck(1)">Apply</button>
                 </div>
             </div>
         </div>
@@ -67,7 +70,7 @@
             </thead>
             <tbody>
 
-                <tr *ngFor="let i of pickup  | orderBy: key : reverse |  filter:term; let j = index" (click)="openQDetails(i.queueid)">
+                <tr *ngFor="let i of pickup  | orderBy: key : reverse |  filter:term  | paginate: { id: 'server', itemsPerPage:dataperpage, currentPage: p + 1, totalItems: record_count }; let j = index" (click)="openQDetails(i.queueid)">
                     <td>{{i.queueid}}</td>
                     <td>{{i.queue_time}}</td>
                     <td>{{i.cust_name}}</td>
@@ -81,5 +84,9 @@
         <table *ngIf="message">
             {{message}}
         </table>
+        <ngx-spinner bdColor = "rgba(51,51,51,0.09)" size = "large" color = "#ea5810" type = "ball-clip-rotate-pulse"></ngx-spinner>
+        <div class="paginate">
+            <pagination-controls (pageChange)="FilterCheck($event)" id="server"></pagination-controls>
+        </div>
     </nb-card-body>
 </nb-card>

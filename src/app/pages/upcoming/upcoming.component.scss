@@ -17,6 +17,7 @@ th,
 td {
     border: 1px solid rgb(218, 223, 230);
     border-collapse: collapse;
+    font-size:13px;
 }
 
 th,
@@ -26,4 +27,8 @@ td {
 
 tbody tr:hover {
     background-color: lightyellow;
+}
+.paginate{
+    text-align: center;
+    padding-top: 5%;
 }

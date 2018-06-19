@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import {ChauffeurService } from '../../services/chauffeur.service';
 import { TitleCasePipe } from '@angular/common';
-import {HttpClient,HttpHeaders,HttpErrorResponse,HttpRequest} from '@angular/common/http';
+import {HttpErrorResponse}from '@angular/common/http';
 import {NgForm} from '@angular/forms';
-import {NgbDateAdapter, NgbDateStruct, NgbDatepickerConfig, NgbDateParserFormatter} from '@ng-bootstrap/ng-bootstrap';
+import { NgbDateStruct, NgbDateParserFormatter} from '@ng-bootstrap/ng-bootstrap';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Modal1Component } from '../modal/modal1/modal1.component';
+import { BookingDetails } from '../modal/BookingDetails/BookingDetails.component';
 import {Router} from '@angular/router';
-import { NgClass } from '@angular/common';
-import { Modal3Component } from '../modal/modal2/modal2.component';
+import { DatePipe } from '@angular/common';
+import { AddEmployee } from '../modal/AddEmployee/AddEmployee.component';
 import { ToasterService, ToasterConfig, Toast, BodyOutputType } from 'angular2-toaster';
 import 'style-loader!angular2-toaster/toaster.css';
 @Component({
@@ -23,15 +23,21 @@ export class ChauffeurComponent implements OnInit {
   private Slot: any=[];
   public slot:any = [];
   svcid:string;
-slotcheck = true;
-public slothour:string;
+  slotcheck = true;
+  addressPickup:any;
+  addressDropoff:any;
+  dontShowModel = false;
+  dontShowVariant = false;
+  public slothour:string;
   public selectedVariant: any = [];
   public selectedCoordinator: any = [];
   public service_type:any =[];
   private Variant: any=[];
-  private TowingTruck: string[];
   private Models: any=[];
   model: NgbDateStruct;
+  cityid:number;
+  CityList:any;
+  disableNext = false;
   public registrationNumber:string;
   public mobile1:string;
   public serviceType:string;
@@ -40,20 +46,37 @@ public slothour:string;
   public carinfo:any=[];
   show3  = true;
   show  = false;
+  addresstype_pu:string;
   cust_details:any={};
-  
+  public pikup_long: string;
+  public dropoff_lat: string;
+  public dropoff_long: string;
+  public pickup_add: string;
+  serviceAdv:string;
+  sameasvalue:boolean;
   private creName: string[];
   public pickup_drop:number;
   public yourBoolean : string = 'onSpot' ; 
   user:any = {};
+  queuetime:string;
   public message:any=[];
   private brands: any=[];
-  public pikup_lat:string;
-  public pikup_long:string;
-  public dropoff_lat:string;
-  public dropoff_long:string;
-  public pickup_add:string;
-  public dropadd:string;
+  showAddress = false;
+  showAddressDropDown = false;
+  pickupdoor:string;
+  pickupstreet:string;
+  pickuparea:string;
+  pickuplandmark:string;
+  pickuppincode:string;
+  dropofffdoor:string;
+  dropoffstreet:string;
+  dropoffarea:string;
+  pikup_lat:string;
+  dropofflandmark:string;
+  addresstype_do:string;
+  addressdoprevious:string;
+  addresspuprevious:string;
+  dropoffpincode:string;
   public slot_time:string;
   public mobile2:string;
   public disabled=false;
@@ -71,6 +94,7 @@ public slothour:string;
   salutation2:string;
   isNewestOnTop = true;
   isHideOnClick = true;
+  today: number = Date.now();
   isDuplicatesPrevented = false;
   public globalsvcid:string;
   public selectedsvcid:string;
@@ -80,6 +104,7 @@ public slothour:string;
   animationType = 'fade';
   timeout = 5000;
   toastsLimit = 5;
+  showtime = false;
   public startDate;
   public minDate;
   public maxDate;
@@ -87,49 +112,43 @@ public slothour:string;
   // public svcid:string;
   countrycode1:string;
   
-  constructor(private titlecasePipe:TitleCasePipe,private toasterService: ToasterService,private _data : ChauffeurService,private router: Router,private ngbDateParserFormatter: NgbDateParserFormatter,private modalService: NgbModal) { }
+  constructor(private datePipe:DatePipe,private titlecasePipe:TitleCasePipe,private toasterService: ToasterService,private _data : ChauffeurService,private router: Router,private ngbDateParserFormatter: NgbDateParserFormatter,private modalService: NgbModal) { }
 
   ngOnInit() {
     if(sessionStorage.getItem('selectedsvc')){
-      // console.log(sessionStorage.getItem('selectedsvc'));
       this.svcid = sessionStorage.getItem('selectedsvc');
-      // console.log(this.svcid);
     }
     else{
       this.svcid = JSON.parse(sessionStorage.getItem('globalsvcid'));
-      // console.log(this.svcid);
     }
     this.service_type  = [
       { id: 1, type: 'Stock Yard' },
       { id: 2, type: 'Test Drive' },
       { id: 3, type: 'Internal Movement' },
       { id: 4, type: 'Home Delivery' },
-  ];
-  this.salutation = [
-    { id: 1, type: 'Mr' },
-    { id: 2, type: 'Mrs' },
-    { id: 3, type: 'Ms' },
-  ];
-  this.user.salutation = 'Mr';
-
-  this.countrycode1 = "+91";
-  this.getBrands();
-  this.getCoordinator();
-  this.getSaleExceutive();
-  const now = new Date();
-  this.model = { year: now.getFullYear(), month: now.getMonth() + 1, day: now.getDate() };
-  this.startDate = this.model;
-  console.log(this.startDate);
-  this.minDate = { year: now.getFullYear(), month: now.getMonth() + 1, day: now.getDate() - 1 };
-  console.log(this.minDate);
-  this.maxDate = { year: now.getFullYear(), month: now.getMonth() + 1, day: now.getDate() + 15};
-  console.log(this.maxDate);
-  this.globalsvcid = JSON.parse(sessionStorage.getItem('globalsvcid'));
-  console.log(this.globalsvcid);
+      { id: 15, type: 'Custody' }
+    ];
+    this.salutation = [
+      { id: 1, type: 'Mr' },
+      { id: 2, type: 'Mrs' },
+      { id: 3, type: 'Ms' },
+    ];
+      this.user.salutation = 'Mr';
+      this.countrycode1 = "+91";
+      this.getBrands();
+      this.getCoordinator();
+      this.getSaleExceutive();
+      // this.getCityList();
+      const now = new Date();
+      this.model = { year: now.getFullYear(), month: now.getMonth() + 1, day: now.getDate() };
+      this.startDate = this.model;
+      this.minDate = { year: now.getFullYear(), month: now.getMonth() + 1, day: now.getDate() - 1 };
+      this.maxDate = { year: now.getFullYear(), month: now.getMonth() + 1, day: now.getDate() + 15};
+      this.globalsvcid = JSON.parse(sessionStorage.getItem('globalsvcid'));
   }
 
   showModal(Id:number) {
-    const activeModal = this.modalService.open(Modal3Component, { size: 'lg', container: 'nb-layout' });
+    const activeModal = this.modalService.open(AddEmployee, { size: 'lg', container: 'nb-layout' });
     activeModal.componentInstance.modalHeader = 'Add Employee';
     activeModal.componentInstance.modalContent = Id;
   }
@@ -138,13 +157,12 @@ public slothour:string;
   }
 
   getBrands(){
-    const reqpara1 = 
-         {
-           requesttype: 'getbrands',
+    const reqpara1 = {
+           requesttype: 'getallbrands',
            svcid:this.svcid
          }
       const as1 = JSON.stringify(reqpara1)
-      this._data.getBrands(as1).subscribe
+      this._data.webServiceCall(as1).subscribe
        (res => 
          {
           if(res[0].login === 0){
@@ -152,16 +170,23 @@ public slothour:string;
             this.router.navigate(['/auth/login']);
           }
           else{
-            this.brands=res[0].brands,
-            console.log('Brands')
-            console.log(this.brands);
-            this.selectedBrand = this.brands[0].brand_id;
-            console.log(this.selectedBrand);
-            this.getModelds(this.selectedBrand);
+            this.brands=res[0].allbrands;
           }
-          
-         }
-       );
+        });
+   }
+
+   data(){
+    this.show = true;
+    this.disableNext = true;
+    var defaultBrand = JSON.parse(sessionStorage.getItem('brandid'));
+    console.log(defaultBrand);
+     for(let i = 0; i < this.brands.length;i ++){
+               if(this.brands[i].brand_id == defaultBrand){
+                 this.selectedBrand = this.brands[i].brand_id;
+                 console.log(this.selectedBrand);
+               }
+             }
+             this.getModelds(this.selectedBrand);
    }
 
    private showToast(type: string, title: string, body: string) {
@@ -186,7 +211,6 @@ public slothour:string;
   }
 
   buildArr(theArr: any[]){
-    // debugger;
    var arrOfarr = [];
    for(var i = 0; i < theArr.length ; i+=4) {
        var row = [];
@@ -203,27 +227,25 @@ public slothour:string;
   }
 
    showLargeModal(res:any) {
-    const activeModal = this.modalService.open(Modal1Component, { size: 'lg', container: 'nb-layout' });
+    const activeModal = this.modalService.open(BookingDetails, { size: 'lg', container: 'nb-layout' });
     activeModal.componentInstance.modalHeader = 'Booking Details';
     activeModal.componentInstance.modalContent = res;
   }
 
   check(value: string,time:string) {
-    console.log(value);
     this.slot_time=time;
     this.slothour = value;
     this.slotcheck = false;
-
-    }
+ }
 
    onSelectBrand(brandsId) {
+     console.log(brandsId);
     this.selectedBrand = null;
     for (let i = 0; i < this.brands.length; i++) {
      if (this.brands[i].brand_id == brandsId) {
         this.selectedBrand = this.brands[i].brand_id;
       }
     }
-    // console.log(this.selectedBrand);
     this.getModelds(this.selectedBrand);
   }
 
@@ -234,7 +256,6 @@ public slothour:string;
         this.selectedModel = this.Models[i];
       }
     }
-    console.log(this.selectedModel);
     this.getVariants(this.selectedModel.model_id);
   }
 
@@ -245,16 +266,15 @@ public slothour:string;
        this.selectedVariant = this.Variant[i];
      }
    }
-   console.log(this.selectedVariant);
   }
 
   getVariants(VariantId:number){
-    const reqpara3 = {
-        requesttype: 'getvariants',
-        brandid : VariantId
+       const reqpara3 = {
+          requesttype: 'getvariants',
+          brandid : VariantId
         }
     const as3 = JSON.stringify(reqpara3)
-    this._data.getVariant(as3).subscribe(res => {
+    this._data.webServiceCall(as3).subscribe(res => {
       if(res[0].login === 0){
         sessionStorage.removeItem('currentUser');
         this.router.navigate(['/auth/login']);
@@ -262,113 +282,164 @@ public slothour:string;
       else{
         this.Variant=res[0].models,
         console.log(this.Variant);
+        if(this.Variant.length === 0){
+          this.dontShowVariant = true;
+        }
+        else{
+          this.dontShowVariant = false;
+        }
       }
-     
-        });
+    });
   }
 
   onCoordinator(Id){
     this.selectedCoordinator = null;
-
-    for (let i = 0; i < this.Coordinator.length; i++) {
+     for (let i = 0; i < this.Coordinator.length; i++) {
       if (this.Coordinator[i].id === Id) {
         this.selectedCoordinator = this.Coordinator[i];
-
-      }
+        }
     }
-    console.log(this.selectedCoordinator);
   }
 
 
   getSaleExceutive(){
-
-    const reqpara8={
+     const reqpara8={
       requesttype:'getspecificsvcusers',
       usertype:7,
       svcid:this.svcid
     }
     const as8 = JSON.stringify(reqpara8)
-    this._data.getVariant(as8).subscribe(res => {
+    this._data.webServiceCall(as8).subscribe(res => {
       if(res[0].login === 0){
         sessionStorage.removeItem('currentUser');
         this.router.navigate(['/auth/login']);
       }
       else{
-
         this.SaleExceutive = res[0].users
         console.log(this.SaleExceutive);
-
-      }
-      
-   
+       }
     });
   }
 
 
   getCoordinator(){
-
     const reqpara7={
       requesttype:'getspecificsvcusers',
       usertype:13,
       svcid:this.svcid
     }
     const as4 = JSON.stringify(reqpara7)
-    this._data.getVariant(as4).subscribe(res => {
+    this._data.webServiceCall(as4).subscribe(res => {
       if(res[0].login === 0){
         sessionStorage.removeItem('currentUser');
         this.router.navigate(['/auth/login']);
       }
       else{
-
         this.Coordinator = res[0].users
-        console.log(this.Coordinator);
-     
-
-      }
-     
+            }
     });
   }
 
     getModelds(ModelId:number){
+      this.dontShowModel = false;
+      this.dontShowVariant = false;
       const reqpara2 = {
           requesttype: 'getmodels',
           brandid : ModelId
           }
       const as2 = JSON.stringify(reqpara2)
-      this._data.getModels(as2).subscribe(res => {
+      this._data.webServiceCall(as2).subscribe(res => {
         if(res[0].login === 0){
           sessionStorage.removeItem('currentUser');
           this.router.navigate(['/auth/login']);
         }
         else{
-          this.Models = res[0].models ,
+            this.Models = res[0].models;
+            this.getVariants(this.Models[0].model_id)
             console.log(this.Models);
+            console.log('model length' + this.Models.length);
+            if(this.Models.length === 0){
+              this.dontShowModel = true;
+            }
+            else{
+              this.dontShowModel = false;
+            }
+            if(this.Models.length === 1){
+              console.log("model length is 1");
+              var model_id = this.Models[0].model_id;
+              this.getVariants(model_id);
+            }
+            else{
+              console.log("model length is more than 1");
+            }
         }
-        
-        
-          });
+       });
       }
+
+      getCityList(){
+        console.log(this.serviceType);
+        if(this.serviceType == '15'){
+          const reqpara23 = {
+            requesttype:"getcitylist",
+            }
+          const as23 = JSON.stringify(reqpara23)
+          this._data.webServiceCall(as23).subscribe(res => {
+            if(res[0].login === 0){
+              sessionStorage.removeItem('currentUser');
+              this.router.navigate(['/auth/login']);
+            }
+            else{
+              console.log(res);
+              this.CityList = res[0].citylist;
+              console.log(this.CityList);
+            }
+           });
+        }
+       
+        }
 
       sameas(value){
         console.log(value);
-        if(value == true){
-          if(this.user.pickloc){
-            this.user.droploc = this.user.pickloc;
-            console.log(this.user.droploc);
+        this.sameasvalue = value;
+        if (value == true) {
+          if (this.user.pickupdoor) {
+            this.user.dropofffdoor = this.user.pickupdoor;
+            console.log(this.user.dropofffdoor);
+            if (this.user.pickupstreet) {
+              this.user.dropoffstreet = this.user.pickupstreet;
+              console.log(this.user.dropoffstreet);
+            }
+            if(this.user.pickuparea){
+              this.user.dropoffarea = this.user.pickuparea;
+              console.log(this.user.dropoffarea);
+            }
+            if(this.user.pickuplandmark){
+              this.user.dropofflandmark = this.user.pickuplandmark;
+              console.log(this.user.dropofflandmark);
+            }
+            if(this.user.pickuppincode){
+              this.user.dropoffpincode = this.user.pickuppincode;
+              console.log(this.user.pickuppincode);
+            }
             if(this.user.picklatlong){
               this.user.droplatlong = this.user.picklatlong;
               console.log(this.user.droplatlong);
             }
+            if(this.user.address_typepu){
+              this.user.address_typedu = this.user.address_typepu;
+              console.log(this.user.address_typedu);
+            }
           }
         }
-        else{
-
-          this.user.droploc = null;
-          this.user.droplatlong = null;
-
+        else {
+          this.user.dropofffdoor = null;
+          this.user.dropoffstreet = null;
+          this.user.dropoffarea = null;
+          this.user.dropoffpincode = null;
+          this.user.dropofflatlong = null;
+          this.user.dropofflandmark  = null;
         }
-    
-      }
+    }
 
 
       modelChanged(event){
@@ -380,32 +451,23 @@ public slothour:string;
         if (date != null) {
                 this.model = date;
                 this.dateString = this.ngbDateParserFormatter.format(date);
-                console.log(this.dateString);
             }
             this.show3 = true;
-            if(this.amb == true){
-              // this.showToast('default', 'Time', 'Please Select time');
-            }
-            
+            if(this.amb == true){}
             this.getSlot(this.dateString);
-
-      }
+          }
 
       some(value){
-        console.log(value);
         this.amb = value;
-        console.log(this.amb);
-        
       }
 
       getSlot(Date: string) {
+        this.showtime = true;
         if (this.yourBoolean === 'servicing') {
           this.pickup_drop = 0;
-          console.log(this.pickup_drop);
         }
         else {
           this.pickup_drop = 1;
-          console.log(this.pickup_drop);
         }
         if (Date) {
           const reqpara5 = {
@@ -415,7 +477,7 @@ public slothour:string;
             svcid: this.svcid
           }
           const as5 = JSON.stringify(reqpara5)
-          this._data.getSlot(as5).subscribe(res => {
+          this._data.webServiceCall(as5).subscribe(res => {
             if (res[0].login === 0) {
               sessionStorage.removeItem('currentUser');
               this.router.navigate(['/auth/login']);
@@ -426,47 +488,145 @@ public slothour:string;
               }
               else {
                 this.slot = res[0].slots;
-                // this.showToast('default', 'Select Slot', 'Please Select Slot');
-                console.log(this.slot);
               }
-    
-    
-            }
-    
-    
+             }
           });
         }
-    
+    }
+
+    getinfowithMobile(){
+      console.log(this.cust_details.mobile)
+      const reqpara112 =
+      {
+        requesttype:'getcustinfo_mobilev2',
+        mobilenumber:this.cust_details.mobile,
+        svcidvar:this.svcid,
+        vehnumber:this.registrationNumber
       }
+      const as112 = JSON.stringify(reqpara112);
+      this._data.webServiceCall(as112).subscribe(data => {
+        if (data[0].login === 0) {
+          sessionStorage.removeItem('currentUser');
+          this.router.navigate(['/auth/login']);
+        }
+        else {
+          this.customer = data;
+          if (this.customer[1].custinfo[0].no_records) {
+            this.cust_details.mobile = this.user.mobile1
+          }
+          else {
+            this.cust_details = this.customer[1].custinfo[0],
+            this.address = this.customer[2].addresses;
+            if(this.address[0].hasOwnProperty('no_records')){
+              this.showAddress = true;
+            }
+            else{
+                this.showAddressDropDown = true;
+                this.addressPickup = this.address[0];
+                this.user.pickupdoor = this.addressPickup.doornumber;
+                this.user.pickupstreet = this.addressPickup.street;
+                this.user.pickuparea = this.addressPickup.area;
+                this.user.pickuplandmark = this.addressPickup.landmark;
+                this.user.pickuppincode = this.addressPickup.pincode;
+                this.user.picklatlong = this.addressPickup.latitude + ',' +this.addressPickup.longitude;
+                this.user.address_typepu = this.addressPickup.address_id;
+                this.addressDropoff = this.address[1];
+                  if(this.addressDropoff != undefined){
+                    this.user.dropofffdoor = this.addressDropoff.doornumber;
+                    this.user.dropoffstreet = this.addressDropoff.street;
+                    this.user.dropoffarea = this.addressDropoff.area;
+                    this.user.dropofflandmark = this.addressDropoff.landmark;
+                    this.user.dropoffpincode = this.addressDropoff.pincode;
+                    this.user.droplatlong = this.addressDropoff.latitude + ',' +this.addressDropoff.longitude;
+                    this.user.address_typedu = this.addressDropoff.address_id;
+                  }
+                  else{
+  
+                    this.user.dropofffdoor = null ;
+                    this.user.dropoffstreet = null;
+                    this.user.dropoffarea = null;
+                    this.user.dropofflandmark = null;
+                    this.user.dropoffpincode = null;
+                    this.user.droplatlong = null;
+                    this.user.address_typedu = null;
+                  }
+              console.log(this.addressDropoff);
+            }
+            this.carinfo = this.customer[4].carinfo[0]
+            this.selectedModel = this.carinfo.veh_model_id;
+            this.selectedVariant = this.carinfo.veh_submodel_id;
+            this.getVariants(this.selectedModel);
+            for (let i = 0; i < this.Models.length; i++) {
+              if (this.Models[i].id === this.selectedModel) {
+                this.selectedModel = this.Models[i].id ;
+              }
+            }
+          }
+        }},
+        (err: HttpErrorResponse) => {
+          if (err.error instanceof Error) {
+            console.log("Client-side error occured.");
+          }
+          else {
+            console.log("Server-side error occured.");
+          }
+        });
+    }
 
+    changeEditpickupdoor(value:any){
+      if (this.sameasvalue == true){
+        this.user.dropofffdoor = value;
+      }
+    }
+  
+    changeEditupstreet(value:any){
+      if (this.sameasvalue == true){
+        this.user.dropoffstreet = value;
+      }
+    }
+  
+    changeEditpickuparea(value:any){
+      if (this.sameasvalue == true){
+      this.user.dropoffarea = value;
+      }
+    }
+  
+    changeEditpickuplandmark(value:any){
+      if (this.sameasvalue == true){
+        this.user.dropofflandmark = value;
+      }
+    }
+  
+    changeEditpickuppincode(value:any){
+      if (this.sameasvalue == true){
+        this.user.dropoffpincode = value;
+      }
+    }
+  
+    changeEditpickuplatlong(value:any){
+      if (this.sameasvalue == true){
+       this.user.droplatlong = value;
+      }
+    }
 
-  someFunction(){
-   
-
-       this.show = true;
-
-  }
+ 
 
   customerCheck(){
-    console.log('correctaaa');
-    console.log(this.registrationNumber);
     const reqpara = {
         requesttype: 'getcustinfo_mobile',
         mobilenumber: this.cust_details.mobile,
         svcid:this.svcid
       }
       const as = JSON.stringify(reqpara)
-      this._data.getCustinfo(as).subscribe(data => {
+      this._data.webServiceCall(as).subscribe(data => {
         if(data[0].login === 0){
           sessionStorage.removeItem('currentUser');
           this.router.navigate(['/auth/login']);
         }
         else{
           if(data[1].custinfo[0].hasOwnProperty('no_records')){
-
           }
           else{
-            console.log(data);
             this.customer = data,
             this.cust_details = this.customer[1].custinfo[0],
             this.address = this.customer[2].addresses[0]
@@ -474,14 +634,10 @@ public slothour:string;
             this.user.picklatlong = this.address.plat + ',' + this.address.plong
             this.user.droploc = this.address.daddy,
             this.user.droplatlong = this.address.dlat + ',' + this.address.dlat,
-            this.carinfo = this.customer[3].carinfo[0]
-            console.log(this.carinfo);
-            console.log(this.cust_details.first_name)
+            this.carinfo = this.customer[3].carinfo[0];
           }
-       
         }
-
-    },
+      },
        (err: HttpErrorResponse) => {
          if (err.error instanceof Error) {
              console.log("Client-side error occured.");
@@ -489,28 +645,29 @@ public slothour:string;
          else {
            console.log("Server-side error occured.");
            }
-         }
-       );
-
-       this.show = true;
+       });
+      this.show = true;
   }
 
   onSubmit(f: NgForm) {
     this.disabled =  true;
+    console.log(f.value.city);
+    console.log(this.serviceType);
+    console.log(f.value.servicetype);
+    if(f.value.city){
+      this.cityid = f.value.city;
+    }
+    else{
+      this.cityid = 0
+    }
     if(this.user.time){
       this.slot_time = this.user.time + ':00'
     }
-    // this.svcid = sessionStorage.getItem('svcid')
-    console.log(f.value.servicetype)
     this.registrationNumber = f.value.num.toUpperCase();
-    console.log(this.registrationNumber);
-
     if(f.value.pickloc){
       this.pickup_add = f.value.pickloc;
       if(f.value.picklatlong){
         let y = f.value.picklatlong.split(/[ ,;]+/);
-        console.log(y);
-        // this.pickup_add = f.value.pickloc;
         this.pikup_lat = y[0];
         this.pikup_long = y[1];
       }
@@ -522,39 +679,100 @@ public slothour:string;
     else{
       this.pickup_add = "0";
     }
-
-  if(f.value.droploc)
-  {
-    this.dropadd = f.value.droploc;
-    if(f.value.droplatlong){
-      let x = f.value.droplatlong.split(/[ ,;]+/);
-      console.log(x);
-      this.dropoff_lat = x[0];
-      this.dropoff_long = x[1];
+    if(this.serviceType == '1'){
+      this.pickup_drop = 6;
     }
-    else{
-      this.dropoff_lat = "0";
-      this.dropoff_long ="0";
+    else if (this.serviceType == '2'){
+      this.pickup_drop = 7;
+    }
+    else if (this.serviceType == '3'){
+      this.pickup_drop = 4;
+    }
+    else if (this.serviceType == '4'){
+      this.pickup_drop = 5;
+    }
+    else if(this.serviceType == '15'){
+      this.pickup_drop = 15;
+    }
+    if(this.pickup_drop == 15 || this.pickup_drop == 6){
+      this.pickupdoor = f.value.pickupdoor;
+      this.pickupstreet = f.value.pickupstreet;
+      this.pickuparea = f.value.pickuparea;
+      this.pickuplandmark = f.value.pickuplandmark;
+      this.pickuppincode = f.value.pickuppincode;
+      this.dropofffdoor = f.value.pickupdoor;
+      this.dropoffstreet = f.value.pickupstreet;
+      this.dropoffarea = f.value.pickuparea;
+      this.dropofflandmark = f.value.pickuplandmark;
+      this.dropoffpincode = f.value.pickuppincode;
+      this.addressdoprevious = "0";
+      this.addresspuprevious = "0";
+      this.addresstype_do="0";
+      this.addresstype_pu="0";
+      if(f.value.picklatlong){
+        let x = f.value.picklatlong.split(/[ ,;]+/);
+        this.pikup_lat = x[0];
+        this.pikup_long = x[1];
+        this.dropoff_lat = x[0];
+        this.dropoff_long = x[1];
+      }
+    }
+    else if (this.pickup_drop == 4){
+      this.pickupdoor = f.value.pickupdoor;
+      this.pickupstreet = f.value.pickupstreet;
+      this.pickuparea = f.value.pickuparea;
+      this.pickuplandmark = f.value.pickuplandmark;
+      this.pickuppincode = f.value.pickuppincode;
+      this.dropofffdoor = f.value.dropofffdoor;
+      this.dropoffstreet = f.value.dropoffstreet;
+      this.dropoffarea = f.value.dropoffarea;
+      this.dropofflandmark = f.value.dropofflandmark;
+      this.dropoffpincode = f.value.dropoffpincode;
+      this.addressdoprevious = "0";
+      this.addresspuprevious = "0";
+      this.addresstype_do="0";
+      this.addresstype_pu="0";
+      if(f.value.picklatlong){
+        let x = f.value.picklatlong.split(/[ ,;]+/);
+        this.pikup_lat = x[0];
+        this.pikup_long = x[1];
+      }
+      if(f.value.droplatlong){
+        let y = f.value.picklatlong.split(/[ ,;]+/);
+        this.dropoff_lat = y[0];
+        this.dropoff_long = y[1];
+      }
+    }
+    else if (this.pickup_drop == 5 || this.pickup_drop == 7){
+      this.pickupdoor = f.value.pickupdoor;
+      this.pickupstreet = f.value.pickupstreet;
+      this.pickuparea = f.value.pickuparea;
+      this.pickuplandmark = f.value.pickuplandmark;
+      this.pickuppincode = f.value.pickuppincode;
+      this.dropofffdoor = f.value.dropofffdoor;
+      this.dropoffstreet = f.value.dropoffstreet;
+      this.dropoffarea = f.value.dropoffarea;
+      this.dropofflandmark = f.value.dropofflandmark;
+      this.dropoffpincode = f.value.dropoffpincode;
+      this.addressdoprevious = "0";
+      this.addresspuprevious = "0";
+      this.addresstype_do="0";
+      this.addresstype_pu="0";
+      if(f.value.picklatlong){
+        let x = f.value.picklatlong.split(/[ ,;]+/);
+        this.pikup_lat = x[0];
+        this.pikup_long = x[1];
+      }
+      if(f.value.droplatlong){
+        let y = f.value.picklatlong.split(/[ ,;]+/);
+        this.dropoff_lat = y[0];
+        this.dropoff_long = y[1];
+      }
     }
    
-  }
-  else{
-    if(f.value.pickloc) {
-      this.dropadd = f.value.pickloc;
-      this.dropoff_lat = this.pikup_lat;
-      this.dropoff_long = this.pikup_long;
-    }
-    else{
-      this.dropadd = "0";
-      this.dropoff_lat = "0";
-      this.dropoff_long = "0";
-    }
-   
-  }
   if(f.value.mobile2)
   {
       this.mobile2 = f.value.mobile2;
-      console.log(this.mobile2);
     }
   else 
   {
@@ -618,23 +836,7 @@ public slothour:string;
   }
   else {
     this.slot_time = "0";
-  }
-
-  if(f.value.servicetype == '1'){
-    this.pickup_drop = 6;
-  }
-  else if (f.value.servicetype == '2'){
-    this.pickup_drop = 7;
-  }
-  else if (f.value.servicetype == '3'){
-    this.pickup_drop = 4;
-  }
-  else if (f.value.servicetype == '4'){
-    this.pickup_drop = 5;
-  }
-  else{
-    this.pickup_drop = 0;
-  }
+  } 
   if(f.value.salesExe){
       this.saleexce= f.value.salesExe
   }
@@ -642,9 +844,24 @@ public slothour:string;
     this.saleexce = "0"
   }
 
+  if(f.value.coordinator){
+    this.serviceAdv = f.value.coordinator;
+  }
+  else{
+    this.serviceAdv = "0";
+  }
+
+    if(this.dateString){
+      this.queuetime = this.dateString + ' ' +this.slot_time
+    }
+    else{
+      this.queuetime =  this.datePipe.transform(this.today,"y-MM-dd h:mm:ss");
+    }
+    if(this.slot_time != "0" || this.pickup_drop == 15 ){
   const reqpara6 = {
-    requesttype:"createbooking",
+    requesttype: "createbookingv3",
     vehnumber: this.registrationNumber,
+    city: this.cityid,
     vehbrand:this.selectedBrand,
     carmodelid: f.value.model,
     carsubmodelid: f.value.variant,
@@ -652,28 +869,41 @@ public slothour:string;
     customermobile1: this.mobile1,
     customermobile2: this.mobile2,
     customeremail: this.cusEmail,
-    queuetime: this.dateString + ' ' +this.slot_time,
-    pickuplocationaddress: this.pickup_add,
+    queuetime: this.queuetime,
+    addresspuprevious:this.addresspuprevious,
+    doornumberpu:this.pickupdoor,
+    streetpu:this.pickupstreet,
+    areapu:this.pickuparea,
+    landmarkpu:this.pickuplandmark,
+    pincodepu:this.pickuppincode,
+    addresstypepu:this.addresstype_pu,
     pickuplat:this.pikup_lat,
-    pickuplong: this.pikup_long,
-    droplocationaddress: this.dropadd,
-    droplat: this.dropoff_lat,
-    droplong: this.dropoff_long,
+    pickuplong:this.pikup_long,
+    addressdoprevious:this.addressdoprevious,
+    doornumberdo:this.dropofffdoor,
+    streetdo:this.dropoffstreet,
+    areado:this.dropoffarea,
+    landmarkdo:this.dropofflandmark,
+    pincodedo:this.dropoffpincode,
+    addresstypedo:this.addresstype_do,
+    droplat:this.dropoff_lat,
+    droplong:this.dropoff_long,
     servicetype: this.pickup_drop,
-    advisorid: f.value.coordinator,
+    advisorid: this.serviceAdv,
     creid: this.saleexce,
     assignambassador:this.amb,
     selectedsvcid:this.svcid,
     cfeeclient:this.amt,
     notes:this.notes,
     isconfirmed:"0",
-    complaint:this.complaint_id,
+    eavalidcode:"0",
+    complaint:["0"]
   
   };
 
  const ua = JSON.stringify(reqpara6);
  console.log(ua);
-  this._data.createChauffeur(ua).subscribe(data => { 
+  this._data.webServiceCall(ua).subscribe(data => { 
     if(data[0].login === 0){
       sessionStorage.removeItem('currentUser');
       this.router.navigate(['/auth/login']);
@@ -684,58 +914,19 @@ public slothour:string;
         this.disabled=false;
         this.showLargeModal(this.message[0]);
         console.log(this.message[0].queue_id);
-        // f.reset();
-        f.controls.num.reset();
-        f.controls.servicetype.reset();
-        f.controls.model.reset();
-        f.controls.variant.reset();
-        f.controls.coordinator.reset();
-        f.controls.cormob.reset();
-        f.controls.dp.reset();
-        f.controls.notes.reset();
-        f.controls.pickloc.reset();
-        f.controls.picklatlong.reset();
-        if(f.controls.droploc){
-          f.controls.droploc.reset();
-          f.controls.droplatlong.reset();
-        }
-       
-       
-       
-        if(f.value.mobile2){
-          f.controls.mobile2.reset();
-        }
-       
-       
-        if(f.controls.Cus_name){
-          f.controls.Cus_name.reset();
-          f.controls.email.reset();
-          f.controls.salutation1.reset();
-          f.controls.mobile1.reset();
-        }
-       if(f.controls.salesExe){
-        f.controls.salesExe.reset();
-       }
-        
-        if(f.value.amt){
-          f.controls.amt.reset();
-        }
-      
-        if(f.controls.time){
-          f.controls.time.reset();
-        }
-
-        if(f.controls.slot){
-          f.controls.slot.reset();
-        }
-        
-       
         this.slot_time = "0";
+        f.reset();
         this.show = false;
         this.show3 = false;
         this.disabled =  true;
+        this.showtime = false;
+        this.countrycode1 = "+91";
+        this.dateString = null;
+        this.yourBoolean = 'servicing';
+        this.user.salutation = 'Mr';
         this.dateString = "";
         this.getCoordinator();
+        this.disableNext = false;
     }
  
   },
@@ -747,7 +938,9 @@ else {
   console.log("Server-side error occured.");
   }
 });
-//  f.reset();
+    }else{
+      this.showToast('alert', 'Message', 'Please select Slot and date');
+    }
 };
 
 }

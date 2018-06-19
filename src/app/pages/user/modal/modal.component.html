@@ -6,7 +6,7 @@
 </div>
 
 <div class="modal-body">
-<form novalidate #f="ngForm" (ngSubmit)="onSubmit(f)">
+<form ngNativeValidate #f="ngForm" (ngSubmit)="onSubmit(f)">
   <div style="width:100%;margin-left:auto;margin-right:auto">
 
 
@@ -33,7 +33,7 @@
   <div class="row">
     <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6">
       <div class="form-group" style="display:inline-block;min-width: 82%;">
-        <input type="text" class="form-control" name="mobile1" [(ngModel)]="modalContent.mobilenumber" required #mobile1="ngModel" pattern="^[0-9]{10}$">
+        <input type="text" class="form-control" name="mobile1" OnlyNumber="true" [(ngModel)]="modalContent.mobilenumber" required #mobile1="ngModel" pattern="^[0-9]{10}$">
         <label class="form-control-placeholder" for="mobile1">Mobile Number*</label>
       </div>
       <div class="form-control-feedback" *ngIf="mobile1.errors && (mobile1.dirty || mobile1.touched)">
@@ -76,7 +76,7 @@
     </div>
   </div>
 
-<button type="submit" class="btn btn-primary" [disabled]="f.invalid">Update User </button>
+<button type="submit" class="btn btn-primary">Update User </button>
 <!-- <button type="button" class="btn btn-success" (click)="deleteUser()" style="margin-left:8%;">Delete User</button> -->
 
 

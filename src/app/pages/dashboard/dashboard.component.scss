@@ -23,57 +23,33 @@
         }
     }
 }
-
 .star {
     position: relative;
     display: inline-block;
     font-size: 1.8rem;
     color: #d3d3d3;
 }
-
 .full {
     color: orange;
 }
-
 .half {
     position: absolute;
     display: inline-block;
     overflow: hidden;
     color: orange;
 }
-
-ngx-charts-legend.chart-legend {
-    width: auto;
-    clear: both;
-    display: block;
-    margin: 0 auto;
-    &>div {
-        display: block;
-        width: auto !important;
-    }
-    .legend-wrap {
-        min-width: 200px;
-        text-align: center;
-        margin: 0 auto;
-        float: none;
-    }
-    .legend-title {
-        display: none;
-    }
-    .legend-labels {
-        width: auto;
-        display: inline-block;
-        text-align: center;
-        margin: 0 auto;
-        background: none;
-        float: none;
-        padding: 0;
-        margin-left: -13%;
-        margin-top: -13%;
-    }
-}
-
 .edit {
     color: orange;
     background-color: white;
 }
+/* basic positioning */
+.legend { list-style: none; }
+.legend li { float: left; margin-right: 10px; }
+.legend span { border: 1px solid #ccc; float: left; width: 12px; height: 12px; margin: 2px; }
+/* your colors */
+.legend .superawesome { background-color: #ffa239; }
+.legend .awesome { background-color: #c8e6c9; }
+.legend .kindaawesome { background-color: #81c784; }
+.legend .notawesome { background-color: #4caf50; }
+.legend .notawesome1 { background-color: #ffe789; }
+

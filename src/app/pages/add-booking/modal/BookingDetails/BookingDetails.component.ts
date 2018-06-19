@@ -6,10 +6,10 @@ import { ToasterService, ToasterConfig, Toast, BodyOutputType } from 'angular2-t
 import 'style-loader!angular2-toaster/toaster.css';
 @Component({
   selector: 'ngx-modal1',
-  templateUrl: './modal1.component.html',
-  styleUrls: ['./modal1.component.scss']
+  templateUrl: './BookingDetails.component.html',
+  styleUrls: ['./BookingDetails.component.scss']
 })
-export class Modal1Component implements OnInit {
+export class BookingDetails implements OnInit {
 
   modalHeader: string;
   modalContent:any;
@@ -33,6 +33,7 @@ export class Modal1Component implements OnInit {
 
   constructor(private toasterService: ToasterService,private activeModal: NgbActiveModal,private httpService: HttpClient) { }
   ngOnInit() {
+    console.log(this.modalContent)
   }
   closeModal() {
     this.activeModal.close();

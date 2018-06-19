@@ -28,7 +28,44 @@
         }
     }
 }
+table{
+    font-size:13px;
+}
+input[type=text],
+input[type=email],
+input[type=number],
+textarea,
+fieldset {
+/* required to properly style form 
+   elements on WebKit based browsers */
+  -webkit-appearance: none;
+  
+  width : 100%;
+  border: 2px solid #dadfe6;;
+  margin: 0;
+  
+  font-family: inherit;
+  font-size: 90%;
+  
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
 
+input:invalid {
+  box-shadow: 0 0 5px 1px red;
+}
+
+input:focus:invalid {
+  outline: none;
+}
+
+select:invalid {
+  box-shadow: 0 0 5px 1px red;
+}
+
+select:focus:invalid {
+  outline: none;
+}
 .search {
     float: right;
     margin-bottom: 5%;
@@ -62,4 +99,13 @@
 .addnumber {
     border-color: orange;
     background-color: white;
+}
+.haserror{
+    color:red;
+}
+.enableButton{
+    padding: 5px;
+    text-transform: capitalize;
+    font-size: 13px;
+    border-radius: 0px;
 }

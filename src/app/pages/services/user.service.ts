@@ -29,12 +29,16 @@ export class ListService {
     return this.http.post(this.url, reqpara, this.httpOptions);
   }
 
+  webServiceCall(reqpara){
+    return this.http.post(this.url, reqpara, this.httpOptions);
+  }
+
   updateUser(reqpara){
     return this.http.post(this.url, reqpara, this.httpOptions);
   }
 
-  getUser() : Observable<IEmployee[]>{
-    return this.http.get<IEmployee[]>(this._url);
-  }
+  // getUser() : Observable<IEmployee[]>{
+  //   return this.http.get<IEmployee[]>(this._url);
+  // }
 
 }

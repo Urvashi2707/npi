@@ -40,7 +40,7 @@ import { Component ,OnInit} from '@angular/core';
 
 export class ThreeColumnsLayoutComponent implements OnInit {
   ngOnInit(){
-   
+    console.log('3-column');
   }
 
 }

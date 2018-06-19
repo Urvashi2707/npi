@@ -65,7 +65,7 @@ export class ModalComponent implements OnInit {
         requesttype: 'getusertypes'
       }
     const as2 = JSON.stringify(reqpara2);
-    this._data.getUserType(as2).subscribe
+    this._data.webServiceCall(as2).subscribe
       (res => {
         this.designation = res[0].usertype
         console.log(res[0]);
@@ -102,7 +102,7 @@ export class ModalComponent implements OnInit {
         servicecentreid: JSON.parse(this.svcid),
       }
     const as1 = JSON.stringify(reqpara1);
-    this._data.getUserType(as1).subscribe
+    this._data.webServiceCall(as1).subscribe
       (res => {
         console.log(res[0].userlist);
         this.userList = res[0].userlist;
@@ -122,7 +122,7 @@ export class ModalComponent implements OnInit {
     };
     console.log(JSON.stringify(reqpara1));
     const ua1 = JSON.stringify(reqpara1);
-    this._data.updateUser(ua1).subscribe(data => {
+    this._data.webServiceCall(ua1).subscribe(data => {
       console.log(data);
     });
   }
@@ -138,7 +138,7 @@ export class ModalComponent implements OnInit {
     };
     console.log(JSON.stringify(reqpara));
     const ua = JSON.stringify(reqpara);
-    this._data.updateUser(ua).subscribe(data => {
+    this._data.webServiceCall(ua).subscribe(data => {
       if (data) {
         console.log(data);
         this.message = data

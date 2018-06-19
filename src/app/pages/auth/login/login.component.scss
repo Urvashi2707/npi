@@ -8,6 +8,38 @@
   margin-top: 1.5em;
 }
 
+.Alert{
+  width: 90%;
+  margin: 0 auto;
+  border: 2px solid coral;
+  position: absolute;
+  border-radius: 6px;
+  padding: 1%;
+  background-color: coral;
+  color: white;
+  z-index: 999;
+}
+.AletTitle{
+  font-weight: 900;
+}
+.container{
+  position: relative;
+  background-color:white;
+  padding-top:20%
+}
+.crossButton{
+  float: right;
+  color:white;
+}
+.button {
+  background-color: Transparent;
+  background-repeat:no-repeat;
+  border: none;
+  cursor:pointer;
+  overflow: hidden;
+  outline:none;
+  color:white;
+}
 .form-control-placeholder {
   position: absolute;
   top: 0;

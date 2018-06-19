@@ -1,96 +1,138 @@
-<nb-card>
-    <nb-card-body>
-        <div>
-            <div class="row">
-                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
-                    <div class="form-group">
-                        <div class="input-group">
-
-                            <input class="form-control" name="dp" [ngModel]="model1" (ngModelChange)="onSelectDate1($event)" placeholder="{{pastdate | date: 'yyyy-MM-dd'}}" ngbDatepicker #d1="ngbDatepicker">
-                            <div class="input-group-append">
-                                <button class="btn btn-outline-secondary dateButton" (click)="d1.toggle()" type="button" style="height: 100%;border-radius: 0px;">
-                                    <span>
-                                        <i class="fa fa-calendar"></i>
-                                    </span>
-                                </button>
+<div class="row">
+    <div class="col-md-12 col-lg-12">
+        <nb-card><nb-card-header>At Centre</nb-card-header>
+            <nb-card-body>
+                <div>
+                    <div class="row">
+                        <div class="col-lg-5 col-md-5 ">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <input class="form-control" name="dp" [ngModel]="model1" (ngModelChange)="onSelectDate1($event)" placeholder="{{pastdate | date: 'yyyy-MM-dd'}}"
+                                        ngbDatepicker #d1="ngbDatepicker">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-outline-secondary dateButton" (click)="d1.toggle()" type="button" style="height: 100%;border-radius: 0px;">
+                                            <span>
+                                                <i class="fa fa-calendar"></i>
+                                            </span>
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
+                        </div>
+                        <div class="col-lg-5 col-md-5 ">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <input class="form-control" name="dp" [ngModel]="model" (ngModelChange)="onSelectDate($event)" placeholder="{{today | date: 'yyyy-MM-dd'}}"
+                                        ngbDatepicker #d="ngbDatepicker">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-outline-secondary dateButton" (click)="d.toggle()" type="button" style="height: 100%;border-radius: 0px;">
+                                            <span>
+                                                <i class="fa fa-calendar"></i>
+                                            </span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-2">
+                            <button type="button" class="btn btn-primary" (click)="FilterCheck(1)">Apply</button>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
-                    <div class="form-group">
-                        <div class="input-group">
-
-                            <input class="form-control" name="dp" [ngModel]="model" (ngModelChange)="onSelectDate($event)" placeholder="{{today | date: 'yyyy-MM-dd'}}" ngbDatepicker #d="ngbDatepicker">
-                            <div class="input-group-append">
-                                <button class="btn btn-outline-secondary dateButton" (click)="d.toggle()" type="button" style="height: 100%;border-radius: 0px;">
-                                    <span>
-                                        <i class="fa fa-calendar"></i>
-                                    </span>
-                                </button>
-                            </div>
-                        </div>
+                <div class="row">
+                    <div class="col-md-6 col-lg-6">
+                    </div>
+                    <div class="col-md-6 col-lg-6 ">
+                        <input type="text" class="search" [(ngModel)]="term" placeholder="search">
                     </div>
                 </div>
-                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                    <button type="button" class="btn btn-primary" (click)="FilterCheck()">Apply</button>
+                <table style="width:100%">
+                    <thead>
+                        <tr>
+                            <th (click)="sort('queueid')">ID
+                                <span class="sort-span">
+                                    <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i>
+                                </span>
+                            </th>
+                            <th (click)="sort('queueid')">License Plate
+                                <span class="sort-span">
+                                    <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i>
+                                </span>
+                            </th>
+                            <th (click)="sort('veh_number')">Customer
+                                <span class="sort-span">
+                                    <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i>
+                                </span>
+                            </th>
+                            <th (click)="sort('cust_name')">Pickup Date
+                                <span class="sort-span">
+                                    <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i>
+                                </span>
+                            </th>
+                            <th (click)="sort('queue_time')">ETD
+                                <span class="sort-span">
+                                    <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i>
+                                </span>
+                            </th>
+                            <th (click)="sort('dropoff_time')">Paid/Unpaid
+                                <span class="sort-span">
+                                    <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i>
+                                </span>
+                            </th>
+                            <th (click)="sort('payment_status')">Amount
+                                <span class="sort-span">
+                                    <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i>
+                                </span>
+                            </th>
+                            <th (click)="sort('queue_total')">Status
+                                <span class="sort-span">
+                                    <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i>
+                                </span>
+                            </th>
+                            <th (click)="sort('queue_state')">Upload</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let i of atcentre | filter:term | orderBy: key : reverse | paginate: { id: 'server', itemsPerPage:dataperpage, currentPage: p + 1, totalItems: record_count };">
+                            <td (click)="openQDetails(i)">{{i.queueid}}</td>
+                            <td (click)="openQDetails(i)">{{i.veh_number}}</td>
+                            <td (click)="openQDetails(i)">{{i.cust_name}}</td>
+                            <td (click)="openQDetails(i)">{{i.queue_time}}</td>
+                            <td (click)="openQDetails(i)">{{i.dropoff_time}}</td>
+                            <td (click)="openQDetails(i)">{{i.payment_status}}</td>
+                            <td (click)="openQDetails(i)">{{i.queue_total}}</td>
+                            <td (click)="openQDetails(i)">{{i.queue_state}}</td>
+                            <td>
+                                <button type="button" class="upload-button" (click)="uploadFiles(i)">{{i.upload_button}}</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table *ngIf="message">
+                    {{message}}
+                </table>
+                <ngx-spinner bdColor="rgba(51,51,51,0.09)" size="large" color="#ea5810" type="ball-clip-rotate-pulse"></ngx-spinner>
+                <div class="paginate">
+                    <pagination-controls (pageChange)="FilterCheck($event)" id="server"></pagination-controls>
                 </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6 col-lg-6 col-sm-6">
-
-            </div>
-            <div class="col-md-6 col-lg-6 col-sm-6">
-                <input type="text" class="search" [(ngModel)]="term" placeholder="search">
-            </div>
-        </div>
-        <table style="width:100%">
-            <thead>
-                <tr>
-                    <th (click)="sort('queueid')">ID
-                        <span class="sort-span"><i class="fa"  [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i></span>
-                    </th>
-                    <th (click)="sort('queueid')">License Plate
-                        <span class="sort-span"><i class="fa"  [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i></span>
-                    </th>
-                    <th (click)="sort('veh_number')">Customer
-                        <span class="sort-span"><i class="fa"  [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i></span>
-                    </th>
-                    <th (click)="sort('cust_name')">Pickup Date
-                        <span class="sort-span"><i class="fa"  [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i></span>
-                    </th>
-                    <th (click)="sort('queue_time')">ETD
-                        <span class="sort-span"><i class="fa"  [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i></span>
-                    </th>
-                    <th (click)="sort('dropoff_time')">Paid/Unpaid
-                        <span class="sort-span"><i class="fa"  [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i></span>
-                    </th>
-                    <th (click)="sort('payment_status')">Amount
-                        <span class="sort-span"><i class="fa"  [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i></span>
-                    </th>
-                    <th (click)="sort('queue_total')">Status
-                        <span class="sort-span"><i class="fa"  [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i></span>
-                    </th>
-                    <th (click)="sort('queue_state')">Upload</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let i of atcentre | filter:term | orderBy: key : reverse ;">
-                    <td (click)="openQDetails(i)">{{i.queueid}}</td>
-                    <td (click)="openQDetails(i)">{{i.veh_number}}</td>
-                    <td (click)="openQDetails(i)">{{i.cust_name}}</td>
-                    <td (click)="openQDetails(i)">{{i.queue_time}}</td>
-                    <td (click)="openQDetails(i)">{{i.dropoff_time}}</td>
-                    <td (click)="openQDetails(i)">{{i.payment_status}}</td>
-                    <td (click)="openQDetails(i)">{{i.queue_total}}</td>
-                    <td (click)="openQDetails(i)">{{i.queue_state}}</td>
-                    <td><button type="button" class="upload-button" (click)="uploadFiles(i)">{{i.upload_button}}</button></td>
-                </tr>
-            </tbody>
-        </table>
-        <table *ngIf="message">
-            {{message}}
-        </table>
-    </nb-card-body>
-</nb-card>
+            </nb-card-body>
+        </nb-card>
+    </div>
+</div>
+<!-- <div class="row mobileView">
+    <ul style="width: 100%">
+        <li *ngFor="let g of atcentre">
+            <div class="card">
+                <div class="row">
+                        <div class="col-sm-6">ID&nbsp;:&nbsp;&nbsp;{{g.queueid}}</div>
+                        <div class="col-sm-6">
+                            <div>
+                                <span>IND</span>
+                                <span>{{g.veh_number}}</span>
+                            </div>
+                        </div>
+                </div>
+              </div>
+        </li>
+    </ul>
+</div> -->

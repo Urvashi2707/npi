@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ServicingService } from '../services/addServicing.service';
 import { Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
+import { QueueTableService } from '../services/queue-table.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { HttpClient, HttpHeaders, HttpErrorResponse, HttpRequest } from '@angular/common/http';
 import { NgbDateAdapter, NgbDateStruct, NgbDatepickerConfig, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
 @Component({
@@ -30,13 +32,19 @@ export class ReportsComponent implements OnInit {
   public globalsvcid:string;
   public selectedsvcid:string;
   public svcid:string
-  constructor(private datePipe: DatePipe, private router: Router, private ngbDateParserFormatter: NgbDateParserFormatter, private service: ServicingService, private http: HttpClient) {
+  constructor(private spinner: NgxSpinnerService,private _detailsTable: QueueTableService,private datePipe: DatePipe, private router: Router, private ngbDateParserFormatter: NgbDateParserFormatter, private service: ServicingService, private http: HttpClient) {
   }
 
   ngOnInit() {
     var date = new Date();
+    this.model = {day:date.getUTCDate(),month:date.getUTCMonth() + 1,year: date.getUTCFullYear() };
+    this.dateString = this.model.year + '-' + this.model.month + '-' + this.model.day;
     this.today = this.datePipe.transform(date,"yyyy-MM-dd");
     var numberOfDays = 14;
+    var dt = new Date();
+           dt.setDate( dt.getDate() - 14 );
+      this.model1 = { day: dt.getUTCDate(), month: dt.getUTCMonth() + 1, year: dt.getUTCFullYear()};
+      this.dateString1 = this.model1.year + '-' + this.model1.month + '-' + this.model1.day;
     var days = date.setDate(date.getDate() - numberOfDays);
     this.pastdate = this.datePipe.transform(days,"yyyy-MM-dd");
     console.log(this.pastdate);
@@ -129,7 +137,7 @@ export class ReportsComponent implements OnInit {
         svcid:this.svcid
       }
     const as1 = JSON.stringify(reqpara1)
-    this.service.getBrands(as1).subscribe
+    this.service.webServiceCall(as1).subscribe
       (res => {
         if (res[0].login === 0) {
           sessionStorage.removeItem('currentUser');
@@ -150,7 +158,13 @@ export class ReportsComponent implements OnInit {
 
       }
   
-  
+      openQDetails(data:any){
+        console.log(data);
+        sessionStorage.removeItem('clickedOn');
+        sessionStorage.setItem('QueueId',data.id)
+        this._detailsTable.queueID = data.id;
+        this.router.navigate(['/pages/queue-details']);
+      }
 
   defaultSearch() {
     const reqpara1 =
@@ -163,7 +177,7 @@ export class ReportsComponent implements OnInit {
         svcid:this.svcid
       }
     const as1 = JSON.stringify(reqpara1)
-    this.service.getBrands(as1).subscribe
+    this.service.webServiceCall(as1).subscribe
       (res => {
         if (res[0].login === 0) {
           sessionStorage.removeItem('currentUser');

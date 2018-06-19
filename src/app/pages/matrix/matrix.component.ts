@@ -35,7 +35,7 @@ export class MatrixComponent implements OnInit {
       svcid:this.svcid
     }
       const as1 = JSON.stringify(reqpara1)
-      this.service.getBrands(as1).subscribe
+      this.service.webServiceCall(as1).subscribe
   (res => 
     {
       if(res[0].login === 0){

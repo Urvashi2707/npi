@@ -4,6 +4,7 @@ import { Subject } from 'rxjs';
 import { QueueTableService } from '../../services/queue-table.service';
 import { ListService } from '../../services/user.service';
 import { Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { DatePipe } from '@angular/common';
 import {NgbDateAdapter, NgbDateStruct, NgbDatepickerConfig, NgbDateParserFormatter} from '@ng-bootstrap/ng-bootstrap';
 @Component({
@@ -17,6 +18,9 @@ export class ChauffeurComponent implements OnInit {
   tableData: any[];
   keyValues: any[];
   today:string;
+  p:number=1;
+  record_count:string;
+  dataperpage:string;
   public chauffeur : any =[];
   dateString: string;
   dateString1: string;
@@ -29,18 +33,27 @@ export class ChauffeurComponent implements OnInit {
   message:string;
   globalsvcid:string;
   svcid:string;
-  constructor(private datePipe:DatePipe,private ngbDateParserFormatter: NgbDateParserFormatter,private _detailsTable: QueueTableService, private _data: ListService, private _tableService: QueueTableService, private router: Router) { 
+  constructor(private spinner: NgxSpinnerService,private datePipe:DatePipe,private ngbDateParserFormatter: NgbDateParserFormatter,private _detailsTable: QueueTableService, private _data: ListService, private _tableService: QueueTableService, private router: Router) { 
     this._tableService.clickedID.subscribe(value => {
       this.tableData = _tableService.table_data;
       this.keyValues = ['queueid', 'cust_name', 'veh_number', 'pickup_address', 'dropoff_address', '(select starttime from 21N_queue_chauffer where queueid = 21N_queue.id)', 'amb_name', 'amb_number', 'queue_state'];
     });
-    var date = new Date();
-    this.today = this.datePipe.transform(date,"yyyy-MM-dd");
-    console.log(this.today)
+    const date = new Date();
+    this.model = {day:date.getUTCDate(),month:date.getUTCMonth() + 1,year: date.getUTCFullYear() };
+    this.dateString = this.model.year + '-' + this.model.month + '-' + this.model.day;
     var numberOfDays = 5;
+    var dt = new Date();
+         dt.setDate( dt.getDate() - 5 );
+    this.model1 = { day: dt.getUTCDate(), month: dt.getUTCMonth() + 1, year: dt.getUTCFullYear()};
+    this.dateString1 = this.model1.year + '-' + this.model1.month + '-' + this.model1.day;
+    this.today = this.datePipe.transform(date,"yyyy-MM-dd");
+    
+    console.log(this.today)
+   
     var days = date.setDate(date.getDate() - numberOfDays);
     this.pastdate = this.datePipe.transform(days,"yyyy-MM-dd");
     console.log(this.pastdate);
+    
   }
 
   ngOnInit() {
@@ -55,35 +68,8 @@ export class ChauffeurComponent implements OnInit {
     }
     this.globalsvcid = JSON.parse(sessionStorage.getItem('globalsvcid'));
     console.log(this.globalsvcid);
-    const reqpara3 = {
-      requesttype: 'getqueueinfonew',
-      servicetype: '5',
-      starttime: this.pastdate,
-      endtime: this.today,
-      pagenumber: '0',
-      svcid:this.svcid 
-    }
-    const as3 = JSON.stringify(reqpara3);
-    console.log(as3);
-    this._data.createUser(as3).subscribe(res => {
-      if(res[0].login === 0){
-        sessionStorage.removeItem('currentUser');
-        this.router.navigate(['/auth/login']);
-      }
-      else{
+    this.FilterCheck(1);
 
-      if(res[0].pagecount[0].hasOwnProperty('noqueues')){
-        console.log('No queue');
-        this.message = 'No Data';
-       }
-       else{
-
-        this.chauffeur = res[1].activechauf;
-        console.log(this.chauffeur)
-       }
-    }
-      // this._detailsTable.setTableData(res, 6);
-    });
   }
   onSelectDate(date: NgbDateStruct){
     if (date != null) {
@@ -129,20 +115,22 @@ export class ChauffeurComponent implements OnInit {
     this.key = key;
     this.reverse = !this.reverse;
   }
-  FilterCheck(){
-    this.message = " ";
-
+  FilterCheck(p:number){
+    console.log(this.dateString);
+    this.message=" ";
+    this.spinner.show();
+    this.p = p - 1 ;
     const reqpara3 = {
       requesttype: 'getqueueinfonew',
       servicetype: '5',
       starttime: this.dateString1,
       endtime: this.dateString,
-      pagenumber: '0',
+      pagenumber:this.p,
       svcid:this.svcid 
     }
     const as3 = JSON.stringify(reqpara3);
     console.log(as3);
-    this._data.createUser(as3).subscribe(res => {
+    this._data.webServiceCall(as3).subscribe(res => {
       console.log(res);
       if(res[0].login === 0){
         sessionStorage.removeItem('currentUser');
@@ -153,11 +141,16 @@ export class ChauffeurComponent implements OnInit {
       if(res[0].pagecount[0].hasOwnProperty('noqueues')){
         console.log('No queue');
         this.message = 'No Data';
+        this.spinner.hide();
        }
        else{
 
         this.chauffeur = res[1].activechauf;
-        console.log(this.chauffeur)
+        console.log(this.chauffeur);
+        this.record_count = res[0].pagecount[0].record_count;
+        this.dataperpage = res[0].pagecount[0].pagelimit;
+        console.log(this.record_count);
+        this.spinner.hide();
        }
     }
     });

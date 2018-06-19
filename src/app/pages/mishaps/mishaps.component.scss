@@ -7,11 +7,20 @@ th,
 td {
     border: 1px solid rgb(218, 223, 230);
     border-collapse: collapse;
+    font-size:13px;
+ 
 }
 
 th,
 td {
     padding: 15px;
+}
+tbody{
+    font-weight: 100 !important;
+}
+
+tbody tr:hover {
+    background-color: lightyellow;
 }
 
 .sort-span {
@@ -30,4 +39,8 @@ tbody tr:hover {
     border-radius: 4px;
     height: 60%;
     width: 50%;
+}
+.paginate{
+text-align: center;
+padding-top: 5%;
 }
