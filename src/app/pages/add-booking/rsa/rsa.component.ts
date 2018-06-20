@@ -530,6 +530,7 @@ export class RsaComponent implements OnInit {
           this.showToast('Message', 'Policy Message', 'Something went wrong');
           console.log("Client-side error occured.");
           this.disabledNext = true;
+          this.showstep3 = true;
           this.ea_respondID = "0";
         }
         else {
@@ -538,6 +539,7 @@ export class RsaComponent implements OnInit {
           this.showToast('Message', 'Policy Message', 'Something went wrong');
           console.log("Server-side error occured.");
           this.disabledNext = true;
+          this.showstep3 = true;
           this.ea_respondID = "0";
         }
       }
