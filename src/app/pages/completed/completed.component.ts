@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Subject } from 'rxjs';
 import { QueueTableService } from '../services/queue-table.service';
 import { ListService } from '../services/user.service';
 import { Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
-import { NgbDateAdapter, NgbDateStruct, NgbDatepickerConfig, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
+import {  NgbDateStruct, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToasterService, ToasterConfig, Toast, BodyOutputType } from 'angular2-toaster';
 import 'style-loader!angular2-toaster/toaster.css';
@@ -70,47 +69,14 @@ export class CompletedComponent implements OnInit {
 
   ngOnInit() {
     if(sessionStorage.getItem('selectedsvc')){
-      // console.log(sessionStorage.getItem('selectedsvc'));
       this.svcid = sessionStorage.getItem('selectedsvc');
-      // console.log(this.svcid);
     }
     else{
       this.svcid = JSON.parse(sessionStorage.getItem('globalsvcid'));
-      // console.log(this.svcid);
     }
     this.globalsvcid = JSON.parse(sessionStorage.getItem('globalsvcid'));
     console.log(this.globalsvcid);
     this.FilterCheck(1);
-    // const reqpara3 = {
-    //   requesttype: 'getqueueinfonew',
-    //   servicetype: '9',
-    //   starttime: this.pastdate,
-    //   endtime: this.today,
-    //   pagenumber: '0',
-    //   svcid:this.svcid
-    // }
-    // const as3 = JSON.stringify(reqpara3);
-    // console.log(as3);
-    // this._data.createUser(as3).subscribe(res => {
-    //   if(res[0].login === 0){
-    //     sessionStorage.removeItem('currentUser');
-    //     this.router.navigate(['/auth/login']);
-    //   }
-    //   else{
-
-    //   if(res[0].pagecount[0].hasOwnProperty('noqueues')){
-    //     console.log('No queue');
-    //     this.message = 'No Data';
-    //    }
-    //    else{
-
-    //     this.completed = res[1].completed;
-    //     console.log(this.completed)
-    //     this.page = res[0].pagecount;
-    //     console.log(this.page[0].record_count);
-    //    }}
-    // });
-
   }
 
   private showToast(type: string, title: string, body: string) {
@@ -158,12 +124,6 @@ export class CompletedComponent implements OnInit {
     this._detailsTable.queueID = data.queueid;
     this.router.navigate(['/pages/queue-details']);
   }
-  // openQDetails(indexId: any) {
-  //   sessionStorage.removeItem('clickedOn');
-  //   sessionStorage.setItem('QueueId', this.tableData[indexId][this.keyValues[0]])
-  //   this._detailsTable.queueID = this.tableData[indexId][this.keyValues[0]];
-  //   this.router.navigate(['/pages/queue-details']);
-  // }
 
   FilterCheck(p:number) {
     this.loading = true;
@@ -201,7 +161,6 @@ export class CompletedComponent implements OnInit {
         console.log(this.record_count);
         this.spinner.hide();
        }}
-      // this._detailsTable.setTableData(res, 10);
     });
   }
 }

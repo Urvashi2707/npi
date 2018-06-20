@@ -32,3 +32,37 @@ tbody tr:hover {
     text-align: center;
     padding-top: 5%;
 }
+@media only screen and (max-width: 420px) {
+    .desktopView {
+        display: none;
+    }
+    .mobileView{
+        color:black;
+    }
+    .card {
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+        transition: 0.3s;
+        width: 100%;
+        height: 100px;
+        padding: 8px 10px 8px 10px
+    }
+    
+    .card:hover {
+        box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    }
+    ul {
+        list-style-type: none;
+        padding: 0px;
+    }
+    .CusName{
+        font-size: 14px;
+        font-weight: 900;
+    }
+}
+
+@media only screen and (min-width: 1050px) {
+    .mobileView {
+        display: none;
+    }
+   
+}
