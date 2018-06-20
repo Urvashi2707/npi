@@ -109,7 +109,7 @@ export class ChauffeurComponent implements OnInit {
   public minDate;
   public maxDate;
   public complaint_id:any =[];
-  // public svcid:string;
+  valuedate = new Date();
   countrycode1:string;
   
   constructor(private datePipe:DatePipe,private titlecasePipe:TitleCasePipe,private toasterService: ToasterService,private _data : ChauffeurService,private router: Router,private ngbDateParserFormatter: NgbDateParserFormatter,private modalService: NgbModal) { }
@@ -140,7 +140,8 @@ export class ChauffeurComponent implements OnInit {
       this.getSaleExceutive();
       // this.getCityList();
       const now = new Date();
-      this.model = { year: now.getFullYear(), month: now.getMonth() + 1, day: now.getDate() };
+      // this.model = { year: now.getFullYear(), month: now.getMonth() + 1, day: now.getDate() };
+      this.valuedate = new Date();
       this.startDate = this.model;
       this.minDate = { year: now.getFullYear(), month: now.getMonth() + 1, day: now.getDate() - 1 };
       this.maxDate = { year: now.getFullYear(), month: now.getMonth() + 1, day: now.getDate() + 15};

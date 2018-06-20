@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Subject } from 'rxjs';
 import { QueueTableService } from '../services/queue-table.service';
 import { ListService } from '../services/user.service';
 import { Router } from '@angular/router';
@@ -8,7 +7,6 @@ import {NgbDateAdapter, NgbDateStruct, NgbDatepickerConfig, NgbDateParserFormatt
 import {ServicingService } from '../services/addServicing.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { ModalUploadComponent } from './../queue-details/modal-upload/modal-upload.component';
 import { Modal4Component } from './../search/modal/modal.component';
 
 @Component({
@@ -37,6 +35,8 @@ export class NotcheckedinComponent implements OnInit {
   groupadmin:string;
   svcid:string;
   datatopass:any;
+  reverse: boolean = false;
+  key: string = 'queueid'; 
   dataForUpload: any;
   today:string;
 
@@ -115,6 +115,10 @@ export class NotcheckedinComponent implements OnInit {
     sessionStorage.setItem('QueueId',data.queueid)
     this._detailsTable.queueID = data.queueid;
     this.router.navigate(['/pages/queue-details']);
+  }
+  sort(key){
+    this.key = key;
+    this.reverse = !this.reverse;
   }
   getData(p:number){
     this.spinner.show();

@@ -148,7 +148,7 @@
                   <div class="form-group">
                     <div class="input-group">
                       <input class="form-control" name="dp" [ngModel]="model" [readonly]="true" [minDate]="startDate" (ngModelChange)="onSelectDate($event)"
-                        ngbDatepicker #d="ngbDatepicker">
+                        ngbDatepicker #d="ngbDatepicker" placeholder="{{valuedate | date: 'yyyy-MM-dd'}}">
                       <div class="input-group-append">
                         <button class="btn btn-outline-secondary dateButton" (click)="d.toggle()" type="button">
                           <span>
@@ -260,7 +260,7 @@
                   <div class="form-group">
                     <div class="input-group">
                       <input class="form-control" name="dp" [ngModel]="model" [readonly]="true" [minDate]="startDate" (ngModelChange)="onSelectDate($event)"
-                        ngbDatepicker #d="ngbDatepicker">
+                        ngbDatepicker #d="ngbDatepicker" placeholder="{{valuedate | date: 'yyyy-MM-dd'}}">
                       <div class="input-group-append">
                         <button class="btn btn-outline-secondary dateButton" (click)="d.toggle()" type="button">
                           <span>
@@ -510,7 +510,7 @@
                   <div class="form-group">
                     <div class="input-group">
                       <input class="form-control" name="dp" [ngModel]="model" [readonly]="true" [minDate]="startDate" (ngModelChange)="onSelectDate($event)"
-                        ngbDatepicker #d="ngbDatepicker">
+                        ngbDatepicker #d="ngbDatepicker" placeholder="{{valuedate | date: 'yyyy-MM-dd'}}">
                       <div class="input-group-append">
                         <button class="btn btn-outline-secondary dateButton" (click)="d.toggle()" type="button">
                           <span>
@@ -813,7 +813,7 @@
                   <div class="form-group">
                     <div class="input-group">
                       <input class="form-control" name="dp" [ngModel]="model" [readonly]="true" [minDate]="startDate" (ngModelChange)="onSelectDate($event)"
-                        ngbDatepicker #d="ngbDatepicker">
+                        ngbDatepicker #d="ngbDatepicker" placeholder="{{valuedate | date: 'yyyy-MM-dd'}}">
                       <div class="input-group-append">
                         <button class="btn btn-outline-secondary dateButton" (click)="d.toggle()" type="button">
                           <span>
