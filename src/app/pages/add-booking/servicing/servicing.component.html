@@ -26,9 +26,9 @@
                 <label class="form-control-placeholder" for="mobile1">Customer Mobile Number*</label>
               </div>
             </div>
-            <div class="col-md-2 col-sm-2 col-lg-2">
+            <div class="col-md-2 col-sm-2 col-lg-2 NextRow">
               <div>
-                <button type="button" class="btn btn-warning" [disabled]="!registrationNumber || !user.mobile1 || disableNext" (click)='eligibiltycheck1();'>Next</button>
+                <button type="button" class="btn btn-warning NextButton" [disabled]="!registrationNumber || !user.mobile1 || disableNext" (click)='eligibiltycheck1();'>Next</button>
               </div>
             </div>
           </div>
@@ -58,9 +58,7 @@
           </div>
           <div *ngIf="showstep3">
             <div class="line">
-              <h5>
-                <span>Vehicle Details</span>
-              </h5>
+                <span class="sectionHeader">Vehicle Details</span>
             </div>
             <div class="row">
               <div class="col-md-6 col-lg-6 col-sm-6">
@@ -94,17 +92,17 @@
                 </div>
               </div>
             </div>
-            <h5>
-              <span>Customer Details</span>
-            </h5>
-            <div class="row">
+            <div class="line">
+                <span class="sectionHeader">Customer Details</span>
+            </div>
+             <div class="row">
               <div class="col-md-8 col-lg-8 col-sm-8 col-xs-8">
                 <div class="form-group" style="display:inline-block;min-width:15%;">
                   <select id="salutation1" class="form-control" name="salutation1" [(ngModel)]="user.salutation" #salutation1="ngModel" required>
                     <option *ngFor="let s of salutation" [value]="s.type"> {{s.type}}</option>
                   </select>
                 </div>
-                <div class="form-group" style="display:inline-block;min-width:59%;">
+                <div class="form-group CusFormGroup">
                   <input type="text" id="Cus_name" class="form-control" required [(ngModel)]="cust_details.first_name" name="Cus_name" #Cus_name="ngModel"
                     style="text-transform: capitalize;">
                   <label class="form-control-placeholder" for="Cus_name">Customer Name*</label>
@@ -118,18 +116,18 @@
             </div>
             <div class="container1">
               <div class="row">
-                <div class="col-md-8 col-lg-8 col-sm-8 col-xs-8">
-                  <div class="form-group" style="display:inline-block;max-width: 16%;">
-                    <label for="countrycode" style="font-size: 12px;padding-left: 2%;margin-bottom: 0px;">Country Code</label>
+                <div class="col-md-8 col-lg-8 col-sm-8 col-xs-8 mob">
+                  <div class="form-group"  class="countryCode">
+                    <label for="countrycode"  class="countryCodelabel">Country Code</label>
                     <input type="text" class="form-control" name="countrycode" OnlyNumber="true" [readonly]="true" value="+91" [(ngModel)]="countrycode1"
                       required #countrycode>
                   </div>
-                  <div class="form-group" style="display:inline-block;min-width:58%;">
+                  <div class="form-group"  class="mobile1">
                     <input type="text" class="form-control" name="mobile1" maxlength="10" [(ngModel)]="cust_details.mobile" required OnlyNumber="true"
                       #mobile1="ngModel" pattern="^[0-9]{10}$">
                     <label class="form-control-placeholder" for="mobile1">Mobile Number*</label>
                   </div>
-                  <div style="display:inline-block;margin:3%">
+                  <div  class="addNumber">
                     <button type="button" (click)="show1=!show1" class="addnumber">
                       <i class="fa" [ngClass]="{'fa-plus': !show1, 'fa-minus': show1}" style="color:#ffa100" aria-hidden="true"></i>
                     </button>
@@ -175,18 +173,18 @@
                 </div>
               </div>
             </div>
-            <!-- Slot and Location Details -->
-            <h5>
-              <span>Slot and Location Details</span>
-            </h5>
+            <div class="line">
+                <span class="sectionHeader">Slot and Location Details</span>
+            </div>
+             
             <div>
               <div class="row" style="margin-bottom: 2%;">
-                <div class="col-lg-4 col-md-4 col-sm-4">
+                <div class="col-lg-4 col-md-4 col-sm-4 switchCol">
                   <label class="switch" style="margin-bottom: -0.5rem;">
                     <input type="checkbox" checked name="amb" #amb (click)="some(amb.checked)">
                     <span class="slider round"></span>
                   </label>
-                  <label style="margin-left:1.5rem;margin-bottom: -0.5rem;">Assign to 21North Ambassador</label>
+                  <label class="switchlabel">Assign to 21North Ambassador</label>
                 </div>
                 <div class="col-lg-2 col-sm-2 col-md-2">
                   <label class="custom-control custom-radio">
@@ -277,7 +275,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-md-6 col-lg-6 col-sm-6" *ngIf="yourBoolean === 'servicing' || yourBoolean === 'onlypickup'" style="margin-top: 2%;">
+                <div class="form-group col-md-6 col-lg-6 col-sm-6" *ngIf="yourBoolean === 'servicing' || yourBoolean === 'onlypickup'" style="margin-top: 2%;">
                   <select id="addresstypepu" class="form-control" name="addresstypepu" [(ngModel)]="user.addresstypepu" #addresstypepu="ngModel"
                     required>
                     <option [value]="i.id" *ngFor="let i of addresstype">{{i.type_of_address}}</option>
@@ -296,7 +294,7 @@
                       <label class="form-control-placeholder" for="pickupdoor">Pickup Door Number*</label>
                     </div>
                     <div class="form-control-feedback" *ngIf="pickupdoor.errors && (pickupdoor.dirty || pickupdoor.touched)">
-                      <p *ngIf="!pickupdoor.errors.required" class="haserror">Pickup Door Number is required</p>
+                      <p *ngIf="pickupdoor.errors.required" class="haserror">Pickup Door Number is required</p>
                     </div>
                   </div>
                   <div class="col-md-6 col-lg-6 col-sm-6">
@@ -351,7 +349,7 @@
                     </div>
                   </div>
                 </div>
-                <div *ngIf="yourBoolean === 'servicing'">
+                <div *ngIf="yourBoolean === 'servicing'" class="sameas">
                   <label class="custom-control custom-checkbox">
                     <input type="checkbox" class="custom-control-input" name="sameas" #same (click)="sameas(same.checked)">
                     <span class="custom-control-indicator"></span>
@@ -375,7 +373,7 @@
                       <p *ngIf="!addressdu.errors.required" class="haserror">Dropoff Location is required</p>
                     </div>
                   </div>
-                  <div class="col-md-6 col-lg-6 col-sm-6" style="margin-top: 2%;">
+                  <div class="form-group col-md-6 col-lg-6 col-sm-6" style="margin-top: 2%;">
                     <select id="addresstypedu" class="form-control" name="addresstypedu" [(ngModel)]="user.addresstypedu" #addresstypedu="ngModel" required >
                       <option [value]="i.id" *ngFor="let i of addresstype">{{i.type_of_address}}</option>
                     </select>
@@ -448,14 +446,6 @@
                     </div>
                   </div>
                 </div>
-                <!-- <div class="row">
-                                <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6" style="padding-bottom: 3%;">
-                                    <select id="addresstypedu" class="form-control" name="addresstypedu" [(ngModel)]="user.addresstypedu" #addresstypedu="ngModel"
-                                    required>
-                                         <option [value]="i.id" *ngFor="let i of addresstype">{{i.type_of_address}}</option>
-                                   </select>
-                                </div>
-                            </div> -->
               </div>
             </div>
             <div *ngIf="showAddress">
@@ -468,7 +458,7 @@
                       <label class="form-control-placeholder" for="pickupdoor">Pickup Door Number*</label>
                     </div>
                     <div class="form-control-feedback" *ngIf="pickupdoor.errors && (pickupdoor.dirty || pickupdoor.touched)">
-                      <p *ngIf="!pickupdoor.errors.required" class="haserror">Pickup Door Number is required</p>
+                      <p *ngIf="pickupdoor.errors.required" class="haserror">Pickup Door Number is required</p>
                     </div>
                   </div>
                   <div class="col-md-6 col-lg-6 col-sm-6">
@@ -478,7 +468,7 @@
                       <label class="form-control-placeholder" for="id">Pickup Street</label>
                     </div>
                     <div class="form-control-feedback" *ngIf="pickupstreet.errors && (pickupstreet.dirty || pickupstreet.touched)">
-                      <p *ngIf="!pickupstreet.errors.required" class="haserror">Pickup Street is required</p>
+                      <p *ngIf="pickupstreet.errors.required" class="haserror">Pickup Street is required</p>
                     </div>
                   </div>
                 </div>
@@ -490,7 +480,7 @@
                       <label class="form-control-placeholder" for="id">Pickup Area</label>
                     </div>
                     <div class="form-control-feedback" *ngIf="pickuparea.errors && (pickuparea.dirty || pickuparea.touched)">
-                      <p *ngIf="!pickuparea.errors.required" class="haserror">Pickup Area is required</p>
+                      <p *ngIf="pickuparea.errors.required" class="haserror">Pickup Area is required</p>
                     </div>
                   </div>
                   <div class="col-md-6 col-lg-6 col-sm-6">
@@ -500,7 +490,7 @@
                       <label class="form-control-placeholder" for="id">Pickup Landmark</label>
                     </div>
                     <div class="form-control-feedback" *ngIf="pickuplandmark.errors && (pickuplandmark.dirty || pickuplandmark.touched)">
-                      <p *ngIf="!pickuplandmark.errors.required" class="haserror">Pickup Landmark is reqiured</p>
+                      <p *ngIf="pickuplandmark.errors.required" class="haserror">Pickup Landmark is reqiured</p>
                     </div>
                   </div>
                 </div>
@@ -512,7 +502,7 @@
                       <label class="form-control-placeholder" for="id">Pickup Pincode</label>
                     </div>
                     <div class="form-control-feedback" *ngIf="pickuppincode.errors && (pickuppincode.dirty || pickuppincode.touched)">
-                      <p *ngIf="!pickuppincode.errors.required" class="haserror">Pincode is required</p>
+                      <p *ngIf="pickuppincode.errors.required" class="haserror">Pincode is required</p>
                     </div>
                   </div>
                   <div class="col-md-6 col-lg-6 col-sm-6">
@@ -524,12 +514,12 @@
                   </div>
                 </div>
                 <div class="row">
-                  <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6" style="padding-bottom: 3%;">
+                  <div class="col-md-6 col-lg-6 col-sm-6 col-12 cssselect" style="padding-bottom: 3%;">
                     <select id="addresstypepu" class="form-control" name="addresstypepu" [(ngModel)]="user.addresstypepu" #addresstypepu="ngModel"
                       required>
                       <option [value]="i.id" *ngFor="let i of addresstype">{{i.type_of_address}}</option>
                     </select>
-                    <label class="form-control-placeholder" for="addresstypepu">Type of address**</label>
+                    <label class="form-control-placeholder" for="addresstypepu">Type of address*</label>
                   </div>
                 </div>
               </div>
@@ -549,7 +539,7 @@
                       <label class="form-control-placeholder" for="dropofffdoor">Dropoff Door Number*</label>
                     </div>
                     <div class="form-control-feedback" *ngIf="dropofffdoor.errors && (dropofffdoor.dirty || dropofffdoor.touched)">
-                      <p *ngIf="!dropofffdoor.errors.required" class="haserror">Dropoff Door Number is required</p>
+                      <p *ngIf="dropofffdoor.errors.required" class="haserror">Dropoff Door Number is required</p>
                     </div>
                   </div>
                   <div class="col-md-6 col-lg-6 col-sm-6">
@@ -559,7 +549,7 @@
                       <label class="form-control-placeholder" for="id">Dropoff Street</label>
                     </div>
                     <div class="form-control-feedback" *ngIf="dropoffstreet.errors && (dropoffstreet.dirty || dropoffstreet.touched)">
-                      <p *ngIf="!dropoffstreet.errors.required" class="haserror">Dropoff Street is required</p>
+                      <p *ngIf="dropoffstreet.errors.required" class="haserror">Dropoff Street is required</p>
                     </div>
                   </div>
                 </div>
@@ -571,7 +561,7 @@
                       <label class="form-control-placeholder" for="id">Dropoff Area</label>
                     </div>
                     <div class="form-control-feedback" *ngIf="dropoffarea.errors && (dropoffarea.dirty || dropoffarea.touched)">
-                      <p *ngIf="!dropoffarea.errors.required" class="haserror">Dropoff Area is required</p>
+                      <p *ngIf="dropoffarea.errors.required" class="haserror">Dropoff Area is required</p>
                     </div>
                   </div>
                   <div class="col-md-6 col-lg-6 col-sm-6">
@@ -581,7 +571,7 @@
                       <label class="form-control-placeholder" for="id">Dropoff Landmark</label>
                     </div>
                     <div class="form-control-feedback" *ngIf="dropofflandmark.errors && (dropofflandmark.dirty || dropofflandmark.touched)">
-                      <p *ngIf="!dropofflandmark.errors.required" class="haserror">Dropoff LandMark is required</p>
+                      <p *ngIf="dropofflandmark.errors.required" class="haserror">Dropoff LandMark is required</p>
                     </div>
                   </div>
                 </div>
@@ -593,7 +583,7 @@
                       <label class="form-control-placeholder" for="id">Dropoff Pincode</label>
                     </div>
                     <div class="form-control-feedback" *ngIf="dropoffpincode.errors && (dropoffpincode.dirty || dropoffpincode.touched)">
-                      <p *ngIf="!dropoffpincode.errors.required" class="haserror">Dropoff Pincode is required</p>
+                      <p *ngIf="dropoffpincode.errors.required" class="haserror">Dropoff Pincode is required</p>
                     </div>
                   </div>
                   <div class="col-md-6 col-lg-6 col-sm-6">
@@ -608,7 +598,7 @@
                   </div>
                 </div>
                 <div class="row">
-                  <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6" style="padding-bottom: 3%;">
+                  <div class="col-md-6 col-lg-6 col-sm-6 col-12 cssselect" style="padding-bottom: 3%;">
                     <select id="addresstypedu" class="form-control" name="addresstypedu" [(ngModel)]="user.addresstypedu" #addresstypedu="ngModel"
                       required>
                       <option [value]="i.id" *ngFor="let i of addresstype">{{i.type_of_address}}</option>
@@ -620,10 +610,10 @@
             </div>
             <div class="row" *ngIf="yourBoolean === 'dropoff' || yourBoolean === 'servicing'">
             </div>
-            <!-- Serivice Details -->
-            <h5>
-              <span>Service Details</span>
-            </h5>
+            <div class="line">
+                <span class="sectionHeader">Service Details</span>
+            </div>
+              
             <div class="row">
               <div class="col-md-6 col-lg-6 col-sm-6">
                 <div class="form-group">
@@ -646,44 +636,44 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-md-5 col-lg-5 col-sm-5">
-                <div class="form-group">
-                  <select name="creName" id="creName" class="form-control" [(ngModel)]="user.cre" #creName="ngModel" required>
-                    <option *ngFor="let ca of cre" [value]="ca.id"> {{ca.first_name}} - {{ca.mobile_number}}</option>
-                  </select>
-                  <label class="form-control-placeholder" for="cre">CRE*</label>
+              <div class="col-md-6 col-lg-6 col-sm-6 col-12 creCol AddUserCre">
+                <div class="creContainer">
+                    <div class="form-group" class="AddUserRow" >
+                        <select name="creName" id="creName" class="form-control" [(ngModel)]="user.cre" #creName="ngModel" required>
+                          <option *ngFor="let ca of cre" [value]="ca.id"> {{ca.first_name}} - {{ca.mobile_number}}</option>
+                        </select>
+                        <label class="form-control-placeholder" for="cre">CRE*</label>
+                      </div>
+                    
+                      <div style="display:inline-block;">
+                          <button type="button" (click)="showModal(1)" class="addnumber" style="background-color: white;border-color: orange;">
+                            <i class="fa fa-plus" style="color:#ffa100" aria-hidden="true"></i>
+                          </button>
+                        </div>
                 </div>
-                <div class="form-control-feedback" *ngIf="cre.errors && (cre.dirty || cre.touched)">
-                  <p *ngIf="cre.errors.required" class="haserror">CRE is required</p>
-                </div>
+            </div>
+            <div class="form-control-feedback" *ngIf="creName.errors && (creName.dirty || creName.touched)">
+                <p *ngIf="creName.errors.required" class="haserror">CRE is required</p>
               </div>
-              <div class="col-md-1 col-lg-1 col-sm-1">
-                <div style="display:inline-block;margin-top: 54%;">
-                  <button type="button" (click)="showModal(1)" class="addnumber" style="background-color: white;border-color: orange;">
-                    <i class="fa fa-plus" style="color:#ffa100" aria-hidden="true"></i>
-                  </button>
-                </div>
-              </div>
-              <div class="col-md-5 col-lg-5 col-sm-5">
-                <div class="form-group">
+              <div class="col-md-6 col-lg-6 col-sm-6 col-12 AddUserCre">
+                <div class="form-group"  class="AddUserRow">
                   <select name="ServiceAdvisor" id="ServiceAdvisor" class="form-control" name="ServiceAdvisor" [(ngModel)]="user.service_advisor"
                     #ServiceAdvisor="ngModel" required>
                     <option *ngFor="let sa of serviceadv" [value]="sa.id"> {{sa.first_name}} - {{sa.mobile_number}}</option>
                   </select>
                   <label class="form-control-placeholder" for="ServiceAdvisor">Service Advisor*</label>
                 </div>
-                <div class="form-control-feedback" *ngIf="ServiceAdvisor.errors && (ServiceAdvisor.dirty || ServiceAdvisor.touched)">
-                  <p *ngIf="ServiceAdvisor.errors.required" class="haserror">Service Advisor is required</p>
-                </div>
-              </div>
-              <div class="col-md-1 col-lg-1 col-sm-1">
-                <div style="display:inline-block;margin-top: 54%;">
-                  <button type="button" (click)="showModal(2)" class="addnumber" style="background-color: white;border-color: orange;">
-                    <i class="fa fa-plus" style="color:#ffa100" aria-hidden="true"></i>
-                  </button>
-                </div>
+            
+                <div style="display:inline-block;">
+                    <button type="button" (click)="showModal(2)" class="addnumber" style="background-color: white;border-color: orange;">
+                      <i class="fa fa-plus" style="color:#ffa100" aria-hidden="true"></i>
+                    </button>
+                  </div>
               </div>
             </div>
+            <div class="form-control-feedback" *ngIf="ServiceAdvisor.errors && (ServiceAdvisor.dirty || ServiceAdvisor.touched)">
+                <p *ngIf="ServiceAdvisor.errors.required" class="haserror">Service Advisor is required</p>
+              </div>
             <div class="row">
               <div class="col-md-6 col-lg-6 col-sm-6">
                 <div class="form-group">
@@ -692,16 +682,8 @@
                 </div>
               </div>
             </div>
-            <!-- <app-modal2 (messageEvent)="receiveMessage($event)"></app-modal2> -->
             <div class="row">
               <div class="col-md-6 col-lg-6 col-sm-6">
-                <!-- <div>
-                          <label class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input"  name="confirm" #confirm (click)="confirm(confirm.checked)">
-                            <span class="custom-control-indicator"></span>
-                            <span class="custom-control-description">Confirmed Booking</span>
-                          </label>
-                        </div> -->
                 <div>
                   <label class="custom-control custom-checkbox">
                     <input type="checkbox" class="custom-control-input" name="confirm" checked [(ngModel)]="user.confirm" #confirm="ngModel">

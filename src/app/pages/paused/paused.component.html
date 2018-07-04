@@ -1,90 +1,198 @@
-<nb-card>
-        <nb-card-header>
-                Paused
-               </nb-card-header>
-    <nb-card-body>
-        <div>
-            <div class="row">
-                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
-                    <div class="form-group">
-                        <div class="input-group">
-                            <input class="form-control" name="dp" [ngModel]="model1" (ngModelChange)="onSelectDate1($event)" placeholder="{{pastdate | date: 'yyyy-MM-dd'}}" ngbDatepicker #d1="ngbDatepicker">
-                            <div class="input-group-append">
-                                <button class="btn btn-outline-secondary dateButton" (click)="d1.toggle()" type="button" style="height: 100%;border-radius: 0px;">
-                                  <span><i class="fa fa-calendar"></i></span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
-                    <div class="form-group">
-                        <div class="input-group">
-                            <input class="form-control" name="dp" [ngModel]="model" (ngModelChange)="onSelectDate($event)" placeholder="{{today | date: 'yyyy-MM-dd'}}" ngbDatepicker #d="ngbDatepicker">
-                            <div class="input-group-append">
-                                <button class="btn btn-outline-secondary dateButton" (click)="d.toggle()" type="button" style="height: 100%;border-radius: 0px;">
-                                  <span><i class="fa fa-calendar"></i></span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                    <button type="button" class="btn btn-primary" (click)="FilterCheck(1)">Apply</button>
-                </div>
+<nb-card class="desktopView">
+  <nb-card-header>
+    Paused
+  </nb-card-header>
+  <nb-card-body>
+    <div>
+      <div class="row">
+        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+          <div class="form-group">
+            <div class="input-group">
+              <input class="form-control" name="dp" [ngModel]="model1" (ngModelChange)="onSelectDate1($event)" placeholder="{{pastdate | date: 'yyyy-MM-dd'}}"
+                ngbDatepicker #d1="ngbDatepicker">
+              <div class="input-group-append">
+                <button class="btn btn-outline-secondary dateButton" (click)="d1.toggle()" type="button" style="height: 100%;border-radius: 0px;">
+                  <span>
+                    <i class="fa fa-calendar"></i>
+                  </span>
+                </button>
+              </div>
             </div>
+          </div>
         </div>
-        <div class="row">
-            <div class="col-md-6 col-lg-6 col-sm-6">
+        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+          <div class="form-group">
+            <div class="input-group">
+              <input class="form-control" name="dp" [ngModel]="model" (ngModelChange)="onSelectDate($event)" placeholder="{{today | date: 'yyyy-MM-dd'}}"
+                ngbDatepicker #d="ngbDatepicker">
+              <div class="input-group-append">
+                <button class="btn btn-outline-secondary dateButton" (click)="d.toggle()" type="button" style="height: 100%;border-radius: 0px;">
+                  <span>
+                    <i class="fa fa-calendar"></i>
+                  </span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+          <button type="button" class="btn btn-primary" (click)="FilterCheck(1)">Apply</button>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 col-lg-6 col-sm-6">
 
-            </div>
-            <div class="col-md-6 col-lg-6 col-sm-6">
-                <input type="text" class="search" [(ngModel)]="term" placeholder="search">
-            </div>
-        </div>
-        <table style="width:100%">
-            <thead>
-                <tr>
-                    <th (click)="sort('queueid')">ID
-                        <span class="sort-span"><i class="fa"  [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i></span>
-                    </th>
-                    <th (click)="sort('cust_name')">Customer
-                        <span class="sort-span"><i class="fa"  [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i></span>
-                    </th>
-                    <th (click)="sort('veh_number')">License Plate
-                        <span class="sort-span"><i class="fa"  [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i></span>
-                    </th>
-                    <th (click)="sort('queue_time')">Slot
-                        <span class="sort-span"><i class="fa"  [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i></span>
-                    </th>
-                    <th (click)="sort('cre_name')">CRE
-                        <span class="sort-span"><i class="fa"  [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i></span>
-                    </th>
-                    <th (click)="sort('queueid')">Reason
-                        <span class="sort-span"><i class="fa"  [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i></span>
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let i of paused | orderBy: key : reverse | filter:term | paginate: { id: 'server', itemsPerPage:dataperpage, currentPage: p + 1, totalItems: record_count }; let j = index" (click)="openQDetails(i)">
-                    <td>{{i.queueid}}</td>
-                    <td>{{i.cust_name}}</td>
-                    <td>{{i.veh_number}}</td>
-                    <td>{{i.queue_time}}</td>
-                    <td>{{i.cre_name}}</td>
-                    <td>{{i.description}}</td>
-                    
-                    <!-- <td>{{i.(select description from 21N_queue_pause_reasons where id = (select reasonid from 21N_queue_pause_reasons_list where queueid = 21N_queue.id order by id desc limit 1))}}</td> -->
-                </tr>
-            </tbody>
-        </table>
-        <table *ngIf="message">
-                {{message}}
-            </table>
-        <ngx-spinner bdColor = "rgba(51,51,51,0.09)" size = "large" color = "#ea5810" type = "ball-clip-rotate-pulse"></ngx-spinner>
-        <div class="paginate">
-            <pagination-controls (pageChange)="FilterCheck($event)" id="server"></pagination-controls>
-        </div>
-  
-    </nb-card-body>
+      </div>
+      <div class="col-md-6 col-lg-6 col-sm-6">
+        <input type="text" class="search" [(ngModel)]="term" placeholder="search">
+      </div>
+    </div>
+    <table style="width:100%">
+      <thead>
+        <tr>
+          <th (click)="sort('queueid')">ID
+            <span class="sort-span">
+              <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i>
+            </span>
+          </th>
+          <th (click)="sort('cust_name')">Customer
+            <span class="sort-span">
+              <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i>
+            </span>
+          </th>
+          <th (click)="sort('veh_number')">License Plate
+            <span class="sort-span">
+              <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i>
+            </span>
+          </th>
+          <th (click)="sort('queue_time')">Slot
+            <span class="sort-span">
+              <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i>
+            </span>
+          </th>
+          <th (click)="sort('cre_name')">CRE
+            <span class="sort-span">
+              <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i>
+            </span>
+          </th>
+          <th (click)="sort('queueid')">Reason
+            <span class="sort-span">
+              <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i>
+            </span>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let i of paused | orderBy: key : reverse | filter:term | paginate: { id: 'server', itemsPerPage:dataperpage, currentPage: p + 1, totalItems: record_count }; let j = index"
+          (click)="openQDetails(i)">
+          <td>{{i.queueid}}</td>
+          <td>{{i.cust_name}}</td>
+          <td>{{i.veh_number}}</td>
+          <td>{{i.queue_time}}</td>
+          <td>{{i.cre_name}}</td>
+          <td>{{i.description}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <table *ngIf="message">
+      {{message}}
+    </table>
+    <ngx-spinner bdColor="rgba(51,51,51,0.09)" size="large" color="#ea5810" type="ball-clip-rotate-pulse"></ngx-spinner>
+    <div class="paginate">
+      <pagination-controls (pageChange)="FilterCheck($event)" id="server"></pagination-controls>
+    </div>
+
+  </nb-card-body>
 </nb-card>
+<div class="mobileView">
+  <div class="row headerRow">
+    <div class="col-4 col-sm-4">
+      <span class="header">Paused</span>
+    </div>
+    <div class="col-8 col-sm-8">
+        <div class="right-inner-addon">
+          <i class="fa fa-search"></i>
+          <input type="search" class="form-control" placeholder="Search" [(ngModel)]="term" />
+        </div>
+      </div>
+  </div>
+<hr/>
+  <div class="row">
+    <div class="col-12 col-sm-12">
+      <div class="form-group">
+        <div class="input-group">
+          <input class="form-control" name="dp" [ngModel]="model1" (ngModelChange)="onSelectDate1($event)" ngbDatepicker #d2="ngbDatepicker">
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary dateButton" (click)="d2.toggle()" type="button" style="height: 100%;width: 100%">
+              <span>
+                <i class="fa fa-calendar"></i>
+              </span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12 col-sm-12">
+      <div class="form-group">
+        <div class="input-group">
+          <input class="form-control" name="dp" [ngModel]="model" (ngModelChange)="onSelectDate($event)" ngbDatepicker #d3="ngbDatepicker">
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary dateButton" (click)="d3.toggle()" type="button" style="height: 100%;width: 100%">
+              <span>
+                <i class="fa fa-calendar"></i>
+              </span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row applyRow">
+    <div class="col-sm-8 col-8"></div>
+    <div class="col-sm-2 col-2 applyCol">
+      <button type="button" class="btn btn-primary apply" (click)="FilterCheck(1)">Apply</button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12 col-sm-12">
+      <ul>
+        <li *ngFor="let i of  paused | filter:term ">
+          <div class="card">
+            <div class="row padding">
+              <div class="col-12 col-sm-12">
+                <span class="QueueId">ID &nbsp;:&nbsp; {{i.queueid}}</span>
+                <span class="vehNumber">
+                  <span class="Ind">IND</span>{{i.veh_number}}</span>
+              </div>
+            </div>
+            <div class="row padding">
+              <div class="col-12 col-sm-12">
+                <div>{{i.cust_name}}</div>
+              </div>
+            </div>
+            <div class="row padding">
+                <div class="col-12 col-sm-12">
+                  <span>Slot : {{i.newdate}} {{i.newtime}}</span>
+                </div>
+              </div>
+            <div class="row padding">
+              <div class="col-12 col-sm-12">
+                  <span>Cre :{{i.cre_name}} </span>
+              </div>
+            </div>
+            <div class="row padding">
+              <div class="col-12 col-sm-12"><span>Reason :{{i.description}} </span></div>
+            </div>
+          </div>
+        </li>
+      </ul>
+      <ngx-spinner bdColor="rgba(51,51,51,0.09)" size="large" color="#ea5810" type="ball-clip-rotate-pulse"></ngx-spinner>
+      <div class="paginate">
+        <pagination-controls (pageChange)="FilterCheck($event)" id="server"></pagination-controls>
+      </div>
+    </div>
+  </div>
+</div>

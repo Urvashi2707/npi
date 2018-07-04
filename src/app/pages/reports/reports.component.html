@@ -1,105 +1,243 @@
-<div class="row">
-    <div class="col-md-12 col-lg-12 col-sm-12">
-        <nb-card class="nb-icons">
-            <nb-card-header>
-                Reports
-            </nb-card-header>
-            <nb-card-body>
-                <div class="row">
-                    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
-                        <div class="form-group">
-                            <div class="input-group">
-                                <input class="form-control" name="dp" [ngModel]="model1" (ngModelChange)="onSelectDate1($event)" placeholder="{{pastdate | date: 'yyyy-MM-dd'}}" ngbDatepicker #d1="ngbDatepicker">
-                                <div class="input-group-append">
-                                    <button class="btn btn-outline-secondary dateButton" (click)="d1.toggle()" type="button">
-                                  <span><i class="fa fa-calendar"></i></span>
-                                </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
-                        <div class="form-group">
-                            <div class="input-group">
-                                <input class="form-control" name="dp" [ngModel]="model" (ngModelChange)="onSelectDate($event)" placeholder="{{today | date: 'yyyy-MM-dd'}}" ngbDatepicker #d="ngbDatepicker">
-                                <div class="input-group-append">
-                                    <button class="btn btn-outline-secondary dateButton" (click)="d.toggle()" type="button">
-                                  <span><i class="fa fa-calendar"></i></span>
-                                </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+<div class="row desktopView">
+  <div class="col-md-12 col-lg-12 col-sm-12">
+    <nb-card class="nb-icons">
+      <nb-card-header>
+        Reports
+      </nb-card-header>
+      <nb-card-body>
+        <div class="row">
+          <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+            <div class="form-group">
+              <div class="input-group">
+                <input class="form-control" name="dp" [ngModel]="model1" (ngModelChange)="onSelectDate1($event)" placeholder="{{pastdate | date: 'yyyy-MM-dd'}}"
+                  ngbDatepicker #d1="ngbDatepicker">
+                <div class="input-group-append">
+                  <button class="btn btn-outline-secondary dateButton" (click)="d1.toggle()" type="button">
+                    <span>
+                      <i class="fa fa-calendar"></i>
+                    </span>
+                  </button>
                 </div>
-                <div class="row">
-                    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
-                        <div class="form-group">
-                            <select id="serviceType" class="form-control" name="service_type" [(ngModel)]="user.service_type" #servicetype="ngModel" required>
-                          <option *ngFor = "let s of service_type" [value] = "s.id"> {{s.type}}</option>
-                      </select>
-                            <label class="form-control-placeholder" for="serviceType">Service Type</label>
-                        </div>
-                    </div>
-                    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
-                        <div class="form-group">
-                            <select id="status" class="form-control" name="status" [(ngModel)]="user.status" #servicetype="ngModel" required>
-                        <option *ngFor = "let stat of status" [value] = "stat.id"> {{stat.type}}</option>
-                    </select>
-                            <label class="form-control-placeholder" for="serviceType">Service Type</label>
-                        </div>
-                    </div>
-                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                        <button type="button" class="btn btn-warning" (click)="search()">Search</button>
-                    </div>
-
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+            <div class="form-group">
+              <div class="input-group">
+                <input class="form-control" name="dp" [ngModel]="model" (ngModelChange)="onSelectDate($event)" placeholder="{{today | date: 'yyyy-MM-dd'}}"
+                  ngbDatepicker #d="ngbDatepicker">
+                <div class="input-group-append">
+                  <button class="btn btn-outline-secondary dateButton" (click)="d.toggle()" type="button">
+                    <span>
+                      <i class="fa fa-calendar"></i>
+                    </span>
+                  </button>
                 </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+            <div class="form-group">
+              <select id="serviceType" class="form-control" name="service_type" [(ngModel)]="user.service_type" #servicetype="ngModel"
+                required>
+                <option *ngFor="let s of service_type" [value]="s.id"> {{s.type}}</option>
+              </select>
+              <label class="form-control-placeholder" for="serviceType">Service Type</label>
+            </div>
+          </div>
+          <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+            <div class="form-group">
+              <select id="status" class="form-control" name="status" [(ngModel)]="user.status" #servicetype="ngModel" required>
+                <option *ngFor="let stat of status" [value]="stat.id"> {{stat.type}}</option>
+              </select>
+              <label class="form-control-placeholder" for="serviceType">Service Type</label>
+            </div>
+          </div>
+          <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+            <button type="button" class="btn btn-warning" (click)="search()">Search</button>
+          </div>
 
-                <div>
-                    <table style="width:100%">
-                        <thead>
-                            <th (click)="sort('id')">Queue ID
-                                <span class="sort-span"><i class="fa"  [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i></span>
-                            </th>
-                            <!-- <th>Queue Date</th> -->
-                            <th (click)="sort('cust_name')">Customer
-                                <span class="sort-span"><i class="fa"  [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i></span>
-                            </th>
-                            <th (click)="sort('cust_mobile')">Customer Mobile
-                                <span class="sort-span"><i class="fa"  [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i></span>
-                            </th>
-                            <th (click)="sort('veh_number')">LIC Plate
-                                <span class="sort-span"><i class="fa"  [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i></span>
-                            </th>
-                            <th (click)="sort('type_service')">Service Type
-                                <span class="sort-span"><i class="fa"  [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i></span>
-                            </th>
-                            <th (click)="sort('queue_status')">Status
-                                <span class="sort-span"><i class="fa"  [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i></span>
-                            </th>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let r of report | orderBy: key : reverse;" (click)="openQDetails(r)">
-                                <td>{{r.id}}</td>
+        </div>
 
-                                <td>{{r.cust_name}}</td>
-                                <td>{{r.cust_mobile}}</td>
-                                <td>{{r.veh_number}}</td>
-                                <td>{{r.type_service}}</td>
-                                <td>{{r.queue_status}}</td>
-                            </tr>
-                            <tr *ngIf="report.length == 0">{{message}}</tr>
-                        </tbody>
-                    </table>
-                    <ngx-spinner bdColor = "rgba(51,51,51,0.09)" size = "large" color = "#ea5810" type = "ball-clip-rotate-pulse"></ngx-spinner>
-                    <!-- <div class="paginate">
+        <div>
+          <table style="width:100%">
+            <thead>
+              <th (click)="sort('id')">Queue ID
+                <span class="sort-span">
+                  <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100"
+                    aria-hidden="true"></i>
+                </span>
+              </th>
+              <!-- <th>Queue Date</th> -->
+              <th (click)="sort('cust_name')">Customer
+                <span class="sort-span">
+                  <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100"
+                    aria-hidden="true"></i>
+                </span>
+              </th>
+              <th (click)="sort('cust_mobile')">Customer Mobile
+                <span class="sort-span">
+                  <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100"
+                    aria-hidden="true"></i>
+                </span>
+              </th>
+              <th (click)="sort('veh_number')">LIC Plate
+                <span class="sort-span">
+                  <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100"
+                    aria-hidden="true"></i>
+                </span>
+              </th>
+              <th (click)="sort('type_service')">Service Type
+                <span class="sort-span">
+                  <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100"
+                    aria-hidden="true"></i>
+                </span>
+              </th>
+              <th (click)="sort('queue_status')">Status
+                <span class="sort-span">
+                  <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100"
+                    aria-hidden="true"></i>
+                </span>
+              </th>
+            </thead>
+            <tbody>
+              <tr *ngFor="let r of report | orderBy: key : reverse;" (click)="openQDetails(r)">
+                <td>{{r.id}}</td>
+
+                <td>{{r.cust_name}}</td>
+                <td>{{r.cust_mobile}}</td>
+                <td>{{r.veh_number}}</td>
+                <td>{{r.type_service}}</td>
+                <td>{{r.queue_status}}</td>
+              </tr>
+              <tr *ngIf="report.length == 0">{{message}}</tr>
+            </tbody>
+          </table>
+          <ngx-spinner bdColor="rgba(51,51,51,0.09)" size="large" color="#ea5810" type="ball-clip-rotate-pulse"></ngx-spinner>
+          <!-- <div class="paginate">
                         <pagination-controls (pageChange)="getData($event)" id="server"></pagination-controls>
                     </div> -->
-                </div>
+        </div>
 
-            </nb-card-body>
-            <nb-card-footer>
+      </nb-card-body>
+      <nb-card-footer>
 
-            </nb-card-footer>
-        </nb-card>
+      </nb-card-footer>
+    </nb-card>
+  </div>
+</div>
+<div class="mobileView">
+  <div class="row headerRow">
+    <div class="col-12 col-sm-12">
+      <div class="header">Reports</div>
+      <!-- <div style="display: inline;padding-right: 4%;float:right;position: relative;">
+        <input placeholder="Search term">
+        <span>
+          <i class="fa fa-search" style="position: absolute;"></i>
+        </span>
+      </div> -->
     </div>
+  </div>
+  <hr/>
+  <div class="row">
+    <div class="col-12 col-sm-12">
+      <div class="form-group">
+        <div class="input-group">
+          <input class="form-control" name="dp" [ngModel]="model1" (ngModelChange)="onSelectDate1($event)" ngbDatepicker #d2="ngbDatepicker">
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary dateButton" (click)="d2.toggle()" type="button" style="height: 100%;width: 100%">
+              <span>
+                <i class="fa fa-calendar"></i>
+              </span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12 col-sm-12">
+      <div class="form-group">
+        <div class="input-group">
+          <input class="form-control" name="dp" [ngModel]="model" (ngModelChange)="onSelectDate($event)" ngbDatepicker #d3="ngbDatepicker">
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary dateButton" (click)="d3.toggle()" type="button" style="height: 100%;width: 100%">
+              <span>
+                <i class="fa fa-calendar"></i>
+              </span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12 col-12">
+      <div class="form-group">
+        <select id="serviceType" class="form-control" name="service_type" [(ngModel)]="user.service_type" #servicetype="ngModel"
+          required>
+          <option *ngFor="let s of service_type" [value]="s.id"> {{s.type}}</option>
+        </select>
+        <label class="form-control-placeholder" for="serviceType">Service Type</label>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12 col-12">
+      <div class="form-group">
+        <select id="status" class="form-control" name="status" [(ngModel)]="user.status" #servicetype="ngModel" required>
+          <option *ngFor="let stat of status" [value]="stat.id"> {{stat.type}}</option>
+        </select>
+        <label class="form-control-placeholder" for="serviceType">Service Type</label>
+      </div>
+    </div>
+  </div>
+  <div class="row applyRow">
+    <div class="col-sm-8 col-8"></div>
+    <div class="col-sm-2 col-2 applyCol">
+      <button type="button" class="btn btn-warning apply" (click)="search()">Search</button>
+    </div>
+  </div>
+<div class="row">
+  <div class="col-12 col-sm-12">
+    <div *ngIf="message">{{message}}</div>
+    <ul>
+      <li *ngFor="let r of report |filter:term" (click)="openQDetails(r)">
+        <div class="card">
+          <div class="row">
+            <div class="col-12 col-sm-12">
+              <span class="QueueId">ID &nbsp;:&nbsp; {{r.id}}</span>
+              <span class="vehNumber">
+                <span class="Ind">IND</span>{{r.veh_number}}</span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 col-sm-12">
+              <div>{{r.cust_name}}</div>
+            </div>
+          </div>
+          <div class="row">
+                <div class="col-12 col-sm-12">
+                  <div>{{r.cust_mobile}}</div>
+                </div>
+              </div>
+              <div class="row">
+                    <div class="col-12 col-sm-12">
+                      <div><span class="title">Service Type: </span><span>{{r.type_service}}</span></div>
+                    </div>
+                  </div>
+          <div class="row">
+            <div class="col-12 col-sm-12 QueueStatus">{{r.queue_status}}</div>
+          </div>
+        </div>
+      </li>
+    </ul>
+    <ngx-spinner bdColor="rgba(51,51,51,0.09)" size="large" color="#ea5810" type="ball-clip-rotate-pulse"></ngx-spinner>
+    <!-- <div class="paginate">
+      <pagination-controls (pageChange)="FilterCheck($event)" id="server" *ngIf="!message"></pagination-controls>
+    </div> -->
+  </div>
+</div>
 </div>

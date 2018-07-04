@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row desktopView">
     <div class="col-md-12 col-lg-12 col-sm-12">
         <nb-card class="nb-icons">
             <nb-card-header>
@@ -63,3 +63,57 @@
         </nb-card>
     </div>
 </div>
+<div class="mobileView">
+        <div class="row" style="min-height: 25px;padding-top: 3%;">
+          <div class="col-12 col-sm-12">
+            <div class="header" style="display: inline">Search</div>
+            <div style="display: inline;padding-right: 4%;float:right;position: relative;">
+               <input placeholder="Search term">
+                <span><i class="fa fa-search" style="position: absolute;"></i></span>
+            </div>
+          </div>
+        </div>
+        <hr/>
+        <div class="row">
+          <div class="col-12 col-sm-12">
+              <div *ngIf="message">{{message}}</div>
+            <ul>
+              <li *ngFor="let r of report|filter:searchText" (click)="openQDetails(i.queueid)">
+                <div class="card">
+                  <div class="row">
+                    <div class="col-12 col-sm-12">
+                      <span class="QueueId">ID &nbsp;:&nbsp;{{r.id}}</span>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-12 col-sm-12">
+                      <div>{{r.cust_name}}</div>
+                    </div>
+                  </div>
+                  <div class="row">
+                        <div class="col-12 col-sm-12">
+                          <div>{{r.cust_number}}</div>
+                        </div>
+                      </div>
+                      <div class="row">
+                            <div class="col-12 col-sm-12">
+                              <span> Service Time : {{r.newdate}} {{r.newtime}}</span>
+                            </div>
+                          </div>
+            
+                          <div class="row">
+                                <div class="col-7 col-sm-7 QueueStatus">{{r.queue_status}}</div>
+                                <div class="col-5 col-sm-5 buttonCol">
+                                  <button type="button" class="button" (click)="uploadFiles(i)">{{r.upload_button}}</button>
+                                </div>
+                              </div>
+                </div>
+              </li>
+            </ul>
+            <ngx-spinner bdColor="rgba(51,51,51,0.09)" size="large" color="#ea5810" type="ball-clip-rotate-pulse"></ngx-spinner>
+            <!-- <div class="paginate">
+              <pagination-controls (pageChange)="FilterCheck($event)" id="server"  *ngIf="!message"></pagination-controls>
+            </div> -->
+          </div>
+        </div>
+      </div>

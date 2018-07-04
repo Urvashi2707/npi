@@ -200,7 +200,14 @@ results1 = [
              this.router.navigate(['/auth/login']);
            }
            else{
-             this.cards=res[0].cards[0]
+             
+             if(res[0].cards[0] > 0){
+                this.cards=res[0].cards[0];
+                console.log('No card details');
+             }
+             else {
+               console.log('calm down');
+             }
              if(this.cards.cust_rating == null){
               this.rating = 0;
              }

@@ -147,8 +147,25 @@ export class DropOffComponent implements OnInit {
         this.dataperpage = res[0].pagecount[0].pagelimit;
         console.log(this.record_count);
         this.spinner.hide();
-       }
+          // for (let j = 0; j < this.dropoff.length ; j++){
+          //   if(this.dropoff[j].queue_time != null){
+          //     var queuetime = this.dropoff[j].queue_time;
+          //     var date = queuetime.replace( /\n/g, " " ).split( " " );
+          //     var newDate = this.datePipe.transform(date[0],"d MMM,y");
+          //     var timeString = date[1];
+          //     var H = +timeString.substr(0, 2);
+          //     var h = (H % 12) || 12;
+          //     var ampm = H < 12 ? "AM" : "PM";
+          //     timeString = h + timeString.substr(2, 3) + ampm;
+          //     this.dropoff[j].newtime = timeString;
+          //     this.dropoff[j].newdate = newDate;
+          //   }
+           
+          // }
+        }
+    
+    
     }
     });
-  }
-}
+      }
+    }

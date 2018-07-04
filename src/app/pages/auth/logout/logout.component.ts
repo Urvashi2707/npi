@@ -12,53 +12,81 @@ export class LogoutComponent implements OnInit {
   constructor(private router: Router,private service : ServicingService,private http:HttpClient) { }
 
   ngOnInit() {
-   
     console.log("I am called");
-
-    this.logout();
-    
+    // this.Simplelogout();  //working Fine
+    this.LogoutDest();
+    // this.Destlogout();
+    // this.Eventlogout();
+    // this.destroySession();
   }
 
-//   logout(){
-//  console.log("This is logout function")
-//     this.service.destroySession().subscribe(res => { 
-//       this.service.logout().subscribe(response => {
-//         console.log('destroySession');
-//         sessionStorage.clear();
-//         localStorage.clear();
-       
-//       });
-//       this.router.navigate(['auth/login']);
-   
-      
-//     });
-    
-//   }
+  //Header for Easy Auto Destroy Session API
+  public EasyAuto={
+    headers: new HttpHeaders({'x-auth-token': sessionStorage.getItem('token'),'x-auth-user':sessionStorage.getItem('auth-user'),'Content-Type':  'application/json'})
+  }
 
-public opt1={
-  headers: new HttpHeaders({'x-auth-token': sessionStorage.getItem('token'),'x-auth-user':sessionStorage.getItem('auth-user'),'Content-Type':  'application/json'})
-  
-}
-  logout(){
-    const data = {};
-    this.http.post('https://plsuat.europassistance.in:444/destroysession',data,this.opt1).subscribe(res=>{
-      this.service.logout().subscribe(res => {
-             console.log(res);
-             sessionStorage.clear();
-              localStorage.clear();
-              this.router.navigate(['auth/login']);
-           })
-    })
+  //Logout Function
+  LogoutDest(){
+    const data1 = {};
+      console.log("This is logout function")
+      this.service.logout().subscribe(response => {
+        // console.log('inside logout-dest');
+        sessionStorage.clear();
+        localStorage.clear();
+        this.http.post('https://plsuat.europassistance.in:444/destroysession',data1,this.EasyAuto).subscribe(res=>{
+        console.log('inside dest-logout');
+        this.router.navigate(['auth/login']);
+       },
+       (err: HttpErrorResponse) => {
+        if (err.error instanceof Error) {
+          // console.log("Client-side error occured.");
+          this.router.navigate(['auth/login']);
+        }
+        else {
+          // console.log("Server-side error occured.");
+          this.router.navigate(['auth/login']);
+        }
+      });
+    });
+  }
 
-       
-     }
 
-    //  logout(){
-    //    this.service.logout().subscribe(res => {
-    //      console.log(res);
-    //    })
+
+  // Destlogout(){
+  //   const data = {};
+  //   this.http.post('https://plsuat.europassistance.in:444/destroysession',data,this.opt1).subscribe(res=>{
+  //     this.service.logout().subscribe(res1=> {
+  //            console.log(res1);
+  //            sessionStorage.clear();
+  //             localStorage.clear();
+  //             this.router.navigate(['auth/login']);
+  //          })
+  //       })
+  //   }
+
+    //  Eventlogout(){
+    //    this.service.logout().subscribe((event: HttpEvent<any>)  =>  {
+    //      console.log(event)
+    //     switch (event.type) {
+    //       case HttpEventType.Sent:
+    //         console.log('Request sent!', HttpEventType.Sent);
+    //         break;
+    //       case HttpEventType.ResponseHeader:
+    //         console.log('Response header received!', HttpEventType.ResponseHeader);
+    //         break;
+    //       case HttpEventType.Response:
+    //         console.log('😺 Done!', event.body, HttpEventType.Response);
+    //     }
+    //   });
     //  }
     
+    //  Simplelogout(){
+    //    this.service.logout().subscribe(res => {
+    //      console.log("logout works");
+    //      this.router.navigate(['auth/login']);
+    //    })
+    //  }
+
     // destroySession(){
     //   this.service.destroySession().subscribe(res => {
     //     console.log(res);

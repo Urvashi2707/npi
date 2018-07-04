@@ -165,10 +165,43 @@ export class AtCentreComponent implements OnInit {
         this.dataperpage = res[0].pagecount[0].pagelimit;
         console.log(this.record_count);
         this.spinner.hide();
-       }
+        this.record_count = res[0].pagecount[0].record_count;
+        this.dataperpage = res[0].pagecount[0].pagelimit;
+        console.log(this.record_count);
+        this.spinner.hide();
+        for (let j = 0; j < this.atcentre.length ; j++){
+          if(this.atcentre[j].queue_time != null){
+            var queuetime = this.atcentre[j].queue_time;
+            var date = queuetime.replace( /\n/g, " " ).split( " " );
+            var newDate = this.datePipe.transform(date[0],"d MMM,y");
+            var timeString = date[1];
+            var H = +timeString.substr(0, 2);
+            var h = (H % 12) || 12;
+            var ampm = H < 12 ? "AM" : "PM";
+            timeString = h + timeString.substr(2, 3) + ampm;
+            this.atcentre[j].newtime = timeString;
+            this.atcentre[j].newdate = newDate;
+          }
+          if(this.atcentre[j].dropoff_time != null){
+            var dropofftime = this.atcentre[j].dropoff_time;
+            var etd = dropofftime.replace( /\n/g, " " ).split( " " );
+            var dropdate = this.datePipe.transform(etd[0],"d MMM,y");
+            var timeString1 = etd[1];
+            var H1 = +timeString1.substr(0, 2);
+            var h1 = (H1 % 12) || 12;
+            var ampm1 = H1 < 12 ? "AM" : "PM";
+            timeString1 = h1 + timeString1.substr(2, 3) + ampm1;
+            this.atcentre[j].droptime = timeString1;
+            this.atcentre[j].dropate = dropdate;
+          }
+       
+        
+       
+      }
     }
-    });
-  }
-  
 
+
+}
+});
+  }
 }

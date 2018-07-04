@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
-import {IEmployee} from '../model/user';
 import {HttpClient,HttpHeaders} from '@angular/common/http';
-import {Observable} from 'rxjs/Observable';
 
 @Injectable()
 export class ListService {

@@ -14,7 +14,7 @@
     @include media-breakpoint-down(xs) {
         .firstcard {
             margin-top: 6%;
-            padding-top: 20%;
+            // padding-top: 20%;
         }
     }
     @include media-breakpoint-down(is) {
@@ -22,6 +22,11 @@
             height: nb-theme(card-height-medium);
         }
     }
+    // .CustRating{
+    //     nb-card {
+    //         height: 50px;
+    //     }
+    // }
 }
 .star {
     position: relative;
@@ -42,6 +47,17 @@
     color: orange;
     background-color: white;
 }
+@media only screen and (max-width: 1050px) {
+    .RatingCard{
+        padding-top: 0px;
+    }
+    .CustRating{
+        nb-card {
+            height: 94px;
+        }
+    }
+}
+
 /* basic positioning */
 .legend { list-style: none; }
 .legend li { float: left; margin-right: 10px; }
@@ -52,4 +68,28 @@
 .legend .kindaawesome { background-color: #81c784; }
 .legend .notawesome { background-color: #4caf50; }
 .legend .notawesome1 { background-color: #ffe789; }
+
+@media only screen and (max-width: 420px) {
+.cardValue{
+    font-size:2.4rem;
+    padding-right:33%;
+}
+.CustRating{
+    nb-card {
+        height: 61px;
+    }
+}
+.star {
+    position: relative;
+    display: inline-block;
+    font-size: .8rem;
+    color: #d3d3d3;
+}
+.RatingCard{
+    padding-top: 0px;
+}
+.cardHeight{
+    height: 50px;
+}
+}
 

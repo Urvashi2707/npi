@@ -123,6 +123,23 @@ export class UnconfirmedComponent implements OnInit {
         this.dataperpage = res[0].pagecount[0].pagelimit;
         console.log(this.record_count);
         this.spinner.hide();
+        for (let j = 0; j < this.unconfirmed .length ; j++){
+          if(this.unconfirmed [j].queue_date != null){
+             var queuedate = this.unconfirmed [j].queue_date;
+            var newDate = this.datePipe.transform(queuedate,"d MMM,y");
+            this.unconfirmed [j].newdate = newDate;
+          }
+         if(this.unconfirmed [j].queue_time != null){
+          var timeString = this.unconfirmed [j].queue_time ;
+          var H = +timeString.substr(0, 2);
+          var h = (H % 12) || 12;
+          var ampm = H < 12 ? "AM" : "PM";
+          timeString = h + timeString.substr(2, 3) + ampm;
+          this.unconfirmed [j].newtime = timeString;
+          
+         }
+         
+         }
        
       }
       

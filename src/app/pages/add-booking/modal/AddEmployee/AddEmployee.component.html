@@ -25,8 +25,8 @@
         <label class="form-control-placeholder" for="name">Name*</label>
       </div>
      <div class="form-control-feedback" *ngIf="name.errors && (name.dirty || name.touched)">
-           <p *ngIf="name.errors.required"> name is required</p>
-           <p *ngIf="name.errors.minlength">3 character</p>
+           <p *ngIf="name.errors.required" class="haserror"> name is required</p>
+           <p *ngIf="name.errors.minlength" class="haserror">Minimum Length is 3 character</p>
        </div>
     </div>
   </div>
@@ -42,8 +42,8 @@
           <label class="form-control-placeholder" for="mobile1">Mobile Number*</label>
         </div>
         <div class="form-control-feedback" *ngIf="mobile1.errors && (mobile1.dirty || mobile1.touched)">
-            <p *ngIf="mobile1.errors.required">mobile is required</p>
-            <p *ngIf="!mobile1.errors.valid">mobile must contain 10 digits only</p>
+            <p *ngIf="mobile1.errors.required" class="haserror">mobile is required</p>
+            <p *ngIf="!mobile1.errors.valid" class="haserror">mobile must contain 10 digits only</p>
         </div>
   
         </div>
@@ -58,8 +58,8 @@
       </div>
       
       <div class="form-control-feedback" *ngIf="email.errors && (email.dirty || email.touched)">
-          <p *ngIf="email.errors.required">Email is required</p>
-          <p *ngIf="!email.errors.valid">Email must contain at least the @ character</p>
+          <p *ngIf="email.errors.required" class="haserror">Email is required</p>
+          <p *ngIf="!email.errors.valid" class="haserror">Email must contain at least the @ character</p>
       </div>
     </div>
   </div>
@@ -74,7 +74,7 @@
         </div>
         
         <div class="form-control-feedback" *ngIf="permission.errors && (permission.dirty || permission.touched)">
-            <p *ngIf="permission.errors.required">Designation is required</p>
+            <p *ngIf="permission.errors.required" class="haserror">Designation is required</p>
         </div>
       </div>
     </div>
@@ -89,7 +89,7 @@
         </div>
         
         <div class="form-control-feedback" *ngIf="permission.errors && (permission.dirty || permission.touched)">
-            <p *ngIf="permission.errors.required">Designation is required</p>
+            <p *ngIf="permission.errors.required" class="haserror">Designation is required</p>
         </div>
       </div>
     </div>
@@ -104,7 +104,7 @@
         </div>
         
         <div class="form-control-feedback" *ngIf="permission.errors && (permission.dirty || permission.touched)">
-            <p *ngIf="permission.errors.required">Designation is required</p>
+            <p *ngIf="permission.errors.required" class="haserror" >Designation is required</p>
         </div>
       </div>
     </div>
@@ -120,7 +120,7 @@
           </div>
           
           <div class="form-control-feedback" *ngIf="permission.errors && (permission.dirty || permission.touched)">
-              <p *ngIf="permission.errors.required">Designation is required</p>
+              <p *ngIf="permission.errors.required" class="haserror">Designation is required</p>
           </div>
         </div>
       </div>

@@ -20,7 +20,6 @@ export class ChauffeurComponent implements OnInit {
 
   public selectedBrand: any = [];
   public selectedModel: any = [];
-  private Slot: any=[];
   public slot:any = [];
   svcid:string;
   slotcheck = true;
@@ -138,9 +137,7 @@ export class ChauffeurComponent implements OnInit {
       this.getBrands();
       this.getCoordinator();
       this.getSaleExceutive();
-      // this.getCityList();
       const now = new Date();
-      // this.model = { year: now.getFullYear(), month: now.getMonth() + 1, day: now.getDate() };
       this.valuedate = new Date();
       this.startDate = this.model;
       this.minDate = { year: now.getFullYear(), month: now.getMonth() + 1, day: now.getDate() - 1 };
@@ -148,15 +145,15 @@ export class ChauffeurComponent implements OnInit {
       this.globalsvcid = JSON.parse(sessionStorage.getItem('globalsvcid'));
   }
 
+  //Show Model
   showModal(Id:number) {
     const activeModal = this.modalService.open(AddEmployee, { size: 'lg', container: 'nb-layout' });
     activeModal.componentInstance.modalHeader = 'Add Employee';
     activeModal.componentInstance.modalContent = Id;
   }
-  Addsales() {
-    this.router.navigate(['pages/user']);
-  }
 
+
+  //GetBrands
   getBrands(){
     const reqpara1 = {
            requesttype: 'getallbrands',
@@ -164,8 +161,7 @@ export class ChauffeurComponent implements OnInit {
          }
       const as1 = JSON.stringify(reqpara1)
       this._data.webServiceCall(as1).subscribe
-       (res => 
-         {
+       (res => {
           if(res[0].login === 0){
             sessionStorage.removeItem('currentUser');
             this.router.navigate(['/auth/login']);
@@ -211,6 +207,7 @@ export class ChauffeurComponent implements OnInit {
     this.toasterService.popAsync(toast);
   }
 
+  //Slot breakup
   buildArr(theArr: any[]){
    var arrOfarr = [];
    for(var i = 0; i < theArr.length ; i+=4) {
@@ -227,18 +224,21 @@ export class ChauffeurComponent implements OnInit {
     return arrOfarr;
   }
 
+  //
    showLargeModal(res:any) {
     const activeModal = this.modalService.open(BookingDetails, { size: 'lg', container: 'nb-layout' });
     activeModal.componentInstance.modalHeader = 'Booking Details';
     activeModal.componentInstance.modalContent = res;
   }
 
-  check(value: string,time:string) {
+  //Slot Selection on click of slot
+  checkSlot(value: string,time:string) {
     this.slot_time=time;
     this.slothour = value;
     this.slotcheck = false;
  }
 
+  //Brand selection
    onSelectBrand(brandsId) {
      console.log(brandsId);
     this.selectedBrand = null;
@@ -250,6 +250,7 @@ export class ChauffeurComponent implements OnInit {
     this.getModelds(this.selectedBrand);
   }
 
+  //on selection of Brand select , this function will be called
  onSelectModel(modelId) {
     this.selectedModel = null;
     for (let i = 0; i < this.Models.length; i++) {
@@ -260,6 +261,7 @@ export class ChauffeurComponent implements OnInit {
     this.getVariants(this.selectedModel.model_id);
   }
 
+  //on selection of Model select , this function will be called
  onSelectVariant(VariantId) {
    this.selectedVariant = null;
    for (let i = 0; i < this.Models.length; i++) {
@@ -269,6 +271,7 @@ export class ChauffeurComponent implements OnInit {
    }
   }
 
+  //Get Variant API
   getVariants(VariantId:number){
        const reqpara3 = {
           requesttype: 'getvariants',
@@ -293,6 +296,7 @@ export class ChauffeurComponent implements OnInit {
     });
   }
 
+//on selection of Coordinate select , this function will be called
   onCoordinator(Id){
     this.selectedCoordinator = null;
      for (let i = 0; i < this.Coordinator.length; i++) {
@@ -302,7 +306,7 @@ export class ChauffeurComponent implements OnInit {
     }
   }
 
-
+//Get Sales executive API call
   getSaleExceutive(){
      const reqpara8={
       requesttype:'getspecificsvcusers',
@@ -322,7 +326,7 @@ export class ChauffeurComponent implements OnInit {
     });
   }
 
-
+//Get Coordinator  API call
   getCoordinator(){
     const reqpara7={
       requesttype:'getspecificsvcusers',
@@ -341,6 +345,7 @@ export class ChauffeurComponent implements OnInit {
     });
   }
 
+  //Get Models  API call
     getModelds(ModelId:number){
       this.dontShowModel = false;
       this.dontShowVariant = false;
@@ -377,6 +382,7 @@ export class ChauffeurComponent implements OnInit {
        });
       }
 
+       //Get City List API call
       getCityList(){
         console.log(this.serviceType);
         if(this.serviceType == '15'){
@@ -396,10 +402,10 @@ export class ChauffeurComponent implements OnInit {
             }
            });
         }
-       
-        }
+      }
 
-      sameas(value){
+      //called when sameas checked box is checked
+      sameAsPickup(value){
         console.log(value);
         this.sameasvalue = value;
         if (value == true) {
@@ -443,11 +449,11 @@ export class ChauffeurComponent implements OnInit {
     }
 
 
-      modelChanged(event){
-        console.log(event);
-      }
+      // modelChanged(event){
+      //   console.log(event);
+      // }
 
-
+      //On change of date in calender it is called
       onSelectDate(date: NgbDateStruct){
         if (date != null) {
                 this.model = date;
@@ -458,10 +464,12 @@ export class ChauffeurComponent implements OnInit {
             this.getSlot(this.dateString);
           }
 
-      some(value){
+         //Assign Amb switch is checked 
+        checkAmb(value){
         this.amb = value;
       }
 
+      //API call for slots
       getSlot(Date: string) {
         this.showtime = true;
         if (this.yourBoolean === 'servicing') {

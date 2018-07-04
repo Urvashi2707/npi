@@ -70,9 +70,9 @@
             }
         }
         @include media-breakpoint-down(xs) {
-            nb-action:not(.toggle-layout) {
-                border: none;
-            }
+            // nb-action:not(.toggle-layout) {
+            //     border: none;
+            // }
             .control-item {
                 display: none;
             }
@@ -100,9 +100,9 @@
                 .toggle-layout {
                     display: none;
                 }
-                nb-action:not(.toggle-layout) {
-                    padding: 0;
-                }
+                // nb-action:not(.toggle-layout) {
+                //     padding: 0;
+                // }
             }
             @include media-breakpoint-down(xs) {
                 .right /deep/ {
@@ -114,7 +114,27 @@
                 .credits{
                     display: none;
                 }
+                .nb-menu{
+                    font-size: 22px;
+                }
             }
+            // @media only screen and (min-width: 420px) {
+            //     .right /deep/ {
+            //         display: none;
+            //     }
+            //     .dropdown{
+            //         display: none;
+            //     }
+            //     .credits{
+            //         display: none;
+            //     }
+            //     .logo img {
+            //         width: 71px;
+            //     }
+            //     nb-search{
+            //         display: inline;
+            //     }
+            // }
         }
     
 

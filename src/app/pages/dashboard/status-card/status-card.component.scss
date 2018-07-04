@@ -89,7 +89,6 @@
         }
         .title {
             font-family: nb-theme(font-secondary);
-            font-size: 1.25rem;
             font-weight: nb-theme(font-weight-bold);
             color: nb-theme(card-fg-heading);
         }
@@ -154,6 +153,26 @@
             .status {
                 font-weight: nb-theme(font-weight-light);
             }
+        }
+    }
+    @media only screen and (max-width: 420px) {
+   
+        nb-card {
+           height: 60px !important;
+    
+           .title{
+            font-size: 1.25rem !important;
+        }
+        }
+    }
+    @media only screen and (max-width: 1050px) {
+   
+        nb-card {
+           height: 60px !important;
+    
+           .title{
+            font-size: 17px !important;
+        }
         }
     }
 }

@@ -8,39 +8,33 @@
           <button (click)="getsvclist()" class="edit" style="background-color: white;border-color: white;" *ngIf="checkgrpadmin">
             <i class="fa fa-pencil" style="color:#ffa100" aria-hidden="true"></i>
           </button>
-
         </span>
-
       </div>
     </nb-card-body>
   </nb-card>
 </div>
-
 <div class="row">
-  <div class="col-xxxl-3 col-md-6">
+  <div class="col-xxxl-3 col-md-6 col-sm-12 col-12">
     <ngx-status-card title="Avg. Invoice Amount" type="primary">
-      <div style="font-size: 2.4rem;" *ngIf="!cards.average_inv_amount">0</div>
-      <div style="font-size: 2.4rem;" *ngIf="cards.average_inv_amount">&#x20b9; {{cards.average_inv_amount}}</div>
+      <div class="cardValue" style="font-size: 2.4rem;" *ngIf="!cards.average_inv_amount">0</div>
+      <div class="cardValue" style="font-size: 2.4rem;" *ngIf="cards.average_inv_amount">&#x20b9; {{cards.average_inv_amount}}</div>
     </ngx-status-card>
   </div>
-
-  <div class="col-xxxl-3 col-md-6">
+  <div class="col-xxxl-3 col-md-6 col-sm-12 col-12">
     <ngx-status-card title="On Time Checked-in" icon='nb-sunny' type="success">
-      <div style="font-size: 2.4rem;" *ngIf="!cards.on_time_checkin">0</div>
-      <div style="font-size: 2.4rem;" *ngIf="cards.on_time_checkin">{{cards.on_time_checkin}}</div>
+      <div class="cardValue" style="font-size: 2.4rem;" *ngIf="!cards.on_time_checkin">0</div>
+      <div class="cardValue" style="font-size: 2.4rem;" *ngIf="cards.on_time_checkin">{{cards.on_time_checkin}}</div>
     </ngx-status-card>
   </div>
-
-  <div class="col-xxxl-3 col-md-6">
+  <div class="col-xxxl-3 col-md-6 col-sm-12 col-12">
     <ngx-status-card title="Avg. Distance in Km" icon="nb-location" type="info">
-      <div style="font-size: 2.4rem;" *ngIf="!cards.average_distance">0</div>
-      <div style="font-size: 2.4rem;" *ngIf="cards.average_distance">{{cards.average_distance}}</div>
+      <div class="cardValue" style="font-size: 2.4rem;" *ngIf="!cards.average_distance">0</div>
+      <div class="cardValue" style="font-size: 2.4rem;" *ngIf="cards.average_distance">{{cards.average_distance}}</div>
     </ngx-status-card>
   </div>
-
-  <div class="col-xxxl-3 col-md-6">
-    <nb-card item-height="50px">
-      <nb-card-body>
+  <div class="col-xxxl-3 col-md-6 col-sm-12 col-12 CustRating">
+    <nb-card class="cardHeight">
+      <nb-card-body class="RatingCard" style="overflow-y: hidden;">
         <div style="font-size:20px;float:left;margin-top: 3%;"> Customer Ratings</div>
         <div style="font-size: 1.0rem;">`</div>
         <ng-template #t let-fill="fill">
@@ -50,28 +44,22 @@
             <span class="half" [style.width.%]="fill">&#9733;</span>&#9733;
           </span>
         </ng-template>
-
         <ngb-rating [(rate)]="rating" [starTemplate]="t" [readonly]="true" max="5" style="float: right;"></ngb-rating>
-
       </nb-card-body>
     </nb-card>
-
   </div>
 </div>
 <div class="row">
-  <div class="col-xxxl-3 col-md-6">
+  <div class="col-xxxl-3 col-md-6 col-sm-12 col-12">
     <ngx-status-card title="Total Vehicles in number" icon='nb-bar-chart' type="primary">
-      <div style="font-size: 2.4rem;" *ngIf="!cards.total_vehicle">0</div>
-      <div style="font-size: 2.4rem;" *ngIf="cards.total_vehicle">{{cards.total_vehicle}}</div>
+      <div class="cardValue" style="font-size: 2.4rem;" *ngIf="!cards.total_vehicle">0</div>
+      <div class="cardValue" style="font-size: 2.4rem;" *ngIf="cards.total_vehicle">{{cards.total_vehicle}}</div>
     </ngx-status-card>
   </div>
-
-  <div class="col-xxxl-3 col-md-6">
+  <div class="col-xxxl-3 col-md-6 col-sm-12 col-12">
     <ngx-status-card title="On Time Pickup" icon="nb-sunny-circled" type="success">
-
-      <div style="font-size: 2.4rem;" *ngIf="!cards.ontime_pickup_percentage">0</div>
-      <div style="font-size: 2.4rem;" *ngIf="cards.ontime_pickup_percentage">{{cards.ontime_pickup_percentage}}</div>
-
+      <div class="cardValue" style="font-size: 2.4rem;" *ngIf="!cards.ontime_pickup_percentage">0</div>
+      <div class="cardValue" style="font-size: 2.4rem;" *ngIf="cards.ontime_pickup_percentage">{{cards.ontime_pickup_percentage}}</div>
     </ngx-status-card>
   </div>
 </div>
@@ -82,44 +70,41 @@
   <div class="col-xxxl-4 col-xxl-4 col-lg-4 col-md-4">
     <ngx-weather></ngx-weather>
   </div>
-
 </div>
-
 <div class="row">
   <div class="col-xxxl-6 col-xxl-6 col-lg-6 col-md-6">
     <nb-card size="medium">
       <nb-card-header>Active Pickup Performance</nb-card-header>
       <nb-card-body style="padding: 0px">
         <div *ngIf="!showPickupPie" style="padding: 5%;font-weight: 600">No Data</div>
-          <div class="row" style="width: 98%;margin: 0 auto;">
-                <ngx-charts-pie-chart [view]="view1" [scheme]="colorScheme1" [results]="pickup"  [labels]="showLabels"
-                style="padding-left: 13%">
-              </ngx-charts-pie-chart>
-          </div>
-          <div *ngIf="showPickupPie" >
-                <span style="padding-left: 4%;font-weight: 600;">Legends</span><br/>
-                <ul class="legend">
-                  <li *ngFor="let p of pickup">
-                    <span [style.background-color]="getColorPickup(p.name)"></span>{{p.name}}</li>
-                </ul>
-              </div>
+        <div class="row" style="width: 98%;margin: 0 auto;">
+          <ngx-charts-pie-chart [view]="view1" [scheme]="colorScheme1" [results]="pickup" [labels]="showLabels" style="padding-left: 13%">
+          </ngx-charts-pie-chart>
+        </div>
+        <div *ngIf="showPickupPie">
+          <span style="padding-left: 4%;font-weight: 600;">Legends</span>
+          <br/>
+          <ul class="legend">
+            <li *ngFor="let p of pickup">
+              <span [style.background-color]="getColorPickup(p.name)"></span>{{p.name}}</li>
+          </ul>
+        </div>
       </nb-card-body>
     </nb-card>
     <!-- <app-card title="Pickup" type="info"></app-card> -->
   </div>
   <div class="col-xxxl-6 col-xxl-6 col-lg-6 col-md-6">
-
     <nb-card size="medium">
       <nb-card-header>Active Dropoff Performance</nb-card-header>
       <nb-card-body style="padding: 0px">
-          <div *ngIf="!showDropoffPie" style="padding: 5%;font-weight: 600">No Data</div>
+        <div *ngIf="!showDropoffPie" style="padding: 5%;font-weight: 600">No Data</div>
         <div class="row" style="width: 80%;margin: 0 auto;">
           <ngx-charts-pie-chart [view]="view1" [scheme]="colorScheme1" [results]="dropoff" [labels]="showLabels">
           </ngx-charts-pie-chart>
         </div>
-
         <div *ngIf="showDropoffPie">
-          <span style="padding-left: 4%;font-weight: 600;">Legends</span><br/>
+          <span style="padding-left: 4%;font-weight: 600;">Legends</span>
+          <br/>
           <ul class="legend">
             <li *ngFor="let d of dropoff">
               <span [style.background-color]="getColorDrop(d.name)"></span>{{d.name}}</li>
@@ -128,23 +113,20 @@
       </nb-card-body>
     </nb-card>
   </div>
-  <!-- <app-card title="Drop-off" type="info"></app-card> -->
 </div>
-
 <div class="row">
   <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
     <nb-card>
       <nb-card-header>Pickup Performance Yesterday</nb-card-header>
       <nb-card-body>
         <ngx-charts-bar-vertical-stacked [view]="view" [scheme]="colorScheme" [results]="multi2" [gradient]="gradient" [xAxis]="showXAxis"
-          [yAxis]="showYAxis" [showXAxisLabel]="showXAxisLabel" [showYAxisLabel]="showYAxisLabel" [xAxisLabel]="xAxisLabel" [legend]="showLegend1"
-          [yAxisLabel]="yAxisLabel" (select)="onSelect($event)">
+          [yAxis]="showYAxis" [showXAxisLabel]="showXAxisLabel" [showYAxisLabel]="showYAxisLabel" [xAxisLabel]="xAxisLabel"
+          [legend]="showLegend1" [yAxisLabel]="yAxisLabel" (select)="onSelect($event)">
         </ngx-charts-bar-vertical-stacked>
       </nb-card-body>
     </nb-card>
   </div>
 </div>
-
 <div class="row">
   <div class="col-lg-12">
     <nb-card>
@@ -157,9 +139,7 @@
       </nb-card-body>
     </nb-card>
   </div>
-
 </div>
-
 <div class="row">
   <div class="col-lg-8">
     <nb-card>

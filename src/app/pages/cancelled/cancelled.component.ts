@@ -138,9 +138,22 @@ export class CancelledComponent implements OnInit {
         this.spinner.hide();
        }
        else{
-
-        this.cancelled = res[1].cancelled;
+         this.cancelled = res[1].cancelled;
         console.log(this.cancelled);
+        for (let j = 0; j < this.cancelled.length ; j++){
+        var queuetime = this.cancelled[j].queue_time;
+        var date = queuetime.replace( /\n/g, " " ).split( " " );
+        var newDate = this.datePipe.transform(date[0],"d,MMM,y");
+        var timeString = date[1];
+        var H = +timeString.substr(0, 2);
+        var h = (H % 12) || 12;
+        var ampm = H < 12 ? "AM" : "PM";
+        timeString = h + timeString.substr(2, 3) + ampm;
+        this.cancelled[j].newtime = timeString;
+        this.cancelled[j].newdate = newDate;
+        }
+        
+
         this.record_count = res[0].pagecount[0].record_count;
           this.dataperpage = res[0].pagecount[0].pagelimit;
           console.log(this.record_count);

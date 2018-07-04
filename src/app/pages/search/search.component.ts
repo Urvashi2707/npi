@@ -3,7 +3,8 @@ import {Router} from '@angular/router';
 import { QueueTableService } from '../services/queue-table.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {ServicingService } from '../services/addServicing.service';
-import {Modal4Component} from './modal/modal.component'
+import {Modal4Component} from './modal/modal.component';
+import { DatePipe } from '@angular/common';
 import {HttpClient,HttpHeaders,HttpErrorResponse,HttpRequest} from '@angular/common/http';
 import { ToasterService, ToasterConfig, Toast, BodyOutputType } from 'angular2-toaster';
 import 'style-loader!angular2-toaster/toaster.css';
@@ -14,7 +15,7 @@ import 'style-loader!angular2-toaster/toaster.css';
 })
 export class SearchComponent implements OnInit {
 
-  constructor(private toasterService: ToasterService,private modalService: NgbModal,private _detailsTable: QueueTableService,private service:ServicingService,private http:HttpClient,private router:Router) { }
+  constructor(private datePipe:DatePipe,private toasterService: ToasterService,private modalService: NgbModal,private _detailsTable: QueueTableService,private service:ServicingService,private http:HttpClient,private router:Router) { }
 
   public vehnumber : string;
   public report : any=[];
@@ -114,6 +115,23 @@ export class SearchComponent implements OnInit {
         this.upload = this.report[0].upload_button,
         console.log(this.upload),
         console.log(this.report);
+        for (let j = 0; j <  this.report.length ; j++){
+          if( this.report[j].queue_date != null){
+             var queuedate =  this.report[j].queue_date;
+            var newDate = this.datePipe.transform(queuedate,"d MMM,y");
+            this.report[j].newdate = newDate;
+          }
+         if( this.report[j].queue_time != null){
+          var timeString =  this.report[j].queue_time ;
+          var H = +timeString.substr(0, 2);
+          var h = (H % 12) || 12;
+          var ampm = H < 12 ? "AM" : "PM";
+          timeString = h + timeString.substr(2, 3) + ampm;
+          this.report[j].newtime = timeString;
+          
+         }
+         
+         }
       }
 
     }

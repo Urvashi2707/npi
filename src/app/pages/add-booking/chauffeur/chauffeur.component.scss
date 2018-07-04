@@ -187,3 +187,234 @@ select:focus:invalid {
 .haserror{
   color:red;
 }
+.CoordinatorName{
+  display:inline-block;
+  min-width: 67%;
+}
+.CoordinatorMobile{
+  display:inline-block;
+  min-width: 58%;
+}
+.AmbLabel{
+  margin-left:1.5rem;
+  margin-bottom: -0.5rem;
+}
+.CusName{
+  display:inline-block;
+  min-width:59%;
+}
+.sectionHeader{
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+.salesExec{
+  width: 87%;
+  display: inline-block;
+}
+@media only screen and (max-width: 420px) {
+  .form-group{
+    margin-bottom: 1rem;   
+    margin-top: .5rem;
+   }
+  .form-control {
+    max-height: 35px;
+    width: 100%;
+    font-size: 12px;
+}
+.form-control{
+    font-size: 11px;
+}
+.input-group-append{
+    width: 20%;
+}
+input[type=text],
+input[type=email],
+input[type=number],
+textarea,
+fieldset {
+/* required to properly style form 
+   elements on WebKit based browsers */
+  -webkit-appearance: none;
+  
+  width : 100%;
+  border: 2px solid #dadfe6;;
+  margin: 0;
+  font-family: inherit;
+  font-size: 69%;
+  
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.haserror{
+    color:red;
+    font-size: 10px;
+}
+.form-control-placeholder {
+    position: absolute;
+    top: 0;
+    padding: 7px 0 0 13px;
+    transition: all 200ms;
+    opacity: 0.5;
+    font-size:12px;
+}
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 15px;
+  width: 15px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+.custom-control-description{
+  font-size: 10px;
+}
+.btn {
+    color: #ffffff;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    font-weight: 500;
+    font-family: Exo;
+    border: 1px solid transparent;
+    transition: none;
+    cursor: default;
+    padding: 0.60rem 1rem;
+    font-size: .7rem;
+    line-height: 1.25;
+    border-radius: 0.375rem;
+}
+.switchlabel{
+  margin-left:.5rem;
+  margin-bottom: -0.5rem;
+  font-size:10px;
+}
+.switch{
+  position: relative;
+  display: inline-block;
+  width: 52px;
+  height: 23px;
+}
+.switchCol{
+  margin-bottom: 1.0rem;
+}
+.form-group select{
+  font-size: 10px;
+  padding: 0px;
+}
+.NextRow{
+  padding-bottom: 1.5rem;
+}
+.sameas{
+  padding-bottom: 1.0rem;
+}
+.creContainer{
+  width: 100%;
+  display: inline-flex;
+}
+.creContainer select{
+  font-size: 10px;
+  padding: 0px;
+}
+.AddUserCre{
+  width: 100%;
+  display: inline-flex;
+  padding-right: 4%;
+  padding-bottom: 1.0rem;
+}
+.AddUserCreModal{
+  width:20%;
+  display:inline-block;
+}
+.creCol{
+  padding-bottom: 1.0rem;
+}
+.AddUserRow{
+  width: 85%;
+  padding-right: 3%;
+  display: inline-block;
+}
+.AddUserRow select{
+  font-size: 10px;
+  padding: 0px;
+}
+.line{
+  padding-bottom: .5rem;
+}
+.cssselect select{
+  font-size: 10px;
+  padding: 0px;
+}
+.countryCode{
+  display:inline-block;
+  max-width: 16%;
+}
+.countryCodelabel{
+  font-size: 12px;
+  padding-left: 2%;
+  margin-bottom: 0px;
+}
+.mobile1{
+  display:inline-block;
+  min-width:58%;
+}
+.addNumber{
+  display:inline-block; 
+  margin:3%;
+}
+.CoordinatorName{
+  display:inline-block;
+  min-width:62%
+}
+.dateButton{
+  height: 97%;
+  border-radius: 0px;
+}
+.CoordinatorMobile{
+  display:inline-block;
+  min-width: 81%;
+}
+.AmbLabel{
+  margin-left:1.5rem;
+  margin-bottom: -0.5rem;
+  font-size: 11px;
+}
+.AmbRow{
+  padding-bottom: 5%;
+}
+.CusName{
+  display:inline-block;
+  min-width:81%;
+}
+.salesExec{
+  display:inline-block;
+  min-width:81%;
+}
+.sectionHeader{
+  font-size: 1.0rem;
+  font-weight: 500;
+  padding-bottom: 2%;
+}
+input::placeholder {
+  font-size: 12px;
+}
+.btn.btn-warning{
+  margin-top: .5rem;
+  margin-bottom: .5rem;
+}
+.AddUserCre{
+  width: 100%;
+  display: inline-flex;
+  padding-right: 4%;
+  padding-bottom: 1.0rem;
+}
+.AddUserCreModal{
+  width:20%;
+  display:inline-block;
+}
+.salesExeBtn{
+  display:inline-block;
+  margin:3%;
+}
+ }

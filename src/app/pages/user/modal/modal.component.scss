@@ -17,48 +17,51 @@
     display: block;
     padding: nb-theme(padding);
   }
-  input[type=text],
-  input[type=email],
-  input[type=number],
-  textarea,
-  fieldset {
-  /* required to properly style form 
-     elements on WebKit based browsers */
-    -webkit-appearance: none;
-    
-    width : 100%;
-    border: 2px solid #dadfe6;;
-    margin: 0;
-    
-    font-family: inherit;
-    font-size: 90%;
-    
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-  }
-  
-  input:invalid {
-    box-shadow: 0 0 5px 1px red;
-  }
-  
-  input:focus:invalid {
-    outline: none;
-  }
-  
-  select:invalid {
-    box-shadow: 0 0 5px 1px red;
-  }
-  
-  select:focus:invalid {
-    outline: none;
-  }
+
   @include media-breakpoint-down(xs) {
     nb-tabset /deep/ul {
       font-size: 1rem;
       padding: 0 0.25rem;
     }
   }
-}.form-group {
+}
+
+input[type=text],
+input[type=email],
+input[type=number],
+textarea,
+fieldset {
+/* required to properly style form 
+   elements on WebKit based browsers */
+  -webkit-appearance: none;
+  
+  width : 100%;
+  border: 2px solid #dadfe6;;
+  margin: 0;
+  
+  font-family: inherit;
+  font-size: 90%;
+  
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+input:invalid {
+  box-shadow: 0 0 5px 1px red;
+}
+
+input:focus:invalid {
+  outline: none;
+}
+
+select:invalid {
+  box-shadow: 0 0 5px 1px red;
+}
+
+select:focus:invalid {
+  outline: none;
+}
+.form-group {
   position: relative;
   margin-bottom: 1.5rem;
 }
@@ -76,4 +79,55 @@
   font-size: 75%;
   transform: translate3d(0, -100%, 0);
   opacity: 1;
+}
+@media only screen and (max-width: 420px) {
+  .form-group{
+    margin-bottom: 1rem;   
+    margin-top: .5rem;
+   }
+  .form-control {
+    max-height: 35px;
+    width: 100%;
+    font-size: 12px;
+}
+.form-control{
+    font-size: 11px;
+}
+.input-group-append{
+    width: 20%;
+}
+input[type=text],
+input[type=email],
+input[type=number],
+textarea,
+fieldset {
+  -webkit-appearance: none;
+  width : 100%;
+  border: 2px solid #dadfe6;;
+  margin: 0;
+  font-family: inherit;
+  font-size: 69%;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.haserror{
+    color:red;
+    font-size: 10px;
+}
+.form-control-placeholder {
+    position: absolute;
+    top: 0;
+    padding: 7px 0 0 13px;
+    transition: all 200ms;
+    opacity: 0.5;
+    font-size:12px;
+}
+.form-group select{
+  font-size: 10px;
+  padding: 0px;
+  padding-left: 5%;
+}
+.form-group input{
+  font-size: 10px;
+}
 }

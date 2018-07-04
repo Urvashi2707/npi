@@ -1,10 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
 import {Ilogin} from '../user';
 import { ServicingService } from '../../services/addServicing.service';
-import {HttpClient,HttpHeaders,HttpErrorResponse} from '@angular/common/http';
+import {HttpHeaders,HttpErrorResponse} from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
-import { ToasterService, ToasterConfig, Toast, BodyOutputType } from 'angular2-toaster';
 
 @Component({
   selector: 'app-login',
@@ -13,19 +12,12 @@ import { ToasterService, ToasterConfig, Toast, BodyOutputType } from 'angular2-t
 })
 export class LoginComponent implements OnInit {
 
-  isNewestOnTop = true;
-  isHideOnClick = true;
-  isDuplicatesPrevented = false;
-  isCloseButton = true;
-  config: ToasterConfig;
-  position = 'toast-top-full-width';
-  animationType = 'fade';
-  timeout = 5000;
-  toastsLimit = 5;
   loggedIn = false;
   showAlert = false;
 
-  constructor( private ServicingService: ServicingService,private toasterService: ToasterService,private http: HttpClient,private router: Router,private _cookieService:CookieService) { 
+  constructor( private ServicingService: ServicingService,
+              private router: Router,
+              private _cookieService:CookieService) { 
       if(_cookieService.get('mobile')){
         this.user.mobile=this._cookieService.get('mobile');
         this.user.password=this._cookieService.get('password');
@@ -44,56 +36,39 @@ export class LoginComponent implements OnInit {
   withCredentials: true
 };
 
-private showToast(type: string, title: string, body: string) {
-  this.config = new ToasterConfig({
-    positionClass: this.position,
-    timeout: this.timeout,
-    newestOnTop: this.isNewestOnTop,
-    tapToDismiss: this.isHideOnClick,
-    preventDuplicates: this.isDuplicatesPrevented,
-    animation: this.animationType,
-    limit: this.toastsLimit,
-  });
-  const toast: Toast = {
-    type: type,
-    title: title,
-    body: body,
-    timeout: this.timeout,
-    showCloseButton: this.isCloseButton,
-    bodyOutputType: BodyOutputType.TrustedHtml,
-  };
-  this.toasterService.popAsync(toast);
-}
 
-goTo(){
+//Go to forgot Password Page
+GoToForgot(){
   this.router.navigate(['auth/forgot']);
 }
-closeAlert(){
+
+//Closes Error Notification
+CloseAlert(){
   this.showAlert = false;
 }
- getSession(){
+
+//Easy auto get Session API
+ GetSession(){
   this.ServicingService.session().subscribe(res =>{
-    console.log(res)
-    console.log(res["sId"]);
     sessionStorage.setItem('token',res["sId"]);
     sessionStorage.setItem('auth-user',res["userName"]);
     this.ServicingService.setter(res["sId"]);
   });
 }
 
-  onSubmit({ value, valid }: { value: Ilogin, valid: boolean }) {
+//On click of Login Button
+  OnSubmit({ value, valid }: { value: Ilogin, valid: boolean }) {
             sessionStorage.clear();
             localStorage.clear();
-            this.getSession();
+            this.GetSession();
             this.showAlert = false;
-            const reqpara = {
+            const LgnReqpara = {
                 requesttype: 'login',
                 mobile: value.mobile,
                 password: value.password,
          }
-        const ua = JSON.stringify(reqpara);
-        const req = this.http.post('http://m.21north.in/notify/svcwebservice.php',ua,this.httpOptions)
-          .subscribe(response => {
+        const LgReq = JSON.stringify(LgnReqpara);
+        this.ServicingService.Login(LgReq).subscribe(response => {
               console.log(response[0].login[0].hasOwnProperty('userid'));
               if(response[0].login[0].hasOwnProperty('userid')){
                 sessionStorage.setItem('currentUser',JSON.stringify(response[0]));
@@ -122,11 +97,11 @@ closeAlert(){
        else {
          console.log("Server-side error occured.");
          }
-       }
-     );
+       });
   }
 
- Remmeber(value){
+  //Called when Remember Checkbox is checked
+  RememberMe(value){
   console.log(value);
   if(value == true){
   console.log('true');
@@ -137,7 +112,5 @@ closeAlert(){
    console.log('false');
  }
 }
-
-getname(value){console.log(value);}
-
 }
+

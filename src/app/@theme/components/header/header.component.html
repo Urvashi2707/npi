@@ -12,10 +12,7 @@
     <span>{{credit}}</span>
 </div>
 <nb-actions size="medium" class="header-container" [class.right]="position === 'normal'" [class.left]="position === 'inverse'">
-
-    <nb-action>
-
-        <!-- <nb-action class="control-item" icon="nb-notifications" (click)="show=!show; shownotification();"></nb-action> -->
+ <nb-action>
         <div class="dropdown">
             <div class="col">
                 <div ngbDropdown class="d-inline-block" (openChange)="toggled($event)">
@@ -24,11 +21,9 @@
                    </button>
                   <ul ngbDropdownMenu aria-labelledby="dropdownBasic1" class="dropdown-menu">
                     <li class="dropdown-item" *ngFor="let n of notification" > 
-                        <!-- <div *ngIf="noNotification">{{message}}</div> -->
                         <div style="font-weight: bold;">{{n.title}}<span style="float:right">{{n.release_date}}</span></div>
                         <div>{{n.description}}</div>
                     </li>
-                    <!-- <li class="dropdown-item">Something else is here</li> -->
                   </ul>
                 </div>
               </div></div>
@@ -37,10 +32,4 @@
     <nb-action class="control-item">
         <nb-search type="rotate-layout" (click)="startSearch()" tag="header-search"></nb-search>
     </nb-action>
-   
-</nb-actions>
-
-<!-- <div *ngIf="show">hidden/show</div>
-<script>
-    console.log('javascript');
-</script> -->
+   </nb-actions>

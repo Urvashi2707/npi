@@ -112,6 +112,15 @@
     outline: none;
   }
 
+  @media only screen and (max-width: 420px) {
+    .input-group{
+        max-height: 40px
+    }.form-control{
+      max-height: 35px;
+      font-size: 12px;
+    }
+}
+
   ngb-rating i {
     color: nb-theme(color-success);
     @include nb-for-theme(cosmic) {

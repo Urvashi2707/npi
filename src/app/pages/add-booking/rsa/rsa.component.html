@@ -33,7 +33,7 @@
                 <span class="custom-control-description">Towing </span>
               </label>
             </div>
-            <div class="col-lg-2 col-sm-2 col-md-2" style="padding: 0px;">
+            <div class="col-lg-2 col-sm-2 col-md-2" class="OnSpotRadio">
               <label class="custom-control custom-radio">
                 <input type="radio" class="custom-control-input" #onSpot [(ngModel)]="yourBoolean" value="onSpot" name="customRadio"
                    checked>
@@ -63,7 +63,7 @@
             </div>
          
           <div class="col-md-2 col-sm-2 col-lg-2">
-            <div>
+            <div class="NextButton">
               <button type="button" class="btn btn-warning" (click)='eligibiltycheck1()' [disabled]="!registrationNumber || !user.mobile1 || disabledNext">Next</button>
             </div>
           </div>
@@ -94,9 +94,7 @@
           </div>
           <div *ngIf="showstep3">
             <div class="line">
-              <h5>
-                <span>Vehicle Details</span>
-              </h5>
+                <span class="sectionHeader">Vehicle Details</span>
             </div>
             <div class="row">
               <div class="col-md-6 col-lg-6 col-sm-6">
@@ -130,17 +128,15 @@
                 </div>
               </div>
             </div>
-            <h5>
-              <span>Customer Details</span>
-            </h5>
+              <span class="sectionHeader">Customer Details</span>
             <div class="row">
-              <div class="col-md-8 col-lg-8 col-sm-8 col-xs-8">
-                <div class="form-group" style="display:inline-block;min-width:15%;">
+              <div class="col-md-8 col-lg-8 col-sm-8 col-12 CustomerSection" >
+                <div class="form-group salutation">
                   <select id="salutation1" class="form-control" name="salutation1" [(ngModel)]="user.salutation" #salutation1="ngModel" required>
                     <option *ngFor="let s of salutation" [value]="s.type"> {{s.type}}</option>
                   </select>
                 </div>
-                <div class="form-group" style="display:inline-block;min-width:59%;">
+                <div class="form-group CusName">
                   <input type="text" id="Cus_name" class="form-control" required [(ngModel)]="cust_details.first_name" name="Cus_name" #Cus_name="ngModel"
                     style="text-transform: capitalize;">
                   <label class="form-control-placeholder" for="Cus_name">Customer Name*</label>
@@ -156,11 +152,12 @@
               <div class="row">
                 <div class="col-md-8 col-lg-8 col-sm-8 col-xs-8">
                   <div class="form-group" style="display:inline-block;max-width: 16%;">
-                    <label for="countrycode" style="font-size: 12px;padding-left: 2%;margin-bottom: 0px;">Country Code</label>
+                    <label for="countrycode" class="countryCodelabel">Country Code</label>
+                    <label for="countrycode" style="font-size: 12px;padding-left: 2%;margin-bottom: 0px;" class="cCode">C.Code</label>
                     <input type="text" class="form-control" name="countrycode" OnlyNumber="true" [readonly]="true" value="+91" [(ngModel)]="countrycode1"
                       required #countrycode>
                   </div>
-                  <div class="form-group" style="display:inline-block;min-width:58%;">
+                  <div class="form-group mobile1">
                     <input type="text" class="form-control" name="mobile1" maxlength="10" [(ngModel)]="cust_details.mobile" required OnlyNumber="true"
                       #mobile1="ngModel" pattern="^[0-9]{10}$">
                     <label class="form-control-placeholder" for="mobile1">Mobile Number*</label>
@@ -211,9 +208,7 @@
                 </div>
               </div>
             </div>
-            <h6>
-              <span>Service Details</span>
-            </h6>
+              <span class="sectionHeader">Service Details</span>
             <div class="row">
               <div class="col-md-6 col-lg-6 col-sm-6">
                 <div class="form-group">
@@ -286,7 +281,7 @@
             </div> -->
               <div class="row">
                 <div class="col-md-6 col-lg-6 col-sm-6">
-                  <div *ngIf="yourBoolean === 'towing'">
+                  <div *ngIf="yourBoolean === 'towing'" class="CheckBox">
                     <label class="custom-control custom-checkbox">
                       <input type="checkbox" class="custom-control-input" name="svc" #svc (click)="some(svc.checked)">
                       <span class="custom-control-indicator"></span>
@@ -390,13 +385,13 @@
                 </div> -->
                 <div class="col-md-6 col-lg-6 col-sm-6">
                   <div class="form-group">
-                    <input type="text" id="notes" class="form-control" name="notes" [(ngModel)]="user.notes" placeholder="Notes" #notes="ngModel">
+                    <input type="text" id="notes" class="form-control" name="notes" [(ngModel)]="user.notes"  #notes="ngModel">
                     <label class="form-control-placeholder" for="notes">Notes</label>
                   </div>
                 </div>
                 <div class="col-md-6 col-lg-6 col-sm-6">
                   <div class="form-group">
-                    <input type="text" id="amt" class="form-control" name="amt" [(ngModel)]="user.amt" placeholder="Amount" #amt="ngModel">
+                    <input type="text" id="amt" class="form-control" name="amt" [(ngModel)]="user.amt"  #amt="ngModel">
                     <label class="form-control-placeholder" for="notes">Estimated Amount</label>
                   </div>
                 </div>
@@ -413,13 +408,13 @@
               <div class="row" *ngIf="yourBoolean != 'towing'">
                 <div class="col-md-6 col-lg-6 col-sm-6">
                   <div class="form-group">
-                    <input type="text" id="amt" class="form-control" name="amt" [(ngModel)]="user.amt" placeholder="Amount" #amt="ngModel">
+                    <input type="text" id="amt" class="form-control" name="amt" [(ngModel)]="user.amt" #amt="ngModel">
                     <label class="form-control-placeholder" for="notes">Estimated Amount</label>
                   </div>
                 </div>
                 <div class="col-md-6 col-lg-6 col-sm-6">
                   <div class="form-group">
-                    <input type="text" id="notes" class="form-control" name="notes" [(ngModel)]="user.notes" placeholder="Notes" #notes="ngModel">
+                    <input type="text" id="notes" class="form-control" name="notes" [(ngModel)]="user.notes" #notes="ngModel">
                     <label class="form-control-placeholder" for="notes">Notes</label>
                   </div>
                 </div>

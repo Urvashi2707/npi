@@ -34,12 +34,35 @@ export class PausedComponent implements OnInit {
   pastdate:string;
   globalsvcid:string;
   svcid:string;
+  value1:any;
+  value = [
+        {
+          "queueid": "347875",
+          "cust_name": "Sree Kumar",
+          "veh_number": "KA",
+          "type_service": "Pickup and Drop",
+          "queue_time": "2018-06-23 14:00:00",
+          "cre_name": "Mr.Rahul",
+          "pause_reason": null,
+          "paused_by": null
+        },
+        {
+          "queueid": "350526",
+          "cust_name": "Sree Kumar",
+          "veh_number": "KA01MH1312",
+          "type_service": "Pickup and Drop",
+          "queue_time": "2018-06-22 09:00:00",
+          "cre_name": "Ramdoss",
+          "pause_reason": "Personal Emergency",
+          "paused_by": "Ramdoss"
+        }
+      ];
+  
   constructor(private spinner: NgxSpinnerService,private datePipe:DatePipe,private ngbDateParserFormatter: NgbDateParserFormatter,private _detailsTable: QueueTableService, private _data: ListService, private _tableService: QueueTableService, private router: Router) { 
     this._tableService.clickedID.subscribe(value => {
       this.tableData = _tableService.table_data;
 
       console.log(this.tableData);
-
       this.keyValues = ['queueid', 'cust_name', 'veh_number', 'queue_time', 'cre_name', '(select description from 21N_queue_pause_reasons where id = (select reasonid from 21N_queue_pause_reasons_list where queueid = 21N_queue.id order by id desc limit 1))'];
 
     });
@@ -142,6 +165,18 @@ export class PausedComponent implements OnInit {
           this.dataperpage = res[0].pagecount[0].pagelimit;
           console.log(this.record_count);
           this.spinner.hide();
+          for (let j = 0; j < this.paused .length ; j++){
+            var queuetime = this.paused [j].queue_time;
+            var date = queuetime.replace( /\n/g, " " ).split( " " );
+            var newDate = this.datePipe.transform(date[0],"d,MMM,y");
+            var timeString = date[1];
+            var H = +timeString.substr(0, 2);
+            var h = (H % 12) || 12;
+            var ampm = H < 12 ? "AM" : "PM";
+            timeString = h + timeString.substr(2, 3) + ampm;
+            this.paused [j].newtime = timeString;
+            this.paused [j].newdate = newDate;
+            }
          }
       //   this.unconfirmed = res[1].unconfirmed;
       // console.log(this.unconfirmed);

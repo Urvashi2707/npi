@@ -151,6 +151,21 @@ export class ChauffeurComponent implements OnInit {
         this.dataperpage = res[0].pagecount[0].pagelimit;
         console.log(this.record_count);
         this.spinner.hide();
+        for (let j = 0; j < this.chauffeur .length ; j++){
+          if(this.chauffeur [j].start_time != null){
+            var queuetime = this.chauffeur [j].start_time;
+            var date = queuetime.replace( /\n/g, " " ).split( " " );
+            var newDate = this.datePipe.transform(date[0],"d MMM,y");
+            var timeString = date[1];
+            var H = +timeString.substr(0, 2);
+            var h = (H % 12) || 12;
+            var ampm = H < 12 ? "AM" : "PM";
+            timeString = h + timeString.substr(2, 3) + ampm;
+            this.chauffeur [j].newtime = timeString;
+            this.chauffeur [j].newdate = newDate;
+          }
+     
+         }
        }
     }
     });

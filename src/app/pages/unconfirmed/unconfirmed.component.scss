@@ -1,3 +1,7 @@
+$headerTopPadding : 3%;
+$mobileRowPadding:3%;
+$mobileQueueIDFont:13px;
+$mobileFont:13px;
 .search {
     float: right;
     margin-bottom: 5%;
@@ -26,4 +30,99 @@ td {
     }
 tbody tr:hover {
     background-color: lightyellow;
+}
+@media only screen and (max-width: 420px) {
+    .desktopView {
+        display: none;
+    }
+    .row{
+        padding-bottom: $mobileRowPadding;
+    }
+    .mobileView{
+        color:black;
+        font-size: $mobileFont
+    }
+    .card {
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+        transition: 0.3s;
+        width: 100%;
+        padding: 8px 10px 8px 10px;
+    }
+    
+    .card:hover {
+        box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    }
+    ul {
+        list-style-type: none;
+        padding: 0px;
+    }
+    li{
+        margin-bottom: 9%;
+    }
+    .QueueId{
+        font-weight: 900;
+        font-size: $mobileQueueIDFont;
+    }
+    .vehNumber{
+        float: right;
+        border: 1px solid black;
+        padding: 3px;
+        border-radius: 4px;
+       
+    }
+    .Ind{
+        font-size: 7px;
+        color:#58a3d9;
+    }
+    .payment{
+        float: right;
+    }
+    .paymentStatus{
+        float: right;
+    }
+    .QueueStatus{
+        color:rgb(155 ,155 ,155);
+        font-weight: 700;
+    }
+    .input-group{
+        max-height: 35px;
+        width: 100%;
+    }
+    .form-control{
+        font-size: 12px;
+    }
+    .input-group-append{
+        width: 20%;
+    }
+    .dateButton{ 
+        border-radius: 0px 5px 5px 0px;
+        font-size: 12px;
+        padding-top: 9px;
+    }
+    .apply{
+        padding: 5px;
+        font-size: 12px;
+    }
+    .applyCol{
+        padding-left: 12%;
+    }
+    .applyRow{
+        padding-bottom: 5%;
+    }
+    .header{
+        font-size: .9rem;
+        padding-left: 1%;
+        font-weight: 700;
+      }
+      .headerRow{
+        min-height: 25px;
+        padding-top: 3%;
+      }
+}
+
+@media only screen and (min-width: 1050px) {
+    .mobileView {
+        display: none;
+    }
+   
 }

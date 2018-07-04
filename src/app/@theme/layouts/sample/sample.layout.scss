@@ -10,6 +10,11 @@
     nb-layout-column.small {
         flex: 0.15 !important;
     }
+    @media only screen and (max-width: 420px) {
+        nb-layout-column{
+            background-color: white;
+        }
+    }
     nb-sidebar.settings-sidebar {
         $sidebar-width: 7.5rem;
         transition: width 0.3s ease;

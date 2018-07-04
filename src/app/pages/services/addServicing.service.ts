@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
-import {custinfo,Brands,IModelsList} from '../model/AddServicing';
 import {HttpClient,HttpHeaders} from '@angular/common/http';
-import {Observable} from 'rxjs/Observable';
-import { post } from 'selenium-webdriver/http';
+
 
 @Injectable()
 export class ServicingService {
@@ -10,8 +8,8 @@ export class ServicingService {
   constructor(private http: HttpClient) { }
 
   private getSession_url :string = 'https://plsuat.europassistance.in:444/getSession';
-  private check1_url:string = 'https://plsuat.europassistance.in:444/checkInitialEligibility';
-  private check2_url:string = 'https://plsuat.europassistance.in:444/checkFinalEligibility';
+  private Ea_check1_url:string = 'https://plsuat.europassistance.in:444/checkInitialEligibility';
+  private Ea_check2_url:string = 'https://plsuat.europassistance.in:444/checkFinalEligibility';
 
   public url:string='http://m.21north.in/notify/svcwebservice.php';
   public logout_url:string = 'http://m.21north.in/notify/logout.php';
@@ -29,7 +27,6 @@ export class ServicingService {
 
 public options = {
   headers: new HttpHeaders({'Content-Type':  'application/json'}),
-  // headers = headers.append('x-auth-token', '12345');
 }
 
 public opt={
@@ -42,14 +39,16 @@ public opt1={
   
 }
 
-public opt2={
-  headers: new HttpHeaders({'X-AUTH-TOKEN': 'erfwefwejrfhiwurhfgiuwerygiuwreyirug','X-AUTH-USER':'fvsfgsdfgsdg'})
-  
+session(){
+    return this.http.post(this.getSession_url,this.options)
 }
 
- 
-session(){
-  return this.http.post(this.getSession_url,this.options)
+ForgotPassword(reqpara){
+  return this.http.post(this.url,reqpara,this.options)
+}
+
+Login(reqpara){
+  return this.http.post(this.url,reqpara,this.httpOptions)
 }
 
 setter(Data){
@@ -64,10 +63,10 @@ getter(): string{
 
 
 Initialcheck(reqpara){
-  return this.http.post(this.check1_url,reqpara,this.opt1)
+  return this.http.post(this.Ea_check1_url,reqpara,this.opt1)
 }
 Finalcheck(reqpara){
-  return this.http.post(this.check2_url,reqpara,this.opt1 )
+  return this.http.post(this.Ea_check2_url,reqpara,this.opt1 )
 }
 
 destroySession(){
