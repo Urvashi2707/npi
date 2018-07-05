@@ -28,6 +28,8 @@ export class ManageComponent implements OnInit {
   public address2:string;
   public salutation:any;
   svcadmin:string;
+  InsuranceUsr:string;
+  InsuranceCheck:boolean = false;
   checksvcadmin :boolean;
   checkgrpadmin :boolean;
   groupadmin:string;
@@ -60,6 +62,7 @@ export class ManageComponent implements OnInit {
       { id: 3, type: 'Ms' },
     ];
     this.user.salutation = 'Mr';
+    this.InsuranceUsr = JSON.parse(sessionStorage.getItem('insurance'));
     this.svcadmin = JSON.parse(sessionStorage.getItem('svcadmin'));
     console.log(this.svcadmin);
     this.groupadmin = JSON.parse(sessionStorage.getItem('groupadmin'));
@@ -70,7 +73,12 @@ export class ManageComponent implements OnInit {
     else{
       this.checkgrpadmin = false;
     }
-   
+    if(this.InsuranceUsr == "1"){
+      this.InsuranceCheck = true;
+    }
+    else{
+      this.InsuranceCheck = false;
+     }
     this.getList();
     this.getCity();
   }

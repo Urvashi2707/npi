@@ -42,6 +42,8 @@ import 'style-loader!angular2-toaster/toaster.css';
       countrycode1:string;
       countrycode:string;
       svcadmin:string;
+      InsuranceUsr:string;
+      InsuranceCheck:boolean = false;
       checksvcadmin :boolean;
       checkgrpadmin :boolean;
       groupadmin:string;
@@ -56,6 +58,7 @@ import 'style-loader!angular2-toaster/toaster.css';
 
 
       ngOnInit() {
+        this.InsuranceUsr = JSON.parse(sessionStorage.getItem('insurance'));
         if(sessionStorage.getItem('selectedsvc')){
           // console.log(sessionStorage.getItem('selectedsvc'));
           this.svcid = sessionStorage.getItem('selectedsvc');
@@ -71,6 +74,12 @@ import 'style-loader!angular2-toaster/toaster.css';
         // this.getUserList();
 
         this.countrycode1="+91";
+        if(this.InsuranceUsr == "1"){
+          this.InsuranceCheck = true;
+        }
+       else{
+        this.InsuranceCheck = false;
+       }
         this.svcadmin = JSON.parse(sessionStorage.getItem('svcadmin'));
         console.log(this.svcadmin);
         this.groupadmin = JSON.parse(sessionStorage.getItem('groupadmin'));
