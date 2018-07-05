@@ -81,6 +81,7 @@ CloseAlert(){
                 sessionStorage.setItem('svcadmin',JSON.stringify(response[0].login[0].issvcadmin));
                 sessionStorage.setItem('groupadmin',JSON.stringify(response[0].login[0].isgroupadminvar));
                 sessionStorage.setItem('brandid',response[0].login[0].brand_id);
+                sessionStorage.setItem('insurance',JSON.stringify(response[0].login[0].is_insurance))
                 console.log(response[0].login[0].first_name);
                 sessionStorage.setItem('username',(response[0].login[0].first_name));
                 sessionStorage.setItem('User',value.mobile);

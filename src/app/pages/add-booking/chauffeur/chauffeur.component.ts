@@ -210,7 +210,7 @@ export class ChauffeurComponent implements OnInit {
   //Slot breakup
   buildArr(theArr: any[]){
    var arrOfarr = [];
-   for(var i = 0; i < theArr.length ; i+=4) {
+   for(var i = 0; i < theArr.length ; i+=6) {
        var row = [];
        for(var x = 0; x < 6; x++) {
          var value = theArr[i + x];
@@ -708,12 +708,23 @@ export class ChauffeurComponent implements OnInit {
       this.pickupstreet = f.value.pickupstreet;
       this.pickuparea = f.value.pickuparea;
       this.pickuplandmark = f.value.pickuplandmark;
-      this.pickuppincode = f.value.pickuppincode;
+      if(f.value.pickuppincode){
+        this.pickuppincode = f.value.pickuppincode;
+      }
+      else{
+        this.pickuppincode = "0";
+      }
+      
       this.dropofffdoor = f.value.pickupdoor;
       this.dropoffstreet = f.value.pickupstreet;
       this.dropoffarea = f.value.pickuparea;
       this.dropofflandmark = f.value.pickuplandmark;
-      this.dropoffpincode = f.value.pickuppincode;
+      if(f.value.pickuppincode){
+        this.dropoffpincode = f.value.pickuppincode;
+      }
+      else{
+        this.dropoffpincode = "0";
+      }
       this.addressdoprevious = "0";
       this.addresspuprevious = "0";
       this.addresstype_do="0";
@@ -731,12 +742,22 @@ export class ChauffeurComponent implements OnInit {
       this.pickupstreet = f.value.pickupstreet;
       this.pickuparea = f.value.pickuparea;
       this.pickuplandmark = f.value.pickuplandmark;
-      this.pickuppincode = f.value.pickuppincode;
+      if(f.value.pickuppincode){
+        this.pickuppincode = f.value.pickuppincode;
+      }
+      else{
+        this.pickuppincode = "0";
+      }
       this.dropofffdoor = f.value.dropofffdoor;
       this.dropoffstreet = f.value.dropoffstreet;
       this.dropoffarea = f.value.dropoffarea;
       this.dropofflandmark = f.value.dropofflandmark;
-      this.dropoffpincode = f.value.dropoffpincode;
+      if(f.value.dropoffpincode){
+        this.dropoffpincode = f.value.dropoffpincode;
+      }
+      else{
+        this.dropoffpincode = "0";
+      }
       this.addressdoprevious = "0";
       this.addresspuprevious = "0";
       this.addresstype_do="0";

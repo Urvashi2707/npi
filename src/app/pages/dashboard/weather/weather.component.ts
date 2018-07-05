@@ -64,15 +64,16 @@ export class WeatherComponent implements OnInit{
              this.router.navigate(['/auth/login']);
            }
            else{
-             this.cards=res[0].cards[0],
-             console.log(this.cards);
-             console.log(this.cards.queue_average);
+            if(res[0].cards[0] > 0){
+              this.cards=res[0].cards[0];
+             
+           }
+           else {
+            console.log('No card details');
+           }
              this.pickup=res[1].pickup_details,
-             console.log(this.pickup);
              this.dropoff=res[2].drop_details,
-             console.log(this.dropoff)
              this.notification=res[3].notification[0];
-             console.log(this.notification);
            }
           
          }

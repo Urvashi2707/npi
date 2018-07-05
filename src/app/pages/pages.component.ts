@@ -1,6 +1,6 @@
 import { Component,OnInit } from '@angular/core';
 
-import { MENU_ITEMSADM,MENU_ITEMSUSR } from './pages-menu';
+import { MENU_ITEMSADM,MENU_ITEMSUSR ,MENU_INSURANCESUSR} from './pages-menu';
 
 @Component({
   selector: 'ngx-pages',
@@ -16,22 +16,21 @@ export class PagesComponent {
   public permission
   menu:any;
   ngOnInit(){
-    var grpadmin = JSON.parse(sessionStorage.getItem('groupadmin'));
-console.log(grpadmin);
-var svcadmin = JSON.parse(sessionStorage.getItem('svcadmin'));
-console.log(svcadmin);
-if(grpadmin == "1" || svcadmin == "1"){
- this.permission = false;
- console.log(this.permission);
- this.menu = MENU_ITEMSADM;
+    var GrpAdmin = JSON.parse(sessionStorage.getItem('groupadmin'));
+    var SvcAdmin = JSON.parse(sessionStorage.getItem('svcadmin'));
+    var InsuAdmin = JSON.parse(sessionStorage.getItem('insurance'));
+    console.log(InsuAdmin);
+    if(GrpAdmin == "1" || SvcAdmin == "1"){
+      // this.permission = false;
+      this.menu = MENU_ITEMSADM;
 }
-
+else if (InsuAdmin == "1"){
+  this.menu = MENU_INSURANCESUSR;
+}
 else {
-  this.permission = true;
-  console.log(this.permission);
+  // this.permission = true;
   this.menu = MENU_ITEMSUSR;
-}
-console.log(this.permission)
+  }
   }
 
   // menu = MENU_ITEMS;

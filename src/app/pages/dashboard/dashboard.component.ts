@@ -203,10 +203,10 @@ results1 = [
              
              if(res[0].cards[0] > 0){
                 this.cards=res[0].cards[0];
-                console.log('No card details');
+               
              }
              else {
-               console.log('calm down');
+              console.log('No card details');
              }
              if(this.cards.cust_rating == null){
               this.rating = 0;

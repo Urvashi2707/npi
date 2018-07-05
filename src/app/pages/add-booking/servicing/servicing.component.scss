@@ -217,6 +217,9 @@ input:checked + .slider:before {
   padding-left: 2%;
   margin-bottom: 0px;
 }
+.timeRow{
+  height: 37px;
+ }
 .mobile1{
   display:inline-block;
   min-width:58%;
@@ -406,5 +409,32 @@ fieldset {
 .addNumber{
   display:inline-block; 
   margin:3%;
+}
+.timeAnchor{
+  padding:6px !important;
+  border: 1px solid #ececec;
+  border-radius: 5px;
+  font-size: 8px;
+ }
+ .timeRow a:hover{
+  background-color:#dadde6;
+ }
+ .timeRow a:visited{
+  background-color:#ffcc00;
+  
+ }
+ .timeRow a:active{
+  background-color:green;
+ }
+
+ table{
+   min-height: 70px;
+   width: 100%;
+   margin-bottom: 10px;
+ }
+ .table td {
+  padding: 6px !important; 
+  vertical-align: top;
+  border-top: 1px solid #e9ecef;
 }
  }

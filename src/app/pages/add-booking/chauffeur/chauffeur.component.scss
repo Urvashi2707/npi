@@ -211,6 +211,14 @@ select:focus:invalid {
   width: 87%;
   display: inline-block;
 }
+.AddSalesBtn{
+  display: inline-block;
+  margin: 3px;
+}
+.salesExeBtn{
+  display:inline-block;
+  margin: 3px;
+}
 @media only screen and (max-width: 420px) {
   .form-group{
     margin-bottom: 1rem;   
@@ -342,6 +350,10 @@ fieldset {
 .line{
   padding-bottom: .5rem;
 }
+.AddSalesBtn{
+  display: inline-block;
+  margin: 0px;
+}
 .cssselect select{
   font-size: 10px;
   padding: 0px;
@@ -415,6 +427,32 @@ input::placeholder {
 }
 .salesExeBtn{
   display:inline-block;
-  margin:3%;
+}
+.timeAnchor{
+  padding:6px !important;
+  border: 1px solid #ececec;
+  border-radius: 5px;
+  font-size: 8px;
+ }
+ .timeRow a:hover{
+  background-color:#dadde6;
+ }
+ .timeRow a:visited{
+  background-color:#ffcc00;
+  
+ }
+ .timeRow a:active{
+  background-color:green;
+ }
+
+ table{
+   min-height: 70px;
+   width: 100%;
+   margin-bottom: 10px;
+ }
+ .table td {
+  padding: 6px !important; 
+  vertical-align: top;
+  border-top: 1px solid #e9ecef;
 }
  }
