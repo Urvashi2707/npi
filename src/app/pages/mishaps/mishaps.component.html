@@ -81,17 +81,23 @@
               <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i>
             </span>
           </th>
+          <th *ngIf="InsuranceCheck" (click)="sort('svc_name')">SVC Name
+            <span class="sort-span">
+              <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i>
+            </span>
+          </th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let i of mishap | filter:term | orderBy: key : reverse | paginate: { id: 'server', itemsPerPage:dataperpage, currentPage: p + 1, totalItems: record_count }; let j = index"
           (click)="openQDetails(i)">
-          <th>{{i.queueid}}</th>
-          <th>{{i.date_of_mishap}}</th>
-          <th>{{i.cust_name}}</th>
-          <th>{{i.veh_number}}</th>
-          <th>{{i.amount}}</th>
-          <th>{{i.mishap_status}}</th>
+          <td>{{i.queueid}}</td>
+          <td>{{i.date_of_mishap}}</td>
+          <td>{{i.cust_name}}</td>
+          <td>{{i.veh_number}}</td>
+          <td>{{i.amount}}</td>
+          <td>{{i.mishap_status}}</td>
+          <td *ngIf="InsuranceCheck">{{i.svc_name}}</td>
         </tr>
       </tbody>
     </table>
@@ -158,16 +164,16 @@
       <button type="button" class="btn btn-primary apply" (click)="FilterCheck(1)">Apply</button>
     </div>
   </div>
-  <!-- <div class="row">
-      <div class="col-sm-12 col-12">
-        <input type="text" class="search" [(ngModel)]="term" placeholder="search">
-      </div>
-    </div> -->
   <div class="row">
     <div class="col-12 col-sm-12">
       <ul>
         <li *ngFor="let i of mishap | filter:term " (click)="openQDetails(i)">
           <div class="card">
+            <div class="row padding" *ngIf="InsuranceCheck">
+              <div class="col-12 col-sm-12">
+                  <span class="QueueId">{{i.svc_name}}</span>
+              </div>
+            </div>
             <div class="row padding">
               <div class="col-12 col-sm-12">
                 <span class="QueueId">ID &nbsp;:&nbsp; {{i.queueid}}</span>

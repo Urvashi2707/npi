@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NbMenuService } from '@nebular/theme';
-import {NgbDateAdapter, NgbDateStruct, NgbDatepickerConfig, NgbDateParserFormatter} from '@ng-bootstrap/ng-bootstrap';
-import { Subject } from 'rxjs';
+import { NgbDateStruct,NgbDateParserFormatter} from '@ng-bootstrap/ng-bootstrap';
 import { QueueTableService } from '../../services/queue-table.service';
 import { ListService } from '../../services/user.service';
 import { Router } from '@angular/router';
@@ -31,7 +29,8 @@ export class PickupComponent implements OnInit {
   message:string;
   globalsvcid:string;
   svcid:string;
-
+  InsuranceUsr:string;
+  InsuranceCheck:boolean = false;
   key: string = 'id'; 
   reverse: boolean = false;
 
@@ -66,6 +65,7 @@ export class PickupComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.InsuranceUsr = JSON.parse(sessionStorage.getItem('insurance'));
     if(sessionStorage.getItem('selectedsvc')){
       // console.log(sessionStorage.getItem('selectedsvc'));
       this.svcid = sessionStorage.getItem('selectedsvc');
@@ -78,6 +78,12 @@ export class PickupComponent implements OnInit {
     this.globalsvcid = JSON.parse(sessionStorage.getItem('globalsvcid'));
     console.log(this.globalsvcid);
     this.FilterCheck(1);
+    if(this.InsuranceUsr == "1"){
+      this.InsuranceCheck = true;
+    }
+    else{
+      this.InsuranceCheck = false;
+     }
   
   }
   sort(key){

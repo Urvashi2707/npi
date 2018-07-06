@@ -114,8 +114,8 @@
                             aria-hidden="true"></i>
                         </span>
                       </th>
-                      <th *ngIf="checkgrpadmin || checksvcadmin">Delete</th>
-                      <th *ngIf="checkgrpadmin || checksvcadmin">Edit</th>
+                      <th *ngIf="checkgrpadmin || checksvcadmin || InsuranceCheck">Delete</th>
+                      <th *ngIf="checkgrpadmin || checksvcadmin || InsuranceCheck">Edit</th>
                     </thead>
                     <tbody>
                       <tr *ngFor="let e of userList | orderBy: key : reverse | filter : searchText;let i = index; ">
@@ -124,12 +124,12 @@
                         <td>{{e.email}}</td>
                         <td>{{e.designation}}</td>
                         <td>
-                          <button (click)="delete(e,i)" style="background-color: white;border-color: orange;" *ngIf="checkgrpadmin || checksvcadmin">
+                          <button (click)="delete(e,i)" style="background-color: white;border-color: orange;" *ngIf="checkgrpadmin || checksvcadmin || InsuranceCheck">
                             <i class="fa fa-trash" style="color:#ffa100" aria-hidden="true"></i>
                           </button>
                         </td>
                         <td>
-                          <button (click)="showLargeModal(e)" style="background-color: white;border-color: orange;" *ngIf="checkgrpadmin || checksvcadmin">
+                          <button (click)="showLargeModal(e)" style="background-color: white;border-color: orange;" *ngIf="checkgrpadmin || checksvcadmin || InsuranceCheck">
                             <i class="fa fa-pencil" style="color:#ffa100" aria-hidden="true"></i>
                           </button>
                         </td>

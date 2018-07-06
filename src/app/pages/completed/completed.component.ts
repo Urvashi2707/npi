@@ -46,6 +46,8 @@ export class CompletedComponent implements OnInit {
   pastdate: string;
   globalsvcid:string;
   svcid:string;
+  InsuranceUsr:string;
+  InsuranceCheck:boolean = false;
   constructor(private toasterService: ToasterService,private spinner: NgxSpinnerService,private datePipe: DatePipe, private ngbDateParserFormatter: NgbDateParserFormatter, private _detailsTable: QueueTableService, private _data: ListService, private _tableService: QueueTableService, private router: Router) {
     this._tableService.clickedID.subscribe(value => {
       this.tableData = _tableService.table_data;
@@ -68,6 +70,7 @@ export class CompletedComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.InsuranceUsr = JSON.parse(sessionStorage.getItem('insurance'));
     if(sessionStorage.getItem('selectedsvc')){
       this.svcid = sessionStorage.getItem('selectedsvc');
     }
@@ -75,7 +78,12 @@ export class CompletedComponent implements OnInit {
       this.svcid = JSON.parse(sessionStorage.getItem('globalsvcid'));
     }
     this.globalsvcid = JSON.parse(sessionStorage.getItem('globalsvcid'));
-    console.log(this.globalsvcid);
+    if(this.InsuranceUsr == "1"){
+      this.InsuranceCheck = true;
+    }
+    else{
+      this.InsuranceCheck = false;
+     }
     this.FilterCheck(1);
   }
 

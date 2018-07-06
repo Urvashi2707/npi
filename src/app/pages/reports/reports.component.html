@@ -101,6 +101,11 @@
                     aria-hidden="true"></i>
                 </span>
               </th>
+              <th *ngIf="InsuranceCheck" (click)="sort('svc_name')">SVC Name
+                  <span class="sort-span">
+                    <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i>
+                  </span>
+                </th>
             </thead>
             <tbody>
               <tr *ngFor="let r of report | orderBy: key : reverse;" (click)="openQDetails(r)">
@@ -111,20 +116,14 @@
                 <td>{{r.veh_number}}</td>
                 <td>{{r.type_service}}</td>
                 <td>{{r.queue_status}}</td>
+                <td *ngIf="InsuranceCheck">{{i.svc_name}}</td>
               </tr>
               <tr *ngIf="report.length == 0">{{message}}</tr>
             </tbody>
           </table>
           <ngx-spinner bdColor="rgba(51,51,51,0.09)" size="large" color="#ea5810" type="ball-clip-rotate-pulse"></ngx-spinner>
-          <!-- <div class="paginate">
-                        <pagination-controls (pageChange)="getData($event)" id="server"></pagination-controls>
-                    </div> -->
         </div>
-
       </nb-card-body>
-      <nb-card-footer>
-
-      </nb-card-footer>
     </nb-card>
   </div>
 </div>
@@ -206,6 +205,11 @@
     <ul>
       <li *ngFor="let r of report |filter:term" (click)="openQDetails(r)">
         <div class="card">
+            <div class="row padding" *ngIf="InsuranceCheck">
+                <div class="col-12 col-sm-12">
+                    <span class="QueueId">{{i.svc_name}}</span>
+                </div>
+              </div>
           <div class="row">
             <div class="col-12 col-sm-12">
               <span class="QueueId">ID &nbsp;:&nbsp; {{r.id}}</span>

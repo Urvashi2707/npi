@@ -24,6 +24,8 @@ export class ReportsComponent implements OnInit {
   dateString1: string;
   message: string;
   user: any = {};
+  InsuranceUsr:string;
+  InsuranceCheck:boolean = false;
   mydate: string;
   pastdate:string;
   today:string;
@@ -36,6 +38,7 @@ export class ReportsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.InsuranceUsr = JSON.parse(sessionStorage.getItem('insurance'));
     var date = new Date();
     this.model = {day:date.getUTCDate(),month:date.getUTCMonth() + 1,year: date.getUTCFullYear() };
     this.dateString = this.model.year + '-' + this.model.month + '-' + this.model.day;
@@ -59,6 +62,12 @@ export class ReportsComponent implements OnInit {
       this.svcid = JSON.parse(sessionStorage.getItem('globalsvcid'));
       // console.log(this.svcid);
     }
+    if(this.InsuranceUsr == "1"){
+      this.InsuranceCheck = true;
+    }
+    else{
+      this.InsuranceCheck = false;
+     }
     this.service_type = [
       { id: "0", type: 'Servicing Pickup and Dropoff' },
       { id: "1", type: 'Servicing only Dropoff' },

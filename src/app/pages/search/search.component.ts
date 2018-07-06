@@ -35,11 +35,13 @@ export class SearchComponent implements OnInit {
   public globalsvcid:string;
   public selectedsvcid:string;
   svcid:string;
-
+  InsuranceUsr:string;
+  InsuranceCheck:boolean = false;
   key: string = 'id'; 
   reverse: boolean = false;
 
   ngOnInit() {
+    this.InsuranceUsr = JSON.parse(sessionStorage.getItem('insurance'));
     if(sessionStorage.getItem('selectedsvc')){
       // console.log(sessionStorage.getItem('selectedsvc'));
       this.svcid = sessionStorage.getItem('selectedsvc');
@@ -51,6 +53,12 @@ export class SearchComponent implements OnInit {
     }
     this.globalsvcid = JSON.parse(sessionStorage.getItem('globalsvcid'));
     console.log(this.globalsvcid);
+    if(this.InsuranceUsr == "1"){
+      this.InsuranceCheck = true;
+    }
+    else{
+      this.InsuranceCheck = false;
+     }
     // this.vehnumber = "";
     this.getData();
   }

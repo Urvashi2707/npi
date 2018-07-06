@@ -32,6 +32,8 @@ export class DropOffComponent implements OnInit {
   model1: NgbDateStruct;
   pastdate:string;
   message:string;
+  InsuranceUsr:string;
+  InsuranceCheck:boolean = false;
   globalsvcid:string;
   svcid:string;
   constructor(private spinner: NgxSpinnerService,private datePipe:DatePipe,private ngbDateParserFormatter: NgbDateParserFormatter,private _detailsTable: QueueTableService, private _data: ListService, private _tableService: QueueTableService, private router: Router) { 
@@ -57,6 +59,7 @@ export class DropOffComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.InsuranceUsr = JSON.parse(sessionStorage.getItem('insurance'));
     if(sessionStorage.getItem('selectedsvc')){
       // console.log(sessionStorage.getItem('selectedsvc'));
       this.svcid = sessionStorage.getItem('selectedsvc');
@@ -68,6 +71,12 @@ export class DropOffComponent implements OnInit {
     }
     this.globalsvcid = JSON.parse(sessionStorage.getItem('globalsvcid'));
     console.log(this.globalsvcid);
+    if(this.InsuranceUsr == "1"){
+      this.InsuranceCheck = true;
+    }
+    else{
+      this.InsuranceCheck = false;
+     }
     this.FilterCheck(1);
   }
   onSelectDate(date: NgbDateStruct){

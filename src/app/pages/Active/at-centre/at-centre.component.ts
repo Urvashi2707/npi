@@ -32,6 +32,8 @@ export class AtCentreComponent implements OnInit {
   pastdate:string;
   globalsvcid:string;
   message:string;
+  InsuranceUsr:string;
+  InsuranceCheck:boolean = false;
   svcid:string;
   advisorName:string;
   key: string = 'queueid'; 
@@ -61,6 +63,7 @@ export class AtCentreComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.InsuranceUsr = JSON.parse(sessionStorage.getItem('insurance'));
     if(sessionStorage.getItem('selectedsvc')){
       // console.log(sessionStorage.getItem('selectedsvc'));
       this.svcid = sessionStorage.getItem('selectedsvc');
@@ -72,6 +75,12 @@ export class AtCentreComponent implements OnInit {
     }
     this.globalsvcid = JSON.parse(sessionStorage.getItem('globalsvcid'));
     console.log(this.globalsvcid);
+    if(this.InsuranceUsr == "1"){
+      this.InsuranceCheck = true;
+    }
+    else{
+      this.InsuranceCheck = false;
+     }
     this.FilterCheck(1);
   }
   datatopass:any;

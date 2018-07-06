@@ -90,6 +90,11 @@
                       aria-hidden="true"></i>
                   </span>
                 </th>
+                <th *ngIf="InsuranceCheck" (click)="sort('svc_name')">SVC Name
+                    <span class="sort-span">
+                      <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i>
+                    </span>
+                  </th>
                 <th>Confirm</th>
               </tr>
               <tr *ngFor="let u of unconfirmed | filter:term | paginate: { id: 'server', itemsPerPage:dataperpage, currentPage: p + 1, totalItems: record_count };">
@@ -99,6 +104,7 @@
                 <td>{{u.type_service}}</td>
                 <td>{{u.queue_date}} - {{u.queue_time}}</td>
                 <td>{{u.queue_state}}</td>
+                <td *ngIf="InsuranceCheck">{{i.svc_name}}</td>
                 <td>
                   <button (click)="showModal(u)" class="btn btn-warning">Confirm</button>
                 </td>
@@ -173,6 +179,11 @@
       <ul>
         <li *ngFor="let u of unconfirmed | filter:term">
           <div class="card">
+              <div class="row padding" *ngIf="InsuranceCheck">
+                  <div class="col-12 col-sm-12">
+                      <span class="QueueId">{{u.svc_name}}</span>
+                  </div>
+                </div>
             <div class="row">
               <div class="col-12 col-sm-12">
                 <span class="QueueId">ID &nbsp;:&nbsp;{{u.queueid}}</span>

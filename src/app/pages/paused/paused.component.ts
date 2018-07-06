@@ -23,6 +23,8 @@ export class PausedComponent implements OnInit {
   record_count:string;
   dataperpage:string;
   p:number;
+  InsuranceUsr:string;
+  InsuranceCheck:boolean = false;
   public paused : any =[];
   message:string;
   key: string = 'queueid'; 
@@ -82,6 +84,7 @@ export class PausedComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.InsuranceUsr = JSON.parse(sessionStorage.getItem('insurance'));
     if(sessionStorage.getItem('selectedsvc')){
       // console.log(sessionStorage.getItem('selectedsvc'));
       this.svcid = sessionStorage.getItem('selectedsvc');
@@ -91,6 +94,12 @@ export class PausedComponent implements OnInit {
       this.svcid = JSON.parse(sessionStorage.getItem('globalsvcid'));
       // console.log(this.svcid);
     }
+    if(this.InsuranceUsr == "1"){
+      this.InsuranceCheck = true;
+    }
+    else{
+      this.InsuranceCheck = false;
+     }
     this.globalsvcid = JSON.parse(sessionStorage.getItem('globalsvcid'));
     console.log(this.globalsvcid);
     this.FilterCheck(1);

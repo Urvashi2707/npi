@@ -28,6 +28,8 @@ export class MishapsComponent implements OnInit {
   dateString1: string;
   model: NgbDateStruct;
   model1: NgbDateStruct;
+  InsuranceUsr:string;
+  InsuranceCheck:boolean = false;
   pastdate:string;
   message:string;
   globalsvcid:string;
@@ -52,6 +54,7 @@ export class MishapsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.InsuranceUsr = JSON.parse(sessionStorage.getItem('insurance'));
     if(sessionStorage.getItem('selectedsvc')){
       this.svcid = sessionStorage.getItem('selectedsvc');
     }
@@ -61,7 +64,12 @@ export class MishapsComponent implements OnInit {
     this.globalsvcid = JSON.parse(sessionStorage.getItem('globalsvcid'));
     console.log(this.globalsvcid);
     this.FilterCheck(1);
-
+    if(this.InsuranceUsr == "1"){
+      this.InsuranceCheck = true;
+    }
+    else{
+      this.InsuranceCheck = false;
+     }
   }
   sort(key){
     this.key = key;

@@ -39,7 +39,8 @@ export class NotcheckedinComponent implements OnInit {
   key: string = 'queueid'; 
   dataForUpload: any;
   today:string;
-
+  InsuranceUsr:string;
+  InsuranceCheck:boolean = false;
   constructor(private datePipe:DatePipe,
     private spinner: NgxSpinnerService,
     private ngbDateParserFormatter: NgbDateParserFormatter,
@@ -66,6 +67,7 @@ export class NotcheckedinComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.InsuranceUsr = JSON.parse(sessionStorage.getItem('insurance'));
     if(sessionStorage.getItem('selectedsvc')){
       
       this.svcid = sessionStorage.getItem('selectedsvc');
@@ -82,6 +84,12 @@ export class NotcheckedinComponent implements OnInit {
     var days = date.setDate(date.getDate() - numberOfDays);
     this.pastdate = this.datePipe.transform(days,"yyyy-MM-dd");
     console.log(this.pastdate);
+    if(this.InsuranceUsr == "1"){
+      this.InsuranceCheck = true;
+    }
+    else{
+      this.InsuranceCheck = false;
+     }
     this.getData(1);
   }
 

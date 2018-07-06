@@ -83,6 +83,11 @@
               <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i>
             </span>
           </th>
+          <th *ngIf="InsuranceCheck" (click)="sort('svc_name')">SVC Name
+              <span class="sort-span">
+                <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i>
+              </span>
+            </th>
         </tr>
       </thead>
       <tbody>
@@ -95,6 +100,7 @@
           <td>{{i.cre_name}}</td>
           <td>{{i.pause_reason}}</td>
           <td>{{i.paused_by}}</td>
+          <td *ngIf="InsuranceCheck">{{i.svc_name}}</td>
         </tr>
       </tbody>
     </table>
@@ -167,6 +173,11 @@
       <ul>
         <li *ngFor="let i of cancelled |  filter:term " (click)="openQDetails(i)">
           <div class="card">
+              <div class="row padding" *ngIf="InsuranceCheck">
+                  <div class="col-12 col-sm-12">
+                      <span class="QueueId">{{i.svc_name}}</span>
+                  </div>
+                </div>
             <div class="row padding">
               <div class="col-12 col-sm-12">
                 <span class="QueueId">ID &nbsp;:&nbsp; {{i.queueid}}</span>
