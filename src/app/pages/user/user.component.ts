@@ -1,11 +1,11 @@
 import { Component, OnInit, Input, EventEmitter, OnDestroy, HostListener } from '@angular/core';
 import {User} from '../model/user';
-import {ListService } from '../services/user.service';
+import {ServerService } from '../services/user.service';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ViewChild } from '@angular/core';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import {NgForm} from '@angular/forms';
-import { ModalComponent } from './modal/modal.component';
+import { EditUserComponent } from './modal/EditUser.component';
 import { SuccessComponent } from './success/success.component';
 import { NgClass } from '@angular/common';
 import { TitleCasePipe } from '@angular/common';
@@ -53,7 +53,7 @@ import 'style-loader!angular2-toaster/toaster.css';
 
       constructor(private toasterService: ToasterService,
                     private modalService: NgbModal,
-                    private _data:ListService,
+                    private _data:ServerService,
                     private titlecasePipe:TitleCasePipe) {}
 
 
@@ -135,7 +135,7 @@ import 'style-loader!angular2-toaster/toaster.css';
       closeResult: string;
 
       showLargeModal(res:any) {
-        const activeModal = this.modalService.open(ModalComponent, { size: 'lg', container: 'nb-layout' });
+        const activeModal = this.modalService.open(EditUserComponent, { size: 'lg', container: 'nb-layout' });
         activeModal.componentInstance.modalHeader = 'Edit Users';
         activeModal.componentInstance.modalContent = res;
       }
@@ -292,7 +292,7 @@ import 'style-loader!angular2-toaster/toaster.css';
         };
         console.log(JSON.stringify(reqpara1));
         const ua1 = JSON.stringify(reqpara1);
-        this._data.updateUser(ua1).subscribe(data => {
+        this._data.webServiceCall(ua1).subscribe(data => {
           console.log(data);
           this.userDisable = [];
           this.userList = [];
@@ -310,7 +310,7 @@ import 'style-loader!angular2-toaster/toaster.css';
           servicecentreid:this.svcid,
         }
           const as1 = JSON.stringify(reqpara1);
-             this._data.getUserType(as1).subscribe
+             this._data.webServiceCall(as1).subscribe
         (res => 
           {
             for(var i = 0; i < res[0].userlist.length; i++ ){

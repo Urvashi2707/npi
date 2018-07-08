@@ -10,7 +10,7 @@
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <img src="/assets/images/logo.png">
 
-        <span style="float: right">{{svcname}}</span>
+        <span style="float: right">{{SvcName}}</span>
     </div>
 </div>
 
@@ -23,8 +23,8 @@
 
     This Agreement made on
 
-    <strong>{{today}}</strong> (“Effective Date”) at Bengaluru between:
-    <strong>{{today}}</strong> (“Effective Date”) at {{cityname}} between:
+    <strong>{{TodayDate}}</strong> (“Effective Date”) at Bengaluru between:
+    <strong>{{TodayDate}}</strong> (“Effective Date”) at {{CityName}} between:
 
 
     <br>
@@ -42,7 +42,7 @@
     </p>
 
     <p>
-        <strong>{{svcname}}</strong> , a company incorporated under the Companies Act, [1956/2013] and having its registered office at 16, Outer Ring Road, Sarjapura, Bellandur, Bangalore - 560103 (hereafter referred to as
+        <strong>{{SvcName}}</strong> , a company incorporated under the Companies Act, [1956/2013] and having its registered office at 16, Outer Ring Road, Sarjapura, Bellandur, Bangalore - 560103 (hereafter referred to as
 
         <strong>“Network Partner”</strong> which expression shall, unless repugnant to the context or meaning hereof is deemed to mean and include successor entities).
     </p>
@@ -600,7 +600,7 @@
       class="custom-control-input"
       name="agree"
       #agree
-      (click)="agreeChk(agree.checked)"/>
+      (click)="AgreeTermsCheck(agree.checked)"/>
 
     <span class="custom-control-indicator"></span>
 
@@ -611,5 +611,5 @@
 </div>
 
 <div class="modal-footer">
-    <button class="btn btn-md btn-primary" (click)="accept()" [disabled]="acceptBtn">Accept</button>
+    <button class="btn btn-md btn-primary" (click)="AcceptTerms()" [disabled]="AcceptBtn">Accept</button>
 </div>

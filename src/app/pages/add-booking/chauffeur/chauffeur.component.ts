@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {ChauffeurService } from '../../services/chauffeur.service';
+import {ServerService } from '../../services/user.service';
 import { TitleCasePipe } from '@angular/common';
 import {HttpErrorResponse}from '@angular/common/http';
 import {NgForm} from '@angular/forms';
@@ -111,7 +111,7 @@ export class ChauffeurComponent implements OnInit {
   valuedate = new Date();
   countrycode1:string;
   
-  constructor(private datePipe:DatePipe,private titlecasePipe:TitleCasePipe,private toasterService: ToasterService,private _data : ChauffeurService,private router: Router,private ngbDateParserFormatter: NgbDateParserFormatter,private modalService: NgbModal) { }
+  constructor(private datePipe:DatePipe,private titlecasePipe:TitleCasePipe,private toasterService: ToasterService,private _data : ServerService,private router: Router,private ngbDateParserFormatter: NgbDateParserFormatter,private modalService: NgbModal) { }
 
   ngOnInit() {
     if(sessionStorage.getItem('selectedsvc')){
@@ -662,7 +662,7 @@ export class ChauffeurComponent implements OnInit {
     this.disabled =  true;
     console.log(f.value.city);
     console.log(this.serviceType);
-    console.log(f.value.servicetype);
+    console.log(f.value.num);
     if(f.value.city){
       this.cityid = f.value.city;
     }
@@ -672,7 +672,6 @@ export class ChauffeurComponent implements OnInit {
     if(this.user.time){
       this.slot_time = this.user.time + ':00'
     }
-    this.registrationNumber = f.value.num.toUpperCase();
     if(f.value.pickloc){
       this.pickup_add = f.value.pickloc;
       if(f.value.picklatlong){
@@ -890,7 +889,7 @@ export class ChauffeurComponent implements OnInit {
     if(this.slot_time != "0" || this.pickup_drop == 15 ){
   const reqpara6 = {
     requesttype: "createbookingv3",
-    vehnumber: this.registrationNumber,
+    vehnumber:f.value.num,
     city: this.cityid,
     vehbrand:this.selectedBrand,
     carmodelid: f.value.model,

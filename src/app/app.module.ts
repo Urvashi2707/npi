@@ -9,7 +9,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
 import { CoreModule } from './@core/core.module';
-import {ListService } from './pages/services/user.service';
+import {ServerService } from './pages/services/user.service';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { ThemeModule } from './@theme/theme.module';
@@ -20,7 +20,6 @@ import {LoginComponent} from './pages/auth/login/login.component';
 import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown/angular2-multiselect-dropdown';
 import { CookieService } from 'ngx-cookie-service';
 import {RatingModule} from "ngx-rating";
-
 import { FilterPipe} from './pages/filter.pipe';
 import { Ng2OrderModule } from 'ng2-order-pipe'; 
 // import {columnPipe,rowPipe,searchPipe} from './pages/pipe.pipe'
@@ -110,7 +109,7 @@ import { Ng2OrderModule } from 'ng2-order-pipe';
   ],
   bootstrap: [AppComponent],
   providers: [
-    { provide: APP_BASE_HREF, useValue: '/' },ListService,CookieService
+    { provide: APP_BASE_HREF, useValue: '/' },ServerService,CookieService
   ],
 })
 export class AppModule {

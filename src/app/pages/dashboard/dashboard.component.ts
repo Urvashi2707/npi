@@ -6,7 +6,7 @@ import { NbThemeService } from '@nebular/theme';
 import { NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import { OptionComponent } from './option/option.component';
 import { LegalComponent } from './legal/legal.component';
-import {HttpClient} from '@angular/common/http';
+
 @Component({
   selector: 'ngx-dashboard',
   styleUrls: ['./dashboard.component.scss'],
@@ -14,132 +14,95 @@ import {HttpClient} from '@angular/common/http';
 })
 export class DashboardComponent implements OnInit{
 
-  public cards :any=[];
-  public pickup : any=[];
-  public dropoff:any=[];
-  public notification :any=[];
-  public svcname:string;
-  public accname:string;
-  public accnumber:string;
-  public globalsvcid:string;
-  public selectedsvcid:string;
-  single: any[];
-  public multi:any = [];
-  public multi1:any = [];
-  public multi2:any = [];
-  svcid:string;
-  view: any[] = [700, 400];
-  starRate = 2;
-  heartRate = 4;
-  rating:number;
-   today:string;
-   pastdate:string;
-   changedsvc:string;
+  //variables
+  Cards :any=[];
+  PickupPieChart : any=[];
+  DropoffPieChart:any=[];
+  Notification :any=[];
+  SvcName:string;
+  public DataGraphDropOff:any = [];
+  public MtdData:any = [];
+  public DataGraphPickup:any = [];
+  SvcId:string;
+  GraphView: any[] = [700, 400];
+  PieChartView: any[] = [400, 300];
+  Rating:number;
+  pastdate:string;
+  ChangedSvc:string;
   showXAxis = true;
   showYAxis = true;
-  visibleheader = false;
+  VisibleHeader = false;
   gradient = false;
   showLegend = true;
-  showLegend1 = true;
   showLabels = false;
   showXAxisLabel = true;
   xAxisLabel = 'Slot Timings';
   showYAxisLabel = true;
-  currentRate = 4.93;
   yAxisLabel = 'Slot Count';
   autoScale = true;
-  showPickupPie = true;
-  showDropoffPie = true;
-  svcadmin:string;
-  checksvcadmin :boolean;
-  checkgrpadmin :boolean;
-  groupadmin:string;
-  terms:string;
-  results = [
-    { name: 'Awaiting Amb', value: 10 },
-    { name: 'Active', value: 30 },
-    { name: 'Awaiting CheckedIn', value: 40 },
-    { name: 'CheckedIn', value: 20 },
-  ];
-results1 = [
-    { name: 'Awaiting Amb', value: 20 },
-    { name: 'Active', value: 30 },
-    { name: 'Awaiting CheckedIn', value: 10 },
-    { name: 'CheckedIn', value: 40 },
-  ];
+  ShowPickupPie = true;
+  ShowDropoffPie = true;
+  SvcAdmin:string;
+  CheckSvcAdmin :boolean = false;
+  CheckGrpAdmin :boolean = false;
+  GroupAdmin:string;
+  ShowAgreement:string;
   themeSubscription: any;
   colorScheme = {
     domain: ['#ffa239', '#c8e6c9', '#81c784', '#4caf50','#ffe789']
   };
-  colorScheme1 = {
-    domain:['#ffa239', '#c8e6c9', '#81c784', '#4caf50','#ffe789']
-  };
-  view1: any[] = [400, 300];
 
+ 
   ngOnInit() {
-    this.terms = JSON.parse(sessionStorage.getItem('terms'));
-    this.svcadmin = JSON.parse(sessionStorage.getItem('svcadmin'));
-    this.groupadmin = JSON.parse(sessionStorage.getItem('groupadmin'));
-    if(this.svcadmin == "1"){
-      this.checksvcadmin = true;
+    this.ShowAgreement = JSON.parse(sessionStorage.getItem('terms'));
+    this.SvcAdmin = JSON.parse(sessionStorage.getItem('svcadmin'));
+    this.GroupAdmin = JSON.parse(sessionStorage.getItem('groupadmin'));
+    if(this.SvcAdmin == "1"){
+      this.CheckSvcAdmin = true;
     }
-    else{
-      this.checksvcadmin = false;
+    if(this.GroupAdmin == "1"){
+      this.CheckGrpAdmin = true;
     }
-    if(this.groupadmin == "1"){
-      this.checkgrpadmin = true;
-    }
-    else{
-      this.checkgrpadmin = false;
-    }
+
     var date = new Date();
-    this.today = this.datePipe.transform(date,"yyyy-MM-dd");
-    var numberOfDays = 1;
-    var days = date.setDate(date.getDate() - numberOfDays);
+    var days = date.setDate(date.getDate() - 1);
     this.pastdate = this.datePipe.transform(days,"yyyy-MM-dd");
     if(sessionStorage.getItem('selectedsvc')){
-      this.svcid = sessionStorage.getItem('selectedsvc');
+      this.SvcId = sessionStorage.getItem('selectedsvc');
     }
     else{
-      this.svcid = JSON.parse(sessionStorage.getItem('globalsvcid'));
+      this.SvcId = JSON.parse(sessionStorage.getItem('globalsvcid'));
     }
     if(sessionStorage.getItem('changedsvc')){
-        this.visibleheader = true;
-        this.changedsvc = sessionStorage.getItem('changedsvc');
+        this.VisibleHeader = true;
+        this.ChangedSvc = sessionStorage.getItem('changedsvc');
     }
     else{
-      this.visibleheader = false;
+      this.VisibleHeader = false;
     }
-    this.svcname = JSON.parse(sessionStorage.getItem('svcname'));
-    // console.log(this.svcname);
-   
-    // if(sessionStorage.getItem('selectedsvc')){
-    //   console.log(sessionStorage.getItem('selectedsvc'));
-    // }
-    // this.globalsvcid = JSON.parse(sessionStorage.getItem('globalsvcid'));
-    // console.log(this.globalsvcid);
-    this.getDashboardData();
-    this.getSlotPerformancedrop();
-    this.getSlotPerformancePickup();
-    this.getSlotUti();
-    if(this.terms == "0"){
-      this.getterms();
+    this.SvcName = JSON.parse(sessionStorage.getItem('svcname'));
+    this.GetDashboardData();
+    this.GetSlotPerformancePickup();
+    this.GetSlotPerformanceDrop();
+    this.GetMtd();
+    if(this.ShowAgreement == "0"){
+      this.GetTerms();
     }
-    Object.assign(this.multi) 
+    Object.assign(this.DataGraphDropOff) 
     this.themeSubscription = this.theme.getJsTheme().subscribe(config => {
       const colors: any = config.variables;
       this.colorScheme = {
         domain: ['#ffa239', '#c8e6c9', '#81c784', '#4caf50','#ffe789'],
       };
     });
-    Object.assign(this.multi1) 
+    Object.assign(this.MtdData) 
     this.themeSubscription = this.theme.getJsTheme().subscribe(config => {
       const colors: any = config.variables;
       this.colorScheme = {
         domain: ['#ffa239', '#c8e6c9', '#81c784', '#4caf50','#ffe789'],
       };
     });
-    Object.assign(this.multi2) 
+    Object.assign(this.DataGraphPickup) 
     this.themeSubscription = this.theme.getJsTheme().subscribe(config => {
       const colors: any = config.variables;
       this.colorScheme = {
@@ -155,9 +118,11 @@ results1 = [
     private modalService: NgbModal,
     private theme: NbThemeService){
   }
-  onSelect(event) {  }
 
-  getColorDrop(country) { 
+  // onSelect(event) {  }
+
+  //Get Color Legends for Dropoff Pie Chart
+  GetColorDropOff(country) { 
     switch (country) {
       case 'Awaiting':
         return '#ffa239';
@@ -172,7 +137,8 @@ results1 = [
     }
   }
 
-  getColorPickup(country) { 
+  //Get Color Legends for Pickup Pie Chart
+  GetColorPickup(country) { 
     switch (country) {
       case 'Awaiting':
         return '#ffa239';
@@ -187,61 +153,60 @@ results1 = [
     }
   }
 
-  getDashboardData(){
-    const reqpara1 = {
+  //GetDashBoardData
+  GetDashboardData(){
+    const DashReq = {
            requesttype: 'dashboard',
-           svcid:this.svcid
+           svcid:this.SvcId
          }
-      const as1 = JSON.stringify(reqpara1)
-      this.service.webServiceCall(as1).subscribe
+      const Req = JSON.stringify(DashReq)
+      this.service.webServiceCall(Req).subscribe
        (res => {
            if(res[0].login === 0){
              sessionStorage.removeItem('currentUser');
              this.router.navigate(['/auth/login']);
            }
            else{
-             
              if(res[0].cards[0] > 0){
-                this.cards=res[0].cards[0];
-               
-             }
-             else {
-              console.log('No card details');
-             }
-             if(this.cards.cust_rating == null){
-              this.rating = 0;
+                this.Cards=res[0].cards[0];
+              }
+             else { }
+             if(this.Cards.cust_rating == null){
+              this.Rating = 0;
              }
              else{
-              this.rating = JSON.parse(this.cards.cust_rating);
+              this.Rating = JSON.parse(this.Cards.cust_rating);
              }
-             this.pickup=res[1].pickup_details;
-             if(this.pickup[0].value === "0" && this.pickup[1].value === "0" && this.pickup[2].value === "0" && this.pickup[3].value === "0" && this.pickup[4].value === "0"){
-              this.showPickupPie = false;
-              console.log('pickupfalse');
+             this.PickupPieChart = res[1].pickup_details;
+             if(this.PickupPieChart[0].value === "0" && this.PickupPieChart[1].value === "0" && this.PickupPieChart[2].value === "0" && this.PickupPieChart[3].value === "0" && this.PickupPieChart[4].value === "0"){
+              this.ShowPickupPie = false;
              }
-             this.dropoff=res[2].drop_details;
-             if(this.dropoff[0].value === "0" && this.dropoff[1].value === "0" && this.dropoff[2].value === "0" && this.dropoff[3].value === "0" && this.dropoff[4].value === "0"){
-              this.showDropoffPie = false;
-              console.log('dropofffalse');
+             this.DropoffPieChart=res[2].drop_details;
+             if(this.DropoffPieChart[0].value === "0" && this.DropoffPieChart[1].value === "0" && this.DropoffPieChart[2].value === "0" && this.DropoffPieChart[3].value === "0" && this.DropoffPieChart[4].value === "0"){
+              this.ShowDropoffPie = false;
              }
-             this.notification=res[3].notification[0];
+             this.Notification=res[3].notification[0];
            }
         });
    }
-   getsvclist() {
+
+   //Open Modal For Service centre selection
+   GetSvcList() {
     const activeModal = this.modalService.open(OptionComponent, { size: 'lg', container: 'nb-layout' });
     activeModal.componentInstance.modalHeader = 'Select Service Centre';
   }
 
-  getterms() {
+  //Open Get Terms Modal
+  GetTerms() {
     const activeModal = this.modalService.open(LegalComponent, { size: 'lg', container: 'nb-layout' , backdrop : 'static',
     keyboard : false});
     activeModal.componentInstance.modalHeader = 'Terms and Condition';
   }
 
-  getSlotPerformancePickup(){
+  //API Call for Pickup Stacked Graph
+  GetSlotPerformancePickup(){
       const reqpara1 = {
-          svcid:this.svcid,
+          svcid:this.SvcId,
           puord:0,
           mtd:0,
           datevar:this.pastdate
@@ -254,16 +219,15 @@ results1 = [
              this.router.navigate(['/auth/login']);
            }
            else{
-            this.multi2 = res;
+            this.DataGraphPickup = res;
            }
         });
       }
 
-
-
-  getSlotPerformancedrop(){
+ //API Call for DropOff Stacked Graph     
+GetSlotPerformanceDrop(){
       const reqpara1 = {
-          svcid:this.svcid,
+          svcid:this.SvcId,
           puord:1,
           mtd:0,
           datevar:this.pastdate
@@ -276,15 +240,15 @@ results1 = [
              this.router.navigate(['/auth/login']);
            }
            else{
-            this.multi = res;
+            this.DataGraphDropOff = res;
            }
          });
         }
 
-
-  getSlotUti(){
+//API Call for Trend Graph
+  GetMtd(){
       const reqpara1 =  {
-          svcid:this.svcid,
+          svcid:this.SvcId,
           puord:0,
           mtd:1,
           datevar:this.pastdate
@@ -297,7 +261,7 @@ results1 = [
              this.router.navigate(['/auth/login']);
            }
            else{
-            this.multi1 = res;
+            this.MtdData = res;
            }
         });
       }

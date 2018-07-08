@@ -8,7 +8,7 @@
         <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
           <div class="form-group">
             <div class="input-group">
-              <input class="form-control" name="dp" [ngModel]="model1" (ngModelChange)="onSelectDate1($event)" placeholder="{{pastdate | date: 'yyyy-MM-dd'}}"
+              <input class="form-control" name="dp" [ngModel]="model1" (ngModelChange)="onSelectStartDate($event)" placeholder="{{pastdate | date: 'yyyy-MM-dd'}}"
                 ngbDatepicker #d1="ngbDatepicker">
               <div class="input-group-append">
                 <button class="btn btn-outline-secondary dateButton" (click)="d1.toggle()" type="button" style="height: 100%;border-radius: 0px;">
@@ -23,7 +23,7 @@
         <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
           <div class="form-group">
             <div class="input-group">
-              <input class="form-control" name="dp" [ngModel]="model" (ngModelChange)="onSelectDate($event)" placeholder="{{today | date: 'yyyy-MM-dd'}}"
+              <input class="form-control" name="dp" [ngModel]="model" (ngModelChange)="onSelectEndDate($event)" placeholder="{{today | date: 'yyyy-MM-dd'}}"
                 ngbDatepicker #d="ngbDatepicker">
               <div class="input-group-append">
                 <button class="btn btn-outline-secondary dateButton" (click)="d.toggle()" type="button" style="height: 100%;border-radius: 0px;">
@@ -46,7 +46,7 @@
 
         </div>
         <div class="col-md-6 col-lg-6 col-sm-6">
-          <input type="text" class="search" [(ngModel)]="term" placeholder="search">
+          <input type="text" class="search" [(ngModel)]="SearchData" placeholder="search">
         </div>
       </div>
     </div>
@@ -92,7 +92,7 @@
       </thead>
       <tbody>
 
-        <tr *ngFor="let i of pickup  | orderBy: key : reverse |  filter:term  | paginate: { id: 'server', itemsPerPage:dataperpage, currentPage: p + 1, totalItems: record_count }; let j = index"
+        <tr *ngFor="let i of pickup  | orderBy: key : reverse |  filter:SearchData  | paginate: { id: 'server', itemsPerPage:DataPerPage, currentPage: p + 1, totalItems: record_count }; let j = index"
           (click)="openQDetails(i.queueid)">
           <td>{{i.queueid}}</td>
           <td>{{i.queue_time}}</td>
@@ -121,7 +121,7 @@
     <div class="col-8 col-sm-8">
         <div class="right-inner-addon">
           <i class="fa fa-search"></i>
-          <input type="search" class="form-control" placeholder="Search" [(ngModel)]="term" />
+          <input type="search" class="form-control" placeholder="Search" [(ngModel)]="SearchData" />
         </div>
       </div>
   </div>
@@ -130,7 +130,7 @@
     <div class="col-12 col-sm-12">
       <div class="form-group">
         <div class="input-group">
-          <input class="form-control" name="dp" [ngModel]="model1" (ngModelChange)="onSelectDate1($event)" ngbDatepicker #d2="ngbDatepicker">
+          <input class="form-control" name="dp" [ngModel]="model1" (ngModelChange)="onSelectStartDate($event)" ngbDatepicker #d2="ngbDatepicker">
           <div class="input-group-append">
             <button class="btn btn-outline-secondary dateButton" (click)="d2.toggle()" type="button" style="height: 100%;width: 100%">
               <span>
@@ -146,7 +146,7 @@
     <div class="col-12 col-sm-12">
       <div class="form-group">
         <div class="input-group">
-          <input class="form-control" name="dp" [ngModel]="model" (ngModelChange)="onSelectDate($event)" ngbDatepicker #d3="ngbDatepicker">
+          <input class="form-control" name="dp" [ngModel]="model" (ngModelChange)="onSelectEndDate($event)" ngbDatepicker #d3="ngbDatepicker">
           <div class="input-group-append">
             <button class="btn btn-outline-secondary dateButton" (click)="d3.toggle()" type="button" style="height: 100%;width: 100%">
               <span>
@@ -164,16 +164,11 @@
       <button type="button" class="btn btn-primary apply" (click)="FilterCheck(1)">Apply</button>
     </div>
   </div>
-  <!-- <div class="row">
-    <div class="col-sm-12 col-12">
-      <input type="text" class="search" [(ngModel)]="term" placeholder="search">
-    </div>
-  </div> -->
   <div class="row">
     <div class="col-12 col-sm-12">
         <div *ngIf="message">{{message}}</div>
       <ul>
-        <li *ngFor="let i of pickup |filter:term" (click)="openQDetails(i.queueid)">
+        <li *ngFor="let i of pickup |filter:SearchData | paginate: { id: 'server', itemsPerPage:DataPerPage, currentPage: p + 1, totalItems: record_count }; let j = index" (click)="openQDetails(i.queueid)">
           <div class="card">
               <div class="row padding" *ngIf="InsuranceCheck">
                   <div class="col-12 col-sm-12">

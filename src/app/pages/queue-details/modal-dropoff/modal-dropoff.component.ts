@@ -8,7 +8,7 @@ import { NgForm } from '@angular/forms';
 import { ToasterService, ToasterConfig, Toast, BodyOutputType } from 'angular2-toaster';
 import 'style-loader!angular2-toaster/toaster.css';
 import { Router } from '@angular/router';
-import { ListService } from '../../services/user.service'
+import { ServerService } from '../../services/user.service'
 import { ServicingService } from '../../services/addServicing.service';
 @Component({
   selector: 'app-modal-dropoff',
@@ -55,7 +55,7 @@ export class ModalDropoffComponent implements OnInit {
   public slot: any[];
   showSlot = '0';
 
-  constructor( private ServicingService: ServicingService,private ngbDateParserFormatter: NgbDateParserFormatter,private toasterService: ToasterService, private activeModal: NgbActiveModal, private httpService: HttpClient, private router: Router, private _data: ListService) { }
+  constructor( private ServicingService: ServicingService,private ngbDateParserFormatter: NgbDateParserFormatter,private toasterService: ToasterService, private activeModal: NgbActiveModal, private httpService: HttpClient, private router: Router, private _data: ServerService) { }
 
   ngOnInit() {
     this.queueID = sessionStorage.getItem('QueueId');
@@ -133,7 +133,7 @@ export class ModalDropoffComponent implements OnInit {
         svcid:this.svcid
       }
       const as5 = JSON.stringify(reqpara5)
-      this.ServicingService.getSlot(as5).subscribe(res => {
+      this.ServicingService.webServiceCall(as5).subscribe(res => {
         if (res[0].login === 0) {
           sessionStorage.removeItem('currentUser');
           this.router.navigate(['/auth/login']);
@@ -205,7 +205,7 @@ export class ModalDropoffComponent implements OnInit {
     }
     const as2 = JSON.stringify(reqpara2);
     console.log(as2);
-    this.ServicingService.AddSerivicng(as2).subscribe(data => {
+    this.ServicingService.webServiceCall(as2).subscribe(data => {
       if (data[0].login === 0) {
         sessionStorage.removeItem('currentUser');
         this.router.navigate(['/auth/login']);

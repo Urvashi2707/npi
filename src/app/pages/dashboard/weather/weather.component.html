@@ -1,50 +1,43 @@
 <nb-card item-height="150px">
-    <nb-card-body>
-        <div class="location">
-            <span>Notification</span>
-        </div>
-        <hr>
-        <!-- <div class="topic">
-      <a class="topic_title" style="width: 100%;" (click)="navigateNotCheckedin()">Not CheckedIn 
-        <span class="topic_count" style="float:right">12</span>
+  <nb-card-body>
+    <div class="location">
+      <span>Notification</span>
+    </div>
+    <hr>
+    <div class="topic">
+      <a class="topic_title" style="width: 100%;" (click)="navigatePaused()">Paused Pickup
+        <span class="topic_count" style="float:right">{{Notification.queue_paused_pickup}}</span>
       </a>
-    </div> -->
-        <!-- <hr /> -->
-        <div class="topic">
-            <a class="topic_title" style="width: 100%;" (click)="navigatePaused()">Paused Pickup
-            <span class="topic_count" style="float:right">{{notification.queue_paused_pickup}}</span>
-          </a>
-        </div>
-        <hr/>
-        <div class="topic">
-            <a class="topic_title" style="width: 100%;" (click)="navigatePaused()">Paused Drop-off
-            <span class="topic_count" style="float:right">{{notification.queue_paused_dropoff}}</span>
-          </a>
-        </div>
-        <hr />
-        <div class="topic">
-            <a class="topic_title" style="width: 100%;" (click)="navigateCancelled()">Cancelled
-            <span class="topic_count" style="float:right">{{notification.queue_cancelled}}</span>
-          </a>
-        </div>
-        <hr/>
-        <div class="topic">
-            <a class="topic_title" style="width: 100%;" (click)="navigateNotCheckedin()">Not Checked-in
-            <span class=" topic_count " style="float:right ">{{notification.not_checkedin}}</span>
-          </a>
-        </div>
-        <hr/>
-        <div class="topic ">
-            <a class="topic_title " style="width: 100%; ">Rescheduled
-            <span class="topic_count " style="float:right ">{{notification.queue_rescheduled}}</span>
-        </a>
-        </div>
-        <hr/>
-        <div class="topic ">
-            <a class="topic_title " style="width: 100%; " (click)="navigateMishap() ">Mishaps 
-          <span class="topic_count " style="float:right ">{{notification.queue_mishaps}}</span>
-        </a>
-        </div>
-
-    </nb-card-body>
+    </div>
+    <hr/>
+    <div class="topic">
+      <a class="topic_title" style="width: 100%;" (click)="navigatePaused()">Paused Drop-off
+        <span class="topic_count" style="float:right">{{Notification.queue_paused_dropoff}}</span>
+      </a>
+    </div>
+    <hr />
+    <div class="topic">
+      <a class="topic_title" style="width: 100%;" (click)="navigateCancelled()">Cancelled
+        <span class="topic_count" style="float:right">{{Notification.queue_cancelled}}</span>
+      </a>
+    </div>
+    <hr/>
+    <div class="topic">
+      <a class="topic_title" style="width: 100%;" (click)="navigateNotCheckedin()">Not Checked-in
+        <span class=" topic_count " style="float:right ">{{Notification.not_checkedin}}</span>
+      </a>
+    </div>
+    <hr/>
+    <div class="topic ">
+      <a class="topic_title " style="width: 100%; ">Rescheduled
+        <span class="topic_count " style="float:right ">{{Notification.queue_rescheduled}}</span>
+      </a>
+    </div>
+    <hr/>
+    <div class="topic ">
+      <a class="topic_title " style="width: 100%; " (click)="navigateMishap() ">Mishaps
+        <span class="topic_count " style="float:right ">{{Notification.queue_mishaps}}</span>
+      </a>
+    </div>
+  </nb-card-body>
 </nb-card>

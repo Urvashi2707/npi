@@ -5,7 +5,7 @@ import { HttpErrorResponse } from '@angular/common/http/src/response';
 import { ToasterService, ToasterConfig, Toast, BodyOutputType } from 'angular2-toaster';
 import 'style-loader!angular2-toaster/toaster.css';
 import { Router } from '@angular/router';
-import { ListService } from '../../services/user.service'
+import { ServerService } from '../../services/user.service'
 
 @Component({
   selector: 'app-modal-upload',
@@ -39,7 +39,7 @@ export class ModalUploadComponent implements OnInit {
   public slot: any[];
   showSlot = '0';
 
-  constructor(private toasterService: ToasterService, private activeModal: NgbActiveModal, private httpService: HttpClient, private router: Router, private _data: ListService) { }
+  constructor(private toasterService: ToasterService, private activeModal: NgbActiveModal, private httpService: HttpClient, private router: Router, private _data: ServerService) { }
   
   ngOnInit() {
     this.getSlot();
@@ -79,7 +79,7 @@ export class ModalUploadComponent implements OnInit {
       pickup_drop: '1'
     }
     const as5 = JSON.stringify(reqpara5)
-    this._data.createUser(as5).subscribe(res => {
+    this._data.webServiceCall(as5).subscribe(res => {
       // if (res[0].login === 0) {
       //   sessionStorage.removeItem('currentUser');
       //   this.router.navigate(['/auth/login']);

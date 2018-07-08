@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { NgbPanelChangeEvent, NgbTabContent } from '@ng-bootstrap/ng-bootstrap';
 import { QueueTableService } from '../services/queue-table.service';
-import { ListService } from '../services/user.service';
+import { ServerService } from '../services/user.service';
 import { Observable } from 'rxjs/Observable';
 import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 import { catchError, retry } from 'rxjs/operators';
@@ -10,7 +10,7 @@ import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModalQueueComponent } from './modal-queue/modal-queue.component';
 import { ModalUploadComponent } from './modal-upload/modal-upload.component';
 import { ModalSendLinkComponent } from './modal-send-link/modal-send-link.component'
-import { Modal4Component } from '../search/modal/modal.component';
+import { SearchModalComponent } from '../search/modal/searchModal.component';
 import { ModalPickupComponent } from './modal-pickup/modal-pickup.component';
 import { ModalAdvComponent } from './modal-adv/modal-adv.component';
 @Component({
@@ -81,7 +81,7 @@ export class QueueDetailsComponent implements OnInit {
   pickupInfo:any = {};
   dropInfo:any = {};
   adv_name:string;
-  constructor(private modalService: NgbModal, private fb: FormBuilder, private _detailsTable: QueueTableService, private _data: ListService) {
+  constructor(private modalService: NgbModal, private fb: FormBuilder, private _detailsTable: QueueTableService, private _data: ServerService) {
 
 
     this.pickCardForm = this.fb.group({
@@ -174,7 +174,7 @@ export class QueueDetailsComponent implements OnInit {
       typeofrequest: '1',
     }
     const as3 = JSON.stringify(reqpara3);
-    this._data.createUser(as3).subscribe(res => {
+    this._data.webServiceCall(as3).subscribe(res => {
       const check = res.valueOf();
       this.cancelReasons = check[0].reasons;
       this.showLargeModal(this.cancelReasons[0].description);
@@ -198,7 +198,7 @@ export class QueueDetailsComponent implements OnInit {
               console.log(this.Amt)
             }
    
-   const activeModal = this.modalService.open(Modal4Component, { size: 'lg', container: 'nb-layout' });
+   const activeModal = this.modalService.open(SearchModalComponent, { size: 'lg', container: 'nb-layout' });
   this.datatopass = { queue_id:  sessionStorage.getItem('QueueId'),  queue_exists:  "0", type_of_service: '1',  queue_time:  this.dropSlotTime, service_status: this.service_status };
     this.dataForModal = { service_status: this.service_status,amt:this.Amt,advName:this.advInfo[0].adv_name, id: sessionStorage.getItem('QueueId'), queue_time: this.QueueTIme }
     console.log("urvashi urvi");
@@ -267,7 +267,7 @@ export class QueueDetailsComponent implements OnInit {
         typeofrequest: '1'
       }
       const as3 = JSON.stringify(reqpara3);
-      this._data.createUser(as3).subscribe(res => {
+      this._data.webServiceCall(as3).subscribe(res => {
         this._detailsTable.setTableData(res, 1);
       });
 
@@ -279,7 +279,7 @@ export class QueueDetailsComponent implements OnInit {
         typeofrequest: '0'
       }
       const as3 = JSON.stringify(reqpara3);
-      this._data.createUser(as3).subscribe(res => {
+      this._data.webServiceCall(as3).subscribe(res => {
         this._detailsTable.setTableData(res, 2);
       });
     }
@@ -304,7 +304,7 @@ export class QueueDetailsComponent implements OnInit {
         typeofrequest: '2'
       }
       const as3 = JSON.stringify(reqpara3);
-      this._data.createUser(as3).subscribe(res => {
+      this._data.webServiceCall(as3).subscribe(res => {
         this._detailsTable.setTableData(res, 12);
       });
 
@@ -316,7 +316,7 @@ export class QueueDetailsComponent implements OnInit {
         queueidvar: sessionStorage.getItem('QueueId'),
       }
       const as3 = JSON.stringify(reqpara3);
-      this._data.createUser(as3).subscribe(res => {
+      this._data.webServiceCall(as3).subscribe(res => {
         const check = res.valueOf();
         const objectlength = Object.keys(check).length;
         if (objectlength > 0) {
@@ -619,7 +619,7 @@ export class QueueDetailsComponent implements OnInit {
       }
       const amblink = JSON.stringify(reqpara3);
       // console.log(amblink);
-      this._data.createUser(amblink).subscribe(res => {
+      this._data.webServiceCall(amblink).subscribe(res => {
         this.link = res[0].ambassadorposition[0].iframe_link;
         // console.log(this.link);
       });

@@ -10,13 +10,12 @@ import { NgbDateStruct, NgbDateParserFormatter} from '@ng-bootstrap/ng-bootstrap
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-modal',
-  templateUrl: './modal.component.html',
-  styleUrls: ['./modal.component.scss']
+  templateUrl: './searchModal.component.html',
+  styleUrls: ['./searchModal.component.scss']
 })
-export class Modal4Component implements OnInit {
+export class SearchModalComponent implements OnInit {
 
-  constructor(
-                private router:Router,
+  constructor(private router:Router,
                 private activeModal: NgbActiveModal,
                 private ServicingService:ServicingService, 
                 private ngbDateParserFormatter: NgbDateParserFormatter,
@@ -141,7 +140,7 @@ export class Modal4Component implements OnInit {
         svcid:this.globalsvcid
         }
     const as5 = JSON.stringify(reqpara5)
-    this.ServicingService.getSlot(as5).subscribe(res => { 
+    this.ServicingService.webServiceCall(as5).subscribe(res => { 
       if(res[0].login === 0){
         sessionStorage.removeItem('currentUser');
         this.router.navigate(['/auth/login']);
@@ -191,7 +190,7 @@ export class Modal4Component implements OnInit {
         queueidvar: sessionStorage.getItem('QueueId'),
       }
       const as10 = JSON.stringify(reqpara10)
-      this.ServicingService.getVariant(as10).subscribe(res => {
+      this.ServicingService.webServiceCall(as10).subscribe(res => {
         this.details = res;
     });
   }
@@ -203,7 +202,7 @@ export class Modal4Component implements OnInit {
         svcid:this.svcid
       }
       const as5 = JSON.stringify(reqpara8)
-      this.ServicingService.getVariant(as5).subscribe(res => {
+      this.ServicingService.webServiceCall(as5).subscribe(res => {
         if (res[0].login === 0) {
           sessionStorage.removeItem('currentUser');
           this.router.navigate(['/auth/login']);
@@ -335,7 +334,7 @@ getData(){
     vehnumber_mobile:this.vehnumber
   }
     const as1 = JSON.stringify(reqpara1)
-    this.ServicingService.getBrands(as1).subscribe
+    this.ServicingService.webServiceCall(as1).subscribe
 (res => 
   {
     if(res[0].login === 0){

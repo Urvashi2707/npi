@@ -1,12 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { NbMenuService } from '@nebular/theme';
-import { Subject } from 'rxjs';
 import { QueueTableService } from '../../services/queue-table.service';
-import { ListService } from '../../services/user.service';
+import { ServerService } from '../../services/user.service';
 import { Router } from '@angular/router';
-import { DatePipe } from '@angular/common';
 import { NgxSpinnerService } from 'ngx-spinner';
-import {NgbDateAdapter, NgbDateStruct, NgbDatepickerConfig, NgbDateParserFormatter} from '@ng-bootstrap/ng-bootstrap';
+import { NgbDateStruct, NgbDateParserFormatter} from '@ng-bootstrap/ng-bootstrap';
+
 @Component({
   selector: 'app-drop-off',
   templateUrl: './drop-off.component.html',
@@ -14,63 +12,52 @@ import {NgbDateAdapter, NgbDateStruct, NgbDatepickerConfig, NgbDateParserFormatt
 })
 export class DropOffComponent implements OnInit {
 
-  pickup_headings: String[] = ['ID', 'Customer', 'License Plate', 'Advisor', 'Amb Name', 'Amb Number', 'Status'];
+  //variables
   tableData: any[];
-  keyValues: any[];
-  term:string;
+  SearchData:string;
   p:number=1;
-  record_count:string;
-  dataperpage:string;
-  public dropoff : any =[];
-  today:string;
-  advisorName:string;
+  RecordCount:string;
+  DataPerPage:string;
+  dropoff : any =[];
   key: string = 'queueid'; 
   reverse: boolean = false; 
-  dateString: string;
-  dateString1: string;
+  EndDateString: string;
+  StartDateString: string;
   model: NgbDateStruct;
   model1: NgbDateStruct;
-  pastdate:string;
-  message:string;
+  MessageNoData:string;
   InsuranceUsr:string;
   InsuranceCheck:boolean = false;
-  globalsvcid:string;
-  svcid:string;
-  constructor(private spinner: NgxSpinnerService,private datePipe:DatePipe,private ngbDateParserFormatter: NgbDateParserFormatter,private _detailsTable: QueueTableService, private _data: ListService, private _tableService: QueueTableService, private router: Router) { 
+  GlobalSvcid:string;
+  SvcId:string;
+
+  constructor(private spinner: NgxSpinnerService,
+                private ngbDateParserFormatter: NgbDateParserFormatter,
+                private _detailsTable: QueueTableService,
+                private _data: ServerService, 
+                private _tableService: QueueTableService, 
+                private router: Router) { 
     this._tableService.clickedID.subscribe(value => {
       this.tableData = _tableService.table_data;
-      this.keyValues = ['queueid', 'cust_name', 'veh_number', 'adv_name', 'amb_name', 'amb_number', 'queue_state'];
     });
     const date = new Date();
     this.model = {day:date.getUTCDate(),month:date.getUTCMonth() + 1,year: date.getUTCFullYear() };
-    this.dateString = this.model.year + '-' + this.model.month + '-' + this.model.day;
-    var numberOfDays = 5;
+    this.EndDateString = this.model.year + '-' + this.model.month + '-' + this.model.day;
     var dt = new Date();
          dt.setDate( dt.getDate() - 5 );
     this.model1 = { day: dt.getUTCDate(), month: dt.getUTCMonth() + 1, year: dt.getUTCFullYear()};
-    this.dateString1 = this.model1.year + '-' + this.model1.month + '-' + this.model1.day;
-    this.today = this.datePipe.transform(date,"yyyy-MM-dd");
-    
-    console.log(this.today)
-   
-    var days = date.setDate(date.getDate() - numberOfDays);
-    this.pastdate = this.datePipe.transform(days,"yyyy-MM-dd");
-    console.log(this.pastdate);
+    this.StartDateString = this.model1.year + '-' + this.model1.month + '-' + this.model1.day;
   }
 
   ngOnInit() {
     this.InsuranceUsr = JSON.parse(sessionStorage.getItem('insurance'));
     if(sessionStorage.getItem('selectedsvc')){
-      // console.log(sessionStorage.getItem('selectedsvc'));
-      this.svcid = sessionStorage.getItem('selectedsvc');
-      // console.log(this.svcid);
+      this.SvcId = sessionStorage.getItem('selectedsvc');
     }
     else{
-      this.svcid = JSON.parse(sessionStorage.getItem('globalsvcid'));
-      // console.log(this.svcid);
+      this.SvcId = JSON.parse(sessionStorage.getItem('globalsvcid'));
     }
-    this.globalsvcid = JSON.parse(sessionStorage.getItem('globalsvcid'));
-    console.log(this.globalsvcid);
+    this.GlobalSvcid = JSON.parse(sessionStorage.getItem('globalsvcid'));
     if(this.InsuranceUsr == "1"){
       this.InsuranceCheck = true;
     }
@@ -79,102 +66,67 @@ export class DropOffComponent implements OnInit {
      }
     this.FilterCheck(1);
   }
-  onSelectDate(date: NgbDateStruct){
+
+    //On select of startDate
+  onSelectEndDate(date: NgbDateStruct){
     if (date != null) {
             this.model = date;
-            this.dateString = this.ngbDateParserFormatter.format(date);
-            console.log(this.dateString);
+            this.EndDateString = this.ngbDateParserFormatter.format(date);
         }
-        
+      }
 
-  }
+      //sort
   sort(key){
     this.key = key;
     this.reverse = !this.reverse;
   }
-  onSelectDate1(date: NgbDateStruct){
+
+    //On select of startDate
+  onSelectStartDate(date: NgbDateStruct){
     if (date != null) {
             this.model1 = date;
-            this.dateString1 = this.ngbDateParserFormatter.format(date);
-            console.log(this.dateString1);
+            this.StartDateString = this.ngbDateParserFormatter.format(date);
         }
-        
+       }
 
-  }
-  // openQDetails(indexId: any){
-  //   sessionStorage.removeItem('clickedOn');
-  //   sessionStorage.setItem('QueueId',this.tableData[indexId][this.keyValues[0]])
-  //   this._detailsTable.queueID = this.tableData[indexId][this.keyValues[0]];
-  //   this.router.navigate(['/pages/queue-details']);
-    
-  // }
+   //Open Queue Details Page     
   openQDetails(details:any) {
-
-    console.log(details);
-
     sessionStorage.setItem('QueueId',details.queueid);
     this._detailsTable.queueID = details.queueid;
-    // sessionStorage.setItem('QueueId', this.tableData[indexId][this.keyValues[0]])
-    // sessionStorage.setItem('QueueTime', this.tableData[indexId][this.keyValues[3]])
-    // console.log(this.tableData[indexId][this.keyValues[3]]);
-    // this._detailsTable.queueID = this.tableData[indexId][this.keyValues[0]];
     sessionStorage.removeItem('clickedOn');
     this.router.navigate(['/pages/queue-details']);
-
-  }
+}
+//Dropoff table API call
   FilterCheck(p:number){
-    this.message=" ";
+    this.MessageNoData = null ;
     this.spinner.show();
     this.p = p - 1 ;
-    const reqpara3 = {
+    const DropReq = {
       requesttype: 'getqueueinfonew',
       servicetype: '3',
-      starttime: this.dateString1,
-      endtime: this.dateString,
+      starttime: this.StartDateString,
+      endtime: this.EndDateString,
       pagenumber: this.p,
-      svcid:this.svcid 
+      svcid:this.SvcId 
     }
-    const as3 = JSON.stringify(reqpara3);
-    console.log(as3);
-    this._data.webServiceCall(as3).subscribe(res => {
+    const DropOffReq = JSON.stringify(DropReq);
+    this._data.webServiceCall(DropOffReq).subscribe(res => {
       if(res[0].login === 0){
         sessionStorage.removeItem('currentUser');
         this.router.navigate(['/auth/login']);
       }
       else{
-
-      if(res[0].pagecount[0].hasOwnProperty('noqueues')){
-        console.log('No queue');
-        this.message = 'No Data';
+         if(res[0].pagecount[0].hasOwnProperty('noqueues')){
+        this.MessageNoData = 'No Data';
         this.spinner.hide();
        }
        else{
-
         this.dropoff = res[1].activedropoff;
-        console.log(this.dropoff)
-        this.record_count = res[0].pagecount[0].record_count;
-        this.dataperpage = res[0].pagecount[0].pagelimit;
-        console.log(this.record_count);
+        this.RecordCount = res[0].pagecount[0].record_count;
+        this.DataPerPage = res[0].pagecount[0].pagelimit;
         this.spinner.hide();
-          // for (let j = 0; j < this.dropoff.length ; j++){
-          //   if(this.dropoff[j].queue_time != null){
-          //     var queuetime = this.dropoff[j].queue_time;
-          //     var date = queuetime.replace( /\n/g, " " ).split( " " );
-          //     var newDate = this.datePipe.transform(date[0],"d MMM,y");
-          //     var timeString = date[1];
-          //     var H = +timeString.substr(0, 2);
-          //     var h = (H % 12) || 12;
-          //     var ampm = H < 12 ? "AM" : "PM";
-          //     timeString = h + timeString.substr(2, 3) + ampm;
-          //     this.dropoff[j].newtime = timeString;
-          //     this.dropoff[j].newdate = newDate;
-          //   }
-           
-          // }
         }
-    
-    
-    }
+  }
     });
       }
     }

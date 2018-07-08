@@ -3,7 +3,7 @@ import {Router,ActivatedRoute} from '@angular/router';
 import { NbMenuService, NbSidebarService,NbSearchService } from '@nebular/theme';
 import { UserService } from '../../../@core/data/users.service';
 import { AnalyticsService } from '../../../@core/utils/analytics.service';
-import {ListService} from '../../../pages/services/user.service';
+import {ServerService} from '../../../pages/services/user.service';
 import { DatePipe } from '@angular/common';
 
 @Component({
@@ -60,7 +60,7 @@ export class HeaderComponent implements OnInit {
               private datePipe:DatePipe,
               private analyticsService: AnalyticsService,
               private router:Router,
-              private _data : ListService,
+              private _data : ServerService,
               private route: ActivatedRoute) {
   }
 
@@ -101,7 +101,7 @@ export class HeaderComponent implements OnInit {
         requesttype: 'markread'
           }
       const as4 = JSON.stringify(reqpara4)
-      this._data.createUser(as4).subscribe(res => {
+      this._data.webServiceCall(as4).subscribe(res => {
         if(res[0].login === 0){
           sessionStorage.removeItem('currentUser');
           this.router.navigate(['/auth/login']);
@@ -141,7 +141,7 @@ getNotification(){
     requesttype: 'getnotifications'
       }
   const as3 = JSON.stringify(reqpara3)
-  this._data.createUser(as3).subscribe(res => {
+  this._data.webServiceCall(as3).subscribe(res => {
     if(res[0].login === 0){
       sessionStorage.removeItem('currentUser');
       this.router.navigate(['/auth/login']);

@@ -427,7 +427,7 @@ export class RsaComponent implements OnInit {
       cityid:JSON.parse(sessionStorage.getItem('city_id'))
     }
     const as22 = JSON.stringify(reqpara22)
-    this.ServicingService.getModels(as22).subscribe(res => {
+    this.ServicingService.webServiceCall(as22).subscribe(res => {
       if (res[0].login === 0) {
         sessionStorage.removeItem('currentUser');
         this.router.navigate(['/auth/login']);

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { QueueTableService } from '../services/queue-table.service';
-import { ListService } from '../services/user.service';
+import { ServerService } from '../services/user.service';
 import { Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import {NgbDateAdapter, NgbDateStruct, NgbDatepickerConfig, NgbDateParserFormatter} from '@ng-bootstrap/ng-bootstrap';
@@ -34,7 +34,7 @@ export class MishapsComponent implements OnInit {
   message:string;
   globalsvcid:string;
   svcid:string;
-  constructor(private spinner: NgxSpinnerService,private datePipe:DatePipe,private ngbDateParserFormatter: NgbDateParserFormatter,private _detailsTable: QueueTableService, private _data: ListService, private _tableService: QueueTableService, private router: Router) { 
+  constructor(private spinner: NgxSpinnerService,private datePipe:DatePipe,private ngbDateParserFormatter: NgbDateParserFormatter,private _detailsTable: QueueTableService, private _data: ServerService, private _tableService: QueueTableService, private router: Router) { 
     this._tableService.clickedID.subscribe(value => {
       this.tableData = _tableService.table_data;
       this.keyValues = ['queueid', 'date_of_mishap', 'cust_name', 'veh_number', 'amount', 'mishap_status'];

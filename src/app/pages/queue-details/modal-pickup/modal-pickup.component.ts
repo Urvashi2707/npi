@@ -58,7 +58,7 @@ export class ModalPickupComponent implements OnInit {
         svcid:this.svcid
       }
       const as5 = JSON.stringify(reqpara5)
-      this.ServicingService.getSlot(as5).subscribe(res => {
+      this.ServicingService.webServiceCall(as5).subscribe(res => {
         if (res[0].login === 0) {
           sessionStorage.removeItem('currentUser');
           this.router.navigate(['/auth/login']);
@@ -150,7 +150,7 @@ export class ModalPickupComponent implements OnInit {
     }
     const as2 = JSON.stringify(reqpara2);
     console.log(as2);
-    this.ServicingService.AddSerivicng(as2).subscribe(data => {
+    this.ServicingService.webServiceCall(as2).subscribe(data => {
       if (data[0].login === 0) {
         sessionStorage.removeItem('currentUser');
         this.router.navigate(['/auth/login']);

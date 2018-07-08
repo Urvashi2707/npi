@@ -1,16 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { NgbModal, NgbActiveModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import { NgForm } from '@angular/forms';
 import { TitleCasePipe } from '@angular/common';
-import { ListService } from '../../services/user.service';
-import { ToasterService, ToasterConfig, Toast, BodyOutputType } from 'angular2-toaster';
+import { ServerService } from '../../services/user.service';
 import 'style-loader!angular2-toaster/toaster.css';
+
 @Component({
   selector: 'app-modal',
-  templateUrl: './modal.component.html',
-  styleUrls: ['./modal.component.scss']
+  templateUrl: './EditUser.component.html',
+  styleUrls: ['./EditUser.component.scss']
 })
-export class ModalComponent implements OnInit {
+
+export class EditUserComponent implements OnInit {
   public visible = false;
   private visibleAnimate = false;
   modalHeader: string;
@@ -24,18 +25,9 @@ export class ModalComponent implements OnInit {
   isHideOnClick = true;
   svcid: string;
   userList: any = [];
-  isDuplicatesPrevented = false;
-  isCloseButton = true;
-  config: ToasterConfig;
-  position = 'toast-top-full-width';
-  animationType = 'fade';
-  title = 'HI there!';
-  content = `I'm cool toaster!`;
-  timeout = 5000;
-  toastsLimit = 5;
-  type = 'default';
   public designation: any = [];
-  constructor(private titlecasePipe:TitleCasePipe,private toasterService: ToasterService, private activeModal: NgbActiveModal, private _data: ListService) { }
+  constructor(private titlecasePipe:TitleCasePipe,private activeModal: NgbActiveModal, private _data: ServerService) { }
+  
   ngOnInit() {
     this.getUserType();
   }
@@ -59,6 +51,7 @@ export class ModalComponent implements OnInit {
       this.hide();
     }
   }
+
   getUserType() {
     const reqpara2 =
       {
@@ -73,26 +66,6 @@ export class ModalComponent implements OnInit {
       );
   }
 
-  private showToast(type: string, title: string, body: string) {
-    this.config = new ToasterConfig({
-      positionClass: this.position,
-      timeout: this.timeout,
-      newestOnTop: this.isNewestOnTop,
-      tapToDismiss: this.isHideOnClick,
-      preventDuplicates: this.isDuplicatesPrevented,
-      animation: this.animationType,
-      limit: this.toastsLimit,
-    });
-    const toast: Toast = {
-      type: type,
-      title: title,
-      body: body,
-      timeout: this.timeout,
-      showCloseButton: this.isCloseButton,
-      bodyOutputType: BodyOutputType.TrustedHtml,
-    };
-    this.toasterService.popAsync(toast);
-  }
   getUserList() {
     this.svcid = localStorage.getItem('svcid')
     console.log(this.svcid);
@@ -126,6 +99,7 @@ export class ModalComponent implements OnInit {
       console.log(data);
     });
   }
+
   onSubmit(f: NgForm) {
     const reqpara = {
       requesttype: 'updateuser',

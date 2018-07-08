@@ -1,21 +1,27 @@
 import { Component, OnInit } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TitleCasePipe } from '@angular/common';
 import { ServicingService } from '../../services/addServicing.service';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient} from '@angular/common/http';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http/src/response';
-import { NgbDateAdapter, NgbDateStruct, NgbDatepickerConfig, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
-import { NgbActiveModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import {NgbDateStruct,  NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
+
 @Component({
   selector: 'app-modal5',
-  templateUrl: './modal5.component.html',
-  styleUrls: ['./modal5.component.scss']
+  templateUrl: './confirmModal.component.html',
+  styleUrls: ['./confirmModal.component.scss']
 })
-export class Modal5Component implements OnInit {
+export class ConfirmModalComponent implements OnInit {
 
-  constructor(private titlecasePipe:TitleCasePipe,private router: Router, private activeModal: NgbActiveModal, private ServicingService: ServicingService, private ngbDateParserFormatter: NgbDateParserFormatter, private http: HttpClient) { }
+  constructor(private titlecasePipe:TitleCasePipe,
+                private router: Router, 
+                private activeModal: NgbActiveModal,
+                private ServicingService: ServicingService,
+                private ngbDateParserFormatter: NgbDateParserFormatter) { }
+
+  //variables
   modalHeader: string;
   modalContent: any;
   valuedate = new Date();
@@ -120,6 +126,7 @@ export class Modal5Component implements OnInit {
   toastsLimit = 5;
   
   date: {year: number, month: number};
+
   ngOnInit() {
     this.selectedItems = [];
     this.settings = {
@@ -132,18 +139,15 @@ export class Modal5Component implements OnInit {
     this.countrycode1 = "+91";
     if (sessionStorage.getItem('selectedsvc')) {
       this.svcid = sessionStorage.getItem('selectedsvc');
-
     }
     else {
       this.svcid = JSON.parse(sessionStorage.getItem('globalsvcid'));
-
     }
     this.service_type = [
       { id: 1, type: 'Body Repair' },
       { id: 2, type: 'Servicing' },
       { id: 3, type: 'Both' },
     ];
- 
     this.salutation = [
       { id: 1, type: 'Mr' },
       { id: 2, type: 'Mrs' },
@@ -164,75 +168,53 @@ export class Modal5Component implements OnInit {
     this.getcreadv();
     this.getDetails();
   }
-  public httpOptions = {
-    // headers: new HttpHeaders({'Content-Type':  'multipart/form-data'}),
-    withCredentials: true
-  };
+
   onSelectDate(date: NgbDateStruct) {
     if (date != null) {
       this.model1 = date;
       this.dateString = this.ngbDateParserFormatter.format(date);
-      console.log(this.dateString);
     }
-    // this.showToast('default', 'Time', 'Please Select time');
     this.slot = [];
     this.datecheck=true;
     this.getSlot(this.dateString);
   }
 
-  onItemSelect(item: any) {
-    console.log(item);
-    console.log(this.selectedItems);
-    console.log(this.selectedItems.length);
-  }
+  onItemSelect(item: any) {}
 
-  OnItemDeSelect(item: any) {
-    console.log(item),
-      console.log(this.selectedItems);
+  OnItemDeSelect(item: any) {}
 
-  }
+  onSelectAll(items: any) {}
 
-  onSelectAll(items: any) {
-    console.log(items);
-  }
-
-  onDeSelectAll(items: any) {
-    console.log(items);
-  }
+  onDeSelectAll(items: any) { }
 
   setDefaultDate(): NgbDateStruct {
     var startDate = new Date();
     let startYear = startDate.getFullYear().toString();
     let startMonth = startDate.getMonth() + 1;
     let startDay = "1";
-
     return this.ngbDateParserFormatter.parse(startYear + "-" + startMonth.toString() + "-" + startDay);
   }
+
   closeModal() {
     this.activeModal.close();
   }
  
 
   onSelectModel(modelId) {
-    // this.selectedModel = null;
     for (let i = 0; i < this.Models.length; i++) {
       if (this.Models[i].model_id == modelId) {
         this.selectedModel = this.Models[i];
       }
     }
-    console.log(this.selectedModel);
-    // this.getVariants(this.selectedModel.model_id);
     this.getVariants(this.selectedModel);
   }
 
   onSelectVariant(VariantId) {
-    // this.selectedVariant = null;
     for (let i = 0; i < this.Models.length; i++) {
       if (this.Variant[i].variant_id == VariantId) {
         this.selectedVariant = this.Variant[i];
       }
     }
-    console.log(this.selectedVariant);
   }
 
   getVariants(VariantId: number) {
@@ -241,7 +223,7 @@ export class Modal5Component implements OnInit {
       brandid: VariantId
     }
     const as3 = JSON.stringify(reqpara3)
-    this.ServicingService.getVariant(as3).subscribe(res => {
+    this.ServicingService.webServiceCall(as3).subscribe(res => {
       if (res[0].login === 0) {
         sessionStorage.removeItem('currentUser');
         this.router.navigate(['/auth/login']);
@@ -250,7 +232,6 @@ export class Modal5Component implements OnInit {
         this.Variant = res[0].models,
           console.log(this.Variant);
       }
-
     });
   }
 
@@ -260,7 +241,7 @@ export class Modal5Component implements OnInit {
       brandid: this.selectedBrand
     }
     const as2 = JSON.stringify(reqpara2)
-    this.ServicingService.getModels(as2).subscribe(res => {
+    this.ServicingService.webServiceCall(as2).subscribe(res => {
       if (res[0].login === 0) {
         sessionStorage.removeItem('currentUser');
         this.router.navigate(['/auth/login']);
@@ -268,21 +249,17 @@ export class Modal5Component implements OnInit {
       else {
         this.Models = res[0].models,
           console.log(this.Models);
-
-
       }
-
     });
   }
 
   getBrands() {
-    const reqpara1 =
-      {
+    const reqpara1 ={
         requesttype: 'getbrands',
         svcid:this.svcid
       }
     const as1 = JSON.stringify(reqpara1)
-    this.ServicingService.getBrands(as1).subscribe
+    this.ServicingService.webServiceCall(as1).subscribe
       (res => {
         console.log(res[0].login);
         if (res[0].login === 0) {
@@ -294,12 +271,10 @@ export class Modal5Component implements OnInit {
             this.selectedBrand = this.brands[0].brand_id;
             console.log(this.selectedBrand);
             this.getModelds(this.selectedBrand);
-         
-        }
-
-      }
-      );
+         }
+      });
   }
+
   buildArr(theArr: any[]) {
     var arrOfarr = [];
     if (theArr.length > 0) {
@@ -315,8 +290,7 @@ export class Modal5Component implements OnInit {
         arrOfarr.push(row);
       }
     }
-
-    return arrOfarr;
+      return arrOfarr;
   }
 
   check(value: string,time:string) {
@@ -334,15 +308,13 @@ export class Modal5Component implements OnInit {
         svcid:this.svcid
       }
       const as5 = JSON.stringify(reqpara5)
-      this.ServicingService.getSlot(as5).subscribe(res => {
+      this.ServicingService.webServiceCall(as5).subscribe(res => {
         if (res[0].login === 0) {
           sessionStorage.removeItem('currentUser');
           this.router.navigate(['/auth/login']);
         }
         else {
-          if (res[0].slots.length == 0) {
-            // this.showToast('default', 'No Slot', 'Sorry !! No Slot Unavailable ');
-          }
+          if (res[0].slots.length == 0) {}
           else {
             this.slot = res[0].slots;
             // this.showToast('default', 'Select Slot', 'Please Select Slot');
@@ -380,7 +352,7 @@ export class Modal5Component implements OnInit {
       svcid:this.svcid
     }
     const as4 = JSON.stringify(reqpara7)
-    this.ServicingService.getVariant(as4).subscribe(res => {
+    this.ServicingService.webServiceCall(as4).subscribe(res => {
       if (res[0].login === 0) {
         sessionStorage.removeItem('currentUser');
         this.router.navigate(['/auth/login']);
@@ -406,7 +378,7 @@ export class Modal5Component implements OnInit {
       svcid:this.svcid
     }
     const as5 = JSON.stringify(reqpara8)
-    this.ServicingService.getVariant(as5).subscribe(res => {
+    this.ServicingService.webServiceCall(as5).subscribe(res => {
       if (res[0].login === 0) {
         sessionStorage.removeItem('currentUser');
         this.router.navigate(['/auth/login']);
@@ -426,7 +398,7 @@ export class Modal5Component implements OnInit {
         svcid: this.svcid
       }
       const as5 = JSON.stringify(reqpara5)
-      this.ServicingService.getSlot(as5).subscribe(res => {
+      this.ServicingService.webServiceCall(as5).subscribe(res => {
         if (res[0].login === 0) {
           sessionStorage.removeItem('currentUser');
           this.router.navigate(['/auth/login']);
@@ -610,7 +582,7 @@ export class Modal5Component implements OnInit {
 
     const ua = JSON.stringify(reqpara6);
     console.log(ua);
-    this.ServicingService.AddSerivicng(ua).subscribe(data => {
+    this.ServicingService.webServiceCall(ua).subscribe(data => {
       if (data[0].login === 0) {
         sessionStorage.removeItem('currentUser');
         this.router.navigate(['/auth/login']);
@@ -655,7 +627,7 @@ export class Modal5Component implements OnInit {
       svcid:this.svcid
     }
     const as4 = JSON.stringify(reqpara4)
-    this.ServicingService.getCre(as4).subscribe(res => {
+    this.ServicingService.webServiceCall(as4).subscribe(res => {
       console.log(res[0].login === 0);
       if (res[0].login === 0) {
         sessionStorage.removeItem('currentUser');
@@ -682,7 +654,7 @@ export class Modal5Component implements OnInit {
     console.log(reqpara1);
     const ua1 = JSON.stringify(reqpara1);
     console.log(ua1);
-    this.ServicingService.AddSerivicng(ua1).subscribe(res => {
+    this.ServicingService.webServiceCall(ua1).subscribe(res => {
       if (res[0].login === 0) {
         sessionStorage.removeItem('currentUser');
         this.router.navigate(['/auth/login']);

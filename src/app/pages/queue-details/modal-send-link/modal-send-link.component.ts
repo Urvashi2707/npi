@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal, NgbActiveModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
-import { ListService } from '../../services/user.service';
+import { ServerService } from '../../services/user.service';
 import { FormGroup, FormBuilder, NgForm } from '@angular/forms';
 import { QueueTableService } from '../../services/queue-table.service';
 
@@ -15,7 +15,7 @@ export class ModalSendLinkComponent implements OnInit {
   number_formgroup: FormGroup;
   type: number;
   modalHeader:string;
-  constructor(private activeModal: NgbActiveModal, private _data: ListService, private fb: FormBuilder, private _detailsTable: QueueTableService) {
+  constructor(private activeModal: NgbActiveModal, private _data: ServerService, private fb: FormBuilder, private _detailsTable: QueueTableService) {
     this.number_formgroup = this.fb.group({
       mobile_number: [{ value: '', disabled: false}]
     });
@@ -49,7 +49,7 @@ export class ModalSendLinkComponent implements OnInit {
       type: this.type
     }
     const as3 = JSON.stringify(reqpara3);
-    this._data.createUser(as3).subscribe(res => {
+    this._data.webServiceCall(as3).subscribe(res => {
       this.showAnimation = 1;
       console.log(res)
     });

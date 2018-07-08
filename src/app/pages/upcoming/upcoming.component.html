@@ -7,7 +7,7 @@
       <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
         <div class="form-group">
           <div class="input-group">
-            <input class="form-control" name="dp" [ngModel]="model1" (ngModelChange)="onSelectDate($event)" placeholder="{{today | date: 'yyyy-MM-dd'}}"
+            <input class="form-control" name="dp" [ngModel]="model1" (ngModelChange)="onSelectStartDate($event)" placeholder="{{today | date: 'yyyy-MM-dd'}}"
               ngbDatepicker #d1="ngbDatepicker">
             <div class="input-group-append">
               <button class="btn btn-outline-secondary dateButton" (click)="d1.toggle()" type="button" style="height: 100%;border-radius: 0px;">
@@ -22,7 +22,7 @@
       <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
         <div class="form-group">
           <div class="input-group">
-            <input class="form-control" name="dp" [ngModel]="model" (ngModelChange)="onSelectDate1($event)" placeholder="{{futuredate | date: 'yyyy-MM-dd'}}"
+            <input class="form-control" name="dp" [ngModel]="model" (ngModelChange)="onSelectEndDate($event)" placeholder="{{futuredate | date: 'yyyy-MM-dd'}}"
               ngbDatepicker #d="ngbDatepicker">
             <div class="input-group-append">
               <button class="btn btn-outline-secondary dateButton" (click)="d.toggle()" type="button" style="height: 100%;border-radius: 0px;">
@@ -43,7 +43,7 @@
 
       </div>
       <div class="col-md-6 col-lg-6 col-sm-6">
-        <input type="text" class="search" [(ngModel)]="term" placeholder="search">
+        <input type="text" class="search" [(ngModel)]="SearchData" placeholder="search">
       </div>
     </div>
     <table style="width:100%">
@@ -85,14 +85,14 @@
             </span>
           </th>
           <th *ngIf="InsuranceCheck" (click)="sort('svc_name')">SVC Name
-              <span class="sort-span">
-                <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i>
-              </span>
-            </th>
+            <span class="sort-span">
+              <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i>
+            </span>
+          </th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let i of upcoming |filter:term | orderBy: key : reverse  | paginate: { id: 'server', itemsPerPage:dataperpage, currentPage: p + 1, totalItems: record_count }; let j = index"
+        <tr *ngFor="let i of upcoming |filter:SearchData | orderBy: key : reverse  | paginate: { id: 'server', itemsPerPage:DataPerPage, currentPage: p + 1, totalItems: record_count }; let j = index"
           (click)="openQDetails(i)">
           <td>{{i.queueid}}</td>
           <td>{{i.cust_name}}</td>
@@ -105,9 +105,7 @@
         </tr>
       </tbody>
     </table>
-    <table *ngIf="message">
-      {{message}}
-    </table>
+    <div *ngIf="MessageNoData" class="ErrorMessage">{{MessageNoData}}</div>
     <ngx-spinner bdColor="rgba(51,51,51,0.09)" size="large" color="#ea5810" type="ball-clip-rotate-pulse"></ngx-spinner>
     <div class="paginate">
       <pagination-controls (pageChange)="FilterCheck($event)" id="server"></pagination-controls>
@@ -121,18 +119,19 @@
       <span class="header">Upcoming</span>
     </div>
     <div class="col-8 col-sm-8">
-        <div class="right-inner-addon">
-          <i class="fa fa-search"></i>
-          <input type="search" class="form-control" placeholder="Search" [(ngModel)]="term" />
-        </div>
+      <div class="right-inner-addon">
+        <i class="fa fa-search"></i>
+        <input type="search" class="form-control" placeholder="Search" [(ngModel)]="SearchData" />
       </div>
+    </div>
   </div>
   <hr/>
   <div class="row">
     <div class="col-12 col-sm-12">
       <div class="form-group">
         <div class="input-group">
-          <input class="form-control" name="dp" [ngModel]="StrtDateModel" (ngModelChange)="onSelectStartDate($event)" ngbDatepicker #d2="ngbDatepicker">
+          <input class="form-control" name="dp" [ngModel]="model1" (ngModelChange)="onSelectStartDate($event)" ngbDatepicker
+            #d2="ngbDatepicker">
           <div class="input-group-append">
             <button class="btn btn-outline-secondary dateButton" (click)="d2.toggle()" type="button" style="height: 100%;width: 100%">
               <span>
@@ -166,21 +165,16 @@
       <button type="button" class="btn btn-primary apply" (click)="FilterCheck(1)">Apply</button>
     </div>
   </div>
-  <!-- <div class="row">
-    <div class="col-sm-12 col-12">
-      <input type="text" class="search" [(ngModel)]="term" placeholder="search">
-    </div>
-  </div> -->
   <div class="row">
     <div class="col-12 col-sm-12">
       <ul>
-        <li *ngFor="let i of upcoming |filter:term " (click)="openQDetails(i)">
+        <li *ngFor="let i of upcoming |filter:SearchData | paginate: { id: 'server', itemsPerPage:DataPerPage, currentPage: p + 1, totalItems: record_count }; let j = index " (click)="openQDetails(i)">
           <div class="card">
-              <div class="row padding" *ngIf="InsuranceCheck">
-                  <div class="col-12 col-sm-12">
-                      <span class="QueueId">{{i.svc_name}}</span>
-                  </div>
-                </div>
+            <div class="row padding" *ngIf="InsuranceCheck">
+              <div class="col-12 col-sm-12">
+                <span class="QueueId">{{i.svc_name}}</span>
+              </div>
+            </div>
             <div class="row">
               <div class="col-12 col-sm-12">
                 <span class="QueueId">ID &nbsp;:&nbsp; {{i.queueid}}</span>
@@ -198,11 +192,12 @@
               <div class="col-7 col-sm-7">{{i.description}}</div>
             </div>
             <div class="row">
-                <div class="col-5 col-sm-5">Service Time:</div>
-                <div class="col-7 col-sm-7">{{i.newdate}} {{i.newtime}}</div>
-              </div>
-              <div class="row">
-                  <div class="col-12 col-sm-12 QueueStatus">{{i.queue_state}}</div></div>
+              <div class="col-5 col-sm-5">Service Time:</div>
+              <div class="col-7 col-sm-7">{{i.newdate}} {{i.newtime}}</div>
+            </div>
+            <div class="row">
+              <div class="col-12 col-sm-12 QueueStatus">{{i.queue_state}}</div>
+            </div>
           </div>
         </li>
       </ul>

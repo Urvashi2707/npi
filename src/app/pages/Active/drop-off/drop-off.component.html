@@ -8,7 +8,7 @@
         <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
           <div class="form-group">
             <div class="input-group">
-              <input class="form-control" name="dp" [ngModel]="model1" (ngModelChange)="onSelectDate1($event)" placeholder="{{pastdate | date: 'yyyy-MM-dd'}}"
+              <input class="form-control" name="dp" [ngModel]="model1" (ngModelChange)="onSelectStartDate($event)" placeholder="{{pastdate | date: 'yyyy-MM-dd'}}"
                 ngbDatepicker #d1="ngbDatepicker">
               <div class="input-group-append">
                 <button class="btn btn-outline-secondary dateButton" (click)="d1.toggle()" type="button" style="height: 100%;border-radius: 0px;">
@@ -23,7 +23,7 @@
         <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
           <div class="form-group">
             <div class="input-group">
-              <input class="form-control" name="dp" [ngModel]="model" (ngModelChange)="onSelectDate($event)" placeholder="{{today | date: 'yyyy-MM-dd'}}"
+              <input class="form-control" name="dp" [ngModel]="model" (ngModelChange)="onSelectEndDate($event)" placeholder="{{today | date: 'yyyy-MM-dd'}}"
                 ngbDatepicker #d="ngbDatepicker">
               <div class="input-group-append">
                 <button class="btn btn-outline-secondary dateButton" (click)="d.toggle()" type="button" style="height: 100%;border-radius: 0px;">
@@ -45,7 +45,7 @@
 
       </div>
       <div class="col-md-6 col-lg-6 col-sm-6">
-        <input type="text" class="search" [(ngModel)]="term" placeholder="search">
+        <input type="text" class="search" [(ngModel)]="SearchData" placeholder="search">
       </div>
     </div>
     <table style="width:100%">
@@ -95,7 +95,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let i of dropoff  | orderBy: key : reverse | filter : term  | paginate: { id: 'server', itemsPerPage:dataperpage, currentPage: p + 1, totalItems: record_count };"
+        <tr *ngFor="let i of dropoff  | orderBy: key : reverse | filter : SearchData  | paginate: { id: 'server', itemsPerPage:DataPerPage, currentPage: p + 1, totalItems: record_count };"
           (click)="openQDetails(i)">
           <td>{{i.queueid}}</td>
           <td>{{i.cust_name}}</td>
@@ -125,7 +125,7 @@
         <div class="col-8 col-sm-8">
             <div class="right-inner-addon">
                 <i class="fa fa-search"></i>
-                <input type="search" class="form-control" placeholder="Search" [(ngModel)]="term" />
+                <input type="search" class="form-control" placeholder="Search" [(ngModel)]="SearchData" />
               </div>
         </div>
       </div>
@@ -134,7 +134,7 @@
         <div class="col-12 col-sm-12">
           <div class="form-group">
             <div class="input-group">
-              <input class="form-control" name="dp" [ngModel]="model1" (ngModelChange)="onSelectDate1($event)" ngbDatepicker #d2="ngbDatepicker">
+              <input class="form-control" name="dp" [ngModel]="model1" (ngModelChange)="onSelectStartDate($event)" ngbDatepicker #d2="ngbDatepicker">
               <div class="input-group-append">
                 <button class="btn btn-outline-secondary dateButton" (click)="d2.toggle()" type="button" style="height: 100%;width: 100%">
                   <span>
@@ -150,7 +150,7 @@
         <div class="col-12 col-sm-12">
           <div class="form-group">
             <div class="input-group">
-              <input class="form-control" name="dp" [ngModel]="model" (ngModelChange)="onSelectDate($event)" ngbDatepicker #d3="ngbDatepicker">
+              <input class="form-control" name="dp" [ngModel]="model" (ngModelChange)="onSelectEndDate($event)" ngbDatepicker #d3="ngbDatepicker">
               <div class="input-group-append">
                 <button class="btn btn-outline-secondary dateButton" (click)="d3.toggle()" type="button" style="height: 100%;width: 100%">
                   <span>
@@ -172,7 +172,7 @@
     <div class="col-12 col-sm-12">
         <div *ngIf="message">{{message}}</div>
       <ul>
-        <li *ngFor="let i of dropoff | filter : term " (click)="openQDetails(i)">
+        <li *ngFor="let i of dropoff | filter : SearchData | paginate: { id: 'server', itemsPerPage:DataPerPage, currentPage: p + 1, totalItems: record_count };" (click)="openQDetails(i)">
           <div class="card">
               <div class="row padding" *ngIf="InsuranceCheck">
                   <div class="col-12 col-sm-12">
@@ -190,32 +190,6 @@
                 <div>{{i.cust_name}}</div>
               </div>
             </div>
-            <!-- <div class="row" style="padding-top:3%">
-                <div class="col-sm-8 col-8">
-                  <div class="row">
-                    <div class="col-sm-6 col-6">
-                      <span>Pickup</span>
-                    </div>
-                    <div class="col-sm-6 col-6">
-                      <span>ETD</span>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-sm-4 col-4">
-                 </div>
-              </div> -->
-        <!-- <div class="row">
-                <div class="col-9 col-sm-9">
-                    <div class="container">
-                        <ul class="progressbar">
-                            <li style="font-size: 10px;">{{i.newdate}}<br>{{i.newtime}}</li>
-                            <li></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-3 col-sm-3">
-                </div>
-            </div> -->
             <div class="row">
               <div class="col-6 col-sm-6"><span>Ambassador : </span></div>
               <div class="col-6 col-sm-6"><span>Advisor : </span></div>

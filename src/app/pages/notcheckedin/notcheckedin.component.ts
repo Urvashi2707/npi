@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { QueueTableService } from '../services/queue-table.service';
-import { ListService } from '../services/user.service';
+import { ServerService } from '../services/user.service';
 import { Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
-import {NgbDateAdapter, NgbDateStruct, NgbDatepickerConfig, NgbDateParserFormatter} from '@ng-bootstrap/ng-bootstrap';
+import {NgbDateStruct,  NgbDateParserFormatter} from '@ng-bootstrap/ng-bootstrap';
 import {ServicingService } from '../services/addServicing.service';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { Modal4Component } from './../search/modal/modal.component';
+import { NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import { SearchModalComponent } from '../search/modal/searchModal.component';
 
 @Component({
   selector: 'app-notcheckedin',
@@ -16,24 +16,19 @@ import { Modal4Component } from './../search/modal/modal.component';
 })
 export class NotcheckedinComponent implements OnInit {
 
-  public notcheckedin : any =[];
-  dateString: string;
-  p:number=1;
-  dateString1: string;
+  //variables
+  notcheckedin : any =[];
+  EndDateString: string;
+  page:number=1;
+  StartDateString: string;
   model: NgbDateStruct;
   model1: NgbDateStruct;
   term:string;
-  message:string;
-  record_count:string;
-  dataperpage:string;
-  pastdate:string;
-  searchText:string;
-  svcadmin:string;
-  checksvcadmin :boolean;
-  checkgrpadmin :boolean;
-  globalsvcid:string;
-  groupadmin:string;
-  svcid:string;
+  MessageNoData:string;
+  RecordCount:string;
+  DataPerPage:string;
+  GlobalSvcId:string;
+  SvcId:string;
   datatopass:any;
   reverse: boolean = false;
   key: string = 'queueid'; 
@@ -41,157 +36,111 @@ export class NotcheckedinComponent implements OnInit {
   today:string;
   InsuranceUsr:string;
   InsuranceCheck:boolean = false;
-  constructor(private datePipe:DatePipe,
-    private spinner: NgxSpinnerService,
-    private ngbDateParserFormatter: NgbDateParserFormatter,
-    private _detailsTable: QueueTableService, 
-    private _data: ListService, 
-    private _tableService: QueueTableService, 
-    private router: Router,
-    private modalService: NgbModal,
-    private service :ServicingService) { 
-
+  constructor(private spinner: NgxSpinnerService,
+                private ngbDateParserFormatter: NgbDateParserFormatter,
+                private _tableService: QueueTableService, 
+                private router: Router,
+                private modalService: NgbModal,
+                private service :ServicingService) { 
       const date = new Date();
       this.model = {day:date.getUTCDate(),month:date.getUTCMonth() + 1,year: date.getUTCFullYear() };
-      this.dateString = this.model.year + '-' + this.model.month + '-' + this.model.day;
-      var numberOfDays = 5;
+      this.EndDateString = this.model.year + '-' + this.model.month + '-' + this.model.day;
       var dt = new Date();
            dt.setDate( dt.getDate() - 5 );
       this.model1 = { day: dt.getUTCDate(), month: dt.getUTCMonth() + 1, year: dt.getUTCFullYear()};
-      this.dateString1 = this.model1.year + '-' + this.model1.month + '-' + this.model1.day;
-      this.today = this.datePipe.transform(date,"yyyy-MM-dd");
-      console.log(this.today)
-      var days = date.setDate(date.getDate() - numberOfDays);
-      this.pastdate = this.datePipe.transform(days,"yyyy-MM-dd");
-      console.log(this.pastdate);   
+      this.StartDateString = this.model1.year + '-' + this.model1.month + '-' + this.model1.day; 
   }
 
   ngOnInit() {
     this.InsuranceUsr = JSON.parse(sessionStorage.getItem('insurance'));
     if(sessionStorage.getItem('selectedsvc')){
-      
-      this.svcid = sessionStorage.getItem('selectedsvc');
-      
+        this.SvcId = sessionStorage.getItem('selectedsvc');
     }
     else{
-      this.svcid = JSON.parse(sessionStorage.getItem('globalsvcid'));
-      
-    }
-    var date = new Date();
-    this.today = this.datePipe.transform(date,"yyyy-MM-dd");
-    console.log(this.today)
-    var numberOfDays = 5;
-    var days = date.setDate(date.getDate() - numberOfDays);
-    this.pastdate = this.datePipe.transform(days,"yyyy-MM-dd");
-    console.log(this.pastdate);
+      this.SvcId = JSON.parse(sessionStorage.getItem('globalsvcid'));
+      }
     if(this.InsuranceUsr == "1"){
       this.InsuranceCheck = true;
     }
     else{
       this.InsuranceCheck = false;
      }
-    this.getData(1);
+    this.FilterCheck(1);
   }
 
-  onSelectDate(date: NgbDateStruct){
+   //On select of startDate
+  onSelectStartDate(date: NgbDateStruct){
+    if (date != null) {
+            this.model1 = date;
+            this.StartDateString = this.ngbDateParserFormatter.format(date);
+        }
+      }
+
+         //On select of End Date
+      onSelectEndDate(date: NgbDateStruct){
     if (date != null) {
             this.model = date;
-            this.dateString = this.ngbDateParserFormatter.format(date);
-            console.log(this.dateString);
+            this.EndDateString = this.ngbDateParserFormatter.format(date);
         }
-        
+    }
 
-  }
-
-  uploadFiles(data:any){
-    console.log(data);
-    console.log(data.service_advisor)
-    // console.log(this.tableData[event.currentTarget.id].service_status)
-
-  //  console.log(id);
-    const activeModal = this.modalService.open(Modal4Component, { size: 'lg', container: 'nb-layout' });
-
+    //Show modal for invoice upload
+  ShowUploadModal(data:any){
+    const activeModal = this.modalService.open(SearchModalComponent, { size: 'lg', container: 'nb-layout' });
     this.datatopass = {id:data.queueid, queue_exists: "0", service_status:data.service_status, queue_time:data.queue_time,service_advisor:data.service_advisor};
     this.dataForUpload = { id: sessionStorage.getItem('QueueId'), queue_date: new Date, service_status: data.service_status}
     activeModal.componentInstance.modalHeader = 'Upload File';
     activeModal.componentInstance.modalContent = this.datatopass;
+}
 
-  }
-
+ //Open Queue Details Page
   openQDetails(data:any){
     sessionStorage.removeItem('clickedOn');
     sessionStorage.setItem('QueueId',data.queueid)
-    this._detailsTable.queueID = data.queueid;
+    this._tableService.queueID = data.queueid;
     this.router.navigate(['/pages/queue-details']);
   }
+
+  //sort
   sort(key){
     this.key = key;
     this.reverse = !this.reverse;
   }
-  getData(p:number){
+
+//Not Checkedin table data API call
+  FilterCheck(p:number){
     this.spinner.show();
-    this.p = p - 1 ;
-   this.message = "";
-    const reqpara1 = 
-    {
+    this.page = p - 1 ;
+   this.MessageNoData = null;
+    const NotCheckedInReq = {
       requesttype: 'getqueueinfonew',
       servicetype:14,
-      starttime: this.pastdate,
-      endtime: this.today,
-      pagenumber: this.p,
-      svcid:this.svcid
+      starttime: this.StartDateString,
+      endtime: this.EndDateString,
+      pagenumber: this.page,
+      svcid:this.SvcId
     }
-      const as1 = JSON.stringify(reqpara1)
-      this.service.webServiceCall(as1).subscribe
-  (res => 
-    {
+      const Req = JSON.stringify(NotCheckedInReq)
+      this.service.webServiceCall(Req).subscribe
+  (res =>{
       if(res[0].login === 0){
         sessionStorage.removeItem('currentUser');
         this.router.navigate(['/auth/login']);
       }
       else{
         if(res[0].pagecount[0].hasOwnProperty('noqueues')){
-          console.log('No queue');
-          this.message = "No Data" ;
+          this.MessageNoData = "No Data" ;
           this.spinner.hide();
          }
          else{
           this.notcheckedin = res[1].atsvc;
-          this.record_count = res[0].pagecount[0].record_count;
-         this.dataperpage = res[0].pagecount[0].pagelimit;
-         console.log(this.record_count);
+          this.RecordCount = res[0].pagecount[0].record_count;
+         this.DataPerPage = res[0].pagecount[0].pagelimit;
          this.spinner.hide();
-         for (let j = 0; j < this.notcheckedin.length ; j++){
-          if(this.notcheckedin[j].start_time != null){
-            var queuetime = this.notcheckedin[j].start_time;
-            var date = queuetime.replace( /\n/g, " " ).split( " " );
-            var newDate = this.datePipe.transform(date[0],"d MMM,y");
-            var timeString = date[1];
-            var H = +timeString.substr(0, 2);
-            var h = (H % 12) || 12;
-            var ampm = H < 12 ? "AM" : "PM";
-            timeString = h + timeString.substr(2, 3) + ampm;
-            this.notcheckedin[j].newtime = timeString;
-            this.notcheckedin[j].newdate = newDate;
-          }
-     
-         }
-         }
-      //   this.unconfirmed = res[1].unconfirmed;
-      // console.log(this.unconfirmed);
+         this._tableService.DateFormat(this.notcheckedin);
+         this._tableService.TimeFormat(this.notcheckedin);
       }
-
     }
-  );
+  });
   }
-
-  onSelectDate1(date: NgbDateStruct){
-    if (date != null) {
-            this.model1 = date;
-            this.dateString1 = this.ngbDateParserFormatter.format(date);
-            console.log(this.dateString1);
-        }
-        
-
-      }
-    }
+}

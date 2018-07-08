@@ -6,13 +6,13 @@
 </div>
 <!--   -->
   <div class="form-group" style="margin:5%">
-    <select class="form-control" name="list" [(ngModel)]="selectedSvcid" required>
+    <select class="form-control" name="list" [(ngModel)]="SelectedSvcid" required>
       <option *ngFor="let item of List" [ngValue]="item.id"> {{item.name}} </option>
     </select>
   </div>
 <!-- </div> -->
 <div>
   <div style="margin:5%">
-    <button class="btn btn-warning" (click)="selectSvcid()">Select</button>
+    <button class="btn btn-warning" (click)="SelectSvcid()">Select</button>
   </div>
 </div>

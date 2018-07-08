@@ -179,7 +179,7 @@ export class ManageComponent implements OnInit {
     console.log(reqpara3);
     const as3 = JSON.stringify(reqpara3)
     console.log(as3);
-    this.servicing.getBrands(as3).subscribe
+    this.servicing.webServiceCall(as3).subscribe
       (res => {
         if (res[0].login === 0) {
           sessionStorage.removeItem('currentUser');

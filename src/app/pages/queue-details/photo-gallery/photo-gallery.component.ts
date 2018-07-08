@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModalPhotoComponent } from './modal-photo/modal-photo.component';
 import { NgbPanelChangeEvent, NgbTabContent } from '@ng-bootstrap/ng-bootstrap';
-import { ListService } from '../../services/user.service';
+import { ServerService } from '../../services/user.service';
 import { QueueTableService } from '../../services/queue-table.service';
 import { ThemeModule } from '../../../@theme/theme.module';
 import { ModalSendLinkComponent } from '../modal-send-link/modal-send-link.component';
@@ -25,7 +25,7 @@ export class PhotoGalleryComponent implements OnInit {
   keyForState: any[];
 
   pickCimages: String[] = []
-  constructor(private modalService: NgbModal, private _data: ListService, private _detailsTable: QueueTableService) { }
+  constructor(private modalService: NgbModal, private _data: ServerService, private _detailsTable: QueueTableService) { }
 
   onViewerVisibilityChanged(img: any) {
     const activeModal = this.modalService.open(ModalPhotoComponent, { size: 'lg', container: 'nb-layout' });
@@ -38,7 +38,7 @@ export class PhotoGalleryComponent implements OnInit {
       queueid: sessionStorage.getItem('QueueId'),
     }
     const as3 = JSON.stringify(reqpara3);
-    this._data.createUser(as3).subscribe(res => {
+    this._data.webServiceCall(as3).subscribe(res => {
       const valueOF = res;
       const check = valueOF.valueOf();
       const check1 = check[0];
@@ -72,7 +72,7 @@ export class PhotoGalleryComponent implements OnInit {
     }
     this.dataToSend = JSON.stringify(reqpara3);
     console.log(this.dataToSend);
-    this._data.createUser(this.dataToSend).subscribe(res => {
+    this._data.webServiceCall(this.dataToSend).subscribe(res => {
       const valueOF = res;
       const check = valueOF.valueOf();
       const check1 = check[0];

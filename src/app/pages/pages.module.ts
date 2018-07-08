@@ -6,7 +6,7 @@ import { PagesRoutingModule } from './pages-routing.module';
 import { ThemeModule } from '../@theme/theme.module';
 import { ManageComponent } from './manage/manage.component';
 import { UserComponent } from './user/user.component';
-import { ModalComponent } from './user/modal/modal.component';
+import { EditUserComponent } from './user/modal/EditUser.component';
 import { Modal2Component } from './manage/modal/modal.component';
 import { QueueDetailsComponent } from './queue-details/queue-details.component';
 import { MaterialModule } from '.././material.module';
@@ -34,10 +34,10 @@ import { ToasterService, ToasterConfig, Toast, BodyOutputType } from 'angular2-t
 import { DatePipe } from '@angular/common';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { ProfileComponent } from './profile/profile.component';
-import { Modal4Component } from './search/modal/modal.component';
+import { SearchModalComponent } from './search/modal/searchModal.component';
 import { MatrixComponent } from './matrix/matrix.component';
 import { UnconfirmedComponent } from './unconfirmed/unconfirmed.component';
-import { Modal5Component } from './unconfirmed/modal5/modal5.component';
+import { ConfirmModalComponent } from './unconfirmed/modal/confirmModal.component';
 import { TitleCasePipe } from '@angular/common';
 import { OptionComponent } from './dashboard/option/option.component';
 import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown/angular2-multiselect-dropdown';
@@ -70,8 +70,8 @@ const PAGES_COMPONENTS = [
     ManageComponent,
     UserComponent,
     Modal2Component,
-    ModalComponent,
-    Modal4Component,
+    EditUserComponent,
+    SearchModalComponent,
     ReportsComponent,
     PaymentComponent,
     UpcomingComponent,
@@ -91,7 +91,7 @@ const PAGES_COMPONENTS = [
     ProfileComponent,
     MatrixComponent,
     UnconfirmedComponent,
-    Modal5Component,
+    ConfirmModalComponent,
     SuccessComponent,
     ModalPickupComponent,
     ModalDropoffComponent,
@@ -101,11 +101,11 @@ const PAGES_COMPONENTS = [
     columnPipe,rowPipe,searchPipe
   ],
   entryComponents: [
-    ModalComponent,
+    EditUserComponent,
     ModalPhotoComponent,
     Modal2Component,
     ModalQueueComponent,
-    ModalUploadComponent,Modal4Component, Modal5Component,
+    ModalUploadComponent,SearchModalComponent, ConfirmModalComponent,
     ModalSendLinkComponent,
     SuccessComponent,
     ModalPickupComponent,

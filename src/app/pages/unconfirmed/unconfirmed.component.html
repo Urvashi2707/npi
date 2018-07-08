@@ -10,7 +10,7 @@
             <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
               <div class="form-group">
                 <div class="input-group">
-                  <input class="form-control" name="dp" [ngModel]="model1" (ngModelChange)="onSelectDate1($event)" placeholder="{{pastdate | date: 'yyyy-MM-dd'}}"
+                  <input class="form-control" name="dp" [ngModel]="model1" (ngModelChange)="onSelectStartDate($event)" placeholder="{{pastdate | date: 'yyyy-MM-dd'}}"
                     ngbDatepicker #d2="ngbDatepicker">
                   <div class="input-group-append">
                     <button class="btn btn-outline-secondary dateButton" (click)="d2.toggle()" type="button" style="height: 100%;border-radius: 0px">
@@ -25,7 +25,7 @@
             <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
               <div class="form-group">
                 <div class="input-group">
-                  <input class="form-control" name="dp" [ngModel]="model" (ngModelChange)="onSelectDate($event)" placeholder="{{today | date: 'yyyy-MM-dd'}}"
+                  <input class="form-control" name="dp" [ngModel]="model" (ngModelChange)=" onSelectEndDate($event)" placeholder="{{today | date: 'yyyy-MM-dd'}}"
                     ngbDatepicker #d3="ngbDatepicker">
                   <div class="input-group-append">
                     <button class="btn btn-outline-secondary dateButton" (click)="d3.toggle()" type="button" style="height: 100%;border-radius: 0px">
@@ -48,7 +48,7 @@
 
             </div>
             <div class="col-md-6 col-lg-6 col-sm-6">
-              <input type="text" class="search" [(ngModel)]="term" placeholder="search">
+              <input type="text" class="search" [(ngModel)]="SearchData" placeholder="search">
             </div>
           </div>
           <div>
@@ -56,48 +56,42 @@
               <tr>
                 <th (click)="sort('queueid')">ID
                   <span class="sort-span">
-                    <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100"
-                      aria-hidden="true"></i>
+                    <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i>
                   </span>
                 </th>
                 <th (click)="sort('cust_name')">Customer Name
                   <span class="sort-span">
-                    <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100"
-                      aria-hidden="true"></i>
+                    <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i>
                   </span>
                 </th>
                 <th (click)="sort('veh_number')">Vehicle Number
                   <span class="sort-span">
-                    <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100"
-                      aria-hidden="true"></i>
+                    <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i>
                   </span>
                 </th>
                 <th (click)="sort('type_service')">Service Type
                   <span class="sort-span">
-                    <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100"
-                      aria-hidden="true"></i>
+                    <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i>
                   </span>
                 </th>
                 <th (click)="sort('queue_date')">Timing
                   <span class="sort-span">
-                    <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100"
-                      aria-hidden="true"></i>
+                    <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i>
                   </span>
                 </th>
                 <th (click)="sort('queue_state')">Status
                   <span class="sort-span">
-                    <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100"
-                      aria-hidden="true"></i>
+                    <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i>
                   </span>
                 </th>
                 <th *ngIf="InsuranceCheck" (click)="sort('svc_name')">SVC Name
-                    <span class="sort-span">
-                      <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i>
-                    </span>
-                  </th>
+                  <span class="sort-span">
+                    <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i>
+                  </span>
+                </th>
                 <th>Confirm</th>
               </tr>
-              <tr *ngFor="let u of unconfirmed | filter:term | paginate: { id: 'server', itemsPerPage:dataperpage, currentPage: p + 1, totalItems: record_count };">
+              <tr *ngFor="let u of unconfirmed | filter:SearchData | paginate: { id: 'server', itemsPerPage:DataPerPage, currentPage: p + 1, totalItems: record_count };">
                 <td>{{u.queueid}}</td>
                 <td>{{u.cust_name}}</td>
                 <td>{{u.veh_number}}</td>
@@ -106,7 +100,7 @@
                 <td>{{u.queue_state}}</td>
                 <td *ngIf="InsuranceCheck">{{i.svc_name}}</td>
                 <td>
-                  <button (click)="showModal(u)" class="btn btn-warning">Confirm</button>
+                  <button (click)="ShowConfirmModal(u)" class="btn btn-warning">Confirm</button>
                 </td>
               </tr>
               <tr *ngIf="message">
@@ -119,20 +113,20 @@
             </div>
           </div>
         </div>
-
-
-
       </nb-card-body>
-      <nb-card-footer>
-
-      </nb-card-footer>
     </nb-card>
   </div>
 </div>
 <div class="mobileView">
   <div class="row headerRow">
-    <div class="col-12 col-sm-12">
+    <div class="col-4 col-sm-4">
       <span class="header">Unconfirmed</span>
+    </div>
+    <div class="col-8 col-sm-8">
+      <div class="right-inner-addon">
+        <i class="fa fa-search"></i>
+        <input type="search" class="form-control" placeholder="Search" [(ngModel)]="SearchData" />
+      </div>
     </div>
   </div>
   <hr/>
@@ -140,7 +134,7 @@
     <div class="col-12 col-sm-12">
       <div class="form-group">
         <div class="input-group">
-          <input class="form-control" name="dp" [ngModel]="model1" (ngModelChange)="onSelectDate1($event)" ngbDatepicker #d0="ngbDatepicker">
+          <input class="form-control" name="dp" [ngModel]="model1" (ngModelChange)="onSelectStartDate($event)" ngbDatepicker #d0="ngbDatepicker">
           <div class="input-group-append">
             <button class="btn btn-outline-secondary dateButton" (click)="d0.toggle()" type="button" style="height: 100%;">
               <span>
@@ -156,7 +150,7 @@
     <div class="col-12 col-sm-12">
       <div class="form-group">
         <div class="input-group">
-          <input class="form-control" name="dp" [ngModel]="model" (ngModelChange)="onSelectDate($event)" ngbDatepicker #d1="ngbDatepicker">
+          <input class="form-control" name="dp" [ngModel]="model" (ngModelChange)=" onSelectEndDate($event)" ngbDatepicker #d1="ngbDatepicker">
           <div class="input-group-append">
             <button class="btn btn-outline-secondary dateButton" (click)="d1.toggle()" type="button" style="height: 100%;">
               <span>
@@ -177,13 +171,13 @@
   <div class="row">
     <div class="col-12 col-sm-12">
       <ul>
-        <li *ngFor="let u of unconfirmed | filter:term">
+        <li *ngFor="let u of unconfirmed | filter:SearchData | paginate: { id: 'server', itemsPerPage:DataPerPage, currentPage: p + 1, totalItems: record_count };">
           <div class="card">
-              <div class="row padding" *ngIf="InsuranceCheck">
-                  <div class="col-12 col-sm-12">
-                      <span class="QueueId">{{u.svc_name}}</span>
-                  </div>
-                </div>
+            <div class="row padding" *ngIf="InsuranceCheck">
+              <div class="col-12 col-sm-12">
+                <span class="QueueId">{{u.svc_name}}</span>
+              </div>
+            </div>
             <div class="row">
               <div class="col-12 col-sm-12">
                 <span class="QueueId">ID &nbsp;:&nbsp;{{u.queueid}}</span>
@@ -203,16 +197,16 @@
             </div>
             <div class="row">
               <div class="col-12 col-sm-12">
-                    <span class="SercviceType">Service type : {{u.type_service}}</span>
+                <span class="SercviceType">Service type : {{u.type_service}}</span>
               </div>
             </div>
             <div class="row">
               <div class="col-6 col-sm-6">
-                
+
                 <span class="QueueStatus">{{u.queue_state}}</span>
               </div>
               <div class="col-6 col-sm-6">
-                <button (click)="showModal(u)" class="btn btn-warning apply">Confirm</button>
+                <button (click)="ShowConfirmModal(u)" class="btn btn-warning apply">Confirm</button>
               </div>
             </div>
           </div>

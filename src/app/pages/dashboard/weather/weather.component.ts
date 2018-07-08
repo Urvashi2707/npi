@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
 import {ServicingService } from '../../services/addServicing.service';
-import {HttpClient,HttpHeaders,HttpErrorResponse,HttpRequest} from '@angular/common/http';
 
 @Component({
   selector: 'ngx-weather',
@@ -11,26 +10,25 @@ import {HttpClient,HttpHeaders,HttpErrorResponse,HttpRequest} from '@angular/com
 
 export class WeatherComponent implements OnInit{
 
-  public cards :any=[];
-  public pickup : any=[];
-  public dropoff:any=[];
-  public notification :any=[];
-  public message:string="31";
-  svcid:string;
+  //variables
+  Cards :any=[];
+  PickupDetails : any=[];
+  DropoffDetails:any=[];
+  Notification :any=[];
+  message:string="31";
+  SvcId:string;
+
   ngOnInit() {
     if(sessionStorage.getItem('selectedsvc')){
-      // console.log(sessionStorage.getItem('selectedsvc'));
-      this.svcid = sessionStorage.getItem('selectedsvc');
-      // console.log(this.svcid);
+      this.SvcId = sessionStorage.getItem('selectedsvc');
     }
     else{
-      this.svcid = JSON.parse(sessionStorage.getItem('globalsvcid'));
-      // console.log(this.svcid);
+      this.SvcId = JSON.parse(sessionStorage.getItem('globalsvcid'));
     }
-    this.getData();
+    this.getDashboardData();
   }
 
-  constructor(private http:HttpClient,private router:Router,private service:ServicingService){}
+  constructor(private router:Router,private service:ServicingService){}
 
   navigatePaused(){
     this.router.navigate(['pages/paused']);
@@ -48,35 +46,27 @@ export class WeatherComponent implements OnInit{
     this.router.navigate(['pages/notcheckedin']);
   }
 
-  getData(){
-    const reqpara1 = 
-         {
+  getDashboardData(){
+    const DashReq = {
            requesttype: 'dashboard',
-           svcid:this.svcid
+           svcid:this.SvcId
          }
-      const as1 = JSON.stringify(reqpara1)
-      this.service.getBrands(as1).subscribe
-       (res => 
-         {
-           console.log(res[0].login);
+      const DashRq = JSON.stringify(DashReq)
+      this.service.webServiceCall(DashRq).subscribe
+       (res => {
            if(res[0].login === 0){
              sessionStorage.removeItem('currentUser');
              this.router.navigate(['/auth/login']);
            }
            else{
+            this.PickupDetails=res[1].pickup_details,
+            this.DropoffDetails=res[2].drop_details,
+            this.Notification=res[3].notification[0];
             if(res[0].cards[0] > 0){
-              this.cards=res[0].cards[0];
-             
-           }
-           else {
-            console.log('No card details');
-           }
-             this.pickup=res[1].pickup_details,
-             this.dropoff=res[2].drop_details,
-             this.notification=res[3].notification[0];
-           }
-          
+              this.Cards=res[0].cards[0];
+            }
+           else {}
+            }
          }
-       );
-   }
+       );}
 }

@@ -58,7 +58,7 @@ export class Modal2Component {
     };
     console.log(JSON.stringify(reqpara));
     const ua = JSON.stringify(reqpara);
-    this._data.getBrands(ua).subscribe(data => {
+    this._data.webServiceCall(ua).subscribe(data => {
       if(data){
         console.log(data);
         this.message = data

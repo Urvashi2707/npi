@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal, NgbActiveModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { QueueTableService } from '../../services/queue-table.service'
-import { ListService } from '../../services/user.service'
+import { ServerService } from '../../services/user.service'
 import { Router } from '@angular/router';
 
 @Component({
@@ -15,7 +15,7 @@ export class ModalQueueComponent implements OnInit {
   selectedGame: Object = {};
   errorMsg: String = "";
   svcid:string;
-  constructor(private activeModal: NgbActiveModal, private _details: QueueTableService, private _data: ListService, private router: Router) { }
+  constructor(private activeModal: NgbActiveModal, private _details: QueueTableService, private _data: ServerService, private router: Router) { }
 
   ngOnInit() {
     if(sessionStorage.getItem('selectedsvc')){
@@ -37,7 +37,7 @@ export class ModalQueueComponent implements OnInit {
       svcid:this.svcid
     }
     const as3 = JSON.stringify(reqpara3);
-    this._data.createUser(as3).subscribe(res => {
+    this._data.webServiceCall(as3).subscribe(res => {
       const check = res.valueOf();
       const cancel = check[0].deletestatus;
       if(cancel[0].is_delete == '1'){

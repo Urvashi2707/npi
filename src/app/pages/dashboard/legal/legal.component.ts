@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import {HttpClient,HttpHeaders} from '@angular/common/http';
-import { HttpErrorResponse } from '@angular/common/http/src/response';
 import { ServicingService } from '../../services/addServicing.service';
-import { Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
+
 @Component({
   selector: 'app-legal',
   templateUrl: './legal.component.html',
@@ -14,67 +12,61 @@ export class LegalComponent implements OnInit {
 
   modalHeader: string;
   modalContent:any;
-  public List: any = [];
-  selectedSvcid:string;
-  public globalsvcid:string;
-  public selectedsvcid:string;
-  svcid:string;
+  SelectedSvcid:string;
+  GlobalSvcid:string;
+  SvcId:string;
   changedsvc:any;
-  public now:string;
-  today:string;
-  svcname:string;
-  acceptBtn = true;
-  cityname:string;
+  TodayDate:string;
+  SvcName:string;
+  AcceptBtn = true;
+  CityName:string;
 
-  constructor(private datePipe: DatePipe,private router: Router,private activeModal: NgbActiveModal,private servicing: ServicingService) { }
+  constructor(private datePipe: DatePipe,
+              private activeModal: NgbActiveModal,
+              private servicing: ServicingService) { }
 
   ngOnInit() {
      var date = new Date();
-     this.today = this.datePipe.transform(date,"fullDate");
-
-     this.cityname = sessionStorage.getItem('city_name');
+     this.TodayDate = this.datePipe.transform(date,"fullDate");
+    this.CityName = sessionStorage.getItem('city_name');
 
     if(sessionStorage.getItem('selectedsvc')){
-      this.svcid = sessionStorage.getItem('selectedsvc');
+      this.SvcId = sessionStorage.getItem('selectedsvc');
      }
     else{
-      this.svcid = JSON.parse(sessionStorage.getItem('globalsvcid'));
-      this.globalsvcid =  JSON.parse(sessionStorage.getItem('globalsvcid'))
+      this.SvcId = JSON.parse(sessionStorage.getItem('globalsvcid'));
+      this.GlobalSvcid =  JSON.parse(sessionStorage.getItem('globalsvcid'))
     }
-    this.selectedSvcid = this.globalsvcid;
-
-    this.svcname = JSON.parse(sessionStorage.getItem('svcname'));
-   
+    this.SelectedSvcid = this.GlobalSvcid;
+    this.SvcName = JSON.parse(sessionStorage.getItem('svcname'));
   }
 
   closeModal() {
     this.activeModal.close();
   }
 
-  agreeChk(value){
-    console.log(value);
+  //Called when checkbox is checked or unchecked of Agree Check 
+  AgreeTermsCheck(value){
     if(value == true){
-      this.acceptBtn = false;
+      this.AcceptBtn = false;
     }
     else{
-     this.acceptBtn = true;
+     this.AcceptBtn = true;
     }
     }
 
-    accept(){
-      const reqpara1 = 
+    //Calls when Checkbox is checked
+    AcceptTerms(){
+      const AgreeTermReq = 
       {
         requesttype: 'agreeterms',
         version:1
       }
-      const as1 = JSON.stringify(reqpara1)
-      this.servicing.getBrands(as1).subscribe(res =>{
-        console.log(res)
-        this.acceptBtn = true;
+      const TermReq = JSON.stringify(AgreeTermReq)
+      this.servicing.webServiceCall(TermReq).subscribe(res =>{
+        this.AcceptBtn = true;
         this.activeModal.close();
       });
     }
-
-
 }
 

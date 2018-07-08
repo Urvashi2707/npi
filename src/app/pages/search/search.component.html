@@ -53,7 +53,7 @@
                                 <td (click)="openQDetails(r.id)">{{r.cust_number}}</td>
                                 <td (click)="openQDetails(r.id)">{{r.queue_status}}</td>
                                 <td *ngIf="InsuranceCheck">{{i.svc_name}}</td>
-                                <td *ngIf="r.upload_button"><button class="upload-button"  (click)="showModal(r)">{{r.upload_button}}</button></td>
+                                <td *ngIf="r.upload_button"><button class="upload-button"  (click)="ShowUploadModal(r)">{{r.upload_button}}</button></td>
 
                             </tr>
                         </table>
@@ -115,7 +115,7 @@
                           <div class="row">
                                 <div class="col-7 col-sm-7 QueueStatus">{{r.queue_status}}</div>
                                 <div class="col-5 col-sm-5 buttonCol">
-                                  <button type="button" class="button" (click)="uploadFiles(i)">{{r.upload_button}}</button>
+                                  <button type="button" class="button" (click)="ShowUploadModal(i)">{{r.upload_button}}</button>
                                 </div>
                               </div>
                 </div>

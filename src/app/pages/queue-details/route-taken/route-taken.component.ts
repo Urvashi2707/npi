@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ListService } from '../../services/user.service'
+import { ServerService } from '../../services/user.service'
 
 @Component({
   selector: 'app-route-taken',
@@ -10,7 +10,7 @@ export class RouteTakenComponent implements OnInit {
 
   pickup:string;
   dropoff:string;
-  constructor(private _data: ListService) { }
+  constructor(private _data: ServerService) { }
 
   ngOnInit() {
     const reqpara3 = {
@@ -18,7 +18,7 @@ export class RouteTakenComponent implements OnInit {
       queueid: sessionStorage.getItem('QueueId'),
     }
     const as3 = JSON.stringify(reqpara3);
-    this._data.createUser(as3).subscribe(res => {
+    this._data.webServiceCall(as3).subscribe(res => {
       this.pickup = res[0].ambassadorposition[0].iframe_link;
       this.dropoff = res[0].ambassadorposition[1].iframe_link;
     });

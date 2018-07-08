@@ -97,33 +97,4 @@ slot(reqpara){
     return this.http.post(this.url, reqpara, this.httpOptions);
   }
 
-  getCustinfo(reqpara){
-    return this.http.post(this.url, reqpara, this.httpOptions);
-  }
-
-  getBrands(reqpara){
-   
-    return this.http.post(this.url, reqpara, this.httpOptions);
-  }
-
-  getModels(reqpara){
-    return this.http.post(this.url, reqpara, this.httpOptions);
-  }
-
-  getVariant(reqpara){
-    return this.http.post(this.url, reqpara, this.httpOptions);
-  }
-
-  getSlot(reqpara){
-    return this.http.post(this.url, reqpara, this.httpOptions);
-  }
-
-  getCre(reqpara){
-    return this.http.post(this.url, reqpara, this.httpOptions);
-  }
-  
-  AddSerivicng(reqpara){
-    return this.http.post(this.url, reqpara, this.httpOptions);
-  }
-
 }

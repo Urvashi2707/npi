@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {ListService } from '../services/user.service';
+import {ServerService } from '../services/user.service';
 import { NgForm } from '@angular/forms';
 import {ServicingService } from '../services/addServicing.service';
 import { ToasterService, ToasterConfig, Toast, BodyOutputType } from 'angular2-toaster';
@@ -27,7 +27,7 @@ export class ProfileComponent implements OnInit {
   timeout = 5000;
   toastsLimit = 5;
   public designation:any = [];
-  constructor(private _data:ListService,private toasterService: ToasterService,private service:ServicingService) { }
+  constructor(private _data:ServerService,private toasterService: ToasterService,private service:ServicingService) { }
 
   ngOnInit() {
     this.countrycode1 = "+91";

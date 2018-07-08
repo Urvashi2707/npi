@@ -24,23 +24,6 @@
                             <p *ngIf="name.errors.minlength" class="haserror">3 character</p>
                           </div>
                       </div>
-                  <!-- <div class="row">
-                    <div class="col-lg-12 col-md-12 col-12 col-sm-12">
-                      <div class="form-group" class="salutation">
-                        <select id="salutation1" class="form-control" name="salutation1" [(ngModel)]="user.salutation" #salutation1="ngModel" required>
-                          <option *ngFor="let s of salutation" [value]="s.type"> {{s.type}}</option>
-                        </select>
-                      </div>
-                      <div class="form-group" class="name">
-                        <input type="text" class="form-control" name="name" [(ngModel)]="model.name" required #name="ngModel" minlength="3" style="text-transform: capitalize;">
-                        <label class="form-control-placeholder" for="name">Name*</label>
-                      </div>
-                      <div class="form-control-feedback" *ngIf="name.errors && (name.dirty || name.touched)">
-                        <p *ngIf="name.errors.required" class="haserror"> Name is required</p>
-                        <p *ngIf="name.errors.minlength" class="haserror">3 character</p>
-                      </div>
-                    </div>
-                  </div> -->
                   <div style="width:100%;margin-left:auto;margin-right:auto">
                     <div class="container1">
                       <div class="form-group" style="display:inline-block;max-width: 16%;">
@@ -144,7 +127,6 @@
                 <div class="col-12 col-sm-12">
                     <div class="row">
                         <div class="col-md-4 col-lg-4 col-sm-12 col-12 SearchCol">
-                            <!-- <input type="text" class="search" [(ngModel)]="term" placeholder="search"> -->
                             <div class="input-group has-person-icon">
                                 <input type="text" [(ngModel)]="term" placeholder="search" class="form-control search" style="max-height:20px !important"/>
                               </div>
@@ -238,7 +220,6 @@
                 <div class="col-12 col-sm-12">
                   <div class="row">
                       <div class="col-md-4 col-lg-4 col-sm-12 col-12 SearchCol">
-                          <!-- <input type="text" class="search" [(ngModel)]="term" placeholder="search"> -->
                           <div class="input-group has-person-icon">
                               <input type="text" [(ngModel)]="term" placeholder="search" class="form-control search" style="max-height:20px !important"/>
                             </div>
