@@ -38,6 +38,13 @@ tbody tr:hover {
     text-align: center;
     padding-top: 5%;
 }
+.NoData{
+    border: 0px;
+    /* margin: 14px; */
+    margin-top: 25px;
+    font-weight: 500;
+    /* padding: 8px; */
+}
 @media only screen and (max-width: 420px) {
     .desktopView {
         display: none;
@@ -80,7 +87,7 @@ tbody tr:hover {
         color:#58a3d9;
     }
     .payment{
-        float: right;
+        float: left;
     }
     .paymentStatus{
         float: right;
@@ -179,6 +186,13 @@ tbody tr:hover {
         right: 0px;
         padding: 5px 12px;
         pointer-events: none;
+    }
+    .title{
+        font-weight: 500;
+    }
+    .NoData{
+        text-align: center;
+        font-weight: 500;
     }
 }
 

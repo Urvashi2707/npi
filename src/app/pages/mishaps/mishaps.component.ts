@@ -24,6 +24,7 @@ export class MishapsComponent implements OnInit {
   reverse: boolean = false;
   public mishap : any =[];
   today:string;
+  VehicleFlag:boolean = false;
   dateString: string;
   dateString1: string;
   model: NgbDateStruct;
@@ -121,6 +122,12 @@ export class MishapsComponent implements OnInit {
        else{
          this.message = " ";
          this.mishap = res[1].mishaps;
+         for(var i=0;i < this.mishap.lenght;i++){
+           if(this.mishap[i].veh_number){
+            this.VehicleFlag = true;
+           }
+          
+         }
          console.log(this.mishap);
          this.record_count = res[0].pagecount[0].record_count;
          this.dataperpage = res[0].pagecount[0].pagelimit;

@@ -112,13 +112,12 @@
                 <td>{{r.type_service}}</td>
                 <td>{{r.queue_status}}</td>
               </tr>
-              <tr *ngIf="report.length == 0">{{message}}</tr>
             </tbody>
           </table>
+          <table class="NoData" *ngIf="message">
+              {{message}}
+            </table>
           <ngx-spinner bdColor="rgba(51,51,51,0.09)" size="large" color="#ea5810" type="ball-clip-rotate-pulse"></ngx-spinner>
-          <!-- <div class="paginate">
-                        <pagination-controls (pageChange)="getData($event)" id="server"></pagination-controls>
-                    </div> -->
         </div>
 
       </nb-card-body>
@@ -132,12 +131,6 @@
   <div class="row headerRow">
     <div class="col-12 col-sm-12">
       <div class="header">Reports</div>
-      <!-- <div style="display: inline;padding-right: 4%;float:right;position: relative;">
-        <input placeholder="Search term">
-        <span>
-          <i class="fa fa-search" style="position: absolute;"></i>
-        </span>
-      </div> -->
     </div>
   </div>
   <hr/>
@@ -175,6 +168,7 @@
   </div>
   <div class="row">
     <div class="col-sm-12 col-12">
+       
       <div class="form-group">
         <select id="serviceType" class="form-control" name="service_type" [(ngModel)]="user.service_type" #servicetype="ngModel"
           required>
@@ -202,7 +196,7 @@
   </div>
 <div class="row">
   <div class="col-12 col-sm-12">
-    <div *ngIf="message">{{message}}</div>
+      <div class="NoData" *ngIf="message"> {{message}}</div>
     <ul>
       <li *ngFor="let r of report |filter:term" (click)="openQDetails(r)">
         <div class="card">

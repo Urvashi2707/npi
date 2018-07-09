@@ -163,23 +163,33 @@ export class PausedComponent implements OnInit {
           this.paused = res[1].paused;
           this.record_count = res[0].pagecount[0].record_count;
           this.dataperpage = res[0].pagecount[0].pagelimit;
-          console.log(this.record_count);
           this.spinner.hide();
-          for (let j = 0; j < this.paused .length ; j++){
-            var queuetime = this.paused [j].queue_time;
-            var date = queuetime.replace( /\n/g, " " ).split( " " );
-            var newDate = this.datePipe.transform(date[0],"d,MMM,y");
-            var timeString = date[1];
-            var H = +timeString.substr(0, 2);
-            var h = (H % 12) || 12;
-            var ampm = H < 12 ? "AM" : "PM";
-            timeString = h + timeString.substr(2, 3) + ampm;
-            this.paused [j].newtime = timeString;
-            this.paused [j].newdate = newDate;
+           for (let j = 0; j < this.paused .length ; j++){
+            if(this.paused[j].hasOwnProperty('queue_time')){
+              var queuetime = this.paused [j].queue_time;
+              if(queuetime != null){
+                var date = queuetime.replace( /\n/g, " " ).split( " " );
+                var newDate = this.datePipe.transform(date[0],"d,MMM,y");
+                var timeString = date[1];
+                var H = +timeString.substr(0, 2);
+                var h = (H % 12) || 12;
+                var ampm = H < 12 ? "AM" : "PM";
+                timeString = h + timeString.substr(2, 3) + ampm;
+                this.paused [j].newtime = timeString;
+                this.paused [j].newdate = newDate;
+                console.log(this.paused);
+              }
+              else{
+                this.paused [j].newtime = "-";
+                this.paused [j].newdate = "-";
+                console.log(this.paused);
+              }
+            
+            }
+          
             }
          }
-      //   this.unconfirmed = res[1].unconfirmed;
-      // console.log(this.unconfirmed);
+    
       }
   
     });

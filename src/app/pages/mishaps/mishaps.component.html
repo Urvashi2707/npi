@@ -95,7 +95,7 @@
         </tr>
       </tbody>
     </table>
-    <table *ngIf="message">
+    <table class="NoData" *ngIf="message">
       {{message}}
     </table>
     <ngx-spinner bdColor="rgba(51,51,51,0.09)" size="large" color="#ea5810" type="ball-clip-rotate-pulse"></ngx-spinner>
@@ -125,7 +125,7 @@
           <input class="form-control" name="dp" [ngModel]="model1" (ngModelChange)="onSelectDate1($event)" placeholder="{{pastdate | date: 'yyyy-MM-dd'}}"
             ngbDatepicker #d1="ngbDatepicker">
           <div class="input-group-append">
-            <button class="btn btn-outline-secondary dateButton" (click)="d1.toggle()" type="button" style="height: 100%;border-radius: 0px;">
+            <button class="btn btn-outline-secondary dateButton" (click)="d1.toggle()" type="button" style="height: 100%;">
               <span>
                 <i class="fa fa-calendar"></i>
               </span>
@@ -142,7 +142,7 @@
           <input class="form-control" name="dp" [ngModel]="model" (ngModelChange)="onSelectDate($event)" placeholder="{{today | date: 'yyyy-MM-dd'}}"
             ngbDatepicker #d="ngbDatepicker">
           <div class="input-group-append">
-            <button class="btn btn-outline-secondary dateButton" (click)="d.toggle()" type="button" style="height: 100%;border-radius: 0px;">
+            <button class="btn btn-outline-secondary dateButton" (click)="d.toggle()" type="button" style="height: 100%;">
               <span>
                 <i class="fa fa-calendar"></i>
               </span>
@@ -165,14 +165,15 @@
     </div> -->
   <div class="row">
     <div class="col-12 col-sm-12">
+        <div class="NoData" *ngIf="message"> {{message}}</div>
       <ul>
         <li *ngFor="let i of mishap | filter:term " (click)="openQDetails(i)">
           <div class="card">
             <div class="row padding">
               <div class="col-12 col-sm-12">
                 <span class="QueueId">ID &nbsp;:&nbsp; {{i.queueid}}</span>
-                <span class="vehNumber">
-                  <span class="Ind">IND</span>{{i.veh_number}}</span>
+                <span class="vehNumber" *ngIf="VehicleFlag">
+                  <span class="Ind" >IND</span>{{i.veh_number}}</span>
               </div>
             </div>
             <div class="row padding">
@@ -182,7 +183,7 @@
             </div>
             <div class="row padding">
               <div class="col-6 col-sm-6">
-                <span>Date : </span>
+                <span class="title">Date : </span>
                 <span>{{i.date_of_mishap}}</span>
               </div>
               <div class="col-6 col-sm-6">
@@ -191,7 +192,7 @@
             </div>
             <div class="row">
               <div class="col-6 col-sm-6">
-                <span>Status : </span>
+                <span class="title">Status : </span>
                 <span>{{i.mishap_status}}</span>
               </div>
             </div>
@@ -200,7 +201,7 @@
       </ul>
       <ngx-spinner bdColor="rgba(51,51,51,0.09)" size="large" color="#ea5810" type="ball-clip-rotate-pulse"></ngx-spinner>
       <div class="paginate">
-        <pagination-controls (pageChange)="FilterCheck($event)" id="server"></pagination-controls>
+        <pagination-controls (pageChange)="FilterCheck($event)" id="server" *ngIf="!message"></pagination-controls>
       </div>
     </div>
   </div>

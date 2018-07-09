@@ -44,6 +44,13 @@ tbody tr:hover {
 text-align: center;
 padding-top: 5%;
 }
+.NoData{
+    border: 0px;
+    /* margin: 14px; */
+    margin-top: 25px;
+    font-weight: 500;
+    /* padding: 8px; */
+}
 @media only screen and (max-width: 420px) {
     .desktopView {
         display: none;
@@ -56,7 +63,6 @@ padding-top: 5%;
         box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
         transition: 0.3s;
         width: 100%;
-        height: 150px;
         padding: 8px 10px 8px 10px
     }
     
@@ -171,6 +177,13 @@ padding-top: 5%;
         right: 0px;
         padding: 5px 12px;
         pointer-events: none;
+    }
+    .title{
+        font-weight: 500;
+    }
+    .NoData{
+        text-align: center;
+        font-weight: 500;
     }
 }
 

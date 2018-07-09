@@ -109,7 +109,7 @@
             </tr>
           </tbody>
         </table>
-        <table *ngIf="message">
+        <table class="NoData" *ngIf="message">
           {{message}}
         </table>
         <ngx-spinner bdColor="rgba(51,51,51,0.09)" size="large" color="#ea5810" type="ball-clip-rotate-pulse"></ngx-spinner>
@@ -171,7 +171,7 @@
       <button type="button" class="btn btn-primary apply" (click)="FilterCheck(1)">Apply</button>
     </div>
   </div>
-  <div *ngIf="message">{{message}}</div>
+  <div class="NoData" *ngIf="message">{{message}}</div>
   <ul>
     <li *ngFor="let i of atcentre | filter:term">
       <div class="card">

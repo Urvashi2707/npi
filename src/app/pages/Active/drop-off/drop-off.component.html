@@ -102,7 +102,7 @@
         </tr>
       </tbody>
     </table>
-    <table>
+    <table class="NoData" *ngIf="message">
       {{message}}
     </table>
     <ngx-spinner bdColor="rgba(51,51,51,0.09)" size="large" color="#ea5810" type="ball-clip-rotate-pulse"></ngx-spinner>
@@ -164,7 +164,7 @@
       </div>
   <div class="row">
     <div class="col-12 col-sm-12">
-        <div *ngIf="message">{{message}}</div>
+        <div class="NoData" *ngIf="message">{{message}}</div>
       <ul>
         <li *ngFor="let i of dropoff | filter : term " (click)="openQDetails(i)">
           <div class="card">
@@ -206,8 +206,8 @@
                 </div>
             </div> -->
             <div class="row">
-              <div class="col-6 col-sm-6"><span>Ambassador : </span></div>
-              <div class="col-6 col-sm-6"><span>Advisor : </span></div>
+              <div class="col-6 col-sm-6"><span class="title">Ambassador : </span></div>
+              <div class="col-6 col-sm-6"><span class="title">Advisor : </span></div>
             </div>
             <div class="row" style="padding-bottom: 0px">
                 <div class="col-6 col-sm-6"><span>{{i.amb_name}}</span></div>
@@ -224,7 +224,7 @@
       </ul>
       <ngx-spinner bdColor="rgba(51,51,51,0.09)" size="large" color="#ea5810" type="ball-clip-rotate-pulse"></ngx-spinner>
       <div class="paginate">
-        <pagination-controls (pageChange)="FilterCheck($event)" id="server"  *ngIf="message"></pagination-controls>
+        <pagination-controls (pageChange)="FilterCheck($event)" id="server"  *ngIf="!message"></pagination-controls>
       </div>
     </div>
   </div>

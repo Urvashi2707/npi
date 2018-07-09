@@ -98,7 +98,7 @@
         </tr>
       </tbody>
     </table>
-    <table *ngIf="message">
+    <table class="NoData" *ngIf="message">
       {{message}}
     </table>
     <div class="paginate">
@@ -157,13 +157,9 @@
       <button type="button" class="btn btn-primary apply" (click)="FilterCheck(1)">Apply</button>
     </div>
   </div>
-  <!-- <div class="row">
-    <div class="col-sm-12 col-12">
-      <input type="text" class="search" [(ngModel)]="term" placeholder="search">
-    </div>
-  </div> -->
   <div class="row">
     <div class="col-12 col-sm-12">
+        <div class="NoData" *ngIf="message"> {{message}}</div>
       <ul>
         <li *ngFor="let i of cancelled |  filter:term " (click)="openQDetails(i)">
           <div class="card">
@@ -181,16 +177,16 @@
             </div>
             <div class="row padding">
               <div class="col-12 col-sm-12">
-                <span>Slot : {{i.newdate}} {{i.newtime}}</span>
+                <span><span class="title">Slot : </span>{{i.newdate}} {{i.newtime}}</span>
               </div>
             </div>
             <div class="row padding">
-              <div class="col-12 col-sm-12" style="padding-right: 0px"><span>Cre : {{i.cre_name}}</span></div>
+              <div class="col-12 col-sm-12" style="padding-right: 0px"><span><span class="title">Cre : </span>{{i.cre_name}}</span></div>
             </div>
             <div class="row padding">
-                <div class="col-6 col-sm-6">Reason:</div>
+                <div class="col-6 col-sm-6"><span class="title">Reason :</span></div>
                 <div class="col-6 col-sm-6">
-                  <span>Cancelled By:</span>
+                  <span class="title">Cancelled By :</span>
                 </div>
               </div>
             <div class="row padding">
@@ -204,7 +200,7 @@
       </ul>
       <ngx-spinner bdColor="rgba(51,51,51,0.09)" size="large" color="#ea5810" type="ball-clip-rotate-pulse"></ngx-spinner>
       <div class="paginate">
-        <pagination-controls (pageChange)="FilterCheck($event)" id="server"></pagination-controls>
+        <pagination-controls (pageChange)="FilterCheck($event)" id="server" *ngIf="!message"></pagination-controls>
       </div>
     </div>
   </div>
