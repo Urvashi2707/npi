@@ -29,6 +29,7 @@ export class ReportsComponent implements OnInit {
   today:string;
   date1:string;
   date2:string;
+  disableCust:boolean = false;
   public globalsvcid:string;
   public selectedsvcid:string;
   public svcid:string
@@ -60,7 +61,7 @@ export class ReportsComponent implements OnInit {
       // console.log(this.svcid);
     }
     this.service_type = [
-      { id: "0", type: 'Servicing Pickup and Dropoff' },
+      { id: "1", type: 'Servicing Pickup and Dropoff' },
       { id: "1", type: 'Servicing only Dropoff' },
       { id: "4", type: 'Internal Movement' },
       { id: "5", type: 'Home Delivery' },
@@ -111,6 +112,12 @@ export class ReportsComponent implements OnInit {
     return this.ngbDateParserFormatter.parse(startYear + "-" + startMonth.toString() + "-" + startDay);
   }
   search() {  
+    if(this.user.service_type == "4" || this.user.service_type == "6"){
+      this.disableCust = true;
+    }
+    else{
+      this.disableCust = false;
+    }
     this.message = "";
 
     if(this.dateString){
