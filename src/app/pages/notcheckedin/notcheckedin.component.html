@@ -70,11 +70,11 @@
                     <td (click)="openQDetails(i)"> {{i.cust_name}}</td>
                     <td (click)="openQDetails(i)">{{i.queue_time}}</td>
                     <td (click)="openQDetails(i)">{{i.queue_total}}</td>
-                    <td><button class="btn btn-warning" (click)="uploadFiles(i)">{{i.upload_button}}</button></td>
+                    <td><button class="upload-button" (click)="uploadFiles(i)">{{i.upload_button}}</button></td>
                 </tr>
             </tbody>
         </table>
-        <table *ngIf="message">
+        <table class="NoData" *ngIf="message">
             {{message}}
         </table>
         <ngx-spinner bdColor = "rgba(51,51,51,0.09)" size = "large" color = "#ea5810" type = "ball-clip-rotate-pulse"></ngx-spinner>
@@ -141,28 +141,28 @@
         </div> -->
         <div class="row">
           <div class="col-12 col-sm-12">
-              <div *ngIf="message">{{message}}</div>
+              <div class="NoData" *ngIf="message">{{message}}</div>
             <ul>
-              <li *ngFor="let i of notcheckedin | filter:term " (click)="openQDetails(i.queueid)">
+              <li *ngFor="let i of notcheckedin | filter:term " >
                 <div class="card">
-                  <div class="row">
+                  <div class="row" (click)="openQDetails(i)">
                     <div class="col-12 col-sm-12">
                       <span class="QueueId">ID &nbsp;:&nbsp; {{i.queueid}}</span>
                       <span class="vehNumber">
                         <span class="Ind">IND</span>{{i.veh_number}}</span>
                     </div>
                   </div>
-                  <div class="row">
+                  <div class="row" (click)="openQDetails(i)">
                     <div class="col-12 col-sm-12">
                       <div>{{i.cust_name}}</div>
                     </div>
                   </div>
-                  <div class="row">
-                        <div class="col-5 col-sm-5">Service Time:</div>
+                  <div class="row" (click)="openQDetails(i)">
+                        <div class="col-5 col-sm-5 title">Service Time:</div>
                         <div class="col-7 col-sm-7">{{i.newdate}} {{i.newtime}}</div>
                       </div>
                   <div class="row">
-                    <div class="col-4 col-sm-4">&#x20B9;{{i.queue_total}}</div>
+                    <div class="col-4 col-sm-4" (click)="openQDetails(i)">&#x20B9;{{i.queue_total}}</div>
                     <div class="col-8 col-sm-8 buttonCol">
                             <button type="button" class="button" (click)="uploadFiles(i)" style="float: right;margin-right: 7%;">{{i.upload_button}}</button>
                           </div>

@@ -64,15 +64,17 @@
     </div>
 </div>
 <div class="mobileView">
-        <div class="row" style="min-height: 25px;padding-top: 3%;">
-          <div class="col-12 col-sm-12">
-            <div class="header" style="display: inline">Search</div>
-            <div style="display: inline;padding-right: 4%;float:right;position: relative;">
-               <input placeholder="Search term">
-                <span><i class="fa fa-search" style="position: absolute;"></i></span>
+    <div class="row headerRow">
+        <div class="col-4 col-sm-4">
+          <span class="header">Search</span>
+        </div>
+        <div class="col-8 col-sm-8">
+            <div class="right-inner-addon">
+              <i class="fa fa-search"></i>
+              <input type="search" class="form-control" placeholder="Search" [(ngModel)]="term" />
             </div>
           </div>
-        </div>
+      </div>
         <hr/>
         <div class="row">
           <div class="col-12 col-sm-12">
@@ -97,7 +99,7 @@
                       </div>
                       <div class="row">
                             <div class="col-12 col-sm-12">
-                              <span> Service Time : {{r.newdate}} {{r.newtime}}</span>
+                              <span> <span class="title">Service Time :</span> {{r.newdate}} {{r.newtime}}</span>
                             </div>
                           </div>
             

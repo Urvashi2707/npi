@@ -32,6 +32,22 @@ tbody tr:hover {
     text-align: center;
     padding-top: 5%;
     }
+    .NoData{
+        border: 0px;
+        /* margin: 14px; */
+        margin-top: 25px;
+        font-weight: 500;
+        /* padding: 8px; */
+    }
+    .upload-button {
+        font-size: 0.80rem;
+        padding-top: 5px;
+        padding-right: 8px;
+        padding-bottom: 5px;
+        padding-left: 8px;
+        background-color: #ffa100;
+        color: white;
+    }
     @media only screen and (max-width: 420px) {
         .desktopView {
             display: none;
@@ -234,6 +250,13 @@ tbody tr:hover {
             right: 0px;
             padding: 5px 12px;
             pointer-events: none;
+        }
+        .title{
+            font-weight: 500;
+        }
+        .NoData{
+            text-align: center;
+            font-weight: 500;
         }
     }
     

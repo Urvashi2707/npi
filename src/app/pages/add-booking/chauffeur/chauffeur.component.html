@@ -191,7 +191,7 @@
                     <label class="form-control-placeholder" for="pickupdoor">Pickup Door Number*</label>
                   </div>
                   <div class="form-control-feedback" *ngIf="pickupdoor.errors && (pickupdoor.dirty || pickupdoor.touched)">
-                    <p *ngIf="pickupdoor.errors.required">Pickup Door Number is required</p>
+                    <p *ngIf="pickupdoor.errors.required" class="haserror">Pickup Door Number is required</p>
                   </div>
                 </div>
                 <div class="col-md-6 col-lg-6 col-sm-6">
@@ -201,7 +201,7 @@
                     <label class="form-control-placeholder" for="pickupstreet">Pickup Street Number*</label>
                   </div>
                   <div class="form-control-feedback" *ngIf="pickupstreet.errors && (pickupstreet.dirty || pickupstreet.touched)">
-                    <p *ngIf="pickupstreet.errors.required">Pickup Street Number is required</p>
+                    <p *ngIf="pickupstreet.errors.required" class="haserror">Pickup Street Number is required</p>
                   </div>
                 </div>
               </div>
@@ -213,7 +213,7 @@
                     <label class="form-control-placeholder" for="pickuparea">Pickup Area*</label>
                   </div>
                   <div class="form-control-feedback" *ngIf="pickuparea.errors && (pickuparea.dirty || pickuparea.touched)">
-                    <p *ngIf="pickuparea.errors.required">Pickup Area is required</p>
+                    <p *ngIf="pickuparea.errors.required" class="haserror">Pickup Area is required</p>
                   </div>
                 </div>
                 <div class="col-md-6 col-lg-6 col-sm-6">
@@ -223,7 +223,7 @@
                     <label class="form-control-placeholder" for="pickuplandmark">Pickup Landmark*</label>
                   </div>
                   <div class="form-control-feedback" *ngIf="pickuplandmark.errors && (pickuplandmark.dirty || pickuplandmark.touched)">
-                    <p *ngIf="pickuplandmark.errors.required">Pickup Landmark is required</p>
+                    <p *ngIf="pickuplandmark.errors.required" class="haserror">Pickup Landmark is required</p>
                   </div>
                 </div>
               </div>
@@ -235,7 +235,7 @@
                     <label class="form-control-placeholder" for="pickuppincode">Pickup Pincode*</label>
                   </div>
                   <div class="form-control-feedback" *ngIf="pickuppincode.errors && (pickuppincode.dirty || pickuppincode.touched)">
-                    <p *ngIf="pickuppincode.errors.required">Pickup Pincode is required</p>
+                    <p *ngIf="pickuppincode.errors.required" class="haserror">Pickup Pincode is required</p>
                   </div>
                 </div>
                 <div class="col-md-6 col-lg-6 col-sm-6">
@@ -245,7 +245,7 @@
                     <label class="form-control-placeholder" for="picklatlong">Pickup Lat/Long*</label>
                   </div>
                   <div class="form-control-feedback" *ngIf="picklatlong.errors && (picklatlong.dirty || picklatlong.touched)">
-                    <p *ngIf="picklatlong.errors.required">Pickup Lat/Long is required</p>
+                    <p *ngIf="picklatlong.errors.required" class="haserror">Pickup Lat/Long is required</p>
                   </div>
                 </div>
               </div>
@@ -718,8 +718,8 @@
                       </button>
                     </div>
                     <div class="form-control-feedback" *ngIf="mobile1.errors && (mobile1.dirty || mobile1.touched)">
-                      <p *ngIf="mobile1.errors.required">mobile is required</p>
-                      <p *ngIf="!mobile1.errors.valid">mobile must contain digits only</p>
+                      <p *ngIf="mobile1.errors.required" class="haserror">mobile is required</p>
+                      <p *ngIf="!mobile1.errors.valid" class="haserror">mobile must contain digits only</p>
                     </div>
                   </div>
                 </div>
@@ -900,9 +900,9 @@
                     </div>
                 </div>
 
-                <div>
+                <div class="sameasDiv">
                     <label class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" name="sameas" #same (click)="sameAsPickup(same.checked)">
+                        <input type="checkbox" class="custom-control-input sameas" name="sameas" #same (click)="sameAsPickup(same.checked)">
                         <span class="custom-control-indicator"></span>
                         <span class="custom-control-description">Drop Location is same as Pickup</span>
                     </label>
@@ -1009,8 +1009,8 @@
                       </button>
                     </div>
                     <div class="form-control-feedback" *ngIf="mobile1.errors && (mobile1.dirty || mobile1.touched)">
-                      <p *ngIf="mobile1.errors.required">mobile is required</p>
-                      <p *ngIf="!mobile1.errors.valid">mobile must contain digits only</p>
+                      <p *ngIf="mobile1.errors.required" class="haserror">mobile is required</p>
+                      <p *ngIf="!mobile1.errors.valid" class="haserror">mobile must contain digits only</p>
                     </div>
                   </div>
                 </div>
@@ -1050,7 +1050,7 @@
                 </div>
                 <div class="col-md-6 col-lg-6 col-sm-6">
                   <div class="form-control-feedback" *ngIf="Cus_name.errors && (Cus_name.dirty || Cus_name.touched)">
-                    <p *ngIf="Cus_name.errors.required">Customer Name is required</p>
+                    <p *ngIf="Cus_name.errors.required" class="haserror">Customer Name is required</p>
                   </div>
                 </div>
               </div>
@@ -1064,8 +1064,8 @@
                 </div>
                 <div class="col-md-6 col-lg-6 col-sm-6">
                   <div class="form-control-feedback" *ngIf="email.errors && (email.dirty || email.touched)">
-                    <p *ngIf="email.errors.required">Email is required</p>
-                    <p *ngIf="!email.errors.valid">Email must contain at least the @ character</p>
+                    <p *ngIf="email.errors.required" class="haserror">Email is required</p>
+                    <p *ngIf="!email.errors.valid" class="haserror">Email must contain at least the @ character</p>
                   </div>
                 </div>
               </div>
@@ -1088,7 +1088,7 @@
                     <label class="form-control-placeholder" for="pickupdoor">Breakdown Door Number*</label>
                   </div>
                   <div class="form-control-feedback" *ngIf="pickupdoor.errors && (pickupdoor.dirty || pickupdoor.touched)">
-                    <p *ngIf="pickupdoor.errors.required">Breakdown Door Number is required</p>
+                    <p *ngIf="pickupdoor.errors.required" class="haserror">Breakdown Door Number is required</p>
                   </div>
                 </div>
                 <div class="col-md-6 col-lg-6 col-sm-6">
@@ -1098,7 +1098,7 @@
                     <label class="form-control-placeholder" for="pickupstreet">Breakdown Street Number</label>
                   </div>
                   <div class="form-control-feedback" *ngIf="pickupstreet.errors && (pickupstreet.dirty || pickupstreet.touched)">
-                    <p *ngIf="pickupstreet.errors.required">Breakdown Street Number is required</p>
+                    <p *ngIf="pickupstreet.errors.required" class="haserror">Breakdown Street Number is required</p>
                   </div>
                 </div>
               </div>
@@ -1110,7 +1110,7 @@
                     <label class="form-control-placeholder" for="pickuparea">Breakdown Area*</label>
                   </div>
                   <div class="form-control-feedback" *ngIf="pickuparea.errors && (pickuparea.dirty || pickuparea.touched)">
-                    <p *ngIf="pickuparea.errors.required">Breakdown Area is required</p>
+                    <p *ngIf="pickuparea.errors.required" class="haserror">Breakdown Area is required</p>
                   </div>
                 </div>
                 <div class="col-md-6 col-lg-6 col-sm-6">
@@ -1120,7 +1120,7 @@
                     <label class="form-control-placeholder" for="pickuplandmark">Breakdown Landmark*</label>
                   </div>
                   <div class="form-control-feedback" *ngIf="pickuplandmark.errors && (pickuplandmark.dirty || pickuplandmark.touched)">
-                    <p *ngIf="pickuplandmark.errors.required">Breakdown Landmark is required</p>
+                    <p *ngIf="pickuplandmark.errors.required" class="haserror" >Breakdown Landmark is required</p>
                   </div>
                 </div>
               </div>
@@ -1132,7 +1132,7 @@
                     <label class="form-control-placeholder" for="pickuppincode">Breakdown Pincode*</label>
                   </div>
                   <div class="form-control-feedback" *ngIf="pickuppincode.errors && (pickuppincode.dirty || pickuppincode.touched)">
-                    <p *ngIf="pickuppincode.errors.required">Breakdown Pincode is required</p>
+                    <p *ngIf="pickuppincode.errors.required" class="haserror">Breakdown Pincode is required</p>
                   </div>
                 </div>
                 <div class="col-md-6 col-lg-6 col-sm-6">
@@ -1142,7 +1142,7 @@
                     <label class="form-control-placeholder" for="picklatlong">Breakdown Lat/Long*</label>
                   </div>
                   <div class="form-control-feedback" *ngIf="picklatlong.errors && (picklatlong.dirty || picklatlong.touched)">
-                    <p *ngIf="picklatlong.errors.required">Breakdown Lat/Long is required</p>
+                    <p *ngIf="picklatlong.errors.required" class="haserror">Breakdown Lat/Long is required</p>
                   </div>
                 </div>
               </div>

@@ -157,7 +157,6 @@ select:focus:invalid {
         transition: 0.3s;
         width: 100%;
         font-size: 11px;
-        min-height: 150px;
         padding: 8px 10px 8px 10px
     }
     ul{
@@ -175,7 +174,7 @@ select:focus:invalid {
         font-weight: 600;
     }
     .form-group{
-     margin-bottom: 1rem;   
+     margin-bottom: 1.5rem;   
     }
     .form-control {
         max-height: 35px;

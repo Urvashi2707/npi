@@ -200,6 +200,51 @@ td {
     .progressbar li:first-child:before{
         background-color: green;
     }
+    .header{
+        font-size: .9rem;
+        padding-left: 1%;
+        font-weight: 700;
+      }
+      .headerRow{
+        min-height: 25px;
+        padding-top: 3%;
+      }
+      .right-inner-addon {
+        position: relative;
+    }
+    .right-inner-addon input {
+        padding: 1px;
+        font-size: 12px; 
+        border: 0px;  
+        // width: 7px;
+        opacity: 0;
+         outline: 0;
+          border: 0;
+          -webkit-transition: width 0.4s ease-in-out;
+          transition: width 0.4s ease-in-out;
+    }
+    .right-inner-addon input:focus {
+        width: 100%;
+        padding: 1px;
+        font-size: 12px;   
+        opacity: 1; 
+        outline: 0; 
+        border: 0;
+        border: 2px solid #ccc;
+    }
+    .right-inner-addon i {
+        position: absolute;
+        right: 0px;
+        padding: 5px 12px;
+        pointer-events: none;
+    }
+    .title{
+        font-weight: 500;
+    }
+    .NoData{
+        text-align: center;
+        font-weight: 500;
+    }
 }
 
 @media only screen and (min-width: 1050px) {
