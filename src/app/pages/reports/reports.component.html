@@ -71,13 +71,19 @@
                 </span>
               </th>
               <!-- <th>Queue Date</th> -->
-              <th (click)="sort('cust_name')">Customer
+              <th *ngIf="!disableCust" (click)="sort('cust_name')">Customer
                 <span class="sort-span">
                   <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100"
                     aria-hidden="true"></i>
                 </span>
               </th>
-              <th (click)="sort('cust_mobile')">Customer Mobile
+              <th *ngIf="!disableCust" (click)="sort('cust_mobile')">Customer Mobile
+                <span class="sort-span">
+                  <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100"
+                    aria-hidden="true"></i>
+                </span>
+              </th>
+              <th *ngIf="disableCust" (click)="sort('cust_mobile')">Cooridnator
                 <span class="sort-span">
                   <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100"
                     aria-hidden="true"></i>
