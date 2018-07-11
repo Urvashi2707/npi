@@ -521,7 +521,7 @@ export class ChauffeurComponent implements OnInit {
         else {
           this.customer = data;
           if (this.customer[1].custinfo[0].no_records) {
-            this.cust_details.mobile = this.user.mobile1
+            // this.cust_details.mobile = this.user.mobile1
           }
           else {
             this.cust_details = this.customer[1].custinfo[0],
