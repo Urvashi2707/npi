@@ -112,6 +112,12 @@ export const MENU_ITEMSADM: NbMenuItem[] = [
     link: '/pages/unconfirmed',
   },
   {
+    title: 'Cre Reports',
+    icon: 'nb-tables',
+    link: '/pages/cre-reports',
+  },
+
+  {
     title: 'Escalation Matrix',
     icon: 'nb-tables',
     link: '/pages/matrix',
@@ -229,6 +235,12 @@ export const MENU_ITEMSUSR: NbMenuItem[] = [
     icon: 'nb-tables',
     link: '/pages/unconfirmed',
   },
+  {
+    title: 'Cre Reports',
+    icon: 'nb-tables',
+    link: '/pages/cre-reports',
+  },
+
   {
     title: 'Escalation Matrix',
     icon: 'nb-tables',

@@ -10,6 +10,7 @@ import { PaymentComponent } from './payment/payment.component';
 import { QueueDetailsComponent } from './queue-details/queue-details.component';
 import { UpcomingComponent } from './upcoming/upcoming.component';
 import { PausedComponent } from './paused/paused.component';
+import {CreReportsComponent} from './cre-reports/cre-reports.component';
 
 import { NotcheckedinComponent } from './notcheckedin/notcheckedin.component'
 import { CancelledComponent } from './cancelled/cancelled.component';
@@ -112,6 +113,11 @@ const routes: Routes = [{
 path: 'user',
 component: UserComponent,
 },
+{
+  path: 'cre-reports',
+    component: CreReportsComponent,
+  },
+
 {
   path: 'reports',
   component: ReportsComponent,

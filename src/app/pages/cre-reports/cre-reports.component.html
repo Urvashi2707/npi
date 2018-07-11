@@ -1,0 +1,79 @@
+<nb-card class="desktopView">
+  <nb-card-header>
+      Cre Reports
+  </nb-card-header>
+  <nb-card-body>
+    <table width="100%">
+      <thead>
+        <th>Name</th>
+        <th>Number</th>
+        <th>Monthly Bookings Added</th>
+        <th>Today Bookings Added</th>
+        <th>Monthly Bookings Deleted</th>
+        <th>Today Bookings Deleted</th>
+      </thead>
+      <tbody>
+        <tr *ngFor="let i of CreReports">
+          <td>{{i.first_name}}</td>
+          <td>{{i.mobilenumber}}</td>
+          <td>{{i.added_month}}</td>
+          <td>{{i.added_today}}</td>
+          <td>{{i.deleted_month}}</td>
+          <td>{{i.deleted_today}}</td> 
+        </tr>
+      </tbody>
+    </table>
+  </nb-card-body>
+</nb-card>
+<div class="mobileView">
+  <div class="row headerRow">
+    <div class="col-12 col-sm-12">
+      <span class="header">Cre Reports</span>
+    </div>
+  </div>
+  <hr/>
+  <div class="row">
+    <div class="col-12 col-sm-12">
+      <ul>
+        <li *ngFor="let i of CreReports">
+          <div class="card">
+            <div class="row">
+              <div class="col-12 col-sm-12">
+                <span class="name">{{i.first_name}}</span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12 col-sm-12">
+                <div>{{i.mobilenumber}}</div>
+              </div>
+            </div>
+            <div>
+              <div>
+                <table width="100%">
+                  <thead>
+                    <th></th>
+                    <th>Added</th>
+                    <th>Deleted</th>
+                  </thead>
+                  <tbody>
+                      <tr>
+                          <td>Today</td>
+                          <td>{{i.added_today}}</td>
+                          <td>{{i.deleted_today}}</td>
+                        </tr>
+                    <tr>
+                      <td>Monthly</td>
+                      <td>{{i.added_month}}</td>
+                      <td>{{i.deleted_month}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </li>
+      </ul>
+      <ngx-spinner bdColor="rgba(51,51,51,0.09)" size="large" color="#ea5810" type="ball-clip-rotate-pulse"></ngx-spinner>
+    </div>
+  </div>
+</div>

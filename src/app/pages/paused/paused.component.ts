@@ -92,7 +92,7 @@ export class PausedComponent implements OnInit {
       // console.log(this.svcid);
     }
     this.globalsvcid = JSON.parse(sessionStorage.getItem('globalsvcid'));
-    console.log(this.globalsvcid);
+    // console.log(this.globalsvcid);
     this.FilterCheck(1);
   }
   onSelectDate(date: NgbDateStruct){
@@ -155,7 +155,7 @@ export class PausedComponent implements OnInit {
       }
       else{
         if(res[0].pagecount[0].hasOwnProperty('noqueues')){
-          console.log('No queue');
+          // console.log('No queue');
           this.message = "No Data" ;
           this.spinner.hide();
          }

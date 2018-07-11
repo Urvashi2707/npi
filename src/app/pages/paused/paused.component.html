@@ -111,13 +111,13 @@
       <span class="header">Paused</span>
     </div>
     <div class="col-8 col-sm-8">
-        <div class="right-inner-addon">
-          <i class="fa fa-search"></i>
-          <input type="search" class="form-control" placeholder="Search" [(ngModel)]="term" />
-        </div>
+      <div class="right-inner-addon">
+        <i class="fa fa-search"></i>
+        <input type="search" class="form-control" placeholder="Search" [(ngModel)]="term" />
       </div>
+    </div>
   </div>
-<hr/>
+  <hr/>
   <div class="row">
     <div class="col-12 col-sm-12">
       <div class="form-group">
@@ -157,43 +157,47 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-12 col-sm-12" *ngIf="message">
-      <div class="NoData">{{message}}</div>
-      <ul>
-        <li *ngFor="let i of paused | filter:term ">
-          <div class="card">
-            <div class="row padding">
-              <div class="col-12 col-sm-12">
-                <span class="QueueId">ID &nbsp;:&nbsp; {{i.queueid}}</span>
-                <span class="vehNumber">
-                  <span class="Ind">IND</span>{{i.veh_number}}</span>
-              </div>
-            </div>
-            <div class="row padding">
-              <div class="col-12 col-sm-12">
-                <div>{{i.cust_name}}</div>
-              </div>
-            </div>
-            <div class="row padding">
-                <div class="col-12 col-sm-12">
-                  <!-- <span><span class="title">Slot : </span>{{i.newdate}} {{i.newtime}}</span> -->
-                </div>
-              </div>
-            <div class="row padding">
-              <div class="col-12 col-sm-12">
-                  <!-- <span><span class="title">Cre :</span>{{i.cre_name}} </span> -->
-              </div>
-            </div>
-            <div class="row padding">
-              <!-- <div class="col-12 col-sm-12"><span class="title">Reason :</span>{{i.description}} </div> -->
+    <div class="col-12 col-sm-12" >
+      <div class="NoData" *ngIf="message">{{message}}</div>
+   
+    <ul>
+      <li *ngFor="let i of paused | filter:term ">
+        <div class="card">
+          <div class="row padding">
+            <div class="col-12 col-sm-12">
+              <span class="QueueId">ID &nbsp;:&nbsp; {{i.queueid}}</span>
+              <span class="vehNumber">
+                <span class="Ind">IND</span>{{i.veh_number}}</span>
             </div>
           </div>
-        </li>
-      </ul>
-      <ngx-spinner bdColor="rgba(51,51,51,0.09)" size="large" color="#ea5810" type="ball-clip-rotate-pulse"></ngx-spinner>
-      <div class="paginate">
-        <pagination-controls (pageChange)="FilterCheck($event)" id="server" *ngIf="!message"></pagination-controls>
-      </div>
+          <div class="row padding">
+            <div class="col-12 col-sm-12">
+              <div>{{i.cust_name}}</div>
+            </div>
+          </div>
+          <div class="row padding">
+            <div class="col-12 col-sm-12">
+              <span>
+                <span class="title">Slot : </span>{{i.newdate}} {{i.newtime}}</span>
+            </div>
+          </div>
+          <div class="row padding">
+            <div class="col-12 col-sm-12">
+              <span>
+                <span class="title">Cre :</span>{{i.cre_name}} </span>
+            </div>
+          </div>
+          <div class="row padding">
+            <div class="col-12 col-sm-12">
+              <span class="title">Reason :</span>{{i.description}} </div>
+          </div>
+        </div>
+      </li>
+    </ul>
+    <ngx-spinner bdColor="rgba(51,51,51,0.09)" size="large" color="#ea5810" type="ball-clip-rotate-pulse"></ngx-spinner>
+    <div class="paginate">
+      <pagination-controls (pageChange)="FilterCheck($event)" id="server" *ngIf="!message"></pagination-controls>
     </div>
   </div>
+</div>
 </div>

@@ -187,7 +187,7 @@ select:focus:invalid {
 
 .CoordinatorName{
   display:inline-block;
-  min-width: 67%;
+  min-width: 87%;
 }
 .CoordinatorMobile{
   display:inline-block;
@@ -205,10 +205,7 @@ select:focus:invalid {
   font-size: 1.2rem;
   font-weight: 500;
 }
-.salesExec{
-  width: 87%;
-  display: inline-block;
-}
+
 .AddSalesBtn{
   display: inline-block;
   margin: 3px;
@@ -216,6 +213,18 @@ select:focus:invalid {
 .salesExeBtn{
   display:inline-block;
   margin: 3px;
+}
+.CountryCode{
+display:inline-block;
+max-width: 16%;
+}
+.CusSalutation{
+  display:inline-block;
+  min-width:15%;
+}
+.salesExec{
+  width: 87%;
+  display: inline-block;
 }
 @media only screen and (max-width: 420px) {
   .form-group{
@@ -351,6 +360,8 @@ fieldset {
 }
 .line{
   padding-bottom: .5rem;
+  margin-bottom: 3%;
+  margin-top: 3%;
 }
 .AddSalesBtn{
   display: inline-block;
@@ -360,6 +371,13 @@ fieldset {
   font-size: 10px;
   padding: 0px;
 }
+.CusSalutation{
+
+}
+.CountryCode{
+  display:inline-block;
+  max-width: 16%;
+  }
 .countryCode{
   display:inline-block;
   max-width: 16%;
@@ -379,7 +397,7 @@ fieldset {
 }
 .CoordinatorName{
   display:inline-block;
-  min-width:62%
+  min-width:81%
 }
 .dateButton{
   height: 97%;
@@ -398,13 +416,17 @@ fieldset {
 .AmbRow{
   padding-bottom: 5%;
 }
+.CusSalutation{
+  display:inline-block;
+  min-width:15%;
+}
 .CusName{
   display:inline-block;
-  min-width:81%;
+  min-width:80%;
 }
 .salesExec{
   display:inline-block;
-  min-width:81% !important;
+  width:81% !important;
 }
 .sectionHeader{
   font-size: 1.0rem;
