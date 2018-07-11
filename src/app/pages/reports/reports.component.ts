@@ -23,12 +23,16 @@ export class ReportsComponent implements OnInit {
   dateString: string;
   dateString1: string;
   message: string;
+  p:number = 1;
   user: any = {};
   mydate: string;
   pastdate:string;
   today:string;
   date1:string;
   date2:string;
+  dataperpage:string;
+  record_count:string;
+
   disableCust:boolean = false;
   public globalsvcid:string;
   public selectedsvcid:string;
@@ -37,28 +41,23 @@ export class ReportsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.user.service_type = "1";
+    this.user.status = "1";
+
     var date = new Date();
     this.model = {day:date.getUTCDate(),month:date.getUTCMonth() + 1,year: date.getUTCFullYear() };
     this.dateString = this.model.year + '-' + this.model.month + '-' + this.model.day;
     this.today = this.datePipe.transform(date,"yyyy-MM-dd");
-    var numberOfDays = 14;
     var dt = new Date();
            dt.setDate( dt.getDate() - 14 );
       this.model1 = { day: dt.getUTCDate(), month: dt.getUTCMonth() + 1, year: dt.getUTCFullYear()};
       this.dateString1 = this.model1.year + '-' + this.model1.month + '-' + this.model1.day;
-    var days = date.setDate(date.getDate() - numberOfDays);
-    this.pastdate = this.datePipe.transform(days,"yyyy-MM-dd");
-    console.log(this.pastdate);
-    
-    console.log(this.today);
+      console.log(this.dateString1);
     if(sessionStorage.getItem('selectedsvc')){
-      // console.log(sessionStorage.getItem('selectedsvc'));
       this.svcid = sessionStorage.getItem('selectedsvc');
-      // console.log(this.svcid);
     }
     else{
       this.svcid = JSON.parse(sessionStorage.getItem('globalsvcid'));
-      // console.log(this.svcid);
     }
     this.service_type = [
       { id: "1", type: 'Servicing Pickup and Dropoff' },
@@ -77,7 +76,7 @@ export class ReportsComponent implements OnInit {
 
     ];
     this.user.status = this.status[0].id;
-    this.defaultSearch()
+    this.search(1);
   }
 
   onSelectDate(date: NgbDateStruct) {
@@ -111,7 +110,10 @@ export class ReportsComponent implements OnInit {
 
     return this.ngbDateParserFormatter.parse(startYear + "-" + startMonth.toString() + "-" + startDay);
   }
-  search() {  
+  search(p:number) {  
+    this.spinner.show();
+    this.p = p - 1 ;
+
     if(this.user.service_type == "4" || this.user.service_type == "6"){
       this.disableCust = true;
     }
@@ -136,12 +138,14 @@ export class ReportsComponent implements OnInit {
     }
     const reqpara1 =
       {
-        requesttype: 'getreports',
-        startdate: this.date1,
-        enddate: this.date2,
+        requesttype: 'getreportsv2',
+        startdate: this.dateString1,
+        enddate: this.dateString,
         servicetype: this.user.service_type,
         status: this.user.status,
-        svcid:this.svcid
+        svcid:this.svcid,
+        pagenumber:this.p
+
       }
     const as1 = JSON.stringify(reqpara1)
     this.service.webServiceCall(as1).subscribe
@@ -151,14 +155,19 @@ export class ReportsComponent implements OnInit {
           this.router.navigate(['/auth/login']);
         }
         else {
-            if (res[0].report[0].hasOwnProperty('no_records')) {
-              this.message = "No Data"
-              console.log('No Data');
-            }
-            else {
-              this.report = res[0].report;
-              console.log(this.report);
-            }
+          if (res[0].pagecount[0].hasOwnProperty('noqueues')) {
+            this.message = "No Data";
+            console.log('No Data');
+            this.spinner.hide();
+          }
+          else {
+            this.record_count = res[0].pagecount[0].record_count;
+            this.dataperpage = res[0].pagecount[0].pagelimit;
+            this.report = res[1].record;
+            console.log(this.report);
+            this.spinner.hide();
+          }
+
           }
 
         });
@@ -173,41 +182,6 @@ export class ReportsComponent implements OnInit {
         this.router.navigate(['/pages/queue-details']);
       }
 
-  defaultSearch() {
-    const reqpara1 =
-      {
-        requesttype: 'getreports',
-        startdate: this.pastdate,
-        enddate: this.today,
-        servicetype: "0",
-        status: "1",
-        svcid:this.svcid
-      }
-    const as1 = JSON.stringify(reqpara1)
-    this.service.webServiceCall(as1).subscribe
-      (res => {
-        if (res[0].login === 0) {
-          sessionStorage.removeItem('currentUser');
-          this.router.navigate(['/auth/login']);
-        }
-        else {
-          if (res[0].report[0].hasOwnProperty('no_records')) {
-            // this.report = res[0].report;
-            // console.log(this.report);
-            this.message = "No Data"
-            console.log('No Data');
-          }
-          else {
-            // this.message = "No Data"
-            // console.log('No Data');
-            this.report = res[0].report;
-            console.log(this.report);
-          }
-
-        }
-
-      }
-      );
-  }
+ 
 
 }
