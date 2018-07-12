@@ -50,6 +50,9 @@ export class RsaComponent implements OnInit {
   showstep3 = false;
   pikup_lat:string;
   dropoff_lat:string;
+  insurance_tied:any = [];
+  north21_tied: any= []
+  svcList:any;
   dropoff_long:string;
   dropoff:string;
   public svc: boolean = true;
@@ -87,12 +90,22 @@ export class RsaComponent implements OnInit {
   countrycode1:string;
   rsaType:any=[];
   scv:string;
+  insuranceFlag:boolean=false;
   TowingTypes:any = [];
   OnSpotTypes:any= [];
   constructor(     private modalService: NgbModal, private titlecasePipe:TitleCasePipe, private ngbDateParserFormatter: NgbDateParserFormatter,private http: HttpClient, private spinner: NgxSpinnerService, private toasterService: ToasterService, private router: Router,private ServicingService: ServicingService,) { }
 
 
   ngOnInit() {
+    console.log(sessionStorage.getItem('insurance'))
+    if(JSON.parse(sessionStorage.getItem('insurance')) == "1"){
+      this.insuranceFlag = true;
+      console.log(this.insuranceFlag , "flag")
+    }
+    else{
+      this.insuranceFlag = false;
+      console.log(this.insuranceFlag , "flag")
+    }
     if(sessionStorage.getItem('selectedsvc')){
       // console.log(sessionStorage.getItem('selectedsvc'));
       this.svcid = sessionStorage.getItem('selectedsvc');
@@ -236,12 +249,49 @@ export class RsaComponent implements OnInit {
             this.selectedBrand = this.brands[0].brand_id;
             console.log(this.selectedBrand);
             this.getModelds(this.selectedBrand);
-         
+            this.GetSVCList1();
         }
 
       }
       );
   }
+
+  GetSVCList1(){
+    console.log(this.selectedBrand);
+    var cityId = JSON.parse(sessionStorage.getItem('city_id'));
+    const reqpara1 = {
+           requesttype: 'getsvclist_city_brand',
+            cityid: cityId,
+            brandid: this.selectedBrand
+         }
+      const SvcList = JSON.stringify(reqpara1)
+      this.ServicingService.webServiceCall(SvcList).subscribe
+       (res => {
+          if(res[0].login === 0){
+            sessionStorage.removeItem('currentUser');
+            this.router.navigate(['/auth/login']);
+          }
+          else{
+            this.svcList=res[0].svclist;
+            for(var i = 0; i < res[0].svclist.length; i++ ){
+              if(res[0].svclist[i].is_tied == '1'){
+              this.north21_tied.push(res[0].svclist[i]);
+              res[0].svclist[i].associated = "21North";
+              // console.log("21north" , this.north21_tied)
+             
+              }
+            
+            else{
+              this.insurance_tied.push(res[0].svclist[i]);
+              res[0].svclist[i].associated = "Insurance";
+              console.log(this.insurance_tied);
+            }
+          
+          }
+          console.log("insurance" , this.insurance_tied)
+          }
+        });
+   }
 
   check(value: string,time:string) {
     // console.log(time);
@@ -698,6 +748,10 @@ export class RsaComponent implements OnInit {
 
   onSubmit(f: NgForm) {
     this.registrationNumber = f.value.num.toUpperCase();
+    console.log(f.value.svclist);
+    if(f.value.svclist){
+      this.selectedBrand = f.value.svclist;
+    }
     if (f.value.mobile2) {
       this.mobile2 = f.value.mobile2;
     }

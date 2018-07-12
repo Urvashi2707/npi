@@ -72,6 +72,7 @@ export class ServicingComponent implements OnInit {
   model: NgbDateStruct;
   dateString: string;
   addresstype_pu:string;
+  svcList:any;
   yourBoolean = 'servicing';
   public pickup_drop: number;
   public mobile2: string;
@@ -116,8 +117,11 @@ export class ServicingComponent implements OnInit {
   public startDate;
   public minDate;
   public maxDate;
+  insurance_tied:any = [];
+  north21_tied: any= []
   addressPickup:any;
   addressDropoff:any;
+  insuranceFlag:boolean=false;
   public salutation:any;
   public globalsvcid:string;
   public selectedsvcid:string;
@@ -155,6 +159,15 @@ export class ServicingComponent implements OnInit {
 
 
   ngOnInit() {
+    console.log(sessionStorage.getItem('insurance'))
+    if(JSON.parse(sessionStorage.getItem('insurance')) == "1"){
+      this.insuranceFlag = true;
+      console.log(this.insuranceFlag , "flag")
+    }
+    else{
+      this.insuranceFlag = false;
+      console.log(this.insuranceFlag , "flag")
+    }
     if(sessionStorage.getItem('selectedsvc')){
       this.svcid = sessionStorage.getItem('selectedsvc');
     }
@@ -192,9 +205,11 @@ export class ServicingComponent implements OnInit {
     this.minDate = { year: date.getFullYear(), month: date.getMonth() + 1, day: date.getDate() - 1 };
     this.maxDate = { year: date.getFullYear(), month: date.getMonth() + 1, day: date.getDate() + 15};
     this.globalsvcid = JSON.parse(sessionStorage.getItem('globalsvcid'));
+    
     this.getAdvisor();
     this.getCre();
     this.getcreadv();
+   
   }
 
 
@@ -436,6 +451,7 @@ getBrands() {
           this.brands = res[0].brands,
             this.selectedBrand = this.brands[0].brand_id;
             this.getModelds(this.selectedBrand);
+            this.GetSVCList();
         }
       });
   }
@@ -858,6 +874,43 @@ getBrands() {
     });
   }
 
+  GetSVCList(){
+    console.log(this.selectedBrand);
+    var cityId = JSON.parse(sessionStorage.getItem('city_id'));
+    const reqpara1 = {
+           requesttype: 'getsvclist_city_brand',
+            cityid: cityId,
+            brandid: this.selectedBrand
+         }
+      const SvcList = JSON.stringify(reqpara1)
+      this.ServicingService.webServiceCall(SvcList).subscribe
+       (res => {
+          if(res[0].login === 0){
+            sessionStorage.removeItem('currentUser');
+            this.router.navigate(['/auth/login']);
+          }
+          else{
+            this.svcList=res[0].svclist;
+            for(var i = 0; i < res[0].svclist.length; i++ ){
+              if(res[0].svclist[i].is_tied == '1'){
+              this.north21_tied.push(res[0].svclist[i]);
+              res[0].svclist[i].associated = "21North";
+              // console.log("21north" , this.north21_tied)
+             
+              }
+            
+            else{
+              this.insurance_tied.push(res[0].svclist[i]);
+              res[0].svclist[i].associated = "Insurance";
+              console.log(this.insurance_tied);
+            }
+          
+          }
+          console.log("insurance" , this.insurance_tied)
+          }
+        });
+   }
+
   getAdvisor() {
     const reqpara8 = {
       requesttype: 'getspecificsvcusers',
@@ -879,6 +932,10 @@ getBrands() {
 
   onSubmit(f: NgForm) {
     this.disabled = true;
+    console.log(f.value.svclist);
+    if(f.value.svclist){
+      this.selectedBrand = f.value.svclist;
+    }
     this.registrationNumber = f.value.num.toUpperCase();
     if(this.showAddressDropDown){
       if(this.editAddress){

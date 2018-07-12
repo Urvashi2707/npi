@@ -241,6 +241,19 @@
                 </div>
               </div>
             </div>
+            <div class="row" *ngIf="insuranceFlag">
+              <div class="col-md-6 col-lg-6 col-sm-6">
+                  <div class="form-group">
+                      <select id="svclist" class="form-control" name="svclist" [(ngModel)]="user.svc" #svclist="ngModel"
+                        required >
+                        <optgroup label="{{i.associated}}" *ngFor="let i of svcList;let j = index;">
+                          <option [value]="i.id">{{i.name}}</option>
+                        </optgroup>
+                      </select>
+                      <label class="form-control-placeholder" for="svclist">Service Centre List*</label>
+                    </div>
+              </div>
+            </div>
             <div *ngIf="amb.checked" class="row" >
               <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6" *ngIf="showtime">
                 <table cellspacing="20" *ngIf="show3">

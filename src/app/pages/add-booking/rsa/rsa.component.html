@@ -225,6 +225,17 @@
                   </div>
                 </div>
               </div>
+              <div class="col-md-6 col-lg-6 col-sm-6" *ngIf="insuranceFlag">
+                  <div class="form-group">
+                      <select id="svclist" class="form-control" name="svclist" [(ngModel)]="user.svc" #svclist="ngModel"
+                        required >
+                        <optgroup label="{{i.associated}}" *ngFor="let i of svcList;let j = index;">
+                          <option [value]="i.id">{{i.name}}</option>
+                        </optgroup>
+                      </select>
+                      <label class="form-control-placeholder" for="svclist">Service Centre List*</label>
+                    </div>
+              </div>
                 <div class="form-control-feedback" *ngIf="d.errors && (d.dirty || d.touched)">
                   <p *ngIf="d.errors.required" class="haserror">Date is required</p>
                 </div>
