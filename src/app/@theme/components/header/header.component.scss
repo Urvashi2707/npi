@@ -70,9 +70,6 @@
             }
         }
         @include media-breakpoint-down(xs) {
-            // nb-action:not(.toggle-layout) {
-            //     border: none;
-            // }
             .control-item {
                 display: none;
             }
@@ -91,34 +88,18 @@
                 display: none;
             }
         }
-            @include media-breakpoint-down(is) {
-                .header-container {
-                    .logo {
-                        font-size: 1.25rem;
-                    }
-                }
-                .toggle-layout {
-                    display: none;
-                }
-                // nb-action:not(.toggle-layout) {
-                //     padding: 0;
-                // }
-            }
-            @include media-breakpoint-down(xs) {
-                .right /deep/ {
-                    display: none;
-                }
-                .dropdown{
-                    display: none;
-                }
-                .credits{
-                    display: none;
-                }
-                .nb-menu{
-                    font-size: 22px;
-                }
-            }
-            // @media only screen and (min-width: 420px) {
+            // @include media-breakpoint-down(xs) {
+            //     .header-container {
+            //         .logo {
+            //             font-size: 1.25rem;
+            //         }
+            //     }
+            //     .toggle-layout {
+            //         display: none;
+            //     }
+            
+            // }
+            // @include media-breakpoint-down(xs) {
             //     .right /deep/ {
             //         display: none;
             //     }
@@ -128,13 +109,27 @@
             //     .credits{
             //         display: none;
             //     }
-            //     .logo img {
-            //         width: 71px;
-            //     }
-            //     nb-search{
-            //         display: inline;
+            //     .nb-menu{
+            //         font-size: 22px;
             //     }
             // }
+            @media only screen and (min-width: 420px) {
+                .right /deep/ {
+                    display: none;
+                }
+                .dropdown{
+                    display: none;
+                }
+                .credits{
+                    display: none;
+                }
+                .logo img {
+                    width: 71px;
+                }
+                nb-search{
+                    display: inline;
+                }
+            }
         }
     
 

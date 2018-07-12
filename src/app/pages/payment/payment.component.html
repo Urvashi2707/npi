@@ -135,11 +135,6 @@
               <button type="button" class="btn btn-primary apply" (click)="FilterCheck(1)">Apply</button>
             </div>
           </div>
-            <!-- <div class="row">
-                <div class="col-sm-12 col-12">
-                  <input type="text" class="search" [(ngModel)]="term" placeholder="search">
-                </div>
-              </div> -->
         <div class="row">
           <div class="col-12 col-sm-12">
               <div class="NoData" *ngIf="message"> {{message}}</div>
@@ -148,27 +143,29 @@
                 <div class="card">
                   <div class="row">
                     <div class="col-12 col-sm-12">
-                      <span class="QueueId">Service Period &nbsp;:&nbsp;{{pay.start_date}} - {{pay.end_date}}</span>
+                      <span><span class="title" style="padding-right: 3%">Service Period</span><span class="title">:</span>&nbsp;{{pay.start_date}} - {{pay.end_date}}</span>
                     </div>
                   </div>
                   <div class="row">
                     <div class="col-12 col-sm-12">
-                      <div><span class="title">Settle Date &nbsp;:&nbsp;</span>{{pay.date_released}}</div>
+                      <div><span class="title" style="padding-right: 11%">Settle Date</span><span class="title">:</span>&nbsp;{{pay.date_released}}</div>
                     </div>
                   </div>
                   <div class="row">
                     <div class="col-12 col-sm-12">
-                      <span class="title">NEFT ID : </span>
-                      <span>{{pay.neft_id}}</span>
+                      <span class="title" style="padding-right: 17%">NEFT ID</span><span class="title">:</span>
+                      <span>&nbsp;{{pay.neft_id}}</span>
                     </div>
                   </div>
                   <div class="row">
-                    <div class="col-6 col-sm-6">
-                      <span class="title">Reference Id  : </span>
-                      <span>{{pay.invoice_id}}</span>
+                    <div class="col-12 col-sm-12">
+                      <span class="title" style="padding-right: 7%">Reference Id</span><span class="title">:</span>
+                      <span>&nbsp;{{pay.invoice_id}}</span>
                     </div>
-                    <div class="col-6 col-sm-6">
-                      <span><a href={{pay.url}}  class="button" target="_blank" download style="padding: 4px;
+                  </div>
+                  <div class="row">
+                    <div class="col-4 col-sm-4">
+                      <span><a href={{pay.url}}  class="button" target="_blank" download style="padding:4px;
                         font-size: 9px;">Download</a></span>
                     </div>
                   </div>

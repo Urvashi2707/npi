@@ -26,16 +26,33 @@ table{
     .card:hover {
         box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
     }
-    ul {
-        list-style-type: none;
-        padding: 0px;
-    }
-    li{
-        margin-bottom: 9%;
-    }
     .poc{
         font-weight: 900;
     }
+    .progressbar li{
+        list-style-type: none;
+        float: left;
+        width: 50%;
+        position: relative;
+    }
+    .progressbar li:before{
+        content: " ";
+        width: 10px;
+        height: 10px;
+        border:1px solid #ddd;
+        display: block;
+        border-radius: 50%;
+        background-color: white;
+    }
+    .progressbar li:after{
+        content:'';
+        position: absolute;
+        width: 93%;
+        height: 1px;
+        background: linear-gradient(to right, rgb(16, 155, 87), rgb(248, 226, 226));
+        top:5px;
+        left: -92%;
+        }
   .header{
     font-size: .9rem;
     padding-left: 1%;

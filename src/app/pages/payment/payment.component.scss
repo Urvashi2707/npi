@@ -269,7 +269,7 @@ input:checked+.slider:before {
         background: orange;
         padding: 10px;
         text-align: center;
-        border-radius: 5px;
+        border-radius: 13px;
         color: white;
         font-weight: bold;
         height: 19px;;
@@ -340,12 +340,11 @@ input:checked+.slider:before {
         padding: 1px;
         font-size: 12px; 
         border: 0px;  
-        // width: 7px;
         opacity: 0;
-         outline: 0;
-          border: 0;
-          -webkit-transition: width 0.4s ease-in-out;
-          transition: width 0.4s ease-in-out;
+        outline: 0;
+        border: 0;
+        -webkit-transition: width 0.4s ease-in-out;
+        transition: width 0.4s ease-in-out;
     }
     .right-inner-addon input:focus {
         width: 100%;
@@ -363,7 +362,7 @@ input:checked+.slider:before {
         pointer-events: none;
     }
     .title{
-        font-weight: 500;
+        font-weight: 600;
     }
     .NoData{
         text-align: center;

@@ -112,7 +112,7 @@ export const MENU_ITEMSADM: NbMenuItem[] = [
     link: '/pages/unconfirmed',
   },
   {
-    title: 'Cre Reports',
+    title: 'CRE Reports',
     icon: 'nb-tables',
     link: '/pages/cre-reports',
   },
