@@ -241,19 +241,7 @@
                 </div>
               </div>
             </div>
-            <div class="row" *ngIf="insuranceFlag">
-              <div class="col-md-6 col-lg-6 col-sm-6">
-                  <div class="form-group">
-                      <select id="svclist" class="form-control" name="svclist" [(ngModel)]="user.svc" #svclist="ngModel"
-                        required >
-                        <optgroup label="{{i.associated}}" *ngFor="let i of svcList;let j = index;">
-                          <option [value]="i.id">{{i.name}}</option>
-                        </optgroup>
-                      </select>
-                      <label class="form-control-placeholder" for="svclist">Service Centre List*</label>
-                    </div>
-              </div>
-            </div>
+       
             <div *ngIf="amb.checked" class="row" >
               <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6" *ngIf="showtime">
                 <table cellspacing="20" *ngIf="show3">
@@ -268,6 +256,19 @@
               </div>
               <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6" *ngIf="showtime">
                 <input class="form-control" name="slot" [readonly]="true" *ngIf="slot_time" [(ngModel)]="slothour" />
+              </div>
+            </div>
+            <div class="row" *ngIf="insuranceFlag">
+              <div class="col-md-6 col-lg-6 col-sm-6">
+                  <div class="form-group">
+                      <select id="svclist" class="form-control" name="svclist" [(ngModel)]="user.svc" #svclist="ngModel"
+                        required >
+                        <optgroup label="{{i.associated}}" *ngFor="let i of svcList;let j = index;">
+                          <option [value]="i.id">{{i.name}}</option>
+                        </optgroup>
+                      </select>
+                      <label class="form-control-placeholder" for="svclist">Service Centre List*</label>
+                    </div>
               </div>
             </div>
             <div *ngIf="showAddressDropDown">
@@ -664,10 +665,11 @@
                           </button>
                         </div>
                 </div>
+                <div class="form-control-feedback" *ngIf="creName.errors && (creName.dirty || creName.touched)">
+                  <p *ngIf="creName.errors.required" class="haserror">CRE is required</p>
+                </div>
             </div>
-            <div class="form-control-feedback" *ngIf="creName.errors && (creName.dirty || creName.touched)">
-                <p *ngIf="creName.errors.required" class="haserror">CRE is required</p>
-              </div>
+           
               <div class="col-md-6 col-lg-6 col-sm-6 col-12 AddUserCre">
                 <div class="form-group"  class="AddUserRow">
                   <select name="ServiceAdvisor" id="ServiceAdvisor" class="form-control" name="ServiceAdvisor" [(ngModel)]="user.service_advisor"
@@ -682,11 +684,12 @@
                       <i class="fa fa-plus" style="color:#ffa100" aria-hidden="true"></i>
                     </button>
                   </div>
+                  <!-- <div class="form-control-feedback" *ngIf="ServiceAdvisor.errors && (ServiceAdvisor.dirty || ServiceAdvisor.touched)">
+                    <p *ngIf="ServiceAdvisor.errors.required" class="haserror">Service Advisor is required</p>
+                  </div> -->
               </div>
             </div>
-            <div class="form-control-feedback" *ngIf="ServiceAdvisor.errors && (ServiceAdvisor.dirty || ServiceAdvisor.touched)">
-                <p *ngIf="ServiceAdvisor.errors.required" class="haserror">Service Advisor is required</p>
-              </div>
+           
             <div class="row">
               <div class="col-md-6 col-lg-6 col-sm-6">
                 <div class="form-group">

@@ -58,6 +58,7 @@ export class ServicingComponent implements OnInit {
   pickuplandmark:string;
   pickuppincode:string;
   dropofffdoor:string;
+  advisorId:string;
   dropoffstreet:string;
   dropoffarea:string;
   dropofflandmark:string;
@@ -1282,6 +1283,13 @@ getBrands() {
     else {
       this.pickup_drop = 1;
     }
+
+    if(f.value.ServiceAdvisor){
+      this.advisorId = f.value.ServiceAdvisor;
+    }
+    else{
+      this.advisorId="0";
+    }
   
       console.log(this.selectedItems);
       if (this.selectedItems === null ) {
@@ -1329,7 +1337,7 @@ getBrands() {
       droplat:this.dropoff_lat,
       droplong:this.dropoff_long,
       servicetype:this.pickup_drop,
-      advisorid:f.value.ServiceAdvisor,
+      advisorid:this.advisorId,
       creid:f.value.creName,
       assignambassador:this.amb,
       selectedsvcid:this.svcid,

@@ -27,6 +27,8 @@ export class CancelledComponent implements OnInit {
   MessageNoData:string;
   page: number = 1;
   SvcId:string;
+  InsuranceUsr:string;
+  InsuranceCheck:boolean = false;
 
   constructor(private spinner: NgxSpinnerService,private datePipe:DatePipe,private ngbDateParserFormatter: NgbDateParserFormatter,private _detailsTable: QueueTableService, private _data: ServerService, private _tableService: QueueTableService, private router: Router) { 
     this._tableService.clickedID.subscribe(value => {
@@ -42,6 +44,13 @@ export class CancelledComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.InsuranceUsr = JSON.parse(sessionStorage.getItem('insurance'));
+    if(this.InsuranceUsr == "1"){
+      this.InsuranceCheck = true;
+    }
+    else{
+      this.InsuranceCheck = false;
+     }
     if(sessionStorage.getItem('selectedsvc')){
       this.SvcId = sessionStorage.getItem('selectedsvc');
     }
