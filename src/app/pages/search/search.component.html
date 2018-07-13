@@ -38,11 +38,11 @@
                                 <th (click)="sort('queue_status')">Status
                                     <span><i class="fa" *ngIf="key =='queue_status'" [ngClass]="{'fa-sort-alpha-asc':reverse, 'fa-sort-alpha-desc':!reverse}" style="color:#ffa100" aria-hidden="true"></i></span>
                                 </th>
-                                <th *ngIf="InsuranceCheck" (click)="sort('svc_name')">SVC Name
+                                <!-- <th *ngIf="InsuranceCheck" (click)="sort('svc_name')">SVC Name
                                         <span class="sort-span">
                                           <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i>
                                         </span>
-                                      </th>
+                                      </th> -->
                                 <th>Upload</th>
                             </tr>
                             <tr *ngFor="let r of report  | orderBy: key : reverse | filter : searchText" >
@@ -52,7 +52,7 @@
                                 <td (click)="openQDetails(r.id)">{{r.cust_name}}</td>
                                 <td (click)="openQDetails(r.id)">{{r.cust_number}}</td>
                                 <td (click)="openQDetails(r.id)">{{r.queue_status}}</td>
-                                <td *ngIf="InsuranceCheck">{{i.svc_name}}</td>
+                                <!-- <td *ngIf="InsuranceCheck">{{i.svc_name}}</td> -->
                                 <td *ngIf="r.upload_button"><button class="upload-button"  (click)="ShowUploadModal(r)">{{r.upload_button}}</button></td>
 
                             </tr>
@@ -86,11 +86,11 @@
             <ul>
               <li *ngFor="let r of report|filter:searchText" (click)="openQDetails(i.queueid)">
                 <div class="card">
-                        <div class="row padding" *ngIf="InsuranceCheck">
+                        <!-- <div class="row padding" *ngIf="InsuranceCheck">
                                 <div class="col-12 col-sm-12">
                                     <span class="QueueId">{{i.svc_name}}</span>
                                 </div>
-                              </div>
+                              </div> -->
                   <div class="row">
                     <div class="col-12 col-sm-12">
                       <span class="QueueId">ID &nbsp;:&nbsp;{{r.id}}</span>
