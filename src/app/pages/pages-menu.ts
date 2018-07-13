@@ -301,6 +301,11 @@ export const MENU_INSURANCESUSR: NbMenuItem[] = [
     link: '/pages/upcoming',
   },
   {
+    title: 'Upcoming RSA',
+    icon: 'nb-tables',
+    link: '/pages/upcomingrsa',
+  },
+  {
     title: 'Paused',
     icon: 'nb-pause',
     link: '/pages/paused',
@@ -314,18 +319,6 @@ export const MENU_INSURANCESUSR: NbMenuItem[] = [
     title: 'Completed',
     icon: 'nb-locked',
     link: '/pages/completed',
-  },
-  {
-    title: 'Mishaps',
-    icon: 'nb-alert',
-    link: '/pages/mishaps'
-  },
-  {
-    title: 'Settlement Advice',
-    icon: 'nb-tables',
-    link: '/pages/payment',
-    hidden:true
-
   },
   {
     title: 'Reports',

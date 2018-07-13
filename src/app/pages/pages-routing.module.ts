@@ -10,7 +10,7 @@ import { PaymentComponent } from './payment/payment.component';
 import { QueueDetailsComponent } from './queue-details/queue-details.component';
 import { UpcomingComponent } from './upcoming/upcoming.component';
 import { PausedComponent } from './paused/paused.component';
-
+import {UpcomingrsaComponent} from './upcomingrsa/upcomingrsa.component'
 import { NotcheckedinComponent } from './notcheckedin/notcheckedin.component'
 import { CancelledComponent } from './cancelled/cancelled.component';
 import { CompletedComponent } from './completed/completed.component';
@@ -53,6 +53,10 @@ const routes: Routes = [{
   {
     path: 'paused',
     component: PausedComponent,
+  },
+  {
+    path: 'upcomingrsa',
+    component: UpcomingrsaComponent,
   },
   {
     path: 'profile',
