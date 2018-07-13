@@ -28,6 +28,8 @@ export class RsaComponent implements OnInit {
   public mobile2: string;
   private cre: any = [];
   public serviceadv: any = [];
+  cityID:string;
+  public cityList: any = [];
   registrationNumber:string;
   private serviceType: string[];
   private TowingTruck: string[];
@@ -44,6 +46,7 @@ export class RsaComponent implements OnInit {
   dateString:string;
   customer: any = [];
   showstep1 = false;
+  reqpara:any;
   public amb: boolean = true;
   showstep2 = false;
   private service_advisor: string[];
@@ -97,6 +100,7 @@ export class RsaComponent implements OnInit {
 
 
   ngOnInit() {
+    this.getCity();
     console.log(sessionStorage.getItem('insurance'))
     if(JSON.parse(sessionStorage.getItem('insurance')) == "1"){
       this.insuranceFlag = true;
@@ -230,10 +234,31 @@ export class RsaComponent implements OnInit {
 
   }
 
+  getCity() {
+    const reqpara1 =
+      {
+        requesttype: 'getcitylist',
+      }
+    const as1 = JSON.stringify(reqpara1)
+    this.ServicingService.webServiceCall(as1).subscribe
+      (res => {
+        if (res[0].login === 0) {
+          sessionStorage.removeItem('currentUser');
+          this.router.navigate(['/auth/login']);
+        }
+        else {
+          this.cityList = res[0].citylist;
+          console.log(this.cityList);
+        }
+
+      }
+      );
+  }
+
   getBrands() {
     const reqpara1 =
       {
-        requesttype: 'getbrands',
+        requesttype: 'getallbrands',
         svcid:this.svcid
       }
     const as1 = JSON.stringify(reqpara1)
@@ -245,24 +270,24 @@ export class RsaComponent implements OnInit {
           this.router.navigate(['/auth/login']);
         }
         else {
-          this.brands = res[0].brands,
+          this.brands = res[0].allbrands,
             this.selectedBrand = this.brands[0].brand_id;
             console.log(this.selectedBrand);
             this.getModelds(this.selectedBrand);
-            this.GetSVCList1();
+            // this.GetSVCList1(this.selectedBrand,this.user.city);
         }
 
       }
       );
   }
 
-  GetSVCList1(){
+  GetSVCList1(brand,city){
     console.log(this.selectedBrand);
     var cityId = JSON.parse(sessionStorage.getItem('city_id'));
     const reqpara1 = {
            requesttype: 'getsvclist_city_brand',
-            cityid: cityId,
-            brandid: this.selectedBrand
+            cityid: city,
+            brandid: brand
          }
       const SvcList = JSON.stringify(reqpara1)
       this.ServicingService.webServiceCall(SvcList).subscribe
@@ -292,6 +317,12 @@ export class RsaComponent implements OnInit {
           }
         });
    }
+
+   onCity(id){
+    console.log(this.user.city);
+    console.log(this.selectedBrand);
+    this.GetSVCList1(this.selectedBrand,this.user.city);
+  }
 
   check(value: string,time:string) {
     // console.log(time);
@@ -490,6 +521,17 @@ export class RsaComponent implements OnInit {
 
     });
   }
+
+  onSelectBrand(brandsId) {
+    console.log(brandsId);
+   this.selectedBrand = null;
+   for (let i = 0; i < this.brands.length; i++) {
+    if (this.brands[i].brand_id == brandsId) {
+       this.selectedBrand = this.brands[i].brand_id;
+     }
+   }
+   this.getModelds(this.selectedBrand);
+ }
 
   getRSATypes(){
     const reqpara21 = {
@@ -747,6 +789,7 @@ export class RsaComponent implements OnInit {
   // }
 
   onSubmit(f: NgForm) {
+    
     this.registrationNumber = f.value.num.toUpperCase();
     console.log(f.value.svclist);
     if(f.value.svclist){
@@ -840,8 +883,42 @@ export class RsaComponent implements OnInit {
       
     }
   }
-  if(this.slot_time != "0"){
-    const reqp = {
+
+  if(this.user.city){
+    this.cityID = this.user.city;
+  }
+  else{
+    this.cityID = JSON.parse(sessionStorage.getItem('city_id'));
+  }
+  if(this.insuranceFlag){
+    this.reqpara = {
+      requesttype :'createbookingrsa_insurance',
+      vehnumber : this.registrationNumber,
+      cityid:this.cityID,
+      vehbrand:this.selectedBrand,
+      carmodelid:f.value.model,
+      carsubmodelid:f.value.variant,
+      customername: f.value.salutation1 +'.'+this.titlecasePipe.transform(f.value.Cus_name),
+      customermobile1: f.value.mobile1,
+      customermobile2: this.mobile2,
+      customeremail:f.value.email,
+      queuetime:this.dateString + ' ' + this.slot_time,
+      pickuplocationaddress:this.pickup_add ,
+      pickuplat:this.pikup_lat ,
+      pickuplong:this.pikup_long,
+      droplocationaddress: this.dropoff,
+      droplat: this.dropoff_lat,
+      droplong:this.dropoff_long,
+      servicetype:this.servicetypeid,
+      advisorid:"0",
+      creid:"0",
+      selectedsvcid:this.scv,
+      cfeeclient:this.amt,
+      notes:this.notes
+    };
+  }
+  else{
+    this.reqpara = {
       requesttype :'createbookingrsa',
       vehnumber : this.registrationNumber,
       vehbrand:this.selectedBrand,
@@ -865,7 +942,10 @@ export class RsaComponent implements OnInit {
       cfeeclient:this.amt,
       notes:this.notes
     };
-    const rep1= JSON.stringify(reqp);
+  }
+  if(this.slot_time != "0"){
+  
+    const rep1= JSON.stringify(this.reqpara);
     console.log(rep1);
     this.ServicingService.webServiceCall(rep1).subscribe(data => {
       if (data[0].login === 0) {

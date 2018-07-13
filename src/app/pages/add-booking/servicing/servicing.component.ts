@@ -33,6 +33,7 @@ export class ServicingComponent implements OnInit {
   private Svclist: any = [];
   public slot: any = [];
   public vehicle = [];
+  cityID:string;
   public selectedBrand: any = [];
   public selectedModel: any = [];
   public selectedVariant: any = [];
@@ -107,6 +108,9 @@ export class ServicingComponent implements OnInit {
   showstep3 = false;
   public countrycode1: string;
   brand_id: string;
+  public List: any = [];
+  public cityList: any = [];
+  selectedCity:string;
   valuedate = new Date();
   public amb: boolean = true;
   isNewestOnTop = true;
@@ -178,6 +182,7 @@ export class ServicingComponent implements OnInit {
     this.user.confirm = true;
     this.countrycode1 = "+91";
     this.getBrands();
+    this.getCity();
     this.salutation = [
       { id: 1, type: 'Mr' },
       { id: 2, type: 'Mrs' },
@@ -266,6 +271,33 @@ public opt1={
     if (this.sameasvalue == true){
       this.user.dropofffdoor = value;
     }
+  }
+
+  onCity(id){
+    console.log(this.user.city);
+    console.log(this.selectedBrand);
+    this.GetSVCList(this.selectedBrand,this.user.city);
+  }
+
+  getCity() {
+    const reqpara1 =
+      {
+        requesttype: 'getcitylist',
+      }
+    const as1 = JSON.stringify(reqpara1)
+    this.ServicingService.webServiceCall(as1).subscribe
+      (res => {
+        if (res[0].login === 0) {
+          sessionStorage.removeItem('currentUser');
+          this.router.navigate(['/auth/login']);
+        }
+        else {
+          this.cityList = res[0].citylist;
+          console.log(this.cityList);
+        }
+
+      }
+      );
   }
 
   changepickupstreet(value:any){
@@ -438,7 +470,7 @@ public opt1={
 
 getBrands() {
     const reqpara1 ={
-        requesttype: 'getbrands',
+        requesttype: 'getallbrands',
         svcid:this.svcid
       }
     const as1 = JSON.stringify(reqpara1)
@@ -449,10 +481,9 @@ getBrands() {
           this.router.navigate(['/auth/login']);
         }
         else {
-          this.brands = res[0].brands,
-            this.selectedBrand = this.brands[0].brand_id;
+          this.brands = res[0].allbrands,
+            // this.selectedBrand = this.brands[0].brand_id;
             this.getModelds(this.selectedBrand);
-            this.GetSVCList();
         }
       });
   }
@@ -489,6 +520,7 @@ getBrands() {
 
 
   onSelectModel(modelId) {
+    console.log(modelId);
     for (let i = 0; i < this.Models.length; i++) {
       if (this.Models[i].model_id == modelId) {
         this.selectedModel = this.Models[i];
@@ -648,6 +680,18 @@ getBrands() {
   onBlurMethod(value: string) {
     this.registrationNumber = value.toUpperCase()
   }
+
+
+  onSelectBrand(brandsId) {
+    console.log(brandsId);
+   this.selectedBrand = null;
+   for (let i = 0; i < this.brands.length; i++) {
+    if (this.brands[i].brand_id == brandsId) {
+       this.selectedBrand = this.brands[i].brand_id;
+     }
+   }
+   this.getModelds(this.selectedBrand);
+ }
 
   onSelectDate(date: NgbDateStruct) {
     if (date != null) {
@@ -875,13 +919,13 @@ getBrands() {
     });
   }
 
-  GetSVCList(){
+  GetSVCList(brand,city){
     console.log(this.selectedBrand);
     var cityId = JSON.parse(sessionStorage.getItem('city_id'));
     const reqpara1 = {
            requesttype: 'getsvclist_city_brand',
-            cityid: cityId,
-            brandid: this.selectedBrand
+            cityid: city,
+            brandid: brand
          }
       const SvcList = JSON.stringify(reqpara1)
       this.ServicingService.webServiceCall(SvcList).subscribe
@@ -1303,13 +1347,18 @@ getBrands() {
       else{
         this.complaint_id = ["0"];
       }
-       var cityId = JSON.parse(sessionStorage.getItem('city_id'));
-      console.log(cityId);
+      if(this.user.city){
+        this.cityID = this.user.city;
+      }
+      else{
+        this.cityID = JSON.parse(sessionStorage.getItem('city_id'));
+      }
+  
     if(this.slot_time != "0"){
     const reqpara6 = {
       requesttype: "createbookingv3",
       vehnumber: this.registrationNumber,
-      city: cityId,
+      city: this.cityID,
       vehbrand: this.selectedBrand,
       carmodelid: f.value.model,
       carsubmodelid: f.value.variant,

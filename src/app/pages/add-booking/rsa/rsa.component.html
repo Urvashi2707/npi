@@ -69,6 +69,7 @@
           </div>
         </div>
           <div *ngIf="showstep2">
+      
             <div class="row">
               <div class="col-md-4 col-sm-4 col-lg-4">
                 <div class="form-group">
@@ -96,6 +97,22 @@
             <div class="line">
                 <span class="sectionHeader">Vehicle Details</span>
             </div>
+            <div class="row" *ngIf="insuranceFlag">
+                <div class="col-md-6 col-lg-6 col-sm-6">
+                  <div class="form-group">
+                    <select name="brand" id="brand" class="form-control" (change)="onSelectBrand($event.target.value)" [(ngModel)]="selectedBrand"
+                      #brand="ngModel" required>
+                      <option *ngFor="let b of brands" [value]="b.brand_id"> {{b.brand_name}}</option>
+                    </select>
+                    <label class="form-control-placeholder" for="brand">Vehicle Brand*</label>
+                  </div>
+                </div>
+                <div class="col-md-6 col-lg-6 col-sm-6">
+                  <div class="form-control-feedback" *ngIf="brand.errors && (brand.dirty || brand.touched)">
+                    <p *ngIf="brand.errors.required" class="haserror">Brand is required</p>
+                  </div>
+                </div>
+              </div>
             <div class="row">
               <div class="col-md-6 col-lg-6 col-sm-6">
                 <div class="form-group">
@@ -225,23 +242,13 @@
                   </div>
                 </div>
               </div>
-              <div class="col-md-6 col-lg-6 col-sm-6" *ngIf="insuranceFlag">
-                  <div class="form-group">
-                      <select id="svclist" class="form-control" name="svclist" [(ngModel)]="user.svc" #svclist="ngModel"
-                        required >
-                        <optgroup label="{{i.associated}}" *ngFor="let i of svcList;let j = index;">
-                          <option [value]="i.id">{{i.name}}</option>
-                        </optgroup>
-                      </select>
-                      <label class="form-control-placeholder" for="svclist">Service Centre List*</label>
-                    </div>
-              </div>
+        
                 <div class="form-control-feedback" *ngIf="d.errors && (d.dirty || d.touched)">
                   <p *ngIf="d.errors.required" class="haserror">Date is required</p>
                 </div>
-                <div class="form-control-feedback" *ngIf="d.errors && (d.dirty || d.touched)">
+                <!-- <div class="form-control-feedback" *ngIf="d.errors && (d.dirty || d.touched)">
                   <p *ngIf="d.errors.required" class="haserror" >Date is required</p>
-                </div>
+                </div> -->
               </div>
               <!-- <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6" *ngIf="yourBoolean === 'onSpot'">
                 <div class="form-group">
@@ -277,6 +284,33 @@
                   <input class="form-control" name="slot" [readonly]="true" *ngIf="slot_time" [(ngModel)]="slothour" />
                 </div>
               </div>
+
+              <div class="row" *ngIf="insuranceFlag">
+                  <div class="col-md-6 col-lg-6 col-sm-6">
+                      <div class="form-group">
+                          <select name="city" id="city" class="form-control" [(ngModel)]="user.city" required #city="ngModel" (change)="onCity($event)">
+                            <option *ngFor="let d of cityList" [value]="d.cityid"> {{d.cityname}}</option>
+                          </select>
+                          <label class="form-control-placeholder" for="city">City*</label>
+                        </div>
+    
+    
+                        <div class="form-control-feedback" *ngIf="city.errors && (city.dirty || city.touched)">
+                          <p *ngIf="city.errors.required" class="haserror">City is required</p>
+                        </div>
+                  </div>
+                  <div class="col-md-6 col-lg-6 col-sm-6">
+                      <div class="form-group">
+                          <select id="svclist" class="form-control" name="svclist" [(ngModel)]="user.svc" #svclist="ngModel"
+                            required >
+                            <optgroup label="{{i.associated}}" *ngFor="let i of svcList;let j = index;">
+                              <option [value]="i.id">{{i.name}}</option>
+                            </optgroup>
+                          </select>
+                          <label class="form-control-placeholder" for="svclist">Service Centre List*</label>
+                        </div>
+                  </div>
+                </div>
               
               <!-- <div class="row">
               <div class="col-md-6 col-lg-6 col-sm-6">
