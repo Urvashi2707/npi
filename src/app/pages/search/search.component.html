@@ -82,7 +82,7 @@
         <hr/>
         <div class="row">
           <div class="col-12 col-sm-12">
-              <div *ngIf="message">{{message}}</div>
+              <!-- <div *ngIf="message">{{message}}</div> -->
             <ul>
               <li *ngFor="let r of report|filter:searchText" (click)="openQDetails(i.queueid)">
                 <div class="card">

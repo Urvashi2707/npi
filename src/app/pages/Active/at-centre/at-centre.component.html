@@ -8,7 +8,7 @@
             <div class="col-lg-5 col-md-5 ">
               <div class="form-group">
                 <div class="input-group">
-                  <input class="form-control" name="dp" [ngModel]="model1" (ngModelChange)="onSelectStartDate($event)" placeholder="{{pastdate | date: 'yyyy-MM-dd'}}"
+                  <input class="form-control" name="dp" [ngModel]="model1" (ngModelChange)="onSelectStartDate($event)" 
                     ngbDatepicker #d1="ngbDatepicker">
                   <div class="input-group-append">
                     <button class="btn btn-outline-secondary dateButton" (click)="d1.toggle()" type="button" style="height: 100%;border-radius: 0px;">
@@ -23,7 +23,7 @@
             <div class="col-lg-5 col-md-5 ">
               <div class="form-group">
                 <div class="input-group">
-                  <input class="form-control" name="dp" [ngModel]="model" (ngModelChange)="onSelectEndDate($event)" placeholder="{{today | date: 'yyyy-MM-dd'}}"
+                  <input class="form-control" name="dp" [ngModel]="model" (ngModelChange)="onSelectEndDate($event)" 
                     ngbDatepicker #d="ngbDatepicker">
                   <div class="input-group-append">
                     <button class="btn btn-outline-secondary dateButton" (click)="d.toggle()" type="button" style="height: 100%;border-radius: 0px;">
@@ -99,7 +99,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let i of atcentre | filter:SearchData | orderBy: key : reverse | paginate: { id: 'server', itemsPerPage:dataperpage, currentPage: p + 1, totalItems: record_count };">
+            <tr *ngFor="let i of atcentre | filter:SearchData | orderBy: key : reverse | paginate: { id: 'server', itemsPerPage:DataPerPage, currentPage: page + 1, totalItems: RecordCount };">
               <td (click)="openQDetails(i)">{{i.queueid}}</td>
               <td (click)="openQDetails(i)">{{i.veh_number}}</td>
               <td (click)="openQDetails(i)">{{i.cust_name}}</td>
@@ -115,8 +115,8 @@
             </tr>
           </tbody>
         </table>
-        <table *ngIf="message">
-          {{message}}
+        <table *ngIf="MessageNoData">
+          {{MessageNoData}}
         </table>
         <ngx-spinner bdColor="rgba(51,51,51,0.09)" size="large" color="#ea5810" type="ball-clip-rotate-pulse"></ngx-spinner>
         <div class="paginate">
@@ -177,7 +177,7 @@
       <button type="button" class="btn btn-primary apply" (click)="FilterCheck(1)">Apply</button>
     </div>
   </div>
-  <div *ngIf="message">{{message}}</div>
+  <div *ngIf="MessageNoData">{{MessageNoData}}</div>
   <ul>
     <li *ngFor="let i of atcentre | filter:SearchData">
       <div class="card">
@@ -239,7 +239,7 @@
   </ul>
   <ngx-spinner bdColor="rgba(51,51,51,0.09)" size="large" color="#ea5810" type="ball-clip-rotate-pulse"></ngx-spinner>
   <div class="paginate">
-    <pagination-controls (pageChange)="FilterCheck($event)" id="server" *ngIf="!message"></pagination-controls>
+    <pagination-controls (pageChange)="FilterCheck($event)" id="server" *ngIf="!MessageNoData"></pagination-controls>
   </div>
 </div>
 

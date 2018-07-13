@@ -337,7 +337,7 @@ public opt1={
         else{
           this.spinner.hide();
           this.getinfowithMobile();
-          this.showToast('Message', 'Policy Message', 'Something went wrong');
+          // this.showToast('Message', 'Policy Message', 'Something went wrong');
           this.showstep3 = true;
           this.disableNext = true;
           this.ea_respondID = "0";
@@ -347,7 +347,7 @@ public opt1={
           this.spinner.hide();
           this.getinfowithMobile();
           this.disableNext = true;
-          this.showToast('Message', 'Policy Message', 'Something went wrong');
+          // this.showToast('Message', 'Policy Message', 'Something went wrong');
           
           this.ea_respondID = "0";
         }
@@ -355,7 +355,7 @@ public opt1={
           this.spinner.hide();
           this.getinfowithMobile();
           this.disableNext = true;
-          this.showToast('Message', 'Policy Message', 'Something went wrong');
+          // this.showToast('Message', 'Policy Message', 'Something went wrong');
        
           this.ea_respondID = "0";
         }

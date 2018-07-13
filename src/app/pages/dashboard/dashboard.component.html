@@ -2,8 +2,8 @@
   <nb-card>
     <nb-card-body>
       <div style="font-size: 1.5em;" class="firstcard">
-        <span *ngIf="!visibleheader"> {{SvcName}}</span>
-        <span *ngIf="visibleheader"> {{ChangedSvc}}</span>
+        <span *ngIf="!VisibleHeader"> {{SvcName}}</span>
+        <span *ngIf="VisibleHeader"> {{ChangedSvc}}</span>
         <span style="float: right;">
           <button (click)="GetSvcList()" class="edit" style="background-color: white;border-color: white;" *ngIf="CheckGrpAdmin">
             <i class="fa fa-pencil" style="color:#ffa100" aria-hidden="true"></i>
@@ -76,12 +76,12 @@
     <nb-card size="medium">
       <nb-card-header>Active Pickup Performance</nb-card-header>
       <nb-card-body style="padding: 0px">
-        <div *ngIf="!showPickupPie" style="padding: 5%;font-weight: 600">No Data</div>
+        <div *ngIf="!ShowPickupPie" style="padding: 5%;font-weight: 600">No Data</div>
         <div class="row" style="width: 98%;margin: 0 auto;">
           <ngx-charts-pie-chart [view]="PieChartView" [scheme]="colorScheme" [results]="PickupPieChart" [labels]="showLabels" style="padding-left: 13%">
           </ngx-charts-pie-chart>
         </div>
-        <div *ngIf="showPickupPie">
+        <div *ngIf="ShowPickupPie">
           <span style="padding-left: 4%;font-weight: 600;">Legends</span>
           <br/>
           <ul class="legend">
@@ -96,12 +96,12 @@
     <nb-card size="medium">
       <nb-card-header>Active Dropoff Performance</nb-card-header>
       <nb-card-body style="padding: 0px">
-        <div *ngIf="!showDropoffPie" style="padding: 5%;font-weight: 600">No Data</div>
+        <div *ngIf="!ShowDropoffPie" style="padding: 5%;font-weight: 600">No Data</div>
         <div class="row" style="width: 80%;margin: 0 auto;">
           <ngx-charts-pie-chart [view]="PieChartView" [scheme]="colorScheme" [results]="DropoffPieChart" [labels]="showLabels">
           </ngx-charts-pie-chart>
         </div>
-        <div *ngIf="showDropoffPie">
+        <div *ngIf="ShowDropoffPie">
           <span style="padding-left: 4%;font-weight: 600;">Legends</span>
           <br/>
           <ul class="legend">

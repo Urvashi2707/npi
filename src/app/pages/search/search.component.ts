@@ -27,6 +27,7 @@ export class SearchComponent implements OnInit {
   GlobalSvcId:string;
   SvcId:string;
   InsuranceUsr:string;
+  searchText:string;
   InsuranceCheck:boolean = false;
   key: string = 'id'; 
   reverse: boolean = false;

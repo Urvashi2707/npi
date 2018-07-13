@@ -5,7 +5,7 @@
         Profile
       </nb-card-header>
       <nb-card-body>
-        <form novalidate #f="ngForm" (ngSubmit)="onSubmit(f)">
+        <form ngNativeValidate #f="ngForm" (ngSubmit)="onSubmit(f)">
           <div class="row">
             <div class="col-md-5 col-sm-5 col-lg-5">
               <div class="form-group">
@@ -112,7 +112,7 @@
           <div class="row">
             <div class="col-md-12 col-lg-12 col-sm-12">
               <div style="float:right">
-                <button type="submit" class="btn btn-primary" [disabled]="f.invalid">Update</button>
+                <button type="submit" class="btn btn-primary">Update</button>
               </div>
             </div>
           </div>

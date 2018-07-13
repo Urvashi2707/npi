@@ -7,7 +7,7 @@
       <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
         <div class="form-group">
           <div class="input-group">
-            <input class="form-control" name="dp" [ngModel]="model1" (ngModelChange)="onSelectStartDate($event)" placeholder="{{today | date: 'yyyy-MM-dd'}}"
+            <input class="form-control" name="dp" [ngModel]="model1" (ngModelChange)="onSelectStartDate($event)" 
               ngbDatepicker #d1="ngbDatepicker">
             <div class="input-group-append">
               <button class="btn btn-outline-secondary dateButton" (click)="d1.toggle()" type="button" style="height: 100%;border-radius: 0px;">
@@ -22,7 +22,7 @@
       <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
         <div class="form-group">
           <div class="input-group">
-            <input class="form-control" name="dp" [ngModel]="model" (ngModelChange)="onSelectEndDate($event)" placeholder="{{futuredate | date: 'yyyy-MM-dd'}}"
+            <input class="form-control" name="dp" [ngModel]="model" (ngModelChange)="onSelectEndDate($event)" 
               ngbDatepicker #d="ngbDatepicker">
             <div class="input-group-append">
               <button class="btn btn-outline-secondary dateButton" (click)="d.toggle()" type="button" style="height: 100%;border-radius: 0px;">
@@ -92,7 +92,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let i of upcoming |filter:SearchData | orderBy: key : reverse  | paginate: { id: 'server', itemsPerPage:DataPerPage, currentPage: p + 1, totalItems: record_count }; let j = index"
+        <tr *ngFor="let i of upcoming |filter:SearchData | orderBy: key : reverse  | paginate: { id: 'server', itemsPerPage:DataPerPage, currentPage: page + 1, totalItems: RecordCount }; let j = index"
           (click)="openQDetails(i)">
           <td>{{i.queueid}}</td>
           <td>{{i.cust_name}}</td>
@@ -168,7 +168,7 @@
   <div class="row">
     <div class="col-12 col-sm-12">
       <ul>
-        <li *ngFor="let i of upcoming |filter:SearchData | paginate: { id: 'server', itemsPerPage:DataPerPage, currentPage: p + 1, totalItems: record_count }; let j = index " (click)="openQDetails(i)">
+        <li *ngFor="let i of upcoming |filter:SearchData | paginate: { id: 'server', itemsPerPage:DataPerPage, currentPage: page + 1, totalItems: RecordCount }; let j = index " (click)="openQDetails(i)">
           <div class="card">
             <div class="row padding" *ngIf="InsuranceCheck">
               <div class="col-12 col-sm-12">

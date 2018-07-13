@@ -567,7 +567,7 @@ export class RsaComponent implements OnInit {
         else{
           this.spinner.hide();
           this.someFunction();
-          this.showToast('Message', 'Policy Message', 'Something went wrong');
+          // this.showToast('Message', 'Policy Message', 'Something went wrong');
           this.showstep3 = true;
           this.disabledNext = true;
           this.showstep3 = true;
@@ -578,7 +578,7 @@ export class RsaComponent implements OnInit {
         if (err.error instanceof Error) {
           this.spinner.hide();
           this.someFunction();
-          this.showToast('Message', 'Policy Message', 'Something went wrong');
+          // this.showToast('Message', 'Policy Message', 'Something went wrong');
           console.log("Client-side error occured.");
           this.disabledNext = true;
           this.showstep3 = true;
@@ -587,7 +587,7 @@ export class RsaComponent implements OnInit {
         else {
           this.spinner.hide();
           this.someFunction();
-          this.showToast('Message', 'Policy Message', 'Something went wrong');
+          // this.showToast('Message', 'Policy Message', 'Something went wrong');
           console.log("Server-side error occured.");
           this.disabledNext = true;
           this.showstep3 = true;

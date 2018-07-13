@@ -8,7 +8,7 @@
         <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
           <div class="form-group">
             <div class="input-group">
-              <input class="form-control" name="dp" [ngModel]="model1" (ngModelChange)="onSelectStartDate($event)" placeholder="{{pastdate | date: 'yyyy-MM-dd'}}"
+              <input class="form-control" name="dp" [ngModel]="model1" (ngModelChange)="onSelectStartDate($event)" 
                 ngbDatepicker #d1="ngbDatepicker">
               <div class="input-group-append">
                 <button class="btn btn-outline-secondary dateButton" (click)="d1.toggle()" type="button" style="height: 100%;border-radius: 0px;">
@@ -23,7 +23,7 @@
         <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
           <div class="form-group">
             <div class="input-group">
-              <input class="form-control" name="dp" [ngModel]="model" (ngModelChange)="onSelectEndDate($event)" placeholder="{{today | date: 'yyyy-MM-dd'}}"
+              <input class="form-control" name="dp" [ngModel]="model" (ngModelChange)="onSelectEndDate($event)"
                 ngbDatepicker #d="ngbDatepicker">
               <div class="input-group-append">
                 <button class="btn btn-outline-secondary dateButton" (click)="d.toggle()" type="button" style="height: 100%;border-radius: 0px;">
@@ -95,7 +95,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let i of dropoff  | orderBy: key : reverse | filter : SearchData  | paginate: { id: 'server', itemsPerPage:DataPerPage, currentPage: p + 1, totalItems: record_count };"
+        <tr *ngFor="let i of dropoff  | orderBy: key : reverse | filter : SearchData  | paginate: { id: 'server', itemsPerPage:DataPerPage, currentPage: p + 1, totalItems: RecordCount };"
           (click)="openQDetails(i)">
           <td>{{i.queueid}}</td>
           <td>{{i.cust_name}}</td>
@@ -108,9 +108,9 @@
         </tr>
       </tbody>
     </table>
-    <table>
-      {{message}}
-    </table>
+    <!-- <table>
+      {{MessageNoData}}
+    </table> -->
     <ngx-spinner bdColor="rgba(51,51,51,0.09)" size="large" color="#ea5810" type="ball-clip-rotate-pulse"></ngx-spinner>
     <div class="paginate">
       <pagination-controls (pageChange)="FilterCheck($event)" id="server"></pagination-controls>
@@ -170,9 +170,9 @@
       </div>
   <div class="row">
     <div class="col-12 col-sm-12">
-        <div *ngIf="message">{{message}}</div>
+        <div *ngIf="MessageNoData">{{MessageNoData}}</div>
       <ul>
-        <li *ngFor="let i of dropoff | filter : SearchData | paginate: { id: 'server', itemsPerPage:DataPerPage, currentPage: p + 1, totalItems: record_count };" (click)="openQDetails(i)">
+        <li *ngFor="let i of dropoff | filter : SearchData | paginate: { id: 'server', itemsPerPage:DataPerPage, currentPage: p + 1, totalItems: RecordCount };" (click)="openQDetails(i)">
           <div class="card">
               <div class="row padding" *ngIf="InsuranceCheck">
                   <div class="col-12 col-sm-12">
@@ -209,7 +209,7 @@
       </ul>
       <ngx-spinner bdColor="rgba(51,51,51,0.09)" size="large" color="#ea5810" type="ball-clip-rotate-pulse"></ngx-spinner>
       <div class="paginate">
-        <pagination-controls (pageChange)="FilterCheck($event)" id="server"  *ngIf="message"></pagination-controls>
+        <pagination-controls (pageChange)="FilterCheck($event)" id="server"  *ngIf="MessageNoData"></pagination-controls>
       </div>
     </div>
   </div>

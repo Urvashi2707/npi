@@ -128,12 +128,12 @@
                     <div class="row">
                         <div class="col-md-4 col-lg-4 col-sm-12 col-12 SearchCol">
                             <div class="input-group has-person-icon">
-                                <input type="text" [(ngModel)]="term" placeholder="search" class="form-control search" style="max-height:20px !important"/>
+                                <input type="text" [(ngModel)]="searchText" placeholder="search" class="form-control search" style="max-height:20px !important"/>
                               </div>
                           </div>
                     </div>
                   <ul>
-                    <li *ngFor="let e of userList | filter:term">
+                    <li *ngFor="let e of userList | filter:searchText">
                       <div class="card">
                 
                         <div class="row">

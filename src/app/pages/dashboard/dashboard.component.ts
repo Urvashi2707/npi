@@ -119,7 +119,7 @@ export class DashboardComponent implements OnInit{
     private theme: NbThemeService){
   }
 
-  // onSelect(event) {  }
+  onSelect(event) {  }
 
   //Get Color Legends for Dropoff Pie Chart
   GetColorDropOff(country) { 
