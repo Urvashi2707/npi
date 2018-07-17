@@ -180,56 +180,33 @@
       <ul>
         <li *ngFor="let i of chauffeur |filter:term" (click)="openQDetails(i)">
           <div class="card">
-            <div class="row">
-              <div class="col-12 col-sm-12">
+            <div class="row" style="padding-bottom: 5%;">
+              <div class="col-3 col-sm-3">
+                <div><img src="{{i.amb_url}}" class="ambinfo" (error)="img($event);"/>
+              </div>
+              </div>
+              <div class="col-9 col-sm-9">
                 <span class="QueueId">ID &nbsp;:&nbsp; {{i.queueid}}</span>
-                <span class="vehNumber">
-                  <span class="Ind">IND</span>{{i.veh_number}}</span>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-12 col-sm-12">
-                <div>{{i.cust_name}}</div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-12 col-sm-12">
-                <span class="title">Pic Loc : </span>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-12 col-sm-12">
-                <span>{{i.pickup_address}}</span>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-12 col-sm-12">
-                <span class="title">Drop Loc : </span>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-12 col-sm-12">
-                <span>{{i.dropoff_address}}</span>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-6 col-sm-6">Started At :</div>
-              <div class="col-6 col-sm-6">
-                <span>{{i.newdate}} {{i.newtime}}</span>
-              </div>
-            </div>
-            <div class="row" style="padding-bottom: 0%">
-              <div class="col-12 col-sm-12">
-                <span class="title">Chauffeur :</span>
+                <span class="vehNumber"><span class="Ind">IND</span>{{i.veh_number}}</span>
+                <p class="ambName">{{i.amb_name}}</p>
+                <p class="ambNumber">{{i.amb_mobile}}</p>
               </div>
             </div>
             <div class="row">
               <div class="col-6 col-sm-6">
-                <span>{{i.amb_name}}</span>
+                <div class="title" style="padding-bottom: 8%">Pickup Location : </div>
+                <p>{{i.pickup_address}}</p>
               </div>
               <div class="col-6 col-sm-6">
-                <span>{{i.amb_number}}</span>
+                <div class="title" style="padding-bottom: 8%">Dropoff Location : </div>
+                <p>{{i.dropoff_address}}</p>
               </div>
+            </div>
+            <div class="row">
+                <div class="col-12 col-sm-12"><span class="title">Customer Name </span><span class="title">:</span><span>{{i.cust_name}}</span></div>
+            </div>
+            <div class="row">
+                <div class="col-12 col-sm-12"><span class="title" style="padding-right: 13%;">Started At  </span><span class="title" >:</span><span>{{i.newdate}} {{i.newtime}}</span></div>
             </div>
             <div class="row">
               <div class="col-12 col-sm-12 QueueStatus">

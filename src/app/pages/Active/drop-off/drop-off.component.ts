@@ -113,6 +113,12 @@ export class DropOffComponent implements OnInit {
     this.router.navigate(['/pages/queue-details']);
 
   }
+
+  img(event){
+    console.log(event);
+    event.target.src = '../../../assets/images/profile.svg';
+    console.log("image broken");
+  }
   FilterCheck(p:number){
     this.message=" ";
     this.spinner.show();

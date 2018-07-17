@@ -128,7 +128,9 @@ export class AtCentreComponent implements OnInit {
 
   }
 
-
+  img(){
+    console.log("image broken");
+  }
   // getdetails(){}
 
   FilterCheck(p:number){
@@ -192,7 +194,7 @@ export class AtCentreComponent implements OnInit {
             var ampm1 = H1 < 12 ? "AM" : "PM";
             timeString1 = h1 + timeString1.substr(2, 3) + ampm1;
             this.atcentre[j].droptime = timeString1;
-            this.atcentre[j].dropate = dropdate;
+            this.atcentre[j].dropdate = dropdate;
           }
        
         

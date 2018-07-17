@@ -75,14 +75,14 @@ tbody tr:hover {
         margin-bottom: 9%;
     }
     .QueueId{
-        font-weight: 900;
+        font-weight: 700;
     }
     .vehNumber{
         float: right;
         border: 1px solid black;
-        padding: 3px;
-        border-radius: 4px;
-       
+        padding: 1px;
+    border-radius: 4px;
+    font-size: 12px;
     }
     .Ind{
         font-size: 7px;
@@ -114,8 +114,19 @@ tbody tr:hover {
         padding-bottom: 5%;
     }
     .QueueStatus{
-        color:rgb(155 ,155 ,155);
+        color:#FA870C;
         font-weight: 700;
+    }
+    .ambinfo{
+        height: 55px;
+    }
+    .ambName{
+        margin-top: 8px;
+        margin-bottom: 0px;
+    }
+    .ambNumber{
+        margin-bottom: 0px;
+        margin-top: 0px;
     }
     .header{
         font-size: .9rem;
@@ -166,7 +177,7 @@ tbody tr:hover {
     
 }
 
-@media only screen and (min-width: 1050px) {
+@media only screen and (min-width: 450px) {
     .mobileView {
         display: none;
     }

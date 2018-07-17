@@ -169,53 +169,24 @@
         <li *ngFor="let i of dropoff | filter : term " (click)="openQDetails(i)">
           <div class="card">
             <div class="row">
-              <div class="col-12 col-sm-12">
+              <div class="col-3 col-sm-3">
+                <div><img src="{{i.amb_url}}" class="ambinfo" (error)="img($event);"/>
+              </div>
+              </div>
+              <div class="col-9 col-sm-9">
                 <span class="QueueId">ID &nbsp;:&nbsp; {{i.queueid}}</span>
                 <span class="vehNumber"><span class="Ind">IND</span>{{i.veh_number}}</span>
+                <p class="ambName">{{i.amb_name}}</p>
+                <p class="ambNumber">{{i.amb_mobile}}</p>
               </div>
             </div>
             <div class="row">
-              <div class="col-12 col-sm-12">
-                <div>{{i.cust_name}}</div>
-              </div>
+              <div class="col-12 col-sm-12"><span class="title">Service Advisor : </span><span>{{i.adv_name}}</span></div>
             </div>
-            <!-- <div class="row" style="padding-top:3%">
-                <div class="col-sm-8 col-8">
-                  <div class="row">
-                    <div class="col-sm-6 col-6">
-                      <span>Pickup</span>
-                    </div>
-                    <div class="col-sm-6 col-6">
-                      <span>ETD</span>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-sm-4 col-4">
-                 </div>
-              </div> -->
-        <!-- <div class="row">
-                <div class="col-9 col-sm-9">
-                    <div class="container">
-                        <ul class="progressbar">
-                            <li style="font-size: 10px;">{{i.newdate}}<br>{{i.newtime}}</li>
-                            <li></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-3 col-sm-3">
-                </div>
-            </div> -->
+            
             <div class="row">
-              <div class="col-6 col-sm-6"><span class="title">Ambassador : </span></div>
-              <div class="col-6 col-sm-6"><span class="title">Advisor : </span></div>
+              <div class="col-12 col-sm-12"><span class="title">Customer Name : </span><span>{{i.cust_name}}</span></div>
             </div>
-            <div class="row" style="padding-bottom: 0px">
-                <div class="col-6 col-sm-6"><span>{{i.amb_name}}</span></div>
-                <div class="col-6 col-sm-6"><span>{{i.adv_name}}</span></div>
-              </div>
-              <div class="row">
-                  <div class="col-6 col-sm-6"><span>{{i.amb_number}}</span></div>
-                </div>
                 <div class="row QueueStatus">
                     <div class="col-12 col-sm-12"><span>{{i.queue_state}}</span></div>
                   </div>

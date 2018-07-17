@@ -104,6 +104,12 @@ export class PickupComponent implements OnInit {
         
 
   }
+
+  img(event){
+    console.log(event);
+    event.target.src = '../../../assets/images/profile.svg';
+    console.log("image broken");
+  }
   openQDetails(indexId: any){
     sessionStorage.removeItem('clickedOn');
 

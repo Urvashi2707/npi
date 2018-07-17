@@ -80,7 +80,11 @@ export class ChauffeurComponent implements OnInit {
         
 
   }
-
+  img(event){
+    console.log(event);
+    event.target.src = '../../../assets/images/profile.svg';
+    console.log("image broken");
+  }
   onSelectDate1(date: NgbDateStruct){
     if (date != null) {
             this.model1 = date;

@@ -39,6 +39,17 @@ tbody tr:hover {
 .sort-span {
     float: right;
 }
+.ambinfo{
+    height: 55px;
+}
+.ambName{
+    margin-top: 8px;
+    margin-bottom: 0px;
+}
+.ambNumber{
+    margin-bottom: 0px;
+    margin-top: 0px;
+}
 .NoData{
     border: 0px;
     /* margin: 14px; */
@@ -61,7 +72,6 @@ tbody tr:hover {
         box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
         transition: 0.3s;
         width: 100%;
-        height: 180px;
         padding: 8px 10px 8px 10px;
     }
    .searchInput input[type=text] {
@@ -112,15 +122,14 @@ tbody tr:hover {
         margin-bottom: 9%;
     }
     .QueueId{
-        font-weight: 900;
-        font-size: $mobileQueueIDFont;
+        font-weight: 700;
     }
     .vehNumber{
         float: right;
         border: 1px solid black;
-        padding: 3px;
-        border-radius: 4px;
-       
+        padding: 1px;
+    border-radius: 4px;
+    font-size: 12px;
     }
     .searchInput{
         padding-right: 5%;
@@ -131,7 +140,7 @@ tbody tr:hover {
         color:#58a3d9;
     }
     .QueueStatus{
-        color:rgb(155 ,155 ,155);
+        color:#FA870C;
         font-weight: 700;
     }
     .payment{
@@ -167,9 +176,6 @@ tbody tr:hover {
         width: 100%;
         padding:0px;
     }
-    .progressbar{
-
-    }
     .buttonCol{
         padding: 0px;
     }
@@ -181,36 +187,25 @@ tbody tr:hover {
       color: white;
       border-radius: 10px;
     }
-    .progressbar li{
-        list-style-type: none;
+    .step1{
+        border: 4px solid #109B57;
+        padding: 2px;
+        width: 15px;
+        height: 15px;
+        border-radius: 10px;
+        background-color: #109B57;
         float: left;
-        width: 50%;
-        position: relative;
+        padding:2px;
     }
-    .progressbar li:before{
-        content: " ";
-        width: 10px;
-        height: 10px;
-        border:1px solid #ddd;
-        display: block;
-        border-radius: 50%;
-        background-color: white;
-    }
-    .progressbar li:after{
-        content:'';
+    .withBefore::before {
+        // top: 72px;
         position: absolute;
-        width: 93%;
-        height: 1px;
+        content: " ";
+        width: calc(100% - 48px);
+        height: 3px;
         background: linear-gradient(to right, rgb(16, 155, 87), rgb(248, 226, 226));
-        top:5px;
-        left: -92%;
-        
-    }
-    .progressbar li:first-child:after{
-        content: none;
-    }
-    .progressbar li:first-child:before{
-        background-color: green;
+        left: 24px;
+        margin: auto;
     }
     .header{
         font-size: .9rem;
@@ -259,7 +254,7 @@ tbody tr:hover {
     }
 }
 
-@media only screen and (min-width: 1050px) {
+@media only screen and (min-width: 450px) {
     .mobileView {
         display: none;
     }

@@ -61,7 +61,7 @@ tbody tr:hover {
         font-size: $mobileFont
     }
     .QueueStatus{
-        color:rgb(155 ,155 ,155);
+        color:#FA870C;
         font-weight: 700;
     }
     .card {
@@ -82,14 +82,25 @@ tbody tr:hover {
         margin-bottom: 9%;
     }
     .QueueId{
-        font-weight: 900;
+        font-weight: 700;
     }
     .vehNumber{
         float: right;
         border: 1px solid black;
-        padding: 3px;
-        border-radius: 4px;
-       
+        padding: 1px;
+    border-radius: 4px;
+    font-size: 12px;
+    }
+    .ambinfo{
+        height: 55px;
+    }
+    .ambName{
+        margin-top: 8px;
+        margin-bottom: 0px;
+    }
+    .ambNumber{
+        margin-bottom: 0px;
+        margin-top: 0px;
     }
     .Ind{
         font-size: 7px;
@@ -138,34 +149,7 @@ tbody tr:hover {
       color: white;
       border-radius: 10px;
     }
-    .progressbar li{
-        list-style-type: none;
-        float: left;
-        width: 50%;
-        position: relative;
-    }
-    .progressbar li:before{
-        content: " ";
-        width: 10px;
-        height: 10px;
-        border:1px solid #ddd;
-        display: block;
-        border-radius: 50%;
-        background-color:green;
-    }
-    .progressbar li:after{
-        content:'';
-        position: absolute;
-        width: 93%;
-        height: 1px;
-        background:green;
-        top:5px;
-        left: -92%;
-        
-    }
-    .progressbar li:first-child:after{
-        content: none;
-    }
+  
     .header{
         font-size: .9rem;
         padding-left: 1%;
@@ -205,7 +189,7 @@ tbody tr:hover {
         pointer-events: none;
     }
     .title{
-        font-weight: 500;
+        font-weight: 600;
     }
     .NoData{
         text-align: center;
@@ -213,7 +197,7 @@ tbody tr:hover {
     }
 }
 
-@media only screen and (min-width: 1050px) {
+@media only screen and (min-width: 450px) {
     .mobileView {
         display: none;
     }

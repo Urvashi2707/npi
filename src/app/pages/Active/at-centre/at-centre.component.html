@@ -182,41 +182,22 @@
               <span class="Ind">IND</span>{{i.veh_number}}</span>
           </div>
         </div>
-        <div class="row CustomerRow" (click)="openQDetails(i)">
-          <div class="col-12 col-sm-12">
-            <div>{{i.cust_name}}</div>
-          </div>
-        </div>
-        <div class="row" style="padding-top:3%" (click)="openQDetails(i)">
-          <div class="col-sm-8 col-8">
-            <div class="row">
-              <div class="col-sm-6 col-6">
-                <span>Pickup</span>
-              </div>
-              <div class="col-sm-6 col-6">
-                <span>ETD</span>
-              </div>
-            </div>
-          </div>
-          <div class="col-sm-4 col-4" style="padding-left: 17%;">
-            <span class="payment"> &#x20B9;{{i.queue_total}}</span>
-          </div>
-        </div>
         <div class="row" (click)="openQDetails(i)">
-          <div class="col-9 col-sm-9">
-            <div class="container">
-              <ul class="progressbar">
-                <li style="font-size: 10px;">{{i.newdate}}
-                  <br>{{i.newtime}}</li>
-                <li style="font-size: 10px;">{{i.dropate}}
-                  <br>{{i.droptime}}</li>
-              </ul>
+            <div class="col-12 col-sm-12"><span class="title">Customer Name : </span><span>{{i.cust_name}}</span></div>
+          </div>
+              <div>
+               <p class="step1 withBefore"></p>
+               <p class="step1" style="float: right;background-color: white;border:3px solid #109B57"></p>
+              </div>
+              <div style="margin-top: -5%;margin-bottom: 5%;">
+                <span style="font-size:12px;padding-right: 15%">{{i.newdate}} | {{i.newtime}}</span>
+                <span style="font-size:12px;">{{i.dropdate}} | {{i.droptime}}</span>
+               </div>
+          <div class="row" (click)="openQDetails(i)">
+              <div class="col-9 col-sm-9" *ngIf="i.payment_status == 'Unpaid'"><span class="title" style="color:red">Outstanding Amount : </span></div>
+              <div class="col-9 col-sm-9" *ngIf="i.payment_status == 'paid'"><span class="title" style="color:109B57">Paid Amount : </span></div>
+              <div class="col-3 col-sm-3"><span>Rs {{i.queue_total}}</span></div>
             </div>
-          </div>
-          <div class="col-3 col-sm-3">
-            <span class="paymentStatus" [ngStyle]="{'color':i.payment_status === 'paid' ? 'green' : 'red' }">{{i.payment_status}}</span>
-          </div>
-        </div>
         <div class="row">
           <div class="col-7 col-sm-7 QueueStatus" (click)="openQDetails(i)">{{i.queue_state}}</div>
           <div class="col-5 col-sm-5 buttonCol">

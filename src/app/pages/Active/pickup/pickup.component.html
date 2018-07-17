@@ -171,49 +171,34 @@
       <ul>
         <li *ngFor="let i of pickup |filter:term" (click)="openQDetails(i.queueid)">
           <div class="card">
-            <div class="row">
-              <div class="col-12 col-sm-12">
-                <span class="QueueId">ID &nbsp;:&nbsp; {{i.queueid}}</span>
-                <span class="vehNumber">
-                  <span class="Ind">IND</span>{{i.veh_number}}</span>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-12 col-sm-12">
-                <div>{{i.cust_name}}</div>
-              </div>
-            </div>
-            <div class="row" style="padding-top:3%">
-                    <div class="col-sm-8 col-8">
-                      <div class="row">
-                        <div class="col-sm-6 col-6">
-                          <span>Pickup</span>
-                        </div>
-                        <div class="col-sm-6 col-6">
-                          <span>ETD</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-sm-4 col-4">
-                     </div>
+              <div class="row">
+                  <div class="col-3 col-sm-3">
+                    <div><img src="{{i.amb_url}}" class="ambinfo" (error)="img($event);"/>
+                  </div>
+                  </div>
+                  <div class="col-9 col-sm-9">
+                    <span class="QueueId">ID &nbsp;:&nbsp; {{i.queueid}}</span>
+                    <span class="vehNumber"><span class="Ind">IND</span>{{i.veh_number}}</span>
+                    <p class="ambName">{{i.amb_name}}</p>
+                    <p class="ambNumber">{{i.amb_mobile}}</p>
+                  </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-sm-12"><span class="title">Customer Name : </span><span>{{i.cust_name}}</span></div>
+                  </div>
+                  <div>
+                    <p class="step1 withBefore"></p>
+                   
+                    <p class="step1" style="float: right;background-color: white;border:3px solid #109B57"></p>
+                   </div>
+                   <div>
+                    <p>{{i.newdate}} | {{i.newtime}}</p>
+                   </div>
+                   <div class="row">
+                    <div class="col-12 col-sm-12"><span class="title">CRE Name : </span><span>{{i.cre_name}}</span></div>
                   </div>
             <div class="row">
-                    <div class="col-12 col-sm-12">
-                        <div class="container">
-                            <ul class="progressbar">
-                                <li style="font-size: 10px;">{{i.newdate}}<br>{{i.newtime}}</li>
-                                <li></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-3 col-sm-3">
-                    </div>
-                </div>
-            <div class="row">
-              <div class="col-6 col-sm-6 QueueStatus">{{i.queue_status}}</div>
-              <div class="col-6 col-sm-6">
-                <span>{{i.cre_name}}</span>
-              </div>
+              <div class="col-12 col-sm-12 QueueStatus">{{i.queue_status}}</div>
             </div>
           </div>
         </li>
