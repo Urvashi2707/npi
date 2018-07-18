@@ -57,6 +57,12 @@
               <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i>
             </span>
           </th>
+          <th (click)="sort('amb_name')">Ambassador
+            <span class="sort-span">
+              <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i>
+            </span>
+          </th>
+
           <th (click)="sort('cust_name')">Customer
             <span class="sort-span">
               <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i>
@@ -72,16 +78,6 @@
               <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i>
             </span>
           </th>
-          <th (click)="sort('amb_name')">Amb Name
-            <span class="sort-span">
-              <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i>
-            </span>
-          </th>
-          <th (click)="sort('amb_number')">Amb Number
-            <span class="sort-span">
-              <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i>
-            </span>
-          </th>
           <th (click)="sort('queue_state')">Status
             <span class="sort-span">
               <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i>
@@ -93,11 +89,18 @@
         <tr *ngFor="let i of dropoff  | orderBy: key : reverse | filter : term  | paginate: { id: 'server', itemsPerPage:dataperpage, currentPage: p + 1, totalItems: record_count };"
           (click)="openQDetails(i)">
           <td>{{i.queueid}}</td>
+          <td>
+            <div style="display:inline-block">
+                <span><img src="{{i.amb_url}}" class="AmbImg" alt="Amb Photo" (error)="img($event);"></span>
+            </div>
+            <div style="display:inline-block">
+                <span>{{i.amb_name}}</span><p>{{i.amb_mobile}}</p>
+            </div>
+            </td>
+
           <td>{{i.cust_name}}</td>
           <td>{{i.veh_number}}</td>
           <td>{{i.adv_name}}</td>
-          <td>{{i.amb_name}}</td>
-          <td>{{i.amb_number}}</td>
           <td>{{i.queue_state}}</td>
         </tr>
       </tbody>

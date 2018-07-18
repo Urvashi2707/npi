@@ -56,6 +56,12 @@
               <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i>
             </span>
           </th>
+          <th (click)="sort('amb_name')">Chauffeur
+            <span class="sort-span">
+              <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i>
+            </span>
+          </th>
+
           <th (click)="sort('cust_name')">Customer
             <span class="sort-span">
               <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i>
@@ -81,16 +87,6 @@
               <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i>
             </span>
           </th>
-          <th (click)="sort('amb_name')">Chauffer Name
-            <span class="sort-span">
-              <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i>
-            </span>
-          </th>
-          <th (click)="sort('amb_number')">Chauffeur No
-            <span class="sort-span">
-              <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i>
-            </span>
-          </th>
           <th (click)="sort('queue_state')">Service
             <span class="sort-span">
               <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i>
@@ -102,13 +98,20 @@
         <tr *ngFor="let i of chauffeur |filter:term | orderBy: key : reverse| paginate: { id: 'server', itemsPerPage:dataperpage, currentPage: p + 1, totalItems: record_count } let j = index"
           (click)="openQDetails(i)">
           <td>{{i.queueid}}</td>
+          <td>
+            <div style="display:inline-block">
+                <span><img src="{{i.amb_url}}" class="AmbImg" alt="Amb Photo" (error)="img($event);"></span>
+            </div>
+            <div style="display:inline-block">
+                <span>{{i.amb_name}}</span><p>{{i.amb_mobile}}</p>
+            </div>
+            </td>
+
           <td>{{i.cust_name}}</td>
           <td>{{i.veh_number}}</td>
           <td>{{i.pickup_address}}</td>
           <td>{{i.dropoff_address}}</td>
           <td>{{i.start_time}}</td>
-          <td>{{i.amb_name}}</td>
-          <td>{{i.amb_number}}</td>
           <td>{{i.queue_state}}</td>
         </tr>
       </tbody>
