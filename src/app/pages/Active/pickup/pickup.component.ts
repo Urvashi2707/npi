@@ -88,8 +88,16 @@ export class PickupComponent implements OnInit {
             this.model1 = date;
             this.StartDateString = this.ngbDateParserFormatter.format(date);
         }
+
       }
 //Open Queue Details Page
+
+  img(event){
+    console.log(event);
+    event.target.src = '../../../assets/images/profile.svg';
+    console.log("image broken");
+  }
+
   openQDetails(indexId: any){
     sessionStorage.removeItem('clickedOn');
     sessionStorage.setItem('QueueId',indexId)
@@ -128,6 +136,7 @@ export class PickupComponent implements OnInit {
         this.spinner.hide();
         this._tableService.DateFormat(this.pickup);
         this._tableService.TimeFormat(this.pickup);
+        console.log(this.pickup);
     }
   }
 });

@@ -11,6 +11,9 @@ import { QueueDetailsComponent } from './queue-details/queue-details.component';
 import { UpcomingComponent } from './upcoming/upcoming.component';
 import { PausedComponent } from './paused/paused.component';
 import {UpcomingrsaComponent} from './upcomingrsa/upcomingrsa.component'
+
+import {CreReportsComponent} from './cre-reports/cre-reports.component';
+
 import { NotcheckedinComponent } from './notcheckedin/notcheckedin.component'
 import { CancelledComponent } from './cancelled/cancelled.component';
 import { CompletedComponent } from './completed/completed.component';
@@ -116,6 +119,11 @@ const routes: Routes = [{
 path: 'user',
 component: UserComponent,
 },
+{
+  path: 'cre-reports',
+    component: CreReportsComponent,
+  },
+
 {
   path: 'reports',
   component: ReportsComponent,

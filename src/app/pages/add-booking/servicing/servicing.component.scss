@@ -237,7 +237,7 @@ input:checked + .slider:before {
 }
  @media only screen and (max-width: 420px) {
   .form-group{
-    margin-bottom: 1rem;   
+    margin-bottom: 1.5rem;   
     margin-top: .5rem;
    }
    .CusFormGroup{
@@ -388,6 +388,7 @@ fieldset {
 }
 .line{
   padding-bottom: .5rem;
+  margin-bottom: 3%;
 }
 .cssselect select{
   font-size: 10px;

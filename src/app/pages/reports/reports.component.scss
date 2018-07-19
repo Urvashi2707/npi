@@ -205,8 +205,17 @@ input:checked+.slider:before {
 .timeRow a:active {
     background-color: orange;
 }
+
 .sort-span {
     float: right;
+}
+.NoData{
+    border: 0px;
+    /* margin: 14px; */
+    margin-top: 25px;
+    font-weight: 500;
+    /* padding: 8px; */
+
 }
 @media only screen and (max-width: 420px) {
     .desktopView {
@@ -297,7 +306,7 @@ input:checked+.slider:before {
         margin-top: 0em;
     }
     .QueueStatus{
-        color:rgb(155 ,155 ,155);
+        color:#FA870C;
         font-weight: 700;
     }
     .payment{
@@ -363,11 +372,15 @@ input:checked+.slider:before {
         margin-top: 0rem;
       }
       .title{
-          font-weight: 700;
-      }
+        font-weight: 500;
+    }
+    .NoData{
+        text-align: center;
+        font-weight: 500;
+    }
 }
 
-@media only screen and (min-width: 1050px) {
+@media only screen and (min-width: 450px) {
     .mobileView {
         display: none;
     }

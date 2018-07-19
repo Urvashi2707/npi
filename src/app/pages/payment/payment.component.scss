@@ -215,6 +215,13 @@ input:checked+.slider:before {
 .timeRow a:active {
     background-color: orange;
 }
+.NoData{
+    border: 0px;
+    /* margin: 14px; */
+    margin-top: 25px;
+    font-weight: 500;
+    /* padding: 8px; */
+}
 @media only screen and (max-width: 420px) {
     .desktopView {
         display: none;
@@ -262,7 +269,7 @@ input:checked+.slider:before {
         background: orange;
         padding: 10px;
         text-align: center;
-        border-radius: 5px;
+        border-radius: 13px;
         color: white;
         font-weight: bold;
         height: 19px;;
@@ -312,9 +319,6 @@ input:checked+.slider:before {
       .btn.btn-warning{
         margin-top: 0rem;
       }
-      .title{
-          font-weight: 700;
-      }
       .form-group {
         position: relative;
         margin-bottom: 1em;
@@ -336,12 +340,11 @@ input:checked+.slider:before {
         padding: 1px;
         font-size: 12px; 
         border: 0px;  
-        // width: 7px;
         opacity: 0;
-         outline: 0;
-          border: 0;
-          -webkit-transition: width 0.4s ease-in-out;
-          transition: width 0.4s ease-in-out;
+        outline: 0;
+        border: 0;
+        -webkit-transition: width 0.4s ease-in-out;
+        transition: width 0.4s ease-in-out;
     }
     .right-inner-addon input:focus {
         width: 100%;
@@ -358,9 +361,16 @@ input:checked+.slider:before {
         padding: 5px 12px;
         pointer-events: none;
     }
+    .title{
+        font-weight: 600;
+    }
+    .NoData{
+        text-align: center;
+        font-weight: 500;
+    }
 }
 
-@media only screen and (min-width: 1050px) {
+@media only screen and (min-width: 450px) {
     .mobileView {
         display: none;
     }

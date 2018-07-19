@@ -740,8 +740,8 @@ getBrands() {
     console.log(id);
     console.log(this.address[$event]);
     var currentAddressDropoff = this.address[$event];
-    this.user.addresspu = this.addressPickup;
-    console.log(this.user.addresspu);
+    // this.user.addresspu = this.addressPickup;
+    // console.log(this.user.addresspu);
     this.user.dropofffdoor = currentAddressDropoff.doornumber;
     this.user.dropoffstreet = currentAddressDropoff.street;
     this.user.dropoffarea = currentAddressDropoff.area;
@@ -1102,8 +1102,8 @@ getBrands() {
       }
       
       else{
-        this.addressdoprevious = "1";
-        this.addresspuprevious = "1";
+        this.addressdoprevious = f.value.addresspu;
+        this.addresspuprevious = f.value.addressdu;
         this.pickupdoor = "0";
         this.pickupstreet = "0";
         this.pickuparea = "0";

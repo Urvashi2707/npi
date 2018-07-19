@@ -111,7 +111,9 @@ export class AtCentreComponent implements OnInit {
 
   }
 
+
   //AtCenter table API call
+
   FilterCheck(p:number){
     this.MessageNoData = null;
     this.spinner.show();
@@ -142,7 +144,7 @@ export class AtCentreComponent implements OnInit {
         this.spinner.hide();
         this._tableService.DateFormat(this.atcentre);
         this._tableService.TimeFormat(this.atcentre);
-    }
+}
 }
 });
   }

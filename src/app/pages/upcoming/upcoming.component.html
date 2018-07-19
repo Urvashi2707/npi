@@ -7,8 +7,7 @@
       <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
         <div class="form-group">
           <div class="input-group">
-            <input class="form-control" name="dp" [ngModel]="model1" (ngModelChange)="onSelectStartDate($event)" 
-              ngbDatepicker #d1="ngbDatepicker">
+            <input class="form-control" name="dp" [ngModel]="model1" (ngModelChange)="onSelectStartDate($event)" ngbDatepicker #d1="ngbDatepicker">
             <div class="input-group-append">
               <button class="btn btn-outline-secondary dateButton" (click)="d1.toggle()" type="button" style="height: 100%;border-radius: 0px;">
                 <span>
@@ -22,8 +21,7 @@
       <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
         <div class="form-group">
           <div class="input-group">
-            <input class="form-control" name="dp" [ngModel]="model" (ngModelChange)="onSelectEndDate($event)" 
-              ngbDatepicker #d="ngbDatepicker">
+            <input class="form-control" name="dp" [ngModel]="model" (ngModelChange)="onSelectEndDate($event)" ngbDatepicker #d="ngbDatepicker">
             <div class="input-group-append">
               <button class="btn btn-outline-secondary dateButton" (click)="d.toggle()" type="button" style="height: 100%;border-radius: 0px;">
                 <span>
@@ -105,7 +103,10 @@
         </tr>
       </tbody>
     </table>
-    <div *ngIf="MessageNoData" class="ErrorMessage">{{MessageNoData}}</div>
+    <table class="NoData" *ngIf="MessageNoData">
+      {{MessageNoData}}
+    </table>
+
     <ngx-spinner bdColor="rgba(51,51,51,0.09)" size="large" color="#ea5810" type="ball-clip-rotate-pulse"></ngx-spinner>
     <div class="paginate">
       <pagination-controls (pageChange)="FilterCheck($event)" id="server"></pagination-controls>
@@ -130,8 +131,7 @@
     <div class="col-12 col-sm-12">
       <div class="form-group">
         <div class="input-group">
-          <input class="form-control" name="dp" [ngModel]="model1" (ngModelChange)="onSelectStartDate($event)" ngbDatepicker
-            #d2="ngbDatepicker">
+          <input class="form-control" name="dp" [ngModel]="model1" (ngModelChange)="onSelectStartDate($event)" ngbDatepicker #d2="ngbDatepicker">
           <div class="input-group-append">
             <button class="btn btn-outline-secondary dateButton" (click)="d2.toggle()" type="button" style="height: 100%;width: 100%">
               <span>
@@ -167,8 +167,10 @@
   </div>
   <div class="row">
     <div class="col-12 col-sm-12">
+      <div class="NoData" *ngIf="message"> {{message}}</div>
       <ul>
-        <li *ngFor="let i of upcoming |filter:SearchData | paginate: { id: 'server', itemsPerPage:DataPerPage, currentPage: page + 1, totalItems: RecordCount }; let j = index " (click)="openQDetails(i)">
+        <li *ngFor="let i of upcoming |filter:SearchData | paginate: { id: 'server', itemsPerPage:DataPerPage, currentPage: page + 1, totalItems: RecordCount }; let j = index "
+          (click)="openQDetails(i)">
           <div class="card">
             <div class="row padding" *ngIf="InsuranceCheck">
               <div class="col-12 col-sm-12">
@@ -188,11 +190,16 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-5 col-sm-5">Service Type:</div>
+              <div class="col-5 col-sm-5">
+                <span class="title">Service Type:</span>
+              </div>
               <div class="col-7 col-sm-7">{{i.description}}</div>
             </div>
             <div class="row">
-              <div class="col-5 col-sm-5">Service Time:</div>
+
+              <div class="col-5 col-sm-5">
+                <span class="title">Time:</span>
+              </div>
               <div class="col-7 col-sm-7">{{i.newdate}} {{i.newtime}}</div>
             </div>
             <div class="row">
@@ -203,7 +210,7 @@
       </ul>
       <ngx-spinner bdColor="rgba(51,51,51,0.09)" size="large" color="#ea5810" type="ball-clip-rotate-pulse"></ngx-spinner>
       <div class="paginate">
-        <pagination-controls (pageChange)="FilterCheck($event)" id="server"></pagination-controls>
+        <pagination-controls (pageChange)="FilterCheck($event)" id="server" *ngIf="!message"></pagination-controls>
       </div>
     </div>
   </div>

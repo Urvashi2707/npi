@@ -49,6 +49,8 @@ import {columnPipe,rowPipe,searchPipe} from './pipe.pipe'
 import { Ng2OrderModule } from 'ng2-order-pipe'; 
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { UpcomingrsaComponent } from './upcomingrsa/upcomingrsa.component';
+import { CreReportsComponent } from './cre-reports/cre-reports.component';
+
 const PAGES_COMPONENTS = [
   PagesComponent,
 ];
@@ -99,7 +101,9 @@ const PAGES_COMPONENTS = [
     ModalAdvComponent,
     OnlyNumber,
     NotcheckedinComponent,
-    columnPipe,rowPipe,searchPipe, UpcomingrsaComponent
+
+    columnPipe,rowPipe,searchPipe, UpcomingrsaComponent,CreReportsComponent
+
   ],
   entryComponents: [
     EditUserComponent,

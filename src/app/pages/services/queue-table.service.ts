@@ -66,4 +66,8 @@ export class QueueTableService {
           }
   }
   }
+
+  DateTimeFormat(Table){
+    
+  }
 }

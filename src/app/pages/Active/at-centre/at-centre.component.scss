@@ -60,6 +60,14 @@ ul {
 .container1 {
     padding: 2px 16px;
 }
+.NoData{
+    border: 0px;
+    /* margin: 14px; */
+    margin-top: 25px;
+    font-weight: 500;
+    /* padding: 8px; */
+}
+
 @media only screen and (max-width: 420px) {
     .desktopView {
         display: none;
@@ -130,7 +138,7 @@ ul {
         padding-bottom: 5%;
     }
     .QueueStatus{
-        color:rgb(155 ,155 ,155);
+        color:#FA870C;
         font-weight: 700;
     }
     .CustomerRow{
@@ -151,42 +159,12 @@ ul {
     .button{
         font-size: 12px;
         font-weight: 800;
-      background-color: #ff7575;
-      border-color: #ff7575;
+      background-color: #FA870C;
+      border-color: #FA870C;
       color: white;
       border-radius: 10px;
     }
-    .progressbar li{
-        list-style-type: none;
-        float: left;
-        width: 50%;
-        position: relative;
-    }
-    .progressbar li:before{
-        content: " ";
-        width: 10px;
-        height: 10px;
-        border:1px solid #ddd;
-        display: block;
-        border-radius: 50%;
-        background-color: white;
-    }
-    .progressbar li:after{
-        content:'';
-        position: absolute;
-        width: 93%;
-        height: 1px;
-        background: linear-gradient(to right, rgb(16, 155, 87), rgb(248, 226, 226));
-        top:5px;
-        left: -92%;
-        
-    }
-    .progressbar li:first-child:after{
-        content: none;
-    }
-    .progressbar li:first-child:before{
-        background-color: green;
-    }
+   
     .header{
         font-size: .9rem;
         padding-left: 1%;
@@ -225,9 +203,36 @@ ul {
         padding: 5px 12px;
         pointer-events: none;
     }
+    .title{
+        font-weight: 500;
+    }
+    .NoData{
+        text-align: center;
+        font-weight: 500;
+    }
+    .step1{
+        border: 4px solid #109B57;
+        padding: 2px;
+        width: 15px;
+        height: 15px;
+        border-radius: 10px;
+        background-color: #109B57;
+        float: left;
+        padding:2px;
+    }
+    .withBefore::before {
+        // top: 72px;
+        position: absolute;
+        content: " ";
+        width: calc(100% - 48px);
+        height: 3px;
+        background: linear-gradient(to right, rgb(16, 155, 87), rgb(248, 226, 226));
+        left: 24px;
+        margin: auto;
+    }
 }
 
-@media only screen and (min-width: 1050px) {
+@media only screen and (min-width: 450px) {
     .mobileView {
         display: none;
     }

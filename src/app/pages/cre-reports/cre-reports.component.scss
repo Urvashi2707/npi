@@ -1,0 +1,81 @@
+$headerTopPadding : 3%;
+$mobileRowPadding:3%;
+$mobileQueueIDFont:13px;
+$mobileFont:13px;
+nb-card {
+    transform: translate3d(0, 0, 0);
+}
+
+table,
+th,
+td {
+    border: 1px solid rgb(218, 223, 230);
+    border-collapse: collapse;
+    font-size:13px;
+}
+
+th,
+td {
+    padding: 15px;
+}
+
+tbody tr:hover {
+    background-color: lightyellow;
+}
+@media only screen and (max-width: 420px) {
+    .desktopView {
+        display: none;
+    }
+    .row{
+        padding-bottom: $mobileRowPadding;
+    }
+    .mobileView{
+        color:black;
+        font-size: $mobileFont
+    }
+    .card {
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+        transition: 0.3s;
+        width: 100%;
+        padding: 8px 10px 8px 10px
+    }
+    
+    .card:hover {
+        box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    }
+    ul {
+        list-style-type: none;
+        padding: 0px;
+    }
+    li{
+        margin-bottom: 9%;
+    }
+  .header{
+    font-size: .9rem;
+    padding-left: 1%;
+    font-weight: 700;
+  }
+  .headerRow{
+    min-height: 25px;
+    padding-top: 3%;
+  }
+  table,
+th,
+td {
+    border: 1px solid rgb(218, 223, 230);
+    border-collapse: collapse;
+    font-size:12px;
+}
+
+th,
+td {
+    padding:4px;
+}
+}
+
+@media only screen and (min-width: 450px) {
+    .mobileView {
+        display: none;
+    }
+   
+}

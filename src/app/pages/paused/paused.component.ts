@@ -55,8 +55,7 @@ export class PausedComponent implements OnInit {
     else{
       this.SvcId = JSON.parse(sessionStorage.getItem('globalsvcid'));
     }
-
-    if(this.InsuranceUsr == "1"){
+  if(this.InsuranceUsr == "1"){
       this.InsuranceCheck = true;
     }
     else{
@@ -118,6 +117,7 @@ export class PausedComponent implements OnInit {
       else{
         if(res[0].pagecount[0].hasOwnProperty('noqueues')){
           this.MessageNoData = "No Data" ;
+
           this.spinner.hide();
          }
          else{
@@ -130,5 +130,6 @@ export class PausedComponent implements OnInit {
          }
     }
   });
+
   }
 }

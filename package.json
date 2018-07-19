@@ -77,6 +77,7 @@
     "ngx-spinner": "^2.0.1",
     "node-sass": "^4.8.1",
     "normalize.css": "6.0.0",
+    "number-to-words": "^1.2.3",
     "pace-js": "1.0.2",
     "roboto-fontface": "0.8.0",
     "rxjs": "5.5.5",

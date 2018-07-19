@@ -31,8 +31,17 @@ td {
 tbody tr:hover {
     background-color: lightyellow;
 }
+
 .sort-span {
     float: right;
+}
+.NoData{
+    border: 0px;
+    /* margin: 14px; */
+    margin-top: 25px;
+    font-weight: 500;
+    /* padding: 8px; */
+
 }
 @media only screen and (max-width: 420px) {
     .desktopView {
@@ -121,6 +130,7 @@ tbody tr:hover {
         min-height: 25px;
         padding-top: 3%;
       }
+
       .header{
         font-size: .9rem;
         padding-left: 1%;
@@ -130,6 +140,7 @@ tbody tr:hover {
         min-height: 25px;
         padding-top: 3%;
       }
+ 
       .right-inner-addon {
         position: relative;
     }
@@ -159,9 +170,17 @@ tbody tr:hover {
         padding: 5px 12px;
         pointer-events: none;
     }
+
+      .title{
+        font-weight: 500;
+    }
+    .NoData{
+        text-align: center;
+        font-weight: 500;
+    }
 }
 
-@media only screen and (min-width: 1050px) {
+@media only screen and (min-width: 450px) {
     .mobileView {
         display: none;
     }

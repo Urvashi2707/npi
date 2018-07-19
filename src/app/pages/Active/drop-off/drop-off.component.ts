@@ -95,8 +95,19 @@ export class DropOffComponent implements OnInit {
     this._detailsTable.queueID = details.queueid;
     sessionStorage.removeItem('clickedOn');
     this.router.navigate(['/pages/queue-details']);
+
 }
 //Dropoff table API call
+
+
+  
+
+  img(event){
+    console.log(event);
+    event.target.src = '../../../assets/images/profile.svg';
+    console.log("image broken");
+  }
+
   FilterCheck(p:number){
     this.MessageNoData = null ;
     this.spinner.show();

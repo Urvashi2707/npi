@@ -36,12 +36,21 @@ tbody tr:hover {
     text-align: center;
     padding-top: 5%;
 }
+
 .sort-span {
     float: right;
 }
 .ErrorMessage{
     padding: 8px;
     font-weight: 500;
+}
+.NoData{
+    border: 0px;
+    /* margin: 14px; */
+    margin-top: 25px;
+    font-weight: 500;
+    /* padding: 8px; */
+
 }
 @media only screen and (max-width: 420px) {
     .desktopView {
@@ -82,7 +91,7 @@ tbody tr:hover {
        
     }
     .QueueStatus{
-        color:rgb(155 ,155 ,155);
+        color:#FA870C;
         font-weight: 700;
     }
     .Ind{
@@ -169,9 +178,16 @@ tbody tr:hover {
         padding: 5px 12px;
         pointer-events: none;
     }
+    .title{
+        font-weight: 500;
+    }
+    .NoData{
+        text-align: center;
+        font-weight: 500;
+    }
 }
 
-@media only screen and (min-width: 1050px) {
+@media only screen and (min-width: 450px) {
     .mobileView {
         display: none;
     }

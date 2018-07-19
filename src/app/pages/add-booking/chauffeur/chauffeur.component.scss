@@ -184,9 +184,7 @@ select:invalid {
 select:focus:invalid {
   outline: none;
 }
-.haserror{
-  color:red;
-}
+
 .CoordinatorName{
   display:inline-block;
   min-width: 87%;
@@ -207,10 +205,7 @@ select:focus:invalid {
   font-size: 1.2rem;
   font-weight: 500;
 }
-.salesExec{
-  width: 87%;
-  display: inline-block;
-}
+
 .AddSalesBtn{
   display: inline-block;
   margin: 3px;
@@ -219,9 +214,21 @@ select:focus:invalid {
   display:inline-block;
   margin: 3px;
 }
+.CountryCode{
+display:inline-block;
+max-width: 16%;
+}
+.CusSalutation{
+  display:inline-block;
+  min-width:15%;
+}
+.salesExec{
+  width: 87%;
+  display: inline-block;
+}
 @media only screen and (max-width: 420px) {
   .form-group{
-    margin-bottom: 1rem;   
+    margin-bottom: 1.5rem;   
     margin-top: .5rem;
    }
   .form-control {
@@ -234,6 +241,9 @@ select:focus:invalid {
 }
 .input-group-append{
     width: 20%;
+}
+.sameasDiv{
+  padding-bottom: 1.0rem;
 }
 input[type=text],
 input[type=email],
@@ -310,6 +320,7 @@ fieldset {
 .form-group select{
   font-size: 10px;
   padding: 0px;
+  padding-left: 5%;
 }
 .NextRow{
   padding-bottom: 1.5rem;
@@ -349,6 +360,8 @@ fieldset {
 }
 .line{
   padding-bottom: .5rem;
+  margin-bottom: 3%;
+  margin-top: 3%;
 }
 .AddSalesBtn{
   display: inline-block;
@@ -358,6 +371,13 @@ fieldset {
   font-size: 10px;
   padding: 0px;
 }
+.CusSalutation{
+
+}
+.CountryCode{
+  display:inline-block;
+  max-width: 16%;
+  }
 .countryCode{
   display:inline-block;
   max-width: 16%;
@@ -377,7 +397,9 @@ fieldset {
 }
 .CoordinatorName{
   display:inline-block;
-  min-width:80%
+
+  min-width:81%
+
 }
 .dateButton{
   height: 97%;
@@ -391,17 +413,22 @@ fieldset {
   margin-left:1.5rem;
   margin-bottom: -0.5rem;
   font-size: 11px;
+  margin-top: 6%;
 }
 .AmbRow{
   padding-bottom: 5%;
 }
+.CusSalutation{
+  display:inline-block;
+  min-width:15%;
+}
 .CusName{
   display:inline-block;
-  min-width:81%;
+  min-width:80%;
 }
 .salesExec{
   display:inline-block;
-  min-width:81%;
+  width:81% !important;
 }
 .sectionHeader{
   font-size: 1.0rem;

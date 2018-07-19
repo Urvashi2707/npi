@@ -64,15 +64,25 @@ export class ChauffeurComponent implements OnInit {
             this.model = date;
             this.EndDateString = this.ngbDateParserFormatter.format(date);
         }
+
     }
 
      //On select of startDate
     onSelectStartDate(date: NgbDateStruct){
+
     if (date != null) {
             this.model1 = date;
             this.StartDateString = this.ngbDateParserFormatter.format(date);
         }
     }
+
+
+  img(event){
+    console.log(event);
+    event.target.src = '../../../assets/images/profile.svg';
+    console.log("image broken");
+  }
+
 
       //Open Queue Details Page
   openQDetails(details:any) {

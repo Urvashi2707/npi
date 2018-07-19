@@ -57,6 +57,12 @@
               <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i>
             </span>
           </th>
+          <th (click)="sort('amb_name')">Ambassador
+            <span class="sort-span">
+              <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i>
+            </span>
+          </th>
+
           <th (click)="sort('cust_name')">Customer
             <span class="sort-span">
               <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i>
@@ -68,16 +74,6 @@
             </span>
           </th>
           <th (click)="sort('adv_name')">Advisor
-            <span class="sort-span">
-              <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i>
-            </span>
-          </th>
-          <th (click)="sort('amb_name')">Amb Name
-            <span class="sort-span">
-              <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i>
-            </span>
-          </th>
-          <th (click)="sort('amb_number')">Amb Number
             <span class="sort-span">
               <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i>
             </span>
@@ -98,19 +94,26 @@
         <tr *ngFor="let i of dropoff  | orderBy: key : reverse | filter : SearchData  | paginate: { id: 'server', itemsPerPage:DataPerPage, currentPage: p + 1, totalItems: RecordCount };"
           (click)="openQDetails(i)">
           <td>{{i.queueid}}</td>
+          <td>
+            <div style="display:inline-block">
+                <span><img src="{{i.amb_url}}" class="AmbImg" alt="Amb Photo" (error)="img($event);"></span>
+            </div>
+            <div style="display:inline-block">
+                <span>{{i.amb_name}}</span><p>{{i.amb_mobile}}</p>
+            </div>
+            </td>
+
           <td>{{i.cust_name}}</td>
           <td>{{i.veh_number}}</td>
           <td>{{i.adv_name}}</td>
-          <td>{{i.amb_name}}</td>
-          <td>{{i.amb_number}}</td>
           <td>{{i.queue_state}}</td>
           <td *ngIf="InsuranceCheck">{{i.svc_name}}</td>
         </tr>
       </tbody>
     </table>
-    <!-- <table>
+    <table class="NoData" *ngIf="MessageNoData">
       {{MessageNoData}}
-    </table> -->
+    </table>
     <ngx-spinner bdColor="rgba(51,51,51,0.09)" size="large" color="#ea5810" type="ball-clip-rotate-pulse"></ngx-spinner>
     <div class="paginate">
       <pagination-controls (pageChange)="FilterCheck($event)" id="server"></pagination-controls>
@@ -180,27 +183,23 @@
                   </div>
                 </div>
             <div class="row">
-              <div class="col-12 col-sm-12">
+              <div class="col-3 col-sm-3">
+                <div><img src="{{i.amb_url}}" class="ambinfo" (error)="img($event);"/>
+              </div>
+              </div>
+              <div class="col-9 col-sm-9">
                 <span class="QueueId">ID &nbsp;:&nbsp; {{i.queueid}}</span>
                 <span class="vehNumber"><span class="Ind">IND</span>{{i.veh_number}}</span>
+                <p class="ambName">{{i.amb_name}}</p>
+                <p class="ambNumber">{{i.amb_mobile}}</p>
               </div>
             </div>
             <div class="row">
-              <div class="col-12 col-sm-12">
-                <div>{{i.cust_name}}</div>
-              </div>
+              <div class="col-12 col-sm-12"><span class="title">Service Advisor : </span><span>{{i.adv_name}}</span></div>
             </div>
             <div class="row">
-              <div class="col-6 col-sm-6"><span>Ambassador : </span></div>
-              <div class="col-6 col-sm-6"><span>Advisor : </span></div>
+              <div class="col-12 col-sm-12"><span class="title">Customer Name : </span><span>{{i.cust_name}}</span></div>
             </div>
-            <div class="row" style="padding-bottom: 0px">
-                <div class="col-6 col-sm-6"><span>{{i.amb_name}}</span></div>
-                <div class="col-6 col-sm-6"><span>{{i.adv_name}}</span></div>
-              </div>
-              <div class="row">
-                  <div class="col-6 col-sm-6"><span>{{i.amb_number}}</span></div>
-                </div>
                 <div class="row QueueStatus">
                     <div class="col-12 col-sm-12"><span>{{i.queue_state}}</span></div>
                   </div>
@@ -209,7 +208,9 @@
       </ul>
       <ngx-spinner bdColor="rgba(51,51,51,0.09)" size="large" color="#ea5810" type="ball-clip-rotate-pulse"></ngx-spinner>
       <div class="paginate">
+
         <pagination-controls (pageChange)="FilterCheck($event)" id="server"  *ngIf="MessageNoData"></pagination-controls>
+
       </div>
     </div>
   </div>

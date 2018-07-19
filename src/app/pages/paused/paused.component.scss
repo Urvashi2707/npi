@@ -40,6 +40,13 @@ tbody tr:hover {
     text-align: center;
     padding-top: 5%;
 }
+.NoData{
+    border: 0px;
+    /* margin: 14px; */
+    margin-top: 25px;
+    font-weight: 500;
+    /* padding: 8px; */
+}
 @media only screen and (max-width: 420px) {
     .desktopView {
         display: none;
@@ -55,7 +62,6 @@ tbody tr:hover {
         box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
         transition: 0.3s;
         width: 100%;
-        height: 180px;
         padding: 8px 10px 8px 10px;
     }
     .card:hover {
@@ -65,12 +71,12 @@ tbody tr:hover {
         list-style-type: none;
         padding: 0px;
     }
+    li{
+        margin-bottom: 9%;
+    }
     .header{
         font-size: 16px;
         font-weight: 600;
-    }
-    li{
-        margin-bottom: 9%;
     }
     .QueueId{
         font-weight: 900;
@@ -85,6 +91,9 @@ tbody tr:hover {
     .Ind{
         font-size: 7px;
         color:#58a3d9;
+    }
+    .title{
+        font-weight: 500;
     }
     .payment{
         float: right;
@@ -166,9 +175,13 @@ tbody tr:hover {
         padding: 5px 12px;
         pointer-events: none;
     }
+    .NoData{
+        text-align: center;
+        font-weight: 500;
+    }
 }
 
-@media only screen and (min-width: 1050px) {
+@media only screen and (min-width: 450px) {
     .mobileView {
         display: none;
     }

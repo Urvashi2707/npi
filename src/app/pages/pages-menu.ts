@@ -73,6 +73,11 @@ export const MENU_ITEMSADM: NbMenuItem[] = [
     link: '/pages/upcoming',
   },
   {
+    title: 'Upcoming RSA',
+    icon: 'nb-tables',
+    link: '/pages/upcomingrsa',
+  },
+  {
     title: 'Paused',
     icon: 'nb-pause',
     link: '/pages/paused',
@@ -111,6 +116,12 @@ export const MENU_ITEMSADM: NbMenuItem[] = [
     icon: 'nb-tables',
     link: '/pages/unconfirmed',
   },
+  {
+    title: 'CRE Reports',
+    icon: 'nb-tables',
+    link: '/pages/cre-reports',
+  },
+
   {
     title: 'Escalation Matrix',
     icon: 'nb-tables',
@@ -191,6 +202,11 @@ export const MENU_ITEMSUSR: NbMenuItem[] = [
     link: '/pages/upcoming',
   },
   {
+    title: 'Upcoming RSA',
+    icon: 'nb-tables',
+    link: '/pages/upcomingrsa',
+  },
+  {
     title: 'Paused',
     icon: 'nb-pause',
     link: '/pages/paused',
@@ -229,6 +245,12 @@ export const MENU_ITEMSUSR: NbMenuItem[] = [
     icon: 'nb-tables',
     link: '/pages/unconfirmed',
   },
+  {
+    title: 'Cre Reports',
+    icon: 'nb-tables',
+    link: '/pages/cre-reports',
+  },
+
   {
     title: 'Escalation Matrix',
     icon: 'nb-tables',

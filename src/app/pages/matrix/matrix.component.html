@@ -14,18 +14,10 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td *ngFor="let m of matrix">{{m.matrix_name}}</td>
-                </tr>
-                <tr>
-                    <td *ngFor="let a of matrix">{{a.first_name}}</td>
-                </tr>
-                <tr>
-                    <td *ngFor="let m of matrix">{{m.email}}</td>
-                </tr>
-                <tr>
-                    <td *ngFor="let m of matrix">{{m.first_number}}</td>
-                </tr>
+                <tr><td *ngFor="let m of matrix">{{m.matrix_name}}</td></tr>
+                <tr><td *ngFor="let a of matrix">{{a.first_name}}</td></tr>
+                <tr><td *ngFor="let m of matrix">{{m.email}}</td></tr>
+                <tr><td *ngFor="let m of matrix">{{m.first_number}}</td></tr>
             </tbody>
         </table>
     </nb-card-body>
@@ -39,34 +31,18 @@
     <hr/>
     <div class="row">
       <div class="col-12 col-sm-12">
-        <ul>
-          <li *ngFor="let m of matrix">
-            <div class="card">
-              <div class="row">
-                <div class="col-12 col-sm-12" style="text-align: center">
-                  <span class="poc">{{m.matrix}} point of contact</span>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-12 col-sm-12">
-                  <div>{{m.matrix_name}}</div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-12 col-sm-12">{{m.first_name}}</div>
-                </div>
-                <div class="row">
-                <div class="col-12 col-sm-12">
-                  <span>{{m.first_number}}</span>
-                </div>
-              </div>
-              <div class="row">
-                  <div class="col-12 col-sm-12">{{m.email}}</div>
-                </div>
-            </div>
-          </li>
-        </ul>
-        <ngx-spinner bdColor="rgba(51,51,51,0.09)" size="large" color="#ea5810" type="ball-clip-rotate-pulse"></ngx-spinner>
+        <div class="container">
+
+          <div class="timeline-block timeline-block-right" *ngFor="let m of matrix">
+             <div class="marker"></div>
+             <div class="timeline-content">
+                <div class="title">{{m.matrix_name}}</div>
+                <span class="first_name">{{m.first_name}}</span>
+                <p class="email">{{m.email}}.</p>
+                <p class="number">{{m.first_number}}</p>
+             </div>
+          </div>
+       </div>
       </div>
     </div>
   </div>
