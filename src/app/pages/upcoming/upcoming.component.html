@@ -167,7 +167,7 @@
   </div>
   <div class="row">
     <div class="col-12 col-sm-12">
-      <div class="NoData" *ngIf="message"> {{message}}</div>
+      <div class="NoData" *ngIf="MessageNoData"> {{MessageNoData}}</div>
       <ul>
         <li *ngFor="let i of upcoming |filter:SearchData | paginate: { id: 'server', itemsPerPage:DataPerPage, currentPage: page + 1, totalItems: RecordCount }; let j = index "
           (click)="openQDetails(i)">

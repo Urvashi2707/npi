@@ -9,3 +9,8 @@ table, th, td {
 th, td {
   padding: 15px;
 }
+@media only screen and (max-width: 420px) {
+table{
+  font-size: 12px;
+}
+}

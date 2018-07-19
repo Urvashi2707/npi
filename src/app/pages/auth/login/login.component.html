@@ -13,7 +13,7 @@
           <form novalidate #f="ngForm" (ngSubmit)="OnSubmit(f)">
             <div class="row">
               <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12">
-                <img src="assets/images/logo.png" class="img-responsive" style="padding-left:16%;" />
+                <img src="assets/images/logo.png" class="img-responsive images"/>
               </div>
             </div>
             <div class="row">
@@ -24,8 +24,8 @@
                   <label class="form-control-placeholder" for="mobile">Mobile</label>
                 </div>
                 <div class="form-control-feedback" style="color:red" *ngIf="mob.errors && (mob.dirty || mob.touched)">
-                  <p *ngIf="mob.errors.required">Mobile is required</p>
-                  <p *ngIf="!mob.errors.valid">Mobile Number Should be a number</p>
+                  <p *ngIf="mob.errors.required" class="haserror">Mobile is required</p>
+                  <p *ngIf="!mob.errors.valid" class="haserror">Mobile Number Should be a number</p>
                 </div>
               </div>
             </div>
@@ -37,7 +37,7 @@
                   <label class="form-control-placeholder" for="password">Password</label>
                 </div>
                 <div class="form-control-feedback" style="color:red" *ngIf="pwd.errors && (pwd.dirty || pwd.touched)">
-                  <p *ngIf="pwd.errors.required">Password is required</p>
+                  <p *ngIf="pwd.errors.required" class="haserror">Password is required</p>
                 </div>
               </div>
             </div>
@@ -48,7 +48,7 @@
                 <span class="custom-control-description">Remember me</span>
               </label>
             </div>
-            <div class="row" style="padding-bottom:20%">
+            <div class="row loginBtn" style="padding-bottom:20%">
               <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3">
                 <div>
                   <button type="submit" class="btn btn-warning" [disabled]="f.invalid" style="float:center">Log In</button>

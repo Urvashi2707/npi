@@ -142,8 +142,9 @@ export class AtCentreComponent implements OnInit {
         this.RecordCount = res[0].pagecount[0].record_count;
         this.DataPerPage = res[0].pagecount[0].pagelimit;
         this.spinner.hide();
-        this._tableService.DateFormat(this.atcentre);
-        this._tableService.TimeFormat(this.atcentre);
+        this._tableService.DateTimeFormat(this.atcentre);
+        // this._tableService.DateFormat(this.atcentre);
+        // this._tableService.TimeFormat(this.atcentre);
 }
 }
 });

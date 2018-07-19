@@ -113,7 +113,7 @@
             </tr>
           </tbody>
         </table>
-        <table *ngIf="MessageNoData">
+        <table class="NoData" *ngIf="MessageNoData">
           {{MessageNoData}}
         </table>
         <ngx-spinner bdColor="rgba(51,51,51,0.09)" size="large" color="#ea5810" type="ball-clip-rotate-pulse"></ngx-spinner>
@@ -175,7 +175,7 @@
       <button type="button" class="btn btn-primary apply" (click)="FilterCheck(1)">Apply</button>
     </div>
   </div>
-  <div *ngIf="MessageNoData">{{MessageNoData}}</div>
+  <div class="NoData" *ngIf="MessageNoData">{{MessageNoData}}</div>
   <ul>
     <li *ngFor="let i of atcentre | filter:SearchData">
       <div class="card">
@@ -202,7 +202,7 @@
           <p class="step1" style="float: right;background-color: white;border:3px solid #109B57"></p>
         </div>
         <div style="margin-top: -5%;margin-bottom: 5%;">
-          <span style="font-size:12px;padding-right: 15%">{{i.newdate}} | {{i.newtime}}</span>
+          <span style="font-size:12px;padding-right: 10%">{{i.newdate}} | {{i.newtime}}</span>
           <span style="font-size:12px;">{{i.dropdate}} | {{i.droptime}}</span>
         </div>
         <div class="row" (click)="openQDetails(i)">

@@ -68,6 +68,47 @@ export class QueueTableService {
   }
 
   DateTimeFormat(Table){
-    
+    for (let j = 0; j < Table.length ; j++){
+      if(Table[j].hasOwnProperty('queue_time')){
+        if(Table[j].queue_time != null){
+          var queuetime = Table[j].queue_time;
+          var date = queuetime.replace( /\n/g, " " ).split( " " );
+          var newDate = this.datePipe.transform(date[0],"d MMM,y");
+          var timeString = date[1];
+          var H = +timeString.substr(0, 2);
+          var h = (H % 12) || 12;
+          var ampm = H < 12 ? "AM" : "PM";
+          timeString = h + timeString.substr(2, 3) + ampm;
+          Table[j].newtime = timeString;
+          Table[j].newdate = newDate;
+        }
+        else{
+          Table[j].newtime = "--";
+          Table[j].newdate = "--";
+        }
+      }
+     
+      if(Table[j].hasOwnProperty('dropoff_time')){
+        if(Table[j].dropoff_time != null){
+          var droptime = Table[j].dropoff_time;
+          var ddate = droptime.replace( /\n/g, " " ).split( " " );
+          var dropDate = this.datePipe.transform(ddate[0],"d MMM,y");
+          var droptimeString = ddate[1];
+          var H = +droptimeString.substr(0, 2);
+          var h = (H % 12) || 12;
+          var AmPm = H < 12 ? "AM" : "PM";
+          droptimeString = h + droptimeString.substr(2, 3) + AmPm;
+          Table[j].droptime = droptimeString;
+          Table[j].dropdate = dropDate;
+        }
+        else{
+          Table[j].droptime = "--";
+          Table[j].dropdate = "--";
+        }
+      }
+   
+     
+
   }
+}
 }

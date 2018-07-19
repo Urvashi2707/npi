@@ -105,7 +105,9 @@
         </tr>
       </tbody>
     </table>
-    <div *ngIf="MessageNoData" class="ErrorMessage">{{MessageNoData}}</div>
+    <table class="NoData" *ngIf="MessageNoData">
+      {{MessageNoData}}
+    </table>
     <ngx-spinner bdColor="rgba(51,51,51,0.09)" size="large" color="#ea5810" type="ball-clip-rotate-pulse"></ngx-spinner>
     <div class="paginate">
       <pagination-controls (pageChange)="FilterCheck($event)" id="server"></pagination-controls>
@@ -116,7 +118,7 @@
 <div class="mobileView">
   <div class="row headerRow">
     <div class="col-4 col-sm-4">
-      <span class="header">Upcoming</span>
+      <span class="header">Upcoming RSA</span>
     </div>
     <div class="col-8 col-sm-8">
       <div class="right-inner-addon">
@@ -167,6 +169,7 @@
   </div>
   <div class="row">
     <div class="col-12 col-sm-12">
+        <div class="NoData" *ngIf="MessageNoData"> {{MessageNoData}}</div>
       <ul>
         <li *ngFor="let i of upcoming |filter:SearchData | paginate: { id: 'server', itemsPerPage:DataPerPage, currentPage: page + 1, totalItems: RecordCount }; let j = index " (click)="openQDetails(i)">
           <div class="card">

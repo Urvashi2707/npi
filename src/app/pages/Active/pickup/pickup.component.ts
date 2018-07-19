@@ -134,8 +134,9 @@ export class PickupComponent implements OnInit {
         this.RecordCount = res[0].pagecount[0].record_count;
         this.DataPerPage = res[0].pagecount[0].pagelimit;
         this.spinner.hide();
-        this._tableService.DateFormat(this.pickup);
-        this._tableService.TimeFormat(this.pickup);
+        // this._tableService.DateFormat(this.pickup);
+        // this._tableService.TimeFormat(this.pickup);
+        this._tableService.DateTimeFormat(this.pickup);
         console.log(this.pickup);
     }
   }
