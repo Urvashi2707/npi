@@ -14,9 +14,8 @@ import { DatePipe } from '@angular/common';
 export class HeaderComponent implements OnInit {
 
   @Input() position = 'normal';
-
-
-  credit:string;
+  //variables
+  Credit:string;
   user: any;
   public name =sessionStorage.getItem('username');
   not:any[];
@@ -67,7 +66,7 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
     this.userService.getUsers()
       .subscribe((users: any) => this.user = users.nick);
-      this.credit = JSON.parse(sessionStorage.getItem('credit'));
+      this.Credit = JSON.parse(sessionStorage.getItem('credit'));
     this.getNotification();
     this.not = this.notifications[0].notifications;
     this.brandid = sessionStorage.getItem('brandid');
