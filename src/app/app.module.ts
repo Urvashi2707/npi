@@ -24,7 +24,7 @@ import { FilterPipe} from './pages/filter.pipe';
 import { Ng2OrderModule } from 'ng2-order-pipe'; 
 // import {columnPipe,rowPipe,searchPipe} from './pages/pipe.pipe'
 
-
+import { TestserviceService } from './testservice.service';
 
 @NgModule({
   declarations: [AppComponent,FilterPipe],
@@ -109,7 +109,7 @@ import { Ng2OrderModule } from 'ng2-order-pipe';
   ],
   bootstrap: [AppComponent],
   providers: [
-    { provide: APP_BASE_HREF, useValue: '/' },ServerService,CookieService
+    { provide: APP_BASE_HREF, useValue: '/' }, ServerService,CookieService, TestserviceService
   ],
 })
 export class AppModule {

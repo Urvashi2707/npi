@@ -108,7 +108,7 @@
               <td (click)="openQDetails(i)">{{i.queue_state}}</td>
               <td *ngIf="InsuranceCheck">{{i.svc_name}}</td>
               <td>
-                <button type="button" class="upload-button" (click)="UploadFiles(i)">{{i.upload_button}}</button>
+                <button type="button" class="upload-button" (click)="UploadFiles(i,page+1)">{{i.upload_button}}</button>
               </td>
             </tr>
           </tbody>

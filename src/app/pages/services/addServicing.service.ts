@@ -1,11 +1,18 @@
 import { Injectable } from '@angular/core';
 import {HttpClient,HttpHeaders} from '@angular/common/http';
-
+import { Router } from '@angular/router';
+import {Subject} from 'rxjs/Subject';
 
 @Injectable()
 export class ServicingService {
 
-  constructor(private http: HttpClient) { }
+  cityList:any = [];
+
+  constructor(private http: HttpClient,private router: Router) {
+    // var myArray = this.getCity();
+    // console.log(myArray);
+    this.getCity();
+   }
 
   private getSession_url :string = 'https://plsuat.europassistance.in:444/getSession';
   private Ea_check1_url:string = 'https://plsuat.europassistance.in:444/checkInitialEligibility';
@@ -18,7 +25,6 @@ export class ServicingService {
   check_url = 'http://m.21north.in/notify/eaws.php';
   public destroySession_url = 'https://plsuat.europassistance.in:444/destroysession';
   public data:string;
-
   data1 = "vfdxvxd";
   public httpOptions = {
   headers: new HttpHeaders({'Content-Type':  'application/json'}),
@@ -95,6 +101,33 @@ slot(reqpara){
 
   webServiceCall(reqpara){
     return this.http.post(this.url, reqpara, this.httpOptions);
+  }
+
+  getCity() {
+    const reqpara1 =
+      {
+        requesttype: 'getcitylist',
+      }
+    const as1 = JSON.stringify(reqpara1)
+    this.webServiceCall(as1).subscribe
+      (res => {
+        if (res[0].login === 0) {
+          sessionStorage.removeItem('currentUser');
+          this.router.navigate(['/auth/login']);
+        }
+        else {
+          this.cityList = res[0].citylist;
+          console.log(this.cityList);
+        }
+        // return this.cityList;
+      });
+  }
+
+  servicing(){
+    const a = 1;
+    const b = 2;
+    const c = a + b;
+    console.log(c);
   }
 
 }

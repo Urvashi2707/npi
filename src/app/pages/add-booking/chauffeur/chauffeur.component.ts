@@ -11,6 +11,8 @@ import { DatePipe } from '@angular/common';
 import { AddEmployee } from '../modal/AddEmployee/AddEmployee.component';
 import { ToasterService, ToasterConfig, Toast, BodyOutputType } from 'angular2-toaster';
 import 'style-loader!angular2-toaster/toaster.css';
+import { NgxSpinnerService } from 'ngx-spinner';
+
 @Component({
   selector: 'app-chauffeur',
   templateUrl: './chauffeur.component.html',
@@ -111,7 +113,7 @@ export class ChauffeurComponent implements OnInit {
   valuedate = new Date();
   countrycode1:string;
   
-  constructor(private datePipe:DatePipe,private titlecasePipe:TitleCasePipe,private toasterService: ToasterService,private _data : ServerService,private router: Router,private ngbDateParserFormatter: NgbDateParserFormatter,private modalService: NgbModal) { }
+  constructor(private spinner: NgxSpinnerService,private datePipe:DatePipe,private titlecasePipe:TitleCasePipe,private toasterService: ToasterService,private _data : ServerService,private router: Router,private ngbDateParserFormatter: NgbDateParserFormatter,private modalService: NgbModal) { }
 
   ngOnInit() {
     if(sessionStorage.getItem('selectedsvc')){
@@ -150,6 +152,16 @@ export class ChauffeurComponent implements OnInit {
     const activeModal = this.modalService.open(AddEmployee, { size: 'lg', container: 'nb-layout' });
     activeModal.componentInstance.modalHeader = 'Add Employee';
     activeModal.componentInstance.modalContent = Id;
+    activeModal.result.then(() => { 
+      this.spinner.show();
+      if(Id == 4){
+        this.getSaleExceutive();
+      }
+      else if (Id == 3){
+        this.getCoordinator();
+      }
+      console.log('When user closes');
+    }, () => { console.log('Backdrop click')})
   }
 
 

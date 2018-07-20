@@ -73,12 +73,17 @@ export class AtCentreComponent implements OnInit {
   dataForUpload: any;
 
   //File Upload Function 
-  UploadFiles(data:any){
+  UploadFiles(data:any,page){
+    console.log(page);
     const activeModal = this.modalService.open(SearchModalComponent, { size: 'lg', container: 'nb-layout' });
     this.datatopass = {id:data.queueid, queue_exists: "0",amt:data.queue_total, service_status:data.service_status, queue_time:data.queue_time,service_advisor:data.service_advisor};
     this.dataForUpload = { id: sessionStorage.getItem('QueueId'), queue_date: new Date, service_status: data.service_status}
     activeModal.componentInstance.modalHeader = 'Upload File';
     activeModal.componentInstance.modalContent = this.datatopass;
+    activeModal.result.then(() => { 
+      console.log('When user closes');
+      this.FilterCheck(page);
+    }, () => { console.log('Backdrop click')})
   }
 
       //On select of End Date
@@ -88,6 +93,8 @@ export class AtCentreComponent implements OnInit {
             this.EndDateString = this.ngbDateParserFormatter.format(date);
         }
      }
+
+    //  closeModal() { this.activeModal.close( anything ); }
 
   sort(key){
     this.key = key;
@@ -143,8 +150,6 @@ export class AtCentreComponent implements OnInit {
         this.DataPerPage = res[0].pagecount[0].pagelimit;
         this.spinner.hide();
         this._tableService.DateTimeFormat(this.atcentre);
-        // this._tableService.DateFormat(this.atcentre);
-        // this._tableService.TimeFormat(this.atcentre);
 }
 }
 });

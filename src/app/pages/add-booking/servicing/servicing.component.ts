@@ -11,6 +11,7 @@ import { ToasterService, ToasterConfig, Toast, BodyOutputType } from 'angular2-t
 import 'style-loader!angular2-toaster/toaster.css';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { TestserviceService } from '../../../testservice.service';
 
 @Component({
   selector: 'app-servicing',
@@ -160,7 +161,10 @@ export class ServicingComponent implements OnInit {
     private modalService: NgbModal,
     private titlecasePipe:TitleCasePipe,
     private activeModal: NgbActiveModal,
-    private spinner: NgxSpinnerService) { }
+    private spinner: NgxSpinnerService, private testServ:TestserviceService) { 
+    this.ServicingService.servicing();
+    
+    }
 
 
   ngOnInit() {
@@ -233,10 +237,21 @@ public opt1={
     activeModal.componentInstance.modalContent = res;
     activeModal.componentInstance.modalNotes = notes;
   }
+
   showModal(Id:number) {
     const activeModal = this.modalService.open(AddEmployee, { size: 'lg', container: 'nb-layout' });
     activeModal.componentInstance.modalHeader = 'Add Employee';
     activeModal.componentInstance.modalContent = Id;
+    activeModal.result.then(() => { 
+      this.spinner.show();
+      if(Id == 1){
+        this.getCre();
+      }
+      else if(Id == 2){
+        this.getAdvisor();
+      }
+      console.log('When user closes');
+    }, () => { console.log('Backdrop click')})
   }
 
   Addcre() {
@@ -295,9 +310,8 @@ public opt1={
           this.cityList = res[0].citylist;
           console.log(this.cityList);
         }
-
-      }
-      );
+      });
+    // console.log(this.ServicingService.getCity());
   }
 
   changepickupstreet(value:any){
@@ -388,7 +402,6 @@ public opt1={
           this.getinfowithMobile();
           this.disableNext = true;
           // this.showToast('Message', 'Policy Message', 'Something went wrong');
-       
           this.ea_respondID = "0";
         }
       });
@@ -401,8 +414,7 @@ public opt1={
 
 
   eligibiltycheck2(){
-    const reqpara01 =
-    {
+    const reqpara01 ={
       customerMobileNumber:this.user.mobile1,
       vehicleRegNumber:this.registrationNumber,
       policyNumber:this.user.policy,
@@ -481,9 +493,8 @@ getBrands() {
           this.router.navigate(['/auth/login']);
         }
         else {
-          this.brands = res[0].allbrands,
-            // this.selectedBrand = this.brands[0].brand_id;
-            this.getModelds(this.selectedBrand);
+          this.brands = res[0].allbrands;
+            // this.getModelds(this.selectedBrand);
         }
       });
   }
@@ -554,7 +565,9 @@ getBrands() {
     });
   }
 
-  getModelds(ModelId: number) {
+  getModelds(ModelId) {
+    console.log(this.selectedBrand);
+    console.log(ModelId);
     const reqpara2 = {
       requesttype: 'getmodels',
       brandid: this.selectedBrand
@@ -827,7 +840,9 @@ getBrands() {
                   this.user.address_typedu = null;
                 }
           }
-          this.carinfo = this.customer[4].carinfo[0]
+          this.carinfo = this.customer[4].carinfo[0];
+          this.selectedBrand = this.carinfo.brand_id;
+          this.getModelds(this.selectedBrand);
           this.selectedModel = this.carinfo.veh_model_id;
           this.selectedVariant = this.carinfo.veh_submodel_id;
           this.getVariants(this.selectedModel);
@@ -914,7 +929,8 @@ getBrands() {
         this.router.navigate(['/auth/login']);
       }
       else {
-        this.cre = res[0].users
+        this.cre = res[0].users;
+        this.spinner.hide();
       }
     });
   }
