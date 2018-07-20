@@ -1,15 +1,16 @@
-import { Component, OnInit } from '@angular/core';
-import {NgbModal,NgbActiveModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import { Component } from '@angular/core';
+import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {NgForm} from '@angular/forms';
 import { TitleCasePipe } from '@angular/common';
 import {ServicingService } from '../../services/addServicing.service';
 import {Router} from '@angular/router';
+
 @Component({
   selector: 'app-modal',
-  templateUrl:'./modal.component.html',
-  styleUrls: ['./modal.component.scss']
+  templateUrl:'./UpdateSvc.component.html',
+  styleUrls: ['./UpdateSvc.component.scss']
 })
-export class Modal2Component {
+export class UpdateSvcComponent {
   public visible = false;
    private visibleAnimate = false;
    modalHeader: string;
@@ -19,7 +20,10 @@ export class Modal2Component {
    public message : any;
    public show1 = false;
 
-   constructor(private titlecasePipe:TitleCasePipe,private activeModal: NgbActiveModal,private _data:ServicingService,private router:Router){}
+   constructor(private titlecasePipe:TitleCasePipe,
+              private activeModal: NgbActiveModal,
+              private _data:ServicingService,
+              private router:Router){}
 
    closeModal() {
     this.activeModal.close();
@@ -41,8 +45,9 @@ export class Modal2Component {
      }
    }
 
+   //update service centre function
    onSubmit(f: NgForm) {
-    const reqpara = {
+    const updatesvc = {
       requesttype: 'updatesvcinfo',
       servicecentreid: this.modalContent.id,
       svc_name:this.titlecasePipe.transform(this.modalContent.svc_name),
@@ -56,20 +61,14 @@ export class Modal2Component {
       bank_account_number: this.modalContent.bank_account_number,
       bank_ifsc_code:this.modalContent.bank_ifsc_code
     };
-    console.log(JSON.stringify(reqpara));
-    const ua = JSON.stringify(reqpara);
-    this._data.webServiceCall(ua).subscribe(data => {
+    const svcreq = JSON.stringify(updatesvc);
+    this._data.webServiceCall(svcreq).subscribe(data => {
       if(data){
-        console.log(data);
         this.message = data
-        // this.show1 = true;
       }
-      
     });
     this.activeModal.close();
   }
-
-
 
 }
 

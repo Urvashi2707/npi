@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NbThemeService, NbMediaBreakpoint, NbMediaBreakpointsService } from '@nebular/theme';
-import {ServerService} from '../../../pages/services/user.service';
+import {ServerService} from '../../services/user.service';
 import {Router} from '@angular/router';
 import {DatePipe } from '@angular/common';
 

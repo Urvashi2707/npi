@@ -12,20 +12,15 @@ import 'style-loader!angular2-toaster/toaster.css';
 })
 
 export class EditUserComponent implements OnInit {
+
   public visible = false;
   private visibleAnimate = false;
   modalHeader: string;
   modalContent: any;
-  service_type: string;
-  public user: any;
-  public message: any;
-  public show1 = false;
-  disable = true;
-  isNewestOnTop = true;
-  isHideOnClick = true;
-  svcid: string;
+  message: any;
+  SvcId: string;
   userList: any = [];
-  public designation: any = [];
+  Designation: any = [];
   constructor(private titlecasePipe:TitleCasePipe,private activeModal: NgbActiveModal, private _data: ServerService) { }
   
   ngOnInit() {
@@ -52,37 +47,34 @@ export class EditUserComponent implements OnInit {
     }
   }
 
+  //get user type
   getUserType() {
-    const reqpara2 =
-      {
+    const reqpara2 = {
         requesttype: 'getusertypes'
       }
     const as2 = JSON.stringify(reqpara2);
     this._data.webServiceCall(as2).subscribe
       (res => {
-        this.designation = res[0].usertype
-        console.log(res[0]);
-      }
-      );
+        this.Designation = res[0].usertype
+      });
   }
 
+  //get user list
   getUserList() {
-    this.svcid = localStorage.getItem('svcid')
-    console.log(this.svcid);
-    const reqpara1 =
-      {
+    this.SvcId = localStorage.getItem('svcid')
+    const reqpara1 ={
         requesttype: 'getuserlist',
-        servicecentreid: JSON.parse(this.svcid),
+        servicecentreid: JSON.parse(this.SvcId),
       }
     const as1 = JSON.stringify(reqpara1);
     this._data.webServiceCall(as1).subscribe
       (res => {
         console.log(res[0].userlist);
         this.userList = res[0].userlist;
-      }
-      );
+      });
   }
 
+  //delete user
   deleteUser() {
     const reqpara1 = {
       requesttype: 'updateuser',
@@ -93,13 +85,12 @@ export class EditUserComponent implements OnInit {
       permission: this.modalContent.designation,
       isenabled: 1
     };
-    console.log(JSON.stringify(reqpara1));
     const ua1 = JSON.stringify(reqpara1);
     this._data.webServiceCall(ua1).subscribe(data => {
-      console.log(data);
     });
   }
 
+  //on submit function call
   onSubmit(f: NgForm) {
     const reqpara = {
       requesttype: 'updateuser',
@@ -110,17 +101,14 @@ export class EditUserComponent implements OnInit {
       isenabled: 0,
       permissionid: f.value.permission
     };
-    console.log(JSON.stringify(reqpara));
     const ua = JSON.stringify(reqpara);
     this._data.webServiceCall(ua).subscribe(data => {
       if (data) {
-        console.log(data);
         this.message = data
-        this.show1 = true;
+        // this.show1 = true;
         this.getUserList()
       }
-
-    });
+   });
     this.activeModal.close();
   }
 }

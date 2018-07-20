@@ -1,16 +1,13 @@
-import { Component, OnInit, Input, EventEmitter, OnDestroy, HostListener } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import {User} from '../model/user';
 import {ServerService } from '../services/user.service';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { ViewChild } from '@angular/core';
-import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {NgForm} from '@angular/forms';
 import { EditUserComponent } from './modal/EditUser.component';
 import { SuccessComponent } from './success/success.component';
-import { NgClass } from '@angular/common';
 import { TitleCasePipe } from '@angular/common';
-import { ToasterService, ToasterConfig, Toast, BodyOutputType } from 'angular2-toaster';
 import 'style-loader!angular2-toaster/toaster.css';
+
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
@@ -18,41 +15,25 @@ import 'style-loader!angular2-toaster/toaster.css';
 })
   export class UserComponent implements OnInit {
 
-      public isCollapsed = false
-      show : false;
       model: User = new User();
-      public designation: string[];
-      public userList: any = [];
-      public userDisable: any = [];
+      Designation: string[];
+      userList: any = [];
+      userDisable: any = [];
       user: any = {};
-
-      searchText:string;
-
-      public svcid:string;
-      isNewestOnTop = true;
-      isHideOnClick = true;
-      public salutation:any;
-      isDuplicatesPrevented = false;
-      isCloseButton = true;
-      config: ToasterConfig;
-      position = 'toast-top-full-width';
-      animationType = 'fade';
-      timeout = 5000;
-      toastsLimit = 5;
-      countrycode1:string;
-      countrycode:string;
-      svcadmin:string;
+      SearchData:string;
+      SvcID:string;
+      salutation:any;
+      CountryCode:string;
+      SvcAdmin:string;
       InsuranceUsr:string;
       InsuranceCheck:boolean = false;
-      checksvcadmin :boolean;
-      checkgrpadmin :boolean;
-      groupadmin:string;
-
+      CheckSvcAdmin :boolean;
+      CheckGrpAdmin :boolean;
+      GroupAdmin:string;
       key: string = 'id'; 
       reverse: boolean = false;
 
-      constructor(private toasterService: ToasterService,
-                    private modalService: NgbModal,
+      constructor(private modalService: NgbModal,
                     private _data:ServerService,
                     private titlecasePipe:TitleCasePipe) {}
 
@@ -60,41 +41,32 @@ import 'style-loader!angular2-toaster/toaster.css';
       ngOnInit() {
         this.InsuranceUsr = JSON.parse(sessionStorage.getItem('insurance'));
         if(sessionStorage.getItem('selectedsvc')){
-          // console.log(sessionStorage.getItem('selectedsvc'));
-          this.svcid = sessionStorage.getItem('selectedsvc');
-          // console.log(this.svcid);
+          this.SvcID = sessionStorage.getItem('selectedsvc');
         }
         else{
-          this.svcid = JSON.parse(sessionStorage.getItem('globalsvcid'));
-          // console.log(this.svcid);
+          this.SvcID = JSON.parse(sessionStorage.getItem('globalsvcid'));
         }
-        // this._data.getUser().subscribe(data => this.user = data);
         this. getUserType();
-
-        // this.getUserList();
-
-        this.countrycode1="+91";
+        this.CountryCode="+91";
         if(this.InsuranceUsr == "1"){
           this.InsuranceCheck = true;
         }
        else{
         this.InsuranceCheck = false;
        }
-        this.svcadmin = JSON.parse(sessionStorage.getItem('svcadmin'));
-        console.log(this.svcadmin);
-        this.groupadmin = JSON.parse(sessionStorage.getItem('groupadmin'));
-        console.log(this.groupadmin);
-        if(this.svcadmin == "1"){
-          this.checksvcadmin = true;
+        this.SvcAdmin = JSON.parse(sessionStorage.getItem('svcadmin'));
+        this.GroupAdmin = JSON.parse(sessionStorage.getItem('groupadmin'));
+        if(this.SvcAdmin == "1"){
+          this.CheckSvcAdmin = true;
         }
         else{
-          this.checksvcadmin = false;
+          this.CheckSvcAdmin = false;
         }
-        if(this.groupadmin == "1"){
-          this.checkgrpadmin = true;
+        if(this.GroupAdmin == "1"){
+          this.CheckGrpAdmin = true;
         }
         else{
-          this.checkgrpadmin = false;
+          this.CheckGrpAdmin = false;
         }
         this.salutation = [
           { id: 1, type: 'Mr' },
@@ -105,50 +77,28 @@ import 'style-loader!angular2-toaster/toaster.css';
        }
 
 
+       //Sort Function
        sort(key){
         this.key = key;
         this.reverse = !this.reverse;
       }
 
-
-       private showToast(type: string, title: string, body: string) {
-        this.config = new ToasterConfig({
-          positionClass: this.position,
-          timeout: this.timeout,
-          newestOnTop: this.isNewestOnTop,
-          tapToDismiss: this.isHideOnClick,
-          preventDuplicates: this.isDuplicatesPrevented,
-          animation: this.animationType,
-          limit: this.toastsLimit,
-        });
-        const toast: Toast = {
-          type: type,
-          title: title,
-          body: body,
-          timeout: this.timeout,
-          showCloseButton: this.isCloseButton,
-          bodyOutputType: BodyOutputType.TrustedHtml,
-        };
-        this.toasterService.popAsync(toast);
-      }
-
-      closeResult: string;
-
+      //LargeModal
       showLargeModal(res:any) {
         const activeModal = this.modalService.open(EditUserComponent, { size: 'lg', container: 'nb-layout' });
         activeModal.componentInstance.modalHeader = 'Edit Users';
         activeModal.componentInstance.modalContent = res;
       }
+
+      //Success Modal
       success(res:any) {
         const activeModal = this.modalService.open(SuccessComponent, { size: 'lg', container: 'nb-layout' });
         activeModal.componentInstance.modalHeader = 'Message';
         activeModal.componentInstance.modalContent = res;
       }
-    //   popToast() {
-    //     this.toasterService.pop('success', 'Args Title', 'Args Body');
-    // }
-
-      delete(user,index){
+      
+      //Delete User
+      Delete(user,index){
         const reqpara1 = {
           requesttype: 'updateuser',
           useridvar: user.id,
@@ -157,131 +107,75 @@ import 'style-loader!angular2-toaster/toaster.css';
           email:user.email,
           isenabled:0,
           designation:user.permission_type
-          
-        };
-        console.log(JSON.stringify(reqpara1));
+          };
         const ua1 = JSON.stringify(reqpara1);
         this._data.webServiceCall(ua1).subscribe(data => {
-          console.log(data);
           this.userList= [];
           this.userDisable = [];
-          this.enbuser(index);
-          // window.location.reload();
-          
+          this.DisableUser(index);
         });
       }
 
-      getUserType()
-      {
-        const reqpara2 = 
-        {
+      //get User type
+      getUserType(){
+        const UserType = {
           requesttype: 'getusertypes'
         }
-          const as2 = JSON.stringify(reqpara2);
-             this._data.webServiceCall(as2).subscribe
-        (res => 
-          {
-            this.designation = res[0].usertype
-            console.log(res[0]);
-          }
-        );
+          const UserReq = JSON.stringify(UserType);
+             this._data.webServiceCall(UserReq).subscribe
+        (res => {
+            this.Designation = res[0].usertype;
+          });
       }
 
-      getUserList()
-      {
-        const reqpara1 = 
-        {
-          requesttype: 'getuserlist',
-          servicecentreid:this.svcid,
-        }
-          const as1 = JSON.stringify(reqpara1);
-             this._data.webServiceCall(as1).subscribe
-        (res => 
-          {
-            for(var i = 0; i < res[0].userlist.length; i++ ){
-              if(res[0].userlist[i].isenabled == '1'){
-              this.userList.push(res[0].userlist[i])
-             
-              }
-            
-            else{
-              this.userDisable.push(res[0].userlist[i])
-             
-            }
-            
-          }
-          console.log(this.userList);
-          console.log(this.userDisable);
-        }
-        );
-      }
-
+      //Function called on change of tab
       tabChanged(tabData: any){
         this.userDisable = [];
         this.userList = [];
         if (tabData.tabTitle == "User List"){
-         
-          const reqpara1 = 
-          {
+        const List = {
             requesttype: 'getuserlist',
-            servicecentreid:this.svcid,
+            servicecentreid:this.SvcID,
           }
-            const as1 = JSON.stringify(reqpara1);
-               this._data.webServiceCall(as1).subscribe
-          (res => 
-            {
+            const ListReq = JSON.stringify(List);
+               this._data.webServiceCall(ListReq).subscribe
+          (res =>  {
               for(var i = 0; i < res[0].userlist.length; i++ ){
                 if(res[0].userlist[i].isenabled == '1'){
                 this.userList.push(res[0].userlist[i])
-               
-                }
-              
-              else{
-                this.userDisable.push(res[0].userlist[i])
-               
               }
-              
+            else{
+                this.userDisable.push(res[0].userlist[i])
+              }
             }
-            console.log(this.userList);
-            console.log(this.userDisable);
-          }
-          );
+          });
         }
-
-        else if (tabData.tabTitle == "Enabled User"){
+      else if (tabData.tabTitle == "Enabled User"){
           this.userDisable = [];
           this.userList = [];
-          const reqpara1 = 
-        {
+          const List1 =  {
           requesttype: 'getuserlist',
-          servicecentreid:this.svcid,
+          servicecentreid:this.SvcID,
         }
-          const as1 = JSON.stringify(reqpara1);
-             this._data.webServiceCall(as1).subscribe
-        (res => 
-          {
+          const ListReq1 = JSON.stringify(List1);
+             this._data.webServiceCall(ListReq1).subscribe
+        (res =>  {
             for(var i = 0; i < res[0].userlist.length; i++ ){
               if(res[0].userlist[i].isenabled == '1'){
               this.userList.push(res[0].userlist[i])
-             
-              }
-            
+             }
             else{
               this.userDisable.push(res[0].userlist[i])
-             
             }
-            
           }
-          console.log(this.userList);
-          console.log(this.userDisable);
+        });
         }
-        );
-        }
-
       }
 
-      enableuser(user1,index){
-        const reqpara1 = {
+
+      //function for unable user
+      EnableUser(user1,index){
+        const UpdateUsr = {
           requesttype: 'updateuser',
           useridvar: user1.id,
           username: user1.first_name,
@@ -290,100 +184,63 @@ import 'style-loader!angular2-toaster/toaster.css';
           designation:user1.permission_type,
           isenabled:1
         };
-        console.log(JSON.stringify(reqpara1));
-        const ua1 = JSON.stringify(reqpara1);
-        this._data.webServiceCall(ua1).subscribe(data => {
-          console.log(data);
+        const UpdateReq = JSON.stringify(UpdateUsr);
+        this._data.webServiceCall(UpdateReq).subscribe(data => {
           this.userDisable = [];
           this.userList = [];
-          this.enbuser(index);
-         
-        });
+          this.DisableUser(index);
+         });
       }
 
-      enbuser(i){
+      //get list of user
+      DisableUser(index){
         this.userDisable = [];
         this.userList = [];
-        const reqpara1 = 
-        {
+        const UsrDisable = {
           requesttype: 'getuserlist',
-          servicecentreid:this.svcid,
+          servicecentreid:this.SvcID,
         }
-          const as1 = JSON.stringify(reqpara1);
-             this._data.webServiceCall(as1).subscribe
-        (res => 
-          {
+          const Disabledreq = JSON.stringify(UsrDisable);
+             this._data.webServiceCall(Disabledreq).subscribe
+        (res => {
             for(var i = 0; i < res[0].userlist.length; i++ ){
               if(res[0].userlist[i].isenabled == '1'){
               this.userList.push(res[0].userlist[i])
-              this.userDisable.splice(i,1);
-             
-              }
-            
-            else{
-              this.userDisable.push(res[0].userlist[i]);
-              this.userDisable.splice(i,1);
+              this.userDisable.splice(index,1);
             }
-            
+           else{
+              this.userDisable.push(res[0].userlist[i]);
+              this.userDisable.splice(index,1);
+            }
           }
-          console.log(this.userList);
-          console.log(this.userDisable);
-        }
-        );
-
+        });
       }
 
+      //create user function
       onSubmit(f: NgForm) {
-        console.log(f.value.code);
-        console.log (this.titlecasePipe.transform(f.value.name))
-        const reqpara3 = {
+        const CreatePara = {
           requesttype:'createuser',
-          servicecentreid:this.svcid,
+          servicecentreid:this.SvcID,
           usertype:f.value.desgination,
           username:this.titlecasePipe.transform(f.value.name),
           mobilenumber:f.value.mobile1,
           email:f.value.email
         }
-        const as3 = JSON.stringify(reqpara3);
-        this._data.webServiceCall(as3).subscribe(res =>{
-          console.log(res);
-         
+        const createreq = JSON.stringify(CreatePara);
+        this._data.webServiceCall(createreq).subscribe(res =>{
           if(res[0].userexists[0].does_exist == 0){
-            console.log('created');
             this.success("0");
-            // f.reset();
             f.controls.name.reset();
             f.controls.desgination.reset();
             f.controls.mobile1.reset();
             f.controls.email.reset();
             f.controls.salutation1.reset();
-            // f.reset({ countrycode1: this.countrycode1 });
-            // f.value.code = "+91";
-            // console.log( f.value.code );
-            // this.countrycode1="+91";
           }
           else if (res[0].userexists[0].does_exist == 1){
-            console.log('not created');
             this.success("1");
             f.controls.name.reset();
-            // f.reset();
-            // f.setValue
-            // f.reset({ code: "+91" });
-            // this.countrycode1="+91";
-            // f.value.code = "+91";
           }
           });
-          // this.countrycode1="+91";
-          // f.value.code = "+91";
-           }
+          }
 
-      private getDismissReason(reason: any): string {
-        if (reason === ModalDismissReasons.ESC) {
-          return 'by pressing ESC';
-        } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-          return 'by clicking on a backdrop';
-        } else {
-          return  `with: ${reason}`;
-        }
-      }
   }

@@ -58,10 +58,8 @@
           <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
             <button type="button" class="btn btn-warning" (click)="Search(1)">Search</button>
           </div>
-
-        </div>
-
-        <div>
+       </div>
+         <div>
           <table style="width:100%">
             <thead>
               <th (click)="sort('id')">Queue ID
@@ -70,7 +68,6 @@
                     aria-hidden="true"></i>
                 </span>
               </th>
-              <!-- <th>Queue Date</th> -->
               <th *ngIf="!disableCust" (click)="sort('cust_name')">Customer
                 <span class="sort-span">
                   <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100"
@@ -107,22 +104,15 @@
                     aria-hidden="true"></i>
                 </span>
               </th>
-              <!-- <th *ngIf="InsuranceCheck" (click)="sort('svc_name')">SVC Name
-                  <span class="sort-span">
-                    <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i>
-                  </span>
-                </th> -->
             </thead>
             <tbody>
               <tr *ngFor="let r of report | orderBy: key : reverse | paginate: { id: 'server', itemsPerPage:DataPerPage, currentPage: p + 1, totalItems: RecordCount }; let j = index" (click)="openQDetails(r)">
-
                 <td>{{r.id}}</td>
                 <td>{{r.cust_name}}</td>
                 <td *ngIf="!disableCust">{{r.cust_mobile}}</td>
                 <td>{{r.veh_number}}</td>
                 <td>{{r.type_service}}</td>
                 <td>{{r.queue_status}}</td>
-                <!-- <td *ngIf="InsuranceCheck">{{i.svc_name}}</td> -->
               </tr>
             </tbody>
           </table>
@@ -179,8 +169,7 @@
   </div>
   <div class="row">
     <div class="col-sm-12 col-12">
-       
-      <div class="form-group">
+       <div class="form-group">
         <select id="serviceType" class="form-control" name="service_type" [(ngModel)]="user.service_type" #servicetype="ngModel"
           required>
           <option *ngFor="let s of service_type" [value]="s.id"> {{s.type}}</option>
@@ -211,11 +200,6 @@
     <ul>
       <li *ngFor="let r of report |filter:term | paginate: { id: 'server', itemsPerPage:DataPerPage, currentPage: p + 1, totalItems: RecordCount }; let j = index"  (click)="openQDetails(r)">
         <div class="card">
-            <!-- <div class="row padding" *ngIf="InsuranceCheck">
-                <div class="col-12 col-sm-12">
-                    <span class="QueueId">{{i.svc_name}}</span>
-                </div>
-              </div> -->
           <div class="row">
             <div class="col-12 col-sm-12">
               <span class="QueueId">ID &nbsp;:&nbsp; {{r.id}}</span>
@@ -248,7 +232,6 @@
     <div class="paginate">
       <pagination-controls (pageChange)="search($event)" id="server"></pagination-controls>
   </div>
-
-  </div>
+</div>
 </div>
 </div>

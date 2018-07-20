@@ -2,105 +2,78 @@
   <div class="row">
     <div class="col-md-12 col-lg-12">
       <nb-card size="large">
-        <!-- <toaster-container [toasterconfig]="config"></toaster-container> -->
         <nb-tabset>
-          <nb-tab tabTitle="Add Centre" *ngIf="checkgrpadmin">
+          <nb-tab tabTitle="Add Centre" *ngIf="CheckGrpAdmin">
             <div class="row">
               <div class="col-md-6 mx-auto">
                 <form ngNativeValidate #f="ngForm" (ngSubmit)="onSubmit(f)">
                   <div style="width:100%;margin-left:auto;margin-right:auto">
-
                     <div class="form-group">
                       <input type="text" class="form-control" name="svcname" [(ngModel)]="user.svcname" required #svcname="ngModel" minlength="3"
                         style="text-transform: capitalize;">
                       <label class="form-control-placeholder" for="svcname">Centre Name*</label>
                     </div>
-
-
                     <div class="form-control-feedback" *ngIf="svcname.errors && (svcname.dirty || svcname.touched)">
                       <p *ngIf="svcname.errors.required" class="haserror">Service Centre Name is required</p>
                       <p *ngIf="svcname.errors.minlength" class="haserror">Minimum 3 character</p>
                     </div>
-
                     <div class="form-group">
                       <input type="text" class="form-control" name="add1" [(ngModel)]="user.add1" required #add1="ngModel" minlength="3" maxlength="40">
                       <label class="form-control-placeholder" for="add1">Address 1*</label>
                     </div>
-
-
                     <div class="form-control-feedback" *ngIf="add1.errors && (add1.dirty || add1.touched)">
                       <p *ngIf="add1.errors.required" class="haserror">Address is required</p>
                       <p *ngIf="add1.errors.minlength" class="haserror"> Minimum 3 character</p>
                     </div>
-
                     <div class="form-group">
                       <input type="text" class="form-control" name="add2" [(ngModel)]="user.add2" #add2="ngModel" minlength="3" maxlength="40">
                       <label class="form-control-placeholder" for="add2">Address 2</label>
                     </div>
-
-
                     <div class="form-control-feedback" *ngIf="add2.errors && (add2.dirty || add2.touched)">
                       <p *ngIf="add2.errors.required" class="haserror">Address is required</p>
                       <p *ngIf="add2.errors.minlength" class="haserror">Minimum 3 character</p>
                     </div>
-
                     <div class="form-group">
                       <select name="city" id="city" class="form-control" [(ngModel)]="user.city" required #city="ngModel">
                         <option *ngFor="let d of cityList" [value]="d.cityid"> {{d.cityname}}</option>
                       </select>
                       <label class="form-control-placeholder" for="city">City*</label>
                     </div>
-
-
                     <div class="form-control-feedback" *ngIf="city.errors && (city.dirty || city.touched)">
                       <p *ngIf="city.errors.required" class="haserror">City is required</p>
                     </div>
-
                     <div class="form-group">
                       <input type="text" class="form-control" name="pincode" OnlyNumber="true" maxlength="6" [(ngModel)]="user.pincode" pattern="^[0-9]{6}$"
                         required #pincode="ngModel">
                       <label class="form-control-placeholder" for="pincode">Pincode*</label>
                     </div>
-
-
                     <div class="form-control-feedback" *ngIf="pincode.errors && (pincode.dirty || pincode.touched)">
                       <p *ngIf="pincode.errors.required" class="haserror">Pincode is required</p>
                       <p *ngIf="pincode.errors.maxlength" class="haserror">Length should be 6 </p>
                       <p *ngIf="!pincode.errors.valid" class="haserror">Please Enter number only</p>
                     </div>
-
                     <div class="form-group">
                       <input type="text" class="form-control" name="capacity" [(ngModel)]="user.capacity" required #capacity="ngModel" OnlyNumber="true"
                         maxlength="4">
-
                       <label class="form-control-placeholder" for="capacity">Capacity*</label>
                     </div>
-
-
                     <div class="form-control-feedback" *ngIf="capacity.errors && (capacity.dirty || capacity.touched)">
                       <p *ngIf="capacity.errors.required" class="haserror">capacity is required</p>
                     </div>
-
                     <div class="form-group">
                       <select name="job" id="job" class="form-control" [(ngModel)]="user.job" required #job="ngModel">
                         <option *ngFor="let d of type_of_job" [value]="d.id"> {{d.type}}</option>
                       </select>
                       <label class="form-control-placeholder" for="job">Type of Outlet*</label>
                     </div>
-
-
                     <div class="form-control-feedback" *ngIf="job.errors && (job.dirty || job.touched)">
                       <p *ngIf="job.errors.required" class="haserror">Job is required</p>
                     </div>
-
                     <div class="form-group">
                       <input type="text" class="form-control" name="latlong" [(ngModel)]="user.latlong" #latlong="ngModel" pattern="^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?),\s*[-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)$">
                       <label class="form-control-placeholder" for="latlong">lat,long (12.99,77.6611)</label>
                     </div>
-
-
                     <div class="form-control-feedback" *ngIf="latlong.errors && (latlong.dirty || latlong.touched)">
-
                       <p *ngIf="!latlong.errors.valid" class="haserror">Pattern is wrong</p>
                     </div>
                     <h5 style="margin-bottom: 1.5em;" class="sectionHeader">Bank Details</h5>
@@ -108,126 +81,96 @@
                       <input type="text" class="form-control" name="bank_name" [(ngModel)]="user.bank_name" required #bank_name="ngModel">
                       <label class="form-control-placeholder" for="bank_name">Bank Name*</label>
                     </div>
-
-
                     <div class="form-control-feedback" *ngIf="bank_name.errors && (bank_name.dirty || bank_name.touched)">
                       <p *ngIf="bank_name.errors.required" class="haserror">Bank Name is required</p>
                     </div>
-
                     <div class="form-group">
                       <input type="text" class="form-control" name="bank_branch" [(ngModel)]="user.bank_branch" required #bank_branch="ngModel">
                       <label class="form-control-placeholder" for="bank_branch">Bank Branch*</label>
                     </div>
-
-
                     <div class="form-control-feedback" *ngIf="bank_branch.errors && (bank_branch.dirty || bank_branch.touched)">
                       <p *ngIf="bank_branch.errors.required" class="haserror">bank_branch is required</p>
                     </div>
-
                     <div class="form-group">
                       <input type="text" class="form-control" name="bank_pincode" [(ngModel)]="user.bank_pincode" required #bank_pincode="ngModel"
                         maxlength="6">
                       <label class="form-control-placeholder" for="bank_pincode">Pincode*</label>
                     </div>
-
-
                     <div class="form-control-feedback" *ngIf="bank_pincode.errors && (bank_pincode.dirty || bank_pincode.touched)">
                       <p *ngIf="bank_pincode.errors.required" class="haserror">Pincode is required</p>
                       <p *ngIf="bank_pincode.errors.maxlength" class="haserror">Length should be 6 </p>
                     </div>
-
                     <div class="form-group">
                       <input type="text" class="form-control" name="bank_account_name" [(ngModel)]="user.bank_account_name" required #bank_account_name="ngModel">
                       <label class="form-control-placeholder" for="bank_account_name">Account Name*</label>
                     </div>
-
-
                     <div class="form-control-feedback" *ngIf="bank_account_name.errors && (bank_account_name.dirty || bank_account_name.touched)">
                       <p *ngIf="bank_account_name.errors.required" class="haserror">Account Name is required</p>
                     </div>
-
                     <div class="form-group">
                       <input type="text" class="form-control" name="bank_account_number" [(ngModel)]="user.bank_account_number" required #bank_account_number="ngModel">
                       <label class="form-control-placeholder" for="bank_account_number">Acccount Number*</label>
                     </div>
-
-
                     <div class="form-control-feedback" *ngIf="bank_account_number.errors && (bank_account_number.dirty || bank_account_number.touched)">
                       <p *ngIf="bank_account_number.errors.required" class="haserror">Acccount Number is required</p>
                     </div>
-
                     <div class="form-group">
                       <input type="text" class="form-control" name="bank_ifsc_code" [(ngModel)]="user.bank_ifsc_code" required #bank_ifsc_code="ngModel">
                       <label class="form-control-placeholder" for="bank_ifsc_code">Bank IFSC Code*</label>
                     </div>
-
-
                     <div class="form-control-feedback" *ngIf="bank_ifsc_code.errors && (bank_ifsc_code.dirty || bank_ifsc_code.touched)">
                       <p *ngIf="bank_ifsc_code.errors.required" class="haserror">IFSC Code is required</p>
                     </div>
-
                     <div>
                       <button type="submit" class="btn btn-primary">Submit</button>
                     </div>
-
                   </div>
                 </form>
               </div>
             </div>
           </nb-tab>
           <nb-tab tabTitle="Centre List">
-
             <div class="row desktopView">
               <div class="col-md-12 col-lg-12 col-sm-12">
                 <div class="row" style="padding-bottom: 4%">
                   <div class="col-md-6 col-lg-6 col-sm-6">
-
                   </div>
                   <div class="col-md-4 col-lg-4 col-sm-4">
-                    <input type="text" class="search" [(ngModel)]="term" placeholder="search" style="height: 161%;">
+                    <input type="text" class="search" [(ngModel)]="SearchData" placeholder="search" style="height: 161%;">
                   </div>
                 </div>
-
-
                 <div>
-
                   <div>
                     <table class="table" style="padding-top:10%">
                       <tr>
                         <th (click)="sort('name')">Name
                           <span class="sort-span">
-                            <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100"
-                              aria-hidden="true"></i>
+                            <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i>
                           </span>
                         </th>
                         <th (click)="sort('manager_name')">Centre Manager Name
                           <span class="sort-span">
-                            <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100"
-                              aria-hidden="true"></i>
+                            <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i>
                           </span>
                         </th>
                         <th (click)="sort('manager_mobile')">Centre Manager Number
                           <span class="sort-span">
-                            <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100"
-                              aria-hidden="true"></i>
+                            <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i>
                           </span>
                         </th>
                         <th (click)="sort('manager_email')">Centre Manager Email
                           <span class="sort-span">
-                            <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100"
-                              aria-hidden="true"></i>
+                            <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i>
                           </span>
                         </th>
-
-                        <th *ngIf="checkgrpadmin">Edit</th>
+                        <th *ngIf="CheckGrpAdmin">Edit</th>
                       </tr>
-                      <tr *ngFor="let list of List | orderBy: key : reverse | filter : term">
-
+                      <tr *ngFor="let list of List | orderBy: key : reverse | filter : SearchData">
                         <td>{{list.name}}</td>
                         <td>{{list.manager_name}}</td>
                         <td>{{list.manager_mobile}}</td>
                         <td>{{list.manager_email}}</td>
-                        <td *ngIf="checkgrpadmin">
+                        <td *ngIf="CheckGrpAdmin">
                           <button (click)="showLargeModal(list)" style="background-color: white;border-color: orange;">
                             <i class="fa fa-pencil" style="color:#ffa100" aria-hidden="true"></i>
                           </button>
@@ -241,21 +184,20 @@
             <div class="mobileView">
               <div class="row">
                 <div class="col-12 col-sm-12">
-                    <div class="col-md-4 col-lg-4 col-sm-12 col-12 SearchCol">
-                        <!-- <input type="text" class="search" [(ngModel)]="term" placeholder="search"> -->
-                        <div class="input-group">
-                            <input type="text" [(ngModel)]="term" placeholder="search" class="form-control search" style="max-height:20px !important"/>
-                          </div>
-                      </div>
-                     
+                  <div class="col-md-4 col-lg-4 col-sm-12 col-12 SearchCol">
+                    <div class="input-group">
+                      <input type="text" [(ngModel)]="SearchData" placeholder="search" class="form-control search" style="max-height:20px !important"
+                      />
+                    </div>
+                  </div>
                   <ul>
-                    <li *ngFor="let list of List  | filter : term">
+                    <li *ngFor="let list of List  | filter : SearchData">
                       <div class="card">
                         <div class="row">
                           <div class="col-10 col-sm-10">
                             <span class="QueueId">{{list.name}}</span>
                           </div>
-                          <div class="col-2 col-sm-2" *ngIf="checkgrpadmin" style="padding: 0px;">
+                          <div class="col-2 col-sm-2" *ngIf="CheckGrpAdmin" style="padding: 0px;">
                             <button (click)="showLargeModal(list)" style="background-color: white;border-color: orange;">
                               <i class="fa fa-pencil" style="color:#ffa100" aria-hidden="true"></i>
                             </button>

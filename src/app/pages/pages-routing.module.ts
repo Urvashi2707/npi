@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { PagesComponent } from './pages.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { ManageComponent } from './manage/manage.component';
+import { ManageComponent } from './manageSvc/manageSvc.component';
 import { UserComponent } from './user/user.component';
 import { ReportsComponent } from './reports/reports.component';
 import { PaymentComponent } from './payment/payment.component';

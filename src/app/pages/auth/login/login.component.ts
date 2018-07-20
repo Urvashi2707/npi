@@ -69,7 +69,6 @@ CloseAlert(){
          }
         const LgReq = JSON.stringify(LgnReqpara);
         this.ServicingService.Login(LgReq).subscribe(response => {
-              console.log(response[0].login[0].hasOwnProperty('userid'));
               if(response[0].login[0].hasOwnProperty('userid')){
                 sessionStorage.setItem('currentUser',JSON.stringify(response[0]));
                 sessionStorage.setItem('globalsvcid',JSON.stringify(response[0].login[0].svcid));
@@ -81,8 +80,7 @@ CloseAlert(){
                 sessionStorage.setItem('svcadmin',JSON.stringify(response[0].login[0].issvcadmin));
                 sessionStorage.setItem('groupadmin',JSON.stringify(response[0].login[0].isgroupadminvar));
                 sessionStorage.setItem('brandid',response[0].login[0].brand_id);
-                sessionStorage.setItem('insurance',JSON.stringify(response[0].login[0].is_insurance))
-                console.log(response[0].login[0].first_name);
+                sessionStorage.setItem('insurance',JSON.stringify(response[0].login[0].is_insurance));
                 sessionStorage.setItem('username',(response[0].login[0].first_name));
                 sessionStorage.setItem('User',value.mobile);
                 this.router.navigate(['/pages']);
@@ -103,9 +101,7 @@ CloseAlert(){
 
   //Called when Remember Checkbox is checked
   RememberMe(value){
-  console.log(value);
   if(value == true){
-  console.log('true');
   this._cookieService.set('mobile',this.user.mobile);
   this._cookieService.set('password',this.user.password);
  }

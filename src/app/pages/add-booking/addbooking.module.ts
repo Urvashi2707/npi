@@ -1,8 +1,8 @@
 import { NgModule ,CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ThemeModule } from '../../@theme/theme.module';
-import {ServicingService} from './../services/addServicing.service';
-import {ChauffeurService} from './../services/chauffeur.service';
+import {ServicingService} from '../services/addServicing.service';
+import {ChauffeurService} from '../services/chauffeur.service';
 import { ServicingComponent } from './servicing/servicing.component';
 import { RsaComponent } from './rsa/rsa.component';
 import { ChauffeurComponent } from './chauffeur/chauffeur.component';
@@ -15,7 +15,7 @@ import { BookingDetails } from './modal/BookingDetails/BookingDetails.component'
 import { ToasterModule } from 'angular2-toaster';
 import {NgbModal,NgbActiveModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import { ToasterService, ToasterConfig, Toast, BodyOutputType } from 'angular2-toaster';
-import { OnlyNumber } from '.././number.directive';
+import { OnlyNumber } from '../number.directive';
 import { AddEmployee } from './modal/AddEmployee/AddEmployee.component';
 // import { ModalComponent } from './modal/modal.component';
 @NgModule({

@@ -52,7 +52,7 @@
         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
           <div class="form-group">
             <select name="permission" id="permission" class="form-control" [(ngModel)]="modalContent.permission_type" required #permission="ngModel">
-              <option *ngFor="let d of designation" [value]="d.id"> {{d.type}}</option>
+              <option *ngFor="let d of Designation" [value]="d.id"> {{d.type}}</option>
             </select>
             <label class="form-control-placeholder" for="permission">Designation*</label>
           </div>

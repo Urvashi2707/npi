@@ -3,33 +3,33 @@
     <div class="col-md-12 col-lg-12">
       <nb-card size="large">
         <nb-tabset (changeTab)="tabChanged($event)">
-          <nb-tab tabTitle="Add User" *ngIf="checkgrpadmin || checksvcadmin" id=1>
+          <nb-tab tabTitle="Add User" *ngIf="CheckGrpAdmin || CheckSvcAdmin" id=1>
             <div class="row">
               <div class="col-md-6 mx-auto">
                 <form ngNativeValidate #f="ngForm" (ngSubmit)="onSubmit(f)">
-                    <div class="row">
-                        <div class="col-md-8 col-lg-8 col-sm-8 col-12">
-                          <div class="form-group" style="display:inline-block;min-width:15%;">
-                            <select id="salutation1" class="form-control" name="salutation1" [(ngModel)]="user.salutation" #salutation1="ngModel" required>
-                              <option *ngFor="let s of salutation" [value]="s.type"> {{s.type}}</option>
-                            </select>
-                          </div>
-                          <div class="form-group" style="display:inline-block;min-width:81%;">
-                            <input type="text" class="form-control" name="name" [(ngModel)]="model.name" required #name="ngModel" minlength="3" style="text-transform: capitalize;">
-                            <label class="form-control-placeholder" for="name">Name*</label>
-                          </div>
-                        </div>
-                        <div class="form-control-feedback" *ngIf="name.errors && (name.dirty || name.touched)">
-                            <p *ngIf="name.errors.required" class="haserror" style="width: 100%;padding-left: 7%;"> Name is required</p>
-                            <p *ngIf="name.errors.minlength" class="haserror">3 character</p>
-                          </div>
+                  <div class="row">
+                    <div class="col-md-8 col-lg-8 col-sm-8 col-12">
+                      <div class="form-group" style="display:inline-block;min-width:15%;">
+                        <select id="salutation1" class="form-control" name="salutation1" [(ngModel)]="user.salutation" #salutation1="ngModel" required>
+                          <option *ngFor="let s of salutation" [value]="s.type"> {{s.type}}</option>
+                        </select>
                       </div>
-                   <div style="width:100%;margin-left:auto;margin-right:auto">
+                      <div class="form-group" style="display:inline-block;min-width:81%;">
+                        <input type="text" class="form-control" name="name" [(ngModel)]="model.name" required #name="ngModel" minlength="3" style="text-transform: capitalize;">
+                        <label class="form-control-placeholder" for="name">Name*</label>
+                      </div>
+                    </div>
+                    <div class="form-control-feedback" *ngIf="name.errors && (name.dirty || name.touched)">
+                      <p *ngIf="name.errors.required" class="haserror" style="width: 100%;padding-left: 7%;"> Name is required</p>
+                      <p *ngIf="name.errors.minlength" class="haserror">3 character</p>
+                    </div>
+                  </div>
+                  <div style="width:100%;margin-left:auto;margin-right:auto">
                     <div class="container1">
                       <div class="form-group" style="display:inline-block;max-width: 16%;">
                         <label for="countrycode" class="countryCode">Country Code</label>
                         <label for="countrycode" style="font-size: 12px;padding-left: 2%;margin-bottom: 0px;" class="cCode">C.Code</label>
-                        <input type="text" class="form-control" id="codeinput" name="code" OnlyNumber="true" [readonly]="true" [(ngModel)]="countrycode1">
+                        <input type="text" class="form-control" id="codeinput" name="code" OnlyNumber="true" [readonly]="true" [(ngModel)]="CountryCode">
                       </div>
                       <div class="form-group" style="display:inline-block;min-width: 82%;">
                         <input type="text" class="form-control" name="mobile1" [(ngModel)]="model.mobile1" maxlength="10" required #mobile1="ngModel"
@@ -51,7 +51,7 @@
                     </div>
                     <div class="form-group">
                       <select name="desgination" id="desgination" class="form-control" [(ngModel)]="model.desgination" required #desgination="ngModel">
-                        <option *ngFor="let d of designation" [value]="d.id"> {{d.type}}</option>
+                        <option *ngFor="let d of Designation" [value]="d.id"> {{d.type}}</option>
                       </select>
                       <label class="form-control-placeholder" for="desgination">Designation*</label>
                     </div>
@@ -68,7 +68,7 @@
                   <div class="row">
                     <div class="col-md-8 col-lg-8 col-sm-8"> </div>
                     <div class="col-md-4 col-lg-4 col-sm-4" style="padding-bottom: 4%">
-                      <input type="text" class="search" [(ngModel)]="searchText" placeholder="search" style="height: 104%;">
+                      <input type="text" class="search" [(ngModel)]="SearchData" placeholder="search" style="height: 104%;">
                     </div>
                   </div>
                   <table class="table">
@@ -97,25 +97,27 @@
                             aria-hidden="true"></i>
                         </span>
                       </th>
-                      <th *ngIf="checkgrpadmin || checksvcadmin || InsuranceCheck">Delete</th>
-                      <th *ngIf="checkgrpadmin || checksvcadmin || InsuranceCheck">Edit</th>
+                      <th *ngIf="CheckGrpAdmin || CheckSvcAdmin || InsuranceCheck">Edit</th>
+                      <th *ngIf="CheckGrpAdmin || CheckSvcAdmin || InsuranceCheck">Delete</th>
+                      
                     </thead>
                     <tbody>
-                      <tr *ngFor="let e of userList | orderBy: key : reverse | filter : searchText;let i = index; ">
+                      <tr *ngFor="let e of userList | orderBy: key : reverse | filter : SearchData;let i = index; ">
                         <td>{{e.first_name}}</td>
                         <td>{{e.mobilenumber}}</td>
                         <td>{{e.email}}</td>
                         <td>{{e.designation}}</td>
                         <td>
-                          <button (click)="delete(e,i)" style="background-color: white;border-color: orange;" *ngIf="checkgrpadmin || checksvcadmin || InsuranceCheck">
+                            <button (click)="showLargeModal(e)" style="background-color: white;border-color: orange;" *ngIf="CheckGrpAdmin || CheckSvcAdmin || InsuranceCheck">
+                              <i class="fa fa-pencil" style="color:#ffa100" aria-hidden="true"></i>
+                            </button>
+                          </td>
+                        <td>
+                          <button (click)="Delete(e,i)" style="background-color: white;border-color: orange;" *ngIf="CheckGrpAdmin || CheckSvcAdmin || InsuranceCheck">
                             <i class="fa fa-trash" style="color:#ffa100" aria-hidden="true"></i>
                           </button>
                         </td>
-                        <td>
-                          <button (click)="showLargeModal(e)" style="background-color: white;border-color: orange;" *ngIf="checkgrpadmin || checksvcadmin || InsuranceCheck">
-                            <i class="fa fa-pencil" style="color:#ffa100" aria-hidden="true"></i>
-                          </button>
-                        </td>
+                   
                       </tr>
                     </tbody>
                   </table>
@@ -125,17 +127,18 @@
             <div class="mobileView">
               <div class="row">
                 <div class="col-12 col-sm-12">
-                    <div class="row">
-                        <div class="col-md-4 col-lg-4 col-sm-12 col-12 SearchCol">
-                            <div class="input-group has-person-icon">
-                                <input type="text" [(ngModel)]="searchText" placeholder="search" class="form-control search" style="max-height:20px !important"/>
-                              </div>
-                          </div>
+                  <div class="row">
+                    <div class="col-md-4 col-lg-4 col-sm-12 col-12 SearchCol">
+                      <div class="input-group has-person-icon">
+                        <input type="text" [(ngModel)]="SearchData" placeholder="search" class="form-control search" style="max-height:20px !important"
+                        />
+                      </div>
                     </div>
+                  </div>
                   <ul>
-                    <li *ngFor="let e of userList | filter:searchText">
+                    <li *ngFor="let e of userList | filter:SearchData">
                       <div class="card">
-                
+
                         <div class="row">
                           <div class="col-12 col-sm-12">
                             <span class="QueueId">{{e.first_name}}</span>
@@ -160,15 +163,15 @@
                           <div class="col-sm-6 col-6"></div>
                           <div class="col-sm-6 col-6" style="padding:0px">
                             <span style="padding-left: 39%;">
-                                <button (click)="showLargeModal(e)" style="background-color: white;border-color: orange;" *ngIf="checkgrpadmin || checksvcadmin">
-                                    <i class="fa fa-pencil" style="color:#ffa100" aria-hidden="true"></i>
-                                  </button>
+                              <button (click)="showLargeModal(e)" style="background-color: white;border-color: orange;" *ngIf="CheckGrpAdmin || CheckSvcAdmin">
+                                <i class="fa fa-pencil" style="color:#ffa100" aria-hidden="true"></i>
+                              </button>
                             </span>
                             <span style="padding-left: 8%;">
-                              
-                              <button (click)="delete(e,i)" style="background-color: white;border-color: orange;" *ngIf="checkgrpadmin || checksvcadmin">
-                                  <i class="fa fa-trash" style="color:#ffa100" aria-hidden="true"></i>
-                                </button>
+
+                              <button (click)="delete(e,i)" style="background-color: white;border-color: orange;" *ngIf="CheckGrpAdmin || CheckSvcAdmin">
+                                <i class="fa fa-trash" style="color:#ffa100" aria-hidden="true"></i>
+                              </button>
                             </span>
                           </div>
                         </div>
@@ -180,7 +183,7 @@
               </div>
             </div>
           </nb-tab>
-          <nb-tab tabTitle="Enabled User" *ngIf="checkgrpadmin || checksvcadmin" id=3>
+          <nb-tab tabTitle="Enabled User" *ngIf="CheckGrpAdmin || CheckSvcAdmin" id=3>
             <div class="row desktopView" style="width:100%">
               <div class="col-lg-12 col-md-12">
                 <div class="container">
@@ -196,7 +199,7 @@
                       <th>Number</th>
                       <th>Email Id</th>
                       <th>Designation</th>
-                      <th *ngIf="checkgrpadmin || checksvcadmin">Enable</th>
+                      <th *ngIf="CheckGrpAdmin || CheckSvcAdmin">Enable</th>
                     </thead>
                     <tbody>
                       <tr *ngFor="let e of userDisable| filter : searchText;let i = index ">
@@ -205,7 +208,7 @@
                         <td>{{e.email}}</td>
                         <td>{{e.designation}}</td>
                         <td>
-                          <button class="btn btn-warning enableButton" *ngIf="checkgrpadmin || checksvcadmin" (click)="enableuser(e,i)">
+                          <button class="btn btn-warning enableButton" *ngIf="CheckGrpAdmin || CheckSvcAdmin" (click)="EnableUser(e,i)">
                             Enable
                           </button>
                         </td>
@@ -219,13 +222,13 @@
               <div class="row">
                 <div class="col-12 col-sm-12">
                   <div class="row">
-                      <div class="col-md-4 col-lg-4 col-sm-12 col-12 SearchCol">
-                          <div class="input-group has-person-icon">
-                              <input type="text" [(ngModel)]="term" placeholder="search" class="form-control search" style="max-height:20px !important"/>
-                            </div>
-                        </div>
+                    <div class="col-md-4 col-lg-4 col-sm-12 col-12 SearchCol">
+                      <div class="input-group has-person-icon">
+                        <input type="text" [(ngModel)]="term" placeholder="search" class="form-control search" style="max-height:20px !important"
+                        />
+                      </div>
+                    </div>
                   </div>
-               
                   <ul>
                     <li *ngFor="let e of userDisable | filter:term">
                       <div class="card">
@@ -235,7 +238,7 @@
                           </div>
                           <div class="col-6 col-sm-6" style="float: right;    padding-left: 25%;">
                             <span>
-                              <button class="btn btn-warning enableButton" *ngIf="checkgrpadmin || checksvcadmin" (click)="enableuser(e,i)" style="    padding: 4px;
+                              <button class="btn btn-warning enableButton" *ngIf="CheckGrpAdmin || CheckSvcAdmin" (click)="EnableUser(e,i)" style="padding: 4px;
                               font-size: 9px;">
                                 Enable
                               </button>

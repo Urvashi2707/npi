@@ -4,12 +4,12 @@ import { PagesComponent } from './pages.component';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { PagesRoutingModule } from './pages-routing.module';
 import { ThemeModule } from '../@theme/theme.module';
-import { ManageComponent } from './manage/manage.component';
+import { ManageComponent } from './manageSvc/manageSvc.component';
 import { UserComponent } from './user/user.component';
 import { EditUserComponent } from './user/modal/EditUser.component';
-import { Modal2Component } from './manage/modal/modal.component';
+import { UpdateSvcComponent } from './manageSvc/modal/UpdateSvc.component';
 import { QueueDetailsComponent } from './queue-details/queue-details.component';
-import { MaterialModule } from '.././material.module';
+import { MaterialModule } from '../material.module';
 import { ReportsComponent } from './reports/reports.component';
 import { PaymentComponent } from './payment/payment.component';
 import { UpcomingComponent } from './upcoming/upcoming.component';
@@ -72,7 +72,7 @@ const PAGES_COMPONENTS = [
     ...PAGES_COMPONENTS,
     ManageComponent,
     UserComponent,
-    Modal2Component,
+    UpdateSvcComponent,
     EditUserComponent,
     SearchModalComponent,
     ReportsComponent,
@@ -108,7 +108,7 @@ const PAGES_COMPONENTS = [
   entryComponents: [
     EditUserComponent,
     ModalPhotoComponent,
-    Modal2Component,
+    UpdateSvcComponent,
     ModalQueueComponent,
     ModalUploadComponent,SearchModalComponent, ConfirmModalComponent,
     ModalSendLinkComponent,

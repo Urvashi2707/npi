@@ -12,7 +12,6 @@ export class LogoutComponent implements OnInit {
   constructor(private router: Router,private service : ServicingService,private http:HttpClient) { }
 
   ngOnInit() {
-    console.log("I am called");
     // this.Simplelogout();  //working Fine
     this.LogoutDest();
     // this.Destlogout();
@@ -28,9 +27,7 @@ export class LogoutComponent implements OnInit {
   //Logout Function
   LogoutDest(){
     const data1 = {};
-      console.log("This is logout function")
       this.service.logout().subscribe(response => {
-        // console.log('inside logout-dest');
         sessionStorage.clear();
         localStorage.clear();
         this.http.post('https://plsuat.europassistance.in:444/destroysession',data1,this.EasyAuto).subscribe(res=>{
@@ -39,11 +36,9 @@ export class LogoutComponent implements OnInit {
        },
        (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
-          // console.log("Client-side error occured.");
           this.router.navigate(['auth/login']);
         }
         else {
-          // console.log("Server-side error occured.");
           this.router.navigate(['auth/login']);
         }
       });

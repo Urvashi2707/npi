@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ServicingService } from '../services/addServicing.service';
 import { Router } from '@angular/router';
-import { DatePipe } from '@angular/common';
 import { QueueTableService } from '../services/queue-table.service';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { HttpClient} from '@angular/common/http';
 import { NgbDateStruct, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
+
 @Component({
   selector: 'app-reports',
   templateUrl: './reports.component.html',
@@ -34,11 +33,9 @@ export class ReportsComponent implements OnInit {
 
   constructor(private spinner: NgxSpinnerService,
               private _detailsTable: QueueTableService,
-              private datePipe: DatePipe, 
               private router: Router, 
               private ngbDateParserFormatter: NgbDateParserFormatter,
-              private service: ServicingService, 
-              private http: HttpClient) {
+              private service: ServicingService) {
             }
 
   ngOnInit() {
@@ -71,14 +68,12 @@ export class ReportsComponent implements OnInit {
       { id: "5", type: 'Home Delivery' },
       { id: "6", type: 'Stock Yard' },
       { id: "7", type: 'Test Drive' },
-
     ];
     this.user.service_type = this.service_type[0].id;
     this.status = [
       { id: "0", type: 'Active' },
       { id: "1", type: 'Closed' },
       { id: "2", type: 'Cancelled' }
-
     ];
     this.user.status = this.status[0].id;
     this.Search(1);
