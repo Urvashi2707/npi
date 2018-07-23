@@ -1,17 +1,26 @@
 import { Injectable } from '@angular/core';
-import {HttpClient,HttpHeaders} from '@angular/common/http';
+import { HttpClient,HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
-import {Subject} from 'rxjs/Subject';
+import 'rxjs/add/operator/map';
+import { Observable } from 'rxjs/Rx';
+import { Subject } from 'rxjs/Subject';
+import { Subscription, Subscriber } from 'rxjs';
 
 @Injectable()
 export class ServicingService {
 
   cityList:any = [];
+  cityList2:any;
+  result:any;
 
   constructor(private http: HttpClient,private router: Router) {
-    // var myArray = this.getCity();
+    var myArray = this.getCity().subscribe(data => this.result = data);
+    var myArray1 = this.getCity();
+    // console.log("widout subs" ,myArray1);
     // console.log(myArray);
-    this.getCity();
+    // this.getCity();
+    // this.testService();
+    // console.log(this.testService());
    }
 
   private getSession_url :string = 'https://plsuat.europassistance.in:444/getSession';
@@ -103,31 +112,48 @@ slot(reqpara){
     return this.http.post(this.url, reqpara, this.httpOptions);
   }
 
-  getCity() {
-    const reqpara1 =
-      {
-        requesttype: 'getcitylist',
-      }
+  // getCity():Observable<any>{
+  //   const reqpara1 ={
+  //     requesttype: 'getcitylist',
+  //   }
+  //   const as1 = JSON.stringify(reqpara1)
+  //   return this.webServiceCall(as1).map
+  //     ((response: Response) => {
+  //       if (response[0].login === 0) {
+  //         sessionStorage.removeItem('currentUser');
+  //         this.router.navigate(['/auth/login']);
+  //       }
+  //       else {
+  //         this.cityList = response[0].citylist;
+  //         var newData = JSON.stringify(this.cityList)
+  //         let result = JSON.parse(newData);
+  //         console.log(response);
+  //         return response;
+
+  //       }
+  //     });
+  // }
+
+  getCity():Observable<any>{
+    const reqpara1 ={
+      requesttype: 'getcitylist',
+    }
     const as1 = JSON.stringify(reqpara1)
-    this.webServiceCall(as1).subscribe
-      (res => {
-        if (res[0].login === 0) {
+    return this.webServiceCall(as1).map
+      ((response: Response) => {
+        if (response[0].login === 0) {
           sessionStorage.removeItem('currentUser');
           this.router.navigate(['/auth/login']);
         }
         else {
-          this.cityList = res[0].citylist;
-          console.log(this.cityList);
-        }
-        // return this.cityList;
-      });
-  }
+          this.cityList = response[0].citylist;
+          var newData = JSON.stringify(this.cityList)
+          let result = JSON.parse(newData);
+          console.log(response);
+          return response;
 
-  servicing(){
-    const a = 1;
-    const b = 2;
-    const c = a + b;
-    console.log(c);
+        }
+      });
   }
 
 }

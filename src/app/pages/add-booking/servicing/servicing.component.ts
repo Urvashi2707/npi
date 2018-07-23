@@ -162,8 +162,9 @@ export class ServicingComponent implements OnInit {
     private titlecasePipe:TitleCasePipe,
     private activeModal: NgbActiveModal,
     private spinner: NgxSpinnerService, private testServ:TestserviceService) { 
-    this.ServicingService.servicing();
-    
+      this.getCity();
+      // console.log(this.cityList[0].cityname);
+      console.log(this.cityList);
     }
 
 
@@ -186,7 +187,7 @@ export class ServicingComponent implements OnInit {
     this.user.confirm = true;
     this.countrycode1 = "+91";
     this.getBrands();
-    this.getCity();
+    // this.getCity();
     this.salutation = [
       { id: 1, type: 'Mr' },
       { id: 2, type: 'Mrs' },
@@ -250,8 +251,10 @@ public opt1={
       else if(Id == 2){
         this.getAdvisor();
       }
-      console.log('When user closes');
-    }, () => { console.log('Backdrop click')})
+      // console.log('When user closes');
+    }, () => {
+      //  console.log('Backdrop click');
+      })
   }
 
   Addcre() {
@@ -289,8 +292,8 @@ public opt1={
   }
 
   onCity(id){
-    console.log(this.user.city);
-    console.log(this.selectedBrand);
+    // console.log(this.user.city);
+    // console.log(this.selectedBrand);
     this.GetSVCList(this.selectedBrand,this.user.city);
   }
 
@@ -312,6 +315,12 @@ public opt1={
         }
       });
     // console.log(this.ServicingService.getCity());
+    // return this.ServicingService.getCity().subscribe(function(data){
+    //   this.cityList = data[0].citylist;
+    //   console.log("cityList");
+    //   console.log(this.cityList);
+ 
+    // })
   }
 
   changepickupstreet(value:any){
@@ -531,7 +540,7 @@ getBrands() {
 
 
   onSelectModel(modelId) {
-    console.log(modelId);
+    // console.log(modelId);
     for (let i = 0; i < this.Models.length; i++) {
       if (this.Models[i].model_id == modelId) {
         this.selectedModel = this.Models[i];
@@ -566,8 +575,8 @@ getBrands() {
   }
 
   getModelds(ModelId) {
-    console.log(this.selectedBrand);
-    console.log(ModelId);
+    // console.log(this.selectedBrand);
+    // console.log(ModelId);
     const reqpara2 = {
       requesttype: 'getmodels',
       brandid: this.selectedBrand
@@ -580,14 +589,14 @@ getBrands() {
       }
       else {
         this.Models = res[0].models;
-        console.log('model length' + this.Models.length);
+        // console.log('model length' + this.Models.length);
         if(this.Models.length === 1){
-          console.log("model length is 1");
+          // console.log("model length is 1");
           var model_id = this.Models[0].model_id;
           this.getVariants(model_id);
         }
         else{
-          console.log("model length is more than 1");
+          // console.log("model length is more than 1");
         }
      }
     });
@@ -727,12 +736,12 @@ getBrands() {
 
   // at select pickup dropdown
   onSelectPickup($event,id){
-    console.log($event);
-    console.log(id);
-    console.log(this.address[$event]);
+    // console.log($event);
+    // console.log(id);
+    // console.log(this.address[$event]);
     var currentAddressPickup = this.address[$event];
     this.user.addresspu = this.addressPickup;
-    console.log(this.user.addresspu);
+    // console.log(this.user.addresspu);
     this.user.pickupdoor = currentAddressPickup.doornumber;
     this.user.pickupstreet = currentAddressPickup.street;
     this.user.pickuparea = currentAddressPickup.area;
@@ -749,9 +758,9 @@ getBrands() {
 
    // at select dropoff dropdown
   onSelectDropoff($event,id){
-    console.log($event);
-    console.log(id);
-    console.log(this.address[$event]);
+    // console.log($event);
+    // console.log(id);
+    // console.log(this.address[$event]);
     var currentAddressDropoff = this.address[$event];
     // this.user.addresspu = this.addressPickup;
     // console.log(this.user.addresspu);
@@ -888,12 +897,12 @@ getBrands() {
         if(this.user.picklatlong){
           this.user.droplatlong = this.user.picklatlong;
         }
-      console.log(this.user.addresstypepu)
+      // console.log(this.user.addresstypepu)
         if(this.user.addresstypepu){
           for(let j = 0 ; j < this.addresstype.length;j++){
             if(this.addresstype[j].id == this.user.addresstypepu){
               this.user.addresstypedu = this.addresstype[j].id ;
-              console.log(this.user.addresstypedu);
+              // console.log(this.user.addresstypedu);
             }
           }
         }
@@ -936,7 +945,7 @@ getBrands() {
   }
 
   GetSVCList(brand,city){
-    console.log(this.selectedBrand);
+    // console.log(this.selectedBrand);
     var cityId = JSON.parse(sessionStorage.getItem('city_id'));
     const reqpara1 = {
            requesttype: 'getsvclist_city_brand',
@@ -963,11 +972,11 @@ getBrands() {
             else{
               this.insurance_tied.push(res[0].svclist[i]);
               res[0].svclist[i].associated = "Insurance";
-              console.log(this.insurance_tied);
+              // console.log(this.insurance_tied);
             }
           
           }
-          console.log("insurance" , this.insurance_tied)
+          // console.log("insurance" , this.insurance_tied);
           }
         });
    }
@@ -993,7 +1002,7 @@ getBrands() {
 
   onSubmit(f: NgForm) {
     this.disabled = true;
-    console.log(f.value.svclist);
+    // console.log(f.value.svclist);
     if(f.value.svclist){
       this.selectedBrand = f.value.svclist;
     }
@@ -1351,7 +1360,7 @@ getBrands() {
       this.advisorId="0";
     }
   
-      console.log(this.selectedItems);
+      // console.log(this.selectedItems);
       if (this.selectedItems === null ) {
         this.complaint_id = ["0"];
       }
@@ -1415,7 +1424,7 @@ getBrands() {
     };
 
     const ua = JSON.stringify(reqpara6);
-    console.log(ua);
+    // console.log(ua);
     this.ServicingService.webServiceCall(ua).subscribe(data => {
       if (data[0].login === 0) {
         sessionStorage.removeItem('currentUser');

@@ -278,7 +278,7 @@
               <div class="col-md-6 col-lg-6 col-sm-6">
                   <div class="form-group">
                       <select name="city" id="city" class="form-control" [(ngModel)]="user.city" required #city="ngModel" (change)="onCity($event)">
-                        <option *ngFor="let d of cityList" [value]="d.cityid"> {{d.cityname}}</option>
+                        <option *ngFor="let d of cityList; let i = index" [value]="d.cityid">{{d.cityname}}</option>
                       </select>
                       <label class="form-control-placeholder" for="city">City*</label>
                     </div>
