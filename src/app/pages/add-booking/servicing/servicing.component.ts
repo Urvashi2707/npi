@@ -110,7 +110,7 @@ export class ServicingComponent implements OnInit {
   public countrycode1: string;
   brand_id: string;
   public List: any = [];
-  public cityList: any = [];
+  private cityList:any;
   selectedCity:string;
   valuedate = new Date();
   public amb: boolean = true;
@@ -136,6 +136,7 @@ export class ServicingComponent implements OnInit {
   timeout = 5000;
   toastsLimit = 5;
   slothour:string;
+  citylist:any = [];
   addresstype = [
     {
       "id": "1",
@@ -162,9 +163,11 @@ export class ServicingComponent implements OnInit {
     private titlecasePipe:TitleCasePipe,
     private activeModal: NgbActiveModal,
     private spinner: NgxSpinnerService, private testServ:TestserviceService) { 
+      this.cityList = [];
       this.getCity();
       // console.log(this.cityList[0].cityname);
-      console.log(this.cityList);
+      // console.log(this.cityList);
+      // this.citylist = [{"cityid":"148","cityname":"North West Delhi"},{"cityid":"27","cityname":"Chennai"},{"cityid":"51","cityname":"Hyderabad"},{"cityid":"2","cityname":"Ahmedabad"},{"cityid":"16","cityname":"Bangalore"},{"cityid":"147","cityname":"South West Delhi"},{"cityid":"131","cityname":"NCR Delhi"},{"cityid":"55","cityname":"Jaipur"},{"cityid":"72","cityname":"Lucknow"},{"cityid":"81","cityname":"Mumbai"},{"cityid":"95","cityname":"Pune"}];
     }
 
 
@@ -220,10 +223,10 @@ export class ServicingComponent implements OnInit {
     this.getAdvisor();
     this.getCre();
     this.getcreadv();
+
+    console.log(this.cityList);
    
   }
-
-
 
 public opt1={
   headers: new HttpHeaders({'x-auth-token': sessionStorage.getItem('token'),'x-auth-user':sessionStorage.getItem('auth-user'),'Content-Type':  'application/json'})
@@ -297,7 +300,7 @@ public opt1={
     this.GetSVCList(this.selectedBrand,this.user.city);
   }
 
-  getCity() {
+public getCity() {
     const reqpara1 =
       {
         requesttype: 'getcitylist',
@@ -317,10 +320,8 @@ public opt1={
     // console.log(this.ServicingService.getCity());
     // return this.ServicingService.getCity().subscribe(function(data){
     //   this.cityList = data[0].citylist;
-    //   console.log("cityList");
-    //   console.log(this.cityList);
- 
-    // })
+    //   console.log("cityList", this.cityList, data[0].citylist);
+    // });
   }
 
   changepickupstreet(value:any){
@@ -414,6 +415,7 @@ public opt1={
           this.ea_respondID = "0";
         }
       });
+      this.getCity();
   }
 
   skip(){

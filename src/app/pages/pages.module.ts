@@ -1,5 +1,6 @@
 import { NgModule , CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import {ServicingService} from './services/addServicing.service';
+import {ServerService} from './services/user.service';
 import { PagesComponent } from './pages.component';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { PagesRoutingModule } from './pages-routing.module';
@@ -120,6 +121,7 @@ const PAGES_COMPONENTS = [
   ],
   providers: [
     ServicingService,
+    ServerService,
     QueueTableService,
     ToasterService,
     DatePipe,
