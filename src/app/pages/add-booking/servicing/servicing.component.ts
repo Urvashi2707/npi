@@ -1033,7 +1033,7 @@ getBrands() {
           this.pickuplandmark = f.value.pickuplandmark;
         }
         else if(f.value.dropofflandmark){
-          this.pickuppincode = f.value.dropofflandmark;
+          this.pickuplandmark = f.value.dropofflandmark;
         }
         else{
           this.pickuplandmark = "0";
@@ -1071,8 +1071,8 @@ getBrands() {
         if(f.value.dropofflandmark){
           this.dropofflandmark = f.value.dropofflandmark;
         }
-        else if (f.value.pickuppincode){
-          this.dropoffpincode =  f.value.pickuplandmark;
+        else if (f.value.pickuplandmark){
+          this.dropofflandmark =  f.value.pickuplandmark;
         }
         else{
           this.dropofflandmark = "0";
@@ -1212,8 +1212,12 @@ getBrands() {
         this.pickuplandmark = f.value.pickuplandmark;
         this.addresspuprevious = "0";
       }
-      else{
+      else if(f.value.dropofflandmark){
         this.pickuplandmark = f.value.dropofflandmark;
+        this.addresspuprevious = "0";
+      }
+      else{
+        this.pickuplandmark = "0";
         this.addresspuprevious = "0";
       }
       if(f.value.addresstypepu){
@@ -1276,8 +1280,12 @@ getBrands() {
         this.dropofflandmark = f.value.dropofflandmark;
         this.addressdoprevious = "0";
       }
+      else if(f.value.pickuplandmark){
+        this.dropofflandmark =f.value.pickuplandmark;
+        this.addressdoprevious = "0";
+      }
       else{
-        this.dropofflandmark = f.value.pickuplandmark;
+        this.dropofflandmark = "0";
         this.addressdoprevious = "0";
       }
       if(f.value.dropoffstreet){

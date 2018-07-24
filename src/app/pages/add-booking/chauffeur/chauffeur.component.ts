@@ -720,23 +720,34 @@ export class ChauffeurComponent implements OnInit {
       this.pickupdoor = f.value.pickupdoor;
       this.pickupstreet = f.value.pickupstreet;
       this.pickuparea = f.value.pickuparea;
-      this.pickuplandmark = f.value.pickuplandmark;
+      // this.pickuplandmark = f.value.pickuplandmark;
       if(f.value.pickuppincode){
         this.pickuppincode = f.value.pickuppincode;
       }
       else{
         this.pickuppincode = "0";
       }
-      
+      if(f.value.pickuplandmark){
+        this.pickuplandmark = f.value.pickuplandmark;
+      }
+      else{
+        this.pickuplandmark = "0";
+      }
       this.dropofffdoor = f.value.pickupdoor;
       this.dropoffstreet = f.value.pickupstreet;
       this.dropoffarea = f.value.pickuparea;
-      this.dropofflandmark = f.value.pickuplandmark;
+      // this.dropofflandmark = f.value.pickuplandmark;
       if(f.value.pickuppincode){
         this.dropoffpincode = f.value.pickuppincode;
       }
       else{
         this.dropoffpincode = "0";
+      }
+      if(f.value.pickuplandmark){
+        this.dropofflandmark = f.value.pickuplandmark;
+      }
+      else{
+        this.dropofflandmark = "0";
       }
       this.addressdoprevious = "0";
       this.addresspuprevious = "0";
@@ -754,22 +765,34 @@ export class ChauffeurComponent implements OnInit {
       this.pickupdoor = f.value.pickupdoor;
       this.pickupstreet = f.value.pickupstreet;
       this.pickuparea = f.value.pickuparea;
-      this.pickuplandmark = f.value.pickuplandmark;
+      // this.pickuplandmark = f.value.pickuplandmark;
       if(f.value.pickuppincode){
         this.pickuppincode = f.value.pickuppincode;
       }
       else{
         this.pickuppincode = "0";
       }
+      if(f.value.pickuplandmark){
+        this.pickuplandmark = f.value.pickuplandmark;
+      }
+      else{
+        this.pickuplandmark = "0";
+      }
       this.dropofffdoor = f.value.dropofffdoor;
       this.dropoffstreet = f.value.dropoffstreet;
       this.dropoffarea = f.value.dropoffarea;
-      this.dropofflandmark = f.value.dropofflandmark;
+      // this.dropofflandmark = f.value.dropofflandmark;
       if(f.value.dropoffpincode){
         this.dropoffpincode = f.value.dropoffpincode;
       }
       else{
         this.dropoffpincode = "0";
+      }
+      if(f.value.dropofflandmark){
+        this.dropofflandmark = f.value.dropofflandmark;
+      }
+      else{
+        this.dropofflandmark = "0";
       }
       this.addressdoprevious = "0";
       this.addresspuprevious = "0";
@@ -791,11 +814,29 @@ export class ChauffeurComponent implements OnInit {
       this.pickupstreet = f.value.pickupstreet;
       this.pickuparea = f.value.pickuparea;
       this.pickuplandmark = f.value.pickuplandmark;
+      if(f.value.pickuplandmark){
+        this.pickuplandmark = f.value.pickuplandmark;
+      }
+      else if (f.value.dropofflandmark){
+        this.pickuplandmark = f.value.dropofflandmark;;
+      }
+      else{
+        this.pickuplandmark = "0";
+      }
       this.pickuppincode = f.value.pickuppincode;
       this.dropofffdoor = f.value.dropofffdoor;
       this.dropoffstreet = f.value.dropoffstreet;
       this.dropoffarea = f.value.dropoffarea;
       this.dropofflandmark = f.value.dropofflandmark;
+      if(f.value.dropofflandmark){
+        this.dropofflandmark = f.value.dropofflandmark;
+      }
+      else if (f.value.pickuplandmark){
+        this.dropofflandmark = f.value.pickuplandmark;;
+      }
+      else{
+        this.dropofflandmark = "0";
+      }
       this.dropoffpincode = f.value.dropoffpincode;
       this.addressdoprevious = "0";
       this.addresspuprevious = "0";
@@ -837,7 +878,6 @@ export class ChauffeurComponent implements OnInit {
   if(f.value.mobile1)
   {
       this.mobile1 = f.value.mobile1;
-      console.log(this.mobile1);
     }
   else 
   {
@@ -848,12 +888,10 @@ export class ChauffeurComponent implements OnInit {
   if(f.value.email)
   {
       this.cusEmail = f.value.email;
-      console.log(this.cusEmail);
     }
   else 
   {
     this.cusEmail = "0";
-    console.log("0");
   }
 
   if(f.value.notes)
@@ -943,20 +981,16 @@ export class ChauffeurComponent implements OnInit {
     complaint:["0"]
   
   };
-
- const ua = JSON.stringify(reqpara6);
- console.log(ua);
+  const ua = JSON.stringify(reqpara6);
   this._data.webServiceCall(ua).subscribe(data => { 
     if(data[0].login === 0){
       sessionStorage.removeItem('currentUser');
       this.router.navigate(['/auth/login']);
     }
     else{
-    
         this.message = data[0].queue,
         this.disabled=false;
         this.showLargeModal(this.message[0]);
-        console.log(this.message[0].queue_id);
         this.slot_time = "0";
         f.reset();
         this.show = false;
