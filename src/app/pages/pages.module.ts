@@ -6,6 +6,7 @@ import { PagesRoutingModule } from './pages-routing.module';
 import { ThemeModule } from '../@theme/theme.module';
 import { ManageComponent } from './manageSvc/manageSvc.component';
 import { UserComponent } from './user/user.component';
+import { ServerService } from './services/user.service';
 import { EditUserComponent } from './user/modal/EditUser.component';
 import { UpdateSvcComponent } from './manageSvc/modal/UpdateSvc.component';
 import { QueueDetailsComponent } from './queue-details/queue-details.component';
@@ -39,6 +40,7 @@ import { MatrixComponent } from './matrix/matrix.component';
 import { UnconfirmedComponent } from './unconfirmed/unconfirmed.component';
 import { ConfirmModalComponent } from './unconfirmed/modal/confirmModal.component';
 import { TitleCasePipe } from '@angular/common';
+import { BarRatingModule } from "ngx-bar-rating";
 import { OptionComponent } from './dashboard/option/option.component';
 import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown/angular2-multiselect-dropdown';
 import { ModalAdvComponent } from './queue-details/modal-adv/modal-adv.component';
@@ -66,7 +68,7 @@ const PAGES_COMPONENTS = [
     Ng2OrderModule,
     NgxPaginationModule,
     NgxSpinnerModule,
-   
+    BarRatingModule
   ],
   declarations: [
     ...PAGES_COMPONENTS,
@@ -123,6 +125,7 @@ const PAGES_COMPONENTS = [
     QueueTableService,
     ToasterService,
     DatePipe,
+    ServerService,
     TitleCasePipe 
    
   ],

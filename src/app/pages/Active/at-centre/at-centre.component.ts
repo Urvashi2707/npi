@@ -10,7 +10,8 @@ import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-at-centre',
   templateUrl: './at-centre.component.html',
-  styleUrls: ['./at-centre.component.scss']
+  styleUrls: ['./at-centre.component.scss'],
+  
 })
 export class AtCentreComponent implements OnInit {
 
@@ -32,6 +33,8 @@ export class AtCentreComponent implements OnInit {
   SvcId:string;
   key: string = 'queueid'; 
   reverse: boolean = false;
+  barRate:number;
+  barRateNull:number;
 
   constructor(private spinner: NgxSpinnerService, 
                 private router:Router,
@@ -40,6 +43,8 @@ export class AtCentreComponent implements OnInit {
                 private _detailsTable: QueueTableService, 
                 private _data: ServerService, 
                 private _tableService: QueueTableService) {
+                  this.barRate = 4;
+                  this.barRateNull = 0;
     this._tableService.clickedID.subscribe(value => {
       this.tableData = _tableService.table_data;
     });

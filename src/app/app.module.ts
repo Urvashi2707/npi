@@ -6,7 +6,7 @@
 import { APP_BASE_HREF } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgModule } from '@angular/core';
+import { NgModule,NO_ERRORS_SCHEMA } from '@angular/core';
 import { HttpModule } from '@angular/http';
 import { CoreModule } from './@core/core.module';
 import {ServerService } from './pages/services/user.service';
@@ -16,6 +16,7 @@ import { ThemeModule } from './@theme/theme.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {MaterialModule} from './material.module';
 import { NbEmailPassAuthProvider, NbAuthModule } from '@nebular/auth';
+import { BarRatingModule } from "ngx-bar-rating";
 import {LoginComponent} from './pages/auth/login/login.component';
 import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown/angular2-multiselect-dropdown';
 import { CookieService } from 'ngx-cookie-service';
@@ -36,11 +37,12 @@ import { TestserviceService } from './testservice.service';
     HttpModule,
     AppRoutingModule,
     MaterialModule,
-
+   
     NgbModule.forRoot(),
     ThemeModule.forRoot(),
     CoreModule.forRoot(),
     RatingModule,
+    BarRatingModule,
     NbAuthModule.forRoot({
          providers: {
            email: {
@@ -108,9 +110,10 @@ import { TestserviceService } from './testservice.service';
        }),
   ],
   bootstrap: [AppComponent],
+
   providers: [
     { provide: APP_BASE_HREF, useValue: '/' }, ServerService,CookieService, TestserviceService
-  ],
+  ]
 })
 export class AppModule {
 }

@@ -70,6 +70,7 @@
     "ng2-search-filter": "^0.4.7",
     "ng2-smart-table": "1.2.2",
     "ng2-tree": "2.0.0-rc.4",
+    "ngx-bar-rating": "^1.1.0",
     "ngx-cookie-service": "^1.0.10",
     "ngx-echarts": "2.0.0",
     "ngx-pagination": "^3.1.1",

@@ -20,6 +20,8 @@ export class DashboardComponent implements OnInit{
   DropoffPieChart:any=[];
   Notification :any=[];
   SvcName:string;
+  barRate:number;
+barRateNull:number;
   public DataGraphDropOff:any = [];
   public MtdData:any = [];
   public DataGraphPickup:any = [];
@@ -117,6 +119,8 @@ export class DashboardComponent implements OnInit{
     private service:ServicingService,
     private modalService: NgbModal,
     private theme: NbThemeService){
+      this.barRate = 4;
+      this.barRateNull = 0;
   }
 
   onSelect(event) {  }
