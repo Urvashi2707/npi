@@ -6,7 +6,8 @@ export class ServerService {
 
   constructor(private http: HttpClient) { }
  
-  public url:string='http://m.21north.in/notify/svcwebservice.php';
+  // public url:string='http://m.21north.in/notify/svcwebservice.php';
+  public url:string='https://m.21north.in/notify/svcwebservice.php';
 
   public httpOptions = {
   headers: new HttpHeaders({'Content-Type':  'application/json'}),

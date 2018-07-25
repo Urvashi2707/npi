@@ -3,8 +3,6 @@ import { HttpClient,HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Rx';
-import { Subject } from 'rxjs/Subject';
-import { Subscription, Subscriber } from 'rxjs';
 
 @Injectable()
 export class ServicingService {
@@ -27,11 +25,11 @@ export class ServicingService {
   private Ea_check1_url:string = 'https://plsuat.europassistance.in:444/checkInitialEligibility';
   private Ea_check2_url:string = 'https://plsuat.europassistance.in:444/checkFinalEligibility';
 
-  public url:string='http://m.21north.in/notify/svcwebservice.php';
-  public logout_url:string = 'http://m.21north.in/notify/logout.php';
-  public graph:string = 'http://m.21north.in/notify/svcgraph.php';
-  public slotgraph =  'http://m.21north.in/notify/svcgraphslot.php';
-  check_url = 'http://m.21north.in/notify/eaws.php';
+  public url:string='https://m.21north.in/notify/svcwebservice.php';
+  public logout_url:string = 'https://m.21north.in/notify/logout.php';
+  public graph:string = 'https://m.21north.in/notify/svcgraph.php';
+  public slotgraph =  'https://m.21north.in/notify/svcgraphslot.php';
+  check_url = 'https://m.21north.in/notify/eaws.php';
   public destroySession_url = 'https://plsuat.europassistance.in:444/destroysession';
   public data:string;
   data1 = "vfdxvxd";

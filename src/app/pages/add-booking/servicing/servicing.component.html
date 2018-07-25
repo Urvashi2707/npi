@@ -332,7 +332,7 @@
                 <div class="row">
                   <div class="col-md-6 col-lg-6 col-sm-6">
                     <div class="form-group">
-                      <input type="text" id="pickupdoor" class="form-control" name="pickupdoor" required (ngModelChange)="changeEditpickupdoor($event)"
+                      <input type="text" id="pickupdoor" class="form-control" name="pickupdoor" maxlength="6" required (ngModelChange)="changeEditpickupdoor($event)"
                         [(ngModel)]="user.pickupdoor" #pickupdoor="ngModel">
                       <label class="form-control-placeholder" for="pickupdoor">Pickup Door Number/Flat Number*</label>
                     </div>
@@ -342,7 +342,7 @@
                   </div>
                   <div class="col-md-6 col-lg-6 col-sm-6">
                     <div class="form-group">
-                      <input type="text" id="id" class="form-control" required name="pickupstreet" #pickupstreet="ngModel" [(ngModel)]="user.pickupstreet"
+                      <input type="text" id="id" class="form-control" required name="pickupstreet" maxlength="70" #pickupstreet="ngModel" [(ngModel)]="user.pickupstreet"
                         (ngModelChange)="changeEditupstreet($event)">
                       <label class="form-control-placeholder" for="id">Pickup Apartment Name/Street Name</label>
                     </div>
@@ -354,7 +354,7 @@
                 <div class="row">
                   <div class="col-md-6 col-lg-6 col-sm-6">
                     <div class="form-group">
-                      <input type="text" id="id" class="form-control" required name="pickuparea" #pickuparea="ngModel" [(ngModel)]="user.pickuparea"
+                      <input type="text" id="id" class="form-control" required name="pickuparea" maxlength="70"  #pickuparea="ngModel" [(ngModel)]="user.pickuparea"
                         (ngModelChange)="changeEditpickuparea($event)">
                       <label class="form-control-placeholder" for="id">Pickup Area/Locality</label>
                     </div>
@@ -364,7 +364,7 @@
                   </div>
                   <div class="col-md-6 col-lg-6 col-sm-6">
                     <div class="form-group">
-                      <input type="text" id="id" class="form-control" name="pickuplandmark" #pickuplandmark="ngModel" [(ngModel)]="user.pickuplandmark"
+                      <input type="text" id="id" class="form-control" name="pickuplandmark" maxlength="150" #pickuplandmark="ngModel" [(ngModel)]="user.pickuplandmark"
                         (ngModelChange)="changeEditpickuplandmark($event)">
                       <label class="form-control-placeholder" for="id">Pickup Landmark</label>
                     </div>
@@ -373,7 +373,7 @@
                 <div class="row">
                   <div class="col-md-6 col-lg-6 col-sm-6">
                     <div class="form-group">
-                      <input type="text" id="id" class="form-control" name="pickuppincode" #pickuppincode="ngModel" [(ngModel)]="user.pickuppincode"
+                      <input type="text" id="id" class="form-control" name="pickuppincode" maxlength="6" #pickuppincode="ngModel" [(ngModel)]="user.pickuppincode"
                         (ngModelChange)="changeEditpickuppincode($event)" maxlength="6">
                       <label class="form-control-placeholder" for="id">Pickup Pincode</label>
                     </div>
@@ -420,7 +420,7 @@
                 <div class="row">
                   <div class="col-md-6 col-lg-6 col-sm-6">
                     <div class="form-group">
-                      <input type="text" id="dropofffdoor" class="form-control" name="dropofffdoor" required (ngModelChange)="EditAddress()" [(ngModel)]="user.dropofffdoor"
+                      <input type="text" id="dropofffdoor" class="form-control" name="dropofffdoor" required  maxlength="6" (ngModelChange)="EditAddress()" [(ngModel)]="user.dropofffdoor"
                         #dropofffdoor="ngModel">
                       <label class="form-control-placeholder" for="dropofffdoor">Dropoff Door Number/Flat Number*</label>
                     </div>
@@ -430,7 +430,7 @@
                   </div>
                   <div class="col-md-6 col-lg-6 col-sm-6">
                     <div class="form-group">
-                      <input type="text" id="id" class="form-control" name="dropoffstreet" required #dropoffstreet="ngModel" [(ngModel)]="user.dropoffstreet"
+                      <input type="text" id="id" class="form-control" name="dropoffstreet" maxlength="70" required #dropoffstreet="ngModel" [(ngModel)]="user.dropoffstreet"
                         (ngModelChange)="EditAddress()">
                       <label class="form-control-placeholder" for="id">Dropoff Apartment Name/Street Name</label>
                     </div>
@@ -442,7 +442,7 @@
                 <div class="row">
                   <div class="col-md-6 col-lg-6 col-sm-6">
                     <div class="form-group">
-                      <input type="text" id="id" class="form-control" name="dropoffarea" required #dropoffarea="ngModel" [(ngModel)]="user.dropoffarea"
+                      <input type="text" id="id" class="form-control" name="dropoffarea" required maxlength="70" #dropoffarea="ngModel" [(ngModel)]="user.dropoffarea"
                         (ngModelChange)="EditAddress()">
                       <label class="form-control-placeholder" for="id">Dropoff Area/Locality</label>
                     </div>
@@ -453,7 +453,7 @@
                   </div>
                   <div class="col-md-6 col-lg-6 col-sm-6">
                     <div class="form-group">
-                      <input type="text" id="id" class="form-control" name="dropofflandmark"  #dropofflandmark="ngModel" [(ngModel)]="user.dropofflandmark"
+                      <input type="text" id="id" class="form-control" name="dropofflandmark" maxlength="150" #dropofflandmark="ngModel" [(ngModel)]="user.dropofflandmark"
                         (ngModelChange)="EditAddress()">
                       <label class="form-control-placeholder" for="id">Dropoff Landmark</label>
                     </div>
@@ -491,7 +491,7 @@
                 <div class="row">
                   <div class="col-md-6 col-lg-6 col-sm-6">
                     <div class="form-group">
-                      <input type="text" id="pickupdoor" class="form-control" name="pickupdoor" required (ngModelChange)="changepickupdoor($event)"
+                      <input type="text" id="pickupdoor" class="form-control" name="pickupdoor" maxlength="6" required (ngModelChange)="changepickupdoor($event)"
                         [(ngModel)]="user.pickupdoor" #pickupdoor="ngModel">
                       <label class="form-control-placeholder" for="pickupdoor">Pickup Door Number/Flat Number*</label>
                     </div>
@@ -501,7 +501,7 @@
                   </div>
                   <div class="col-md-6 col-lg-6 col-sm-6">
                     <div class="form-group">
-                      <input type="text" id="id" class="form-control" required name="pickupstreet" #pickupstreet="ngModel" [(ngModel)]="user.pickupstreet"
+                      <input type="text" id="id" class="form-control" required name="pickupstreet" maxlength="70" #pickupstreet="ngModel" [(ngModel)]="user.pickupstreet"
                         (ngModelChange)="changepickupstreet($event)">
                       <label class="form-control-placeholder" for="id">Pickup Apartment Name/Street Name
                         *</label>
@@ -515,7 +515,7 @@
                 <div class="row">
                   <div class="col-md-6 col-lg-6 col-sm-6">
                     <div class="form-group">
-                      <input type="text" id="id" class="form-control" required name="pickuparea" #pickuparea="ngModel" [(ngModel)]="user.pickuparea"
+                      <input type="text" id="id" class="form-control" required name="pickuparea" maxlength="70" #pickuparea="ngModel" [(ngModel)]="user.pickuparea"
                         (ngModelChange)="changepickuparea($event)">
                       <label class="form-control-placeholder" for="id">Pickup Area/Locality*</label>
                     </div>
@@ -525,7 +525,7 @@
                   </div>
                   <div class="col-md-6 col-lg-6 col-sm-6">
                     <div class="form-group">
-                      <input type="text" id="id" class="form-control" name="pickuplandmark" #pickuplandmark="ngModel" [(ngModel)]="user.pickuplandmark"
+                      <input type="text" id="id" class="form-control" name="pickuplandmark" maxlength="150" #pickuplandmark="ngModel" [(ngModel)]="user.pickuplandmark"
                         (ngModelChange)="changepickuplandmark($event)">
                       <label class="form-control-placeholder" for="id">Pickup Landmark</label>
                     </div>
@@ -534,7 +534,7 @@
                 <div class="row">
                   <div class="col-md-6 col-lg-6 col-sm-6">
                     <div class="form-group">
-                      <input type="text" id="id" class="form-control" name="pickuppincode" #pickuppincode="ngModel" [(ngModel)]="user.pickuppincode"
+                      <input type="text" id="id" class="form-control" name="pickuppincode" maxlength="6" #pickuppincode="ngModel" [(ngModel)]="user.pickuppincode"
                         (ngModelChange)="changepickuppincode($event)" maxlength="6">
                       <label class="form-control-placeholder" for="id">Pickup Pincode</label>
                     </div>
@@ -571,7 +571,7 @@
                 <div class="row">
                   <div class="col-md-6 col-lg-6 col-sm-6">
                     <div class="form-group">
-                      <input type="text" id="dropofffdoor" class="form-control" name="dropofffdoor" required (ngModelChange)="EditAddress()" [(ngModel)]="user.dropofffdoor"
+                      <input type="text" id="dropofffdoor" class="form-control" name="dropofffdoor" maxlength="6" required (ngModelChange)="EditAddress()" [(ngModel)]="user.dropofffdoor"
                         #dropofffdoor="ngModel">
                       <label class="form-control-placeholder" for="dropofffdoor">Dropoff Door Number/Flat Number*</label>
                     </div>
@@ -581,7 +581,7 @@
                   </div>
                   <div class="col-md-6 col-lg-6 col-sm-6">
                     <div class="form-group">
-                      <input type="text" id="id" class="form-control" name="dropoffstreet" required #dropoffstreet="ngModel" (ngModelChange)="EditAddress()"
+                      <input type="text" id="id" class="form-control" name="dropoffstreet" required maxlength="70" #dropoffstreet="ngModel" (ngModelChange)="EditAddress()"
                         [(ngModel)]="user.dropoffstreet">
                       <label class="form-control-placeholder" for="id">Dropoff Apartment Name/Street Name
                       </label>
@@ -595,7 +595,7 @@
                 <div class="row">
                   <div class="col-md-6 col-lg-6 col-sm-6">
                     <div class="form-group">
-                      <input type="text" id="id" class="form-control" name="dropoffarea" required #dropoffarea="ngModel" (ngModelChange)="EditAddress()"
+                      <input type="text" id="id" class="form-control" name="dropoffarea" required maxlength="70" #dropoffarea="ngModel" (ngModelChange)="EditAddress()"
                         [(ngModel)]="user.dropoffarea">
                       <label class="form-control-placeholder" for="id">Dropoff Area/Locality</label>
                     </div>
@@ -605,7 +605,7 @@
                   </div>
                   <div class="col-md-6 col-lg-6 col-sm-6">
                     <div class="form-group">
-                      <input type="text" id="id" class="form-control" name="dropofflandmark" #dropofflandmark="ngModel" (ngModelChange)="EditAddress()"
+                      <input type="text" id="id" class="form-control" name="dropofflandmark" maxlength="150" #dropofflandmark="ngModel" (ngModelChange)="EditAddress()"
                         [(ngModel)]="user.dropofflandmark">
                       <label class="form-control-placeholder" for="id">Dropoff Landmark</label>
                     </div>
@@ -614,7 +614,7 @@
                 <div class="row">
                   <div class="col-md-6 col-lg-6 col-sm-6">
                     <div class="form-group">
-                      <input type="text" id="id" class="form-control" name="dropoffpincode" #dropoffpincode="ngModel" (ngModelChange)="EditAddress()"
+                      <input type="text" id="id" class="form-control" name="dropoffpincode" maxlength="6" #dropoffpincode="ngModel" (ngModelChange)="EditAddress()"
                         [(ngModel)]="user.dropoffpincode" maxlength="6">
                       <label class="form-control-placeholder" for="id">Dropoff Pincode</label>
                     </div>
