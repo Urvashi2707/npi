@@ -483,6 +483,25 @@ export class ChauffeurComponent implements OnInit {
         this.amb = value;
       }
 
+      getDistanceFromLatLonInKm(lat1,lon1,lat2,lon2) {
+        var R = 6371; // Radius of the earth in km
+        var dLat = this.deg2rad(lat2-lat1);  // deg2rad below
+        var dLon = this.deg2rad(lon2-lon1); 
+        var a = 
+          Math.sin(dLat/2) * Math.sin(dLat/2) +
+          Math.cos(this.deg2rad(lat1)) * Math.cos(this.deg2rad(lat2)) * 
+          Math.sin(dLon/2) * Math.sin(dLon/2)
+          ; 
+        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+        var d = R * c; // Distance in km
+        // console.log(d);
+        return d;
+      }
+      
+     deg2rad(deg) {
+        return deg * (Math.PI/180)
+      }
+
       //API call for slots
       getSlot(Date: string) {
         this.showtime = true;
@@ -801,13 +820,21 @@ export class ChauffeurComponent implements OnInit {
       if(f.value.picklatlong){
         let x = f.value.picklatlong.split(/[ ,;]+/);
         this.pikup_lat = x[0];
+        var lat1 = +this.pikup_lat;
         this.pikup_long = x[1];
+        var lon1 = +this.pikup_long;
       }
       if(f.value.droplatlong){
-        let y = f.value.picklatlong.split(/[ ,;]+/);
+        let y = f.value.droplatlong.split(/[ ,;]+/);
         this.dropoff_lat = y[0];
+        var lat2 = +this.dropoff_lat;
         this.dropoff_long = y[1];
+        var lon2 = +this.dropoff_long;
       }
+      var result = this.getDistanceFromLatLonInKm(lat1,lon1,lat2,lon2);
+      console.log(result);
+      // var result1 = this.getDistanceFromLatLonInKm(12.929299,77.634291,12.932705,77.631364);
+      // console.log(result1);
     }
     else if (this.pickup_drop == 5 || this.pickup_drop == 7){
       this.pickupdoor = f.value.pickupdoor;
@@ -939,6 +966,7 @@ export class ChauffeurComponent implements OnInit {
       this.queuetime =  this.datePipe.transform(this.today,"y-MM-dd h:mm:ss");
     }
     if(this.slot_time != "0" || this.pickup_drop == 15 ){
+      if(result >= 0.500000){
   const reqpara6 = {
     requesttype: "createbookingv3",
     vehnumber:f.value.num,
@@ -1014,7 +1042,10 @@ export class ChauffeurComponent implements OnInit {
 else {
   console.log("Server-side error occured.");
   }
-});
+});}
+else{
+  this.showToast('alert', 'Message', 'Distance is less than 500 metre');
+}
     }else{
       this.showToast('alert', 'Message', 'Please select Slot and date');
     }

@@ -4,203 +4,206 @@
     <span aria-hidden="true">&times;</span>
   </button>
 </div>
-<!--  -->
 <div *ngIf="modalContent.queue_exists == 0">
-<div class="modal-body">
+  <div class="modal-body">
+    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130.2 130.2">
+      <circle class="path circle" fill="none" stroke="#73AF55" stroke-width="6" stroke-miterlimit="10" cx="65.1" cy="65.1" r="62.1"
+      />
+      <polyline class="path check" fill="none" stroke="#73AF55" stroke-width="6" stroke-linecap="round" stroke-miterlimit="10"
+        points="100.2,40.2 51.5,88.8 29.8,67.5 " />
+    </svg>
+    <p class="success">Successful</p>
+  </div>
+  <table class="successtable" style="margin-bottom: 5%;" *ngIf="modalContent.type_of_service != 1 ">
+    <tr>
+      <th>Queue Id</th>
+      <td style="padding: 5%;">{{modalContent.queue_id }}</td>
+    </tr>
+    <tr>
+      <th>Type of Service</th>
+      <td style="padding: 5%;">
+        <span *ngIf="modalContent.type_of_service == 0 ">
+          Pickup and Dropoff
+        </span>
+        <span *ngIf="modalContent.type_of_service == 4 ">
+          Internal Movement
+        </span>
+        <span *ngIf="modalContent.type_of_service == 5 ">
+          Home Delivery
+        </span>
+        <span *ngIf="modalContent.type_of_service == 6 ">
+          Stock Yard
+        </span>
+        <span *ngIf="modalContent.type_of_service == 7 ">
+          Test Drive
+        </span>
+        <span *ngIf="modalContent.type_of_service == 9 ">
+          Towing - Flat Bed
+        </span>
+        <span *ngIf="modalContent.type_of_service == 10 ">
+          Towing - UWL
+        </span>
+        <span *ngIf="modalContent.type_of_service == 11 ">
+          Towing - Winch
+        </span>
+        <span *ngIf="modalContent.type_of_service == 12 ">
+          Jump Start
+        </span>
+        <span *ngIf="modalContent.type_of_service == 13 ">
+          Out of Gas
+        </span>
+        <span *ngIf="modalContent.type_of_service == 14 ">
+          Flat Tyre
+        </span>
+        <span *ngIf="modalContent.type_of_service == 15 ">
+          Custody
+        </span>
+      </td>
+    </tr>
+    <tr>
+      <th>Queue Time</th>
+      <td style="padding: 5%;">{{ modalContent.queue_time }}</td>
+    </tr>
+  </table>
+  <div *ngIf="modalContent.type_of_service == 1 " style="margin-left: 18%">
+    <div class="row">
+      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+        <div class="form-group">
+          <label style="font-size: 12px;padding-left: 2%;margin-bottom: 0px;" for="queue_id">Queue ID</label>
+          <input type="text" id="queue_id" class="form-control" name="queue_id" [readonly]="true" [(ngModel)]="modalContent.queue_id"
+            #queue_id="ngModel" required>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+        <div class="form-group">
+          <label style="font-size: 12px;padding-left: 2%;margin-bottom: 0px;" for="type_of_service">Type of service</label>
+          <input type="text" id="type_of_service" class="form-control" [readonly]="true" name="type_of_service" [(ngModel)]="modalContent.type_of_service"
+            #type_of_service="ngModel" required>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+        <div class="form-group">
+          <label style="font-size: 12px;padding-left: 2%;margin-bottom: 0px;" for="queue_time">Queue Time</label>
+          <input type="text" id="queue_time" class="form-control" [readonly]="true" name="queue_time" [(ngModel)]="modalContent.queue_time"
+            #queue_time="ngModel" required>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+        <div class="form-group">
+          <label style="font-size: 12px;padding-left: 2%;margin-bottom: 0px;" for="queue_time">Notes</label>
+          <input type="text" id="notes" class="form-control" [readonly]="true" name="notes" [(ngModel)]="modalNotes" #notes="ngModel"
+            required>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+        <div class="form-group">
+          <input type="text" id="amt" class="form-control" name="amt" [(ngModel)]="modalContent.amt" pattern="^[0-9]*$" #amt="ngModel"
+            required>
+          <label class="form-control-placeholder" for="amt">Amount</label>
+        </div>
+        <div class="form-control-feedback" *ngIf="amt.errors && (amt.dirty || amt.touched)">
+          <p *ngIf="amt.errors.required">capacity is required</p>
+          <p *ngIf="!amt.errors.valid">Please Enter number only</p>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+        <div class="form-group">
+          <input type="text" id="invoice_Id" class="form-control" name="invoice_Id" [(ngModel)]="modalContent.invoiceid" #invoice_Id="ngModel"
+            required>
+          <label class="form-control-placeholder" for="droploc">Invoice Id</label>
+        </div>
+      </div>
+    </div>
+    <ng-container>
+      <div class="row">
+        <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6">
+          <label class="fileContainer">
+            <i class="fa fa-paperclip" style="font-size: 22px;"></i>
+            <input type="file" id="file" multiple style="margin-bottom: 5%;" (change)="getFileDetails($event)" multiple accept="image/jpg,application/pdf,image/jpeg,image/png">
+          </label>
+        </div>
+      </div>
+      <div>
+        <label>Maximium Number of file Upload is 3</label>
+      </div>
+      <div class="row">
+        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+          <table width="57%">
+            <tr *ngFor="let file of myFiles">
+              <td style="margin-right: 9%;padding: 1%;">{{file.name}}</td>
+              <td>
+                <button (click)=removefile(file) style="background-color: white;border-color: orange;">
+                  <i class="fa fa-remove" aria-hidden="true" style="color:#ffa100"></i>
+                </button>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <button (click)="uploadFiles()" class="btn btn-warning" style="margin:2%" [disabled]="disable">Upload</button>
+    </ng-container>
+  </div>
+</div>
+
+<div *ngIf="modalContent.queue_exists == 1">
   <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130.2 130.2">
-    <circle class="path circle" fill="none" stroke="#73AF55" stroke-width="6" stroke-miterlimit="10" cx="65.1" cy="65.1" r="62.1"/>
-    <polyline class="path check" fill="none" stroke="#73AF55" stroke-width="6" stroke-linecap="round" stroke-miterlimit="10" points="100.2,40.2 51.5,88.8 29.8,67.5 "/>
+    <circle class="path circle" fill="none" stroke="#D06079" stroke-width="6" stroke-miterlimit="10" cx="65.1" cy="65.1" r="62.1"
+    />
+    <line class="path line" fill="none" stroke="#D06079" stroke-width="6" stroke-linecap="round" stroke-miterlimit="10" x1="34.4"
+      y1="37.9" x2="95.8" y2="92.3" />
+    <line class="path line" fill="none" stroke="#D06079" stroke-width="6" stroke-linecap="round" stroke-miterlimit="10" x1="95.8"
+      y1="38" x2="34.4" y2="92.2" />
   </svg>
-  <p class="success">Successful</p>
+  <p class="error">Unsuccessful!</p>
 </div>
-    <table style="margin-left: 32%;margin-bottom: 5%;" *ngIf="modalContent.type_of_service != 1 ">
-      <tr>
-        <th>Queue Id</th>
-        <td style="padding: 5%;">{{modalContent.queue_id }}</td>
-      </tr>
-      <tr>
-        <th>Type of Service</th>
-        <td style="padding: 5%;">
-          <span *ngIf="modalContent.type_of_service == 0 ">
-            Pickup and Dropoff
-          </span>
-          <!-- <span *ngIf="modalContent.type_of_service == 1 ">
-              Dropoff
-          </span> -->
-          <span *ngIf="modalContent.type_of_service == 4 ">
-            Internal Movement
-          </span>
-          <span *ngIf="modalContent.type_of_service == 5 ">
-            Home Delivery
-          </span>
-          <span *ngIf="modalContent.type_of_service == 6 ">
-            Stock Yard
-          </span>
-          <span *ngIf="modalContent.type_of_service == 7 ">
-           Test Drive
-          </span>
-          <span *ngIf="modalContent.type_of_service == 9 ">
-            Towing - Flat Bed
-          </span>
-          <span *ngIf="modalContent.type_of_service == 10 ">
-            Towing - UWL
-          </span>
-          <span *ngIf="modalContent.type_of_service == 11 ">
-            Towing - Winch
-          </span>
-          <span *ngIf="modalContent.type_of_service == 12 ">
-            Jump Start
-          </span>
-          <span *ngIf="modalContent.type_of_service == 13 ">
-            Out of Gas
-          </span>
-          <span *ngIf="modalContent.type_of_service == 14 ">
-            Flat Tyre
-          </span>
-          <span *ngIf="modalContent.type_of_service == 15 ">
-              Custody
-            </span>
-        </td>
-      </tr>
-      <tr>
-        <th>Queue Time</th>
-        <td style="padding: 5%;">{{ modalContent.queue_time }}</td>
-      </tr>
-    </table>
-      <div *ngIf="modalContent.type_of_service == 1 " style="margin-left: 18%">
-          <div class="row">
-              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                  <div class="form-group">
-                      <label style="font-size: 12px;padding-left: 2%;margin-bottom: 0px;" for="queue_id">Queue ID</label>
-                      <input type="text" id="queue_id" class="form-control" name="queue_id" [readonly]="true" [(ngModel)]="modalContent.queue_id" #queue_id="ngModel" required>
-                    </div>
-              </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                    <div class="form-group">
-                        <label style="font-size: 12px;padding-left: 2%;margin-bottom: 0px;" for="type_of_service">Type of service</label>
-                        <input type="text" id="type_of_service" class="form-control" [readonly]="true"  name="type_of_service" [(ngModel)]="modalContent.type_of_service" #type_of_service="ngModel" required>
-                      </div>
-                </div>
-              </div>
-              <div class="row">
-                  <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                      <div class="form-group">
-                          <label style="font-size: 12px;padding-left: 2%;margin-bottom: 0px;" for="queue_time">Queue Time</label>
-                          <input type="text" id="queue_time" class="form-control" [readonly]="true"  name="queue_time" [(ngModel)]="modalContent.queue_time" #queue_time="ngModel" required>
-                        </div>
-                  </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                        <div class="form-group">
-                            <label style="font-size: 12px;padding-left: 2%;margin-bottom: 0px;" for="queue_time">Notes</label>
-                            <input type="text" id="notes" class="form-control" [readonly]="true"  name="notes" [(ngModel)]="modalNotes" #notes="ngModel" required>
-                          </div>
-                    </div>
-                  </div>
-        <div class="row">
-          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-              <div class="form-group">
-                  <input type="text" id="amt" class="form-control" name="amt" [(ngModel)]="modalContent.amt" pattern="^[0-9]*$" #amt="ngModel" required>
-                  <label class="form-control-placeholder" for="amt">Amount</label>
-                </div>
-                <div class="form-control-feedback" *ngIf="amt.errors && (amt.dirty || amt.touched)">
-                  <p *ngIf="amt.errors.required">capacity is required</p>
-                  <p *ngIf="!amt.errors.valid">Please Enter number only</p>
-              </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-              <div class="form-group">
-                  <input type="text" id="invoice_Id" class="form-control" name="invoice_Id" [(ngModel)]="modalContent.invoiceid" #invoice_Id="ngModel" required>
-                  <label class="form-control-placeholder" for="droploc">Invoice Id</label>
-                </div>
-          </div>
-        </div>
-        <ng-container>
-            <div class="row">
-                <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6">
-                    <label class="fileContainer">
-                        <i class="fa fa-paperclip" style="font-size: 22px;"></i>
-                        <input type="file" id="file" multiple style="margin-bottom: 5%;"
-                        (change)="getFileDetails($event)" multiple accept="image/jpg,application/pdf,image/jpeg,image/png" >
-                    </label>
-          
-                </div>
-              </div>
-          <!-- <div class="row">
-            <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6">
-                <input type="file" id="file" multiple style="margin-bottom: 5%;"
-                (change)="getFileDetails($event)" accept="image/jpg,application/pdf,image/jpeg,image/png" >
-            </div>
-          </div> -->
-          <div><label>Maximium Number of file Upload is 3</label></div>
-          <div class="row">
-            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
-                <table width="57%">
-                    <tr *ngFor="let file of myFiles">
-                      <td style="margin-right: 9%;padding: 1%;">{{file.name}}</td>
-                      <td><button (click)=removefile(file) style="background-color: white;border-color: orange;"><i class="fa fa-remove" aria-hidden="true" style="color:#ffa100"></i></button></td>
-                    </tr>
-                  </table>
-            </div>
-          </div>
-       
-          <button (click)="uploadFiles()" class="btn btn-warning" style="margin:2%" [disabled]="disable">Upload</button>
-        </ng-container>
-      </div>
-    </div>
 
-    <div *ngIf="modalContent.queue_exists == 1">
-      <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130.2 130.2">
-        <circle class="path circle" fill="none" stroke="#D06079" stroke-width="6" stroke-miterlimit="10" cx="65.1" cy="65.1" r="62.1"/>
-        <line class="path line" fill="none" stroke="#D06079" stroke-width="6" stroke-linecap="round" stroke-miterlimit="10" x1="34.4" y1="37.9" x2="95.8" y2="92.3"/>
-        <line class="path line" fill="none" stroke="#D06079" stroke-width="6" stroke-linecap="round" stroke-miterlimit="10" x1="95.8" y1="38" x2="34.4" y2="92.2"/>
-      </svg>
-      <p class="error">Unsuccessful!</p>
-      </div>
-
-    <div *ngIf="modalContent.queue_exists == 1">
-      <span class="textExist" style="margin-left: 40%">Booking Already exists</span>
-      <table style="margin-left: 32%;margin-bottom: 5%;">
-          <tr>
-            <th>Queue Id</th>
-            <td style="padding: 5%;">{{modalContent.queue_id }}</td>
-          </tr>
-          <tr>
-            <th>Type of Service</th>
-            <td style="padding: 5%;">
-              <span *ngIf="modalContent.type_of_service == 0 ">
-                Pickup and Dropoff
-              </span>
-              <span *ngIf="modalContent.type_of_service == 1 ">
-                  Dropoff
-              </span>
-              <span *ngIf="modalContent.type_of_service == 4 ">
-                Internal Movement
-              </span>
-              <span *ngIf="modalContent.type_of_service == 5 ">
-                Home Delivery
-              </span>
-              <span *ngIf="modalContent.type_of_service == 6 ">
-                Stock Yard
-              </span>
-              <span *ngIf="modalContent.type_of_service == 7 ">
-               Test Drive
-              </span>
-            </td>
-          </tr>
-          <tr>
-            <th>Queue Time</th>
-            <td style="padding: 5%;">{{ modalContent.queue_time }}</td>
-          </tr>
-        </table>
-    </div>
-
+<div *ngIf="modalContent.queue_exists == 1">
+  <span class="textExist">Booking Already exists</span>
+  <table class="successtable" style="margin-bottom: 5%;">
+    <tr>
+      <th>Queue Id</th>
+      <td style="padding: 5%;">{{modalContent.queue_id }}</td>
+    </tr>
+    <tr>
+      <th>Type of Service</th>
+      <td style="padding: 5%;">
+        <span *ngIf="modalContent.type_of_service == 0 ">
+          Pickup and Dropoff
+        </span>
+        <span *ngIf="modalContent.type_of_service == 1 ">
+          Dropoff
+        </span>
+        <span *ngIf="modalContent.type_of_service == 4 ">
+          Internal Movement
+        </span>
+        <span *ngIf="modalContent.type_of_service == 5 ">
+          Home Delivery
+        </span>
+        <span *ngIf="modalContent.type_of_service == 6 ">
+          Stock Yard
+        </span>
+        <span *ngIf="modalContent.type_of_service == 7 ">
+          Test Drive
+        </span>
+      </td>
+    </tr>
+    <tr>
+      <th>Queue Time</th>
+      <td style="padding: 5%;">{{ modalContent.queue_time }}</td>
+    </tr>
+  </table>
+</div>
 <div class="modal-footer">
-  <button class="btn btn-md btn-primary" [hidden] = "modalContent.queue_exists == 0 && modalContent.type_of_service == 1 " (click)="closeModal()">Done</button>
+  <button class="btn btn-md btn-primary" [hidden]="modalContent.queue_exists == 0 && modalContent.type_of_service == 1 " (click)="closeModal()">Done</button>
 </div>
-

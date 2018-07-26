@@ -45,6 +45,9 @@
     background-color: orange;
     border-color: orange;
   }
+  .textExist{
+   margin-left: 18%;
+  }
   .myclass{
   border-color: #d7dbe0;
   }
@@ -105,7 +108,9 @@
     top: 45px;
     position: absolute;
   }
-  
+  .successtable{
+    margin-left: 32%;
+  }
   @-webkit-keyframes checkmark {
     0% {
       height: 0;
@@ -262,5 +267,28 @@
     100% {
       stroke-dashoffset: 900;
     }
+  }
+  @media only screen and (max-width: 420px) {
+
+    .successtable{
+      margin-left: 25%;
+    } 
+    .textExist{
+      margin-left: 26%;
+    }
+    .btn {
+      color: #ffffff;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      font-weight: 500;
+      font-family: Exo;
+      border: 1px solid transparent;
+      transition: none;
+      cursor: default;
+      padding: 0.60rem 1rem;
+      font-size: .7rem;
+      line-height: 1.25;
+      border-radius: 0.375rem;
+  }
   }
   
