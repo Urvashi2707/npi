@@ -13,6 +13,7 @@ export class CreReportsComponent implements OnInit {
   SvcId:String;
   GlobalSvcId:String;
   message:string;
+  SearchData:string;
   CreReports:any =[];
 
   constructor(private spinner: NgxSpinnerService,

@@ -171,16 +171,21 @@ barRateNull:number;
              this.router.navigate(['/auth/login']);
            }
            else{
-             if(res[0].cards[0] > 0){
+             console.log(res[0].cards.length)
+             if(res[0].cards.length > 0){
+               console.log(res[0].cards[0]>0)
                 this.Cards=res[0].cards[0];
+                this.Rating = JSON.parse(this.Cards.cust_rating);
               }
              else { }
-             if(this.Cards.cust_rating == null){
-              this.Rating = 0;
-             }
-             else{
-              this.Rating = JSON.parse(this.Cards.cust_rating);
-             }
+            //  if(this.Cards.cust_rating){
+            //    this.Rating = JSON.parse(this.Cards.cust_rating);
+            //   console.log(this.Rating);
+            //  }
+            //  else{
+            //   this.Rating = 0;
+            //   console.log(this.Rating);
+            //  }
              this.PickupPieChart = res[1].pickup_details;
              if(this.PickupPieChart[0].value === "0" && this.PickupPieChart[1].value === "0" && this.PickupPieChart[2].value === "0" && this.PickupPieChart[3].value === "0" && this.PickupPieChart[4].value === "0"){
               this.ShowPickupPie = false;

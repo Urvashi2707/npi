@@ -24,7 +24,8 @@ import { CardComponent } from './card/card.component';
 import { BargraphComponent } from './bargraph/bargraph.component';
 import { StarRatingModule } from 'angular-star-rating';
 // import { D3AdvancedPieComponent } from '././chart/d3/d3-pie.component';
-import {RatingModule} from "ngx-rating";
+// import {RatingModule} from "ngx-rating";
+import { BarRatingModule } from "ngx-bar-rating";
 import { OptionComponent } from './option/option.component';
 import { LegalComponent } from './legal/legal.component';
 @NgModule({
@@ -32,7 +33,8 @@ import { LegalComponent } from './legal/legal.component';
     ThemeModule,
     NgxEchartsModule,
     NgxChartsModule,
-    RatingModule,
+    // RatingModule,
+    BarRatingModule,
     StarRatingModule.forRoot()
   ],
   declarations: [

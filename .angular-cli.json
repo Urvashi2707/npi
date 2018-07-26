@@ -26,6 +26,7 @@
       "styles": [
         "../node_modules/ngx-bar-rating/themes/br-square-theme.css",
         "../node_modules/ngx-bar-rating/themes/br-horizontal-theme.css",
+        "../node_modules/ngx-bar-rating/themes/br-default-theme.css",
         "../node_modules/bootstrap/dist/css/bootstrap.css",
         "styles.css",
         "../node_modules/@nebular/theme/styles/prebuilt/default.css",

@@ -880,7 +880,7 @@
                                                     <tr *ngFor="let f of feedback" class="question">
                                                         <td>{{f.questions}}</td>
 
-                                                        <ng-template #t let-fill="fill">
+                                                        <!-- <ng-template #t let-fill="fill">
                                                             <span *ngIf="fill === 100" class="star full">&#9733;</span>
                                                             <span *ngIf="fill === 0" class="star">&#9733;</span>
                                                             <span *ngIf="fill < 100 && fill > 0" class="star">
@@ -888,8 +888,8 @@
                                                             </span>
                                                         </ng-template>
 
-                                                        <ngb-rating [(rate)]="f.rating" [starTemplate]="t" [readonly]="true" max="5" style="float: right;"></ngb-rating>
-
+                                                        <ngb-rating [(rate)]="f.rating" [starTemplate]="t" [readonly]="true" max="5" style="float: right;"></ngb-rating> -->
+                                                        <bar-rating [rate]="f.rating" [max]="5" class="br br-custom" [readOnly]="true" style="float: right;"></bar-rating>
                                                     </tr>
                                                 </tbody>
                                             </table>

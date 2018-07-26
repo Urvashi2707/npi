@@ -3,6 +3,13 @@
       CRE Reports
   </nb-card-header>
   <nb-card-body>
+      <div class="row">
+          <div class="col-md-6 col-lg-6">
+          </div>
+          <div class="col-md-6 col-lg-6" style="padding-bottom: 3%;">
+            <input type="text" class="search" [(ngModel)]="SearchData" placeholder="search" style="width: 70%;">
+          </div>
+        </div>
     <table width="100%">
       <thead>
         <th>Name</th>
@@ -13,7 +20,7 @@
         <th>Today Bookings Deleted</th>
       </thead>
       <tbody>
-        <tr *ngFor="let i of CreReports">
+        <tr *ngFor="let i of CreReports | filter:SearchData">
           <td>{{i.first_name}}</td>
           <td>{{i.mobilenumber}}</td>
           <td>{{i.added_month}}</td>
@@ -26,16 +33,22 @@
   </nb-card-body>
 </nb-card>
 <div class="mobileView">
-  <div class="row headerRow">
-    <div class="col-12 col-sm-12">
-      <span class="header">CRE Reports</span>
-    </div>
-  </div>
+    <div class="row headerRow">
+        <div class="col-4 col-sm-4">
+          <div class="header">At Centre</div>
+        </div>
+        <div class="col-8 col-sm-8">
+          <div class="right-inner-addon">
+            <i class="fa fa-search"></i>
+            <input type="search" class="form-control" placeholder="Search" [(ngModel)]="SearchData" />
+          </div>
+        </div>
+      </div>
   <hr/>
   <div class="row">
     <div class="col-12 col-sm-12">
       <ul>
-        <li *ngFor="let i of CreReports">
+        <li *ngFor="let i of CreReports | filter:SearchData">
           <div class="card">
             <div class="row">
               <div class="col-12 col-sm-12">

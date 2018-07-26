@@ -20,7 +20,7 @@ import { BarRatingModule } from "ngx-bar-rating";
 import {LoginComponent} from './pages/auth/login/login.component';
 import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown/angular2-multiselect-dropdown';
 import { CookieService } from 'ngx-cookie-service';
-import {RatingModule} from "ngx-rating";
+// import {RatingModule} from "ngx-rating";
 import { FilterPipe} from './pages/filter.pipe';
 import { Ng2OrderModule } from 'ng2-order-pipe'; 
 // import {columnPipe,rowPipe,searchPipe} from './pages/pipe.pipe'
@@ -41,7 +41,7 @@ import { TestserviceService } from './testservice.service';
     NgbModule.forRoot(),
     ThemeModule.forRoot(),
     CoreModule.forRoot(),
-    RatingModule,
+    // RatingModule,ng 
     BarRatingModule,
     NbAuthModule.forRoot({
          providers: {
