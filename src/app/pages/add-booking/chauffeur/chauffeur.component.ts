@@ -140,8 +140,13 @@ export class ChauffeurComponent implements OnInit {
       this.getCoordinator();
       this.getSaleExceutive();
       const now = new Date();
+      const date = new Date();
+      // this.model = {day:date.getUTCDate(),month:date.getUTCMonth() + 1,year: date.getUTCFullYear() };
+      // this.model = {year: date.getUTCFullYear(),month:date.getUTCMonth() + 1,day:date.getUTCDate() };
+      // console.log(this.model);
+      // this.dateString = this.model.year + '-' + this.model.month + '-' + this.model.day;
       this.valuedate = new Date();
-      this.startDate = this.model;
+      this.startDate = {year: date.getUTCFullYear(),month:date.getUTCMonth() + 1,day:date.getUTCDate() };
       this.minDate = { year: now.getFullYear(), month: now.getMonth() + 1, day: now.getDate() - 1 };
       this.maxDate = { year: now.getFullYear(), month: now.getMonth() + 1, day: now.getDate() + 15};
       this.globalsvcid = JSON.parse(sessionStorage.getItem('globalsvcid'));
@@ -398,7 +403,6 @@ export class ChauffeurComponent implements OnInit {
 
        //Get City List API call
       getCityList(){
-        console.log(this.serviceType);
         if(this.serviceType == '15'){
           const reqpara23 = {
             requesttype:"getcitylist",
@@ -420,35 +424,27 @@ export class ChauffeurComponent implements OnInit {
 
       //called when sameas checked box is checked
       sameAsPickup(value){
-        console.log(value);
         this.sameasvalue = value;
         if (value == true) {
           if (this.user.pickupdoor) {
             this.user.dropofffdoor = this.user.pickupdoor;
-            console.log(this.user.dropofffdoor);
             if (this.user.pickupstreet) {
               this.user.dropoffstreet = this.user.pickupstreet;
-              console.log(this.user.dropoffstreet);
             }
             if(this.user.pickuparea){
               this.user.dropoffarea = this.user.pickuparea;
-              console.log(this.user.dropoffarea);
             }
             if(this.user.pickuplandmark){
               this.user.dropofflandmark = this.user.pickuplandmark;
-              console.log(this.user.dropofflandmark);
             }
             if(this.user.pickuppincode){
               this.user.dropoffpincode = this.user.pickuppincode;
-              console.log(this.user.pickuppincode);
             }
             if(this.user.picklatlong){
               this.user.droplatlong = this.user.picklatlong;
-              console.log(this.user.droplatlong);
             }
             if(this.user.address_typepu){
               this.user.address_typedu = this.user.address_typepu;
-              console.log(this.user.address_typedu);
             }
           }
         }
@@ -651,6 +647,42 @@ export class ChauffeurComponent implements OnInit {
       }
     }
 
+    changeEditdropoffdoor(value:any){
+      if (this.sameasvalue == true){
+        this.user.pickupdoor = value;
+      }
+    }
+  
+    changeEditdropoffstreet(value:any){
+      if (this.sameasvalue == true){
+        this.user.pickupstreet = value;
+      }
+    }
+  
+    changeEditdropoffarea(value:any){
+      if (this.sameasvalue == true){
+      this.user.pickuparea = value;
+      }
+    }
+  
+    changeEditdropofflandmark(value:any){
+      if (this.sameasvalue == true){
+        this.user.pickuplandmark = value;
+      }
+    }
+  
+    changeEditdropoffpincode(value:any){
+      if (this.sameasvalue == true){
+        this.user.pickuppincode = value;
+      }
+    }
+  
+    changeEditdropofflatlong(value:any){
+      if (this.sameasvalue == true){
+       this.user.picklatlong = value;
+      }
+    }
+
  
 
   customerCheck(){
@@ -779,6 +811,7 @@ export class ChauffeurComponent implements OnInit {
         this.dropoff_lat = x[0];
         this.dropoff_long = x[1];
       }
+      result = 0.500;
     }
     else if (this.pickup_drop == 4){
       this.pickupdoor = f.value.pickupdoor;
@@ -874,11 +907,30 @@ export class ChauffeurComponent implements OnInit {
         this.pikup_lat = x[0];
         this.pikup_long = x[1];
       }
+      else if (f.value.droplatlong){
+        let x = f.value.droplatlong.split(/[ ,;]+/);
+        this.pikup_lat = x[0];
+        this.pikup_long = x[1];
+      }
+      else {
+        this.pikup_lat = "0";
+        this.pikup_long = "0";
+      }
       if(f.value.droplatlong){
+        let y = f.value.droplatlong.split(/[ ,;]+/);
+        this.dropoff_lat = y[0];
+        this.dropoff_long = y[1];
+      }
+      else if (f.value.picklatlong){
         let y = f.value.picklatlong.split(/[ ,;]+/);
         this.dropoff_lat = y[0];
         this.dropoff_long = y[1];
       }
+      else {
+        this.dropoff_lat = "0";
+        this.dropoff_long = "0";
+      }
+      result = 0.5000;
     }
    
   if(f.value.mobile2)
@@ -963,9 +1015,10 @@ export class ChauffeurComponent implements OnInit {
       this.queuetime = this.dateString + ' ' +this.slot_time
     }
     else{
-      this.queuetime =  this.datePipe.transform(this.today,"y-MM-dd h:mm:ss");
+      this.queuetime =  this.datePipe.transform(this.today,"y-MM-dd HH:mm:ss");
     }
     if(this.slot_time != "0" || this.pickup_drop == 15 ){
+      
       if(result >= 0.500000){
   const reqpara6 = {
     requesttype: "createbookingv3",
@@ -1022,6 +1075,7 @@ export class ChauffeurComponent implements OnInit {
         this.slot_time = "0";
         f.reset();
         this.show = false;
+        this.sameasvalue = false;
         this.show3 = false;
         this.disabled =  true;
         this.showtime = false;
@@ -1032,6 +1086,7 @@ export class ChauffeurComponent implements OnInit {
         this.dateString = "";
         this.getCoordinator();
         this.disableNext = false;
+        this.model=null;
     }
  
   },

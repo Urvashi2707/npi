@@ -420,7 +420,7 @@
                 <div class="row">
                   <div class="col-md-6 col-lg-6 col-sm-6">
                     <div class="form-group">
-                      <input type="text" id="dropofffdoor" class="form-control" name="dropofffdoor" required  maxlength="6" (ngModelChange)="EditAddress()" [(ngModel)]="user.dropofffdoor"
+                      <input type="text" id="dropofffdoor" class="form-control" name="dropofffdoor" required  maxlength="6" (ngModelChange)="changeEditdropOffdoor($event)" [(ngModel)]="user.dropofffdoor"
                         #dropofffdoor="ngModel">
                       <label class="form-control-placeholder" for="dropofffdoor">Dropoff Door Number/Flat Number*</label>
                     </div>
@@ -431,7 +431,7 @@
                   <div class="col-md-6 col-lg-6 col-sm-6">
                     <div class="form-group">
                       <input type="text" id="id" class="form-control" name="dropoffstreet" maxlength="70" required #dropoffstreet="ngModel" [(ngModel)]="user.dropoffstreet"
-                        (ngModelChange)="EditAddress()">
+                        (ngModelChange)="changeEditdropOffstreet($event)">
                       <label class="form-control-placeholder" for="id">Dropoff Apartment Name/Street Name</label>
                     </div>
                     <div class="form-control-feedback" *ngIf="dropoffstreet.errors && (dropoffstreet.dirty || dropoffstreet.touched)">
@@ -443,7 +443,7 @@
                   <div class="col-md-6 col-lg-6 col-sm-6">
                     <div class="form-group">
                       <input type="text" id="id" class="form-control" name="dropoffarea" required maxlength="70" #dropoffarea="ngModel" [(ngModel)]="user.dropoffarea"
-                        (ngModelChange)="EditAddress()">
+                        (ngModelChange)="changeEditdropOffparea($event)">
                       <label class="form-control-placeholder" for="id">Dropoff Area/Locality</label>
                     </div>
                     <div class="form-control-feedback" *ngIf="dropoffarea.errors && (dropoffarea.dirty || dropoffarea.touched)">
@@ -454,7 +454,7 @@
                   <div class="col-md-6 col-lg-6 col-sm-6">
                     <div class="form-group">
                       <input type="text" id="id" class="form-control" name="dropofflandmark" maxlength="150" #dropofflandmark="ngModel" [(ngModel)]="user.dropofflandmark"
-                        (ngModelChange)="EditAddress()">
+                        (ngModelChange)="changeEditdropOfflandmark($event)">
                       <label class="form-control-placeholder" for="id">Dropoff Landmark</label>
                     </div>
                     <div class="form-control-feedback" *ngIf="dropofflandmark.errors && (dropofflandmark.dirty || dropofflandmark.touched)">
@@ -466,7 +466,7 @@
                   <div class="col-md-6 col-lg-6 col-sm-6">
                     <div class="form-group">
                       <input type="text" id="id" class="form-control" name="dropoffpincode" maxlength="6" #dropoffpincode="ngModel" [(ngModel)]="user.dropoffpincode"
-                        (ngModelChange)="EditAddress()">
+                        (ngModelChange)="changeEditdropOffpincode($event)">
                       <label class="form-control-placeholder" for="id">Dropoff Pincode</label>
                     </div>
                     <div class="form-control-feedback" *ngIf="dropoffpincode.errors && (dropoffpincode.dirty || dropoffpincode.touched)">
@@ -476,7 +476,7 @@
                   <div class="col-md-6 col-lg-6 col-sm-6">
                     <div class="form-group">
                       <input type="text" id="id" class="form-control" name="droplatlong" #droplatlong="ngModel" [(ngModel)]="user.droplatlong"
-                        (ngModelChange)="EditAddress()" pattern="^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?),\s*[-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)$">
+                        (ngModelChange)="changeEditdropOfflatlong($event)" pattern="^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?),\s*[-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)$">
                       <label class="form-control-placeholder" for="id">Dropoff lat,long (12.99,77.6611)</label>
                     </div>
                     <div class="form-control-feedback" *ngIf="droplatlong.errors && (droplatlong.dirty || droplatlong.touched)">

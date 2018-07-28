@@ -83,7 +83,7 @@ export class ServicingComponent implements OnInit {
   public dropadd: string;
   public disabled = false;
   editAddress = false;
-  public sameasvalue: boolean;
+  public sameasvalue: boolean = false;
   public isconfirm: string;
   public address: any = [];
   public serviceadv: any = [];
@@ -443,9 +443,58 @@ public getCity() {
     this.editAddress = true;
   }
 
+  changeEditdropOffdoor(value:any){
+    this.counter ++;
+    this.editAddress = true;
+    console.log(this.sameasvalue);
+    if (this.sameasvalue == true){
+      this.user.pickupdoor = value;
+    }
+  }
+
+  changeEditdropOffstreet(value:any){
+    this.counter ++;
+    this.editAddress = true;
+    if (this.sameasvalue == true){
+      this.user.pickupstreet = value;
+    }
+  }
+
+  changeEditdropOffparea(value:any){
+    this.counter ++;
+    this.editAddress = true;
+    if (this.sameasvalue == true){
+    this.user.pickuparea = value;
+    }
+  }
+
+  changeEditdropOfflandmark(value:any){
+    this.counter ++;
+    this.editAddress = true;
+    if (this.sameasvalue == true){
+      this.user.pickuplandmark = value;
+    }
+  }
+
+  changeEditdropOffpincode(value:any){
+    this.counter ++;
+    this.editAddress = true;
+    if (this.sameasvalue == true){
+      this.user.pickuppincode = value;
+    }
+  }
+
+  changeEditdropOfflatlong(value:any){
+    this.counter ++;
+    this.editAddress = true;
+    if (this.sameasvalue == true){
+     this.user.droplatlong = value;
+    }
+  }
   changeEditpickupdoor(value:any){
     this.counter ++;
     this.editAddress = true;
+    console.log(this.sameasvalue);
     if (this.sameasvalue == true){
       this.user.dropofffdoor = value;
     }
@@ -738,12 +787,35 @@ getBrands() {
 
   // at select pickup dropdown
   onSelectPickup($event,id){
-    // console.log($event);
-    // console.log(id);
-    // console.log(this.address[$event]);
+    console.log(this.sameasvalue);
+    console.log(this.address);
     var currentAddressPickup = this.address[$event];
+    if(this.sameasvalue == true){
+      if(this.user.addresspu){
+        console.log(this.user.addresspu);
+        for(let i = 0;i < this.address.length; i++){
+          if(this.user.addresspu == this.address[i].address_id){
+            this.user.addressdu = this.address[i].address_id ;
+            // console.log(this.address[i].address_id);
+            // console.log(this.user.addressdu);
+            // this.user.addresspu = this.addressPickup;
+            this.user.dropofffdoor = currentAddressPickup.doornumber;
+            this.user.dropoffstreet = currentAddressPickup.street;
+            this.user.dropoffarea = currentAddressPickup.area;
+            this.user.dropofflandmark = currentAddressPickup.landmark;
+            this.user.dropoffpincode = currentAddressPickup.pincode;
+            this.user.droplatlong = currentAddressPickup.latitude + ',' + currentAddressPickup.longitude;
+            for(let i = 0; i < this.addresstype.length;i ++){
+              if(this.addresstype[i].id == id){
+                this.user.addresspu = this.addresstype[i].id;
+                this.user.addresstypedu = this.addresstype[i].id;
+              }
+            }
+          }
+        }
+      }
+    }
     this.user.addresspu = this.addressPickup;
-    // console.log(this.user.addresspu);
     this.user.pickupdoor = currentAddressPickup.doornumber;
     this.user.pickupstreet = currentAddressPickup.street;
     this.user.pickuparea = currentAddressPickup.area;
@@ -760,12 +832,7 @@ getBrands() {
 
    // at select dropoff dropdown
   onSelectDropoff($event,id){
-    // console.log($event);
-    // console.log(id);
-    // console.log(this.address[$event]);
     var currentAddressDropoff = this.address[$event];
-    // this.user.addresspu = this.addressPickup;
-    // console.log(this.user.addresspu);
     this.user.dropofffdoor = currentAddressDropoff.doornumber;
     this.user.dropoffstreet = currentAddressDropoff.street;
     this.user.dropoffarea = currentAddressDropoff.area;
@@ -881,6 +948,14 @@ getBrands() {
   sameas(value) {
     this.sameasvalue = value;
     if (value == true) {
+      if(this.user.addresspu){
+        console.log(this.user.addresspu);
+        for(var i = 0;i < this.address.length; i++){
+          if(this.user.addresspu == this.address[i].id){
+            this.user.addressdu == this.address[i].id ;
+          }
+        }
+      }
       if (this.user.pickupdoor) {
         this.user.dropofffdoor = this.user.pickupdoor;
         if (this.user.pickupstreet) {
@@ -1135,8 +1210,20 @@ getBrands() {
       }
       
       else{
-        this.addressdoprevious = f.value.addresspu;
-        this.addresspuprevious = f.value.addressdu;
+        // this.addressdoprevious = f.value.addresspu;
+        // this.addresspuprevious = f.value.addressdu;
+        if(f.value.addresspu){
+          this.addresspuprevious = f.value.addresspu;
+        }
+        else{
+          this.addresspuprevious =  f.value.addressdu;
+        }
+        if( f.value.addressdu){
+          this.addresspuprevious =  f.value.addressdu;
+        }
+        else{
+          this.addresspuprevious =   f.value.addressdu;
+        }
         this.pickupdoor = "0";
         this.pickupstreet = "0";
         this.pickuparea = "0";
@@ -1460,6 +1547,7 @@ getBrands() {
         this.pickup_drop = 0;
         this.counter = 0;
         this.slot = [];
+        this.sameasvalue = false;
         f.reset();
         this.countrycode1 = "+91";
         this.dateString = null;

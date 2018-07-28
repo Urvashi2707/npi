@@ -22,6 +22,9 @@ td {
 tbody tr:hover {
     background-color: lightyellow;
 }
+.sort-span {
+    float: right;
+}
 @media only screen and (max-width: 420px) {
     .desktopView {
         display: none;
