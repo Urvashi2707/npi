@@ -39,16 +39,14 @@
         <div class="CustomerRatingText" > Customer Ratings</div>
         <div style="font-size: 1.0rem;">`</div>
         <!-- <bar-rating [rate]="Rating" [max]="5" class="br br-custom" [readOnly]="true"></bar-rating> -->
-        <!-- <bar-rating [rate]="Rating" [max]="5" class="br br-square" [readOnly]="true" ></bar-rating> -->
-        <bar-rating [(rate)]="barRate" [max]="5" class="br br-square" ></bar-rating>
-         <!-- <ng-template #t let-fill="fill">
+         <ng-template #t let-fill="fill">
           <span *ngIf="fill === 100" class="star full">&#9733;</span>
           <span *ngIf="fill === 0" class="star">&#9733;</span>
           <span *ngIf="fill < 100 && fill > 0" class="star">
             <span class="half" [style.width.%]="fill">&#9733;</span>&#9733;
           </span>
         </ng-template>
-        <ngb-rating [(rate)]="Rating" [starTemplate]="t" [readonly]="true" max="5" style="float: right;"></ngb-rating> -->
+        <ngb-rating [(rate)]="Rating" [starTemplate]="t" [readonly]="true" max="5" style="float: right;"></ngb-rating>
       </nb-card-body>
     </nb-card>
   </div>

@@ -1,14 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
-import { NgbPanelChangeEvent, NgbTabContent } from '@ng-bootstrap/ng-bootstrap';
+import { FormGroup, FormBuilder } from '@angular/forms';
+import { NgbPanelChangeEvent } from '@ng-bootstrap/ng-bootstrap';
 import { QueueTableService } from '../services/queue-table.service';
 import { ServerService } from '../services/user.service';
-import { Observable } from 'rxjs/Observable';
-import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
-import { catchError, retry } from 'rxjs/operators';
-import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModalQueueComponent } from './modal-queue/modal-queue.component';
-import { ModalUploadComponent } from './modal-upload/modal-upload.component';
 import { ModalSendLinkComponent } from './modal-send-link/modal-send-link.component'
 import { SearchModalComponent } from '../search/modal/searchModal.component';
 import { ModalPickupComponent } from './modal-pickup/modal-pickup.component';
@@ -19,7 +15,6 @@ import { ModalAdvComponent } from './modal-adv/modal-adv.component';
   styleUrls: ['./queue-details.component.scss']
 })
 export class QueueDetailsComponent implements OnInit {
-
 
   pickCardForm: FormGroup;
   pickupHandedToForm: FormGroup;
