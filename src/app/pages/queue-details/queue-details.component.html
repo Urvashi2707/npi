@@ -869,27 +869,11 @@
                                 <div class=".col-xs">
                                     <nb-card class=".col-xs" class=".space">
                                         <nb-card-body>
-                                            <!-- <form [formGroup]="FeedbackFormGroup">
-                                                <div class="input-group">
-                                                    
-                                                    <input type="text" class="form-control" formControlName="notesData" names="notesData" placeholder="No Data">
-                                                </div>
-                                            </form> -->
                                             <table style="width: 80%;">
                                                 <tbody>
                                                     <tr *ngFor="let f of feedback" class="question">
                                                         <td>{{f.questions}}</td>
-
-                                                        <!-- <ng-template #t let-fill="fill">
-                                                            <span *ngIf="fill === 100" class="star full">&#9733;</span>
-                                                            <span *ngIf="fill === 0" class="star">&#9733;</span>
-                                                            <span *ngIf="fill < 100 && fill > 0" class="star">
-                                                                  <span class="half" [style.width.%]="fill">&#9733;</span>&#9733;
-                                                            </span>
-                                                        </ng-template>
-
-                                                        <ngb-rating [(rate)]="f.rating" [starTemplate]="t" [readonly]="true" max="5" style="float: right;"></ngb-rating> -->
-                                                        <bar-rating [rate]="f.rating" [max]="5" class="br br-custom" [readOnly]="true" style="float: right;"></bar-rating>
+                                                        <td><bar-rating [rate]="f.rating" [max]="5" class="br br-square" [readOnly]="true" style="float: right;"></bar-rating></td>
                                                     </tr>
                                                 </tbody>
                                             </table>

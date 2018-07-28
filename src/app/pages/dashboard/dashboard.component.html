@@ -38,8 +38,9 @@
       <nb-card-body class="RatingCard" style="overflow-y: hidden;">
         <div class="CustomerRatingText" > Customer Ratings</div>
         <div style="font-size: 1.0rem;">`</div>
-        <bar-rating [rate]="Rating" [max]="5" class="br br-custom" [readOnly]="true"></bar-rating>
-        <!-- <bar-rating [(rate)]="barRate" [max]="5" class="br br-square" ></bar-rating> -->
+        <!-- <bar-rating [rate]="Rating" [max]="5" class="br br-custom" [readOnly]="true"></bar-rating> -->
+        <!-- <bar-rating [rate]="Rating" [max]="5" class="br br-square" [readOnly]="true" ></bar-rating> -->
+        <bar-rating [(rate)]="barRate" [max]="5" class="br br-square" ></bar-rating>
          <!-- <ng-template #t let-fill="fill">
           <span *ngIf="fill === 100" class="star full">&#9733;</span>
           <span *ngIf="fill === 0" class="star">&#9733;</span>

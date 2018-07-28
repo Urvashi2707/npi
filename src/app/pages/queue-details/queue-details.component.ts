@@ -81,6 +81,7 @@ export class QueueDetailsComponent implements OnInit {
   pickupInfo:any = {};
   dropInfo:any = {};
   adv_name:string;
+  ratting:number;
   constructor(private modalService: NgbModal, private fb: FormBuilder, private _detailsTable: QueueTableService, private _data: ServerService) {
 
 
@@ -143,7 +144,9 @@ export class QueueDetailsComponent implements OnInit {
 
     this.notesFormGroup = this.fb.group({
       notesData: [{ value: '', disabled: false }]
-    })
+    });
+
+    this.ratting = 3;
   }
 
   ngOnInit() {
