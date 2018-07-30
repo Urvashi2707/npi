@@ -96,6 +96,19 @@ h6 {
 .brandimg{
   height: 44px;
 }
+.review_value{
+      /* padding-left: 27%; */
+      // margin-left: 28%;
+      border: 1px solid #FF8400;
+      /* padding: 3px; */
+      padding-left: 12px;
+      padding-right: 12px;
+      padding-top: 4px;
+      padding-bottom: 4px;
+      color: white;
+      background-color: #FF8400;
+      border-radius: 8PX;
+}
 @include media-breakpoint-down(sm) {
     .star {
         position: relative;

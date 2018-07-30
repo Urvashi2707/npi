@@ -882,11 +882,24 @@
                                                     <span class="Feedbacktitle">Feedback</span>
                                                 </div>
                                             </div>
-                                            <table style="width: 80%;">
+                                            <table style="width: 90%;">
                                                 <tbody>
-                                                    <tr *ngFor="let f of feedback" class="question">
-                                                        <td>{{f.questions}}</td>
-                                                        <td><bar-rating [rate]="f.rating" [max]="5" class="br br-square" [readOnly]="true" style="float: right;"></bar-rating></td>
+                                                    <tr *ngFor="let f of feedback" class="question" height="50">
+                                                        <td *ngIf="f.type_of_question == '2'">{{f.question}}</td>
+                                                        <td *ngIf="f.type_of_question == '2'"><bar-rating [rate]="f.review_value" [max]="5" class="br br-square" [readOnly]="true"></bar-rating></td>
+                                                        <td *ngIf="f.type_of_question == '1'">{{f.question}}</td>
+                                                        <td *ngIf="f.type_of_question == '1'">
+                                                            <span *ngIf="f.review_value == '1'" class="review_value">Yes</span>
+                                                            <span *ngIf="f.review_value == '2'">No</span>
+                                                        </td>
+                                                        <td *ngIf="f.type_of_question == '3'">{{f.question}}</td>
+                                                        <td *ngIf="f.type_of_question == '3'">
+                                                                <span *ngIf="f.review_value == '1'" class="review_value">As per estimate provided</span>
+                                                                <span *ngIf="f.review_value == '2'" class="review_value">More than estimate provided</span>
+                                                                <span *ngIf="f.review_value == '3'" class="review_value">No estimate provided</span>
+                                                        </td>
+                                                        <td *ngIf="f.type_of_question == '4'">{{f.question}}</td>
+                                                        <td *ngIf="f.type_of_question == '4'">{{f.review_value}}</td>
                                                     </tr>
                                                 </tbody>
                                             </table>

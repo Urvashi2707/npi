@@ -9,6 +9,7 @@ import { ModalSendLinkComponent } from './modal-send-link/modal-send-link.compon
 import { SearchModalComponent } from '../search/modal/searchModal.component';
 import { ModalPickupComponent } from './modal-pickup/modal-pickup.component';
 import { ModalAdvComponent } from './modal-adv/modal-adv.component';
+
 @Component({
   selector: 'app-queue-details',
   templateUrl: './queue-details.component.html',
@@ -312,7 +313,8 @@ export class QueueDetailsComponent implements OnInit {
     }
     else if (tabData.tabTitle == "Details") {
       const reqpara3 = {
-        requesttype: 'getqueuebasichistory',
+        // requesttype: 'getqueuebasichistory',
+        requesttype: 'getqueuebasichistoryv2',
         queueidvar: sessionStorage.getItem('QueueId'),
       }
       const as3 = JSON.stringify(reqpara3);
@@ -579,23 +581,25 @@ export class QueueDetailsComponent implements OnInit {
             }
           }
         }
-        if (objectlength > 11) {
-          if (check[11].hasOwnProperty('feedback')) {
+        // if (objectlength > 11) {
+        //   if (check[11].hasOwnProperty('feedback')) {
+        //     this.showFeedbackCards = "1";
+        //     this.feedback = check[11].feedback;
+        //     if(check[11].feedback[0].hasOwnProperty('no_records'))
+        //     {
+        //       this.showFeedbackCards = "0";
+        //     }
+        //   }
+        // }
+        if (objectlength > 12) {
+          if (check[12].hasOwnProperty('newfeedback')) {
             this.showFeedbackCards = "1";
-            this.feedback = check[11].feedback;
-            // for(var i = 0; i < this.feedback.length; i++){
-            //   this.feedbackRating = JSON.parse(check[11].feedback[i].rating);
-            //   console.log(this.feedbackRating)
-
-            // }
-            if(check[11].feedback[0].hasOwnProperty('no_records'))
+            this.feedback = check[12].newfeedback;
+            if(check[12].newfeedback[0].hasOwnProperty('no_records'))
             {
               this.showFeedbackCards = "0";
             }
           }
-          // else{
-          //   this.showFeedbackCards = "0";
-          // }
         }
 
       });
