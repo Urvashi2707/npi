@@ -77,6 +77,25 @@ h6 {
 .CustName{
     font-size: 23px;
 }
+.logo{
+  float:right;
+}
+.Feedbacktitle{
+  margin-top: 23px;
+  font-weight: 700;
+}
+.brandlogo{
+  float:left;
+}
+.brandcol{
+  padding-left: 0px;
+}
+.northlogo{
+  height: 33px;
+}
+.brandimg{
+  height: 44px;
+}
 @include media-breakpoint-down(sm) {
     .star {
         position: relative;
@@ -113,6 +132,9 @@ h6 {
   }
   .form-control{
       font-size: 11px;
+  }
+  .logo{
+    float:right;
   }
   table{
     font-size: 12px;

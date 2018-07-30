@@ -75,3 +75,20 @@
     color: #bbcefb;
     font-weight: 600;
 }
+
+
+@media only screen and (max-width: 420px) {
+    .br-square .br-unit {
+        width: 18px;
+        height: 18px;
+        border: 2px solid #bbcefb;
+        background-color: #fff;
+        margin: 2px;
+        text-decoration: none;
+        font-size: 9px;
+        line-height: 2;
+        text-align: center;
+        color: #bbcefb;
+        font-weight: 600;
+    }
+}

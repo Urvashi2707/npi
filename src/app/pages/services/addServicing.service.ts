@@ -27,11 +27,11 @@ export class ServicingService {
   private Ea_check1_url:string = 'https://plsuat.europassistance.in:444/checkInitialEligibility';
   private Ea_check2_url:string = 'https://plsuat.europassistance.in:444/checkFinalEligibility';
 
-  public url:string='http://m.21north.in/notify/svcwebservice.php';
-  public logout_url:string = 'http://m.21north.in/notify/logout.php';
-  public graph:string = 'http://m.21north.in/notify/svcgraph.php';
-  public slotgraph =  'http://m.21north.in/notify/svcgraphslot.php';
-  check_url = 'http://m.21north.in/notify/eaws.php';
+  public url:string='https://m.21north.in/notify/svcwebservice.php';
+  public logout_url:string = 'https://m.21north.in/notify/logout.php';
+  public graph:string = 'https://m.21north.in/notify/svcgraph.php';
+  public slotgraph =  'https://m.21north.in/notify/svcgraphslot.php';
+  check_url = 'https://m.21north.in/notify/eaws.php';
   public destroySession_url = 'https://plsuat.europassistance.in:444/destroysession';
   public data:string;
   data1 = "vfdxvxd";

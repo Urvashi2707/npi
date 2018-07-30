@@ -77,6 +77,7 @@ export class QueueDetailsComponent implements OnInit {
   dropInfo:any = {};
   adv_name:string;
   ratting:number;
+  brandid:string;
   constructor(private modalService: NgbModal, private fb: FormBuilder, private _detailsTable: QueueTableService, private _data: ServerService) {
 
 
@@ -145,6 +146,7 @@ export class QueueDetailsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.brandid = sessionStorage.getItem('brandid');
     this.sysClicked = sessionStorage.getItem('clickedOn');
     // console.log(this.sysClicked);
     this.QueueID = sessionStorage.getItem('QueueId');
