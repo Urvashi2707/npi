@@ -110,6 +110,7 @@ export class ReportsComponent implements OnInit {
   Search(p:number) {  
     this.spinner.show();
     this.page = p - 1 ;
+    this.report = [];
     if(this.user.service_type == "4" || this.user.service_type == "6"){
       this.disableCust = true;
     }

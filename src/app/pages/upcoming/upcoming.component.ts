@@ -43,6 +43,7 @@ export class UpcomingComponent implements OnInit {
     this.StrtDateString = this.model1.year + '-' + this.model1.month + '-' + this.model1.day;
     var numberOfDays = 1;
     var dt = new Date();
+    
          dt.setDate( dt.getDate() + numberOfDays );
     this.model = { day: dt.getUTCDate(), month: dt.getUTCMonth() + 1, year: dt.getUTCFullYear()};
     this.EndDateString = this.model.year + '-' + this.model.month + '-' + this.model.day;

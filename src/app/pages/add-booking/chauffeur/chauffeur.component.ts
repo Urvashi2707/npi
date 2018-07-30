@@ -725,9 +725,10 @@ export class ChauffeurComponent implements OnInit {
 
   onSubmit(f: NgForm) {
     this.disabled =  true;
-    console.log(f.value.city);
-    console.log(this.serviceType);
-    console.log(f.value.num);
+    // console.log(f.value.city);
+    // console.log(this.serviceType);
+    // console.log(f.value.num);
+    console.log("variant",f.value.variant)
     if(f.value.city){
       this.cityid = f.value.city;
     }

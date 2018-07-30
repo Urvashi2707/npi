@@ -165,21 +165,15 @@ export class ServicingComponent implements OnInit {
     private spinner: NgxSpinnerService, private testServ:TestserviceService) { 
       this.cityList = [];
       this.getCity();
-      // console.log(this.cityList[0].cityname);
-      // console.log(this.cityList);
-      // this.citylist = [{"cityid":"148","cityname":"North West Delhi"},{"cityid":"27","cityname":"Chennai"},{"cityid":"51","cityname":"Hyderabad"},{"cityid":"2","cityname":"Ahmedabad"},{"cityid":"16","cityname":"Bangalore"},{"cityid":"147","cityname":"South West Delhi"},{"cityid":"131","cityname":"NCR Delhi"},{"cityid":"55","cityname":"Jaipur"},{"cityid":"72","cityname":"Lucknow"},{"cityid":"81","cityname":"Mumbai"},{"cityid":"95","cityname":"Pune"}];
     }
 
 
   ngOnInit() {
-    console.log(sessionStorage.getItem('insurance'))
     if(JSON.parse(sessionStorage.getItem('insurance')) == "1"){
       this.insuranceFlag = true;
-      console.log(this.insuranceFlag , "flag")
     }
     else{
       this.insuranceFlag = false;
-      console.log(this.insuranceFlag , "flag")
     }
     if(sessionStorage.getItem('selectedsvc')){
       this.svcid = sessionStorage.getItem('selectedsvc');
@@ -189,8 +183,7 @@ export class ServicingComponent implements OnInit {
     }
     this.user.confirm = true;
     this.countrycode1 = "+91";
-    this.getBrands();
-    // this.getCity();
+    this.getAllBrands();
     this.salutation = [
       { id: 1, type: 'Mr' },
       { id: 2, type: 'Mrs' },
@@ -211,26 +204,21 @@ export class ServicingComponent implements OnInit {
       maxHeight: 150
     };
     const date = new Date();
-    // this.model = {day:date.getUTCDate(),month:date.getUTCMonth() + 1,year: date.getUTCFullYear() };
     this.model = {year: date.getUTCFullYear(),month:date.getUTCMonth() + 1,day:date.getUTCDate() };
-    console.log(this.model);
     this.dateString = this.model.year + '-' + this.model.month + '-' + this.model.day;
     this.startDate = this.model;
     this.minDate = { year: date.getFullYear(), month: date.getMonth() + 1, day: date.getDate() - 1 };
     this.maxDate = { year: date.getFullYear(), month: date.getMonth() + 1, day: date.getDate() + 15};
     this.globalsvcid = JSON.parse(sessionStorage.getItem('globalsvcid'));
-    
     this.getAdvisor();
     this.getCre();
     this.getcreadv();
-
-    console.log(this.cityList);
-   
-  }
+   }
 
 public opt1={
   headers: new HttpHeaders({'x-auth-token': sessionStorage.getItem('token'),'x-auth-user':sessionStorage.getItem('auth-user'),'Content-Type':  'application/json'})
   }
+
   receiveMessage($event) {
     this.message1 = $event
   }
@@ -254,17 +242,7 @@ public opt1={
       else if(Id == 2){
         this.getAdvisor();
       }
-      // console.log('When user closes');
-    }, () => {
-      //  console.log('Backdrop click');
-      })
-  }
-
-  Addcre() {
-    this.router.navigate(['pages/user']);
-  }
-  Addadv() {
-    this.router.navigate(['pages/user']);
+    }, () => {})
   }
 
   private showToast(type: string, title: string, body: string) {
@@ -295,14 +273,11 @@ public opt1={
   }
 
   onCity(id){
-    // console.log(this.user.city);
-    // console.log(this.selectedBrand);
     this.GetSVCList(this.selectedBrand,this.user.city);
   }
 
 public getCity() {
-    const reqpara1 =
-      {
+    const reqpara1 ={
         requesttype: 'getcitylist',
       }
     const as1 = JSON.stringify(reqpara1)
@@ -314,14 +289,8 @@ public getCity() {
         }
         else {
           this.cityList = res[0].citylist;
-          console.log(this.cityList);
         }
       });
-    // console.log(this.ServicingService.getCity());
-    // return this.ServicingService.getCity().subscribe(function(data){
-    //   this.cityList = data[0].citylist;
-    //   console.log("cityList", this.cityList, data[0].citylist);
-    // });
   }
 
   changepickupstreet(value:any){
@@ -365,8 +334,7 @@ public getCity() {
 
   eligibiltycheck1(){
     this.spinner.show();
-    const reqpara0 =
-    {
+    const reqpara0 = {
       customerMobileNumber:this.user.mobile1,
       vehicleRegNumbe:this.registrationNumber,
       typeofservice:1
@@ -393,7 +361,6 @@ public getCity() {
         else{
           this.spinner.hide();
           this.getinfowithMobile();
-          // this.showToast('Message', 'Policy Message', 'Something went wrong');
           this.showstep3 = true;
           this.disableNext = true;
           this.ea_respondID = "0";
@@ -403,15 +370,12 @@ public getCity() {
           this.spinner.hide();
           this.getinfowithMobile();
           this.disableNext = true;
-          // this.showToast('Message', 'Policy Message', 'Something went wrong');
-          
           this.ea_respondID = "0";
         }
         else {
           this.spinner.hide();
           this.getinfowithMobile();
           this.disableNext = true;
-          // this.showToast('Message', 'Policy Message', 'Something went wrong');
           this.ea_respondID = "0";
         }
       });
@@ -435,8 +399,7 @@ public getCity() {
     const as01 = JSON.stringify(reqpara01);
     this.http.post('https://plsuat.europassistance.in:444/checkFinalEligibility',as01,this.opt1).subscribe(
         res => {
-      }
-    )
+      });
   }
 
   EditAddress(){
@@ -446,7 +409,6 @@ public getCity() {
   changeEditdropOffdoor(value:any){
     this.counter ++;
     this.editAddress = true;
-    console.log(this.sameasvalue);
     if (this.sameasvalue == true){
       this.user.pickupdoor = value;
     }
@@ -540,7 +502,7 @@ public getCity() {
     }
   }
 
-getBrands() {
+  getAllBrands() {
     const reqpara1 ={
         requesttype: 'getallbrands',
         svcid:this.svcid
@@ -591,7 +553,6 @@ getBrands() {
 
 
   onSelectModel(modelId) {
-    // console.log(modelId);
     for (let i = 0; i < this.Models.length; i++) {
       if (this.Models[i].model_id == modelId) {
         this.selectedModel = this.Models[i];
@@ -626,8 +587,6 @@ getBrands() {
   }
 
   getModelds(ModelId) {
-    // console.log(this.selectedBrand);
-    // console.log(ModelId);
     const reqpara2 = {
       requesttype: 'getmodels',
       brandid: this.selectedBrand
@@ -640,18 +599,15 @@ getBrands() {
       }
       else {
         this.Models = res[0].models;
-        // console.log('model length' + this.Models.length);
         if(this.Models.length === 1){
-          // console.log("model length is 1");
           var model_id = this.Models[0].model_id;
           this.getVariants(model_id);
         }
-        else{
-          // console.log("model length is more than 1");
-        }
+        else{}
      }
     });
   }
+
   getcreadv() {
     const reqpara4 = {
       requesttype: 'getcreadv',
@@ -671,6 +627,7 @@ getBrands() {
       }
     });
   }
+
  getSlot(Date: string) {
     this.showtime = true;
     if (this.yourBoolean === 'servicing' || this.yourBoolean === 'onlypickup') {
@@ -756,7 +713,6 @@ getBrands() {
 
 
   onSelectBrand(brandsId) {
-    console.log(brandsId);
    this.selectedBrand = null;
    for (let i = 0; i < this.brands.length; i++) {
     if (this.brands[i].brand_id == brandsId) {
@@ -950,9 +906,11 @@ getBrands() {
     if (value == true) {
       if(this.user.addresspu){
         console.log(this.user.addresspu);
+        console.log(this.address);
         for(var i = 0;i < this.address.length; i++){
-          if(this.user.addresspu == this.address[i].id){
-            this.user.addressdu == this.address[i].id ;
+          console.log(this.address[i].address_id,"adress_id")
+          if(this.user.addresspu == this.address[i].address_id){
+            this.user.addressdu = this.address[i].address_id ;
           }
         }
       }
@@ -1022,7 +980,6 @@ getBrands() {
   }
 
   GetSVCList(brand,city){
-    // console.log(this.selectedBrand);
     var cityId = JSON.parse(sessionStorage.getItem('city_id'));
     const reqpara1 = {
            requesttype: 'getsvclist_city_brand',
@@ -1042,18 +999,12 @@ getBrands() {
               if(res[0].svclist[i].is_tied == '1'){
               this.north21_tied.push(res[0].svclist[i]);
               res[0].svclist[i].associated = "21North";
-              // console.log("21north" , this.north21_tied)
-             
-              }
-            
+            }
             else{
               this.insurance_tied.push(res[0].svclist[i]);
               res[0].svclist[i].associated = "Insurance";
-              // console.log(this.insurance_tied);
             }
-          
-          }
-          // console.log("insurance" , this.insurance_tied);
+        }
           }
         });
    }
@@ -1079,7 +1030,6 @@ getBrands() {
 
   onSubmit(f: NgForm) {
     this.disabled = true;
-    // console.log(f.value.svclist);
     if(f.value.svclist){
       this.selectedBrand = f.value.svclist;
     }
@@ -1219,10 +1169,10 @@ getBrands() {
           this.addresspuprevious =  f.value.addressdu;
         }
         if( f.value.addressdu){
-          this.addresspuprevious =  f.value.addressdu;
+          this.addressdoprevious =  f.value.addressdu;
         }
         else{
-          this.addresspuprevious =   f.value.addressdu;
+          this.addressdoprevious =   f.value.addresspu;
         }
         this.pickupdoor = "0";
         this.pickupstreet = "0";
