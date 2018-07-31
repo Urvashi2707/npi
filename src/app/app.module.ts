@@ -22,12 +22,13 @@ import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown/angular2
 import { CookieService } from 'ngx-cookie-service';
 import { FilterPipe} from './pages/filter.pipe';
 import { Ng2OrderModule } from 'ng2-order-pipe'; 
+import {TrendsComponent} from './trends/trends/trends.component';
 // import {columnPipe,rowPipe,searchPipe} from './pages/pipe.pipe'
 
 import { TestserviceService } from './testservice.service';
 
 @NgModule({
-  declarations: [AppComponent,FilterPipe],
+  declarations: [AppComponent,FilterPipe,TrendsComponent],
 
   imports: [
     BrowserModule,

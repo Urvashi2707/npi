@@ -83,8 +83,13 @@ CloseAlert(){
                 sessionStorage.setItem('insurance',JSON.stringify(response[0].login[0].is_insurance));
                 sessionStorage.setItem('username',(response[0].login[0].first_name));
                 sessionStorage.setItem('User',value.mobile);
-                this.router.navigate(['/pages']);
-            }  
+                if(response[0].login[0].is_manufacturer == "1"){
+                  this.router.navigate(['/trend']);
+                }
+                else{
+                  this.router.navigate(['/pages']);
+                }
+               }  
           else if (response[0].login[0].hasOwnProperty('failed')){
             this.showAlert = true;
         }
