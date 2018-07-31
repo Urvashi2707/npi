@@ -599,19 +599,21 @@ export class QueueDetailsComponent implements OnInit {
             if(check[12].newfeedback[0].hasOwnProperty('no_records'))
             {
               this.showNewFeedbackCards = "0";
-            }
-            else{
               if (objectlength > 11) {
-          if (check[11].hasOwnProperty('feedback')) {
-            this.showFeedbackCards = "1";
-            this.feedback = check[11].feedback;
-            if(check[11].feedback[0].hasOwnProperty('no_records'))
-            {
-              this.showFeedbackCards = "0";
+                if (check[11].hasOwnProperty('feedback')) {
+                  this.showFeedbackCards = "1";
+                 
+                  if(check[11].feedback[0].hasOwnProperty('no_records'))
+                  {
+                    this.showFeedbackCards = "0";
+                  }
+                  else{
+                    this.feedback = check[11].feedback;
+                  }
+                }
+              }
             }
-          }
-        }
-            }
+            else{}
           }
         }
 
