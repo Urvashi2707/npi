@@ -140,8 +140,13 @@ export class ChauffeurComponent implements OnInit {
       this.getCoordinator();
       this.getSaleExceutive();
       const now = new Date();
+      const date = new Date();
+      // this.model = {day:date.getUTCDate(),month:date.getUTCMonth() + 1,year: date.getUTCFullYear() };
+      // this.model = {year: date.getUTCFullYear(),month:date.getUTCMonth() + 1,day:date.getUTCDate() };
+      // console.log(this.model);
+      // this.dateString = this.model.year + '-' + this.model.month + '-' + this.model.day;
       this.valuedate = new Date();
-      this.startDate = this.model;
+      this.startDate = {year: date.getUTCFullYear(),month:date.getUTCMonth() + 1,day:date.getUTCDate() };
       this.minDate = { year: now.getFullYear(), month: now.getMonth() + 1, day: now.getDate() - 1 };
       this.maxDate = { year: now.getFullYear(), month: now.getMonth() + 1, day: now.getDate() + 15};
       this.globalsvcid = JSON.parse(sessionStorage.getItem('globalsvcid'));
@@ -398,7 +403,6 @@ export class ChauffeurComponent implements OnInit {
 
        //Get City List API call
       getCityList(){
-        console.log(this.serviceType);
         if(this.serviceType == '15'){
           const reqpara23 = {
             requesttype:"getcitylist",
@@ -420,35 +424,27 @@ export class ChauffeurComponent implements OnInit {
 
       //called when sameas checked box is checked
       sameAsPickup(value){
-        console.log(value);
         this.sameasvalue = value;
         if (value == true) {
           if (this.user.pickupdoor) {
             this.user.dropofffdoor = this.user.pickupdoor;
-            console.log(this.user.dropofffdoor);
             if (this.user.pickupstreet) {
               this.user.dropoffstreet = this.user.pickupstreet;
-              console.log(this.user.dropoffstreet);
             }
             if(this.user.pickuparea){
               this.user.dropoffarea = this.user.pickuparea;
-              console.log(this.user.dropoffarea);
             }
             if(this.user.pickuplandmark){
               this.user.dropofflandmark = this.user.pickuplandmark;
-              console.log(this.user.dropofflandmark);
             }
             if(this.user.pickuppincode){
               this.user.dropoffpincode = this.user.pickuppincode;
-              console.log(this.user.pickuppincode);
             }
             if(this.user.picklatlong){
               this.user.droplatlong = this.user.picklatlong;
-              console.log(this.user.droplatlong);
             }
             if(this.user.address_typepu){
               this.user.address_typedu = this.user.address_typepu;
-              console.log(this.user.address_typedu);
             }
           }
         }
@@ -481,6 +477,25 @@ export class ChauffeurComponent implements OnInit {
          //Assign Amb switch is checked 
         checkAmb(value){
         this.amb = value;
+      }
+
+      getDistanceFromLatLonInKm(lat1,lon1,lat2,lon2) {
+        var R = 6371; // Radius of the earth in km
+        var dLat = this.deg2rad(lat2-lat1);  // deg2rad below
+        var dLon = this.deg2rad(lon2-lon1); 
+        var a = 
+          Math.sin(dLat/2) * Math.sin(dLat/2) +
+          Math.cos(this.deg2rad(lat1)) * Math.cos(this.deg2rad(lat2)) * 
+          Math.sin(dLon/2) * Math.sin(dLon/2)
+          ; 
+        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+        var d = R * c; // Distance in km
+        // console.log(d);
+        return d;
+      }
+      
+     deg2rad(deg) {
+        return deg * (Math.PI/180)
       }
 
       //API call for slots
@@ -632,6 +647,42 @@ export class ChauffeurComponent implements OnInit {
       }
     }
 
+    changeEditdropoffdoor(value:any){
+      if (this.sameasvalue == true){
+        this.user.pickupdoor = value;
+      }
+    }
+  
+    changeEditdropoffstreet(value:any){
+      if (this.sameasvalue == true){
+        this.user.pickupstreet = value;
+      }
+    }
+  
+    changeEditdropoffarea(value:any){
+      if (this.sameasvalue == true){
+      this.user.pickuparea = value;
+      }
+    }
+  
+    changeEditdropofflandmark(value:any){
+      if (this.sameasvalue == true){
+        this.user.pickuplandmark = value;
+      }
+    }
+  
+    changeEditdropoffpincode(value:any){
+      if (this.sameasvalue == true){
+        this.user.pickuppincode = value;
+      }
+    }
+  
+    changeEditdropofflatlong(value:any){
+      if (this.sameasvalue == true){
+       this.user.picklatlong = value;
+      }
+    }
+
  
 
   customerCheck(){
@@ -674,9 +725,10 @@ export class ChauffeurComponent implements OnInit {
 
   onSubmit(f: NgForm) {
     this.disabled =  true;
-    console.log(f.value.city);
-    console.log(this.serviceType);
-    console.log(f.value.num);
+    // console.log(f.value.city);
+    // console.log(this.serviceType);
+    // console.log(f.value.num);
+    console.log("variant",f.value.variant)
     if(f.value.city){
       this.cityid = f.value.city;
     }
@@ -720,23 +772,34 @@ export class ChauffeurComponent implements OnInit {
       this.pickupdoor = f.value.pickupdoor;
       this.pickupstreet = f.value.pickupstreet;
       this.pickuparea = f.value.pickuparea;
-      this.pickuplandmark = f.value.pickuplandmark;
+      // this.pickuplandmark = f.value.pickuplandmark;
       if(f.value.pickuppincode){
         this.pickuppincode = f.value.pickuppincode;
       }
       else{
         this.pickuppincode = "0";
       }
-      
+      if(f.value.pickuplandmark){
+        this.pickuplandmark = f.value.pickuplandmark;
+      }
+      else{
+        this.pickuplandmark = "0";
+      }
       this.dropofffdoor = f.value.pickupdoor;
       this.dropoffstreet = f.value.pickupstreet;
       this.dropoffarea = f.value.pickuparea;
-      this.dropofflandmark = f.value.pickuplandmark;
+      // this.dropofflandmark = f.value.pickuplandmark;
       if(f.value.pickuppincode){
         this.dropoffpincode = f.value.pickuppincode;
       }
       else{
         this.dropoffpincode = "0";
+      }
+      if(f.value.pickuplandmark){
+        this.dropofflandmark = f.value.pickuplandmark;
+      }
+      else{
+        this.dropofflandmark = "0";
       }
       this.addressdoprevious = "0";
       this.addresspuprevious = "0";
@@ -749,27 +812,40 @@ export class ChauffeurComponent implements OnInit {
         this.dropoff_lat = x[0];
         this.dropoff_long = x[1];
       }
+      result = 0.500;
     }
     else if (this.pickup_drop == 4){
       this.pickupdoor = f.value.pickupdoor;
       this.pickupstreet = f.value.pickupstreet;
       this.pickuparea = f.value.pickuparea;
-      this.pickuplandmark = f.value.pickuplandmark;
+      // this.pickuplandmark = f.value.pickuplandmark;
       if(f.value.pickuppincode){
         this.pickuppincode = f.value.pickuppincode;
       }
       else{
         this.pickuppincode = "0";
       }
+      if(f.value.pickuplandmark){
+        this.pickuplandmark = f.value.pickuplandmark;
+      }
+      else{
+        this.pickuplandmark = "0";
+      }
       this.dropofffdoor = f.value.dropofffdoor;
       this.dropoffstreet = f.value.dropoffstreet;
       this.dropoffarea = f.value.dropoffarea;
-      this.dropofflandmark = f.value.dropofflandmark;
+      // this.dropofflandmark = f.value.dropofflandmark;
       if(f.value.dropoffpincode){
         this.dropoffpincode = f.value.dropoffpincode;
       }
       else{
         this.dropoffpincode = "0";
+      }
+      if(f.value.dropofflandmark){
+        this.dropofflandmark = f.value.dropofflandmark;
+      }
+      else{
+        this.dropofflandmark = "0";
       }
       this.addressdoprevious = "0";
       this.addresspuprevious = "0";
@@ -778,24 +854,50 @@ export class ChauffeurComponent implements OnInit {
       if(f.value.picklatlong){
         let x = f.value.picklatlong.split(/[ ,;]+/);
         this.pikup_lat = x[0];
+        var lat1 = +this.pikup_lat;
         this.pikup_long = x[1];
+        var lon1 = +this.pikup_long;
       }
       if(f.value.droplatlong){
-        let y = f.value.picklatlong.split(/[ ,;]+/);
+        let y = f.value.droplatlong.split(/[ ,;]+/);
         this.dropoff_lat = y[0];
+        var lat2 = +this.dropoff_lat;
         this.dropoff_long = y[1];
+        var lon2 = +this.dropoff_long;
       }
+      var result = this.getDistanceFromLatLonInKm(lat1,lon1,lat2,lon2);
+      console.log(result);
+      // var result1 = this.getDistanceFromLatLonInKm(12.929299,77.634291,12.932705,77.631364);
+      // console.log(result1);
     }
     else if (this.pickup_drop == 5 || this.pickup_drop == 7){
       this.pickupdoor = f.value.pickupdoor;
       this.pickupstreet = f.value.pickupstreet;
       this.pickuparea = f.value.pickuparea;
       this.pickuplandmark = f.value.pickuplandmark;
+      if(f.value.pickuplandmark){
+        this.pickuplandmark = f.value.pickuplandmark;
+      }
+      else if (f.value.dropofflandmark){
+        this.pickuplandmark = f.value.dropofflandmark;;
+      }
+      else{
+        this.pickuplandmark = "0";
+      }
       this.pickuppincode = f.value.pickuppincode;
       this.dropofffdoor = f.value.dropofffdoor;
       this.dropoffstreet = f.value.dropoffstreet;
       this.dropoffarea = f.value.dropoffarea;
       this.dropofflandmark = f.value.dropofflandmark;
+      if(f.value.dropofflandmark){
+        this.dropofflandmark = f.value.dropofflandmark;
+      }
+      else if (f.value.pickuplandmark){
+        this.dropofflandmark = f.value.pickuplandmark;;
+      }
+      else{
+        this.dropofflandmark = "0";
+      }
       this.dropoffpincode = f.value.dropoffpincode;
       this.addressdoprevious = "0";
       this.addresspuprevious = "0";
@@ -806,11 +908,30 @@ export class ChauffeurComponent implements OnInit {
         this.pikup_lat = x[0];
         this.pikup_long = x[1];
       }
+      else if (f.value.droplatlong){
+        let x = f.value.droplatlong.split(/[ ,;]+/);
+        this.pikup_lat = x[0];
+        this.pikup_long = x[1];
+      }
+      else {
+        this.pikup_lat = "0";
+        this.pikup_long = "0";
+      }
       if(f.value.droplatlong){
+        let y = f.value.droplatlong.split(/[ ,;]+/);
+        this.dropoff_lat = y[0];
+        this.dropoff_long = y[1];
+      }
+      else if (f.value.picklatlong){
         let y = f.value.picklatlong.split(/[ ,;]+/);
         this.dropoff_lat = y[0];
         this.dropoff_long = y[1];
       }
+      else {
+        this.dropoff_lat = "0";
+        this.dropoff_long = "0";
+      }
+      result = 0.5000;
     }
    
   if(f.value.mobile2)
@@ -837,7 +958,6 @@ export class ChauffeurComponent implements OnInit {
   if(f.value.mobile1)
   {
       this.mobile1 = f.value.mobile1;
-      console.log(this.mobile1);
     }
   else 
   {
@@ -848,12 +968,10 @@ export class ChauffeurComponent implements OnInit {
   if(f.value.email)
   {
       this.cusEmail = f.value.email;
-      console.log(this.cusEmail);
     }
   else 
   {
     this.cusEmail = "0";
-    console.log("0");
   }
 
   if(f.value.notes)
@@ -898,9 +1016,11 @@ export class ChauffeurComponent implements OnInit {
       this.queuetime = this.dateString + ' ' +this.slot_time
     }
     else{
-      this.queuetime =  this.datePipe.transform(this.today,"y-MM-dd h:mm:ss");
+      this.queuetime =  this.datePipe.transform(this.today,"y-MM-dd HH:mm:ss");
     }
     if(this.slot_time != "0" || this.pickup_drop == 15 ){
+      
+      if(result >= 0.500000){
   const reqpara6 = {
     requesttype: "createbookingv3",
     vehnumber:f.value.num,
@@ -943,23 +1063,20 @@ export class ChauffeurComponent implements OnInit {
     complaint:["0"]
   
   };
-
- const ua = JSON.stringify(reqpara6);
- console.log(ua);
+  const ua = JSON.stringify(reqpara6);
   this._data.webServiceCall(ua).subscribe(data => { 
     if(data[0].login === 0){
       sessionStorage.removeItem('currentUser');
       this.router.navigate(['/auth/login']);
     }
     else{
-    
         this.message = data[0].queue,
         this.disabled=false;
         this.showLargeModal(this.message[0]);
-        console.log(this.message[0].queue_id);
         this.slot_time = "0";
         f.reset();
         this.show = false;
+        this.sameasvalue = false;
         this.show3 = false;
         this.disabled =  true;
         this.showtime = false;
@@ -970,6 +1087,7 @@ export class ChauffeurComponent implements OnInit {
         this.dateString = "";
         this.getCoordinator();
         this.disableNext = false;
+        this.model=null;
     }
  
   },
@@ -980,7 +1098,10 @@ export class ChauffeurComponent implements OnInit {
 else {
   console.log("Server-side error occured.");
   }
-});
+});}
+else{
+  this.showToast('alert', 'Message', 'Distance is less than 500 metre');
+}
     }else{
       this.showToast('alert', 'Message', 'Please select Slot and date');
     }

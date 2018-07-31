@@ -65,6 +65,8 @@ export class LegalComponent implements OnInit {
       const TermReq = JSON.stringify(AgreeTermReq)
       this.servicing.webServiceCall(TermReq).subscribe(res =>{
         this.AcceptBtn = true;
+        sessionStorage.setItem('terms',"12")
+        // this.ShowAgreement = JSON.parse(sessionStorage.getItem('terms'));
         this.activeModal.close();
       });
     }

@@ -1,12 +1,12 @@
 import { NgModule , CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import {ServicingService} from './services/addServicing.service';
+import {ServerService} from './services/user.service';
 import { PagesComponent } from './pages.component';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { PagesRoutingModule } from './pages-routing.module';
 import { ThemeModule } from '../@theme/theme.module';
 import { ManageComponent } from './manageSvc/manageSvc.component';
 import { UserComponent } from './user/user.component';
-import { ServerService } from './services/user.service';
 import { EditUserComponent } from './user/modal/EditUser.component';
 import { UpdateSvcComponent } from './manageSvc/modal/UpdateSvc.component';
 import { QueueDetailsComponent } from './queue-details/queue-details.component';
@@ -122,6 +122,7 @@ const PAGES_COMPONENTS = [
   ],
   providers: [
     ServicingService,
+    ServerService,
     QueueTableService,
     ToasterService,
     DatePipe,

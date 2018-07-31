@@ -4,23 +4,46 @@
   </nb-card-header>
   <nb-card-body>
       <div class="row">
-          <div class="col-md-6 col-lg-6">
-          </div>
-          <div class="col-md-6 col-lg-6" style="padding-bottom: 3%;">
-            <input type="text" class="search" [(ngModel)]="SearchData" placeholder="search" style="width: 70%;">
+          <div class="col-md-6 col-lg-6 col-sm-6"> </div>
+          <div class="col-md-6 col-lg-6 col-sm-6">
+            <input type="text" class="search" [(ngModel)]="SearchData" placeholder="search" style="width: 70%;margin-bottom: 3%">
           </div>
         </div>
     <table width="100%">
       <thead>
-        <th>Name</th>
-        <th>Number</th>
-        <th>Monthly Bookings Added</th>
-        <th>Today Bookings Added</th>
-        <th>Monthly Bookings Deleted</th>
-        <th>Today Bookings Deleted</th>
+        <th (click)="sort('first_name')">Name
+          <span class="sort-span">
+            <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i>
+          </span>
+        </th>
+        <th (click)="sort('mobilenumber')">Number
+          <span class="sort-span">
+            <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i>
+          </span>
+        </th>
+        <th (click)="sort('added_month')">Monthly Bookings Added
+          <span class="sort-span">
+            <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i>
+          </span>
+        </th>
+        <th (click)="sort('added_today')">Today Bookings Added
+          <span class="sort-span">
+            <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i>
+          </span>
+        </th>
+        <th (click)="sort('deleted_month')">Monthly Bookings Deleted
+          <span class="sort-span">
+            <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i>
+          </span>
+        </th>
+        <th (click)="sort('deleted_today')">Today Bookings Deleted
+          <span class="sort-span">
+            <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i>
+          </span>
+        </th>
       </thead>
       <tbody>
-        <tr *ngFor="let i of CreReports | filter:SearchData">
+        <tr *ngFor="let i of CreReports | filter : SearchData | orderBy: key : reverse ">
           <td>{{i.first_name}}</td>
           <td>{{i.mobilenumber}}</td>
           <td>{{i.added_month}}</td>
@@ -35,7 +58,7 @@
 <div class="mobileView">
     <div class="row headerRow">
         <div class="col-4 col-sm-4">
-          <div class="header">At Centre</div>
+          <span class="header">CRE Reports</span>
         </div>
         <div class="col-8 col-sm-8">
           <div class="right-inner-addon">
@@ -48,7 +71,7 @@
   <div class="row">
     <div class="col-12 col-sm-12">
       <ul>
-        <li *ngFor="let i of CreReports | filter:SearchData">
+        <li *ngFor="let i of CreReports | filter : SearchData">
           <div class="card">
             <div class="row">
               <div class="col-12 col-sm-12">

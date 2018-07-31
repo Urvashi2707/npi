@@ -22,6 +22,9 @@ td {
 tbody tr:hover {
     background-color: lightyellow;
 }
+.sort-span {
+    float: right;
+}
 @media only screen and (max-width: 420px) {
     .desktopView {
         display: none;
@@ -71,16 +74,7 @@ th,
 td {
     padding:4px;
 }
-.header{
-    font-size: .9rem;
-    padding-left: 1%;
-    font-weight: 700;
-  }
-  .headerRow{
-    min-height: 25px;
-    padding-top: 3%;
-  }
-  .right-inner-addon {
+.right-inner-addon {
     position: relative;
 }
 .right-inner-addon input {

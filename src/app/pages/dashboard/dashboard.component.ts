@@ -21,7 +21,7 @@ export class DashboardComponent implements OnInit{
   Notification :any=[];
   SvcName:string;
   barRate:number;
-barRateNull:number;
+  barRateNull:number;
   public DataGraphDropOff:any = [];
   public MtdData:any = [];
   public DataGraphPickup:any = [];
@@ -177,15 +177,21 @@ barRateNull:number;
                 this.Cards=res[0].cards[0];
                 this.Rating = JSON.parse(this.Cards.cust_rating);
               }
-             else { }
-            //  if(this.Cards.cust_rating){
-            //    this.Rating = JSON.parse(this.Cards.cust_rating);
-            //   console.log(this.Rating);
-            //  }
-            //  else{
-            //   this.Rating = 0;
-            //   console.log(this.Rating);
-            //  }
+             else {
+               this.Cards = "0";
+              }
+             if(this.Cards.cust_rating == null){
+              this.Rating = 0;
+             }
+             else{
+               if(this.Cards.cust_rating == ""){
+                this.Rating = 0;
+               }
+               else{
+                this.Rating = JSON.parse(this.Cards.cust_rating);
+               }
+              
+             }
              this.PickupPieChart = res[1].pickup_details;
              if(this.PickupPieChart[0].value === "0" && this.PickupPieChart[1].value === "0" && this.PickupPieChart[2].value === "0" && this.PickupPieChart[3].value === "0" && this.PickupPieChart[4].value === "0"){
               this.ShowPickupPie = false;

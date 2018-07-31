@@ -127,13 +127,19 @@ input:checked + .slider:before {
   padding: 0 4px;
 }
 
- .timeAnchor{
+.timeAnchor{
   padding:10px;
   border: 1px solid #ececec;
-  border-radius: 5px;
+  height: 50px;
+  // border-radius: 5px;
+ 
+ }
+ .timeRow{
+  height: 50px;
  }
  .timeRow a:hover{
   background-color:#dadde6;
+ 
  }
  .timeRow a:visited{
   background-color:#ffcc00;

@@ -83,7 +83,7 @@ export class ServicingComponent implements OnInit {
   public dropadd: string;
   public disabled = false;
   editAddress = false;
-  public sameasvalue: boolean;
+  public sameasvalue: boolean = false;
   public isconfirm: string;
   public address: any = [];
   public serviceadv: any = [];
@@ -110,7 +110,7 @@ export class ServicingComponent implements OnInit {
   public countrycode1: string;
   brand_id: string;
   public List: any = [];
-  public cityList: any = [];
+  private cityList:any;
   selectedCity:string;
   valuedate = new Date();
   public amb: boolean = true;
@@ -136,6 +136,7 @@ export class ServicingComponent implements OnInit {
   timeout = 5000;
   toastsLimit = 5;
   slothour:string;
+  citylist:any = [];
   addresstype = [
     {
       "id": "1",
@@ -162,21 +163,17 @@ export class ServicingComponent implements OnInit {
     private titlecasePipe:TitleCasePipe,
     private activeModal: NgbActiveModal,
     private spinner: NgxSpinnerService, private testServ:TestserviceService) { 
+      this.cityList = [];
       this.getCity();
-      // console.log(this.cityList[0].cityname);
-      console.log(this.cityList);
     }
 
 
   ngOnInit() {
-    console.log(sessionStorage.getItem('insurance'))
     if(JSON.parse(sessionStorage.getItem('insurance')) == "1"){
       this.insuranceFlag = true;
-      console.log(this.insuranceFlag , "flag")
     }
     else{
       this.insuranceFlag = false;
-      console.log(this.insuranceFlag , "flag")
     }
     if(sessionStorage.getItem('selectedsvc')){
       this.svcid = sessionStorage.getItem('selectedsvc');
@@ -186,8 +183,7 @@ export class ServicingComponent implements OnInit {
     }
     this.user.confirm = true;
     this.countrycode1 = "+91";
-    this.getBrands();
-    // this.getCity();
+    this.getAllBrands();
     this.salutation = [
       { id: 1, type: 'Mr' },
       { id: 2, type: 'Mrs' },
@@ -208,26 +204,21 @@ export class ServicingComponent implements OnInit {
       maxHeight: 150
     };
     const date = new Date();
-    // this.model = {day:date.getUTCDate(),month:date.getUTCMonth() + 1,year: date.getUTCFullYear() };
     this.model = {year: date.getUTCFullYear(),month:date.getUTCMonth() + 1,day:date.getUTCDate() };
-    console.log(this.model);
     this.dateString = this.model.year + '-' + this.model.month + '-' + this.model.day;
     this.startDate = this.model;
     this.minDate = { year: date.getFullYear(), month: date.getMonth() + 1, day: date.getDate() - 1 };
     this.maxDate = { year: date.getFullYear(), month: date.getMonth() + 1, day: date.getDate() + 15};
     this.globalsvcid = JSON.parse(sessionStorage.getItem('globalsvcid'));
-    
     this.getAdvisor();
     this.getCre();
     this.getcreadv();
-   
-  }
-
-
+   }
 
 public opt1={
   headers: new HttpHeaders({'x-auth-token': sessionStorage.getItem('token'),'x-auth-user':sessionStorage.getItem('auth-user'),'Content-Type':  'application/json'})
   }
+
   receiveMessage($event) {
     this.message1 = $event
   }
@@ -251,17 +242,7 @@ public opt1={
       else if(Id == 2){
         this.getAdvisor();
       }
-      // console.log('When user closes');
-    }, () => {
-      //  console.log('Backdrop click');
-      })
-  }
-
-  Addcre() {
-    this.router.navigate(['pages/user']);
-  }
-  Addadv() {
-    this.router.navigate(['pages/user']);
+    }, () => {})
   }
 
   private showToast(type: string, title: string, body: string) {
@@ -292,14 +273,11 @@ public opt1={
   }
 
   onCity(id){
-    // console.log(this.user.city);
-    // console.log(this.selectedBrand);
     this.GetSVCList(this.selectedBrand,this.user.city);
   }
 
-  getCity() {
-    const reqpara1 =
-      {
+public getCity() {
+    const reqpara1 ={
         requesttype: 'getcitylist',
       }
     const as1 = JSON.stringify(reqpara1)
@@ -311,16 +289,8 @@ public opt1={
         }
         else {
           this.cityList = res[0].citylist;
-          console.log(this.cityList);
         }
       });
-    // console.log(this.ServicingService.getCity());
-    // return this.ServicingService.getCity().subscribe(function(data){
-    //   this.cityList = data[0].citylist;
-    //   console.log("cityList");
-    //   console.log(this.cityList);
- 
-    // })
   }
 
   changepickupstreet(value:any){
@@ -364,8 +334,7 @@ public opt1={
 
   eligibiltycheck1(){
     this.spinner.show();
-    const reqpara0 =
-    {
+    const reqpara0 = {
       customerMobileNumber:this.user.mobile1,
       vehicleRegNumbe:this.registrationNumber,
       typeofservice:1
@@ -392,7 +361,6 @@ public opt1={
         else{
           this.spinner.hide();
           this.getinfowithMobile();
-          // this.showToast('Message', 'Policy Message', 'Something went wrong');
           this.showstep3 = true;
           this.disableNext = true;
           this.ea_respondID = "0";
@@ -402,18 +370,16 @@ public opt1={
           this.spinner.hide();
           this.getinfowithMobile();
           this.disableNext = true;
-          // this.showToast('Message', 'Policy Message', 'Something went wrong');
-          
           this.ea_respondID = "0";
         }
         else {
           this.spinner.hide();
           this.getinfowithMobile();
           this.disableNext = true;
-          // this.showToast('Message', 'Policy Message', 'Something went wrong');
           this.ea_respondID = "0";
         }
       });
+      this.getCity();
   }
 
   skip(){
@@ -433,17 +399,64 @@ public opt1={
     const as01 = JSON.stringify(reqpara01);
     this.http.post('https://plsuat.europassistance.in:444/checkFinalEligibility',as01,this.opt1).subscribe(
         res => {
-      }
-    )
+      });
   }
 
   EditAddress(){
     this.editAddress = true;
   }
 
+  changeEditdropOffdoor(value:any){
+    this.counter ++;
+    this.editAddress = true;
+    if (this.sameasvalue == true){
+      this.user.pickupdoor = value;
+    }
+  }
+
+  changeEditdropOffstreet(value:any){
+    this.counter ++;
+    this.editAddress = true;
+    if (this.sameasvalue == true){
+      this.user.pickupstreet = value;
+    }
+  }
+
+  changeEditdropOffparea(value:any){
+    this.counter ++;
+    this.editAddress = true;
+    if (this.sameasvalue == true){
+    this.user.pickuparea = value;
+    }
+  }
+
+  changeEditdropOfflandmark(value:any){
+    this.counter ++;
+    this.editAddress = true;
+    if (this.sameasvalue == true){
+      this.user.pickuplandmark = value;
+    }
+  }
+
+  changeEditdropOffpincode(value:any){
+    this.counter ++;
+    this.editAddress = true;
+    if (this.sameasvalue == true){
+      this.user.pickuppincode = value;
+    }
+  }
+
+  changeEditdropOfflatlong(value:any){
+    this.counter ++;
+    this.editAddress = true;
+    if (this.sameasvalue == true){
+     this.user.droplatlong = value;
+    }
+  }
   changeEditpickupdoor(value:any){
     this.counter ++;
     this.editAddress = true;
+    console.log(this.sameasvalue);
     if (this.sameasvalue == true){
       this.user.dropofffdoor = value;
     }
@@ -489,7 +502,7 @@ public opt1={
     }
   }
 
-getBrands() {
+  getAllBrands() {
     const reqpara1 ={
         requesttype: 'getallbrands',
         svcid:this.svcid
@@ -540,7 +553,6 @@ getBrands() {
 
 
   onSelectModel(modelId) {
-    // console.log(modelId);
     for (let i = 0; i < this.Models.length; i++) {
       if (this.Models[i].model_id == modelId) {
         this.selectedModel = this.Models[i];
@@ -575,8 +587,6 @@ getBrands() {
   }
 
   getModelds(ModelId) {
-    // console.log(this.selectedBrand);
-    // console.log(ModelId);
     const reqpara2 = {
       requesttype: 'getmodels',
       brandid: this.selectedBrand
@@ -589,18 +599,15 @@ getBrands() {
       }
       else {
         this.Models = res[0].models;
-        // console.log('model length' + this.Models.length);
         if(this.Models.length === 1){
-          // console.log("model length is 1");
           var model_id = this.Models[0].model_id;
           this.getVariants(model_id);
         }
-        else{
-          // console.log("model length is more than 1");
-        }
+        else{}
      }
     });
   }
+
   getcreadv() {
     const reqpara4 = {
       requesttype: 'getcreadv',
@@ -620,6 +627,7 @@ getBrands() {
       }
     });
   }
+
  getSlot(Date: string) {
     this.showtime = true;
     if (this.yourBoolean === 'servicing' || this.yourBoolean === 'onlypickup') {
@@ -705,7 +713,6 @@ getBrands() {
 
 
   onSelectBrand(brandsId) {
-    console.log(brandsId);
    this.selectedBrand = null;
    for (let i = 0; i < this.brands.length; i++) {
     if (this.brands[i].brand_id == brandsId) {
@@ -736,12 +743,35 @@ getBrands() {
 
   // at select pickup dropdown
   onSelectPickup($event,id){
-    // console.log($event);
-    // console.log(id);
-    // console.log(this.address[$event]);
+    console.log(this.sameasvalue);
+    console.log(this.address);
     var currentAddressPickup = this.address[$event];
+    if(this.sameasvalue == true){
+      if(this.user.addresspu){
+        console.log(this.user.addresspu);
+        for(let i = 0;i < this.address.length; i++){
+          if(this.user.addresspu == this.address[i].address_id){
+            this.user.addressdu = this.address[i].address_id ;
+            // console.log(this.address[i].address_id);
+            // console.log(this.user.addressdu);
+            // this.user.addresspu = this.addressPickup;
+            this.user.dropofffdoor = currentAddressPickup.doornumber;
+            this.user.dropoffstreet = currentAddressPickup.street;
+            this.user.dropoffarea = currentAddressPickup.area;
+            this.user.dropofflandmark = currentAddressPickup.landmark;
+            this.user.dropoffpincode = currentAddressPickup.pincode;
+            this.user.droplatlong = currentAddressPickup.latitude + ',' + currentAddressPickup.longitude;
+            for(let i = 0; i < this.addresstype.length;i ++){
+              if(this.addresstype[i].id == id){
+                this.user.addresspu = this.addresstype[i].id;
+                this.user.addresstypedu = this.addresstype[i].id;
+              }
+            }
+          }
+        }
+      }
+    }
     this.user.addresspu = this.addressPickup;
-    // console.log(this.user.addresspu);
     this.user.pickupdoor = currentAddressPickup.doornumber;
     this.user.pickupstreet = currentAddressPickup.street;
     this.user.pickuparea = currentAddressPickup.area;
@@ -758,12 +788,7 @@ getBrands() {
 
    // at select dropoff dropdown
   onSelectDropoff($event,id){
-    // console.log($event);
-    // console.log(id);
-    // console.log(this.address[$event]);
     var currentAddressDropoff = this.address[$event];
-    // this.user.addresspu = this.addressPickup;
-    // console.log(this.user.addresspu);
     this.user.dropofffdoor = currentAddressDropoff.doornumber;
     this.user.dropoffstreet = currentAddressDropoff.street;
     this.user.dropoffarea = currentAddressDropoff.area;
@@ -879,6 +904,16 @@ getBrands() {
   sameas(value) {
     this.sameasvalue = value;
     if (value == true) {
+      if(this.user.addresspu){
+        console.log(this.user.addresspu);
+        console.log(this.address);
+        for(var i = 0;i < this.address.length; i++){
+          console.log(this.address[i].address_id,"adress_id")
+          if(this.user.addresspu == this.address[i].address_id){
+            this.user.addressdu = this.address[i].address_id ;
+          }
+        }
+      }
       if (this.user.pickupdoor) {
         this.user.dropofffdoor = this.user.pickupdoor;
         if (this.user.pickupstreet) {
@@ -945,7 +980,6 @@ getBrands() {
   }
 
   GetSVCList(brand,city){
-    // console.log(this.selectedBrand);
     var cityId = JSON.parse(sessionStorage.getItem('city_id'));
     const reqpara1 = {
            requesttype: 'getsvclist_city_brand',
@@ -965,18 +999,12 @@ getBrands() {
               if(res[0].svclist[i].is_tied == '1'){
               this.north21_tied.push(res[0].svclist[i]);
               res[0].svclist[i].associated = "21North";
-              // console.log("21north" , this.north21_tied)
-             
-              }
-            
+            }
             else{
               this.insurance_tied.push(res[0].svclist[i]);
               res[0].svclist[i].associated = "Insurance";
-              // console.log(this.insurance_tied);
             }
-          
-          }
-          // console.log("insurance" , this.insurance_tied);
+        }
           }
         });
    }
@@ -1002,7 +1030,6 @@ getBrands() {
 
   onSubmit(f: NgForm) {
     this.disabled = true;
-    // console.log(f.value.svclist);
     if(f.value.svclist){
       this.selectedBrand = f.value.svclist;
     }
@@ -1030,8 +1057,11 @@ getBrands() {
         if(f.value.pickuplandmark){
           this.pickuplandmark = f.value.pickuplandmark;
         }
-        else{
+        else if(f.value.dropofflandmark){
           this.pickuplandmark = f.value.dropofflandmark;
+        }
+        else{
+          this.pickuplandmark = "0";
         }
         if(f.value.pickuppincode){
           this.pickuppincode = f.value.pickuppincode;
@@ -1066,8 +1096,11 @@ getBrands() {
         if(f.value.dropofflandmark){
           this.dropofflandmark = f.value.dropofflandmark;
         }
+        else if (f.value.pickuplandmark){
+          this.dropofflandmark =  f.value.pickuplandmark;
+        }
         else{
-          this.dropofflandmark = f.value.pickuplandmark;
+          this.dropofflandmark = "0";
         }
         if(f.value.dropoffstreet){
           this.dropoffstreet = f.value.dropoffstreet;
@@ -1127,8 +1160,20 @@ getBrands() {
       }
       
       else{
-        this.addressdoprevious = f.value.addresspu;
-        this.addresspuprevious = f.value.addressdu;
+        // this.addressdoprevious = f.value.addresspu;
+        // this.addresspuprevious = f.value.addressdu;
+        if(f.value.addresspu){
+          this.addresspuprevious = f.value.addresspu;
+        }
+        else{
+          this.addresspuprevious =  f.value.addressdu;
+        }
+        if( f.value.addressdu){
+          this.addressdoprevious =  f.value.addressdu;
+        }
+        else{
+          this.addressdoprevious =   f.value.addresspu;
+        }
         this.pickupdoor = "0";
         this.pickupstreet = "0";
         this.pickuparea = "0";
@@ -1204,8 +1249,12 @@ getBrands() {
         this.pickuplandmark = f.value.pickuplandmark;
         this.addresspuprevious = "0";
       }
-      else{
+      else if(f.value.dropofflandmark){
         this.pickuplandmark = f.value.dropofflandmark;
+        this.addresspuprevious = "0";
+      }
+      else{
+        this.pickuplandmark = "0";
         this.addresspuprevious = "0";
       }
       if(f.value.addresstypepu){
@@ -1268,8 +1317,12 @@ getBrands() {
         this.dropofflandmark = f.value.dropofflandmark;
         this.addressdoprevious = "0";
       }
+      else if(f.value.pickuplandmark){
+        this.dropofflandmark =f.value.pickuplandmark;
+        this.addressdoprevious = "0";
+      }
       else{
-        this.dropofflandmark = f.value.pickuplandmark;
+        this.dropofflandmark = "0";
         this.addressdoprevious = "0";
       }
       if(f.value.dropoffstreet){
@@ -1444,6 +1497,7 @@ getBrands() {
         this.pickup_drop = 0;
         this.counter = 0;
         this.slot = [];
+        this.sameasvalue = false;
         f.reset();
         this.countrycode1 = "+91";
         this.dateString = null;

@@ -856,6 +856,59 @@
                         </ngb-panel>
 
 
+                        <ngb-panel *ngIf="showNewFeedbackCards == '1'" id="preventchange-8">
+                            <ng-template ngbPanelTitle>
+                                <div class="row">
+                                    <span>
+                                        <i class="fa fa-caret-down"></i>
+                                    </span>
+                                    <h6>Feedback</h6>
+                                </div>
+                            </ng-template>
+                            <ng-template ngbPanelContent>
+                                <div class=".col-xs">
+                                    <nb-card class=".col-xs" class=".space">
+                                        <nb-card-body>
+                                            <div class="row">
+                                                <div class="col-6 col-md-6 col-lg-6 col-sm-6 brandcol">
+                                                    <span class="brandlogo" *ngIf="brandid === '19'"><img src="../../assets/images/Hyundai1.jpeg"  class="img-responsive brandimg" ></span>
+                                                </div>
+                                                <div class="col-6 col-md-6 col-lg-6 col-sm-6">
+                                                    <div class="logo" ><img src="../../assets/images/logo.png" class="img-responsive" class="northlogo"></div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-12 col-md-12 col-lg-12 col-sm-12">
+                                                    <span class="Feedbacktitle">Feedback</span>
+                                                </div>
+                                            </div>
+                                            <table style="width: 90%;">
+                                                <tbody>
+                                                    <tr *ngFor="let f of feedback" class="question" height="50">
+                                                        <td *ngIf="f.type_of_question == '2'">{{f.question}}</td>
+                                                        <td *ngIf="f.type_of_question == '2'"><bar-rating [rate]="f.review_value" [max]="5" class="br br-square" [readOnly]="true"></bar-rating></td>
+                                                        <td *ngIf="f.type_of_question == '1'">{{f.question}}</td>
+                                                        <td *ngIf="f.type_of_question == '1'">
+                                                            <span *ngIf="f.review_value == '1'" class="review_value">Yes</span>
+                                                            <span *ngIf="f.review_value == '2'">No</span>
+                                                        </td>
+                                                        <td *ngIf="f.type_of_question == '3'">{{f.question}}</td>
+                                                        <td *ngIf="f.type_of_question == '3'">
+                                                                <span *ngIf="f.review_value == '1'" class="review_value">As per estimate provided</span>
+                                                                <span *ngIf="f.review_value == '2'" class="review_value">More than estimate provided</span>
+                                                                <span *ngIf="f.review_value == '3'" class="review_value">No estimate provided</span>
+                                                        </td>
+                                                        <td *ngIf="f.type_of_question == '4'">{{f.question}}</td>
+                                                        <td *ngIf="f.type_of_question == '4'">{{f.review_value}}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </nb-card-body>
+                                    </nb-card>
+                                </div>
+                            </ng-template>
+                        </ngb-panel>
+
                         <ngb-panel *ngIf="showFeedbackCards == '1'" id="preventchange-7">
                             <ng-template ngbPanelTitle>
                                 <div class="row">

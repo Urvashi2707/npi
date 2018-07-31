@@ -105,8 +105,8 @@
               </tr>
       
             </table>
-            <table class="NoData" *ngIf="message">
-                {{message}}
+            <table class="NoData" *ngIf="MessageNoData">
+                {{MessageNoData}}
             </table>
             <ngx-spinner bdColor="rgba(51,51,51,0.09)" size="large" color="#ea5810" type="ball-clip-rotate-pulse"></ngx-spinner>
             <div class="paginate">
@@ -173,7 +173,7 @@
   </div>
   <div class="row">
     <div class="col-12 col-sm-12">
-        <div class="NoData" *ngIf="message"> {{message}}</div>
+        <div class="NoData" *ngIf="MessageNoData"> {{MessageNoData}}</div>
       <ul>
         <li *ngFor="let u of unconfirmed | filter:SearchData | paginate: { id: 'server', itemsPerPage:DataPerPage, currentPage: page + 1, totalItems: RecordCount };">
           <div class="card">

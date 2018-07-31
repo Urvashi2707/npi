@@ -8,7 +8,6 @@ export class ChauffeurService {
   constructor(private http: HttpClient) { }
   private _url :string = 'https://api.myjson.com/bins/tjkvh'
   employees = []
-
   public url:string='https://m.21north.in/notify/svcwebservice.php';
 
   public httpOptions = {
@@ -20,8 +19,4 @@ export class ChauffeurService {
     return this.http.post(this.url, reqpara, this.httpOptions);
   }
 
- 
-
-
-
-}
+ }

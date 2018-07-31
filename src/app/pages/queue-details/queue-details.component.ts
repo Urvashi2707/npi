@@ -38,6 +38,7 @@ export class QueueDetailsComponent implements OnInit {
   showAtSVCCard: String = '0';
   showNotesCard: String = '1';
   showFeedbackCards:string = "0";
+  showNewFeedbackCards:string = "0";
   showFeedbackCard: String = '0';
   showServiceCard: String = '0';
   showChauffeurCard: String = '0';
@@ -593,11 +594,23 @@ export class QueueDetailsComponent implements OnInit {
         // }
         if (objectlength > 12) {
           if (check[12].hasOwnProperty('newfeedback')) {
-            this.showFeedbackCards = "1";
+            this.showNewFeedbackCards = "1";
             this.feedback = check[12].newfeedback;
             if(check[12].newfeedback[0].hasOwnProperty('no_records'))
             {
+              this.showNewFeedbackCards = "0";
+            }
+            else{
+              if (objectlength > 11) {
+          if (check[11].hasOwnProperty('feedback')) {
+            this.showFeedbackCards = "1";
+            this.feedback = check[11].feedback;
+            if(check[11].feedback[0].hasOwnProperty('no_records'))
+            {
               this.showFeedbackCards = "0";
+            }
+          }
+        }
             }
           }
         }

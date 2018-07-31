@@ -3,8 +3,6 @@ import { HttpClient,HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Rx';
-import { Subject } from 'rxjs/Subject';
-import { Subscription, Subscriber } from 'rxjs';
 
 @Injectable()
 export class ServicingService {

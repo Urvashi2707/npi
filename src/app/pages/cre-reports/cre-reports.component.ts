@@ -15,6 +15,8 @@ export class CreReportsComponent implements OnInit {
   message:string;
   SearchData:string;
   CreReports:any =[];
+  key: string = 'first_name'; 
+  reverse: boolean = false;
 
   constructor(private spinner: NgxSpinnerService,
                 private _detailsTable: QueueTableService, 
@@ -32,6 +34,12 @@ export class CreReportsComponent implements OnInit {
     this.GlobalSvcId = JSON.parse(sessionStorage.getItem('globalsvcid'));
     this.GetCreData();
   }
+
+     //Sort   
+     sort(key){
+      this.key = key;
+      this.reverse = !this.reverse;
+    }
 
   GetCreData(){
     const reqpara3 = {
