@@ -211,7 +211,7 @@
       </ul>
       <ngx-spinner bdColor="rgba(51,51,51,0.09)" size="large" color="#ea5810" type="ball-clip-rotate-pulse"></ngx-spinner>
       <div class="paginate">
-        <pagination-controls (pageChange)="FilterCheck($event)" id="server" *ngIf="!message"></pagination-controls>
+        <pagination-controls (pageChange)="FilterCheck($event)" id="server" *ngIf="!MessageNoData"></pagination-controls>
       </div>
     </div>
   </div>

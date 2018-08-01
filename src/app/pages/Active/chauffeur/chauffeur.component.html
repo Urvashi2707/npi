@@ -178,7 +178,7 @@
   </div>
   <div class="row">
     <div class="col-12 col-sm-12">
-        <div class="NoData" *ngIf="message"> {{message}}</div>
+        <div class="NoData" *ngIf="MessageNoData"> {{MessageNoData}}</div>
       <ul>
         <li *ngFor="let i of chauffeur |filter:SearchData" (click)="openQDetails(i)">
           <div class="card">

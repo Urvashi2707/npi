@@ -9,7 +9,7 @@
           <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
             <div class="form-group">
               <div class="input-group">
-                <input class="form-control" name="dp" [ngModel]="model1" (ngModelChange)="onStrtSelectDate($event)" placeholder="{{pastdate | date: 'yyyy-MM-dd'}}"
+                <input class="form-control" name="dp" [ngModel]="model1" (ngModelChange)="onStrtSelectDate($event)" 
                   ngbDatepicker #d1="ngbDatepicker">
                 <div class="input-group-append">
                   <button class="btn btn-outline-secondary dateButton" (click)="d1.toggle()" type="button">
@@ -24,7 +24,7 @@
           <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
             <div class="form-group">
               <div class="input-group">
-                <input class="form-control" name="dp" [ngModel]="model" (ngModelChange)="onEndSelectDate($event)" placeholder="{{today | date: 'yyyy-MM-dd'}}"
+                <input class="form-control" name="dp" [ngModel]="model" (ngModelChange)="onEndSelectDate($event)" 
                   ngbDatepicker #d="ngbDatepicker">
                 <div class="input-group-append">
                   <button class="btn btn-outline-secondary dateButton" (click)="d.toggle()" type="button">
@@ -106,7 +106,7 @@
               </th>
             </thead>
             <tbody>
-              <tr *ngFor="let r of report | orderBy: key : reverse | paginate: { id: 'server', itemsPerPage:DataPerPage, currentPage: p + 1, totalItems: RecordCount }; let j = index" (click)="openQDetails(r)">
+              <tr *ngFor="let r of report | orderBy: key : reverse | paginate: { id: 'server', itemsPerPage:DataPerPage, currentPage: page + 1, totalItems: RecordCount }; let j = index" (click)="openQDetails(r)">
                 <td>{{r.id}}</td>
                 <td>{{r.cust_name}}</td>
                 <td *ngIf="!disableCust">{{r.cust_mobile}}</td>
@@ -121,7 +121,7 @@
             </table>
           <ngx-spinner bdColor="rgba(51,51,51,0.09)" size="large" color="#ea5810" type="ball-clip-rotate-pulse"></ngx-spinner>
           <div class="paginate">
-            <pagination-controls (pageChange)="search($event)" id="server"></pagination-controls>
+            <pagination-controls (pageChange)="Search($event)" id="server"></pagination-controls>
         </div>
         </div>
       </nb-card-body>
@@ -198,7 +198,7 @@
   <div class="col-12 col-sm-12">
       <div class="NoData" *ngIf="MessageNoData"> {{MessageNoData}}</div>
     <ul>
-      <li *ngFor="let r of report |filter:term | paginate: { id: 'server', itemsPerPage:DataPerPage, currentPage: p + 1, totalItems: RecordCount }; let j = index"  (click)="openQDetails(r)">
+      <li *ngFor="let r of report  | paginate: { id: 'server', itemsPerPage:DataPerPage, currentPage: page + 1, totalItems: RecordCount }; let j = index"  (click)="openQDetails(r)">
         <div class="card">
           <div class="row">
             <div class="col-12 col-sm-12">
@@ -230,7 +230,7 @@
     </ul>
     <ngx-spinner bdColor="rgba(51,51,51,0.09)" size="large" color="#ea5810" type="ball-clip-rotate-pulse"></ngx-spinner>
     <div class="paginate">
-      <pagination-controls (pageChange)="search($event)" id="server"></pagination-controls>
+      <pagination-controls (pageChange)="Search($event)" id="server"></pagination-controls>
   </div>
 </div>
 </div>

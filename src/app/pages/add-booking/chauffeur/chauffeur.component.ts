@@ -501,17 +501,27 @@ export class ChauffeurComponent implements OnInit {
       //API call for slots
       getSlot(Date: string) {
         this.showtime = true;
-        if (this.yourBoolean === 'servicing') {
-          this.pickup_drop = 0;
+        if(this.serviceType == '1'){
+          this.pickup_drop = 6;
         }
-        else {
-          this.pickup_drop = 1;
+        else if (this.serviceType == '2'){
+          this.pickup_drop = 7;
+        }
+        else if (this.serviceType == '3'){
+          this.pickup_drop = 4;
+        }
+        else if (this.serviceType == '4'){
+          this.pickup_drop = 5;
+        }
+        else if(this.serviceType == '15'){
+          this.pickup_drop = 15;
         }
         if (Date) {
           const reqpara5 = {
-            requesttype: 'getslots',
+            requesttype: 'getslotsv2',
             reqdate: Date,
-            pickup_drop: this.pickup_drop,
+            pickup_drop: "0",
+            type_service:this.pickup_drop,
             svcid: this.svcid
           }
           const as5 = JSON.stringify(reqpara5)

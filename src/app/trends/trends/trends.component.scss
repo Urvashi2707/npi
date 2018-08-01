@@ -1,12 +1,119 @@
 .filterRow{
     position: relative;
-    margin-top: 7rem;
+    position: relative;
+    margin-top: 5rem;
+    padding-top: 3rem;
+    padding-bottom: 1.5rem;
+}
+ select{
+    height: 30px;
+    font-size: 14px;
+    background-color: white;
+    // -webkit-appearance: none;
+    // -moz-appearance: none;
+    // appearance: none;
+    background-size: 12px;
+    padding-left: 4px;
+    padding-right: 24px;
+     /* SVG background image */
+//   background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='%238C98F2'><polygon points='0,0 100,0 50,50'/></svg>") no-repeat;
+    // background: url("../../../assets/images/caret-down.svg");
+}
+.sel-lbl::after{
+    content: "";
+    height: 10px;
+    width: 10px;
+    background: red;
+
+}
+.select {
+    height: 40px;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    border-radius: 3px;
+    margin-bottom: 1em;
+  }
+  
+  .select:after {
+    content: "\2C7";
+    padding: 12px 8px;
+    position: absolute;
+    top: -11px;
+    right: 55px;
+    font-size: 37px;
+    z-index: 1;
+    text-align: center;
+    width: 10%;
+    height: 100%;
+    pointer-events: none;
+
+  }
+.select__field {
+    height: 30px;
+    width: 79%;
+    padding: 5px 15px;
+    color: #616263;
+    background-color: white;
+    border: 1px solid #e3e3e3;
+    outline: none;
+    font-size: 14px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+  }
+.select__field::-ms-expand {
+    display: none;
+  }
+  
+  .select__field:focus:invalid {
+    border-color: #FD6347;
+  }
+  
+  .select__field:required:valid {
+    border-color: #006400;
+  }
+// .select:after {
+//     content: "▼";
+//     padding: 12px 8px;
+//     position: absolute;
+//     right: 10px;
+//     top: 0;
+//     z-index: 1;
+//     text-align: center;
+//     width: 10%;
+//     height: 100%;
+//     pointer-events: none;
+//   }
+.cityname{
+    font-weight:600;
 }
 .page{
     height: 100vh;
     padding-left: 1%;
     padding-right: 1%;
     background-color: #F5F8F8;
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    font-weight: 300;
+}
+th{
+    background-color: #D8DDDE;
+    border: 2px solid #F5F8F8;
+    border-collapse: collapse;
+    font-size:13px;
+}
+table,
+td {
+    background-color: white;
+    border: 2px solid #F5F8F8;
+    border-collapse: collapse;
+    font-size:13px;
+    font-weight: 500;
+}
+
+th,
+td {
+    padding: 15px;
 }
 .selectdiv:after {
     content: '\f078';

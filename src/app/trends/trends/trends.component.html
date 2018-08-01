@@ -1,34 +1,42 @@
 <app-navbar></app-navbar>
 <div class="page">
     <div class="row filterRow">
-        <div class="col-8 col-md-8 col-lg-8 col-sm-8">
-          <p *ngIf="is_default">{{defaultCity?.cityname}}</p>
-          <p *ngIf="!is_default">{{selectedCity.cityname}}</p>
+        <div class="col-7 col-md-7 col-lg-7 col-sm-7">
+          <p class="cityname" *ngIf="is_default">{{defaultCity?.cityname}}</p>
+          <p class="cityname" *ngIf="!is_default">{{selectedCity.cityname}}</p>
          </div>
+         <div class="col-2 col-md-2 col-lg-2 col-sm-2"></div>
+         <div class="col-1 col-md-1 col-lg-1 col-sm-1">
+            <span style="float: right;"> Filter : </span>
+        </div>
         <div class="col-2 col-md-2 col-lg-2 col-sm-2">
             <div>
-                <label>
-                    <select name="city1" id="city1" class="form-control selectdiv" [(ngModel)]="user.city" required #city1="ngModel" (change)="onCityChange($event)">
+                <label class="select">
+                    <select name="city1" id="city1"  [(ngModel)]="user.city" required #city1="ngModel" (change)="onCityChange($event)" class="select__field">
                         <option *ngFor="let d of cityList; let i = index" [value]="d.cityid">{{d.cityname}}</option>
                       </select>
                 </label>
               </div>
         </div>
-        <div class="col-2 col-md-2 col-lg-2 col-sm-4">
+        <!-- <div class="col-1 col-md-1 col-lg-1 col-sm-1">
+            <span style="float: right;"> Filter : </span>
+        </div>
+        <div class="col-2 col-md-2 col-lg-2 col-sm-2">
           <div>
-            <label>
-                <select name="serviceType" id="servicetype" class="form-control selectdiv" [(ngModel)]="user.service" required #servicetype="ngModel" (change)="onServiceType($event)">
+            <label class="select">
+                <select name="serviceType" id="servicetype" [(ngModel)]="user.service" required #servicetype="ngModel" (change)="onServiceType($event)" class="select__field">
                     <option *ngFor="let s of type_of_service; let i = index" [value]="s.id">{{s.service}}</option>
                   </select>
             </label>
           </div>
-        </div>
+        </div> -->
       </div>
       <div>
         <div>
           <table>
             <thead>
               <th>SVC Name</th>
+              <th>Account Manager</th>
               <th>Projected this month</th>
               <th>{{last_n_months[0]}}</th>
               <th>{{last_n_months[1]}}</th>
@@ -44,6 +52,7 @@
             <tbody>
               <tr *ngFor="let item of List">
                 <td>{{item.svcname}}</td>
+                <td>{{item.implant_name}}</td>
                 <td>{{item.projected}}</td>
                 <td>{{item.this_month}}</td>
                 <td>{{item.minus_1_month}}</td>

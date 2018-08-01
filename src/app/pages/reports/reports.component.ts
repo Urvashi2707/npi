@@ -24,6 +24,7 @@ export class ReportsComponent implements OnInit {
   MessageNoData: string;
   page:number = 1;
   user: any = {};
+  SearchData:string
   InsuranceUsr:string;
   InsuranceCheck:boolean = false;
   DataPerPage:string;

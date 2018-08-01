@@ -21,7 +21,12 @@ export class TrendsComponent implements OnInit {
   is_default:boolean = true;
   selectedCity:any;
 
-  constructor(private ServicingService: ServerService,private router: Router, private http: HttpClient,private spinner: NgxSpinnerService) {}
+  constructor(private ServicingService: ServerService,private router: Router, private http: HttpClient,private spinner: NgxSpinnerService) {
+    const el = document.getElementById('nb-global-spinner');
+    if (el) {
+      el.style['display'] = 'none';
+    }
+  }
 
   ngOnInit() {
     this.getCurrentMonth();
@@ -31,11 +36,11 @@ export class TrendsComponent implements OnInit {
     // this.getData("148");
     this.type_of_service = [{
       "id":0,
-      "service":"pickup",
+      "service":"Pickup",
     },
     {
       "id":1,
-      "service":"dropoff",
+      "service":"Dropoff",
     }];
     this.user.service =  this.type_of_service[0].id;
 
@@ -63,7 +68,7 @@ export class TrendsComponent implements OnInit {
           this.defaultCity = this.cityList[0];
           this.user.city = this.cityList[0].cityid;
           console.log("default",this.defaultCity);
-          this.getData(this.defaultCity.cityid,"0");
+          this.getData(this.defaultCity.cityid);
           for(var i = 0; i < this.cityList.length;i++){
             if(this.cityList[i].cityid == this.defaultCity.cityid ){
               this.selectedCity = this.cityList[i];
@@ -74,13 +79,13 @@ export class TrendsComponent implements OnInit {
       });
   }
 
-  getData(cityid,servicetype){
+  getData(cityid){
     this.List = [];
     const reqpara2 ={
       requesttype: 'gettrend',
       cityid:cityid,
       brandid:this.brandid,
-      puord:servicetype
+      puord:"0"
     }
     const as2 = JSON.stringify(reqpara2);
     this.ServicingService.webServiceCall(as2).subscribe(res =>{
@@ -100,7 +105,7 @@ export class TrendsComponent implements OnInit {
 onServiceType($event){
   console.log($event.target.value);
   this.spinner.show();
-  this.getData(this.user.city,$event.target.value,);
+  this.getData(this.user.city);
   
 }
 
@@ -108,7 +113,7 @@ onCityChange($event){
   this.is_default = false;
   console.log($event.target.value);
   this.spinner.show();
-  this.getData($event.target.value,this.user.service);
+  this.getData($event.target.value);
   for(var i = 0; i < this.cityList.length;i++){
     if(this.cityList[i].cityid == $event.target.value ){
       this.selectedCity = this.cityList[i];
