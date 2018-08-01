@@ -1,3 +1,23 @@
-<p>
-  trends works!
-</p>
+<app-navbar></app-navbar>
+<div class="row filterRow">
+  <div class="col-8 col-md-8 col-lg-8 col-sm-8">Benagaluru</div>
+  <div class="col-2 col-md-2 col-lg-2 col-sm-2">
+      <div class="selectdiv ">
+          <label>
+              <select name="city1" id="city1" class="form-control" required #city1 (change)="onCity($event)">
+                  <option *ngFor="let d of cityList; let i = index" [value]="d.cityid">{{d.cityname}}</option>
+                </select>
+          </label>
+        </div>
+  </div>
+  <div class="col-2 col-md-2 col-lg-2 col-sm-4">
+    <div class="selectdiv ">
+      <label>
+          <select name="city1" id="city1" class="form-control" required #city1 (change)="onCity($event)">
+              <option *ngFor="let d of cityList; let i = index" [value]="d.cityid">{{d.cityname}}</option>
+            </select>
+      </label>
+    </div>
+    
+  </div>
+</div>
