@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import {HttpClient,HttpHeaders,HttpErrorResponse} from '@angular/common/http';
-import {ServicingService} from '../../services/addServicing.service';
+import {ServicingService} from '../../pages/services/addServicing.service';
+
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
@@ -11,18 +12,22 @@ export class NavbarComponent implements OnInit {
 
   //variable
   brandid:string;
-  constructor() { }
+  constructor(
+    private router: Router,
+    private http: HttpClient,
+    private service: ServicingService
+  ) { }
 
   ngOnInit() {
     this.brandid = sessionStorage.getItem('brandid');
-    this.brandid = '29';
+    // this.brandid = '29';
   }
 
    //Get Color Legends for Dropoff Pie Chart
    GetBrandColor(brandid) { 
     switch (brandid) {
       case '19':
-        return '#ffa239';
+        return '#0D55F1';
       case '29':
         return '#c8e6c9';
       case '45':

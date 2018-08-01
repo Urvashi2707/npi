@@ -11,6 +11,7 @@ import { HttpModule } from '@angular/http';
 import { CoreModule } from './@core/core.module';
 import {ServerService } from './pages/services/user.service';
 import { AppComponent } from './app.component';
+import {ServicingService} from './pages/services/addServicing.service';
 import { AppRoutingModule } from './app-routing.module';
 import { ThemeModule } from './@theme/theme.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -111,7 +112,7 @@ import { TestserviceService } from './testservice.service';
   bootstrap: [AppComponent],
 
   providers: [
-    { provide: APP_BASE_HREF, useValue: '/' }, ServerService,CookieService, TestserviceService
+    { provide: APP_BASE_HREF, useValue: '/' }, ServerService,CookieService, TestserviceService,ServicingService
   ]
 })
 export class AppModule {

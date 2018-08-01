@@ -20,16 +20,15 @@ li a {
     display: block;
     color: white;
     text-align: center;
-    padding: 14px 16px;
-   
+    padding-top: 6%;
     text-decoration: none;
     height: 90px;
 }
 
 li a:hover:not(.active) {
-    background-color: #111;
+    // background-color: #111;
 }
 
 .active {
-    background-color: #4CAF50;
+    // background-color: #4CAF50;
 }

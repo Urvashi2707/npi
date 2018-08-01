@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {ServerService} from '../../pages/services/user.service';
 import { Router } from '@angular/router';
+import {HttpClient,HttpHeaders,HttpErrorResponse} from '@angular/common/http';
+
 @Component({
   selector: 'app-trends',
   templateUrl: './trends.component.html',
@@ -12,10 +14,11 @@ export class TrendsComponent implements OnInit {
   cityList:any = [];
   user:any;
 
-  constructor(private ServicingService: ServerService,private router: Router,) {}
+  constructor(private ServicingService: ServerService,private router: Router, private http: HttpClient,) {}
 
   ngOnInit() {
     this.getCity();
+    this.getData();
   }
 
 
@@ -36,4 +39,10 @@ export class TrendsComponent implements OnInit {
       });
   }
 
+  getData(){
+    this.http.get('https://api.myjson.com/bins/n8m2w').subscribe(res =>{
+    console.log(res);
+  });
+
+}
 }
