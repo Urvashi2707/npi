@@ -20,7 +20,7 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit() {
     this.brandid = sessionStorage.getItem('brandid');
-    // this.brandid = '29';
+    // this.brandid = '27';
   }
 
    //Get Color Legends for Dropoff Pie Chart
@@ -28,8 +28,8 @@ export class NavbarComponent implements OnInit {
     switch (brandid) {
       case '19':
         return '#0D55F1';
-      case '29':
-        return '#c8e6c9';
+      case '27':
+        return '#FE1616';
       case '45':
         return '#81c784';
       case '66':

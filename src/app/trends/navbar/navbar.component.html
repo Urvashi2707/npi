@@ -1,6 +1,10 @@
-<ul [style.background-color]="GetBrandColor(brandid)">
-    <li><a class="active" href="#home">Logo</a></li>
-    <li><a href="#news">Text</a></li>
-    <li><a href="#about">
-      <button (click)="LogoutDest()">Logout</button></a></li>
+<ul [style.background-color]="GetBrandColor(brandid)" style="z-index: 9;">
+    <li><a>
+        <div class="brandHyundialogo" *ngIf="brandid === '19'"><img src="../../../assets/images/Hyundai_white.png" class="brandHyundai"/></div>
+        <div class="brandlogo" *ngIf="brandid === '27'"><img src="../../../assets/images/Mahindra_white.svg" class="brandMahindra"/></div>
+        <div><img></div></a></li>
+    <li><a>
+        <p class="title">LAST 10 MONTHS REPORT</p></a></li>
+    <li><a>
+      <button (click)="LogoutDest()" [style.background-color]="GetBrandColor(brandid)" class="logout">Logout</button></a></li>
   </ul>
