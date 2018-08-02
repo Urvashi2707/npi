@@ -64,6 +64,12 @@ export class TrendsComponent implements OnInit {
         }
         else {
           this.cityList = res[0].citylist;
+          this.cityList.sort();
+          // console.log("sort", this.cityList[0].cityName.sort());
+          let city_sort = this.cityList; 
+           let fld = 'cityname';
+            console.log(this.cityList.sort((a, b) => (a[fld] || "").toString().localeCompare((b[fld] || "").toString())));
+
           console.log("trend",this.cityList);
           this.defaultCity = this.cityList[0];
           this.user.city = this.cityList[0].cityid;
