@@ -834,15 +834,15 @@ public getCity() {
               this.showAddressDropDown = true;
               this.showEditAddress = true;
               this.addressPickup = this.address[0];
-              this.user.addresspu = this.addressPickup;
+              this.user.addresspu = this.addressPickup.address_id;
               this.user.pickupdoor = this.addressPickup.doornumber;
               this.user.pickupstreet = this.addressPickup.street;
               this.user.pickuparea = this.addressPickup.area;
               this.user.pickuplandmark = this.addressPickup.landmark;
               this.user.pickuppincode = this.addressPickup.pincode;
               for(let i = 0; i < this.addresstype.length;i ++){
-                if(this.addresstype[i].id == this.addressPickup.address_id){
-                  this.user.addresspu = this.addresstype[i].id;
+                if(this.addresstype[i].type_of_address == this.addressPickup.type_of_address){
+                  // this.user.addresspu = this.addresstype[i].id;
                   this.user.addresstypepu = this.addresstype[i].id;
                 }
               }
@@ -850,6 +850,7 @@ public getCity() {
               this.user.address_typepu = this.addressPickup.address_id;
               this.addressDropoff = this.address[0];
                 if(this.addressDropoff != undefined){
+                  this.user.addressdu = this.addressDropoff.address_id;
                   this.user.dropofffdoor = this.addressDropoff.doornumber;
                   this.user.dropoffstreet = this.addressDropoff.street;
                   this.user.dropoffarea = this.addressDropoff.area;
@@ -858,8 +859,8 @@ public getCity() {
                   this.user.droplatlong = this.addressDropoff.latitude + ',' +this.addressDropoff.longitude;
                   this.user.address_typedu = this.addressDropoff.address_id;
                   for(let i = 0; i < this.addresstype.length;i ++){
-                    if(this.addresstype[i].id == this.addressDropoff.address_id){
-                      this.user.addressdu = this.addresstype[i].id;
+                    if(this.addresstype[i].type_of_address == this.addressDropoff.type_of_address){
+                      // this.user.addressdu = this.addresstype[i].id;
                       this.user.addresstypedu = this.addresstype[i].id;
                     }
                   }
