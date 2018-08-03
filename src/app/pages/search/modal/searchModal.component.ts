@@ -259,7 +259,7 @@ export class SearchModalComponent implements OnInit {
       }
       const us = JSON.stringify(frmData);
       console.log(us);
-      this.http.post('http://m.21north.in/notify/uploadfile.php', frmData,this.httpOptions).subscribe(
+      this.http.post('https://m.21north.in/notify/uploadfile.php', frmData,this.httpOptions).subscribe(
         data => {
           this.sMsg = data as string;
           console.log (this.sMsg);
@@ -305,7 +305,7 @@ export class SearchModalComponent implements OnInit {
     }
     const us = JSON.stringify(frmData);
     console.log(us);
-    this.http.post('http://m.21north.in/notify/uploadfile.php', frmData,this.httpOptions).subscribe(
+    this.http.post('https://m.21north.in/notify/uploadfile.php', frmData,this.httpOptions).subscribe(
       data => {
         this.sMsg = data as string;
         console.log (this.sMsg);
