@@ -18,7 +18,7 @@
 <nb-card *ngIf="showAnimation==0">
     <nb-card-body>
         <form #f="ngForm" (ngSubmit)="onSubmit(f)" [formGroup]="number_formgroup">
-            <div *ngIf="showAnimation==0" class="col-lg-6 col-md-6 col-sm-6 col-xs-6" style="margin-left: 18%">
+            <div *ngIf="showAnimation==0" class="col-lg-6 col-md-6 col-sm-6 col-8" style="margin-left: 18%">
                 <div class="form-group">
                     <label>Enter Mobile Number</label>
                     <input type="number" class="form-control" formControlName="mobile_number" value="{{modalContent}}">

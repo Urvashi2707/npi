@@ -37,7 +37,7 @@
     <form ngNativeValidate #f="ngForm" (ngSubmit)="uploadFilesInv(f)" *ngIf="modalContent.service_status == 1 || modalContent.service_status == 2">
         <div class="modalDiv"  *ngIf="modalContent.service_status == 1 || modalContent.service_status == 2">
             <div class="row">
-                <div class="col-lg-6 col-md-6 col-sm-6 col-2">
+                <div class="col-lg-6 col-md-6 col-sm-6 col-12">
                     <div class="form-group">
                         <label style="font-size: 12px;padding-left: 2%;margin-bottom: 0px;" for="queue_id">Queue ID</label>
                         <input type="text" id="queue_id" class="form-control" [readonly]="true" name="queue_id" [(ngModel)]="modalContent.id" #queue_id="ngModel"

@@ -3,7 +3,16 @@
 @import '~@nebular/theme/styles/global/bootstrap/breakpoints';
 
 
-
+.BtnEditPickup{
+  background-color: white;
+  border-color: white;
+  margin-top: 12%;
+  margin-left: 62%;
+}
+.PickupPencilIcon{
+  color: #ffa100;
+  font-size: 1.5rem;
+}
 
 
 .star {
@@ -135,7 +144,7 @@ h6 {
     tr.question>td {
         padding-bottom: 1em;
     }
-   
+
 }
 @media only screen and (max-width: 420px) {
     .form-group{
@@ -149,6 +158,19 @@ h6 {
   }
   .form-control{
       font-size: 11px;
+  }
+  .EditPickupCol{
+    padding: 0px;
+  }
+  .BtnEditPickup{
+    background-color: white;
+    border-color: white;
+    margin-top: 10%;
+    margin-left: 9%;
+  }
+  .PickupPencilIcon{
+    color: #ffa100;
+    font-size: 1.0rem;
   }
   .choice{
     font-size: 7px;

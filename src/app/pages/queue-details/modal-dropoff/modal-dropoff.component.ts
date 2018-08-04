@@ -127,9 +127,10 @@ export class ModalDropoffComponent implements OnInit {
     
     if (Date) {
       const reqpara5 = {
-        requesttype: 'getslots',
+        requesttype: 'getslotsv2',
         reqdate: Date,
         pickup_drop: this.pickup_drop,
+        type_service:1,
         svcid:this.svcid
       }
       const as5 = JSON.stringify(reqpara5)

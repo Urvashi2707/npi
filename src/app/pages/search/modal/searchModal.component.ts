@@ -134,9 +134,10 @@ export class SearchModalComponent implements OnInit {
   getSlot(Date:string){
       if(Date){
       const reqpara5 = {
-        requesttype: 'getslots',
+        requesttype: 'getslotsv2',
         reqdate:Date,
         pickup_drop:1,
+        type_service:1,
         svcid:this.globalsvcid
         }
     const as5 = JSON.stringify(reqpara5)

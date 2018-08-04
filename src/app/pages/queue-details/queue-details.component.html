@@ -96,16 +96,16 @@
                                             <form [formGroup]="pickCardForm">
                                                 <div class="finput-group input-group-fill-only">
                                                     <div class="row">
-                                                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                                        <div class="col-lg-2 col-md-2 col-sm-2 col-2">
                                                             <label class="labels" for="exampleInputEmail1">Address</label>
                                                         </div>
-                                                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                        <div class="col-lg-8 col-md-8 col-sm-8 col-8">
                                                             <input type="text" class="form-control" formControlName="pickupAddress" name="pickupAddress" placeholder="Pickup Address">
                                                         </div>
-                                                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                                        <div class="col-lg-2 col-md-2 col-sm-2 col-2 EditPickupCol">
                                                             <span *ngIf="sysClicked == 7 ">
-                                                                <button type="button" (click)=" showpickupModal(pickupInfo[0])" style="background-color: white;border-color: white;margin-top: 12%;margin-left: 62%;">
-                                                                    <i class="fa fa-pencil" style="color:#ffa100;font-size: 1.5rem;"></i>
+                                                                <button type="button" class="BtnEditPickup" (click)=" showpickupModal(pickupInfo[0])">
+                                                                    <i class="fa fa-pencil PickupPencilIcon"></i>
                                                                 </button>
                                                             </span>
                                                         </div>
@@ -223,16 +223,16 @@
                                             <form [formGroup]="dropoffForm">
                                                 <div class="finput-group input-group-fill-only">
                                                     <div class="row">
-                                                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                                        <div class="col-lg-2 col-md-2 col-sm-2 col-2">
                                                             <label class="labels" for="exampleInputEmail1">Address</label>
                                                         </div>
-                                                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                        <div class="col-lg-8 col-md-8 col-sm-8 col-8">
                                                             <input type="text" class="form-control" formControlName="dropAddress" id="dropAddress" placeholder="Drop-off Address">
                                                         </div>
-                                                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                                        <div class="col-lg-2 col-md-2 col-sm-2 col-2 EditPickupCol">
                                                             <span *ngIf="sysClicked == 7 ">
-                                                                <button type="button" (click)=" showdropoffModal(dropInfo[0])" style="background-color: white;border-color: white;margin-top: 12%;margin-left: 62%;">
-                                                                    <i class="fa fa-pencil" style="color:#ffa100"></i>
+                                                                <button type="button" class="BtnEditPickup" (click)="showdropoffModal(dropInfo[0])">
+                                                                    <i class="fa fa-pencil PickupPencilIcon" style="color:#ffa100"></i>
                                                                 </button>
                                                             </span>
                                                         </div>
@@ -375,13 +375,13 @@
                                             <form [formGroup]="creFormGroup">
                                                 <div class="finput-group input-group-fill-only">
                                                     <div class="row">
-                                                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                                        <div class="col-lg-2 col-md-2 col-sm-2 col-2">
                                                             <label class="labels" for="exampleInputEmail1">CRE Name</label>
                                                         </div>
-                                                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                        <div class="col-lg-8 col-md-8 col-sm-8 col-8">
                                                             <input type="text" class="form-control" formControlName="creName" id="creName" placeholder="CRE Name">
                                                         </div>
-                                                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                                        <div class="col-lg-2 col-md-2 col-sm-2 col-2 EditPickupCol">
                                                             <span *ngIf="sysClicked == 7 ">
                                                                 <button type="button" (click)=" showdAdv(advInfo[0])" style="background-color: white;border-color: white;">
                                                                     <i class="fa fa-pencil" style="color:#ffa100"></i>

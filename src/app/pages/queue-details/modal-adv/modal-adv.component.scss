@@ -160,3 +160,315 @@ input:checked + .slider:before {
  .timeRow a:active{
   background-color:green;
  }
+ @media only screen and (max-width: 420px) {
+  .SlotCol{
+      margin-left: 0%;
+  }
+.form-group{
+ margin-bottom: 1.5rem;   
+ margin-top: .5rem;
+}
+.form-control {
+ max-height: 35px;
+ width: 100%;
+ font-size: 12px;
+}
+.form-control{
+ font-size: 11px;
+}
+.EditPickupCol{
+padding: 0px;
+}
+.BtnEditPickup{
+background-color: white;
+border-color: white;
+margin-top: 10%;
+margin-left: 9%;
+}
+.PickupPencilIcon{
+color: #ffa100;
+font-size: 1.0rem;
+}
+.choice{
+font-size: 7px;
+border: 1px solid #FF8400;
+padding-bottom: 4px;
+padding: 5px;
+color: white;
+background-color: #FF8400;
+border-radius: 8PX;
+}
+.logo{
+float:right;
+}
+table{
+font-size: 12px;
+}
+.handed{
+font-size: 15px;
+margin-top:0.5em;
+margin-bottom:0.5em
+}
+.input-group-append{
+ width: 20%;
+}
+.sameasDiv{
+padding-bottom: 1.0rem;
+}
+input[type=text],
+input[type=email],
+input[type=number],
+textarea,
+fieldset {
+/* required to properly style form 
+elements on WebKit based browsers */
+-webkit-appearance: none;
+
+width : 100%;
+border: 2px solid #dadfe6;;
+margin: 0;
+font-family: inherit;
+font-size: 69%;
+
+-moz-box-sizing: border-box;
+box-sizing: border-box;
+}
+.haserror{
+ color:red;
+ font-size: 10px;
+}
+.form-control-placeholder {
+ position: absolute;
+ top: 0;
+ padding: 7px 0 0 13px;
+ transition: all 200ms;
+ opacity: 0.5;
+ font-size:12px;
+}
+.slider:before {
+position: absolute;
+content: "";
+height: 15px;
+width: 15px;
+left: 4px;
+bottom: 4px;
+background-color: white;
+-webkit-transition: .4s;
+transition: .4s;
+}
+.TextReview{
+padding: 2px;
+border-bottom: 1px solid orange;
+}
+.custom-control-description{
+font-size: 10px;
+}
+nb-tabset{
+/deep/ ul{
+ font-size: 11px;
+}
+}
+.btn {
+ color: #ffffff;
+ text-transform: uppercase;
+ letter-spacing: 0.4px;
+ font-weight: 500;
+ font-family: Exo;
+ border: 1px solid transparent;
+ transition: none;
+ cursor: default;
+ padding: 0.60rem 1rem;
+ font-size: .7rem;
+ line-height: 1.25;
+ border-radius: 0.375rem;
+}
+.labels {
+margin-top: 1em;
+font-size: 12px;
+}
+.switchlabel{
+margin-left:.5rem;
+margin-bottom: -0.5rem;
+font-size:10px;
+}
+.switch{
+position: relative;
+display: inline-block;
+width: 52px;
+height: 23px;
+}
+.switchCol{
+margin-bottom: 1.0rem;
+}
+.form-group select{
+font-size: 10px;
+padding: 0px;
+padding-left: 5%;
+}
+.NextRow{
+padding-bottom: 1.5rem;
+}
+.sameas{
+padding-bottom: 1.0rem;
+}
+.creContainer{
+width: 100%;
+display: inline-flex;
+}
+.creContainer select{
+font-size: 10px;
+padding: 0px;
+}
+.AddUserCre{
+width: 100%;
+display: inline-flex;
+padding-right: 4%;
+padding-bottom: 1.0rem;
+}
+.AddUserCreModal{
+width:20%;
+display:inline-block;
+}
+.creCol{
+padding-bottom: 1.0rem;
+}
+.AddUserRow{
+width: 85%;
+padding-right: 3%;
+display: inline-block;
+}
+.AddUserRow select{
+font-size: 10px;
+padding: 0px;
+}
+.line{
+padding-bottom: .5rem;
+margin-bottom: 3%;
+margin-top: 3%;
+}
+.AddSalesBtn{
+display: inline-block;
+margin: 0px;
+}
+.cssselect select{
+font-size: 10px;
+padding: 0px;
+}
+.CusSalutation{
+
+}
+.CountryCode{
+display:inline-block;
+max-width: 16%;
+}
+.countryCode{
+display:inline-block;
+max-width: 16%;
+}
+.countryCodelabel{
+font-size: 12px;
+padding-left: 2%;
+margin-bottom: 0px;
+}
+.mobile1{
+display:inline-block;
+min-width:58%;
+}
+.addNumber{
+display:inline-block; 
+margin:3%;
+}
+.CoordinatorName{
+display:inline-block;
+
+min-width:81%
+
+}
+.dateButton{
+height: 97%;
+border-radius: 0px;
+}
+.CoordinatorMobile{
+display:inline-block;
+min-width: 81%;
+}
+.AmbLabel{
+margin-left:1.5rem;
+margin-bottom: -0.5rem;
+font-size: 11px;
+margin-top: 6%;
+}
+.AmbRow{
+padding-bottom: 5%;
+}
+.CusSalutation{
+display:inline-block;
+min-width:15%;
+}
+.CusName{
+display:inline-block;
+min-width:80%;
+}
+.salesExec{
+display:inline-block;
+width:81% !important;
+}
+.sectionHeader{
+font-size: 1.0rem;
+font-weight: 500;
+padding-bottom: 2%;
+}
+input::placeholder {
+font-size: 12px;
+}
+.btn.btn-warning{
+margin-top: .5rem;
+margin-bottom: .5rem;
+}
+.AddUserCre{
+width: 100%;
+display: inline-flex;
+padding-right: 4%;
+padding-bottom: 1.0rem;
+}
+.AddUserCreModal{
+width:20%;
+display:inline-block;
+}
+.salesExeBtn{
+display:inline-block;
+}
+.timeAnchor{
+padding:6px !important;
+border: 1px solid #ececec;
+border-radius: 5px;
+font-size: 8px;
+}
+.timeRow a:hover{
+background-color:#dadde6;
+}
+.timeRow a:visited{
+background-color:#ffcc00;
+
+}
+.timeRow a:active{
+background-color:green;
+}
+.custinfo{
+font-size: 12px;
+.CustName{
+   font-size: 15px;
+   font-weight: 500;
+}
+}
+table{
+min-height: 70px;
+width: 100%;
+margin-bottom: 10px;
+}
+.table td {
+padding: 6px !important; 
+vertical-align: top;
+border-top: 1px solid #e9ecef;
+}
+}
