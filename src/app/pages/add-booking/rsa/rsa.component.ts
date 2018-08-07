@@ -150,26 +150,6 @@ export class RsaComponent implements OnInit {
     headers: new HttpHeaders().set('x-auth-token', JSON.stringify(localStorage.getItem('token')))
   }
 
-  // getModelds(ModelId: number) {
-  //   const reqpara2 = {
-  //     requesttype: 'getmodels',
-  //     brandid: this.selectedBrand
-  //   }
-  //   const as2 = JSON.stringify(reqpara2)
-  //   this.ServicingService.getModels(as2).subscribe(res => {
-  //     if (res[0].login === 0) {
-  //       sessionStorage.removeItem('currentUser');
-  //       this.router.navigate(['/auth/login']);
-  //     }
-  //     else {
-  //       this.Models = res[0].models,
-  //         console.log(this.Models);
-
-
-  //     }
-
-  //   });
-  // }
   private showToast(type: string, title: string, body: string) {
     this.config = new ToasterConfig({
       positionClass: this.position,
@@ -264,21 +244,17 @@ export class RsaComponent implements OnInit {
     const as1 = JSON.stringify(reqpara1)
     this.ServicingService.webServiceCall(as1).subscribe
       (res => {
-        // console.log(res[0].login);
         if (res[0].login === 0) {
           sessionStorage.removeItem('currentUser');
           this.router.navigate(['/auth/login']);
         }
         else {
-          this.brands = res[0].allbrands,
-            this.selectedBrand = this.brands[0].brand_id;
-            console.log(this.selectedBrand);
-            this.getModelds(this.selectedBrand);
-            // this.GetSVCList1(this.selectedBrand,this.user.city);
+          this.brands = res[0].allbrands;
+            // this.selectedBrand = this.brands[0].brand_id;
+            // console.log(this.selectedBrand);
+            // this.getModelds(this.selectedBrand);
         }
-
-      }
-      );
+      });
   }
 
   GetSVCList1(brand,city){
@@ -662,7 +638,7 @@ export class RsaComponent implements OnInit {
   }
   someFunction() {
     const reqpara = {
-     requesttype: 'getcustinfo',
+     requesttype: 'getcustinfo_mobilev2',
      vehnumber: this.registrationNumber,
      mobilenumber: this.user.mobile1,
      svcid:this.svcid
@@ -676,46 +652,36 @@ export class RsaComponent implements OnInit {
      else {
        this.customer = data
        if (this.customer[1].custinfo[0].no_records) {
-         // console.log('no records');
-         this.cust_details.mobile = this.user.mobile1
+         this.cust_details.mobile = this.user.mobile1;
        }
-       else {
-         this.cust_details = this.customer[1].custinfo[0],
-        //    this.address = this.customer[2].addresses[0]
-        //  this.user.pickuploc = this.address.paddy,
-        //    this.user.picklatlong = this.address.plat + ',' + this.address.plong
-        //  this.user.dropoff_location = this.address.daddy,
-        //    this.user.dropofflatlong = this.address.dlat + ',' + this.address.dlat,
-           this.carinfo = this.customer[3].carinfo[0];
-           console.log(this.carinfo);
-         this.selectedModel = this.carinfo.veh_model_id;
-         this.selectedVariant = this.carinfo.veh_submodel_id;
-         // console.log(this.selectedModel);
-         this.getVariants(this.selectedModel);
-         for (let i = 0; i < this.Models.length; i++) {
-           if (this.Models[i].id === this.selectedModel) {
-             this.selectedModel = this.Models[i].id ;
-           }
-         }
+       else{
+        this.cust_details = this.customer[1].custinfo[0];
        }
-
-     }
-
-
-   },
+       this.carinfo = this.customer[4].carinfo[0];
+       console.log(this.carinfo);
+       if(this.carinfo.hasOwnProperty('no_records')){
+        this.selectedBrand  = sessionStorage.getItem('brandid');
+         console.log(this.selectedBrand )
+         this.getModelds(this.selectedBrand );
+      }
+          else{
+            this.selectedModel = this.carinfo.veh_model_id;
+            this.selectedVariant = this.carinfo.veh_submodel_id;
+            this.getVariants(this.selectedModel);
+            for (let i = 0; i < this.Models.length; i++) {
+              if (this.Models[i].id === this.selectedModel) {
+                this.selectedModel = this.Models[i].id ;
+              }
+            }
+          }
+        }
+      },
      (err: HttpErrorResponse) => {
        if (err.error instanceof Error) {
-         // console.log("Client-side error occured.");
        }
-       else {
-         // console.log("Server-side error occured.");
-       }
-     }
-   );
-
-   // this.showstep3 = true;
-
- }
+       else {}
+     }); 
+  }
  showLargeModal(res: any, notes: string) {
   const activeModal = this.modalService.open(BookingDetails, { size: 'lg', container: 'nb-layout' });
   activeModal.componentInstance.modalHeader = 'Booking Details';

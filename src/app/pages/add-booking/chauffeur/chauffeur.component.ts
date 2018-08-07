@@ -600,15 +600,24 @@ export class ChauffeurComponent implements OnInit {
                   }
               console.log(this.addressDropoff);
             }
-            this.carinfo = this.customer[4].carinfo[0]
-            this.selectedModel = this.carinfo.veh_model_id;
-            this.selectedVariant = this.carinfo.veh_submodel_id;
-            this.getVariants(this.selectedModel);
-            for (let i = 0; i < this.Models.length; i++) {
-              if (this.Models[i].id === this.selectedModel) {
-                this.selectedModel = this.Models[i].id ;
+            this.carinfo = this.customer[4].carinfo[0];
+            console.log( this.carinfo);
+            if(this.carinfo.hasOwnProperty('no_records')){
+              this.selectedBrand  = sessionStorage.getItem('brandid');
+               console.log(this.selectedBrand )
+               this.getModelds(this.selectedBrand );
+            }
+            else{
+              this.selectedModel = this.carinfo.veh_model_id;
+              this.selectedVariant = this.carinfo.veh_submodel_id;
+              this.getVariants(this.selectedModel);
+              for (let i = 0; i < this.Models.length; i++) {
+                if (this.Models[i].id === this.selectedModel) {
+                  this.selectedModel = this.Models[i].id ;
+                }
               }
             }
+          
           }
         }},
         (err: HttpErrorResponse) => {

@@ -876,16 +876,25 @@ public getCity() {
                 }
           }
           this.carinfo = this.customer[4].carinfo[0];
-          this.selectedBrand = this.carinfo.brand_id;
-          this.getModelds(this.selectedBrand);
-          this.selectedModel = this.carinfo.veh_model_id;
-          this.selectedVariant = this.carinfo.veh_submodel_id;
-          this.getVariants(this.selectedModel);
-          for (let i = 0; i < this.Models.length; i++) {
-            if (this.Models[i].id === this.selectedModel) {
-              this.selectedModel = this.Models[i].id ;
+          console.log( this.carinfo);
+          if(this.carinfo.hasOwnProperty('no_records')){
+            this.selectedBrand  = sessionStorage.getItem('brandid');
+             console.log(this.selectedBrand )
+             this.getModelds(this.selectedBrand );
+          }
+          else{
+            this.selectedBrand = this.carinfo.brand_id;
+            this.getModelds(this.selectedBrand);
+            this.selectedModel = this.carinfo.veh_model_id;
+            this.selectedVariant = this.carinfo.veh_submodel_id;
+            this.getVariants(this.selectedModel);
+            for (let i = 0; i < this.Models.length; i++) {
+              if (this.Models[i].id === this.selectedModel) {
+                this.selectedModel = this.Models[i].id ;
+              }
             }
           }
+        
         }
       }},
       (err: HttpErrorResponse) => {
