@@ -287,8 +287,8 @@
                         <div class="form-group">
                             <input type="text" id="pickupdoor" class="form-control" name="pickupdoor" maxlength="6" required 
                                 [(ngModel)]="user.pickupdoor" #pickupdoor="ngModel">
-                            <label class="form-control-placeholder" for="pickupdoor">Pickup Door Number/Flat Number
-                              *</label>
+                            <label class="form-control-placeholder" for="pickupdoor">Pickup Door Number/Flat Number*
+                              </label>
                         </div>
                         <div class="form-control-feedback" *ngIf="pickupdoor.errors && (pickupdoor.dirty || pickupdoor.touched)">
                             <p *ngIf="!pickupdoor.errors.required" class="haserror">Pickup Door Number/Flat Number
@@ -309,7 +309,7 @@
                     <div class="col-md-6 col-lg-6 col-sm-6">
                         <div class="form-group">
                             <input type="text" id="id" class="form-control" required name="pickuparea" maxlength="70" #pickuparea="ngModel" [(ngModel)]="user.pickuparea">
-                            <label class="form-control-placeholder" for="id">Pickup Area/Locality </label>
+                            <label class="form-control-placeholder" for="id">Pickup Area/Locality* </label>
                         </div>
                         <div class="form-control-feedback" *ngIf="pickuparea.errors && (pickuparea.dirty || pickuparea.touched)">
                             <p *ngIf="!pickuparea.errors.required" class="haserror">Pickup Area/Locality  is required</p>
@@ -333,7 +333,7 @@
                         <div class="form-group">
                             <input type="text" id="id" class="form-control" name="picklatlong" #picklatlong="ngModel" [(ngModel)]="user.picklatlong"
                               pattern="^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?),\s*[-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)$" required>
-                            <label class="form-control-placeholder" for="id">Pickup lat,long (12.99,77.6611)</label>
+                            <label class="form-control-placeholder" for="id">Pickup lat,long* (12.99,77.6611)</label>
                         </div>
                     </div>
                 </div>
@@ -386,7 +386,7 @@
                     <div class="col-md-6 col-lg-6 col-sm-6">
                         <div class="form-group">
                             <input type="text" id="id" class="form-control" name="droplatlong" #droplatlong="ngModel" [(ngModel)]="user.droplatlong"  pattern="^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?),\s*[-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)$" required>
-                            <label class="form-control-placeholder" for="id">Dropoff lat,long (12.99,77.6611)</label>
+                            <label class="form-control-placeholder" for="id">Dropoff lat,long* (12.99,77.6611)</label>
                         </div>
                         <div class="form-control-feedback" *ngIf="droplatlong.errors && (droplatlong.dirty || droplatlong.touched)">
                             <p *ngIf="!droplatlong.errors.required" class="haserror">format is wrong</p>
@@ -533,8 +533,8 @@
                         <div class="form-group">
                             <input type="text" id="id" class="form-control" required name="pickupstreet" maxlength="70" #pickupstreet="ngModel" [(ngModel)]="user.pickupstreet"
                             (ngModelChange)="changeEditupstreet($event)">
-                            <label class="form-control-placeholder" for="id">Pickup Apartment Name/Street Name
-                              *</label>
+                            <label class="form-control-placeholder" for="id">Pickup Apartment Name/Street Name*
+                              </label>
                         </div>
                         <div class="form-control-feedback" *ngIf="pickupstreet.errors && (pickupstreet.dirty || pickupstreet.touched)">
                             <p *ngIf="!pickupstreet.errors.required" class="haserror">Pickup Apartment Name/Street Name
@@ -547,8 +547,8 @@
                         <div class="form-group">
                             <input type="text" id="id" class="form-control" required name="pickuparea" maxlength="70" #pickuparea="ngModel" [(ngModel)]="user.pickuparea"
                             (ngModelChange)="changeEditpickuparea($event)">
-                            <label class="form-control-placeholder" for="id">Pickup Area/Locality 
-                              *</label>
+                            <label class="form-control-placeholder" for="id">Pickup Area/Locality* 
+                              </label>
                         </div>
                         <div class="form-control-feedback" *ngIf="pickuparea.errors && (pickuparea.dirty || pickuparea.touched)">
                             <p *ngIf="!pickuparea.errors.required" class="haserror">Pickup Area/Locality 
@@ -579,14 +579,14 @@
                         </div>
                     </div>
                 </div>
-
+<!-- 
                 <div>
                     <label class="custom-control custom-checkbox">
                         <input type="checkbox" class="custom-control-input" name="sameas" #same (click)="sameAsPickup(same.checked)">
                         <span class="custom-control-indicator"></span>
                         <span class="custom-control-description">Drop Location is same as Pickup</span>
                     </label>
-                </div>
+                </div> -->
            
            
                 <div class="row">
@@ -594,8 +594,8 @@
                         <div class="form-group">
                             <input type="text" id="dropofffdoor" class="form-control" name="dropofffdoor" required 
                                 [(ngModel)]="user.dropofffdoor" #dropofffdoor="ngModel" maxlength="6" (ngModelChange)="changeEditdropoffdoor($event)">
-                            <label class="form-control-placeholder" for="dropofffdoor">Dropoff Door Number/Flat Number
-                              *</label>
+                            <label class="form-control-placeholder" for="dropofffdoor">Dropoff Door Number/Flat Number*
+                              </label>
                         </div>
                         <div class="form-control-feedback" *ngIf="dropofffdoor.errors && (dropofffdoor.dirty || dropofffdoor.touched)">
                             <p *ngIf="!dropofffdoor.errors.required" class="haserror">Dropoff Door Number/Flat Number
@@ -616,7 +616,7 @@
                     <div class="col-md-6 col-lg-6 col-sm-6">
                         <div class="form-group">
                             <input type="text" id="id" class="form-control" name="dropoffarea" maxlength="70" required #dropoffarea="ngModel" [(ngModel)]="user.dropoffarea" (ngModelChange)="changeEditdropoffarea($event)">
-                            <label class="form-control-placeholder" for="id">Dropoff Area/Locality *</label>
+                            <label class="form-control-placeholder" for="id">Dropoff Area/Locality*</label>
                         </div>
                         <div class="form-control-feedback" *ngIf="dropoffarea.errors && (dropoffarea.dirty || dropoffarea.touched)">
                             <p *ngIf="!dropoffarea.errors.required" class="haserror">Dropoff Area/Locality  is required</p>
@@ -817,8 +817,8 @@
                         <div class="form-group">
                             <input type="text" id="pickupdoor" class="form-control" name="pickupdoor" maxlength="6" required (ngModelChange)="changeEditpickupdoor($event)"
                                 [(ngModel)]="user.pickupdoor" #pickupdoor="ngModel">
-                            <label class="form-control-placeholder" for="pickupdoor">Pickup Door Number/Flat Number
-                              *</label>
+                            <label class="form-control-placeholder" for="pickupdoor">Pickup Door Number/Flat Number*
+                            </label>
                         </div>
                         <div class="form-control-feedback" *ngIf="pickupdoor.errors && (pickupdoor.dirty || pickupdoor.touched)">
                             <p *ngIf="!pickupdoor.errors.required" class="haserror">Pickup Door Number/Flat Number
@@ -829,8 +829,8 @@
                         <div class="form-group">
                             <input type="text" id="id" class="form-control" required name="pickupstreet" maxlength="70" #pickupstreet="ngModel" [(ngModel)]="user.pickupstreet"
                             (ngModelChange)="changeEditupstreet($event)">
-                            <label class="form-control-placeholder" for="id">Pickup Apartment Name/Street Name
-                              *</label>
+                            <label class="form-control-placeholder" for="id">Pickup Apartment Name/Street Name*
+                              </label>
                         </div>
                         <div class="form-control-feedback" *ngIf="pickupstreet.errors && (pickupstreet.dirty || pickupstreet.touched)">
                             <p *ngIf="!pickupstreet.errors.required" class="haserror">Pickup Apartment Name/Street Name
@@ -843,7 +843,7 @@
                         <div class="form-group">
                             <input type="text" id="id" class="form-control" required name="pickuparea" maxlength="70" #pickuparea="ngModel" [(ngModel)]="user.pickuparea"
                             (ngModelChange)="changeEditpickuparea($event)">
-                            <label class="form-control-placeholder" for="id">Pickup Area/Locality *</label>
+                            <label class="form-control-placeholder" for="id">Pickup Area/Locality*</label>
                         </div>
                         <div class="form-control-feedback" *ngIf="pickuparea.errors && (pickuparea.dirty || pickuparea.touched)">
                             <p *ngIf="!pickuparea.errors.required" class="haserror">Pickup Area/Locality  is required</p>
@@ -888,8 +888,8 @@
                         <div class="form-group">
                             <input type="text" id="dropofffdoor" class="form-control" name="dropofffdoor" required 
                                 [(ngModel)]="user.dropofffdoor" #dropofffdoor="ngModel" maxlength="6" (ngModelChange)="changeEditdropoffdoor($event)">
-                            <label class="form-control-placeholder" for="dropofffdoor">Dropoff Door Number/Flat Number
-                              *</label>
+                            <label class="form-control-placeholder" for="dropofffdoor">Dropoff Door Number/Flat Number*
+                              </label>
                         </div>
                         <div class="form-control-feedback" *ngIf="dropofffdoor.errors && (dropofffdoor.dirty || dropofffdoor.touched)">
                             <p *ngIf="!dropofffdoor.errors.required" class="haserror">Dropoff Door Number/Flat Number
@@ -910,8 +910,8 @@
                     <div class="col-md-6 col-lg-6 col-sm-6">
                         <div class="form-group">
                             <input type="text" id="id" class="form-control" name="dropoffarea" maxlength="70" required #dropoffarea="ngModel" [(ngModel)]="user.dropoffarea" (ngModelChange)="changeEditdropoffarea($event)">
-                            <label class="form-control-placeholder" for="id">Dropoff Area/Locality 
-                              *</label>
+                            <label class="form-control-placeholder" for="id">Dropoff Area/Locality* 
+                              </label>
                         </div>
                         <div class="form-control-feedback" *ngIf="dropoffarea.errors && (dropoffarea.dirty || dropoffarea.touched)">
                             <p *ngIf="!dropoffarea.errors.required" class="haserror">Dropoff Area/Locality 
@@ -1057,8 +1057,8 @@
                   <div class="form-group">
                     <input type="text" id="pickupdoor" class="form-control" name="pickupdoor" maxlength="6" [(ngModel)]="user.pickupdoor" #pickupdoor="ngModel"
                       required>
-                    <label class="form-control-placeholder" for="pickupdoor">Breakdown Door Number/Flat Number
-                      *</label>
+                    <label class="form-control-placeholder" for="pickupdoor">Breakdown Door Number/Flat Number*
+                      </label>
                   </div>
                   <div class="form-control-feedback" *ngIf="pickupdoor.errors && (pickupdoor.dirty || pickupdoor.touched)">
                     <p *ngIf="pickupdoor.errors.required" class="haserror">Breakdown Door Number/Flat Number
@@ -1069,7 +1069,7 @@
                   <div class="form-group">
                     <input type="text" id="pickupstreet" class="form-control" name="pickupstreet" maxlength="70" [(ngModel)]="user.pickupstreet" #pickupstreet="ngModel"
                       required>
-                    <label class="form-control-placeholder" for="pickupstreet">Breakdown Apartment Name/Street Name</label>
+                    <label class="form-control-placeholder" for="pickupstreet">Breakdown Apartment Name/Street Name*</label>
                   </div>
                   <div class="form-control-feedback" *ngIf="pickupstreet.errors && (pickupstreet.dirty || pickupstreet.touched)">
                     <p *ngIf="pickupstreet.errors.required" class="haserror">Breakdown Apartment Name/Street Name is required</p>
@@ -1081,8 +1081,8 @@
                   <div class="form-group">
                     <input type="text" id="pickloc" class="form-control" name="pickuparea" maxlength="70" [(ngModel)]="user.pickuparea" #pickuparea="ngModel"
                       required>
-                    <label class="form-control-placeholder" for="pickuparea">Breakdown Area/Locality 
-                      *</label>
+                    <label class="form-control-placeholder" for="pickuparea">Breakdown Area/Locality *
+                      </label>
                   </div>
                   <div class="form-control-feedback" *ngIf="pickuparea.errors && (pickuparea.dirty || pickuparea.touched)">
                     <p *ngIf="pickuparea.errors.required" class="haserror">Breakdown Area/Locality 

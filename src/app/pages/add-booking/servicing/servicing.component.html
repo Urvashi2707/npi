@@ -344,7 +344,7 @@
                     <div class="form-group">
                       <input type="text" id="id" class="form-control" required name="pickupstreet" maxlength="70" #pickupstreet="ngModel" [(ngModel)]="user.pickupstreet"
                         (ngModelChange)="changeEditupstreet($event)">
-                      <label class="form-control-placeholder" for="id">Pickup Apartment Name/Street Name</label>
+                      <label class="form-control-placeholder" for="id">Pickup Apartment Name/Street Name*</label>
                     </div>
                     <div class="form-control-feedback" *ngIf="pickupstreet.errors && (pickupstreet.dirty || pickupstreet.touched)">
                       <p *ngIf="!pickupstreet.errors.required" class="haserror">Pickup Apartment Name/Street Name is required</p>
@@ -356,7 +356,7 @@
                     <div class="form-group">
                       <input type="text" id="id" class="form-control" required name="pickuparea" maxlength="70"  #pickuparea="ngModel" [(ngModel)]="user.pickuparea"
                         (ngModelChange)="changeEditpickuparea($event)">
-                      <label class="form-control-placeholder" for="id">Pickup Area/Locality</label>
+                      <label class="form-control-placeholder" for="id">Pickup Area/Locality*</label>
                     </div>
                     <div class="form-control-feedback" *ngIf="pickuparea.errors && (pickuparea.dirty || pickuparea.touched)">
                       <p *ngIf="!pickuparea.errors.required" class="haserror">Pickup Area/Locality is required</p>
@@ -414,7 +414,7 @@
                     <select id="addresstypedu" class="form-control" name="addresstypedu" [(ngModel)]="user.addresstypedu" #addresstypedu="ngModel" required >
                       <option [value]="i.id" *ngFor="let i of addresstype">{{i.type_of_address}}</option>
                     </select>
-                    <label class="form-control-placeholder" for="addressdu">Type of address**</label>
+                    <label class="form-control-placeholder" for="addressdu">Type of address*</label>
                   </div>
                 </div>
                 <div class="row">
@@ -432,7 +432,7 @@
                     <div class="form-group">
                       <input type="text" id="id" class="form-control" name="dropoffstreet" maxlength="70" required #dropoffstreet="ngModel" [(ngModel)]="user.dropoffstreet"
                         (ngModelChange)="changeEditdropOffstreet($event)">
-                      <label class="form-control-placeholder" for="id">Dropoff Apartment Name/Street Name</label>
+                      <label class="form-control-placeholder" for="id">Dropoff Apartment Name/Street Name*</label>
                     </div>
                     <div class="form-control-feedback" *ngIf="dropoffstreet.errors && (dropoffstreet.dirty || dropoffstreet.touched)">
                       <p *ngIf="!dropoffstreet.errors.required" class="haserror">Dropoff Apartment Name/Street Name is required</p>
@@ -444,7 +444,7 @@
                     <div class="form-group">
                       <input type="text" id="id" class="form-control" name="dropoffarea" required maxlength="70" #dropoffarea="ngModel" [(ngModel)]="user.dropoffarea"
                         (ngModelChange)="changeEditdropOffparea($event)">
-                      <label class="form-control-placeholder" for="id">Dropoff Area/Locality</label>
+                      <label class="form-control-placeholder" for="id">Dropoff Area/Locality*</label>
                     </div>
                     <div class="form-control-feedback" *ngIf="dropoffarea.errors && (dropoffarea.dirty || dropoffarea.touched)">
                       <p *ngIf="!dropoffarea.errors.required" class="haserror">Dropoff Area/Locality 
@@ -597,7 +597,7 @@
                     <div class="form-group">
                       <input type="text" id="id" class="form-control" name="dropoffarea" required maxlength="70" #dropoffarea="ngModel" (ngModelChange)="EditAddress()"
                         [(ngModel)]="user.dropoffarea">
-                      <label class="form-control-placeholder" for="id">Dropoff Area/Locality</label>
+                      <label class="form-control-placeholder" for="id">Dropoff Area/Locality*</label>
                     </div>
                     <div class="form-control-feedback" *ngIf="dropoffarea.errors && (dropoffarea.dirty || dropoffarea.touched)">
                       <p *ngIf="dropoffarea.errors.required" class="haserror">Dropoff Area/Locality is required</p>
@@ -639,7 +639,7 @@
                       required>
                       <option [value]="i.id" *ngFor="let i of addresstype">{{i.type_of_address}}</option>
                     </select>
-                    <label class="form-control-placeholder" for="addresstypedu">Type of address**</label>
+                    <label class="form-control-placeholder" for="addresstypedu">Type of address*</label>
                   </div>
                 </div>
               </div>
@@ -650,7 +650,7 @@
                 <span class="sectionHeader">Service Details</span>
             </div>
               
-            <div class="row">
+            <div class="row" *ngIf="yourBoolean != 'dropoff'">
               <div class="col-md-6 col-lg-6 col-sm-6">
                 <div class="form-group">
                   <select name="serviceType" id="serviceType" class="form-control" name="service_type" [(ngModel)]="user.service_type" #servicetype="ngModel"

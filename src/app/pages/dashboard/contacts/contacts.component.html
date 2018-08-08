@@ -20,7 +20,7 @@
     </div>
     <div class="input-container">
         <input type="text" class="input-message" [(ngModel)]="ReplyMessage" name="message" style="width: 82%;"/>
-        <button class="RplyButton" (click)="ReplyChat();">Send</button>
+        <button class="RplyButton" (click)="ReplyChat();" [disabled]="true">Send</button>
       </div>
   </div>
 </nb-card>

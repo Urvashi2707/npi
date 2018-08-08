@@ -4,11 +4,16 @@ import { NgForm } from '@angular/forms';
 import {ServicingService } from '../services/addServicing.service';
 import { ToasterService, ToasterConfig, Toast, BodyOutputType } from 'angular2-toaster';
 import 'style-loader!angular2-toaster/toaster.css';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import { SuccessComponent } from '../user/success/success.component';
+
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss']
 })
+
+
 export class ProfileComponent implements OnInit {
 
    usr: any = {};
@@ -27,7 +32,7 @@ export class ProfileComponent implements OnInit {
   timeout = 5000;
   toastsLimit = 5;
   public designation:any = [];
-  constructor(private _data:ServerService,private toasterService: ToasterService,private service:ServicingService) { }
+  constructor(private _data:ServerService,private toasterService: ToasterService,private service:ServicingService,private modalService: NgbModal,) { }
 
   ngOnInit() {
     this.countrycode1 = "+91";
@@ -50,7 +55,16 @@ export class ProfileComponent implements OnInit {
       const as3 = JSON.stringify(reqpara3);
       this._data.webServiceCall(as3).subscribe
     (res => {
-        console.log(res);
+      console.log(res[0].passwordupdate);
+      var updatePasswordFlag = res[0].passwordupdate;
+      if(updatePasswordFlag[0].is_success === "1"){
+        console.log("success flag");
+        this.success("0");
+      }
+      else{
+        console.log("Unsuccess flag");
+        this.success("1");
+      }
       });
   }
   else{
@@ -58,8 +72,13 @@ export class ProfileComponent implements OnInit {
   }
   }
 
+  success(res:any) {
+    const activeModal = this.modalService.open(SuccessComponent, { size: 'lg', container: 'nb-layout' });
+    activeModal.componentInstance.modalHeader = 'Message';
+    activeModal.componentInstance.modalContent = res;
+  } 
+
   getProfileInfo(){
-    console.log('profile');
     const reqpara3 = {
       requesttype: 'getprofile',
       svcid:this.svcid
@@ -67,15 +86,12 @@ export class ProfileComponent implements OnInit {
       const as3 = JSON.stringify(reqpara3);
       this._data.webServiceCall(as3).subscribe
     (res => {
-        console.log(res);
         this.usr = res[0].profile[0];
-        console.log(this.usr);
       });
   }
 
 
   onSubmit(f: NgForm){
-    console.log(f.value);
     const data = {
       requesttype : 'updateprofile',
       name : f.value.name,
@@ -84,7 +100,16 @@ export class ProfileComponent implements OnInit {
     }
     const ua = JSON.stringify(data);
     this._data.webServiceCall(ua).subscribe(res =>{
-      console.log(res);
+      console.log(res[0].profileupdate);
+      var updateFlag = res[0].profileupdate;
+      if(updateFlag[0].is_success === "1"){
+        console.log("success flag");
+        this.success("0");
+      }
+      else{
+        console.log("Unsuccess flag");
+        this.success("1");
+      }
     });
   }
 

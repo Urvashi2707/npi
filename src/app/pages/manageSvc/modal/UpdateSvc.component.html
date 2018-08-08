@@ -71,8 +71,9 @@
       <div class="row">
         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
           <div class="form-group">
-            <input type="text" class="form-control" id="bname" name="bname" [(ngModel)]="modalContent.bank_name" required #bname="ngModel">
-            <label class="form-control-placeholder" for="bname">Bank Name</label>
+              <label  for="bname">Bank Name</label>
+            <input type="text" class="form-control" id="bname" name="bname" [(ngModel)]="modalContent.bank_name" required #bname="ngModel" [readonly]="true">
+           
           </div>
 
           <div class="form-control-feedback" *ngIf="bname.errors && (bname.dirty || bname.touched)">
@@ -83,8 +84,9 @@
       <div class="row">
         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
           <div class="form-group">
-            <input type="text" class="form-control" id="badd" name="badd" [(ngModel)]="modalContent.bank_address" required #badd="ngModel">
-            <label class="form-control-placeholder" for="badd">Bank Address</label>
+              <label  for="badd">Bank Address</label>
+            <input type="text" class="form-control" id="badd" name="badd" [(ngModel)]="modalContent.bank_address" required #badd="ngModel" [readonly]="true">
+           
           </div>
           <div class="form-control-feedback" *ngIf="badd.errors && (badd.dirty || badd.touched)">
             <p *ngIf="badd.errors.required">Bank Address is required</p>
@@ -94,8 +96,9 @@
       <div class="row">
         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
           <div class="form-group">
-            <input type="text" class="form-control" id="acc" name="acc" [(ngModel)]="modalContent.bank_account_name" required #acc="ngModel">
-            <label class="form-control-placeholder" for="acc">Bank Account Name</label>
+              <label  for="acc" >Bank Account Name</label>
+            <input type="text" class="form-control" id="acc" name="acc" [(ngModel)]="modalContent.bank_account_name" required #acc="ngModel"  [readonly]="true">
+         
           </div>
           <div class="form-control-feedback" *ngIf="acc.errors && (acc.dirty || acc.touched)">
             <p *ngIf="acc.errors.required">Bank Account is required</p>
@@ -105,9 +108,10 @@
       <div class="row">
         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
           <div class="form-group">
+              <label  for="accnum">Bank Account Number</label>
             <input type="text" class="form-control" id="accnum" name="accnum" [(ngModel)]="modalContent.bank_account_number" required
-              #accnum="ngModel">
-            <label class="form-control-placeholder" for="accnum">Bank Account Number</label>
+              #accnum="ngModel" [readonly]="true">
+        
           </div>
           <div class="form-control-feedback" *ngIf="accnum.errors && (accnum.dirty || accnum.touched)">
             <p *ngIf="accnum.errors.required">Bank Name is required</p>
@@ -117,8 +121,9 @@
       <div class="row">
         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
           <div class="form-group">
-            <input type="text" class="form-control" id="ifsc" name="ifsc" [(ngModel)]="modalContent.bank_ifsc_code" required #ifsc="ngModel">
-            <label class="form-control-placeholder" for="ifsc">Bank IFSC</label>
+              <label for="ifsc">Bank IFSC</label>
+            <input type="text" class="form-control" id="ifsc" name="ifsc" [(ngModel)]="modalContent.bank_ifsc_code" required #ifsc="ngModel" [readonly]="true">
+          
           </div>
           <div class="form-control-feedback" *ngIf="ifsc.errors && (ifsc.dirty || ifsc.touched)">
             <p *ngIf="ifsc.errors.required">Bank Account IFSC is required</p>

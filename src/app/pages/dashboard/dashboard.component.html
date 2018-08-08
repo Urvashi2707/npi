@@ -17,20 +17,20 @@
 <div class="row">
   <div class="col-xxxl-3 col-md-6 col-sm-12 col-12">
     <ngx-status-card title="Avg. Invoice Amount" type="primary">
-      <div class="cardValue" style="font-size: 2.4rem;" *ngIf="!Cards.average_inv_amount">0</div>
-      <div class="cardValue" style="font-size: 2.4rem;" *ngIf="Cards.average_inv_amount">&#x20b9; {{Cards.average_inv_amount}}</div>
+      <div class="cardValue"  *ngIf="!Cards.average_inv_amount">0</div>
+      <div class="cardValue"  *ngIf="Cards.average_inv_amount">&#x20b9; {{Cards.average_inv_amount}}</div>
     </ngx-status-card>
   </div>
   <div class="col-xxxl-3 col-md-6 col-sm-12 col-12">
     <ngx-status-card title="On Time Checked-in" icon='nb-sunny' type="success">
-      <div class="cardValue" style="font-size: 2.4rem;" *ngIf="!Cards.on_time_checkin">0</div>
-      <div class="cardValue" style="font-size: 2.4rem;" *ngIf="Cards.on_time_checkin">{{Cards.on_time_checkin}}</div>
+      <div class="cardValue"  *ngIf="!Cards.on_time_checkin">0</div>
+      <div class="cardValue"  *ngIf="Cards.on_time_checkin">{{Cards.on_time_checkin}}</div>
     </ngx-status-card>
   </div>
   <div class="col-xxxl-3 col-md-6 col-sm-12 col-12">
     <ngx-status-card title="Avg. Distance in Km" icon="nb-location" type="info">
-      <div class="cardValue" style="font-size: 2.4rem;" *ngIf="!Cards.average_distance">0</div>
-      <div class="cardValue" style="font-size: 2.4rem;" *ngIf="Cards.average_distance">{{Cards.average_distance}}</div>
+      <div class="cardValue"  *ngIf="!Cards.average_distance">0</div>
+      <div class="cardValue"  *ngIf="Cards.average_distance">{{Cards.average_distance}}</div>
     </ngx-status-card>
   </div>
   <div class="col-xxxl-3 col-md-6 col-sm-12 col-12 CustRating">
@@ -54,14 +54,14 @@
 <div class="row">
   <div class="col-xxxl-3 col-md-6 col-sm-12 col-12">
     <ngx-status-card title="Total Vehicles in number" icon='nb-bar-chart' type="primary">
-      <div class="cardValue" style="font-size: 2.4rem;" *ngIf="!Cards.total_vehicle">0</div>
-      <div class="cardValue" style="font-size: 2.4rem;" *ngIf="Cards.total_vehicle">{{Cards.total_vehicle}}</div>
+      <div class="cardValue"  *ngIf="!Cards.total_vehicle">0</div>
+      <div class="cardValue"  *ngIf="Cards.total_vehicle">{{Cards.total_vehicle}}</div>
     </ngx-status-card>
   </div>
   <div class="col-xxxl-3 col-md-6 col-sm-12 col-12">
     <ngx-status-card title="On Time Pickup" icon="nb-sunny-circled" type="success">
-      <div class="cardValue" style="font-size: 2.4rem;" *ngIf="!Cards.ontime_pickup_percentage">0</div>
-      <div class="cardValue" style="font-size: 2.4rem;" *ngIf="Cards.ontime_pickup_percentage">{{Cards.ontime_pickup_percentage}}</div>
+      <div class="cardValue"  *ngIf="!Cards.ontime_pickup_percentage">0</div>
+      <div class="cardValue" *ngIf="Cards.ontime_pickup_percentage">{{Cards.ontime_pickup_percentage}}</div>
     </ngx-status-card>
   </div>
 </div>

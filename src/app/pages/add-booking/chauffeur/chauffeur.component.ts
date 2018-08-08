@@ -123,7 +123,7 @@ export class ChauffeurComponent implements OnInit {
       this.svcid = JSON.parse(sessionStorage.getItem('globalsvcid'));
     }
     this.service_type  = [
-      { id: 1, type: 'Stock Yard' },
+      { id: 1, type: 'StockYard' },
       { id: 2, type: 'Test Drive' },
       { id: 3, type: 'Internal Movement' },
       { id: 4, type: 'Home Delivery' },

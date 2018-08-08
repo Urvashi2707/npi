@@ -239,6 +239,7 @@ import 'style-loader!angular2-toaster/toaster.css';
           else if (res[0].userexists[0].does_exist == 1){
             this.success("1");
             f.controls.name.reset();
+            f.reset();
           }
           });
           }

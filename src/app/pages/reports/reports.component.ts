@@ -67,7 +67,7 @@ export class ReportsComponent implements OnInit {
       { id: "1", type: 'Servicing only Dropoff' },
       { id: "4", type: 'Internal Movement' },
       { id: "5", type: 'Home Delivery' },
-      { id: "6", type: 'Stock Yard' },
+      { id: "6", type: 'StockYard' },
       { id: "7", type: 'Test Drive' },
     ];
     this.user.service_type = this.service_type[0].id;

@@ -131,6 +131,7 @@ export class ManageComponent implements OnInit {
 
   //Submit Form Function
   onSubmit(f: NgForm) {
+    console.log(f.value)
     if (f.value.latlong) {
       let y = f.value.latlong.split(/[ ,;]+/);
       console.log(y);

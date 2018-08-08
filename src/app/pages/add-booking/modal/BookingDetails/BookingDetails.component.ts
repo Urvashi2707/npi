@@ -33,7 +33,8 @@ export class BookingDetails implements OnInit {
 
   constructor(private toasterService: ToasterService,private activeModal: NgbActiveModal,private httpService: HttpClient) { }
   ngOnInit() {
-    console.log(this.modalContent)
+    console.log(this.modalContent);
+    this.modalContent.typeodservive = "Drop Off"
   }
   closeModal() {
     this.activeModal.close();
