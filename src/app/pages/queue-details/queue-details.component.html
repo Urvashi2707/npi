@@ -525,8 +525,30 @@
                                 <div class=".col-xs">
                                     <nb-card class=".col-xs" class=".space">
                                         <nb-card-body>
-                                            <form [formGroup]="vehicle_at_svc_formGroup">
-                                                <div class="finput-group input-group-fill-only">
+                                                <div class="row" *ngIf="servicestatus === 3">
+                                                        <div *ngIf="service_status == 0" class="finput-group col-lg-4 col-md-4 col-xs-4 col-sm-4">
+                                                            <button class="btn btn-warning" title="Upload" id="uploadInvocie" (click)="viewInvoice()">Upload Estimate</button>
+                                                        </div>
+                                                        <div *ngIf="service_status == 1" class="finput-group col-lg-4 col-md-4 col-xs-4 col-sm-4">
+                                                            <button class="btn btn-warning" title="Upload" id="uploadInvocie" (click)="viewInvoice()">Upload Invoice</button>
+                                                        </div>
+                                                        <div *ngIf="service_status == 2" class="finput-group col-lg-4 col-md-4 col-xs-4 col-sm-4">
+                                                            <button class="btn btn-warning" title="Upload" id="uploadInvocie" (click)="viewInvoice()">Reupload Invoice</button>
+                                                        </div>
+                                                        <div class="finput-group col-lg-4 col-md-4 col-xs-4 col-sm-4" *ngIf="service_status==1">
+                                                            <button class="btn btn-warning" title="view_estimate" (click)="viewEstimate()" id="viewEstimate">View Estimate</button>
+                                                        </div>
+    
+                                                        <div class="finput-group col-lg-4 col-md-4 col-xs-4 col-sm-4" *ngIf="service_status==2">
+                                                            <button class="btn btn-warning" title="view_estimate" (click)="viewInv()" id="viewEstimate">View Invoice</button>
+                                                        </div>
+    
+                                                        <div class="finput-group col-lg-4 col-md-4 col-xs-4 col-sm-4" *ngIf="service_status==2">
+                                                            <button class="btn btn-warning" title="send_payment_link" (click)="sendPaymentLink()" id="sendLink">Send Payment Link</button>
+                                                        </div>
+                                                    </div>
+                                            <form [formGroup]="vehicle_at_svc_formGroup" *ngIf="servicestatus != 3">
+                                                <div class="finput-group input-group-fill-only" *ngIf="servicestatus != 3">
                                                     <div class="row">
                                                         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
                                                             <label class="labels" for="exampleInputEmail1">Estimated Amount</label>
@@ -535,11 +557,8 @@
                                                             <input type="text" class="form-control" formControlName="estAmount" id="estimatedAmount" placeholder="Estimated Amount">
                                                         </div>
                                                     </div>
-                                                    <!-- <label for="exampleInputEmail1">Estimated Amount</label>
-                                                    <input type="text" class="form-control" formControlName="estAmount" id="estimatedAmount" placeholder="Estimated Amount"> -->
                                                 </div>
-
-                                                <div class="finput-group input-group-fill-only">
+                                                 <div class="finput-group input-group-fill-only" *ngIf="servicestatus != 3">
                                                     <div class="row">
                                                         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
                                                             <label class="labels" for="exampleInputEmail1">Estimated Time of Delivery</label>
@@ -548,11 +567,8 @@
                                                             <input type="text" class="form-control" formControlName="ETD" id="estimatedTimeOfDelivery" placeholder="ETD">
                                                         </div>
                                                     </div>
-                                                    <!-- <label for="exampleInputEmail1">Estimated Time of Delivery</label>
-                                                    <input type="text" class="form-control" formControlName="ETD" id="estimatedTimeOfDelivery" placeholder="ETD"> -->
                                                 </div>
-
-                                                <div class="finput-group input-group-fill-only">
+                                             <div class="finput-group input-group-fill-only" *ngIf="servicestatus != 3">
                                                     <div class="row">
                                                         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
                                                             <label class="labels" for="exampleInputEmail1">Invoice Amount</label>
@@ -561,22 +577,7 @@
                                                             <input type="text" class="form-control" formControlName="invoiceAmount" id="invoiceAmount" placeholder="Invoice Amount">
                                                         </div>
                                                     </div>
-                                                    <!-- <label for="exampleInputEmail1">Invoice Amount</label>
-                                                    <input type="text" class="form-control" formControlName="invoiceAmount" id="invoiceAmount" placeholder="Invoice Amount"> -->
                                                 </div>
-
-                                                <!-- <div class="finput-group input-group-fill-only">
-                                                    <div class="row">
-                                                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                                                            <label class="labels" for="exampleInputEmail1">Invoice Uploaded</label>
-                                                        </div>
-                                                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-                                                            <img src={{invoiceUploaded}} width="30px" height="30px" style="margin-top:0.5em">
-                                                        </div>
-                                                    </div> -->
-                                                <!-- <label for="exampleInputEmail1">Invoice Uploaded</label>
-                                                    <img src={{invoiceUploaded}} width="20px" height="20px"> -->
-                                                <!-- </div> -->
                                                 <div class="row">
                                                     <div *ngIf="service_status == 0" class="finput-group col-lg-4 col-md-4 col-xs-4 col-sm-4">
                                                         <button class="btn btn-warning" title="Upload" id="uploadInvocie" (click)="viewInvoice()">Upload Estimate</button>
@@ -599,8 +600,7 @@
                                                         <button class="btn btn-warning" title="send_payment_link" (click)="sendPaymentLink()" id="sendLink">Send Payment Link</button>
                                                     </div>
                                                 </div>
-
-                                            </form>
+                                             </form>
                                         </nb-card-body>
                                     </nb-card>
                                 </div>
@@ -754,8 +754,6 @@
                                                             <input type="text" class="form-control" formControlName="service_type" name="ChauffeurServiceType" placeholder="Service Type">
                                                         </div>
                                                     </div>
-                                                    <!-- <label for="exampleInputEmail1">Service Type</label>
-                                                    <input type="text" class="form-control" formControlName="service_type" name="ChauffeurServiceType" placeholder="Service Type"> -->
                                                 </div>
 
                                                 <div class="finput-group input-group-fill-only">
@@ -767,8 +765,6 @@
                                                             <input type="text" class="form-control" formControlName="started_at" name="ChauffeurStarted" placeholder="Start Time" disabled>
                                                         </div>
                                                     </div>
-                                                    <!-- <label for="exampleInputEmail1">Started At</label>
-                                                    <input type="text" class="form-control" formControlName="started_at" name="ChauffeurStarted" placeholder="Start Time" disabled> -->
                                                 </div>
 
                                                 <div class="finput-group input-group-fill-only">
@@ -780,8 +776,6 @@
                                                             <input type="text" class="form-control" formControlName="ended_at" name="ChauffeurEnded" placeholder="End Time" disabled>
                                                         </div>
                                                     </div>
-                                                    <!-- <label for="exampleInputEmail1">Ended At</label>
-                                                    <input type="text" class="form-control" formControlName="ended_at" name="ChauffeurEnded" placeholder="End Time" disabled> -->
                                                 </div>
 
                                                 <div class="finput-group input-group-fill-only">
@@ -793,8 +787,6 @@
                                                             <img src={{OnTimeImage}} width="20px" height="20px">
                                                         </div>
                                                     </div>
-                                                    <!-- <label for="exampleInputEmail1">Payment Status</label>
-                                                    <img src={{OnTimeImage}} width="20px" height="20px"> -->
                                                 </div>
                                             </form>
                                         </nb-card-body>
@@ -802,7 +794,7 @@
                                 </div>
                             </ng-template>
                         </ngb-panel>
-                        <ngb-panel *ngIf="showComplaintsCard == '1' && ShowComplaints" id="preventchange-10">
+                        <ngb-panel *ngIf="showComplaintsCard == '1'" id="preventchange-10">
                             <ng-template ngbPanelTitle>
                                 <div class="row">
                                     <span>

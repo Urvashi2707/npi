@@ -28,6 +28,7 @@ export class QueueDetailsComponent implements OnInit {
   chauffeur_card: FormGroup;
   notesFormGroup: FormGroup;
   link: string;
+  servicestatus:any;
   type_of_service:any;
   ShowComplaints:boolean = true;
   rating = "3.4";
@@ -341,8 +342,8 @@ export class QueueDetailsComponent implements OnInit {
             console.log(this.pickupInfo);
             if(this.pickupInfo[0].hasOwnProperty('type_service')){
               console.log("inside typeofserviceif");
-              this.type_of_service = JSON.parse(this.pickupInfo[0].type_service)
-             
+              this.type_of_service = JSON.parse(this.pickupInfo[0].type_service);
+             this.servicestatus = JSON.parse(this.pickupInfo[0].active);
             }
             if (this.pickupInfo[0].hasOwnProperty('pu_address')) {
               this.showPickupCard = '1';
@@ -435,6 +436,10 @@ export class QueueDetailsComponent implements OnInit {
         if(objectlength > 3){
           if (check[3].hasOwnProperty('atsvc')) {
             const atSVC = check[3].atsvc;
+            console.log(this.servicestatus);
+            if(this.servicestatus === 3){
+              this.showAtSVCCard = '1';
+            }
             if (atSVC[0].hasOwnProperty('est_amount')) {
               this.showAtSVCCard = '1';
               let estAmount = this.vehicle_at_svc_formGroup.get('estAmount');
@@ -580,20 +585,17 @@ export class QueueDetailsComponent implements OnInit {
         if (objectlength > 10) {
           if (check[10].hasOwnProperty('complaints')) {
             const complaints1 = check[10].complaints;
+            this.showComplaintsCard = "0";
             console.log(this.type_of_service);
-            if(this.type_of_service === "0" || this.type_of_service === "1"){
+            if (complaints1[0].hasOwnProperty('complaint')) {
+            this.complaints = complaints1[0].complaint;
+            if(this.type_of_service === 1 || this.type_of_service === 0){
               this.showComplaintsCard = "1";
-              this.complaints = complaints1[0].complaint;
-              console.log("show comp")
             }
             else{
-              if (complaints1[0].hasOwnProperty('complaint')) {
-                this.complaints = complaints1[0].complaint;
-                this.showComplaintsCard = "0";
-                console.log("Dont show comp")
-              }
+              this.showComplaintsCard = "0";
             }
-         
+            }
           }
         }
         // if (objectlength > 11) {
