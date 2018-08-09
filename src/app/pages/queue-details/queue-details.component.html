@@ -526,25 +526,9 @@
                                     <nb-card class=".col-xs" class=".space">
                                         <nb-card-body>
                                                 <div class="row" *ngIf="servicestatus === 3">
-                                                        <div *ngIf="service_status == 0" class="finput-group col-lg-4 col-md-4 col-xs-4 col-sm-4">
-                                                            <button class="btn btn-warning" title="Upload" id="uploadInvocie" (click)="viewInvoice()">Upload Estimate</button>
-                                                        </div>
-                                                        <div *ngIf="service_status == 1" class="finput-group col-lg-4 col-md-4 col-xs-4 col-sm-4">
-                                                            <button class="btn btn-warning" title="Upload" id="uploadInvocie" (click)="viewInvoice()">Upload Invoice</button>
-                                                        </div>
-                                                        <div *ngIf="service_status == 2" class="finput-group col-lg-4 col-md-4 col-xs-4 col-sm-4">
-                                                            <button class="btn btn-warning" title="Upload" id="uploadInvocie" (click)="viewInvoice()">Reupload Invoice</button>
-                                                        </div>
-                                                        <div class="finput-group col-lg-4 col-md-4 col-xs-4 col-sm-4" *ngIf="service_status==1">
-                                                            <button class="btn btn-warning" title="view_estimate" (click)="viewEstimate()" id="viewEstimate">View Estimate</button>
-                                                        </div>
-    
-                                                        <div class="finput-group col-lg-4 col-md-4 col-xs-4 col-sm-4" *ngIf="service_status==2">
-                                                            <button class="btn btn-warning" title="view_estimate" (click)="viewInv()" id="viewEstimate">View Invoice</button>
-                                                        </div>
-    
-                                                        <div class="finput-group col-lg-4 col-md-4 col-xs-4 col-sm-4" *ngIf="service_status==2">
-                                                            <button class="btn btn-warning" title="send_payment_link" (click)="sendPaymentLink()" id="sendLink">Send Payment Link</button>
+                                                <div class="finput-group col-lg-4 col-md-4 col-xs-4 col-sm-4">
+                                                            <a href="http://m.21north.in:7410/images/estimate{{QueueID}}.pdf" class="button view" target="_blank" download>View Invoice</a>
+                                                            <a href="http://m.21north.in:7410/images/inv{{QueueID}}.pdf" class="button view" target="_blank" download>View Estimate</a>
                                                         </div>
                                                     </div>
                                             <form [formGroup]="vehicle_at_svc_formGroup" *ngIf="servicestatus != 3">
