@@ -5,6 +5,89 @@ $mobileFont:13px;
 table{
     font-size:13px;
 }
+.container {
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+ }
+ 
+ .container:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 5%;
+    margin-left: -1px;
+    width: 3px;
+    height: 100%;
+    background: #109B57;
+    /* z-index: -1; */
+ }
+ 
+ .timeline-block {
+    width: -webkit-calc(100% + 8px);
+    width: -moz-calc(100% + 8px);
+    width: calc(100% + 8px);
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: flex;
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+    -moz-box-pack: justify;
+    justify-content: space-between;
+    clear: both;
+ }
+ 
+ .timeline-block-right {
+    float: right;
+ }
+ 
+ .timeline-block-left {
+    float: left;
+    direction: rtl
+ }
+ 
+ .marker {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    /* left: 10%; */
+    margin-left: 3.5%;
+    border: 2px solid #109B57;
+    background: #109B57;
+ }
+ 
+ .timeline-content {
+    width: 95%;
+    padding: 0 15px;
+    color: #666;
+    margin-bottom: 7%;
+    .title{
+        color:#FA870C;
+        font-size: 15px;
+        font-weight: 600;
+    }
+ }
+ 
+ .timeline-content h3 {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    font-size: 25px;
+    font-weight: 500
+ }
+ 
+ .timeline-content span {
+    font-size: 15px;
+    color: black;
+ }
+ 
+ .timeline-content p {
+    font-size: 14px;
+    margin-bottom: 0px;
+    line-height: 1.5em;
+    word-spacing: 1px;
+    color: black;
+ }
 @media only screen and (max-width: 420px) {
     .desktopView {
         display: none;

@@ -129,7 +129,7 @@ export class RsaComponent implements OnInit {
     // console.log(this.maxDate);
    
     this.TowingTruck =  ['Flat bed', 'Winch'];
-    this.serviceType =  ['Flat Tyre', 'Jump Start', 'Lock out','Out of Gas','Others'];
+    this.serviceType =  ['Flat Tyre', 'Jump Start', 'Lock out','Out of Fuel','Others'];
     this.creName = ['Rohnit','Mohit','Nitin','Add CRE'];
     this.countrycode1 = "+91";
     this.getBrands();

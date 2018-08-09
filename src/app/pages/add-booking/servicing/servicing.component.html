@@ -311,7 +311,7 @@
                           <option [value]="i.address_id">{{i.doornumber}},{{i.street}},{{i.area}},{{i.pincode}}</option>
                         </optgroup>
                       </select>
-                      <label class="form-control-placeholder" for="addresspu">Pickup Location*</label>
+                      <label class="form-control-placeholder" for="addresspu">Save Pickup Location*</label>
                     </div>
                     <div class="form-control-feedback" *ngIf="addresspu.errors && (addresspu.dirty || addresspu.touched)">
                       <p *ngIf="!addresspu.errors.required" class="haserror">Pickup Location is required</p>
@@ -371,7 +371,7 @@
                   </div>
                 </div>
                 <div class="row">
-                  <div class="col-md-6 col-lg-6 col-sm-6">
+                  <div class="col-md-6 col-lg-6 col-sm-6" style="display:none;">
                     <div class="form-group">
                       <input type="text" id="id" class="form-control" name="pickuppincode" maxlength="6" #pickuppincode="ngModel" [(ngModel)]="user.pickuppincode"
                         (ngModelChange)="changeEditpickuppincode($event)" maxlength="6">
@@ -388,7 +388,7 @@
                 </div>
                 <div *ngIf="yourBoolean === 'servicing'" class="sameas">
                   <label class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" name="sameas" #same (click)="sameas(same.checked)">
+                    <input type="checkbox" class="custom-control-input" name="sameas" #same (click)="sameas(same.checked)" checked>
                     <span class="custom-control-indicator"></span>
                     <span class="custom-control-description">Drop Location is same as Pickup</span>
                   </label>
@@ -404,7 +404,7 @@
                           <option [value]="i.address_id">{{i.doornumber}},{{i.street}},{{i.area}},{{i.pincode}}</option>
                         </optgroup>
                       </select>
-                      <label class="form-control-placeholder" for="addressdu">Dropoff Location*</label>
+                      <label class="form-control-placeholder" for="addressdu">Save Dropoff Location*</label>
                     </div>
                     <div class="form-control-feedback" *ngIf="addressdu.errors && (addressdu.dirty || addressdu.touched)">
                       <p *ngIf="!addressdu.errors.required" class="haserror">Dropoff Location is required</p>
@@ -463,7 +463,7 @@
                   </div>
                 </div>
                 <div class="row">
-                  <div class="col-md-6 col-lg-6 col-sm-6">
+                  <div class="col-md-6 col-lg-6 col-sm-6" style="display:none;">
                     <div class="form-group">
                       <input type="text" id="id" class="form-control" name="dropoffpincode" maxlength="6" #dropoffpincode="ngModel" [(ngModel)]="user.dropoffpincode"
                         (ngModelChange)="changeEditdropOffpincode($event)">
@@ -532,7 +532,7 @@
                   </div>
                 </div>
                 <div class="row">
-                  <div class="col-md-6 col-lg-6 col-sm-6">
+                  <div class="col-md-6 col-lg-6 col-sm-6" style="display:none;">
                     <div class="form-group">
                       <input type="text" id="id" class="form-control" name="pickuppincode" maxlength="6" #pickuppincode="ngModel" [(ngModel)]="user.pickuppincode"
                         (ngModelChange)="changepickuppincode($event)" maxlength="6">
@@ -549,8 +549,15 @@
                       <label class="form-control-placeholder" for="id">Pickup lat,long (12.99,77.6611)</label>
                     </div>
                   </div>
+                  <div class="col-md-6 col-lg-6 col-sm-6 col-12 cssselect" style="padding-bottom: 3%;" *ngIf="yourBoolean === 'dropoff'">
+                      <select id="addresstypepu" class="form-control" name="addresstypepu" [(ngModel)]="user.addresstypepu" #addresstypepu="ngModel"
+                        required>
+                        <option [value]="i.id" *ngFor="let i of addresstype">{{i.type_of_address}}</option>
+                      </select>
+                      <label class="form-control-placeholder" for="addresstypepu">Type of address*</label>
+                    </div>
                 </div>
-                <div class="row">
+                <div class="row"  *ngIf="yourBoolean != 'dropoff'">
                   <div class="col-md-6 col-lg-6 col-sm-6 col-12 cssselect" style="padding-bottom: 3%;">
                     <select id="addresstypepu" class="form-control" name="addresstypepu" [(ngModel)]="user.addresstypepu" #addresstypepu="ngModel"
                       required>
@@ -612,7 +619,7 @@
                   </div>
                 </div>
                 <div class="row">
-                  <div class="col-md-6 col-lg-6 col-sm-6">
+                  <div class="col-md-6 col-lg-6 col-sm-6" style="display:none;">
                     <div class="form-group">
                       <input type="text" id="id" class="form-control" name="dropoffpincode" maxlength="6" #dropoffpincode="ngModel" (ngModelChange)="EditAddress()"
                         [(ngModel)]="user.dropoffpincode" maxlength="6">
@@ -632,8 +639,15 @@
                       <p *ngIf="!droplatlong.errors.required" class="haserror">format is wrong</p>
                     </div>
                   </div>
+                  <div class="col-md-6 col-lg-6 col-sm-6 col-12 cssselect" style="padding-bottom: 3%;" *ngIf="yourBoolean === 'dropoff'">
+                      <select id="addresstypedu" class="form-control" name="addresstypedu" [(ngModel)]="user.addresstypedu" #addresstypedu="ngModel"
+                        required>
+                        <option [value]="i.id" *ngFor="let i of addresstype">{{i.type_of_address}}</option>
+                      </select>
+                      <label class="form-control-placeholder" for="addresstypedu">Type of address*</label>
+                    </div>
                 </div>
-                <div class="row">
+                <div class="row" *ngIf="yourBoolean != 'dropoff'">
                   <div class="col-md-6 col-lg-6 col-sm-6 col-12 cssselect" style="padding-bottom: 3%;">
                     <select id="addresstypedu" class="form-control" name="addresstypedu" [(ngModel)]="user.addresstypedu" #addresstypedu="ngModel"
                       required>
@@ -650,7 +664,7 @@
                 <span class="sectionHeader">Service Details</span>
             </div>
               
-            <div class="row" *ngIf="yourBoolean != 'dropoff'">
+            <div class="row">
               <div class="col-md-6 col-lg-6 col-sm-6">
                 <div class="form-group">
                   <select name="serviceType" id="serviceType" class="form-control" name="service_type" [(ngModel)]="user.service_type" #servicetype="ngModel"
@@ -663,13 +677,19 @@
                   <p *ngIf="servicetype.errors.required" class="haserror">Service Type is required</p>
                 </div>
               </div>
-              <div class="col-md-6 col-lg-6 col-sm-6">
+              <div class="col-md-6 col-lg-6 col-sm-6" *ngIf="yourBoolean != 'dropoff'">
                 <div class="form-group">
                   <angular2-multiselect [data]="itemList" [(ngModel)]="selectedItems" [settings]="settings" name="something" #comp (onSelect)="onItemSelect($event)"
                     (onDeSelect)="OnItemDeSelect($event)" (onSelectAll)="onSelectAll($event)" (onDeSelectAll)="onDeSelectAll($event)">
                   </angular2-multiselect>
                 </div>
               </div>
+              <div class="col-md-6 col-lg-6 col-sm-6" *ngIf="yourBoolean === 'dropoff'">
+                  <div class="form-group">
+                    <input type="text" id="notes" class="form-control" name="notes" [(ngModel)]="user.notes" placeholder="Notes" #notes="ngModel">
+                    <label class="form-control-placeholder" for="notes">Notes</label>
+                  </div>
+                </div>
             </div>
             <div class="row">
               <div class="col-md-6 col-lg-6 col-sm-6 col-12 creCol AddUserCre">
@@ -706,13 +726,10 @@
                       <i class="fa fa-plus" style="color:#ffa100" aria-hidden="true"></i>
                     </button>
                   </div>
-                  <!-- <div class="form-control-feedback" *ngIf="ServiceAdvisor.errors && (ServiceAdvisor.dirty || ServiceAdvisor.touched)">
-                    <p *ngIf="ServiceAdvisor.errors.required" class="haserror">Service Advisor is required</p>
-                  </div> -->
               </div>
             </div>
            
-            <div class="row">
+            <div class="row" *ngIf="yourBoolean != 'dropoff'">
               <div class="col-md-6 col-lg-6 col-sm-6">
                 <div class="form-group">
                   <input type="text" id="notes" class="form-control" name="notes" [(ngModel)]="user.notes" placeholder="Notes" #notes="ngModel">
@@ -720,7 +737,7 @@
                 </div>
               </div>
             </div>
-            <div class="row">
+            <div class="row" style="padding-top: 2%;">
               <div class="col-md-6 col-lg-6 col-sm-6">
                 <div>
                   <label class="custom-control custom-checkbox">

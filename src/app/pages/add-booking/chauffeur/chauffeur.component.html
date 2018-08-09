@@ -44,7 +44,7 @@
             <div class="line">
                 <span class="sectionHeader">Vehicle Details</span>
             </div>
-            <div class="row">
+            <!-- <div class="row">
               <div class="col-md-6 col-lg-6 col-sm-6">
                 <div class="form-group">
                   <select name="brand" id="brand" class="form-control" (change)="onSelectBrand($event.target.value)" [(ngModel)]="selectedBrand"
@@ -59,7 +59,7 @@
                   <p *ngIf="brand.errors.required" class="haserror">Brand is required</p>
                 </div>
               </div>
-            </div>
+            </div> -->
             <div class="row" *ngIf="!dontShowModel">
               <div class="col-md-6 col-lg-6 col-sm-6">
                 <div class="form-group">
@@ -220,7 +220,7 @@
                 </div>
               </div>
               <div class="row">
-                <div class="col-md-6 col-lg-6 col-sm-6">
+                <div class="col-md-6 col-lg-6 col-sm-6" style="display:none;">
                   <div class="form-group">
                     <input type="text" id="pickuppincode" class="form-control" name="pickuppincode" maxlength="6" [(ngModel)]="user.pickuppincode" #pickuppincode="ngModel"
                       >
@@ -323,7 +323,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-6 col-lg-6 col-sm-6">
+                    <div class="col-md-6 col-lg-6 col-sm-6" style="display:none;">
                         <div class="form-group">
                             <input type="text" id="id" class="form-control" name="pickuppincode" maxlength="6" #pickuppincode="ngModel" [(ngModel)]="user.pickuppincode">
                             <label class="form-control-placeholder" for="id">Pickup Pincode</label>
@@ -377,7 +377,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-6 col-lg-6 col-sm-6">
+                    <div class="col-md-6 col-lg-6 col-sm-6" style="display:none;">
                         <div class="form-group">
                             <input type="text" id="id" class="form-control" name="dropoffpincode" #dropoffpincode="ngModel"  maxlength="6" [(ngModel)]="user.dropoffpincode">
                             <label class="form-control-placeholder" for="id">Dropoff Pincode</label>
@@ -564,7 +564,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-6 col-lg-6 col-sm-6">
+                    <div class="col-md-6 col-lg-6 col-sm-6" style="display:none;">
                         <div class="form-group">
                             <input type="text" id="id" class="form-control"  name="pickuppincode"  maxlength="6" #pickuppincode="ngModel" [(ngModel)]="user.pickuppincode"
                             (ngModelChange)="changeEditpickuppincode($event)">
@@ -630,7 +630,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-6 col-lg-6 col-sm-6">
+                    <div class="col-md-6 col-lg-6 col-sm-6" style="display:none;">
                         <div class="form-group">
                             <input type="text" id="id" class="form-control" name="dropoffpincode" maxlength="6" #dropoffpincode="ngModel" [(ngModel)]="user.dropoffpincode" (ngModelChange)="changeEditdropoffpincode($event)">
                             <label class="form-control-placeholder" for="id">Dropoff Pincode*</label>
@@ -858,7 +858,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-6 col-lg-6 col-sm-6">
+                    <div class="col-md-6 col-lg-6 col-sm-6" style="display:none;">
                         <div class="form-group">
                             <input type="text" id="id" class="form-control" name="pickuppincode" maxlength="6" #pickuppincode="ngModel" [(ngModel)]="user.pickuppincode"
                             (ngModelChange)="changeEditpickuppincode($event)">
@@ -926,7 +926,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-6 col-lg-6 col-sm-6">
+                    <div class="col-md-6 col-lg-6 col-sm-6" style="display:none;">
                         <div class="form-group">
                             <input type="text" id="id" class="form-control" name="dropoffpincode" maxlength="6" #dropoffpincode="ngModel" [(ngModel)]="user.dropoffpincode" (ngModelChange)="changeEditdropoffpincode($event)">
                             <label class="form-control-placeholder" for="id">Dropoff Pincode</label>
@@ -1098,7 +1098,7 @@
                 </div>
               </div>
               <div class="row">
-                <div class="col-md-6 col-lg-6 col-sm-6">
+                <div class="col-md-6 col-lg-6 col-sm-6" style="display:none;">
                   <div class="form-group">
                     <input type="text" id="pickuppincode" class="form-control" name="pickuppincode" maxlength="6" [(ngModel)]="user.pickuppincode" #pickuppincode="ngModel"
                     >

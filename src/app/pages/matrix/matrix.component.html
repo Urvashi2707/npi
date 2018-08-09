@@ -3,7 +3,23 @@
         Escalation Matrix
     </nb-card-header>
     <nb-card-body>
-        <table style="width:100%" class="table table-striped">
+            <div class="row">
+                    <div class="col-12 col-sm-12">
+                      <div class="container">
+              
+                        <div class="timeline-block timeline-block-right" *ngFor="let m of matrix">
+                           <div class="marker"></div>
+                           <div class="timeline-content">
+                              <div class="title">{{m.matrix_name}}</div>
+                              <span class="first_name">{{m.first_name}}</span>
+                              <p class="email">{{m.email}}.</p>
+                              <p class="number">{{m.first_number}}</p>
+                           </div>
+                        </div>
+                     </div>
+                    </div>
+                  </div>
+        <!-- <table style="width:100%" class="table table-striped">
             <thead>
                 <tr style="font-weight:700">
                     <td>1st point of contact</td>
@@ -19,7 +35,7 @@
                 <tr><td *ngFor="let m of matrix">{{m.email}}</td></tr>
                 <tr><td *ngFor="let m of matrix">{{m.first_number}}</td></tr>
             </tbody>
-        </table>
+        </table> -->
     </nb-card-body>
 </nb-card>
 <div class="mobileView">
