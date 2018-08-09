@@ -66,10 +66,14 @@ export class UnconfirmedComponent implements OnInit {
     this.FilterCheck(1);
   }
   //call Confirm Modal
-  ShowConfirmModal(res:any) {
+  ShowConfirmModal(res:any,page) {
     const activeModal = this.modalService.open(ConfirmModalComponent, { size: 'lg', container: 'nb-layout' });
     activeModal.componentInstance.modalHeader = 'Confirmed Booking';
     activeModal.componentInstance.modalContent = res;
+    activeModal.result.then(() => { 
+      console.log('When user closes');
+      this.FilterCheck(page);
+    }, () => { console.log('Backdrop click')})
   }
 //sort function
   sort(key){
@@ -93,6 +97,7 @@ export class UnconfirmedComponent implements OnInit {
 
 //Unconfirmed table API call
   FilterCheck(p:number){
+    this.unconfirmed=[];
     this.spinner.show();
     this.page = p - 1 ;
    this.MessageNoData = null;

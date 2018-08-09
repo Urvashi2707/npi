@@ -267,6 +267,7 @@ public opt1={
   }
 
   changepickupdoor(value:any){
+    this.user.dropofffdoor = value;
     if (this.sameasvalue == true){
       this.user.dropofffdoor = value;
     }
@@ -294,30 +295,35 @@ public getCity() {
   }
 
   changepickupstreet(value:any){
+    this.user.dropoffstreet = value;
     if (this.sameasvalue == true){
       this.user.dropoffstreet = value;
     }
   }
 
   changepickuparea(value:any){
+    this.user.dropoffarea = value;
     if (this.sameasvalue == true){
     this.user.dropoffarea = value;
     }
   }
 
   changepickuplandmark(value:any){
+    this.user.dropofflandmark = value;
     if (this.sameasvalue == true){
       this.user.dropofflandmark = value;
     }
   }
 
   changepickuppincode(value:any){
+    this.user.dropoffpincode = value;
     if (this.sameasvalue == true){
       this.user.dropoffpincode = value;
     }
   }
 
   changepickuplatlong(value:any){
+    this.user.droplatlong = value;
     if (this.sameasvalue == true){
      this.user.droplatlong = value;
     }
@@ -456,6 +462,7 @@ public getCity() {
   changeEditpickupdoor(value:any){
     this.counter ++;
     this.editAddress = true;
+    this.user.dropofffdoor = value;
     console.log(this.sameasvalue);
     if (this.sameasvalue == true){
       this.user.dropofffdoor = value;
@@ -464,6 +471,7 @@ public getCity() {
 
   changeEditupstreet(value:any){
     this.counter ++;
+    this.user.dropoffstreet = value;
     this.editAddress = true;
     if (this.sameasvalue == true){
       this.user.dropoffstreet = value;
@@ -472,6 +480,7 @@ public getCity() {
 
   changeEditpickuparea(value:any){
     this.counter ++;
+    this.user.dropoffarea = value;
     this.editAddress = true;
     if (this.sameasvalue == true){
     this.user.dropoffarea = value;
@@ -481,6 +490,7 @@ public getCity() {
   changeEditpickuplandmark(value:any){
     this.counter ++;
     this.editAddress = true;
+    this.user.dropofflandmark = value;
     if (this.sameasvalue == true){
       this.user.dropofflandmark = value;
     }
@@ -489,6 +499,7 @@ public getCity() {
   changeEditpickuppincode(value:any){
     this.counter ++;
     this.editAddress = true;
+    this.user.dropoffpincode = value;
     if (this.sameasvalue == true){
       this.user.dropoffpincode = value;
     }
@@ -497,6 +508,7 @@ public getCity() {
   changeEditpickuplatlong(value:any){
     this.counter ++;
     this.editAddress = true;
+    this.user.droplatlong = value;
     if (this.sameasvalue == true){
      this.user.droplatlong = value;
     }
@@ -516,7 +528,6 @@ public getCity() {
         }
         else {
           this.brands = res[0].allbrands;
-            // this.getModelds(this.selectedBrand);
         }
       });
   }

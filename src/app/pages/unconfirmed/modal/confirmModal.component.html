@@ -22,7 +22,7 @@
   <div class="row">
     <div class="col-md-8 col-lg-8 col-sm-8 col-xs-8">
       <div class="form-group">
-        <select name="model" id="model" class="form-control" (change)="onSelectModel($event.value)" [(ngModel)]="selectedModel" #model="ngModel"
+        <select name="model" id="model" class="form-control" [(ngModel)]="selectedModel" #model="ngModel"
           required>
           <option *ngFor="let ma of Models" [value]="ma.model_id"> {{ma.model_name}}</option>
         </select>
@@ -40,7 +40,7 @@
   <div class="row">
     <div class="col-md-8 col-lg-8 col-sm-8 col-xs-8">
       <div class="form-group">
-        <select name="variant" id="variant" class="form-control" (change)="onSelectVariant($event.value)" [(ngModel)]="selectedVariant"
+        <select name="variant" id="variant" class="form-control" [(ngModel)]="selectedVariant"
           #variant="ngModel" required>
           <option *ngFor="let va of Variant" [value]="va.variant_id"> {{va.variant_name}}</option>
         </select>
@@ -56,11 +56,6 @@
 
   <div class="row">
     <div class="col-md-8 col-lg-8 col-sm-8 col-xs-8">
-      <div class="form-group" style="display:inline-block;min-width:15%;">
-        <select id="salutation1" class="form-control" name="salutation1" [(ngModel)]="queue.salutation" #salutation1="ngModel" required>
-          <option *ngFor="let s of salutation"   [value]="s.type" [selected]="s == 'Mr'"> {{s.type}}</option>
-        </select>
-      </div>
       <div class="form-group CusFormGroup">
         <input type="text" id="Cus_name" class="form-control" required [(ngModel)]="queue.cust_name" name="Cus_name" #Cus_name="ngModel"
           style="text-transform: capitalize;">
@@ -144,7 +139,7 @@
 
       </div>
       <div  style="display:inline-block;margin:3%">
-        <button class="edit" style="background-color: white;border-color: white;" (click)="show2=!show2">
+        <button type="button" class="edit" style="background-color: white;border-color: white;" (click)="dateshow()">
           <i class="fa fa-pencil" style="color:#ffa100" aria-hidden="true"></i>
         </button>
       </div>
@@ -154,13 +149,13 @@
 
 
   <div class="row"  *ngIf="show2">
-    <div class="col-md-8 col-lg-8 col-sm-8 col-xs-8">
+    <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6">
       <div class="form-group">
         <div class="input-group">
           <input class="form-control" name="dp" [ngModel]="model1" [readonly]="true" [maxDate]="maxDate" 
-            placeholder="{{model | date: 'yyyy-MM-dd'}}" (ngModelChange)="onSelectDate($event)" ngbDatepicker #d="ngbDatepicker">
+             (ngModelChange)="onSelectDate($event)" ngbDatepicker #d="ngbDatepicker">
           <div class="input-group-append">
-            <button class="btn btn-outline-secondary dateButton" (click)="d.toggle()" type="button">
+            <button type="button" class="btn btn-outline-secondary dateButton" (click)="d.toggle()">
               <span>
                 <i class="fa fa-calendar"></i>
               </span>
@@ -183,18 +178,8 @@
         </tr>
       </table>
     </div>
-    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4" style="padding-bottom: 4%;">
       <input class="form-control" name="slot" [readonly]="true" *ngIf="slot_time" [(ngModel)]="slot_time" />
-    </div>
-  </div>
-
-  <div class="row" style="margin-bottom: 2%;">
-    <div class="col-lg-6 col-md-6 col-sm-6">
-      <label class="switch" style="margin-bottom: -0.5rem;">
-        <input type="checkbox" checked name="amb" #amb (click)="some(amb.checked)" [(ngModel)]="queue.assignambassador">
-        <span class="slider round"></span>
-      </label>
-      <label style="margin-left:1.5rem;margin-bottom: -0.5rem;">Assign to 21North Ambassador</label>
     </div>
   </div>
 
@@ -298,23 +283,6 @@
         <input type="text" id="notes" class="form-control" name="notes" [(ngModel)]="queue.notes" placeholder="Notes" #notes="ngModel">
         <label class="form-control-placeholder" for="notes">Notes</label>
       </div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-        <div class="form-group">
-            <angular2-multiselect [data]="itemList" 
-            [(ngModel)]="selectedItems" 
-            [settings]="settings" 
-            name="something"
-            #comp
-            (onSelect)="onItemSelect($event)"
-            (onDeSelect)="OnItemDeSelect($event)" 
-            (onSelectAll)="onSelectAll($event)" 
-            (onDeSelectAll)="onDeSelectAll($event)"
-            required>
-            </angular2-multiselect> </div>
     </div>
   </div>
  

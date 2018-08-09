@@ -28,6 +28,8 @@ export class QueueDetailsComponent implements OnInit {
   chauffeur_card: FormGroup;
   notesFormGroup: FormGroup;
   link: string;
+  type_of_service:any;
+  ShowComplaints:boolean = true;
   rating = "3.4";
   public advInfo:any= {};
   public feedback:any;
@@ -336,7 +338,12 @@ export class QueueDetailsComponent implements OnInit {
           if (check[1].hasOwnProperty('puinfo')) {
 
              this.pickupInfo = check[1].puinfo;
-            // console.log(this.pickupInfo);
+            console.log(this.pickupInfo);
+            if(this.pickupInfo[0].hasOwnProperty('type_service')){
+              console.log("inside typeofserviceif");
+              this.type_of_service = JSON.parse(this.pickupInfo[0].type_service)
+             
+            }
             if (this.pickupInfo[0].hasOwnProperty('pu_address')) {
               this.showPickupCard = '1';
               let pick_address = this.pickCardForm.get('pickupAddress');
@@ -364,9 +371,6 @@ export class QueueDetailsComponent implements OnInit {
               amb_name.setValue(this.pickupInfo[0].amb_name);
             }
             this.on_time =this.pickupInfo[0].on_time
-
-
-
             if (this.pickupInfo[0].on_time) {
               if (this.pickupInfo[0].on_time == '0') {
                 this.pickOnTimeImage = this.failimg;
@@ -576,10 +580,20 @@ export class QueueDetailsComponent implements OnInit {
         if (objectlength > 10) {
           if (check[10].hasOwnProperty('complaints')) {
             const complaints1 = check[10].complaints;
-            if (complaints1[0].hasOwnProperty('complaint')) {
-
+            console.log(this.type_of_service);
+            if(this.type_of_service === "0" || this.type_of_service === "1"){
+              this.showComplaintsCard = "1";
               this.complaints = complaints1[0].complaint;
+              console.log("show comp")
             }
+            else{
+              if (complaints1[0].hasOwnProperty('complaint')) {
+                this.complaints = complaints1[0].complaint;
+                this.showComplaintsCard = "0";
+                console.log("Dont show comp")
+              }
+            }
+         
           }
         }
         // if (objectlength > 11) {

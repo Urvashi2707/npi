@@ -100,7 +100,7 @@
                 <td>{{u.queue_state}}</td>
                 <td *ngIf="InsuranceCheck">{{i.svc_name}}</td>
                 <td>
-                  <button (click)="ShowConfirmModal(u)" class="btn btn-warning">Confirm</button>
+                  <button (click)="ShowConfirmModal(u,page+1)" class="btn btn-warning">Confirm</button>
                 </td>
               </tr>
       
