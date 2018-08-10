@@ -9,9 +9,10 @@
   <div class="row">
     <div class="col-sm-8 col-lg-8 col-xs-8 col-md-8">
       <div class="form-group">
-        <input type="text" id="num" name="num" class="form-control" style=" text-transform: uppercase" [(ngModel)]="queue.veh_number"
+          <label  for="num">Registration Number*</label>
+        <input type="text" id="num" name="num" class="form-control" [readonly]="true" style=" text-transform: uppercase" [(ngModel)]="queue.veh_number"
           #num="ngModel" />
-        <label class="form-control-placeholder" for="num">Registration Number*</label>
+       
       </div>
       <div class="form-control-feedback" *ngIf="num.errors && (num.dirty || num.touched)">
         <p *ngIf="num.errors.required">Registration Number is required</p>
@@ -22,11 +23,12 @@
   <div class="row">
     <div class="col-md-8 col-lg-8 col-sm-8 col-xs-8">
       <div class="form-group">
-        <select name="model" id="model" class="form-control" [(ngModel)]="selectedModel" #model="ngModel"
+          <label  for="model">Vehicle Model*</label>
+        <select name="model" id="model" class="form-control" [disabled]="true" [(ngModel)]="selectedModel" #model="ngModel"
           required>
           <option *ngFor="let ma of Models" [value]="ma.model_id"> {{ma.model_name}}</option>
         </select>
-        <label class="form-control-placeholder" for="model">Vehicle Model*</label>
+       
       </div>
     </div>
 
@@ -40,11 +42,12 @@
   <div class="row">
     <div class="col-md-8 col-lg-8 col-sm-8 col-xs-8">
       <div class="form-group">
-        <select name="variant" id="variant" class="form-control" [(ngModel)]="selectedVariant"
+          <label  for="ServiceAdvisor">Vehicle Variant*</label>
+        <select name="variant" id="variant" class="form-control" [disabled]="true" [(ngModel)]="selectedVariant"
           #variant="ngModel" required>
           <option *ngFor="let va of Variant" [value]="va.variant_id"> {{va.variant_name}}</option>
         </select>
-        <label class="form-control-placeholder" for="ServiceAdvisor">Vehicle Variant*</label>
+       
       </div>
     </div>
     <div class="col-md-8 col-lg-8 col-sm-8 col-xs-8">
@@ -57,9 +60,10 @@
   <div class="row">
     <div class="col-md-8 col-lg-8 col-sm-8 col-xs-8">
       <div class="form-group CusFormGroup">
-        <input type="text" id="Cus_name" class="form-control" required [(ngModel)]="queue.cust_name" name="Cus_name" #Cus_name="ngModel"
+          <label  for="Cus_name">Customer Name*</label>
+        <input type="text" id="Cus_name" class="form-control" required [readonly]="true" [(ngModel)]="queue.cust_name" name="Cus_name" #Cus_name="ngModel"
           style="text-transform: capitalize;">
-        <label class="form-control-placeholder" for="Cus_name">Customer Name*</label>
+    
       </div>
       <div class="form-control-feedback" *ngIf="Cus_name.errors && (Cus_name.dirty || Cus_name.touched)">
         <p *ngIf="Cus_name.errors.required">Customer Name is required</p>
@@ -72,13 +76,14 @@
       <div class="col-md-8 col-lg-8 col-sm-8 col-xs-8 mob">
         <div class="form-group" style="display:inline-block;max-width: 16%;">
           <label for="countrycode" class="countryCodelabel">Country Code</label>
-          <input type="text" class="form-control" name="countrycode" OnlyNumber="true" [readonly]="true" value="+91" [(ngModel)]="countrycode1"
+          <input type="text" class="form-control" [readonly]="true" name="countrycode" OnlyNumber="true" [readonly]="true" value="+91" [(ngModel)]="countrycode1"
             required #countrycode>
         </div>
         <div class="form-group mobile1">
-          <input type="text" class="form-control" name="mobile1" maxlength="10" [(ngModel)]="queue.customermobile1" required OnlyNumber="true"
+            <label  for="mobile1">Mobile Number*</label>
+          <input type="text" class="form-control" name="mobile1" [readonly]="true" maxlength="10" [(ngModel)]="queue.customermobile1" required OnlyNumber="true"
             #mobile1="ngModel" pattern="^[0-9]{10}$">
-          <label class="form-control-placeholder" for="mobile1">Mobile Number*</label>
+        
         </div>
         <div class="addNumber">
           <button type="button" (click)="show1=!show1" class="addnumber">
@@ -97,13 +102,14 @@
         <div class="col-md-8 col-lg-8 col-sm-8 col-xs-8">
           <div class="form-group" style="display:inline-block;max-width: 16%;">
             <label for="countrycode" style="font-size: 12px;padding-left: 2%;margin-bottom: 0px;">Country Code</label>
-            <input type="text" class="form-control" name="countrycode" OnlyNumber="true" [readonly]="true" value="+91" [(ngModel)]="countrycode1"
+            <input type="text" class="form-control" [readonly]="true" name="countrycode" OnlyNumber="true" [readonly]="true" value="+91" [(ngModel)]="countrycode1"
               required #countrycode="ngModel">
           </div>
           <div class="form-group" style="display:inline-block;min-width:70%;">
-            <input type="text" class="form-control" name="mobile2" maxlength="10" [(ngModel)]="queue.customermobile2" OnlyNumber="true"
+              <label  for="mobile2">Mobile2 Number*</label>
+            <input type="text" class="form-control" name="mobile2"[readonly]="true"  maxlength="10" [(ngModel)]="queue.customermobile2" OnlyNumber="true"
               #mobile2="ngModel" pattern="^[0-9]{10}$">
-            <label class="form-control-placeholder" for="mobile2">Mobile2 Number*</label>
+     
           </div>
           <div class="form-control-feedback" *ngIf="mobile2.errors && (mobile2.dirty || mobile2.touched)">
 
@@ -118,9 +124,10 @@
   <div class="row">
     <div class="col-md-8 col-lg-8 col-sm-8 col-xs-8">
       <div class="form-group">
-        <input type="text" id="email" class="form-control" name="email" [(ngModel)]="queue.customeremail" #email="ngModel" required
+          <label  for="email">Email Id*</label>
+        <input type="text" id="email" class="form-control" [readonly]="true" name="email" [(ngModel)]="queue.customeremail" #email="ngModel" required
           pattern="^([a-zA-Z0-9_\.\-])+@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$">
-        <label class="form-control-placeholder" for="email">Email Id*</label>
+       
       </div>
       <div class="form-control-feedback" *ngIf="email.errors && (email.dirty || email.touched)">
         <p *ngIf="email.errors.required">Email is required</p>
@@ -187,7 +194,7 @@
     <div class="row">
       <div class="col-md-6 col-lg-6 col-sm-6">
         <div class="form-group">
-          <input type="text" id="pickuploc" class="form-control" name="pickuploc" placeholder="Pickup Location" (ngModelChange)="saverange($event)"
+          <input type="text" id="pickuploc" class="form-control" name="pickuploc"  placeholder="Pickup Location" (ngModelChange)="saverange($event)"
             [(ngModel)]="queue.pickuplocationaddress" #pickuploc="ngModel">
           <label class="form-control-placeholder" for="pickuploc">Pickup Location*</label>
         </div>
@@ -195,7 +202,7 @@
       </div>
       <div class="col-md-6 col-lg-6 col-sm-6">
         <div class="form-group">
-          <input type="text" id="id" class="form-control" name="picklatlong" #picklatlong="ngModel" [(ngModel)]="queue.pickuplatlong"
+          <input type="text" id="id" class="form-control" name="picklatlong"   #picklatlong="ngModel" [(ngModel)]="queue.pickuplatlong"
             pattern="^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?),\s*[-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)$">
           <label class="form-control-placeholder" for="id">Pickup lat/long</label>
         </div>
