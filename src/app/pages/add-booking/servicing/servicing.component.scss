@@ -65,6 +65,12 @@ border-color: #d7dbe0;
   transform: translate3d(0, -100%, 0);
   opacity: 1;
 }
+.form-control:focus + .form-control-placeholder1,
+.form-control:valid + .form-control-placeholder1 {
+  font-size: 75%;
+  transform: translate3d(0, -100%, 0);
+  opacity: 1;
+}
 .switch {
   position: relative;
   display: inline-block;
@@ -243,17 +249,37 @@ input:checked + .slider:before {
   padding-bottom: 0.2rem;
   margin-bottom: 1%;
 }
+.form-control-placeholder1{
+  position: absolute;
+  top: 21px;
+  padding: 7px 0 0 13px;
+  transition: all 200ms;
+  opacity: 0.5;
+}
  @media only screen and (max-width: 420px) {
   .form-group{
     margin-bottom: 1.5rem;   
     margin-top: .5rem;
    }
+   .form-control:focus + .form-control-placeholder1,
+.form-control:valid + .form-control-placeholder1 {
+  font-size: 75%;
+  transform: translate3d(0, -100%, 0);
+  opacity: 1;
+}
    .showtimeinput{
     padding-bottom: 5%;
   }
    .CusFormGroup{
     display:inline-block;
     min-width:81%;
+  }
+  .form-control-placeholder1{
+    position: absolute;
+    top: 21px;
+    padding: 7px 0 0 13px;
+    transition: all 200ms;
+    opacity: 0.5;
   }
   .form-control {
     max-height: 35px;

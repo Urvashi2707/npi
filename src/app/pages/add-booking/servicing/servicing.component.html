@@ -549,15 +549,15 @@
                       <label class="form-control-placeholder" for="id">Pickup lat,long (12.99,77.6611)</label>
                     </div>
                   </div>
-                  <div class="col-md-6 col-lg-6 col-sm-6 col-12 cssselect" style="padding-bottom: 3%;" *ngIf="yourBoolean === 'dropoff'">
+                  <div class="col-md-6 col-lg-6 col-sm-6 col-12 cssselect" style=" padding-top: 2%">
                       <select id="addresstypepu" class="form-control" name="addresstypepu" [(ngModel)]="user.addresstypepu" #addresstypepu="ngModel"
                         required>
                         <option [value]="i.id" *ngFor="let i of addresstype">{{i.type_of_address}}</option>
                       </select>
-                      <label class="form-control-placeholder" for="addresstypepu">Type of address*</label>
+                      <label class="form-control-placeholder1" for="addresstypepu">Type of address*</label>
                     </div>
                 </div>
-                <div class="row"  *ngIf="yourBoolean != 'dropoff'">
+                <!-- <div class="row"  *ngIf="yourBoolean != 'dropoff'">
                   <div class="col-md-6 col-lg-6 col-sm-6 col-12 cssselect" style="padding-bottom: 3%;">
                     <select id="addresstypepu" class="form-control" name="addresstypepu" [(ngModel)]="user.addresstypepu" #addresstypepu="ngModel"
                       required>
@@ -565,7 +565,7 @@
                     </select>
                     <label class="form-control-placeholder" for="addresstypepu">Type of address*</label>
                   </div>
-                </div>
+                </div> -->
               </div>
               <div *ngIf="yourBoolean === 'servicing'">
                 <label class="custom-control custom-checkbox">
@@ -639,15 +639,15 @@
                       <p *ngIf="!droplatlong.errors.required" class="haserror">format is wrong</p>
                     </div>
                   </div>
-                  <div class="col-md-6 col-lg-6 col-sm-6 col-12 cssselect" style="padding-bottom: 3%;" *ngIf="yourBoolean === 'dropoff'">
+                  <div class="col-md-6 col-lg-6 col-sm-6 col-12 " style="    padding-top: 2%">
                       <select id="addresstypedu" class="form-control" name="addresstypedu" [(ngModel)]="user.addresstypedu" #addresstypedu="ngModel"
                         required>
                         <option [value]="i.id" *ngFor="let i of addresstype">{{i.type_of_address}}</option>
                       </select>
-                      <label class="form-control-placeholder" for="addresstypedu">Type of address*</label>
+                      <label class="form-control-placeholder1" for="addresstypedu">Type of address*</label>
                     </div>
                 </div>
-                <div class="row" *ngIf="yourBoolean != 'dropoff'">
+                <!-- <div class="row" *ngIf="yourBoolean != 'dropoff'">
                   <div class="col-md-6 col-lg-6 col-sm-6 col-12 cssselect" style="padding-bottom: 3%;">
                     <select id="addresstypedu" class="form-control" name="addresstypedu" [(ngModel)]="user.addresstypedu" #addresstypedu="ngModel"
                       required>
@@ -655,7 +655,7 @@
                     </select>
                     <label class="form-control-placeholder" for="addresstypedu">Type of address*</label>
                   </div>
-                </div>
+                </div> -->
               </div>
             </div>
             <div class="row" *ngIf="yourBoolean === 'dropoff' || yourBoolean === 'servicing'">
