@@ -1038,7 +1038,7 @@ export class ChauffeurComponent implements OnInit {
     }
     if(this.slot_time != "0" || this.pickup_drop == 15 ){
       
-      if(result >= 0.500000){
+      if(result >= 0.100000){
   const reqpara6 = {
     requesttype: "createbookingv3",
     vehnumber:f.value.num,
