@@ -1046,7 +1046,7 @@ export class ChauffeurComponent implements OnInit {
     vehbrand:this.selectedBrand,
     carmodelid: f.value.model,
     carsubmodelid: f.value.variant,
-    customername: this.salutation2 +'.'+this.titlecasePipe.transform(this.cusName),
+    customername: this.titlecasePipe.transform(this.cusName),
     customermobile1: this.mobile1,
     customermobile2: this.mobile2,
     customeremail: this.cusEmail,
@@ -1118,7 +1118,7 @@ else {
   }
 });}
 else{
-  this.showToast('alert', 'Message', 'Distance is less than 500 metre');
+  this.showToast('alert', 'Message', 'Distance is less than 100 metre');
 }
     }else{
       this.showToast('alert', 'Message', 'Please select Slot and date');
