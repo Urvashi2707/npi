@@ -20,26 +20,26 @@
                         <table class="table">
                             <tr>
                                 <th (click)="sort('id')">Queue Id
-                                    <span><i class="fa" *ngIf="key =='id'" [ngClass]="{'fa-sort-alpha-asc':reverse, 'fa-sort-alpha-desc':!reverse}" style="color:#ffa100" aria-hidden="true"></i></span>
+                                    <span class="sort-span"><i class="fa" *ngIf="key =='id'" [ngClass]="{'fa-long-arrow-down':reverse, 'fa-long-arrow-up':!reverse}" style="color:#ffa100" aria-hidden="true"></i></span>
                                 </th>
                                 <th (click)="sort('veh_number')">LIC Plate
-                                        <span><i class="fa" *ngIf="key =='id'" [ngClass]="{'fa-sort-alpha-asc':reverse, 'fa-sort-alpha-desc':!reverse}" style="color:#ffa100" aria-hidden="true"></i></span>
+                                        <span class="sort-span"><i class="fa" *ngIf="key =='veh_number'" [ngClass]="{'fa-long-arrow-down':reverse, 'fa-long-arrow-up':!reverse}" style="color:#ffa100" aria-hidden="true"></i></span>
                                     </th>
                                 <th (click)="sort('queue_date')">Queue Date
-                                    <span><i class="fa" *ngIf="key =='queue_date'" [ngClass]="{'fa-sort-alpha-asc':reverse, 'fa-sort-alpha-desc':!reverse}" style="color:#ffa100" aria-hidden="true"></i></span>
+                                    <span class="sort-span"><i class="fa" *ngIf="key =='queue_date'" [ngClass]="{'fa-long-arrow-down':reverse, 'fa-long-arrow-up':!reverse}" style="color:#ffa100" aria-hidden="true"></i></span>
                                 </th>
                                 <th (click)="sort('queue_time')">Queue Time
-                                    <span><i class="fa" *ngIf="key =='queue_time'" [ngClass]="{'fa-sort-alpha-asc':reverse, 'fa-sort-alpha-desc':!reverse}" style="color:#ffa100" aria-hidden="true"></i></span>
+                                    <span class="sort-span"><i class="fa" *ngIf="key =='queue_time'" [ngClass]="{'fa-long-arrow-down':reverse, 'fa-long-arrow-up':!reverse}" style="color:#ffa100" aria-hidden="true"></i></span>
                                 </th>
                                 <th (click)="sort('cust_name')">Customer Name
-                                    <span><i class="fa" *ngIf="key =='cust_name'" [ngClass]="{'fa-sort-alpha-asc':reverse, 'fa-sort-alpha-desc':!reverse}" style="color:#ffa100" aria-hidden="true"></i></span>
+                                    <span class="sort-span"><i class="fa" *ngIf="key =='cust_name'" [ngClass]="{'fa-long-arrow-down':reverse, 'fa-long-arrow-up':!reverse}" style="color:#ffa100" aria-hidden="true"></i></span>
                                 </th>
                                 <th (click)="sort('cust_number')">Customer Number
-                                    <span><i class="fa" *ngIf="key =='cust_number'" [ngClass]="{'fa-sort-alpha-asc':reverse, 'fa-sort-alpha-desc':!reverse}" style="color:#ffa100" aria-hidden="true"></i></span>
+                                    <span class="sort-span"><i class="fa" *ngIf="key =='cust_number'" [ngClass]="{'fa-long-arrow-down':reverse, 'fa-long-arrow-up':!reverse}" style="color:#ffa100" aria-hidden="true"></i></span>
                                 </th>
 
                                 <th (click)="sort('queue_status')">Status
-                                    <span><i class="fa" *ngIf="key =='queue_status'" [ngClass]="{'fa-sort-alpha-asc':reverse, 'fa-sort-alpha-desc':!reverse}" style="color:#ffa100" aria-hidden="true"></i></span>
+                                    <span class="sort-span"><i class="fa" *ngIf="key =='queue_status'" [ngClass]="{'fa-long-arrow-down':reverse, 'fa-long-arrow-up':!reverse}" style="color:#ffa100" aria-hidden="true"></i></span>
                                 </th>
                                 <!-- <th *ngIf="InsuranceCheck" (click)="sort('svc_name')">SVC Name
                                         <span class="sort-span">
