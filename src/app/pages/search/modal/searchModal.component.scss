@@ -1,7 +1,10 @@
 @import '../../../@theme/styles/themes';
 @import '~bootstrap/scss/mixins/breakpoints';
 @import '~@nebular/theme/styles/global/bootstrap/breakpoints';
-
+$headerTopPadding : 3%;
+$mobileRowPadding:3%;
+$mobileQueueIDFont:13px;
+$mobileFont:13px;
 @include nb-install-component() {
   nb-tabset {
     height: 100%;
@@ -56,7 +59,20 @@ input[readonly]
     background-color:#ececec;
 }
 
-
+.QueueId{
+  font-weight: 900;
+  font-size: $mobileQueueIDFont;
+}
+.vehNumber{
+  float: right;
+  border: 1px solid black;
+  padding: 3px;
+  border-radius: 4px;
+}
+.Ind{
+  font-size: 7px;
+  color:#58a3d9;
+}
 .form-control:focus + .form-control-placeholder,
 .form-control:valid + .form-control-placeholder {
   font-size: 75%;
