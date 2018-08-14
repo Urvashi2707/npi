@@ -88,6 +88,10 @@ import 'style-loader!angular2-toaster/toaster.css';
         const activeModal = this.modalService.open(EditUserComponent, { size: 'lg', container: 'nb-layout' });
         activeModal.componentInstance.modalHeader = 'Edit Users';
         activeModal.componentInstance.modalContent = res;
+        activeModal.result.then(() => { 
+          console.log('When user closes');
+          this.getUserList();
+        }, () => { console.log('Backdrop click')})
       }
 
       //Success Modal
@@ -172,6 +176,26 @@ import 'style-loader!angular2-toaster/toaster.css';
         }
       }
 
+      getUserList(){
+        this.userList = [];
+        this.userDisable = [];
+        const List1 = {
+          requesttype: 'getuserlist',
+          servicecentreid:this.SvcID,
+        }
+          const ListReq1 = JSON.stringify(List1);
+             this._data.webServiceCall(ListReq1).subscribe
+        (res =>  {
+            for(var i = 0; i < res[0].userlist.length; i++ ){
+              if(res[0].userlist[i].isenabled == '1'){
+              this.userList.push(res[0].userlist[i])
+            }
+          else{
+              this.userDisable.push(res[0].userlist[i])
+            }
+          }
+        });
+      }
 
       //function for unable user
       EnableUser(user1,index){

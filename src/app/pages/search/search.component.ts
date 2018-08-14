@@ -74,6 +74,7 @@ export class SearchComponent implements OnInit {
   //Search Table Data API call
   GetSearchData(){
     this.VehNumber = "";
+    this.report=[];
     this.VehNumber = sessionStorage.getItem('search')
     const reqpara1 = {
       requesttype: 'getsearch',
