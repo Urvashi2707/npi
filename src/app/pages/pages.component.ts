@@ -7,7 +7,7 @@ import { MENU_ITEMSADM,MENU_ITEMSUSR ,MENU_INSURANCESUSR} from './pages-menu';
   template: `
     <ngx-sample-layout>
       <nb-menu [items]="menu"></nb-menu>
-      <router-outlet></router-outlet>
+      <router-outlet (activate)="onActivate($event)"></router-outlet>
     </ngx-sample-layout>
   `,
 })
@@ -33,5 +33,8 @@ else {
   }
   }
 
+  onActivate(e){
+    console.log(e)
+  }
   // menu = MENU_ITEMS;
 }
