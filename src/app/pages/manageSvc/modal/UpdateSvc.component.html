@@ -36,7 +36,7 @@
       <div class="row">
         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
           <div class="form-group">
-            <input type="text" class="form-control" id="add2" name="add2" [(ngModel)]="modalContent.address2" required #add2="ngModel">
+            <input type="text" class="form-control" id="add2" name="add2" [(ngModel)]="modalContent.address2" #add2="ngModel">
             <label class="form-control-placeholder" for="add2">Address2</label>
           </div>
           <div class="form-control-feedback" *ngIf="add2.errors && (add2.dirty || add2.touched)">

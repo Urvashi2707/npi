@@ -73,12 +73,19 @@ export class UpdateSvcComponent {
      else{
       TypeOfShop = "4"
      }
+     if(f.value.add2){
+       var add2 = f.value.add2;
+     }
+     else{
+        add2 = "0";
+     }
+     console.log(this.modalContent.cityid);
     const updatesvc = {
       requesttype: 'updatesvcinfo',
       servicecentreid: this.modalContent.id,
       svc_name:this.titlecasePipe.transform(this.modalContent.name),
       address_1: this.modalContent.address1,
-      address_2: this.modalContent.address2,
+      address_2: add2,
       pin_code:this.modalContent.pincode,
       city_id:this.modalContent.cityid,
       capacity:this.modalContent.capacity,
