@@ -8,6 +8,8 @@ import { ModalQueueComponent } from './modal-queue/modal-queue.component';
 import { ModalSendLinkComponent } from './modal-send-link/modal-send-link.component'
 import { SearchModalComponent } from '../search/modal/searchModal.component';
 import { ModalPickupComponent } from './modal-pickup/modal-pickup.component';
+
+import { ModalDropoffComponent } from './modal-dropoff/modal-dropoff.component';
 import { ModalAdvComponent } from './modal-adv/modal-adv.component';
 
 @Component({
@@ -210,18 +212,7 @@ export class QueueDetailsComponent implements OnInit {
     activeModal.componentInstance.modalHeader = 'Upload File';
     activeModal.componentInstance.modalContent = this.dataForModal;
   }
-  // showUploadModal() {
-  //   if(this.InvAmt){
-  //         this.Amt = this.InvAmt;
-  //       }
-  //       else{
-  //         this.Amt = this.estAmount;
-  //       }
-  //   const activeModal = this.modalService.open(Modal4Component, { size: 'lg', container: 'nb-layout' });
-  //  this.dataForModal = { service_status: this.service_status,amt:this.Amt,advName:this.advInfo[0].adv_name, id: sessionStorage.getItem('QueueId'), queue_date: new Date }
-  //   activeModal.componentInstance.modalHeader = 'Upload File';
-  //   activeModal.componentInstance.modalContent ={ service_status: this.service_status,amt:this.Amt,advName:this.advInfo[0].adv_name, id: sessionStorage.getItem('QueueId'), queue_date: new Date };
-  // }
+
   showLargeModal(name: string) {
   
     const activeModal = this.modalService.open(ModalQueueComponent, { size: 'lg', container: 'nb-layout' });
@@ -231,26 +222,44 @@ export class QueueDetailsComponent implements OnInit {
     this._detailsTable.setCancelReasons(this.cancelReasons);
   }
   showpickupModal(res:any){
+    res.service = "pickup";
     const activeModal = this.modalService.open(ModalPickupComponent, { size: 'lg', container: 'nb-layout' });
-
     activeModal.componentInstance.modalHeader = 'Pickup Details';
     activeModal.componentInstance.modalContent = res;
-    //  console.log(res);
-    // this._detailsTable.setCancelReasons(this.cancelReasons);
+    activeModal.result.then(() => { 
+      console.log('When user closes');
+      var event = {
+        "tabTitle":"Details"
+      };
+      this.tabChanged(event);
+    }, () => { console.log('Backdrop click')})
+
   }
   showdropoffModal(res:any){
-    const activeModal = this.modalService.open(ModalPickupComponent, { size: 'lg', container: 'nb-layout' });
-
+    res.service = "dropoff";
+    const activeModal = this.modalService.open(ModalDropoffComponent, { size: 'lg', container: 'nb-layout' });
     activeModal.componentInstance.modalHeader = 'DropOff Details';
     activeModal.componentInstance.modalContent = res;
-    //  console.log(res);
-    // this._detailsTable.setCancelReasons(this.cancelReasons);
+    activeModal.result.then(() => { 
+      console.log('When user closes');
+      var event = {
+        "tabTitle":"Details"
+      };
+      this.tabChanged(event);
+    }, () => { console.log('Backdrop click')})
+
   }
   showdAdv(res:any){
     const activeModal = this.modalService.open(ModalAdvComponent, { size: 'lg', container: 'nb-layout' });
-
     activeModal.componentInstance.modalHeader = 'Select Advisor';
     activeModal.componentInstance.modalContent = res;
+    activeModal.result.then(() => { 
+      console.log('When user closes');
+      var event = {
+        "tabTitle":"Details"
+      };
+      this.tabChanged(event);
+    }, () => { console.log('Backdrop click')})
     //  console.log(res);
     // this._detailsTable.setCancelReasons(this.cancelReasons);
   }

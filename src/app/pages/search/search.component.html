@@ -8,14 +8,14 @@
                 <!-- <toaster-container [toasterconfig]="config"></toaster-container> -->
                 <div>
                     <div>
-                            <div class="row">
-                                    <div class="col-md-6 col-lg-6 col-sm-6">
-                        
-                                    </div>
-                                    <div class="col-md-6 col-lg-6 col-sm-6">
-                                            <input [(ngModel)]="searchText" placeholder="search" class="search" class="search">
-                                    </div>
-                                </div>
+                        <div class="row">
+                            <div class="col-md-6 col-lg-6 col-sm-6">
+                
+                            </div>
+                            <div class="col-md-6 col-lg-6 col-sm-6">
+                                <input [(ngModel)]="searchText" placeholder="search" class="search" class="search">
+                            </div>
+                        </div>
                         
                         <table class="table">
                             <tr>
@@ -61,6 +61,9 @@
 
                             </tr>
                         </table>
+                        <table class="NoData" *ngIf="messageNodata">
+                                {{messageNodata}}
+                              </table>
                     </div>
                 </div>
 

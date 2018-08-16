@@ -3,7 +3,7 @@ input[readonly]
     background-color:#ececec;
 }
 .timeAnchor{
-    padding:10px;
+    padding:4px;
     border: 1px solid #ececec;
     border-radius: 5px;
    }
@@ -12,8 +12,10 @@ input[readonly]
    }
    .timeRow a:visited{
     background-color:#ffcc00;
-    
-   }
+    }
+    .timeRow{
+      padding: 0.55rem;
+    }
    .timeRow a:active{
     background-color:green;
    }

@@ -5,7 +5,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {ServicingService } from '../services/addServicing.service';
 import {SearchModalComponent} from './modal/searchModal.component';
 import { NgxSpinnerService } from 'ngx-spinner';
-
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-search',
@@ -18,6 +18,7 @@ export class SearchComponent implements OnInit {
   constructor(private modalService: NgbModal,
     private _tableService: QueueTableService, 
     private service:ServicingService,
+    private route:ActivatedRoute,
     private spinner: NgxSpinnerService,
     private router:Router) { }
 
@@ -31,23 +32,15 @@ export class SearchComponent implements OnInit {
   InsuranceCheck:boolean = false;
   key: string = 'id'; 
   reverse: boolean = false;
+  messageNodata = "No Data" 
 
+   data = this.route.params.subscribe(params => {
+    if(params.hasOwnProperty('data')) {
+      this.GetSearchData();
+    }
+  })
   ngOnInit() {
-    this.InsuranceUsr = JSON.parse(sessionStorage.getItem('insurance'));
-    if(sessionStorage.getItem('selectedsvc')){
-      this.SvcId = sessionStorage.getItem('selectedsvc');
-    }
-    else{
-      this.SvcId = JSON.parse(sessionStorage.getItem('globalsvcid'));
-    }
-    this.GlobalSvcId = JSON.parse(sessionStorage.getItem('globalsvcid'));
-    if(this.InsuranceUsr == "1"){
-      this.InsuranceCheck = true;
-    }
-    else{
-      this.InsuranceCheck = false;
-     }
-    this.GetSearchData();
+  
   }
 
   //sort
@@ -73,9 +66,30 @@ export class SearchComponent implements OnInit {
 
   //Search Table Data API call
   GetSearchData(){
-    this.VehNumber = "";
+    var mobile = "";
+    this.messageNodata = null;
+    var data = this.route.params.subscribe(params => {
+      mobile = params.data; // (+) converts string 'id' to a number
+      // console.log(mobile);
+      // In a real app: dispatch action to load the details here.
+   });
+   this.InsuranceUsr = JSON.parse(sessionStorage.getItem('insurance'));
+    if(sessionStorage.getItem('selectedsvc')){
+      this.SvcId = sessionStorage.getItem('selectedsvc');
+    }
+    else{
+      this.SvcId = JSON.parse(sessionStorage.getItem('globalsvcid'));
+    }
+    this.GlobalSvcId = JSON.parse(sessionStorage.getItem('globalsvcid'));
+    if(this.InsuranceUsr == "1"){
+      this.InsuranceCheck = true;
+    }
+    else{
+      this.InsuranceCheck = false;
+     }
+  
+    this.VehNumber = mobile;
     this.report=[];
-    this.VehNumber = sessionStorage.getItem('search')
     const reqpara1 = {
       requesttype: 'getsearch',
       vehnumber_mobile:this.VehNumber,
@@ -84,12 +98,17 @@ export class SearchComponent implements OnInit {
       const as1 = JSON.stringify(reqpara1)
       this.service.webServiceCall(as1).subscribe
       (res => {
-      if(res[0].login === 0){
+        if(!res[0]){
+          console.log("No Data");
+          this.messageNodata = "No Data";
+        }
+     else if(res[0].login === 0){
         sessionStorage.removeItem('currentUser');
         this.router.navigate(['/auth/login']);
       }
       else{
         this.report = res[0].vehqueues;
+        console.log(this.report);
         this.UploadBtn = this.report[0].upload_button,
         this.spinner.hide();
         this._tableService.DateFormat(this.report);

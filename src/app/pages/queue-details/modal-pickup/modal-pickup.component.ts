@@ -15,6 +15,8 @@ export class ModalPickupComponent implements OnInit {
   modalContent:any;
   pickup_card_group: FormGroup;
   queueID:any;
+  showAnimation = '0';
+  visible = false;
   valuedate = new Date();
   modalHeader:string;
   public startDate;
@@ -46,10 +48,8 @@ export class ModalPickupComponent implements OnInit {
   }
   public pickup_drop: number;
   getSlot(Date: string) {
-    
-      this.pickup_drop = 0;
+    this.pickup_drop = 0;
       console.log(this.pickup_drop);
-    
     if (Date) {
       const reqpara5 = {
         requesttype: 'getslotsv2',
@@ -73,15 +73,11 @@ export class ModalPickupComponent implements OnInit {
             // this.showToast('default', 'Select Slot', 'Please Select Slot');
             console.log(this.slot);
           }
-
-
         }
-
-
       });
     }
-
   }
+  
   public slot_time: string;
   check(value: string) {
     console.log(value);
@@ -91,6 +87,7 @@ export class ModalPickupComponent implements OnInit {
   closeModal() {
     this.activeModal.close();
   }
+
   buildArr(theArr: any[]) {
     var arrOfarr = [];
     if (theArr.length > 0) {
@@ -106,9 +103,9 @@ export class ModalPickupComponent implements OnInit {
         arrOfarr.push(row);
       }
     }
-
-    return arrOfarr;
+  return arrOfarr;
   }
+
   ngOnInit() {
     this.queueID = sessionStorage.getItem('QueueId');
     console.log(this.modalContent);
@@ -140,25 +137,60 @@ export class ModalPickupComponent implements OnInit {
     else {
       this.pickupdate = this. modalContent.pu_time
     }
-    const reqpara2 = {
-      requesttype: 'updatescheduled',
-      queueid: this.queueID ,
-      puaddress:f.value.pu_address,
-      pulat:f.value.pu_lat,
-      pulong:f.value.pu_long,
-      queuetime:this.pickupdate,
-      svcid:this.svcid
+    if(this.modalContent.service = "pickup"){
+      const reqpara2 = {
+        requesttype: 'updatescheduled',
+        queueid: this.queueID ,
+        puaddress:f.value.pu_address,
+        pulat:f.value.pu_lat,
+        pulong:f.value.pu_long,
+        queuetime:this.pickupdate,
+        svcid:this.svcid
+      }
+      const as2 = JSON.stringify(reqpara2);
+      console.log(as2);
+      this.ServicingService.webServiceCall(as2).subscribe(data => {
+        if (data[0].login === 0) {
+          sessionStorage.removeItem('currentUser');
+          this.router.navigate(['/auth/login']);
+        } 
+        else {
+          console.log(data);
+          if(data[0].updatestatus[0].is_updated === "1"){
+            console.log("updated");
+            this.visible = true;
+            this.showAnimation = '1';
+          }
+          else{
+            console.log("not updated");
+            this.visible = true;
+            this.showAnimation = '0';
+          }
+        }
+  });
     }
-    const as2 = JSON.stringify(reqpara2);
-    console.log(as2);
-    this.ServicingService.webServiceCall(as2).subscribe(data => {
-      if (data[0].login === 0) {
-        sessionStorage.removeItem('currentUser');
-        this.router.navigate(['/auth/login']);
-      } else {
-        console.log(data);
-        this.activeModal.close();
-  }
-});
+    else{
+      const reqpara2 = {
+        requesttype: 'updatedropoff',
+        queueid: this.queueID ,
+        doaddress:f.value.do_address,
+        dolat:f.value.dropofflat,
+        dolong:f.value.dropofflong,
+        doqueuetime:this.pickupdate,
+        svcid:this.svcid
+      }
+      const as2 = JSON.stringify(reqpara2);
+      console.log(as2);
+      this.ServicingService.webServiceCall(as2).subscribe(data => {
+        if (data[0].login === 0) {
+          sessionStorage.removeItem('currentUser');
+          this.router.navigate(['/auth/login']);
+        } else {
+          console.log(data);
+          this.activeModal.close();
+    }
+  });
+    }
+
   }
 }

@@ -16,6 +16,14 @@
   top: 0;
   opacity: 0;
 }
+.checkmark-circle {
+  width: 90px;
+  height: 90px;
+  position: relative;
+  display: inline-block;
+  vertical-align: top;
+  margin-left: 43%;
+}
 .form-group {
   position: relative;
   margin-bottom: 1.5rem;

@@ -5,8 +5,10 @@ import { UserService } from '../../../@core/data/users.service';
 import { AnalyticsService } from '../../../@core/utils/analytics.service';
 import {ServerService} from '../../../pages/services/user.service';
 import { DatePipe } from '@angular/common';
+import {SearchComponent} from '../../../pages/search/search.component'
 
 @Component({
+  providers:[SearchComponent],
   selector: 'ngx-header',
   styleUrls: ['./header.component.scss'],
   templateUrl: './header.component.html',
@@ -57,6 +59,7 @@ export class HeaderComponent implements OnInit {
               private userService: UserService,
               private searchService : NbSearchService,
               private datePipe:DatePipe,
+              private comp:SearchComponent,
               private analyticsService: AnalyticsService,
               private router:Router,
               private _data : ServerService,
@@ -107,10 +110,9 @@ export class HeaderComponent implements OnInit {
   startSearch() {
     this.searchService.onSearchSubmit().subscribe((data: { term: string, tag: string }) => {
       console.info(`term: ${data.term}, from search: ${data.tag}`);
-      sessionStorage.setItem('search',data.term);
-      window.location.reload();
-      this.router.navigate(["pages/search"]);
- 
+      // sessionStorage.setItem('search',data.term);
+      this.router.navigate(["pages/search",  {'data': data.term}]);
+     
   });
 }
 

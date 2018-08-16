@@ -7,7 +7,7 @@ import { NgForm } from '@angular/forms';
 import { QueueTableService } from '../../services/queue-table.service'
 import { ServerService } from '../../services/user.service'
 import {NgbActiveModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
-
+import { SuccessComponent } from '../../user/success/success.component';
 @Component({
   selector: 'app-modal-adv',
   templateUrl: './modal-adv.component.html',
@@ -18,6 +18,8 @@ export class ModalAdvComponent implements OnInit {
   svcid:string;
   modalHeader:string;
   modalContent:any;
+  showAnimation = '0';
+  visible = false;
   pickup_card_group: FormGroup;
   queueID:any;
   user:any={};
@@ -30,16 +32,13 @@ export class ModalAdvComponent implements OnInit {
 
   ngOnInit() {
     if(sessionStorage.getItem('selectedsvc')){
-      // console.log(sessionStorage.getItem('selectedsvc'));
       this.svcid = sessionStorage.getItem('selectedsvc');
-      // console.log(this.svcid);
     }
     else{
       this.svcid = JSON.parse(sessionStorage.getItem('globalsvcid'));
-      // console.log(this.svcid);
     }
     this.queueID = sessionStorage.getItem('QueueId');
-    console.log(this.modalContent);
+    console.log(this.modalContent,"model Contetnt");
     this.getAdvisor();
   }
 
@@ -56,11 +55,17 @@ export class ModalAdvComponent implements OnInit {
         this.router.navigate(['/auth/login']);
       }
       else {
-
         this.serviceadv = res[0].users
         console.log(this.serviceadv);
+        for(var i = 0; i < this.serviceadv.length; i++){
+          console.log(this.serviceadv[i].first_name)
+          if(this.serviceadv[i].first_name === this.modalContent.adv_name){
+            this.user.service_advisor = this.serviceadv[i].id;
+            
+            console.log(this.user.service_advisor , "inside if");
+          }
+        }
       }
-
     });
   }
 
@@ -80,6 +85,16 @@ export class ModalAdvComponent implements OnInit {
       }
       else {
         console.log(res);
+        if(res[0].updatestatus[0].is_updated === "1"){
+          console.log("updated");
+          this.visible = true;
+          this.showAnimation = '1';
+        }
+        else{
+          console.log("not updated");
+          this.visible = true;
+          this.showAnimation = '0';
+        }
       }
 
     });

@@ -121,16 +121,14 @@ export class ModalDropoffComponent implements OnInit {
   }
   public pickup_drop: number;
   getSlot(Date: string) {
-    
-      this.pickup_drop = 0;
+    this.pickup_drop = 0;
       console.log(this.pickup_drop);
-    
     if (Date) {
       const reqpara5 = {
         requesttype: 'getslotsv2',
         reqdate: Date,
         pickup_drop: this.pickup_drop,
-        type_service:1,
+        type_service:0,
         svcid:this.svcid
       }
       const as5 = JSON.stringify(reqpara5)
@@ -148,25 +146,22 @@ export class ModalDropoffComponent implements OnInit {
             // this.showToast('default', 'Select Slot', 'Please Select Slot');
             console.log(this.slot);
           }
-
-
         }
-
-
       });
     }
+  }
 
-  }
-  public slot_time: string;
-  check(value: string) {
-    console.log(value);
-    this.slot_time = value;
-    this.show=true;
-  }
+public slot_time: string;
+check(value: string) {
+  console.log(value);
+  this.slot_time = value;
+  this.show=true;
+}
   closeModal() {
     this.activeModal.close();
   }
-  buildArr(theArr: any[]) {
+
+  buildArr(theArr: any) {
     var arrOfarr = [];
     if (theArr.length > 0) {
       for (var i = 0; i < theArr.length; i += 4) {
@@ -181,8 +176,7 @@ export class ModalDropoffComponent implements OnInit {
         arrOfarr.push(row);
       }
     }
-
-    return arrOfarr;
+  return arrOfarr;
   }
 
 
@@ -198,9 +192,9 @@ export class ModalDropoffComponent implements OnInit {
     const reqpara2 = {
       requesttype: 'updatedropoff',
       queueid: this.queueID ,
-      doaddress:f.value.pu_address,
-      dolat:f.value.pu_lat,
-      dolong:f.value.pu_long,
+      doaddress:f.value.do_address,
+      dolat:f.value.dropofflat,
+      dolong:f.value.dropofflong,
       doqueuetime:this.pickupdate,
       svcid:this.svcid
     }

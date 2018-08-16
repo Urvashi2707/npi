@@ -1,24 +1,214 @@
-<nb-card>
+<nb-card class="desktopView">
         <nb-card-header>
-                RSA
+          Active RSA
         </nb-card-header>
-    <nb-card-body>
-        <!-- <table style="width:100%">
+        <nb-card-body>
+          <div class="row">
+            <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+              <div class="form-group">
+                <div class="input-group">
+                  <input class="form-control" name="dp" [ngModel]="model1" (ngModelChange)="onSelectStartDate($event)" 
+                    ngbDatepicker #d1="ngbDatepicker" [minDate]="model1">
+                  <div class="input-group-append">
+                    <button class="btn btn-outline-secondary dateButton" (click)="d1.toggle()" type="button" style="height: 100%;border-radius: 0px;">
+                      <span>
+                        <i class="fa fa-calendar"></i>
+                      </span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+              <div class="form-group">
+                <div class="input-group">
+                  <input class="form-control" name="dp" [ngModel]="model" (ngModelChange)="onSelectEndDate($event)" 
+                    ngbDatepicker #d="ngbDatepicker" [minDate]="model">
+                  <div class="input-group-append">
+                    <button class="btn btn-outline-secondary dateButton" (click)="d.toggle()" type="button" style="height: 100%;border-radius: 0px;">
+                      <span>
+                        <i class="fa fa-calendar"></i>
+                      </span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+              <button type="button" class="btn btn-primary" (click)="FilterCheck(1)">Apply</button>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 col-lg-6 col-sm-6">
+      
+            </div>
+            <div class="col-md-6 col-lg-6 col-sm-6">
+              <input type="text" class="search" [(ngModel)]="SearchData" placeholder="search">
+            </div>
+          </div>
+          <table style="width:100%">
             <thead>
-
-                <tr>
-                    <th *ngFor="let k of pickup_headings; let i = index">
-                        {{pickup_headings[i]}}
-                    </th>
-                </tr>
+              <tr>
+                <th (click)="sort('queueid')">ID
+                  <span class="sort-span">
+                    <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i>
+                  </span>
+                </th>
+                <th (click)="sort('cust_name')">Customer
+                  <span class="sort-span">
+                    <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i>
+                  </span>
+                </th>
+                <th (click)="sort('veh_number')">License Plate
+                  <span class="sort-span">
+                    <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i>
+                  </span>
+                </th>
+                <th (click)="sort('description')">Description
+                  <span class="sort-span">
+                    <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i>
+                  </span>
+                </th>
+                <th (click)="sort('queue_date')">Date
+                  <span class="sort-span">
+                    <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i>
+                  </span>
+                </th>
+                <th (click)="sort('queue_time')">Time
+                  <span class="sort-span">
+                    <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i>
+                  </span>
+                </th>
+                <th (click)="sort('queue_state')">Status
+                  <span class="sort-span">
+                    <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i>
+                  </span>
+                </th>
+                <th *ngIf="InsuranceCheck" (click)="sort('svc_name')">SVC Name
+                  <span class="sort-span">
+                    <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i>
+                  </span>
+                </th>
+              </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let i of tableData; let j = index">
-                    <td *ngFor="let key of keyValues; let k = index">
-                        {{tableData[j][keyValues[k]]}}
-                    </td>
-                </tr>
+              <tr *ngFor="let i of upcoming |filter:SearchData | orderBy: key : reverse  | paginate: { id: 'server', itemsPerPage:DataPerPage, currentPage: page + 1, totalItems: RecordCount }; let j = index"
+                (click)="openQDetails(i)">
+                <td>{{i.queueid}}</td>
+                <td>{{i.cust_name}}</td>
+                <td>{{i.veh_number}}</td>
+                <td>{{i.description}}</td>
+                <td>{{i.queue_date}}</td>
+                <td>{{i.queue_time}}</td>
+                <td>{{i.queue_state}}</td>
+                <td *ngIf="InsuranceCheck">{{i.svc_name}}</td>
+              </tr>
             </tbody>
-        </table> -->
-    </nb-card-body>
-</nb-card>
+          </table>
+          <table class="NoData" *ngIf="MessageNoData">
+            {{MessageNoData}}
+          </table>
+          <ngx-spinner bdColor="rgba(51,51,51,0.09)" size="large" color="#ea5810" type="ball-clip-rotate-pulse"></ngx-spinner>
+          <div class="paginate">
+            <pagination-controls (pageChange)="FilterCheck($event)" id="server"></pagination-controls>
+          </div>
+      
+        </nb-card-body>
+      </nb-card>
+      <div class="mobileView">
+        <div class="row headerRow">
+          <div class="col-4 col-sm-4">
+            <span class="header">Upcoming RSA</span>
+          </div>
+          <div class="col-8 col-sm-8">
+            <div class="right-inner-addon">
+              <i class="fa fa-search"></i>
+              <input type="search" class="form-control" placeholder="Search" [(ngModel)]="SearchData" />
+            </div>
+          </div>
+        </div>
+        <hr/>
+        <div class="row">
+          <div class="col-12 col-sm-12">
+            <div class="form-group">
+              <div class="input-group">
+                <input class="form-control" name="dp" [ngModel]="model1" (ngModelChange)="onSelectStartDate($event)" ngbDatepicker
+                  #d2="ngbDatepicker" [minDate]="model1">
+                <div class="input-group-append">
+                  <button class="btn btn-outline-secondary dateButton" (click)="d2.toggle()" type="button" style="height: 100%;width: 100%">
+                    <span>
+                      <i class="fa fa-calendar"></i>
+                    </span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 col-sm-12">
+            <div class="form-group">
+              <div class="input-group">
+                <input class="form-control" name="dp" [ngModel]="model" (ngModelChange)="onSelectEndDate($event)" ngbDatepicker #d3="ngbDatepicker" [minDate]="model">
+                <div class="input-group-append" >
+                  <button class="btn btn-outline-secondary dateButton" (click)="d3.toggle()" type="button" style="height: 100%;width: 100%">
+                    <span>
+                      <i class="fa fa-calendar"></i>
+                    </span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row applyRow">
+          <div class="col-sm-8 col-8"></div>
+          <div class="col-sm-2 col-2 applyCol">
+            <button type="button" class="btn btn-primary apply" (click)="FilterCheck(1)">Apply</button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 col-sm-12">
+              <div class="NoData" *ngIf="MessageNoData"> {{MessageNoData}}</div>
+            <ul>
+              <li *ngFor="let i of upcoming |filter:SearchData | paginate: { id: 'server', itemsPerPage:DataPerPage, currentPage: page + 1, totalItems: RecordCount }; let j = index " (click)="openQDetails(i)">
+                <div class="card">
+                  <div class="row padding" *ngIf="InsuranceCheck">
+                    <div class="col-12 col-sm-12">
+                      <span class="QueueId">{{i.svc_name}}</span>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-12 col-sm-12">
+                      <span class="QueueId">ID &nbsp;:&nbsp; {{i.queueid}}</span>
+                      <span class="vehNumber">
+                        <span class="Ind">IND</span>{{i.veh_number}}</span>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-12 col-sm-12">
+                      <div>{{i.cust_name}}</div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-5 col-sm-5">Service Type:</div>
+                    <div class="col-7 col-sm-7">{{i.description}}</div>
+                  </div>
+                  <div class="row">
+                    <div class="col-5 col-sm-5">Service Time:</div>
+                    <div class="col-7 col-sm-7">{{i.newdate}} {{i.newtime}}</div>
+                  </div>
+                  <div class="row">
+                    <div class="col-12 col-sm-12 QueueStatus">{{i.queue_state}}</div>
+                  </div>
+                </div>
+              </li>
+            </ul>
+            <ngx-spinner bdColor="rgba(51,51,51,0.09)" size="large" color="#ea5810" type="ball-clip-rotate-pulse"></ngx-spinner>
+            <div class="paginate">
+              <pagination-controls (pageChange)="FilterCheck($event)" id="server"></pagination-controls>
+            </div>
+          </div>
+        </div>
+      </div>
+      

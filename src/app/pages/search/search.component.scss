@@ -20,6 +20,14 @@ td {
 .sort-span {
     float: right;
 }
+.NoData{
+    border: 0px;
+    /* margin: 14px; */
+    margin-top: 25px;
+    font-weight: 500;
+    /* padding: 8px; */
+
+}
 .search {
     float: right;
     margin-bottom: 5%;
@@ -112,6 +120,10 @@ td {
         padding: 3px;
         border-radius: 4px;
        
+    }
+    .NoData{
+        text-align: center;
+        font-weight: 500;
     }
     .searchInput{
         padding-right: 5%;

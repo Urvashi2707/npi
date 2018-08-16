@@ -28,6 +28,7 @@ export class RsaComponent implements OnInit {
   GlobalSvcId:string;
   MessageNoData:string;
   InsuranceUsr:string;
+  public upcoming : any =[];
   InsuranceCheck:boolean = false;
   SvcId:string;
   key: string = 'queueid'; 
@@ -102,39 +103,39 @@ dataForUpload: any;
    }
 
      //RSA table API call
-  FilterCheck(p:number){
-    this.MessageNoData = null;
-    this.spinner.show();
-    this.page = p - 1 ;
-     const AtCentreReq = {
-      requesttype: 'getqueueinfonew',
-      servicetype: '15',
-      starttime: this.StrtDateString,
-      endtime: this.EndDateString,
-      pagenumber: this.page,
-      svcid:this.SvcId 
-    }
-    const ReqAtCentre = JSON.stringify(AtCentreReq);
-    this._data.webServiceCall(ReqAtCentre).subscribe(res => {
-      if(res[0].login === 0){
-        sessionStorage.removeItem('currentUser');
-        this.router.navigate(['/auth/login']);
+     FilterCheck(p:number){
+      this.spinner.show();
+      this.page = p - 1 ;
+      this.MessageNoData = null;
+      const UpcmReqpara = {
+        requesttype: 'getqueueinfonew',
+        servicetype: '16',
+        starttime: this.StrtDateString,
+        endtime: this.EndDateString,
+        pagenumber: this.page,
+        svcid:this.SvcId
       }
-      else{
-        if(res[0].pagecount[0].hasOwnProperty('noqueues')){
-        this.MessageNoData = 'No Data';
-        this.spinner.hide();
-       }
-       else{
-        // this.atcentre = res[1].rsa;
-        // this.RecordCount = res[0].pagecount[0].record_count;
-        // this.DataPerPage = res[0].pagecount[0].pagelimit;
-        this.spinner.hide();
-        this._tableService.DateFormat(this.atcentre);
-        this._tableService.TimeFormat(this.atcentre);
+      const UpReq = JSON.stringify(UpcmReqpara);
+      this._data.webServiceCall(UpReq).subscribe(res => {
+        if(res[0].login === 0){
+          sessionStorage.removeItem('currentUser');
+          this.router.navigate(['/auth/login']);
+        }
+        else{
+          if(res[0].pagecount[0].hasOwnProperty('noqueues')){
+            this.MessageNoData = "No Data" ;
+            this.spinner.hide();
+           }
+           else{
+          this.upcoming = res[1].upcoming;
+          this.RecordCount = res[0].pagecount[0].record_count;
+          this.DataPerPage = res[0].pagecount[0].pagelimit;
+          this.spinner.hide();
+          this._tableService.DateFormat(this.upcoming);
+          this._tableService.TimeFormat(this.upcoming);
+        }
+      }
+    });
     }
-}
-});
-  }
 
 }
