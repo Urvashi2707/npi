@@ -120,7 +120,7 @@
               {{MessageNoData}}
             </table>
           <ngx-spinner bdColor="rgba(51,51,51,0.09)" size="large" color="#ea5810" type="ball-clip-rotate-pulse"></ngx-spinner>
-          <div class="paginate">
+          <div class="paginate" *ngIf="!MessageNoData">
             <pagination-controls (pageChange)="Search($event)" id="server"></pagination-controls>
         </div>
         </div>
@@ -229,8 +229,8 @@
       </li>
     </ul>
     <ngx-spinner bdColor="rgba(51,51,51,0.09)" size="large" color="#ea5810" type="ball-clip-rotate-pulse"></ngx-spinner>
-    <div class="paginate">
-      <pagination-controls (pageChange)="Search($event)" id="server"></pagination-controls>
+    <div class="paginate" *ngIf="!MessageNoData">
+      <pagination-controls (pageChange)="Search($event)" id="server" *ngIf="!MessageNoData"></pagination-controls>
   </div>
 </div>
 </div>
