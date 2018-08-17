@@ -91,24 +91,6 @@ export class EditUserComponent implements OnInit {
       }
       });
   }
-
-  //delete user
-  deleteUser() {
-    const reqpara1 = {
-      requesttype: 'updateuser',
-      useridvar: this.modalContent.id,
-      username: this.modalContent.first_name,
-      mobilenumber: this.modalContent.mobilenumber,
-      email: this.modalContent.email,
-      permission: this.modalContent.designation,
-      isenabled: 1
-    };
-    const ua1 = JSON.stringify(reqpara1);
-    this._data.webServiceCall(ua1).subscribe(data => {
-      
-    });
-  }
-
   //on submit function call
   onSubmit(f: NgForm) {
     const reqpara = {
@@ -118,7 +100,7 @@ export class EditUserComponent implements OnInit {
       mobilenumber: f.value.mobile1,
       email: f.value.email,
       
-      isenabled: 0,
+      isenabled: 1,
       permissionid: f.value.permission
     };
     const ua = JSON.stringify(reqpara);
@@ -126,22 +108,18 @@ export class EditUserComponent implements OnInit {
       if (data) {
         this.message = data
         console.log("message update");
-
-        [{"userupdate":[{"update_status":"1"}]}]
         if(data[0].userupdate[0].update_status === "1"){
           console.log("update");
-          // this.getUserList();
+          this.getUserList();
           this.visible = true;
           this.showAnimation = '1';
         }
         else{
           console.log(" not update");
-          // this.getUserList();
+          this.getUserList();
           this.visible = true;
           this.showAnimation = '0';
         }
-        // this.show1 = true;
-     
       }
    });
     // this.activeModal.close();

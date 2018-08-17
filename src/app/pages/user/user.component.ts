@@ -110,7 +110,7 @@ import 'style-loader!angular2-toaster/toaster.css';
           mobilenumber: user.mobilenumber,
           email:user.email,
           isenabled:0,
-          permissionid:user.permission_type
+          designation:user.permission_type
           };
         const ua1 = JSON.stringify(reqpara1);
         this._data.webServiceCall(ua1).subscribe(data => {
@@ -213,7 +213,7 @@ import 'style-loader!angular2-toaster/toaster.css';
         this._data.webServiceCall(UpdateReq).subscribe(data => {
           this.userDisable = [];
           this.userList = [];
-          this.DisableUser(index);
+          this.EnableUserindex(index);
          });
       }
 
@@ -232,11 +232,35 @@ import 'style-loader!angular2-toaster/toaster.css';
             for(var i = 0; i < res[0].userlist.length; i++ ){
               if(res[0].userlist[i].isenabled == '1'){
               this.userList.push(res[0].userlist[i])
-              this.userDisable.splice(index,1);
+              // this.userDisable.splice(index,1);
             }
            else{
               this.userDisable.push(res[0].userlist[i]);
               this.userDisable.splice(index,1);
+            }
+          }
+        });
+      }
+
+      EnableUserindex(index){
+        console.log(index);
+        this.userDisable = [];
+        this.userList = [];
+        const UsrDisable = {
+          requesttype: 'getuserlist',
+          servicecentreid:this.SvcID,
+        }
+          const Disabledreq = JSON.stringify(UsrDisable);
+             this._data.webServiceCall(Disabledreq).subscribe
+        (res => {
+            for(var i = 0; i < res[0].userlist.length; i++ ){
+              if(res[0].userlist[i].isenabled == '1'){
+              this.userList.push(res[0].userlist[i])
+              this.userList.splice(index,1);
+            }
+           else{
+              this.userDisable.push(res[0].userlist[i]);
+              // this.userDisable.splice(index,1);
             }
           }
         });
