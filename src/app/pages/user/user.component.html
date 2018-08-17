@@ -107,13 +107,13 @@
                         <td>{{e.mobilenumber}}</td>
                         <td>{{e.email}}</td>
                         <td>{{e.designation}}</td>
-                        <td>
+                        <td *ngIf="CheckGrpAdmin || CheckSvcAdmin || InsuranceCheck">
                             <button (click)="showLargeModal(e)" style="background-color: white;border-color: orange;" *ngIf="CheckGrpAdmin || CheckSvcAdmin || InsuranceCheck">
                               <i class="fa fa-pencil" style="color:#ffa100" aria-hidden="true"></i>
                             </button>
                           </td>
-                        <td>
-                          <button (click)="Delete(e,i)" style="background-color: white;border-color: orange;" *ngIf="CheckGrpAdmin || CheckSvcAdmin || InsuranceCheck">
+                        <td *ngIf="CheckGrpAdmin || CheckSvcAdmin || InsuranceCheck">
+                          <button (click)="Delete(e,i)" style="background-color: white;border-color: orange;" >
                             <i class="fa fa-trash" style="color:#ffa100" aria-hidden="true"></i>
                           </button>
                         </td>
