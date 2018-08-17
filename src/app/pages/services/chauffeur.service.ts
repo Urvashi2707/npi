@@ -8,7 +8,7 @@ export class ChauffeurService {
   constructor(private http: HttpClient) { }
   private _url :string = 'https://api.myjson.com/bins/tjkvh'
   employees = []
-  public url:string='https://m.21north.in/notify/svcwebservice.php';
+  public url:string='http://m.21north.in/notify/svcwebservice.php';
 
   public httpOptions = {
   headers: new HttpHeaders({'Content-Type':  'application/json'}),

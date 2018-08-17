@@ -41,6 +41,8 @@ export class ModalDropoffComponent implements OnInit {
   disable = true;
   isNewestOnTop = true;
   isHideOnClick = true;
+  showAnimation = '0';
+  visible = false;
   isDuplicatesPrevented = false;
   isCloseButton = true;
   config: ToasterConfig;
@@ -51,7 +53,7 @@ export class ModalDropoffComponent implements OnInit {
   timeout = 5000;
   toastsLimit = 5;
   type = 'default';
-  showAnimation = '0';
+  // showAnimation = '0';
   public slot: any[];
   showSlot = '0';
 

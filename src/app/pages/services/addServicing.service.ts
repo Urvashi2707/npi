@@ -21,16 +21,16 @@ export class ServicingService {
     // console.log(this.testService());
    }
 
-  private getSession_url :string = 'https://plsuat.europassistance.in:444/getSession';
-  private Ea_check1_url:string = 'https://plsuat.europassistance.in:444/checkInitialEligibility';
-  private Ea_check2_url:string = 'https://plsuat.europassistance.in:444/checkFinalEligibility';
+  private getSession_url :string = 'http://plsuat.europassistance.in:444/getSession';
+  private Ea_check1_url:string = 'http://plsuat.europassistance.in:444/checkInitialEligibility';
+  private Ea_check2_url:string = 'http://plsuat.europassistance.in:444/checkFinalEligibility';
 
-  public url:string='https://m.21north.in/notify/svcwebservice.php';
-  public logout_url:string = 'https://m.21north.in/notify/logout.php';
-  public graph:string = 'https://m.21north.in/notify/svcgraph.php';
-  public slotgraph =  'https://m.21north.in/notify/svcgraphslot.php';
-  check_url = 'https://m.21north.in/notify/eaws.php';
-  public destroySession_url = 'https://plsuat.europassistance.in:444/destroysession';
+  public url:string='http://m.21north.in/notify/svcwebservice.php';
+  public logout_url:string = 'http://m.21north.in/notify/logout.php';
+  public graph:string = 'http://m.21north.in/notify/svcgraph.php';
+  public slotgraph =  'http://m.21north.in/notify/svcgraphslot.php';
+  check_url = 'http://m.21north.in/notify/eaws.php';
+  public destroySession_url = 'http://plsuat.europassistance.in:444/destroysession';
   public data:string;
   data1 = "vfdxvxd";
   public httpOptions = {
