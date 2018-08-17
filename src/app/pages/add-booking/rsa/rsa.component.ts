@@ -173,7 +173,13 @@ export class RsaComponent implements OnInit {
 
   getSlot(Date: string) {
     this.showtime = true;
-    if (this.yourBoolean === 'onSpot') {
+    if(this.yourBoolean ==='towing'){
+      var serivcetype = this.user.towingTruckType;
+    }
+    else if (this.yourBoolean ==='onSpot'){
+      serivcetype = this.user.onSpotType;
+    }
+    if (this.yourBoolean === 'servicing' || this.yourBoolean === 'onlypickup') {
       this.pickup_drop = 0;
       // console.log(this.pickup_drop);
     }
@@ -187,7 +193,7 @@ export class RsaComponent implements OnInit {
         requesttype: 'getslotsv2',
         reqdate: Date,
         pickup_drop: this.pickup_drop,
-        type_service:this.pickup_drop,
+        type_service:serivcetype,
         svcid:this.svcid
       }
       const as5 = JSON.stringify(reqpara5)
