@@ -88,10 +88,10 @@ import 'style-loader!angular2-toaster/toaster.css';
         const activeModal = this.modalService.open(EditUserComponent, { size: 'lg', container: 'nb-layout' });
         activeModal.componentInstance.modalHeader = 'Edit Users';
         activeModal.componentInstance.modalContent = res;
-        // activeModal.result.then(() => { 
-        //   console.log('When user closes');
-        //   this.getUserList();
-        // }, () => { console.log('Backdrop click')})
+        activeModal.result.then(() => { 
+          console.log('When user closes');
+          this.getUserList();
+        }, () => { console.log('Backdrop click')})
       }
 
       //Success Modal
