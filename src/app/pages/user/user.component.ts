@@ -88,10 +88,10 @@ import 'style-loader!angular2-toaster/toaster.css';
         const activeModal = this.modalService.open(EditUserComponent, { size: 'lg', container: 'nb-layout' });
         activeModal.componentInstance.modalHeader = 'Edit Users';
         activeModal.componentInstance.modalContent = res;
-        activeModal.result.then(() => { 
-          console.log('When user closes');
-          this.getUserList();
-        }, () => { console.log('Backdrop click')})
+        // activeModal.result.then(() => { 
+        //   console.log('When user closes');
+        //   this.getUserList();
+        // }, () => { console.log('Backdrop click')})
       }
 
       //Success Modal
@@ -110,7 +110,7 @@ import 'style-loader!angular2-toaster/toaster.css';
           mobilenumber: user.mobilenumber,
           email:user.email,
           isenabled:0,
-          designation:user.permission_type
+          permissionid:user.permission_type
           };
         const ua1 = JSON.stringify(reqpara1);
         this._data.webServiceCall(ua1).subscribe(data => {
@@ -205,8 +205,9 @@ import 'style-loader!angular2-toaster/toaster.css';
           username: user1.first_name,
           mobilenumber: user1.mobilenumber,
           email:user1.email,
-          designation:user1.permission_type,
-          isenabled:1
+       
+          isenabled:1,
+          permissionid:user1.permission_type,
         };
         const UpdateReq = JSON.stringify(UpdateUsr);
         this._data.webServiceCall(UpdateReq).subscribe(data => {
@@ -218,6 +219,7 @@ import 'style-loader!angular2-toaster/toaster.css';
 
       //get list of user
       DisableUser(index){
+        console.log(index);
         this.userDisable = [];
         this.userList = [];
         const UsrDisable = {

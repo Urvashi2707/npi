@@ -109,7 +109,7 @@ export class UpdateSvcComponent {
         this.success("1");
       }
     });
-    this.activeModal.close();
+    // this.activeModal.close();
   }
 
   GetCityList() {

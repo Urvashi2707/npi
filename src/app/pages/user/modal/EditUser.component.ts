@@ -18,12 +18,21 @@ export class EditUserComponent implements OnInit {
   modalHeader: string;
   modalContent: any;
   message: any;
+  showAnimation = '0';
+  visible1 = false;
   SvcId: string;
   userList: any = [];
   Designation: any = [];
+  userDisable:any;
   constructor(private titlecasePipe:TitleCasePipe,private activeModal: NgbActiveModal, private _data: ServerService) { }
   
   ngOnInit() {
+    if(sessionStorage.getItem('selectedsvc')){
+      this.SvcId = sessionStorage.getItem('selectedsvc');
+    }
+    else{
+      this.SvcId = JSON.parse(sessionStorage.getItem('globalsvcid'));
+    }
     this.getUserType();
   }
 
@@ -61,7 +70,8 @@ export class EditUserComponent implements OnInit {
 
   //get user list
   getUserList() {
-    this.SvcId = localStorage.getItem('svcid')
+    // this.SvcId = sessionStorage.getItem('svcid');
+    console.log(this.SvcId);
     const reqpara1 ={
         requesttype: 'getuserlist',
         servicecentreid: JSON.parse(this.SvcId),
@@ -71,6 +81,14 @@ export class EditUserComponent implements OnInit {
       (res => {
         console.log(res[0].userlist);
         this.userList = res[0].userlist;
+        for(var i = 0; i < res[0].userlist.length; i++ ){
+          if(res[0].userlist[i].isenabled == '1'){
+          this.userList.push(res[0].userlist[i])
+        }
+      else{
+          this.userDisable.push(res[0].userlist[i])
+        }
+      }
       });
   }
 
@@ -87,6 +105,7 @@ export class EditUserComponent implements OnInit {
     };
     const ua1 = JSON.stringify(reqpara1);
     this._data.webServiceCall(ua1).subscribe(data => {
+      
     });
   }
 
@@ -98,6 +117,7 @@ export class EditUserComponent implements OnInit {
       username: this.titlecasePipe.transform(f.value.name),
       mobilenumber: f.value.mobile1,
       email: f.value.email,
+      
       isenabled: 0,
       permissionid: f.value.permission
     };
@@ -105,10 +125,25 @@ export class EditUserComponent implements OnInit {
     this._data.webServiceCall(ua).subscribe(data => {
       if (data) {
         this.message = data
+        console.log("message update");
+
+        [{"userupdate":[{"update_status":"1"}]}]
+        if(data[0].userupdate[0].update_status === "1"){
+          console.log("update");
+          // this.getUserList();
+          this.visible = true;
+          this.showAnimation = '1';
+        }
+        else{
+          console.log(" not update");
+          // this.getUserList();
+          this.visible = true;
+          this.showAnimation = '0';
+        }
         // this.show1 = true;
-        this.getUserList()
+     
       }
    });
-    this.activeModal.close();
+    // this.activeModal.close();
   }
 }
