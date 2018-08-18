@@ -17,6 +17,8 @@ export class UpdateSvcComponent {
    private visibleAnimate = false;
    modalHeader: string;
    modalContent:any;
+   showAnimation = '0';
+  //  visible = false;
    service_type:string;
    public user:any;
    public message : any;
@@ -103,10 +105,14 @@ export class UpdateSvcComponent {
     this._data.webServiceCall(svcreq).subscribe(data => {
       if(data[0].svcupdated[0].updated === "1"){
         this.message = data;
-        this.success("0");
+        // this.success("0");
+        this.visible = true;
+        this.showAnimation = '1';
       }
       else{
-        this.success("1");
+        // this.success("1");
+        this.visible = true;
+        this.showAnimation = '0';
       }
     });
     // this.activeModal.close();
