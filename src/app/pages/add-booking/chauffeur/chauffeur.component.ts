@@ -118,7 +118,10 @@ export class ChauffeurComponent implements OnInit {
   countrycode1:string;
   insuranceFlag:boolean=false;
   
-  constructor(private spinner: NgxSpinnerService,private datePipe:DatePipe,private titlecasePipe:TitleCasePipe,private toasterService: ToasterService,private _data : ServerService,private router: Router,private ngbDateParserFormatter: NgbDateParserFormatter,private modalService: NgbModal) { }
+  constructor(private spinner: NgxSpinnerService,private datePipe:DatePipe,private titlecasePipe:TitleCasePipe,private toasterService: ToasterService,private _data : ServerService,private router: Router,private ngbDateParserFormatter: NgbDateParserFormatter,private modalService: NgbModal) {
+    this.cityList = [];
+    this.getCity();
+   }
 
   ngOnInit() {
     console.log(sessionStorage.getItem('insurance'))
@@ -577,13 +580,21 @@ export class ChauffeurComponent implements OnInit {
         else if(this.serviceType == '15'){
           this.pickup_drop = 15;
         }
+        if(this.user.city){
+          var cityId = this.user.city;
+          console.log(cityId);
+        }
+        else{
+          cityId = JSON.parse(sessionStorage.getItem('city_id'));
+          console.log(cityId);
+        }
         if (Date) {
           const reqpara5 = {
-            requesttype: 'getslotsv2',
+            requesttype: 'getslotsv2city',
             reqdate: Date,
             pickup_drop: "0",
             type_service:this.pickup_drop,
-            svcid: this.svcid
+            cityid:cityId
           }
           const as5 = JSON.stringify(reqpara5)
           this._data.webServiceCall(as5).subscribe(res => {

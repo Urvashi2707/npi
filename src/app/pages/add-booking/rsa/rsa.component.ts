@@ -914,8 +914,6 @@ export class RsaComponent implements OnInit {
       notes:this.notes
     };
   }
-  if(this.slot_time != "0"){
-  
     const rep1= JSON.stringify(this.reqpara);
     console.log(rep1);
     this.ServicingService.webServiceCall(rep1).subscribe(data => {
@@ -950,10 +948,6 @@ export class RsaComponent implements OnInit {
       }
     }
   );
-}
-else {
-  this.showToast('alert', 'Message', 'Please select Slot and date');
-}
 }
 }
 
