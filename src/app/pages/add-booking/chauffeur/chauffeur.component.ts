@@ -24,6 +24,7 @@ export class ChauffeurComponent implements OnInit {
   public selectedModel: any = [];
   public slot:any = [];
   svcid:string;
+  svcList:any;
   slotcheck = true;
   addressPickup:any;
   addressDropoff:any;
@@ -55,6 +56,7 @@ export class ChauffeurComponent implements OnInit {
   public pickup_add: string;
   serviceAdv:string;
   sameasvalue:boolean;
+  cityList:any;
   private creName: string[];
   public pickup_drop:number;
   public yourBoolean : string = 'onSpot' ; 
@@ -92,7 +94,9 @@ export class ChauffeurComponent implements OnInit {
   public amb:boolean = true;
   public Sid:string;
   dateString: string;
-  salutation2:string;
+  north21_tied: any= [];
+  insurance_tied:any = [];
+   salutation2:string;
   isNewestOnTop = true;
   isHideOnClick = true;
   today: number = Date.now();
@@ -405,6 +409,57 @@ export class ChauffeurComponent implements OnInit {
             }
         }
        });
+      }
+
+      onCity(id){
+        this.GetSVCList(this.selectedBrand,this.user.city);
+      }
+
+      GetSVCList(brand,city){
+        var cityId = JSON.parse(sessionStorage.getItem('city_id'));
+        const reqpara1 = {
+               requesttype: 'getsvclist_city_brand',
+                cityid: city,
+                brandid: brand
+             }
+          const SvcList = JSON.stringify(reqpara1)
+          this._data.webServiceCall(SvcList).subscribe
+           (res => {
+              if(res[0].login === 0){
+                sessionStorage.removeItem('currentUser');
+                this.router.navigate(['/auth/login']);
+              }
+              else{
+                this.svcList=res[0].svclist;
+                for(var i = 0; i < res[0].svclist.length; i++ ){
+                  if(res[0].svclist[i].is_tied == '1'){
+                  this.north21_tied.push(res[0].svclist[i]);
+                  res[0].svclist[i].associated = "21North";
+                }
+                else{
+                  this.insurance_tied.push(res[0].svclist[i]);
+                  res[0].svclist[i].associated = "Insurance";
+                }
+            }
+              }
+            });
+       }
+
+       public getCity() {
+        const reqpara1 ={
+            requesttype: 'getcitylist',
+          }
+        const as1 = JSON.stringify(reqpara1)
+        this._data.webServiceCall(as1).subscribe
+          (res => {
+            if (res[0].login === 0) {
+              sessionStorage.removeItem('currentUser');
+              this.router.navigate(['/auth/login']);
+            }
+            else {
+              this.cityList = res[0].citylist;
+            }
+          });
       }
 
        //Get City List API call
