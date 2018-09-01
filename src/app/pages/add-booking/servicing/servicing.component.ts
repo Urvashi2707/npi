@@ -647,13 +647,22 @@ public getCity() {
     else {
       this.pickup_drop = 1;
     }
+    
+    if(this.user.city){
+      var cityId = this.user.city;
+      console.log(cityId);
+    }
+    else{
+      cityId = JSON.parse(sessionStorage.getItem('city_id'));
+      console.log(cityId);
+    }
     if (Date) {
       const reqpara5 = {
-        requesttype: 'getslotsv2',
+        requesttype: 'getslotsv2city',
         reqdate: Date,
         pickup_drop: this.pickup_drop,
         type_service:this.pickup_drop,
-        svcid:this.svcid
+        cityid:cityId
       }
       const as5 = JSON.stringify(reqpara5)
       this.ServicingService.webServiceCall(as5).subscribe(res => {
