@@ -226,128 +226,6 @@
               </div>
             </div>
               <span class="sectionHeader">Service Details</span>
-            <div class="row">
-              <div class="col-md-6 col-lg-6 col-sm-6">
-                <div class="form-group">
-                  <div class="input-group">
-                    <input class="form-control" name="dp" [ngModel]="model" [readonly]="true" [minDate]="startDate" placeholder="{{valuedate | date: 'yyyy-MM-dd'}}"
-                      (ngModelChange)="onSelectDate($event)" ngbDatepicker #d="ngbDatepicker">
-                    <div class="input-group-append">
-                      <button class="btn btn-outline-secondary dateButton" (click)="d.toggle()" type="button">
-                        <span>
-                          <i class="fa fa-calendar"></i>
-                        </span>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-        
-                <div class="form-control-feedback" *ngIf="d.errors && (d.dirty || d.touched)">
-                  <p *ngIf="d.errors.required" class="haserror">Date is required</p>
-                </div>
-                <!-- <div class="form-control-feedback" *ngIf="d.errors && (d.dirty || d.touched)">
-                  <p *ngIf="d.errors.required" class="haserror" >Date is required</p>
-                </div> -->
-              </div>
-              <!-- <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6" *ngIf="yourBoolean === 'onSpot'">
-                <div class="form-group">
-                  <select name="serviceType" id="serviceType" class="form-control" name="serviceType" [(ngModel)]="user.onSpotType" #serviceType="ngModel" required>
-                    <option *ngFor="let c of OnSpotTypes" [value]="c.eaid"> {{c.description}}</option>
-                  </select>
-                  <label class="form-control-placeholder" for="serviceType">OnSpot Type</label>
-                </div>
-              </div>
-
-              <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6" *ngIf="yourBoolean === 'towing'">
-                <div class="form-group">
-                  <select name="TowingTruck" id="TowingTruck" class="form-control" name="TowingTruck" [(ngModel)]="user.towingTruckType" #serviceType="ngModel" #TowingTruck required>
-                    <option *ngFor="let d of TowingTypes" [value]="d.eaid"> {{d.description}}</option>
-                  </select>
-                  <label class="form-control-placeholder" for="TowingTruck">Select Towing Truck Type</label>
-                </div>
-              </div>
-            </div> -->
-              <div class="row" *ngIf="showtime">
-                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-                  <table cellspacing="20" *ngIf="show3" class="table table-condensed table-responsive">
-                    <tr *ngFor="let row of buildArr(slot);let i = index">
-                      <td *ngFor="let s of row" class="timeRow">
-                        <a (click)=check(s.time_format,s.slothour) class="timeAnchor">
-                          <span>{{s.time_format}}</span>
-                        </a>
-                      </td>
-                    </tr>
-                  </table>
-                </div>
-                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4"  *ngIf="showtime">
-                  <input class="form-control" name="slot" [readonly]="true" *ngIf="slot_time" [(ngModel)]="slothour" />
-                </div>
-              </div>
-
-              <div class="row" *ngIf="insuranceFlag">
-                  <div class="col-md-6 col-lg-6 col-sm-6">
-                      <div class="form-group">
-                          <select name="city" id="city" class="form-control" [(ngModel)]="user.city" required #city="ngModel" (change)="onCity($event)">
-                            <option *ngFor="let d of cityList" [value]="d.cityid"> {{d.cityname}}</option>
-                          </select>
-                          <label class="form-control-placeholder" for="city">City*</label>
-                        </div>
-    
-    
-                        <div class="form-control-feedback" *ngIf="city.errors && (city.dirty || city.touched)">
-                          <p *ngIf="city.errors.required" class="haserror">City is required</p>
-                        </div>
-                  </div>
-                  <div class="col-md-6 col-lg-6 col-sm-6">
-                      <div class="form-group">
-                          <select id="svclist" class="form-control" name="svclist" [(ngModel)]="user.svc" #svclist="ngModel"
-                            required >
-                            <optgroup label="{{i.associated}}" *ngFor="let i of svcList;let j = index;">
-                              <option [value]="i.id">{{i.name}}</option>
-                            </optgroup>
-                          </select>
-                          <label class="form-control-placeholder" for="svclist">Service Centre List*</label>
-                        </div>
-                  </div>
-                </div>
-              
-              <!-- <div class="row">
-              <div class="col-md-6 col-lg-6 col-sm-6">
-                <div *ngIf="yourBoolean === 'towing'">
-                  <label class="custom-control custom-checkbox">
-                      <input type="checkbox" checked name="amb" #amb (click)="some(amb.checked)"> -->
-              <!-- <input type="checkbox" class="custom-control-input" name="svc" #svc> -->
-              <!-- <span class="custom-control-indicator"></span>
-                    <span class="custom-control-description">Service Centre</span>
-                  </label>
-                </div>
-              </div>
-            </div> -->
-              <div class="row">
-                <div class="col-md-6 col-lg-6 col-sm-6">
-                  <div *ngIf="yourBoolean === 'towing'" class="CheckBox">
-                    <label class="custom-control custom-checkbox">
-                      <input type="checkbox" class="custom-control-input" name="svc" #svc (click)="some(svc.checked)">
-                      <span class="custom-control-indicator"></span>
-                      <span class="custom-control-description">Service Centre</span>
-                    </label>
-                  </div>
-                </div>
-              </div>
-              <div class="row" *ngIf="showsvclist">
-                <div class="col-md-6 col-lg-6 col-sm-6">
-                  <div class="form-group">
-                    <select name="svc1" id="svc1" class="form-control" [(ngModel)]="user.svc1" #svc1="ngModel" required>
-                      <option *ngFor="let s of Svclist" [value]="s.id"> {{s.name}}</option>
-                    </select>
-                    <label class="form-control-placeholder" for="svc1">Service Centre*</label>
-                  </div>
-                  <div class="form-control-feedback" *ngIf="svc1.errors && (svc1.dirty || svc1.touched)">
-                    <p *ngIf="svc1.errors.required" class="haserror">Service Centre is required</p>
-                  </div>
-                </div>
-              </div>
               <div class="row">
                 <div class="col-md-6 col-lg-6 col-sm-6">
                   <div class="form-group">
@@ -369,17 +247,59 @@
                   </div>
                 </div>
               </div>
-              <!-- <div class="row">
-              <div class="col-md-6 col-lg-6 col-sm-6">
-                <div *ngIf="yourBoolean === 'towing'">
-                  <label class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" name="svc" #svc>
-                    <span class="custom-control-indicator"></span>
-                    <span class="custom-control-description">Service Centre</span>
-                  </label>
+              <div *ngIf="yourBoolean === 'towing'">
+              <div class="row" *ngIf="insuranceFlag">
+                  <div class="col-md-6 col-lg-6 col-sm-6">
+                      <div class="form-group">
+                          <select name="city" id="city" class="form-control" [(ngModel)]="user.city" required #city="ngModel" (change)="onCity($event)">
+                            <option *ngFor="let d of cityList" [value]="d.cityid"> {{d.cityname}}</option>
+                          </select>
+                          <label class="form-control-placeholder" for="city">City*</label>
+                        </div>
+    
+    
+                        <div class="form-control-feedback" *ngIf="city.errors && (city.dirty || city.touched)">
+                          <p *ngIf="city.errors.required" class="haserror">City is required</p>
+                        </div>
+                  </div>
+                  <div class="col-md-6 col-lg-6 col-sm-6" *ngIf="showsvclist">
+                      <div class="form-group">
+                          <select id="svclist" class="form-control" name="svclist" [(ngModel)]="user.svc" #svclist="ngModel"
+                            required >
+                            <optgroup label="{{i.associated}}" *ngFor="let i of svcList;let j = index;">
+                              <option [value]="i.id">{{i.name}}</option>
+                            </optgroup>
+                          </select>
+                          <label class="form-control-placeholder" for="svclist">Service Centre List*</label>
+                        </div>
+                  </div>
                 </div>
               </div>
-            </div> -->
+              <div class="row">
+                <div class="col-md-6 col-lg-6 col-sm-6">
+                  <div *ngIf="yourBoolean === 'towing'" class="CheckBox">
+                    <label class="custom-control custom-checkbox">
+                      <input type="checkbox" class="custom-control-input" name="svc" #svc (click)="some(svc.checked)">
+                      <span class="custom-control-indicator"></span>
+                      <span class="custom-control-description">Service Centre</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div class="row" *ngIf="showsvclist && !insuranceFlag">
+                <div class="col-md-6 col-lg-6 col-sm-6">
+                  <div class="form-group">
+                    <select name="svc1" id="svc1" class="form-control" [(ngModel)]="user.svc1" #svc1="ngModel" required>
+                      <option *ngFor="let s of Svclist" [value]="s.id"> {{s.name}}</option>
+                    </select>
+                    <label class="form-control-placeholder" for="svc1">Service Centre*</label>
+                  </div>
+                  <div class="form-control-feedback" *ngIf="svc1.errors && (svc1.dirty || svc1.touched)">
+                    <p *ngIf="svc1.errors.required" class="haserror">Service Centre is required</p>
+                  </div>
+                </div>
+              </div>
+   
               <div *ngIf="yourBoolean === 'towing'">
                 <div class="row" *ngIf="hideDropoff">
                   <div class="col-md-6 col-lg-6 col-sm-6">
@@ -402,32 +322,8 @@
                     </div>
                   </div>
                 </div>
-                <!-- <div class="row">
-                <div class="col-md-6 col-lg-6 col-sm-6">
-                  <div class="form-group">
-                    <select name="creName" id="creName" class="form-control" [(ngModel)]="user.cre" #creName="ngModel" required>
-                      <option *ngFor="let ca of cre" [value]="ca.id"> {{ca.first_name}} - {{ca.mobile_number}}</option>
-                    </select>
-                    <label class="form-control-placeholder" for="cre">CRE*</label>
-                  </div>
-                  <div class="form-control-feedback" *ngIf="cre.errors && (cre.dirty || cre.touched)">
-                    <p *ngIf="cre.errors.required" class="haserror">CRE is required</p>
-                  </div>
-                </div>
-              </div> -->
               </div>
               <div class="row" *ngIf="yourBoolean === 'towing'">
-                <!-- <div class="col-md-6 col-lg-6 col-sm-6">
-                  <div class="form-group">
-                    <select name="creName" id="creName" class="form-control" [(ngModel)]="user.cre" #creName="ngModel" required>
-                        <option *ngFor="let ca of cre" [value]="ca.id"> {{ca.first_name}} - {{ca.mobile_number}}</option>
-                    </select>
-                    <label class="form-control-placeholder" for="cre">CRE*</label>
-                </div>
-                <div class="form-control-feedback" *ngIf="cre.errors && (cre.dirty || cre.touched)">
-                    <p *ngIf="cre.errors.required" class="haserror">CRE is required</p>
-                </div>
-                </div> -->
                 <div class="col-md-6 col-lg-6 col-sm-6">
                   <div class="form-group">
                     <input type="text" id="notes" class="form-control" name="notes" [(ngModel)]="user.notes"  #notes="ngModel">
@@ -441,15 +337,6 @@
                   </div>
                 </div>
               </div>
-              <!-- <div class="row"  *ngIf="yourBoolean === 'towing'">
-                <div  class="col-md-6 col-lg-6 col-sm-6">
-                  <div class="form-group">
-                    <input type="text" id="amt" class="form-control" name="amt" [(ngModel)]="user.amt" placeholder="Amount" #amt="ngModel">
-                    <label class="form-control-placeholder" for="notes">Estimated Amount</label>
-                  </div>
-                </div>
-              </div> -->
-
               <div class="row" *ngIf="yourBoolean != 'towing'">
                 <div class="col-md-6 col-lg-6 col-sm-6">
                   <div class="form-group">

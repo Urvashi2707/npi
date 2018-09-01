@@ -44,7 +44,7 @@
             <div class="line">
                 <span class="sectionHeader">Vehicle Details</span>
             </div>
-            <!-- <div class="row">
+            <div class="row" *ngIf="insuranceFlag">
               <div class="col-md-6 col-lg-6 col-sm-6">
                 <div class="form-group">
                   <select name="brand" id="brand" class="form-control" (change)="onSelectBrand($event.target.value)" [(ngModel)]="selectedBrand"
@@ -59,7 +59,7 @@
                   <p *ngIf="brand.errors.required" class="haserror">Brand is required</p>
                 </div>
               </div>
-            </div> -->
+            </div>
             <div class="row" *ngIf="!dontShowModel">
               <div class="col-md-6 col-lg-6 col-sm-6">
                 <div class="form-group">

@@ -112,10 +112,20 @@ export class ChauffeurComponent implements OnInit {
   public complaint_id:any =[];
   valuedate = new Date();
   countrycode1:string;
+  insuranceFlag:boolean=false;
   
   constructor(private spinner: NgxSpinnerService,private datePipe:DatePipe,private titlecasePipe:TitleCasePipe,private toasterService: ToasterService,private _data : ServerService,private router: Router,private ngbDateParserFormatter: NgbDateParserFormatter,private modalService: NgbModal) { }
 
   ngOnInit() {
+    console.log(sessionStorage.getItem('insurance'))
+    if(JSON.parse(sessionStorage.getItem('insurance')) == "1"){
+      this.insuranceFlag = true;
+      console.log(this.insuranceFlag , "flag")
+    }
+    else{
+      this.insuranceFlag = false;
+      console.log(this.insuranceFlag , "flag")
+    }
     if(sessionStorage.getItem('selectedsvc')){
       this.svcid = sessionStorage.getItem('selectedsvc');
     }
@@ -141,10 +151,6 @@ export class ChauffeurComponent implements OnInit {
       this.getSaleExceutive();
       const now = new Date();
       const date = new Date();
-      // this.model = {day:date.getUTCDate(),month:date.getUTCMonth() + 1,year: date.getUTCFullYear() };
-      // this.model = {year: date.getUTCFullYear(),month:date.getUTCMonth() + 1,day:date.getUTCDate() };
-      // console.log(this.model);
-      // this.dateString = this.model.year + '-' + this.model.month + '-' + this.model.day;
       this.valuedate = new Date();
       this.startDate = {year: date.getUTCFullYear(),month:date.getUTCMonth() + 1,day:date.getUTCDate() };
       this.minDate = { year: now.getFullYear(), month: now.getMonth() + 1, day: now.getDate() - 1 };
@@ -743,10 +749,6 @@ export class ChauffeurComponent implements OnInit {
 
   onSubmit(f: NgForm) {
     this.disabled =  true;
-    // console.log(f.value.city);
-    // console.log(this.serviceType);
-    // console.log(f.value.num);
-    console.log("variant",f.value.variant)
     if(f.value.city){
       this.cityid = f.value.city;
     }
@@ -790,7 +792,6 @@ export class ChauffeurComponent implements OnInit {
       this.pickupdoor = f.value.pickupdoor;
       this.pickupstreet = f.value.pickupstreet;
       this.pickuparea = f.value.pickuparea;
-      // this.pickuplandmark = f.value.pickuplandmark;
       if(f.value.pickuppincode){
         this.pickuppincode = f.value.pickuppincode;
       }
@@ -806,7 +807,6 @@ export class ChauffeurComponent implements OnInit {
       this.dropofffdoor = f.value.pickupdoor;
       this.dropoffstreet = f.value.pickupstreet;
       this.dropoffarea = f.value.pickuparea;
-      // this.dropofflandmark = f.value.pickuplandmark;
       if(f.value.pickuppincode){
         this.dropoffpincode = f.value.pickuppincode;
       }
@@ -836,7 +836,6 @@ export class ChauffeurComponent implements OnInit {
       this.pickupdoor = f.value.pickupdoor;
       this.pickupstreet = f.value.pickupstreet;
       this.pickuparea = f.value.pickuparea;
-      // this.pickuplandmark = f.value.pickuplandmark;
       if(f.value.pickuppincode){
         this.pickuppincode = f.value.pickuppincode;
       }
@@ -852,7 +851,6 @@ export class ChauffeurComponent implements OnInit {
       this.dropofffdoor = f.value.dropofffdoor;
       this.dropoffstreet = f.value.dropoffstreet;
       this.dropoffarea = f.value.dropoffarea;
-      // this.dropofflandmark = f.value.dropofflandmark;
       if(f.value.dropoffpincode){
         this.dropoffpincode = f.value.dropoffpincode;
       }
@@ -885,8 +883,6 @@ export class ChauffeurComponent implements OnInit {
       }
       var result = this.getDistanceFromLatLonInKm(lat1,lon1,lat2,lon2);
       console.log(result);
-      // var result1 = this.getDistanceFromLatLonInKm(12.929299,77.634291,12.932705,77.631364);
-      // console.log(result1);
     }
     else if (this.pickup_drop == 5 || this.pickup_drop == 7){
       this.pickupdoor = f.value.pickupdoor;

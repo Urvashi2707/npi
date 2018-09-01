@@ -9,6 +9,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { HttpClient, HttpHeaders, HttpErrorResponse, HttpRequest } from '@angular/common/http';
 import { ToasterService, ToasterConfig, Toast, BodyOutputType } from 'angular2-toaster';
 import 'style-loader!angular2-toaster/toaster.css';
+import { DatePipe } from '@angular/common';
 import { ServicingService } from '../../services/addServicing.service';
 @Component({
   selector: 'app-rsa',
@@ -31,6 +32,7 @@ export class RsaComponent implements OnInit {
   cityID:string;
   public cityList: any = [];
   registrationNumber:string;
+  queuetime:string;
   private serviceType: string[];
   private TowingTruck: string[];
   private creName: string[];
@@ -93,10 +95,11 @@ export class RsaComponent implements OnInit {
   countrycode1:string;
   rsaType:any=[];
   scv:string;
+  today: number = Date.now();
   insuranceFlag:boolean=false;
   TowingTypes:any = [];
   OnSpotTypes:any= [];
-  constructor(     private modalService: NgbModal, private titlecasePipe:TitleCasePipe, private ngbDateParserFormatter: NgbDateParserFormatter,private http: HttpClient, private spinner: NgxSpinnerService, private toasterService: ToasterService, private router: Router,private ServicingService: ServicingService,) { }
+  constructor( private datePipe:DatePipe,private modalService: NgbModal, private titlecasePipe:TitleCasePipe, private ngbDateParserFormatter: NgbDateParserFormatter,private http: HttpClient, private spinner: NgxSpinnerService, private toasterService: ToasterService, private router: Router,private ServicingService: ServicingService,) { }
 
 
   ngOnInit() {
@@ -111,23 +114,16 @@ export class RsaComponent implements OnInit {
       console.log(this.insuranceFlag , "flag")
     }
     if(sessionStorage.getItem('selectedsvc')){
-      // console.log(sessionStorage.getItem('selectedsvc'));
       this.svcid = sessionStorage.getItem('selectedsvc');
-      // console.log(this.svcid);
     }
     else{
       this.svcid = JSON.parse(sessionStorage.getItem('globalsvcid'));
-      // console.log(this.svcid);
     }
     const now = new Date();
     this.model = { year: now.getFullYear(), month: now.getMonth() + 1, day: now.getDate() };
     this.startDate = this.model;
-    // console.log(this.startDate);
     this.minDate = { year: now.getFullYear(), month: now.getMonth() + 1, day: now.getDate() - 1 };
-    // console.log(this.minDate);
     this.maxDate = { year: now.getFullYear(), month: now.getMonth() + 1, day: now.getDate() + 15};
-    // console.log(this.maxDate);
-   
     this.TowingTruck =  ['Flat bed', 'Winch'];
     this.serviceType =  ['Flat Tyre', 'Jump Start', 'Lock out','Out of Fuel','Others'];
     this.creName = ['Rohnit','Mohit','Nitin','Add CRE'];
@@ -864,6 +860,7 @@ export class RsaComponent implements OnInit {
   else{
     this.cityID = JSON.parse(sessionStorage.getItem('city_id'));
   }
+  this.queuetime =  this.datePipe.transform(this.today,"y-MM-dd HH:mm:ss");
   if(this.insuranceFlag){
     this.reqpara = {
       requesttype :'createbookingrsa_insurance',
@@ -876,7 +873,7 @@ export class RsaComponent implements OnInit {
       customermobile1: f.value.mobile1,
       customermobile2: this.mobile2,
       customeremail:f.value.email,
-      queuetime:this.dateString + ' ' + this.slot_time,
+      queuetime: this.queuetime,
       pickuplocationaddress:this.pickup_add ,
       pickuplat:this.pikup_lat ,
       pickuplong:this.pikup_long,
@@ -902,7 +899,7 @@ export class RsaComponent implements OnInit {
       customermobile1: f.value.mobile1,
       customermobile2: this.mobile2,
       customeremail:f.value.email,
-      queuetime:this.dateString + ' ' + this.slot_time,
+      queuetime:this.queuetime,
       pickuplocationaddress:this.pickup_add ,
       pickuplat:this.pikup_lat ,
       pickuplong:this.pikup_long,
