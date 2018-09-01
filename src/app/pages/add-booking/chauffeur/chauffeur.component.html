@@ -201,75 +201,74 @@
                   </div>
                 </div>
               </div>
-            </div>
-            <span class="sectionHeader">Slot Details</span>
-            <div class="row" *ngIf="insuranceFlag">
-              <div class="col-md-6 col-lg-6 col-sm-6">
-                <div class="form-group">
-                  <select name="city" id="city" class="form-control" [(ngModel)]="user.city" required #city="ngModel"
-                    (change)="onCity($event)">
-                    <option *ngFor="let d of cityList; let i = index" [value]="d.cityid">{{d.cityname}}</option>
-                  </select>
-                  <label class="form-control-placeholder" for="city">City*</label>
-                </div>
-
-
-                <div class="form-control-feedback" *ngIf="city.errors && (city.dirty || city.touched)">
-                  <p *ngIf="city.errors.required" class="haserror">City is required</p>
-                </div>
-              </div>
-              <div class="col-md-6 col-lg-6 col-sm-6">
-                <div class="form-group">
-                  <select id="svclist" class="form-control" name="svclist" [(ngModel)]="user.svc" #svclist="ngModel"
-                    required>
-                    <optgroup label="{{i.associated}}" *ngFor="let i of svcList;let j = index;">
-                      <option [value]="i.id">{{i.name}}</option>
-                    </optgroup>
-                  </select>
-                  <label class="form-control-placeholder" for="svclist">Service Centre List*</label>
-                </div>
-              </div>
-            </div>
-            <div class="row" style="margin-bottom: 2%;">
-              <div class="col-md-6 col-lg-6 col-sm-6">
-                <div class="form-group">
-                  <div class="input-group">
-                    <input class="form-control" name="dp" [ngModel]="model" [readonly]="true" [minDate]="startDate"
-                      (ngModelChange)="onSelectDate($event)" ngbDatepicker #d="ngbDatepicker" placeholder="{{valuedate | date: 'yyyy-MM-dd'}}">
-                    <div class="input-group-append">
-                      <button class="btn btn-outline-secondary dateButton" (click)="d.toggle()" type="button">
-                        <span>
-                          <i class="fa fa-calendar"></i>
-                        </span>
-                      </button>
-                    </div>
+              <span class="sectionHeader">Slot Details</span>
+              <div class="row" *ngIf="insuranceFlag">
+                <div class="col-md-6 col-lg-6 col-sm-6">
+                  <div class="form-group">
+                    <select name="city" id="city" class="form-control" [(ngModel)]="user.city" required #city="ngModel"
+                      (change)="onCity($event)">
+                      <option *ngFor="let d of cityList; let i = index" [value]="d.cityid">{{d.cityname}}</option>
+                    </select>
+                    <label class="form-control-placeholder" for="city">City*</label>
+                  </div>
+                   <div class="form-control-feedback" *ngIf="city.errors && (city.dirty || city.touched)">
+                    <p *ngIf="city.errors.required" class="haserror">City is required</p>
                   </div>
                 </div>
-                <div class="form-control-feedback" *ngIf="d.errors && (d.dirty || d.touched)">
-                  <p *ngIf="d.errors.required" class="haserror">Date is required</p>
+                <div class="col-md-6 col-lg-6 col-sm-6">
+                  <div class="form-group">
+                    <select id="svclist" class="form-control" name="svclist" [(ngModel)]="user.svc" #svclist="ngModel"
+                      required>
+                      <optgroup label="{{i.associated}}" *ngFor="let i of svcList;let j = index;">
+                        <option [value]="i.id">{{i.name}}</option>
+                      </optgroup>
+                    </select>
+                    <label class="form-control-placeholder" for="svclist">Service Centre List*</label>
+                  </div>
                 </div>
               </div>
-              <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6">
-                <div class="form-group">
-                  <input type="text" id="notes" class="form-control" name="notes" [(ngModel)]="user.notes" #notes="ngModel">
-                  <label class="form-control-placeholder" for="notes">Notes</label>
+              <div class="row" style="margin-bottom: 2%;">
+                <div class="col-md-6 col-lg-6 col-sm-6">
+                  <div class="form-group">
+                    <div class="input-group">
+                      <input class="form-control" name="dp" [ngModel]="model" [readonly]="true" [minDate]="startDate"
+                        (ngModelChange)="onSelectDate($event)" ngbDatepicker #d="ngbDatepicker" placeholder="{{valuedate | date: 'yyyy-MM-dd'}}">
+                      <div class="input-group-append">
+                        <button class="btn btn-outline-secondary dateButton" (click)="d.toggle()" type="button">
+                          <span>
+                            <i class="fa fa-calendar"></i>
+                          </span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-control-feedback" *ngIf="d.errors && (d.dirty || d.touched)">
+                    <p *ngIf="d.errors.required" class="haserror">Date is required</p>
+                  </div>
+                </div>
+                <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6">
+                  <div class="form-group">
+                    <input type="text" id="notes" class="form-control" name="notes" [(ngModel)]="user.notes" #notes="ngModel">
+                    <label class="form-control-placeholder" for="notes">Notes</label>
+                  </div>
+                </div>
+              </div>
+              <div class="row" style="margin-bottom: 2%;">
+                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8" *ngIf="showtime">
+                  <table cellspacing="20" *ngIf="show3">
+                    <tr *ngFor="let row of buildArr(slot);let i = index">
+                      <td *ngFor="let s of row" class="timeRow">
+                        <a (click)=checkSlot(s.time_format,s.slothour) class="timeAnchor">{{s.time_format}}</a>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4" *ngIf="showtime">
+                  <input class="form-control" name="slot" *ngIf="slot_time || showtime" [(ngModel)]="slothour" />
                 </div>
               </div>
             </div>
-            <div class="row" style="margin-bottom: 2%;">
-              <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8" *ngIf="showtime">
-                <table cellspacing="20" *ngIf="show3">
-                  <tr *ngFor="let row of buildArr(slot);let i = index">
-                    <td *ngFor="let s of row" class="timeRow">
-                      <a (click)=checkSlot(s.time_format,s.slothour) class="timeAnchor">{{s.time_format}}</a>
-                    </td>
-                  </tr>
-                </table>
-              </div>
-              <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4" *ngIf="showtime">
-                <input class="form-control" name="slot" *ngIf="slot_time || showtime" [(ngModel)]="slothour" />
-              </div>
-            </div>
+
             <!-- Internal Movement -->
             <div *ngIf="serviceType === '3'">
               <span class="sectionHeader">Location Details</span>
@@ -1009,60 +1008,6 @@
                     <button type="button" (click)="showModal(4)" class="addnumber" style="background-color: white;border-color: orange;">
                       <i class="fa fa-plus" style="color:#ffa100" aria-hidden="true"></i>
                     </button>
-                  </div>
-                </div>
-              </div>
-              <span class="sectionHeader">Slot Details</span>
-              <div class="row" *ngIf="insuranceFlag">
-                <div class="col-md-6 col-lg-6 col-sm-6">
-                  <div class="form-group">
-                    <select name="city" id="city" class="form-control" [(ngModel)]="user.city" required #city="ngModel"
-                      (change)="onCity($event)">
-                      <option *ngFor="let d of cityList; let i = index" [value]="d.cityid">{{d.cityname}}</option>
-                    </select>
-                    <label class="form-control-placeholder" for="city">City*</label>
-                  </div>
-
-
-                  <div class="form-control-feedback" *ngIf="city.errors && (city.dirty || city.touched)">
-                    <p *ngIf="city.errors.required" class="haserror">City is required</p>
-                  </div>
-                </div>
-                <div class="col-md-6 col-lg-6 col-sm-6">
-                  <div class="form-group">
-                    <select id="svclist" class="form-control" name="svclist" [(ngModel)]="user.svc" #svclist="ngModel"
-                      required>
-                      <optgroup label="{{i.associated}}" *ngFor="let i of svcList;let j = index;">
-                        <option [value]="i.id">{{i.name}}</option>
-                      </optgroup>
-                    </select>
-                    <label class="form-control-placeholder" for="svclist">Service Centre List*</label>
-                  </div>
-                </div>
-              </div>
-              <div class="row" style="margin-bottom: 2%;">
-                <div class="col-md-6 col-lg-6 col-sm-6">
-                  <div class="form-group">
-                    <div class="input-group">
-                      <input class="form-control" name="dp" [ngModel]="model" [readonly]="true" [minDate]="startDate"
-                        (ngModelChange)="onSelectDate($event)" ngbDatepicker #d="ngbDatepicker" placeholder="{{valuedate | date: 'yyyy-MM-dd'}}">
-                      <div class="input-group-append">
-                        <button class="btn btn-outline-secondary dateButton" (click)="d.toggle()" type="button">
-                          <span>
-                            <i class="fa fa-calendar"></i>
-                          </span>
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="form-control-feedback" *ngIf="d.errors && (d.dirty || d.touched)">
-                    <p *ngIf="d.errors.required" class="haserror">Date is required</p>
-                  </div>
-                </div>
-                <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6">
-                  <div class="form-group">
-                    <input type="text" id="notes" class="form-control" name="notes" [(ngModel)]="user.notes" #notes="ngModel">
-                    <label class="form-control-placeholder" for="notes">Notes</label>
                   </div>
                 </div>
               </div>
