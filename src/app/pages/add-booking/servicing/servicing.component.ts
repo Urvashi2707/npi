@@ -923,6 +923,7 @@ public getCity() {
 
   sameas(value) {
     this.sameasvalue = value;
+    console.log(this.sameasvalue);
     if (value == true) {
       if(this.user.addresspu){
         console.log(this.user.addresspu);
@@ -997,6 +998,13 @@ public getCity() {
         this.spinner.hide();
       }
     });
+  }
+
+  sameaddresstype(event){
+    console.log(event);
+    if(this.sameasvalue){
+      console.log(event);
+    }
   }
 
   GetSVCList(brand,city){
@@ -1517,7 +1525,7 @@ public getCity() {
         this.pickup_drop = 0;
         this.counter = 0;
         this.slot = [];
-        this.sameasvalue = false;
+        this.sameasvalue = true;
         f.reset();
         this.countrycode1 = "+91";
         this.dateString = null;

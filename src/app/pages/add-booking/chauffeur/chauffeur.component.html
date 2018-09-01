@@ -755,13 +755,6 @@
               </div>
                 <span class="sectionHeader">Slot and Location Details</span>
               <div class="row AmbRow">
-                <div class="col-lg-6 col-md-6 col-sm-6">
-                  <label class="switch" style="margin-bottom: -0.5rem;">
-                    <input type="checkbox" checked name="amb" #amb (click)="checkAmb(amb.checked)">
-                    <span class="slider round"></span>
-                  </label>
-                  <label class="AmbLabel">Assign to 21North Ambassador</label>
-                </div>
                 <div class="col-md-6 col-lg-6 col-sm-6" *ngIf="!amb.checked">
                   <div class="form-group">
                     <input type="time" id="servicingTime" class="form-control" name="time" [(ngModel)]="user.time" #time="ngModel" required>

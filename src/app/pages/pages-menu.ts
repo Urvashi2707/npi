@@ -290,6 +290,10 @@ export const MENU_INSURANCESUSR: NbMenuItem[] = [
         link: '/pages/add-booking/Servicing',
       },
       {
+        title: 'Chauffeur',
+        link: '/pages/add-booking/Chauffeur',
+      },
+      {
         title: 'RSA',
         link: '/pages/add-booking/RSA',
       },
