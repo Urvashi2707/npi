@@ -6,13 +6,13 @@
       </nb-card-header>
       <nb-card-body>
         <toaster-container [toasterconfig]="config"></toaster-container>
-        <!-- Registration Number  -->
         <form ngNativeValidate #f="ngForm" (ngSubmit)="onSubmit(f)">
           <div class="row">
             <div class="col-md-5 col-sm-5 col-lg-5">
               <div class="form-group">
-                <input type="text" id="num" name="num" class="form-control" style=" text-transform: uppercase" required (change)="onBlurMethod($event.target.value)"
-                  [(ngModel)]="registrationNumber" #num="ngModel" maxlength="15">
+                <input type="text" id="num" name="num" class="form-control" style=" text-transform: uppercase" required
+                  (change)="onBlurMethod($event.target.value)" [(ngModel)]="registrationNumber" #num="ngModel"
+                  maxlength="15">
                 <label class="form-control-placeholder" for="num">Registration Number*</label>
               </div>
               <div class="form-control-feedback" *ngIf="num.errors && (num.dirty || num.touched)">
@@ -21,14 +21,15 @@
             </div>
             <div class="col-md-5 col-sm-5 col-lg-5">
               <div class="form-group">
-                <input type="text" id="mobile1" name="mobile1" class="form-control" maxlength="10" [(ngModel)]="user.mobile1" OnlyNumber="true"
-                  required #mobile1="ngModel" pattern="^[0-9]{10}$">
+                <input type="text" id="mobile1" name="mobile1" class="form-control" maxlength="10" [(ngModel)]="user.mobile1"
+                  OnlyNumber="true" required #mobile1="ngModel" pattern="^[0-9]{10}$">
                 <label class="form-control-placeholder" for="mobile1">Customer Mobile Number*</label>
               </div>
             </div>
             <div class="col-md-2 col-sm-2 col-lg-2 NextRow">
               <div>
-                <button type="button" class="btn btn-warning NextButton" [disabled]="!registrationNumber || !user.mobile1 || disableNext" (click)='eligibiltycheck1();'>Next</button>
+                <button type="button" class="btn btn-warning NextButton" [disabled]="!registrationNumber || !user.mobile1 || disableNext"
+                  (click)='eligibiltycheck1();'>Next</button>
               </div>
             </div>
           </div>
@@ -58,13 +59,13 @@
           </div>
           <div *ngIf="showstep3">
             <div class="line">
-                <span class="sectionHeader">Vehicle Details</span>
+              <span class="sectionHeader">Vehicle Details</span>
             </div>
             <div class="row" *ngIf="insuranceFlag">
               <div class="col-md-6 col-lg-6 col-sm-6">
                 <div class="form-group">
-                  <select name="brand" id="brand" class="form-control" (change)="onSelectBrand($event.target.value)" [(ngModel)]="selectedBrand"
-                    #brand="ngModel" required>
+                  <select name="brand" id="brand" class="form-control" (change)="onSelectBrand($event.target.value)"
+                    [(ngModel)]="selectedBrand" #brand="ngModel" required>
                     <option *ngFor="let b of brands" [value]="b.brand_id"> {{b.brand_name}}</option>
                   </select>
                   <label class="form-control-placeholder" for="brand">Vehicle Brand*</label>
@@ -79,8 +80,8 @@
             <div class="row">
               <div class="col-md-6 col-lg-6 col-sm-6">
                 <div class="form-group">
-                  <select name="model" id="model" class="form-control" (change)="onSelectModel($event.value)" [(ngModel)]="selectedModel" #model="ngModel"
-                    required>
+                  <select name="model" id="model" class="form-control" (change)="onSelectModel($event.value)"
+                    [(ngModel)]="selectedModel" #model="ngModel" required>
                     <option *ngFor="let ma of Models" [value]="ma.model_id"> {{ma.model_name}}</option>
                   </select>
                   <label class="form-control-placeholder" for="model">Vehicle Model*</label>
@@ -95,8 +96,8 @@
             <div class="row">
               <div class="col-md-6 col-lg-6 col-sm-6">
                 <div class="form-group">
-                  <select name="variant" id="variant" class="form-control" (change)="onSelectVariant($event.value)" [(ngModel)]="selectedVariant"
-                    #variant="ngModel" required>
+                  <select name="variant" id="variant" class="form-control" (change)="onSelectVariant($event.value)"
+                    [(ngModel)]="selectedVariant" #variant="ngModel" required>
                     <option *ngFor="let va of Variant" [value]="va.variant_id"> {{va.variant_name}}</option>
                   </select>
                   <label class="form-control-placeholder" for="ServiceAdvisor">Vehicle Variant*</label>
@@ -109,18 +110,19 @@
               </div>
             </div>
             <div class="line">
-                <span class="sectionHeader">Customer Details</span>
+              <span class="sectionHeader">Customer Details</span>
             </div>
-             <div class="row">
+            <div class="row">
               <div class="col-md-8 col-lg-8 col-sm-8 col-xs-8">
                 <div class="form-group" style="display:inline-block;min-width:15%;">
-                  <select id="salutation1" class="form-control" name="salutation1" [(ngModel)]="user.salutation" #salutation1="ngModel" required>
+                  <select id="salutation1" class="form-control" name="salutation1" [(ngModel)]="user.salutation"
+                    #salutation1="ngModel" required>
                     <option *ngFor="let s of salutation" [value]="s.type"> {{s.type}}</option>
                   </select>
                 </div>
                 <div class="form-group CusFormGroup">
-                  <input type="text" id="Cus_name" class="form-control" required [(ngModel)]="cust_details.first_name" name="Cus_name" #Cus_name="ngModel"
-                    style="text-transform: capitalize;">
+                  <input type="text" id="Cus_name" class="form-control" required [(ngModel)]="cust_details.first_name"
+                    name="Cus_name" #Cus_name="ngModel" style="text-transform: capitalize;">
                   <label class="form-control-placeholder" for="Cus_name">Customer Name*</label>
                 </div>
               </div>
@@ -133,19 +135,20 @@
             <div class="container1">
               <div class="row">
                 <div class="col-md-8 col-lg-8 col-sm-8 col-xs-8 mob">
-                  <div class="form-group"  class="countryCode">
-                    <label for="countrycode"  class="countryCodelabel">Country Code</label>
-                    <input type="text" class="form-control" name="countrycode" OnlyNumber="true" [readonly]="true" value="+91" [(ngModel)]="countrycode1"
-                      required #countrycode>
+                  <div class="form-group" class="countryCode">
+                    <label for="countrycode" class="countryCodelabel">Country Code</label>
+                    <input type="text" class="form-control" name="countrycode" OnlyNumber="true" [readonly]="true"
+                      value="+91" [(ngModel)]="countrycode1" required #countrycode>
                   </div>
-                  <div class="form-group"  class="mobile1">
-                    <input type="text" class="form-control" name="mobile1" maxlength="10" [(ngModel)]="cust_details.mobile" required OnlyNumber="true"
-                      #mobile1="ngModel" pattern="^[0-9]{10}$">
+                  <div class="form-group" class="mobile1">
+                    <input type="text" class="form-control" name="mobile1" maxlength="10" [(ngModel)]="cust_details.mobile"
+                      required OnlyNumber="true" #mobile1="ngModel" pattern="^[0-9]{10}$">
                     <label class="form-control-placeholder" for="mobile1">Mobile Number*</label>
                   </div>
-                  <div  class="addNumber">
+                  <div class="addNumber">
                     <button type="button" (click)="show1=!show1" class="addnumber">
-                      <i class="fa" [ngClass]="{'fa-plus': !show1, 'fa-minus': show1}" style="color:#ffa100" aria-hidden="true"></i>
+                      <i class="fa" [ngClass]="{'fa-plus': !show1, 'fa-minus': show1}" style="color:#ffa100"
+                        aria-hidden="true"></i>
                     </button>
                   </div>
                   <div class="form-control-feedback" *ngIf="mobile1.errors && (mobile1.dirty || mobile1.touched)">
@@ -158,13 +161,14 @@
                 <div class="row">
                   <div class="col-md-8 col-lg-8 col-sm-8 col-xs-8">
                     <div class="form-group" style="display:inline-block;max-width: 16%;">
-                      <label for="countrycode" style="font-size: 12px;padding-left: 2%;margin-bottom: 0px;">Country Code</label>
-                      <input type="text" class="form-control" name="countrycode" OnlyNumber="true" [readonly]="true" value="+91" [(ngModel)]="countrycode1"
-                        required #countrycode="ngModel">
+                      <label for="countrycode" style="font-size: 12px;padding-left: 2%;margin-bottom: 0px;">Country
+                        Code</label>
+                      <input type="text" class="form-control" name="countrycode" OnlyNumber="true" [readonly]="true"
+                        value="+91" [(ngModel)]="countrycode1" required #countrycode="ngModel">
                     </div>
                     <div class="form-group" style="display:inline-block;min-width:58%;">
-                      <input type="text" class="form-control" name="mobile2" maxlength="10" [(ngModel)]="cust_details.mobile2" OnlyNumber="true"
-                        #mobile2="ngModel" pattern="^[0-9]{10}$">
+                      <input type="text" class="form-control" name="mobile2" maxlength="10" [(ngModel)]="cust_details.mobile2"
+                        OnlyNumber="true" #mobile2="ngModel" pattern="^[0-9]{10}$">
                       <label class="form-control-placeholder" for="mobile2">Mobile2 Number*</label>
                     </div>
                     <div class="form-control-feedback" *ngIf="mobile2.errors && (mobile2.dirty || mobile2.touched)">
@@ -177,8 +181,8 @@
             <div class="row">
               <div class="col-md-6 col-lg-6 col-sm-6">
                 <div class="form-group">
-                  <input type="text" id="email" class="form-control" name="email" [(ngModel)]="cust_details.email" #email="ngModel" required
-                    pattern="^([a-zA-Z0-9_\.\-])+@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$">
+                  <input type="text" id="email" class="form-control" name="email" [(ngModel)]="cust_details.email"
+                    #email="ngModel" required pattern="^([a-zA-Z0-9_\.\-])+@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$">
                   <label class="form-control-placeholder" for="email">Email Id*</label>
                 </div>
               </div>
@@ -190,554 +194,235 @@
               </div>
             </div>
             <div class="line">
-                <span class="sectionHeader">Location Details</span>
+              <span class="sectionHeader">Location Details</span>
             </div>
-            <div *ngIf="showAddressDropDown">
+            <nb-tabset>
+            <nb-tab tabTitle="Pick up Address">
+              <div class="row">
+                <div class="col-md-12 col-lg-12 col-sm-12">
+                  <div>
+                    <div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </nb-tab>
+            <nb-tab tabTitle="Drop off Address">
+                <div class="row">
+                  <div class="col-md-12 col-lg-12 col-sm-12">
+                    <div>
+                      <div>
+  
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </nb-tab>
+        </nb-tabset>
+              <div class="line">
+                <span class="sectionHeader">Slot Details</span>
+              </div>
+              <div>
+                <div class="row" style="margin-bottom: 2%;">
+                  <div class="col-lg-2 col-sm-2 col-md-2">
+                    <label class="custom-control custom-radio">
+                      <input type="radio" class="custom-control-input" #onlypickup [(ngModel)]="yourBoolean" (change)=doPickup()
+                        value="onlypickup" name="customRadio">
+                      <span class="custom-control-indicator"></span>
+                      <span class="custom-control-description"> Only Pickup</span>
+                    </label>
+                  </div>
+                  <div class="col-lg-3 col-sm-3 col-md-3">
+                    <label class="custom-control custom-radio">
+                      <input type="radio" class="custom-control-input" #servicing [(ngModel)]="yourBoolean" (change)=doPickup()
+                        value="servicing" name="customRadio" checked>
+                      <span class="custom-control-indicator"></span>
+                      <span class="custom-control-description">Pickup & Drop-off</span>
+                    </label>
+                  </div>
+                  <div class="col-lg-2 col-sm-2 col-md-2">
+                    <label class="custom-control custom-radio">
+                      <input type="radio" class="custom-control-input" #dropoff [(ngModel)]="yourBoolean" (change)=doDrop()
+                        value="dropoff" name="customRadio">
+                      <span class="custom-control-indicator"></span>
+                      <span class="custom-control-description">Only Drop-off</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div class="row" *ngIf="insuranceFlag">
+                <div class="col-md-6 col-lg-6 col-sm-6">
+                  <div class="form-group">
+                    <select name="city" id="city" class="form-control" [(ngModel)]="user.city" required #city="ngModel"
+                      (change)="onCity($event)">
+                      <option *ngFor="let d of cityList; let i = index" [value]="d.cityid">{{d.cityname}}</option>
+                    </select>
+                    <label class="form-control-placeholder" for="city">City*</label>
+                  </div>
+                  <div class="form-control-feedback" *ngIf="city.errors && (city.dirty || city.touched)">
+                    <p *ngIf="city.errors.required" class="haserror">City is required</p>
+                  </div>
+                </div>
+                <div class="col-md-6 col-lg-6 col-sm-6">
+                  <div class="form-group">
+                    <select id="svclist" class="form-control" name="svclist" [(ngModel)]="user.svc" #svclist="ngModel"
+                      required>
+                      <optgroup label="{{i.associated}}" *ngFor="let i of svcList;let j = index;">
+                        <option [value]="i.id">{{i.name}}</option>
+                      </optgroup>
+                    </select>
+                    <label class="form-control-placeholder" for="svclist">Service Centre List*</label>
+                  </div>
+                </div>
+              </div>
               <div class="row">
                 <div class="col-md-6 col-lg-6 col-sm-6">
-                  <div *ngIf="yourBoolean === 'servicing' || yourBoolean === 'onlypickup'">
-                    <div class="form-group">
-                      <select id="addresspu" class="form-control" name="addresspu" [(ngModel)]="user.addresspu" #addresspu="ngModel"
-                        required (change)="onSelectPickup($event.target.selectedIndex,user.addresspu)">
-                        <optgroup label="{{i.type_of_address}}" *ngFor="let i of address;let j = index;">
-                          <option [value]="i.address_id">{{i.doornumber}},{{i.street}},{{i.area}},{{i.pincode}}</option>
-                        </optgroup>
-                      </select>
-                      <label class="form-control-placeholder" for="addresspu">Save Pickup Location*</label>
-                    </div>
-                    <div class="form-control-feedback" *ngIf="addresspu.errors && (addresspu.dirty || addresspu.touched)">
-                      <p *ngIf="!addresspu.errors.required" class="haserror">Pickup Location is required</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="form-group col-md-6 col-lg-6 col-sm-6" *ngIf="yourBoolean === 'servicing' || yourBoolean === 'onlypickup'" style="margin-top: 2%;">
-                  <select id="addresstypepu" class="form-control" name="addresstypepu" [(ngModel)]="user.addresstypepu" #addresstypepu="ngModel"
-                    required>
-                    <option [value]="i.id" *ngFor="let i of addresstype">{{i.type_of_address}}</option>
-                  </select>
-                  <label class="form-control-placeholder" for="addresstypepu">Type of address*</label>
-                </div>
-              </div>
-            </div>
-            <div *ngIf="showAddressDropDown">
-              <div *ngIf="yourBoolean === 'servicing' || yourBoolean === 'onlypickup'">
-                <div class="row">
-                  <div class="col-md-6 col-lg-6 col-sm-6">
-                    <div class="form-group">
-                      <input type="text" id="pickupdoor" class="form-control" name="pickupdoor" maxlength="6" required (ngModelChange)="changeEditpickupdoor($event)"
-                        [(ngModel)]="user.pickupdoor" #pickupdoor="ngModel">
-                      <label class="form-control-placeholder" for="pickupdoor">Pickup Door Number/Flat Number*</label>
-                    </div>
-                    <div class="form-control-feedback" *ngIf="pickupdoor.errors && (pickupdoor.dirty || pickupdoor.touched)">
-                      <p *ngIf="pickupdoor.errors.required" class="haserror">Pickup Door Number/Flat Number is required</p>
-                    </div>
-                  </div>
-                  <div class="col-md-6 col-lg-6 col-sm-6">
-                    <div class="form-group">
-                      <input type="text" id="id" class="form-control" required name="pickupstreet" maxlength="70" #pickupstreet="ngModel" [(ngModel)]="user.pickupstreet"
-                        (ngModelChange)="changeEditupstreet($event)">
-                      <label class="form-control-placeholder" for="id">Pickup Apartment Name/Street Name*</label>
-                    </div>
-                    <div class="form-control-feedback" *ngIf="pickupstreet.errors && (pickupstreet.dirty || pickupstreet.touched)">
-                      <p *ngIf="!pickupstreet.errors.required" class="haserror">Pickup Apartment Name/Street Name is required</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-6 col-lg-6 col-sm-6">
-                    <div class="form-group">
-                      <input type="text" id="id" class="form-control" required name="pickuparea" maxlength="70"  #pickuparea="ngModel" [(ngModel)]="user.pickuparea"
-                        (ngModelChange)="changeEditpickuparea($event)">
-                      <label class="form-control-placeholder" for="id">Pickup Area/Locality*</label>
-                    </div>
-                    <div class="form-control-feedback" *ngIf="pickuparea.errors && (pickuparea.dirty || pickuparea.touched)">
-                      <p *ngIf="!pickuparea.errors.required" class="haserror">Pickup Area/Locality is required</p>
-                    </div>
-                  </div>
-                  <div class="col-md-6 col-lg-6 col-sm-6">
-                    <div class="form-group">
-                      <input type="text" id="id" class="form-control" name="pickuplandmark" maxlength="150" #pickuplandmark="ngModel" [(ngModel)]="user.pickuplandmark"
-                        (ngModelChange)="changeEditpickuplandmark($event)">
-                      <label class="form-control-placeholder" for="id">Pickup Landmark</label>
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-6 col-lg-6 col-sm-6" style="display:none;">
-                    <div class="form-group">
-                      <input type="text" id="id" class="form-control" name="pickuppincode" maxlength="6" #pickuppincode="ngModel" [(ngModel)]="user.pickuppincode"
-                        (ngModelChange)="changeEditpickuppincode($event)" maxlength="6">
-                      <label class="form-control-placeholder" for="id">Pickup Pincode</label>
-                    </div>
-                  </div>
-                  <div class="col-md-6 col-lg-6 col-sm-6">
-                    <div class="form-group">
-                      <input type="text" id="id" class="form-control" name="picklatlong" #picklatlong="ngModel" [(ngModel)]="user.picklatlong"
-                        (ngModelChange)="changeEditpickuplatlong($event)" pattern="^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?),\s*[-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)$">
-                      <label class="form-control-placeholder" for="id">Pickup lat,long (12.99,77.6611)</label>
-                    </div>
-                  </div>
-                </div>
-                <div *ngIf="yourBoolean === 'servicing'" class="sameas">
-                  <label class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" name="sameas" #same (click)="sameas(same.checked)" checked>
-                    <span class="custom-control-indicator"></span>
-                    <span class="custom-control-description">Drop Location is same as Pickup</span>
-                  </label>
-                </div>
-              </div>
-              <div *ngIf="yourBoolean === 'dropoff' || yourBoolean === 'servicing'">
-                <div class="row">
-                  <div class="col-md-6 col-lg-6 col-sm-6">
-                    <div class="form-group">
-                      <select name="addressdu" id="addressdu" class="form-control" name="addressdu" [(ngModel)]="user.addressdu"
-                        #addressdu="ngModel" required (change)="onSelectDropoff($event.target.selectedIndex,user.addressdu)">
-                        <optgroup label="{{i.type_of_address}}" *ngFor="let i of address">
-                          <option [value]="i.address_id">{{i.doornumber}},{{i.street}},{{i.area}},{{i.pincode}}</option>
-                        </optgroup>
-                      </select>
-                      <label class="form-control-placeholder" for="addressdu">Save Dropoff Location*</label>
-                    </div>
-                    <div class="form-control-feedback" *ngIf="addressdu.errors && (addressdu.dirty || addressdu.touched)">
-                      <p *ngIf="!addressdu.errors.required" class="haserror">Dropoff Location is required</p>
-                    </div>
-                  </div>
-                  <div class="form-group col-md-6 col-lg-6 col-sm-6" style="margin-top: 2%;">
-                    <select id="addresstypedu" class="form-control" name="addresstypedu" [(ngModel)]="user.addresstypedu" #addresstypedu="ngModel" required >
-                      <option [value]="i.id" *ngFor="let i of addresstype">{{i.type_of_address}}</option>
-                    </select>
-                    <label class="form-control-placeholder" for="addressdu">Type of address*</label>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-6 col-lg-6 col-sm-6">
-                    <div class="form-group">
-                      <input type="text" id="dropofffdoor" class="form-control" name="dropofffdoor" required  maxlength="6" (ngModelChange)="changeEditdropOffdoor($event)" [(ngModel)]="user.dropofffdoor"
-                        #dropofffdoor="ngModel">
-                      <label class="form-control-placeholder" for="dropofffdoor">Dropoff Door Number/Flat Number*</label>
-                    </div>
-                    <div class="form-control-feedback" *ngIf="dropofffdoor.errors && (dropofffdoor.dirty || dropofffdoor.touched)">
-                      <p *ngIf="!dropofffdoor.errors.required" class="haserror">Dropoff Door Number/Flat Number is required</p>
-                    </div>
-                  </div>
-                  <div class="col-md-6 col-lg-6 col-sm-6">
-                    <div class="form-group">
-                      <input type="text" id="id" class="form-control" name="dropoffstreet" maxlength="70" required #dropoffstreet="ngModel" [(ngModel)]="user.dropoffstreet"
-                        (ngModelChange)="changeEditdropOffstreet($event)">
-                      <label class="form-control-placeholder" for="id">Dropoff Apartment Name/Street Name*</label>
-                    </div>
-                    <div class="form-control-feedback" *ngIf="dropoffstreet.errors && (dropoffstreet.dirty || dropoffstreet.touched)">
-                      <p *ngIf="!dropoffstreet.errors.required" class="haserror">Dropoff Apartment Name/Street Name is required</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-6 col-lg-6 col-sm-6">
-                    <div class="form-group">
-                      <input type="text" id="id" class="form-control" name="dropoffarea" required maxlength="70" #dropoffarea="ngModel" [(ngModel)]="user.dropoffarea"
-                        (ngModelChange)="changeEditdropOffparea($event)">
-                      <label class="form-control-placeholder" for="id">Dropoff Area/Locality*</label>
-                    </div>
-                    <div class="form-control-feedback" *ngIf="dropoffarea.errors && (dropoffarea.dirty || dropoffarea.touched)">
-                      <p *ngIf="!dropoffarea.errors.required" class="haserror">Dropoff Area/Locality 
-                        is required</p>
-                    </div>
-                  </div>
-                  <div class="col-md-6 col-lg-6 col-sm-6">
-                    <div class="form-group">
-                      <input type="text" id="id" class="form-control" name="dropofflandmark" maxlength="150" #dropofflandmark="ngModel" [(ngModel)]="user.dropofflandmark"
-                        (ngModelChange)="changeEditdropOfflandmark($event)">
-                      <label class="form-control-placeholder" for="id">Dropoff Landmark</label>
-                    </div>
-                    <div class="form-control-feedback" *ngIf="dropofflandmark.errors && (dropofflandmark.dirty || dropofflandmark.touched)">
-                      <p *ngIf="!dropofflandmark.errors.required" class="haserror">Dropoff Landmark is required</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-6 col-lg-6 col-sm-6" style="display:none;">
-                    <div class="form-group">
-                      <input type="text" id="id" class="form-control" name="dropoffpincode" maxlength="6" #dropoffpincode="ngModel" [(ngModel)]="user.dropoffpincode"
-                        (ngModelChange)="changeEditdropOffpincode($event)">
-                      <label class="form-control-placeholder" for="id">Dropoff Pincode</label>
-                    </div>
-                    <div class="form-control-feedback" *ngIf="dropoffpincode.errors && (dropoffpincode.dirty || dropoffpincode.touched)">
-                      <p *ngIf="!dropoffpincode.errors.required" class="haserror">Dropoff Pincode is required</p>
-                    </div>
-                  </div>
-                  <div class="col-md-6 col-lg-6 col-sm-6">
-                    <div class="form-group">
-                      <input type="text" id="id" class="form-control" name="droplatlong" #droplatlong="ngModel" [(ngModel)]="user.droplatlong"
-                        (ngModelChange)="changeEditdropOfflatlong($event)" pattern="^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?),\s*[-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)$">
-                      <label class="form-control-placeholder" for="id">Dropoff lat,long (12.99,77.6611)</label>
-                    </div>
-                    <div class="form-control-feedback" *ngIf="droplatlong.errors && (droplatlong.dirty || droplatlong.touched)">
-                      <p *ngIf="!droplatlong.errors.required" class="haserror">format is wrong</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div *ngIf="showAddress">
-              <div *ngIf="yourBoolean === 'servicing' || yourBoolean === 'onlypickup'">
-                <div class="row">
-                  <div class="col-md-6 col-lg-6 col-sm-6">
-                    <div class="form-group">
-                      <input type="text" id="pickupdoor" class="form-control" name="pickupdoor" maxlength="6" required (ngModelChange)="changepickupdoor($event)"
-                        [(ngModel)]="user.pickupdoor" #pickupdoor="ngModel">
-                      <label class="form-control-placeholder" for="pickupdoor">Pickup Door Number/Flat Number*</label>
-                    </div>
-                    <div class="form-control-feedback" *ngIf="pickupdoor.errors && (pickupdoor.dirty || pickupdoor.touched)">
-                      <p *ngIf="pickupdoor.errors.required" class="haserror">Pickup Door Number/Flat Number is required</p>
-                    </div>
-                  </div>
-                  <div class="col-md-6 col-lg-6 col-sm-6">
-                    <div class="form-group">
-                      <input type="text" id="id" class="form-control" required name="pickupstreet" maxlength="70" #pickupstreet="ngModel" [(ngModel)]="user.pickupstreet"
-                        (ngModelChange)="changepickupstreet($event)">
-                      <label class="form-control-placeholder" for="id">Pickup Apartment Name/Street Name
-                        *</label>
-                    </div>
-                    <div class="form-control-feedback" *ngIf="pickupstreet.errors && (pickupstreet.dirty || pickupstreet.touched)">
-                      <p *ngIf="pickupstreet.errors.required" class="haserror">Pickup Apartment Name/Street Name
-                        is required</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-6 col-lg-6 col-sm-6">
-                    <div class="form-group">
-                      <input type="text" id="id" class="form-control" required name="pickuparea" maxlength="70" #pickuparea="ngModel" [(ngModel)]="user.pickuparea"
-                        (ngModelChange)="changepickuparea($event)">
-                      <label class="form-control-placeholder" for="id">Pickup Area/Locality*</label>
-                    </div>
-                    <div class="form-control-feedback" *ngIf="pickuparea.errors && (pickuparea.dirty || pickuparea.touched)">
-                      <p *ngIf="pickuparea.errors.required" class="haserror">Pickup Area/Locality is required</p>
-                    </div>
-                  </div>
-                  <div class="col-md-6 col-lg-6 col-sm-6">
-                    <div class="form-group">
-                      <input type="text" id="id" class="form-control" name="pickuplandmark" maxlength="150" #pickuplandmark="ngModel" [(ngModel)]="user.pickuplandmark"
-                        (ngModelChange)="changepickuplandmark($event)">
-                      <label class="form-control-placeholder" for="id">Pickup Landmark</label>
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-6 col-lg-6 col-sm-6" style="display:none;">
-                    <div class="form-group">
-                      <input type="text" id="id" class="form-control" name="pickuppincode" maxlength="6" #pickuppincode="ngModel" [(ngModel)]="user.pickuppincode"
-                        (ngModelChange)="changepickuppincode($event)" maxlength="6">
-                      <label class="form-control-placeholder" for="id">Pickup Pincode</label>
-                    </div>
-                    <div class="form-control-feedback" *ngIf="pickuppincode.errors && (pickuppincode.dirty || pickuppincode.touched)">
-                      <p *ngIf="pickuppincode.errors.required" class="haserror">Pincode is required</p>
-                    </div>
-                  </div>
-                  <div class="col-md-6 col-lg-6 col-sm-6">
-                    <div class="form-group">
-                      <input type="text" id="id" class="form-control" name="picklatlong" #picklatlong="ngModel" [(ngModel)]="user.picklatlong"
-                        (ngModelChange)="changepickuplatlong($event)" pattern="^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?),\s*[-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)$">
-                      <label class="form-control-placeholder" for="id">Pickup lat,long (12.99,77.6611)</label>
-                    </div>
-                  </div>
-                  <div class="col-md-6 col-lg-6 col-sm-6 col-12 cssselect" style=" padding-top: 2%">
-                      <select id="addresstypepu" class="form-control" name="addresstypepu" [(ngModel)]="user.addresstypepu" #addresstypepu="ngModel"
-                        required (change)="sameaddresstype($event.target.value)">
-                        <option [value]="i.id" *ngFor="let i of addresstype">{{i.type_of_address}}</option>
-                      </select>
-                      <label class="form-control-placeholder1" for="addresstypepu">Type of address*</label>
-                    </div>
-                </div>
-              </div>
-              <div *ngIf="yourBoolean === 'servicing'">
-                <label class="custom-control custom-checkbox">
-                  <input type="checkbox" class="custom-control-input" name="sameas" #same (click)="sameas(same.checked)" checked>
-                  <span class="custom-control-indicator"></span>
-                  <span class="custom-control-description">Drop Location is same as Pickup</span>
-                </label>
-              </div>
-              <div *ngIf="yourBoolean === 'dropoff' || yourBoolean === 'servicing'">
-                <div class="row">
-                  <div class="col-md-6 col-lg-6 col-sm-6">
-                    <div class="form-group">
-                      <input type="text" id="dropofffdoor" class="form-control" name="dropofffdoor" maxlength="6" required (ngModelChange)="EditAddress()" [(ngModel)]="user.dropofffdoor"
-                        #dropofffdoor="ngModel">
-                      <label class="form-control-placeholder" for="dropofffdoor">Dropoff Door Number/Flat Number*</label>
-                    </div>
-                    <div class="form-control-feedback" *ngIf="dropofffdoor.errors && (dropofffdoor.dirty || dropofffdoor.touched)">
-                      <p *ngIf="dropofffdoor.errors.required" class="haserror">Dropoff Door Number/Flat Number is required</p>
-                    </div>
-                  </div>
-                  <div class="col-md-6 col-lg-6 col-sm-6">
-                    <div class="form-group">
-                      <input type="text" id="id" class="form-control" name="dropoffstreet" required maxlength="70" #dropoffstreet="ngModel" (ngModelChange)="EditAddress()"
-                        [(ngModel)]="user.dropoffstreet">
-                      <label class="form-control-placeholder" for="id">Dropoff Apartment Name/Street Name
-                      </label>
-                    </div>
-                    <div class="form-control-feedback" *ngIf="dropoffstreet.errors && (dropoffstreet.dirty || dropoffstreet.touched)">
-                      <p *ngIf="dropoffstreet.errors.required" class="haserror">Dropoff Apartment Name/Street Name
-                        is required</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-6 col-lg-6 col-sm-6">
-                    <div class="form-group">
-                      <input type="text" id="id" class="form-control" name="dropoffarea" required maxlength="70" #dropoffarea="ngModel" (ngModelChange)="EditAddress()"
-                        [(ngModel)]="user.dropoffarea">
-                      <label class="form-control-placeholder" for="id">Dropoff Area/Locality*</label>
-                    </div>
-                    <div class="form-control-feedback" *ngIf="dropoffarea.errors && (dropoffarea.dirty || dropoffarea.touched)">
-                      <p *ngIf="dropoffarea.errors.required" class="haserror">Dropoff Area/Locality is required</p>
-                    </div>
-                  </div>
-                  <div class="col-md-6 col-lg-6 col-sm-6">
-                    <div class="form-group">
-                      <input type="text" id="id" class="form-control" name="dropofflandmark" maxlength="150" #dropofflandmark="ngModel" (ngModelChange)="EditAddress()"
-                        [(ngModel)]="user.dropofflandmark">
-                      <label class="form-control-placeholder" for="id">Dropoff Landmark</label>
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-6 col-lg-6 col-sm-6" style="display:none;">
-                    <div class="form-group">
-                      <input type="text" id="id" class="form-control" name="dropoffpincode" maxlength="6" #dropoffpincode="ngModel" (ngModelChange)="EditAddress()"
-                        [(ngModel)]="user.dropoffpincode" maxlength="6">
-                      <label class="form-control-placeholder" for="id">Dropoff Pincode</label>
-                    </div>
-                    <div class="form-control-feedback" *ngIf="dropoffpincode.errors && (dropoffpincode.dirty || dropoffpincode.touched)">
-                      <p *ngIf="dropoffpincode.errors.required" class="haserror">Dropoff Pincode is required</p>
-                    </div>
-                  </div>
-                  <div class="col-md-6 col-lg-6 col-sm-6">
-                    <div class="form-group">
-                      <input type="text" id="id" class="form-control" name="droplatlong" #droplatlong="ngModel" (ngModelChange)="EditAddress()"
-                        [(ngModel)]="user.droplatlong">
-                      <label class="form-control-placeholder" for="id">Dropoff lat,long (12.99,77.6611)</label>
-                    </div>
-                    <div class="form-control-feedback" *ngIf="droplatlong.errors && (droplatlong.dirty || droplatlong.touched)">
-                      <p *ngIf="!droplatlong.errors.required" class="haserror">format is wrong</p>
-                    </div>
-                  </div>
-                  <div class="col-md-6 col-lg-6 col-sm-6 col-12 " style="    padding-top: 2%">
-                      <select id="addresstypedu" class="form-control" name="addresstypedu" [(ngModel)]="user.addresstypedu" #addresstypedu="ngModel"
-                        required>
-                        <option [value]="i.id" *ngFor="let i of addresstype">{{i.type_of_address}}</option>
-                      </select>
-                      <label class="form-control-placeholder1" for="addresstypedu">Type of address*</label>
-                    </div>
-                </div>
-              </div>
-            </div>
-            <div class="line">
-              <span class="sectionHeader">Slot Details</span>
-          </div>
-            <div>
-              <div class="row" style="margin-bottom: 2%;">
-                <div class="col-lg-2 col-sm-2 col-md-2">
-                  <label class="custom-control custom-radio">
-                    <input type="radio" class="custom-control-input" #onlypickup [(ngModel)]="yourBoolean" (change)=doPickup() value="onlypickup"
-                      name="customRadio">
-                    <span class="custom-control-indicator"></span>
-                    <span class="custom-control-description"> Only Pickup</span>
-                  </label>
-                </div>
-                <div class="col-lg-3 col-sm-3 col-md-3">
-                  <label class="custom-control custom-radio">
-                    <input type="radio" class="custom-control-input" #servicing [(ngModel)]="yourBoolean" (change)=doPickup() value="servicing"
-                      name="customRadio" checked>
-                    <span class="custom-control-indicator"></span>
-                    <span class="custom-control-description">Pickup & Drop-off</span>
-                  </label>
-                </div>
-                <div class="col-lg-2 col-sm-2 col-md-2">
-                  <label class="custom-control custom-radio">
-                    <input type="radio" class="custom-control-input" #dropoff [(ngModel)]="yourBoolean" (change)=doDrop() value="dropoff" name="customRadio">
-                    <span class="custom-control-indicator"></span>
-                    <span class="custom-control-description">Only Drop-off</span>
-                  </label>
-                </div>
-              </div>
-            </div>
-            <div class="row" *ngIf="insuranceFlag">
-              <div class="col-md-6 col-lg-6 col-sm-6">
                   <div class="form-group">
-                      <select name="city" id="city" class="form-control" [(ngModel)]="user.city" required #city="ngModel" (change)="onCity($event)">
-                        <option *ngFor="let d of cityList; let i = index" [value]="d.cityid">{{d.cityname}}</option>
-                      </select>
-                      <label class="form-control-placeholder" for="city">City*</label>
-                    </div>
-
-
-                    <div class="form-control-feedback" *ngIf="city.errors && (city.dirty || city.touched)">
-                      <p *ngIf="city.errors.required" class="haserror">City is required</p>
-                    </div>
-              </div>
-              <div class="col-md-6 col-lg-6 col-sm-6">
-                  <div class="form-group">
-                      <select id="svclist" class="form-control" name="svclist" [(ngModel)]="user.svc" #svclist="ngModel"
-                        required >
-                        <optgroup label="{{i.associated}}" *ngFor="let i of svcList;let j = index;">
-                            <option [value]="i.id">{{i.name}}</option>
-                          </optgroup>
-  
-                        
-                      </select>
-                      <label class="form-control-placeholder" for="svclist">Service Centre List*</label>
-                    </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6 col-lg-6 col-sm-6">
-                <div class="form-group">
-                  <div class="input-group">
-                    <input class="form-control" name="dp" [ngModel]="model"  required [minDate]="startDate" placeholder="{{valuedate | date: 'yyyy-MM-dd'}}"
-                      (ngModelChange)="onSelectDate($event)" ngbDatepicker #d="ngbDatepicker">
-                    <div class="input-group-append">
-                      <button class="btn btn-outline-secondary dateButton" (click)="d.toggle()" type="button">
-                        <span>
-                          <i class="fa fa-calendar"></i>
-                        </span>
-                      </button>
+                    <div class="input-group">
+                      <input class="form-control" name="dp" [ngModel]="model" required [minDate]="startDate"
+                        placeholder="{{valuedate | date: 'yyyy-MM-dd'}}" (ngModelChange)="onSelectDate($event)"
+                        ngbDatepicker #d="ngbDatepicker">
+                      <div class="input-group-append">
+                        <button class="btn btn-outline-secondary dateButton" (click)="d.toggle()" type="button">
+                          <span>
+                            <i class="fa fa-calendar"></i>
+                          </span>
+                        </button>
+                      </div>
                     </div>
                   </div>
+                  <div class="form-control-feedback" *ngIf="d.errors && (d.dirty || d.touched)">
+                    <p *ngIf="d.errors.required" class="haserror">Date is required</p>
+                  </div>
                 </div>
-                <div class="form-control-feedback" *ngIf="d.errors && (d.dirty || d.touched)">
-                  <p *ngIf="d.errors.required" class="haserror">Date is required</p>
-                </div>
               </div>
-            </div>
-       
-            <div class="row" style="padding-bottom: 3%;">
-              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6" *ngIf="showtime">
-                <table cellspacing="20" *ngIf="show3">
-                  <tr *ngFor="let row of buildArr(slot);let i = index">
-                    <td *ngFor="let s of row" class="timeRow">
-                      <a (click)=check(s.time_format,s.slothour) class="timeAnchor">
-                        <span>{{s.time_format}}</span>
-                      </a>
-                    </td>
-                  </tr>
-                </table>
-              </div>
-              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 showtimeinput" *ngIf="showtime">
-                <input class="form-control" name="slot" [readonly]="true" *ngIf="slot_time" [(ngModel)]="slothour" />
-              </div>
-            </div>
 
-            <div class="line">
+              <div class="row" style="padding-bottom: 3%;">
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6" *ngIf="showtime">
+                  <table cellspacing="20" *ngIf="show3">
+                    <tr *ngFor="let row of buildArr(slot);let i = index">
+                      <td *ngFor="let s of row" class="timeRow">
+                        <a (click)=check(s.time_format,s.slothour) class="timeAnchor">
+                          <span>{{s.time_format}}</span>
+                        </a>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 showtimeinput" *ngIf="showtime">
+                  <input class="form-control" name="slot" [readonly]="true" *ngIf="slot_time" [(ngModel)]="slothour" />
+                </div>
+              </div>
+              <div class="line">
                 <span class="sectionHeader">Service Details</span>
-            </div>
-              
-            <div class="row">
-              <div class="col-md-6 col-lg-6 col-sm-6">
-                <div class="form-group">
-                  <select name="serviceType" id="serviceType" class="form-control" name="service_type" [(ngModel)]="user.service_type" #servicetype="ngModel"
-                    required>
-                    <option *ngFor="let s of service_type" [value]="s.id"> {{s.type}}</option>
-                  </select>
-                  <label class="form-control-placeholder" for="serviceType">Service Type*</label>
-                </div>
-                <div class="form-control-feedback" *ngIf="servicetype.errors && (servicetype.dirty || servicetype.touched)">
-                  <p *ngIf="servicetype.errors.required" class="haserror">Service Type is required</p>
-                </div>
               </div>
-              <div class="col-md-6 col-lg-6 col-sm-6" *ngIf="yourBoolean != 'dropoff'">
-                <div class="form-group">
-                  <angular2-multiselect [data]="itemList" [(ngModel)]="selectedItems" [settings]="settings" name="something" #comp (onSelect)="onItemSelect($event)"
-                    (onDeSelect)="OnItemDeSelect($event)" (onSelectAll)="onSelectAll($event)" (onDeSelectAll)="onDeSelectAll($event)">
-                  </angular2-multiselect>
-                </div>
-              </div>
-              <div class="col-md-6 col-lg-6 col-sm-6" *ngIf="yourBoolean === 'dropoff'">
+              <div class="row">
+                <div class="col-md-6 col-lg-6 col-sm-6">
                   <div class="form-group">
-                    <input type="text" id="notes" class="form-control" name="notes" [(ngModel)]="user.notes" placeholder="Notes" #notes="ngModel">
+                    <select name="serviceType" id="serviceType" class="form-control" name="service_type" [(ngModel)]="user.service_type"
+                      #servicetype="ngModel" required>
+                      <option *ngFor="let s of service_type" [value]="s.id"> {{s.type}}</option>
+                    </select>
+                    <label class="form-control-placeholder" for="serviceType">Service Type*</label>
+                  </div>
+                  <div class="form-control-feedback" *ngIf="servicetype.errors && (servicetype.dirty || servicetype.touched)">
+                    <p *ngIf="servicetype.errors.required" class="haserror">Service Type is required</p>
+                  </div>
+                </div>
+                <div class="col-md-6 col-lg-6 col-sm-6" *ngIf="yourBoolean != 'dropoff'">
+                  <div class="form-group">
+                    <angular2-multiselect [data]="itemList" [(ngModel)]="selectedItems" [settings]="settings" name="something"
+                      #comp (onSelect)="onItemSelect($event)" (onDeSelect)="OnItemDeSelect($event)" (onSelectAll)="onSelectAll($event)"
+                      (onDeSelectAll)="onDeSelectAll($event)">
+                    </angular2-multiselect>
+                  </div>
+                </div>
+                <div class="col-md-6 col-lg-6 col-sm-6" *ngIf="yourBoolean === 'dropoff'">
+                  <div class="form-group">
+                    <input type="text" id="notes" class="form-control" name="notes" [(ngModel)]="user.notes"
+                      placeholder="Notes" #notes="ngModel">
                     <label class="form-control-placeholder" for="notes">Notes</label>
                   </div>
                 </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6 col-lg-6 col-sm-6 col-12 creCol AddUserCre">
-                <div class="creContainer">
-                    <div class="form-group" class="AddUserRow" >
-                        <select name="creName" id="creName" class="form-control" [(ngModel)]="user.cre" #creName="ngModel" required>
-                          <option *ngFor="let ca of cre" [value]="ca.id"> {{ca.first_name}} - {{ca.mobile_number}}</option>
-                        </select>
-                        <label class="form-control-placeholder" for="cre">CRE*</label>
-                      </div>
-                    
-                      <div style="display:inline-block;">
-                          <button type="button" (click)="showModal(1)" class="addnumber" style="background-color: white;border-color: orange;">
-                            <i class="fa fa-plus" style="color:#ffa100" aria-hidden="true"></i>
-                          </button>
-                        </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 col-lg-6 col-sm-6 col-12 creCol AddUserCre">
+                  <div class="creContainer">
+                    <div class="form-group" class="AddUserRow">
+                      <select name="creName" id="creName" class="form-control" [(ngModel)]="user.cre" #creName="ngModel"
+                        required>
+                        <option *ngFor="let ca of cre" [value]="ca.id"> {{ca.first_name}} - {{ca.mobile_number}}</option>
+                      </select>
+                      <label class="form-control-placeholder" for="cre">CRE*</label>
+                    </div>
+                    <div style="display:inline-block;">
+                      <button type="button" (click)="showModal(1)" class="addnumber" style="background-color: white;border-color: orange;">
+                        <i class="fa fa-plus" style="color:#ffa100" aria-hidden="true"></i>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="form-control-feedback" *ngIf="creName.errors && (creName.dirty || creName.touched)">
+                    <p *ngIf="creName.errors.required" class="haserror">CRE is required</p>
+                  </div>
                 </div>
-                <div class="form-control-feedback" *ngIf="creName.errors && (creName.dirty || creName.touched)">
-                  <p *ngIf="creName.errors.required" class="haserror">CRE is required</p>
-                </div>
-            </div>
-           
-              <div class="col-md-6 col-lg-6 col-sm-6 col-12 AddUserCre" *ngIf="!insuranceFlag">
-                <div class="form-group"  class="AddUserRow">
-                  <select name="ServiceAdvisor" id="ServiceAdvisor" class="form-control" name="ServiceAdvisor" [(ngModel)]="user.service_advisor"
-                    #ServiceAdvisor="ngModel" required>
-                    <option *ngFor="let sa of serviceadv" [value]="sa.id"> {{sa.first_name}} - {{sa.mobile_number}}</option>
-                  </select>
-                  <label class="form-control-placeholder" for="ServiceAdvisor">Service Advisor*</label>
-                </div>
-            
-                <div style="display:inline-block;">
+                <div class="col-md-6 col-lg-6 col-sm-6 col-12 AddUserCre" *ngIf="!insuranceFlag">
+                  <div class="form-group" class="AddUserRow">
+                    <select name="ServiceAdvisor" id="ServiceAdvisor" class="form-control" name="ServiceAdvisor"
+                      [(ngModel)]="user.service_advisor" #ServiceAdvisor="ngModel" required>
+                      <option *ngFor="let sa of serviceadv" [value]="sa.id"> {{sa.first_name}} - {{sa.mobile_number}}</option>
+                    </select>
+                    <label class="form-control-placeholder" for="ServiceAdvisor">Service Advisor*</label>
+                  </div>
+                  <div style="display:inline-block;">
                     <button type="button" (click)="showModal(2)" class="addnumber" style="background-color: white;border-color: orange;">
                       <i class="fa fa-plus" style="color:#ffa100" aria-hidden="true"></i>
                     </button>
                   </div>
-              </div>
-              <div class="col-md-6 col-lg-6 col-sm-6 col-12 AddUserCre" *ngIf="insuranceFlag">
-                <div class="form-group"  class="AddUserRow">
-                  <select name="ServiceAdvisor" id="ServiceAdvisor" class="form-control" name="ServiceAdvisor" [(ngModel)]="user.service_advisor"
-                    #ServiceAdvisor="ngModel">
-                    <option *ngFor="let sa of serviceadv" [value]="sa.id"> {{sa.first_name}} - {{sa.mobile_number}}</option>
-                  </select>
-                  <label class="form-control-placeholder" for="ServiceAdvisor">Service Advisor*</label>
                 </div>
-            
-                <div style="display:inline-block;">
+                <div class="col-md-6 col-lg-6 col-sm-6 col-12 AddUserCre" *ngIf="insuranceFlag">
+                  <div class="form-group" class="AddUserRow">
+                    <select name="ServiceAdvisor" id="ServiceAdvisor" class="form-control" name="ServiceAdvisor"
+                      [(ngModel)]="user.service_advisor" #ServiceAdvisor="ngModel">
+                      <option *ngFor="let sa of serviceadv" [value]="sa.id"> {{sa.first_name}} - {{sa.mobile_number}}</option>
+                    </select>
+                    <label class="form-control-placeholder" for="ServiceAdvisor">Service Advisor*</label>
+                  </div>
+                  <div style="display:inline-block;">
                     <button type="button" (click)="showModal(2)" class="addnumber" style="background-color: white;border-color: orange;">
                       <i class="fa fa-plus" style="color:#ffa100" aria-hidden="true"></i>
                     </button>
                   </div>
-              </div>
-            </div>
-           
-            <div class="row" *ngIf="yourBoolean != 'dropoff'">
-              <div class="col-md-6 col-lg-6 col-sm-6">
-                <div class="form-group">
-                  <input type="text" id="notes" class="form-control" name="notes" [(ngModel)]="user.notes" placeholder="Notes" #notes="ngModel">
-                  <label class="form-control-placeholder" for="notes">Notes</label>
                 </div>
               </div>
-            </div>
-            <div class="row" style="padding-top: 2%;">
-              <div class="col-md-6 col-lg-6 col-sm-6">
-                <div>
-                  <label class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" name="confirm" checked [(ngModel)]="user.confirm" #confirm="ngModel">
-                    <span class="custom-control-indicator"></span>
-                    <span class="custom-control-description">Confirmed Booking</span>
-                  </label>
+              <div class="row" *ngIf="yourBoolean != 'dropoff'">
+                <div class="col-md-6 col-lg-6 col-sm-6">
+                  <div class="form-group">
+                    <input type="text" id="notes" class="form-control" name="notes" [(ngModel)]="user.notes"
+                      placeholder="Notes" #notes="ngModel">
+                    <label class="form-control-placeholder" for="notes">Notes</label>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12 col-lg-12 col-sm-12">
-                <div style="float:right">
-                  <button type="submit" class="btn btn-primary">Schedule</button>
+              <div class="row" style="padding-top: 2%;">
+                <div class="col-md-6 col-lg-6 col-sm-6">
+                  <div>
+                    <label class="custom-control custom-checkbox">
+                      <input type="checkbox" class="custom-control-input" name="confirm" checked [(ngModel)]="user.confirm"
+                        #confirm="ngModel">
+                      <span class="custom-control-indicator"></span>
+                      <span class="custom-control-description">Confirmed Booking</span>
+                    </label>
+                  </div>
                 </div>
               </div>
-            </div>
+              <div class="row">
+                <div class="col-md-12 col-lg-12 col-sm-12">
+                  <div style="float:right">
+                    <button type="submit" class="btn btn-primary">Schedule</button>
+                  </div>
+                </div>
+              </div>
           </div>
         </form>
       </nb-card-body>
