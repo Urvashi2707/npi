@@ -581,8 +581,10 @@
                       <select id="svclist" class="form-control" name="svclist" [(ngModel)]="user.svc" #svclist="ngModel"
                         required >
                         <optgroup label="{{i.associated}}" *ngFor="let i of svcList;let j = index;">
-                          <option [value]="i.id">{{i.name}}</option>
-                        </optgroup>
+                            <option [value]="i.id">{{i.name}}</option>
+                          </optgroup>
+  
+                        
                       </select>
                       <label class="form-control-placeholder" for="svclist">Service Centre List*</label>
                     </div>
