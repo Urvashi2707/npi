@@ -12,6 +12,8 @@ import 'style-loader!angular2-toaster/toaster.css';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { TestserviceService } from '../../../testservice.service';
+import { AgmCoreModule } from '@agm/core'; 
+
 declare var google: any;
 @Component({
   selector: 'app-servicing',
@@ -138,8 +140,14 @@ export class ServicingComponent implements OnInit {
   toastsLimit = 5;
   slothour:string;
   citylist:any = [];
+  lat: number = 51.678418;
+  lng: number = 7.809007;
   public latitude: number;
   public longitude: number;
+  label:string ="a";
+  // public lat: number = 12.993544199999999;
+  // public lng: number = 77.66068589999999;
+  public zoom: number = 16;
   @ViewChild('pickupsearchplace') pickupsearchplace:ElementRef;
   @ViewChild('pickupsearchplaceFill') pickupsearchplaceFill: ElementRef;
   @ViewChild('pickupsearchplaceLandmark') pickupsearchplaceLandmark: ElementRef;
@@ -153,6 +161,9 @@ export class ServicingComponent implements OnInit {
       "type_of_address": "Work"
     }
   ];
+    
+
+
   date: {year: number, month: number};
 
   public httpOptions = {
@@ -173,6 +184,8 @@ export class ServicingComponent implements OnInit {
     ) { 
       this.cityList = [];
       this.getCity();
+      this.lat= 12.993544199999999;
+      this.lng= 77.66068589999999;
     }
 
 
@@ -221,6 +234,22 @@ export class ServicingComponent implements OnInit {
     this.getAdvisor();
     this.getCre();
     this.getcreadv();
+
+
+    // var map;
+    // function init() {
+    //   var Map = google.maps.Map;
+    //       // LatLng = google.maps.Lat,
+    //       // Marker = google.maps.Marker;
+
+    //   map = new Map(document.getElementById('map-canvas'),{
+    //       center: {lat: -34.397, lng: 150.644},
+    //       zoom: 8
+    //   })
+
+    // }
+
+
    }
 
 public opt1={
@@ -275,21 +304,22 @@ public opt1={
   }
 
   pickUpSearch(e){
-    console.log(e);
-    console.log(this.pickupsearchplace.nativeElement.value);
+    // console.log(e);
+    // console.log(this.pickupsearchplace.nativeElement.value);
     let autocomplete = new google.maps.places.Autocomplete(this.pickupsearchplace.nativeElement);
-          autocomplete.addListener("place_changed", () => {
-            this.ngZone.run(() => {
-              let place: google.maps.places.PlaceResult = autocomplete.getPlace();
-              if (place.geometry === undefined || place.geometry === null) {
-                return;
-              }
-              this.latitude = place.geometry.location.lat();
-              this.longitude = place.geometry.location.lng();
-            }
-          });
-          this.pickupsearchplaceFill.nativeElement.value = this.pickupsearchplace.nativeElement.value;
+      autocomplete.addListener("place_changed", () => {
+        this.ngZone.run(() => {
+          let place: google.maps.places.PlaceResult = autocomplete.getPlace();
+          if (place.geometry === undefined || place.geometry === null) {
+            return;
+        }
+        this.latitude = place.geometry.location.lat();
+        this.longitude = place.geometry.location.lng();
+      })
+    });
+    this.pickupsearchplaceFill.nativeElement.value = this.pickupsearchplace.nativeElement.value;
   }
+
   changepickupdoor(value:any){
     this.user.dropofffdoor = value;
     if (this.sameasvalue == true){
@@ -299,6 +329,10 @@ public opt1={
 
   onCity(id){
     this.GetSVCList(this.selectedBrand,this.user.city);
+  }
+
+  markerDragEnd(e){
+    console.log(e);
   }
 
 public getCity() {
@@ -1591,5 +1625,12 @@ public getCity() {
   }
   }
 
+}
+
+interface marker {
+  name?:string;
+  lat:number;
+  lng:number;
+  draggable:boolean;
 }
 

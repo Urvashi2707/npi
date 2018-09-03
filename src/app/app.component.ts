@@ -9,6 +9,7 @@ import { NbMenuService, NbSidebarService,NbSearchService } from '@nebular/theme'
 @Component({
   selector: 'ngx-app',
   template: '<router-outlet></router-outlet>',
+  styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
 

@@ -17,6 +17,8 @@ import {NgbModal,NgbActiveModal, ModalDismissReasons} from '@ng-bootstrap/ng-boo
 import { ToasterService, ToasterConfig, Toast, BodyOutputType } from 'angular2-toaster';
 import { OnlyNumber } from '../number.directive';
 import { AddEmployee } from './modal/AddEmployee/AddEmployee.component';
+import { MapComponent } from './map/map.component';
+import {GmapsComponent} from '../maps/gmaps/gmaps.component';
 // import { ModalComponent } from './modal/modal.component';
 @NgModule({
   imports: [
@@ -34,7 +36,8 @@ import { AddEmployee } from './modal/AddEmployee/AddEmployee.component';
       ...routedComponents,
       BookingDetails,
       AddEmployee,
-     
+      MapComponent,
+      GmapsComponent
       // ModalComponent,
 
   ],

@@ -194,219 +194,302 @@
               </div>
             </div>
             <div class="line">
-              <span class="sectionHeader">Location Details</span>
-              <div class="row" style="margin-bottom: 2%;">
-                  <div class="col-lg-2 col-sm-2 col-md-2">
-                    <label class="custom-control custom-radio">
-                      <input type="radio" class="custom-control-input" #onlypickup [(ngModel)]="yourBoolean" (change)=doPickup()
-                        value="onlypickup" name="customRadio">
-                      <span class="custom-control-indicator"></span>
-                      <span class="custom-control-description"> Only Pickup</span>
-                    </label>
-                  </div>
-                  <div class="col-lg-3 col-sm-3 col-md-3">
-                    <label class="custom-control custom-radio">
-                      <input type="radio" class="custom-control-input" #servicing [(ngModel)]="yourBoolean" (change)=doPickup()
-                        value="servicing" name="customRadio" checked>
-                      <span class="custom-control-indicator"></span>
-                      <span class="custom-control-description">Pickup & Drop-off</span>
-                    </label>
-                  </div>
-                  <div class="col-lg-2 col-sm-2 col-md-2">
-                    <label class="custom-control custom-radio">
-                      <input type="radio" class="custom-control-input" #dropoff [(ngModel)]="yourBoolean" (change)=doDrop()
-                        value="dropoff" name="customRadio">
-                      <span class="custom-control-indicator"></span>
-                      <span class="custom-control-description">Only Drop-off</span>
-                    </label>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-lg-6 col-sm-6 col-md-6">
-                    <input placeholder="Search Places" #pickupsearchplace autocomplete="off" spellcheck="off" type="text" (keyup)="pickUpSearch($event)"/>
-                    <input placeholder="Auto fill" #pickupsearchplaceFill autocomplete="off" spellcheck="off" type="text"/>
-                    <input placeholder="Landmark" #pickupsearchplaceLandmark autocomplete="off" spellcheck="off" type="text"/>
-                  </div>
-                </div>
+              <span class="sectionHeader">Location Details</span></div>
+            <div class="row" style="margin-bottom: 2%;">
+              <div class="col-lg-2 col-sm-2 col-md-2">
+                <label class="custom-control custom-radio">
+                  <input type="radio" class="custom-control-input" #onlypickup [(ngModel)]="yourBoolean" (change)=doPickup()
+                    value="onlypickup" name="customRadio">
+                  <span class="custom-control-indicator"></span>
+                  <span class="custom-control-description"> Only Pickup</span>
+                </label>
+              </div>
+              <div class="col-lg-3 col-sm-3 col-md-3">
+                <label class="custom-control custom-radio">
+                  <input type="radio" class="custom-control-input" #servicing [(ngModel)]="yourBoolean" (change)=doPickup()
+                    value="servicing" name="customRadio" checked>
+                  <span class="custom-control-indicator"></span>
+                  <span class="custom-control-description">Pickup & Drop-off</span>
+                </label>
+              </div>
+              <div class="col-lg-2 col-sm-2 col-md-2">
+                <label class="custom-control custom-radio">
+                  <input type="radio" class="custom-control-input" #dropoff [(ngModel)]="yourBoolean" (change)=doDrop()
+                    value="dropoff" name="customRadio">
+                  <span class="custom-control-indicator"></span>
+                  <span class="custom-control-description">Only Drop-off</span>
+                </label>
+              </div>
             </div>
-              <div class="line">
-                <span class="sectionHeader">Slot Details</span>
-              </div>
-              <div>
-  
-              </div>
-              <div class="row" *ngIf="insuranceFlag">
-                <div class="col-md-6 col-lg-6 col-sm-6">
-                  <div class="form-group">
-                    <select name="city" id="city" class="form-control" [(ngModel)]="user.city" required #city="ngModel"
-                      (change)="onCity($event)">
-                      <option *ngFor="let d of cityList; let i = index" [value]="d.cityid">{{d.cityname}}</option>
-                    </select>
-                    <label class="form-control-placeholder" for="city">City*</label>
-                  </div>
-                  <div class="form-control-feedback" *ngIf="city.errors && (city.dirty || city.touched)">
-                    <p *ngIf="city.errors.required" class="haserror">City is required</p>
-                  </div>
-                </div>
-                <div class="col-md-6 col-lg-6 col-sm-6">
-                  <div class="form-group">
-                    <select id="svclist" class="form-control" name="svclist" [(ngModel)]="user.svc" #svclist="ngModel"
-                      required>
-                      <optgroup label="{{i.associated}}" *ngFor="let i of svcList;let j = index;">
-                        <option [value]="i.id">{{i.name}}</option>
-                      </optgroup>
-                    </select>
-                    <label class="form-control-placeholder" for="svclist">Service Centre List*</label>
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-6 col-lg-6 col-sm-6">
-                  <div class="form-group">
-                    <div class="input-group">
-                      <input class="form-control" name="dp" [ngModel]="model" required [minDate]="startDate"
-                        placeholder="{{valuedate | date: 'yyyy-MM-dd'}}" (ngModelChange)="onSelectDate($event)"
-                        ngbDatepicker #d="ngbDatepicker">
-                      <div class="input-group-append">
-                        <button class="btn btn-outline-secondary dateButton" (click)="d.toggle()" type="button">
-                          <span>
-                            <i class="fa fa-calendar"></i>
-                          </span>
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="form-control-feedback" *ngIf="d.errors && (d.dirty || d.touched)">
-                    <p *ngIf="d.errors.required" class="haserror">Date is required</p>
-                  </div>
-                </div>
-              </div>
+            <div *ngIf="yourBoolean === 'onlypickup' || yourBoolean === 'servicing'">
 
-              <div class="row" style="padding-bottom: 3%;">
-                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6" *ngIf="showtime">
-                  <table cellspacing="20" *ngIf="show3">
-                    <tr *ngFor="let row of buildArr(slot);let i = index">
-                      <td *ngFor="let s of row" class="timeRow">
-                        <a (click)=check(s.time_format,s.slothour) class="timeAnchor">
-                          <span>{{s.time_format}}</span>
-                        </a>
-                      </td>
-                    </tr>
-                  </table>
+              <!-- <div id="map-canvas"></div> -->
+
+              <div class="pickup-map">
+                  <agm-map id="pickUpMap" 
+                  [zoom]= "zoom" 
+                  [latitude]= "lat" 
+                  [longitude]= "lng" 
+                  [disableDefaultUI]= false 
+                  (mapReady)= pickUpMapReady($events)>
+                    <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+                  </agm-map>
                 </div>
-                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 showtimeinput" *ngIf="showtime">
-                  <input class="form-control" name="slot" [readonly]="true" *ngIf="slot_time" [(ngModel)]="slothour" />
+
+
+              <div class="row">
+                <div class="col-lg-6 col-sm-6 col-md-6">
+                  <div class="form-group">
+                    <input class="form-control" id="pickupsearch" #pickupsearchplace autocomplete="off" spellcheck="off"
+                      type="text" (keyup)="pickUpSearch($event)" />
+                    <label class="form-control-placeholder" for="city">Search Places*</label>
+                  </div>
                 </div>
-              </div>
-              <div class="line">
-                <span class="sectionHeader">Service Details</span>
+                <div class="col-lg-6 col-sm-6 col-md-6">
+                  <div class="form-group">
+                    <input class="form-control" #pickupsearchplaceFill autocomplete="off" spellcheck="off" type="text" />
+                    <label class="form-control-placeholder" for="pickupsearch">Postal Address*</label>
+                  </div>
+                </div>
               </div>
               <div class="row">
-                <div class="col-md-6 col-lg-6 col-sm-6">
+                <div class="col-lg-6 col-sm-6 col-md-6">
                   <div class="form-group">
-                    <select name="serviceType" id="serviceType" class="form-control" name="service_type" [(ngModel)]="user.service_type"
-                      #servicetype="ngModel" required>
-                      <option *ngFor="let s of service_type" [value]="s.id"> {{s.type}}</option>
+                    <input class="form-control" id="pickulandmark" placeholder="Landmark" #pickupsearchplaceLandmark
+                      autocomplete="off" spellcheck="off" type="text" />
+                    <label class="form-control-placeholder" for="pickulandmark">Landmark*</label>
+                  </div>
+                </div>
+                <div class="col-lg-6 col-sm-6 col-md-6">
+                  <div class="form-group">
+                    <select id="addresstypepu" class="form-control" name="addresstypepu" [(ngModel)]="user.addresstypepu"
+                      #addresstypepu="ngModel" required>
+                      <option [value]="i.id" *ngFor="let i of addresstype">{{i.type_of_address}}</option>
                     </select>
-                    <label class="form-control-placeholder" for="serviceType">Service Type*</label>
-                  </div>
-                  <div class="form-control-feedback" *ngIf="servicetype.errors && (servicetype.dirty || servicetype.touched)">
-                    <p *ngIf="servicetype.errors.required" class="haserror">Service Type is required</p>
+                    <label class="form-control-placeholder" for="addresstypepu">Type of address*</label>
                   </div>
                 </div>
-                <div class="col-md-6 col-lg-6 col-sm-6" *ngIf="yourBoolean != 'dropoff'">
+              </div>
+            </div>
+            <div class="sameasDiv" *ngIf="yourBoolean === 'servicing'">
+              <label class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input sameas" name="sameas" #same (click)="sameAsPickup(same.checked)">
+                <span class="custom-control-indicator"></span>
+                <span class="custom-control-description">Drop Location is same as Pickup</span>
+              </label>
+            </div>
+            <div *ngIf="yourBoolean === 'dropoff' || yourBoolean === 'servicing'">
+              <div class="row">
+                <div class="col-lg-6 col-sm-6 col-md-6">
                   <div class="form-group">
-                    <angular2-multiselect [data]="itemList" [(ngModel)]="selectedItems" [settings]="settings" name="something"
-                      #comp (onSelect)="onItemSelect($event)" (onDeSelect)="OnItemDeSelect($event)" (onSelectAll)="onSelectAll($event)"
-                      (onDeSelectAll)="onDeSelectAll($event)">
-                    </angular2-multiselect>
+                    <input class="form-control" id="dropoffsearch" #dropoffsearchplace autocomplete="off" spellcheck="off"
+                      type="text" (keyup)="DropOffSearch($event)" />
+                    <label class="form-control-placeholder" for="dropoffsearch">Search Places*</label>
                   </div>
                 </div>
-                <div class="col-md-6 col-lg-6 col-sm-6" *ngIf="yourBoolean === 'dropoff'">
+                <div class="col-lg-6 col-sm-6 col-md-6">
                   <div class="form-group">
-                    <input type="text" id="notes" class="form-control" name="notes" [(ngModel)]="user.notes"
-                      placeholder="Notes" #notes="ngModel" pattern="^[a-zA-Z0-9 \,\.\-\/\;\'\}\{\%]+$">
-                    <label class="form-control-placeholder" for="notes">Notes</label>
+                    <input class="form-control" #dropoffsearchplaceFill autocomplete="off" id="dropoffsearchautofill"
+                      spellcheck="off" type="text" />
+                    <label class="form-control-placeholder" for="dropoffsearchautofill">Postal Address*</label>
                   </div>
                 </div>
               </div>
               <div class="row">
-                <div class="col-md-6 col-lg-6 col-sm-6 col-12 creCol AddUserCre">
-                  <div class="creContainer">
-                    <div class="form-group" class="AddUserRow">
-                      <select name="creName" id="creName" class="form-control" [(ngModel)]="user.cre" #creName="ngModel"
-                        required>
-                        <option *ngFor="let ca of cre" [value]="ca.id"> {{ca.first_name}} - {{ca.mobile_number}}</option>
-                      </select>
-                      <label class="form-control-placeholder" for="cre">CRE*</label>
-                    </div>
-                    <div style="display:inline-block;">
-                      <button type="button" (click)="showModal(1)" class="addnumber" style="background-color: white;border-color: orange;">
-                        <i class="fa fa-plus" style="color:#ffa100" aria-hidden="true"></i>
+                <div class="col-lg-6 col-sm-6 col-md-6">
+                  <div class="form-group">
+                    <input class="form-control" id="dropofflandmark" placeholder="Landmark" #dropoffsearchplaceLandmark
+                      autocomplete="off" spellcheck="off" type="text" />
+                    <label class="form-control-placeholder" for="dropofflandmark">Landmark*</label>
+                  </div>
+                </div>
+                <div class="col-lg-6 col-sm-6 col-md-6">
+                  <div class="form-group">
+                    <select id="addresstypedo" class="form-control" name="addresstypedo" [(ngModel)]="user.addresstypedo"
+                      #addresstypepu="ngModel" required>
+                      <option [value]="i.id" *ngFor="let i of addresstype">{{i.type_of_address}}</option>
+                    </select>
+                    <label class="form-control-placeholder" for="addresstypedo">Type of address*</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="line">
+              <span class="sectionHeader">Slot Details</span>
+            </div>
+            <div> </div>
+            <div class="row" *ngIf="insuranceFlag">
+              <div class="col-md-6 col-lg-6 col-sm-6">
+                <div class="form-group">
+                  <select name="city" id="city" class="form-control" [(ngModel)]="user.city" required #city="ngModel"
+                    (change)="onCity($event)">
+                    <option *ngFor="let d of cityList; let i = index" [value]="d.cityid">{{d.cityname}}</option>
+                  </select>
+                  <label class="form-control-placeholder" for="city">City*</label>
+                </div>
+                <div class="form-control-feedback" *ngIf="city.errors && (city.dirty || city.touched)">
+                  <p *ngIf="city.errors.required" class="haserror">City is required</p>
+                </div>
+              </div>
+              <div class="col-md-6 col-lg-6 col-sm-6">
+                <div class="form-group">
+                  <select id="svclist" class="form-control" name="svclist" [(ngModel)]="user.svc" #svclist="ngModel"
+                    required>
+                    <optgroup label="{{i.associated}}" *ngFor="let i of svcList;let j = index;">
+                      <option [value]="i.id">{{i.name}}</option>
+                    </optgroup>
+                  </select>
+                  <label class="form-control-placeholder" for="svclist">Service Centre List*</label>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 col-lg-6 col-sm-6">
+                <div class="form-group">
+                  <div class="input-group">
+                    <input class="form-control" name="dp" [ngModel]="model" required [minDate]="startDate" placeholder="{{valuedate | date: 'yyyy-MM-dd'}}"
+                      (ngModelChange)="onSelectDate($event)" ngbDatepicker #d="ngbDatepicker">
+                    <div class="input-group-append">
+                      <button class="btn btn-outline-secondary dateButton" (click)="d.toggle()" type="button">
+                        <span>
+                          <i class="fa fa-calendar"></i>
+                        </span>
                       </button>
                     </div>
                   </div>
-                  <div class="form-control-feedback" *ngIf="creName.errors && (creName.dirty || creName.touched)">
-                    <p *ngIf="creName.errors.required" class="haserror">CRE is required</p>
-                  </div>
                 </div>
-                <div class="col-md-6 col-lg-6 col-sm-6 col-12 AddUserCre" *ngIf="!insuranceFlag">
+                <div class="form-control-feedback" *ngIf="d.errors && (d.dirty || d.touched)">
+                  <p *ngIf="d.errors.required" class="haserror">Date is required</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="row" style="padding-bottom: 3%;">
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6" *ngIf="showtime">
+                <table cellspacing="20" *ngIf="show3">
+                  <tr *ngFor="let row of buildArr(slot);let i = index">
+                    <td *ngFor="let s of row" class="timeRow">
+                      <a (click)=check(s.time_format,s.slothour) class="timeAnchor">
+                        <span>{{s.time_format}}</span>
+                      </a>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 showtimeinput" *ngIf="showtime">
+                <input class="form-control" name="slot" [readonly]="true" *ngIf="slot_time" [(ngModel)]="slothour" />
+              </div>
+            </div>
+            <div class="line">
+              <span class="sectionHeader">Service Details</span>
+            </div>
+            <div class="row">
+              <div class="col-md-6 col-lg-6 col-sm-6">
+                <div class="form-group">
+                  <select name="serviceType" id="serviceType" class="form-control" name="service_type" [(ngModel)]="user.service_type"
+                    #servicetype="ngModel" required>
+                    <option *ngFor="let s of service_type" [value]="s.id"> {{s.type}}</option>
+                  </select>
+                  <label class="form-control-placeholder" for="serviceType">Service Type*</label>
+                </div>
+                <div class="form-control-feedback" *ngIf="servicetype.errors && (servicetype.dirty || servicetype.touched)">
+                  <p *ngIf="servicetype.errors.required" class="haserror">Service Type is required</p>
+                </div>
+              </div>
+              <div class="col-md-6 col-lg-6 col-sm-6" *ngIf="yourBoolean != 'dropoff'">
+                <div class="form-group">
+                  <angular2-multiselect [data]="itemList" [(ngModel)]="selectedItems" [settings]="settings" name="something"
+                    #comp (onSelect)="onItemSelect($event)" (onDeSelect)="OnItemDeSelect($event)" (onSelectAll)="onSelectAll($event)"
+                    (onDeSelectAll)="onDeSelectAll($event)">
+                  </angular2-multiselect>
+                </div>
+              </div>
+              <div class="col-md-6 col-lg-6 col-sm-6" *ngIf="yourBoolean === 'dropoff'">
+                <div class="form-group">
+                  <input type="text" id="notes" class="form-control" name="notes" [(ngModel)]="user.notes" placeholder="Notes"
+                    #notes="ngModel" pattern="^[a-zA-Z0-9 \,\.\-\/\;\'\}\{\%]+$">
+                  <label class="form-control-placeholder" for="notes">Notes</label>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 col-lg-6 col-sm-6 col-12 creCol AddUserCre">
+                <div class="creContainer">
                   <div class="form-group" class="AddUserRow">
-                    <select name="ServiceAdvisor" id="ServiceAdvisor" class="form-control" name="ServiceAdvisor"
-                      [(ngModel)]="user.service_advisor" #ServiceAdvisor="ngModel" required>
-                      <option *ngFor="let sa of serviceadv" [value]="sa.id"> {{sa.first_name}} - {{sa.mobile_number}}</option>
+                    <select name="creName" id="creName" class="form-control" [(ngModel)]="user.cre" #creName="ngModel"
+                      required>
+                      <option *ngFor="let ca of cre" [value]="ca.id"> {{ca.first_name}} - {{ca.mobile_number}}</option>
                     </select>
-                    <label class="form-control-placeholder" for="ServiceAdvisor">Service Advisor*</label>
+                    <label class="form-control-placeholder" for="cre">CRE*</label>
                   </div>
                   <div style="display:inline-block;">
-                    <button type="button" (click)="showModal(2)" class="addnumber" style="background-color: white;border-color: orange;">
+                    <button type="button" (click)="showModal(1)" class="addnumber" style="background-color: white;border-color: orange;">
                       <i class="fa fa-plus" style="color:#ffa100" aria-hidden="true"></i>
                     </button>
                   </div>
                 </div>
-                <div class="col-md-6 col-lg-6 col-sm-6 col-12 AddUserCre" *ngIf="insuranceFlag">
-                  <div class="form-group" class="AddUserRow">
-                    <select name="ServiceAdvisor" id="ServiceAdvisor" class="form-control" name="ServiceAdvisor"
-                      [(ngModel)]="user.service_advisor" #ServiceAdvisor="ngModel">
-                      <option *ngFor="let sa of serviceadv" [value]="sa.id"> {{sa.first_name}} - {{sa.mobile_number}}</option>
-                    </select>
-                    <label class="form-control-placeholder" for="ServiceAdvisor">Service Advisor*</label>
-                  </div>
-                  <div style="display:inline-block;">
-                    <button type="button" (click)="showModal(2)" class="addnumber" style="background-color: white;border-color: orange;">
-                      <i class="fa fa-plus" style="color:#ffa100" aria-hidden="true"></i>
-                    </button>
-                  </div>
+                <div class="form-control-feedback" *ngIf="creName.errors && (creName.dirty || creName.touched)">
+                  <p *ngIf="creName.errors.required" class="haserror">CRE is required</p>
                 </div>
               </div>
-              <div class="row" *ngIf="yourBoolean != 'dropoff'">
-                <div class="col-md-6 col-lg-6 col-sm-6">
-                  <div class="form-group">
-                    <input type="text" id="notes" class="form-control" name="notes" [(ngModel)]="user.notes"
-                      placeholder="Notes" #notes="ngModel" pattern="^[a-zA-Z0-9 \,\.\-\/\;\'\}\{\%]+$">
-                    <label class="form-control-placeholder" for="notes">Notes</label>
-                  </div>
+              <div class="col-md-6 col-lg-6 col-sm-6 col-12 AddUserCre" *ngIf="!insuranceFlag">
+                <div class="form-group" class="AddUserRow">
+                  <select name="ServiceAdvisor" id="ServiceAdvisor" class="form-control" name="ServiceAdvisor"
+                    [(ngModel)]="user.service_advisor" #ServiceAdvisor="ngModel" required>
+                    <option *ngFor="let sa of serviceadv" [value]="sa.id"> {{sa.first_name}} - {{sa.mobile_number}}</option>
+                  </select>
+                  <label class="form-control-placeholder" for="ServiceAdvisor">Service Advisor*</label>
+                </div>
+                <div style="display:inline-block;">
+                  <button type="button" (click)="showModal(2)" class="addnumber" style="background-color: white;border-color: orange;">
+                    <i class="fa fa-plus" style="color:#ffa100" aria-hidden="true"></i>
+                  </button>
                 </div>
               </div>
-              <div class="row" style="padding-top: 2%;">
-                <div class="col-md-6 col-lg-6 col-sm-6">
-                  <div>
-                    <label class="custom-control custom-checkbox">
-                      <input type="checkbox" class="custom-control-input" name="confirm" checked [(ngModel)]="user.confirm"
-                        #confirm="ngModel">
-                      <span class="custom-control-indicator"></span>
-                      <span class="custom-control-description">Confirmed Booking</span>
-                    </label>
-                  </div>
+              <div class="col-md-6 col-lg-6 col-sm-6 col-12 AddUserCre" *ngIf="insuranceFlag">
+                <div class="form-group" class="AddUserRow">
+                  <select name="ServiceAdvisor" id="ServiceAdvisor" class="form-control" name="ServiceAdvisor"
+                    [(ngModel)]="user.service_advisor" #ServiceAdvisor="ngModel">
+                    <option *ngFor="let sa of serviceadv" [value]="sa.id"> {{sa.first_name}} - {{sa.mobile_number}}</option>
+                  </select>
+                  <label class="form-control-placeholder" for="ServiceAdvisor">Service Advisor*</label>
+                </div>
+                <div style="display:inline-block;">
+                  <button type="button" (click)="showModal(2)" class="addnumber" style="background-color: white;border-color: orange;">
+                    <i class="fa fa-plus" style="color:#ffa100" aria-hidden="true"></i>
+                  </button>
                 </div>
               </div>
-              <div class="row">
-                <div class="col-md-12 col-lg-12 col-sm-12">
-                  <div style="float:right">
-                    <button type="submit" class="btn btn-primary">Schedule</button>
-                  </div>
+            </div>
+            <div class="row" *ngIf="yourBoolean != 'dropoff'">
+              <div class="col-md-6 col-lg-6 col-sm-6">
+                <div class="form-group">
+                  <input type="text" id="notes" class="form-control" name="notes" [(ngModel)]="user.notes" placeholder="Notes"
+                    #notes="ngModel" pattern="^[a-zA-Z0-9 \,\.\-\/\;\'\}\{\%]+$">
+                  <label class="form-control-placeholder" for="notes">Notes</label>
                 </div>
               </div>
+            </div>
+            <div class="row" style="padding-top: 2%;">
+              <div class="col-md-6 col-lg-6 col-sm-6">
+                <div>
+                  <label class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" name="confirm" checked [(ngModel)]="user.confirm"
+                      #confirm="ngModel">
+                    <span class="custom-control-indicator"></span>
+                    <span class="custom-control-description">Confirmed Booking</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12 col-lg-12 col-sm-12">
+                <div style="float:right">
+                  <button type="submit" class="btn btn-primary">Schedule</button>
+                </div>
+              </div>
+            </div>
           </div>
         </form>
       </nb-card-body>
