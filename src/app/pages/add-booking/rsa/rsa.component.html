@@ -10,7 +10,7 @@
           <div class="row">
             <div class="col-md-5 col-sm-5 col-lg-5">
               <div class="form-group">
-                <input type="text" id="num" name="num" class="form-control" required [(ngModel)]="registrationNumber" #num="ngModel" style=" text-transform: uppercase">
+                <input type="text" id="num" name="num" class="form-control" required [(ngModel)]="registrationNumber" #num="ngModel" style=" text-transform: uppercase" pattern="^[a-zA-Z0-9 \,\.\-\/\;\'\}\{\%]+$">
                 <label class="form-control-placeholder" for="num">Registration Number</label>
               </div>
               <div class="form-control-feedback" *ngIf="num.errors && (num.dirty || num.touched)">
@@ -155,7 +155,7 @@
                 </div>
                 <div class="form-group CusName">
                   <input type="text" id="Cus_name" class="form-control" required [(ngModel)]="cust_details.first_name" name="Cus_name" #Cus_name="ngModel"
-                    style="text-transform: capitalize;">
+                    style="text-transform: capitalize;" pattern="^[a-zA-Z0-9 \,\.\-\/\;\'\}\{\%]+$">
                   <label class="form-control-placeholder" for="Cus_name">Customer Name*</label>
                 </div>
               </div>
@@ -229,7 +229,7 @@
               <div class="row">
                 <div class="col-md-6 col-lg-6 col-sm-6">
                   <div class="form-group">
-                    <input type="text" id="custloc" class="form-control" name="custloc" [(ngModel)]="user.custloc" #custloc="ngModel" required>
+                    <input type="text" id="custloc" class="form-control" name="custloc" [(ngModel)]="user.custloc" #custloc="ngModel" required pattern="^[a-zA-Z0-9 \,\.-]+$">
                     <label class="form-control-placeholder" for="custloc">BreakDown Location*</label>
                   </div>
                   <div class="form-control-feedback" *ngIf="custloc.errors && (custloc.dirty || custloc.touched)">
@@ -304,7 +304,7 @@
                 <div class="row" *ngIf="hideDropoff">
                   <div class="col-md-6 col-lg-6 col-sm-6">
                     <div class="form-group">
-                      <input type="text" id="dropoff" class="form-control" name="dropoff" [(ngModel)]="user.dropoff" #dropoff="ngModel" required>
+                      <input type="text" id="dropoff" class="form-control" name="dropoff" [(ngModel)]="user.dropoff" #dropoff="ngModel" required pattern="^[a-zA-Z0-9 \,\.-]+$">
                       <label class="form-control-placeholder" for="custloc">Drop-off Location*</label>
                     </div>
                     <div class="form-control-feedback" *ngIf="dropoff.errors && (dropoff.dirty || dropoff.touched)">
@@ -326,7 +326,7 @@
               <div class="row" *ngIf="yourBoolean === 'towing'">
                 <div class="col-md-6 col-lg-6 col-sm-6">
                   <div class="form-group">
-                    <input type="text" id="notes" class="form-control" name="notes" [(ngModel)]="user.notes"  #notes="ngModel">
+                    <input type="text" id="notes" class="form-control" name="notes" [(ngModel)]="user.notes"  #notes="ngModel" pattern="^[a-zA-Z0-9 \,\.\-\/\;\'\}\{\%]+$">
                     <label class="form-control-placeholder" for="notes">Notes</label>
                   </div>
                 </div>
@@ -346,7 +346,7 @@
                 </div>
                 <div class="col-md-6 col-lg-6 col-sm-6">
                   <div class="form-group">
-                    <input type="text" id="notes" class="form-control" name="notes" [(ngModel)]="user.notes" #notes="ngModel">
+                    <input type="text" id="notes" class="form-control" name="notes" [(ngModel)]="user.notes" #notes="ngModel" pattern="^[a-zA-Z0-9 \,\.\-\/\;\'\}\{\%]+$">
                     <label class="form-control-placeholder" for="notes">Notes</label>
                   </div>
                 </div>

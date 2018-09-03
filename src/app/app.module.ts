@@ -24,13 +24,12 @@ import { CookieService } from 'ngx-cookie-service';
 import { FilterPipe} from './pages/filter.pipe';
 import { Ng2OrderModule } from 'ng2-order-pipe'; 
 import {TrendsComponent} from './trends/trends/trends.component';
-// import {columnPipe,rowPipe,searchPipe} from './pages/pipe.pipe'
 import {NavbarComponent} from './trends/navbar/navbar.component';
 import { TestserviceService } from './testservice.service';
 import { NgxSpinnerModule } from 'ngx-spinner';
+
 @NgModule({
   declarations: [AppComponent,FilterPipe,TrendsComponent,NavbarComponent],
-
   imports: [
     BrowserModule,
     AngularMultiSelectModule,

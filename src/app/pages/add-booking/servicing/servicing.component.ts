@@ -1,4 +1,4 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit,ViewChild, ElementRef, NgZone } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { TitleCasePipe } from '@angular/common';
 import { ServicingService } from '../../services/addServicing.service';
@@ -12,12 +12,13 @@ import 'style-loader!angular2-toaster/toaster.css';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { TestserviceService } from '../../../testservice.service';
-
+declare var google: any;
 @Component({
   selector: 'app-servicing',
   templateUrl: './servicing.component.html',
   styleUrls: ['./servicing.component.scss']
 })
+
 
 export class ServicingComponent implements OnInit {
   
@@ -137,6 +138,11 @@ export class ServicingComponent implements OnInit {
   toastsLimit = 5;
   slothour:string;
   citylist:any = [];
+  public latitude: number;
+  public longitude: number;
+  @ViewChild('pickupsearchplace') pickupsearchplace:ElementRef;
+  @ViewChild('pickupsearchplaceFill') pickupsearchplaceFill: ElementRef;
+  @ViewChild('pickupsearchplaceLandmark') pickupsearchplaceLandmark: ElementRef;
   addresstype = [
     {
       "id": "1",
@@ -162,7 +168,9 @@ export class ServicingComponent implements OnInit {
     private modalService: NgbModal,
     private titlecasePipe:TitleCasePipe,
     private activeModal: NgbActiveModal,
-    private spinner: NgxSpinnerService, private testServ:TestserviceService) { 
+    private spinner: NgxSpinnerService, private testServ:TestserviceService,
+    public ngZone: NgZone
+    ) { 
       this.cityList = [];
       this.getCity();
     }
@@ -266,6 +274,22 @@ public opt1={
     this.toasterService.popAsync(toast);
   }
 
+  pickUpSearch(e){
+    console.log(e);
+    console.log(this.pickupsearchplace.nativeElement.value);
+    let autocomplete = new google.maps.places.Autocomplete(this.pickupsearchplace.nativeElement);
+          autocomplete.addListener("place_changed", () => {
+            this.ngZone.run(() => {
+              let place: google.maps.places.PlaceResult = autocomplete.getPlace();
+              if (place.geometry === undefined || place.geometry === null) {
+                return;
+              }
+              this.latitude = place.geometry.location.lat();
+              this.longitude = place.geometry.location.lng();
+            }
+          });
+          this.pickupsearchplaceFill.nativeElement.value = this.pickupsearchplace.nativeElement.value;
+  }
   changepickupdoor(value:any){
     this.user.dropofffdoor = value;
     if (this.sameasvalue == true){
