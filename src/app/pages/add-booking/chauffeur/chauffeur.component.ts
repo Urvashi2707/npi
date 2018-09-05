@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ViewChild, ElementRef, NgZone  } from '@angular/core';
 import {ServerService } from '../../services/user.service';
 import { TitleCasePipe } from '@angular/common';
 import {HttpErrorResponse}from '@angular/common/http';
@@ -12,6 +12,9 @@ import { AddEmployee } from '../modal/AddEmployee/AddEmployee.component';
 import { ToasterService, ToasterConfig, Toast, BodyOutputType } from 'angular2-toaster';
 import 'style-loader!angular2-toaster/toaster.css';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { AgmCoreModule, MapsAPILoader } from '@agm/core'; 
+import {} from '@types/googlemaps';
+declare var google: any;
 
 @Component({
   selector: 'app-chauffeur',
@@ -48,6 +51,7 @@ export class ChauffeurComponent implements OnInit {
   public carinfo:any=[];
   show3  = true;
   show  = false;
+  public zoom: number = 16;
   addresstype_pu:string;
   cust_details:any={};
   public pikup_long: string;
@@ -109,6 +113,10 @@ export class ChauffeurComponent implements OnInit {
   animationType = 'fade';
   timeout = 5000;
   toastsLimit = 5;
+  public lat: number = 51.678418;
+  public lng: number = 7.809007;
+  public latitude: number;
+  public longitude: number;
   showtime = false;
   public startDate;
   public minDate;
@@ -117,8 +125,11 @@ export class ChauffeurComponent implements OnInit {
   valuedate = new Date();
   countrycode1:string;
   insuranceFlag:boolean=false;
+  @ViewChild('pickupsearchplace') pickupsearchplace:ElementRef;
+  @ViewChild('pickupsearchplaceFill') pickupsearchplaceFill: ElementRef;
+  @ViewChild('pickupsearchplaceLandmark') pickupsearchplaceLandmark: ElementRef;
   
-  constructor(private spinner: NgxSpinnerService,private datePipe:DatePipe,private titlecasePipe:TitleCasePipe,private toasterService: ToasterService,private _data : ServerService,private router: Router,private ngbDateParserFormatter: NgbDateParserFormatter,private modalService: NgbModal) {
+  constructor(public ngZone: NgZone,private spinner: NgxSpinnerService,private datePipe:DatePipe,private titlecasePipe:TitleCasePipe,private toasterService: ToasterService,private _data : ServerService,private router: Router,private ngbDateParserFormatter: NgbDateParserFormatter,private modalService: NgbModal) {
     this.cityList = [];
     this.getCity();
    }
@@ -269,6 +280,27 @@ export class ChauffeurComponent implements OnInit {
     this.slothour = value;
     this.slotcheck = false;
  }
+
+
+ pickUpSearch(e){
+  let autocomplete = new google.maps.places.Autocomplete(this.pickupsearchplace.nativeElement);
+      autocomplete.addListener("place_changed", () => {
+        this.ngZone.run(() => {
+          let place: google.maps.places.PlaceResult = autocomplete.getPlace();
+          if (place.geometry === undefined || place.geometry === null) {
+            return;
+      }
+      this.latitude = place.geometry.location.lat();
+      this.longitude = place.geometry.location.lng();
+      this.lat = place.geometry.location.lat();
+      this.lng = place.geometry.location.lng();
+      this.zoom = 20;
+      console.log(this.latitude, this.longitude);
+      console.log(autocomplete.getPlace());
+    })
+  });
+  this.pickupsearchplaceFill.nativeElement.value = this.pickupsearchplace.nativeElement.value;
+}
 
   //Brand selection
    onSelectBrand(brandsId) {

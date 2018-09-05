@@ -139,65 +139,42 @@
             <!-- stock yard -->
             <div *ngIf="serviceType === '1'">
               <span class="sectionHeader">Location Details</span>
+              <div class="pickup-map">
+                <agm-map id="pickUpMap" [zoom]="zoom" [latitude]="lat" [longitude]="lng" [disableDefaultUI]=false
+                  (mapReady)=pickUpMapReady($events)>
+                  <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+                </agm-map>
+              </div>
               <div class="row">
-                <div class="col-md-6 col-lg-6 col-sm-6">
+                <div class="col-lg-6 col-sm-6 col-md-6">
                   <div class="form-group">
-                    <input type="text" id="pickupdoor" class="form-control" name="pickupdoor" maxlength="6" [(ngModel)]="user.pickupdoor"
-                      #pickupdoor="ngModel" required>
-                    <label class="form-control-placeholder" for="pickupdoor">Pickup Door Number/Flat Number*</label>
-                  </div>
-                  <div class="form-control-feedback" *ngIf="pickupdoor.errors && (pickupdoor.dirty || pickupdoor.touched)">
-                    <p *ngIf="pickupdoor.errors.required" class="haserror">Pickup Door Number/Flat Number is required</p>
+                    <input class="form-control" id="pickupsearch" #pickupsearchplace autocomplete="off" spellcheck="off"
+                      type="text" (keyup)="pickUpSearch($event)" />
+                    <label class="form-control-placeholder" for="city">Search Places*</label>
                   </div>
                 </div>
-                <div class="col-md-6 col-lg-6 col-sm-6">
+                <div class="col-lg-6 col-sm-6 col-md-6">
                   <div class="form-group">
-                    <input type="text" id="pickupstreet" class="form-control" name="pickupstreet" maxlength="70"
-                      [(ngModel)]="user.pickupstreet" #pickupstreet="ngModel" required>
-                    <label class="form-control-placeholder" for="pickupstreet">Pickup Apartment Name/Street Name*</label>
-                  </div>
-                  <div class="form-control-feedback" *ngIf="pickupstreet.errors && (pickupstreet.dirty || pickupstreet.touched)">
-                    <p *ngIf="pickupstreet.errors.required" class="haserror">Pickup Apartment Name/Street Name is
-                      required</p>
+                    <input class="form-control" #pickupsearchplaceFill autocomplete="off" spellcheck="off" type="text" />
+                    <label class="form-control-placeholder" for="pickupsearch">Postal Address*</label>
                   </div>
                 </div>
               </div>
               <div class="row">
-                <div class="col-md-6 col-lg-6 col-sm-6">
+                <div class="col-lg-6 col-sm-6 col-md-6">
                   <div class="form-group">
-                    <input type="text" id="pickloc" class="form-control" name="pickuparea" maxlength="70" [(ngModel)]="user.pickuparea"
-                      #pickuparea="ngModel" required>
-                    <label class="form-control-placeholder" for="pickuparea">Pickup Area/Locality *</label>
-                  </div>
-                  <div class="form-control-feedback" *ngIf="pickuparea.errors && (pickuparea.dirty || pickuparea.touched)">
-                    <p *ngIf="pickuparea.errors.required" class="haserror">Pickup Area/Locality is required</p>
+                    <input class="form-control" id="pickulandmark" placeholder="Landmark" #pickupsearchplaceLandmark
+                      autocomplete="off" spellcheck="off" type="text" />
+                    <label class="form-control-placeholder" for="pickulandmark">Landmark*</label>
                   </div>
                 </div>
-                <div class="col-md-6 col-lg-6 col-sm-6">
+                <div class="col-lg-6 col-sm-6 col-md-6">
                   <div class="form-group">
-                    <input type="text" id="pickuplandmark" class="form-control" maxlength="150" name="pickuplandmark"
-                      [(ngModel)]="user.pickuplandmark" #pickuplandmark="ngModel">
-                    <label class="form-control-placeholder" for="pickuplandmark">Pickup Landmark</label>
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-6 col-lg-6 col-sm-6" style="display:none;">
-                  <div class="form-group">
-                    <input type="text" id="pickuppincode" class="form-control" name="pickuppincode" maxlength="6"
-                      [(ngModel)]="user.pickuppincode" #pickuppincode="ngModel">
-                    <label class="form-control-placeholder" for="pickuppincode">Pickup Pincode</label>
-                  </div>
-                </div>
-                <div class="col-md-6 col-lg-6 col-sm-6">
-                  <div class="form-group">
-                    <input type="text" id="picklatlong" class="form-control" name="picklatlong" [(ngModel)]="user.picklatlong"
-                      #picklatlong="ngModel" pattern="^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?),\s*[-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)$"
-                      required>
-                    <label class="form-control-placeholder" for="picklatlong">Pickup Lat/Long*</label>
-                  </div>
-                  <div class="form-control-feedback" *ngIf="picklatlong.errors && (picklatlong.dirty || picklatlong.touched)">
-                    <p *ngIf="picklatlong.errors.required" class="haserror">Pickup Lat/Long is required</p>
+                    <select id="addresstypepu" class="form-control" name="addresstypepu" [(ngModel)]="user.addresstypepu"
+                      #addresstypepu="ngModel" required>
+                      <option [value]="i.id" *ngFor="let i of addresstype">{{i.type_of_address}}</option>
+                    </select>
+                    <label class="form-control-placeholder" for="addresstypepu">Type of address*</label>
                   </div>
                 </div>
               </div>
@@ -211,7 +188,7 @@
                     </select>
                     <label class="form-control-placeholder" for="city">City*</label>
                   </div>
-                   <div class="form-control-feedback" *ngIf="city.errors && (city.dirty || city.touched)">
+                  <div class="form-control-feedback" *ngIf="city.errors && (city.dirty || city.touched)">
                     <p *ngIf="city.errors.required" class="haserror">City is required</p>
                   </div>
                 </div>
@@ -248,7 +225,8 @@
                 </div>
                 <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6">
                   <div class="form-group">
-                    <input type="text" id="notes" class="form-control" name="notes" [(ngModel)]="user.notes" #notes="ngModel" pattern="^[a-zA-Z0-9 \,\.\-\/\;\'\}\{\%]+$">
+                    <input type="text" id="notes" class="form-control" name="notes" [(ngModel)]="user.notes" #notes="ngModel"
+                      pattern="^[a-zA-Z0-9 \,\.\-\/\;\'\}\{\%]+$">
                     <label class="form-control-placeholder" for="notes">Notes</label>
                   </div>
                 </div>
@@ -268,7 +246,6 @@
                 </div>
               </div>
             </div>
-
             <!-- Internal Movement -->
             <div *ngIf="serviceType === '3'">
               <span class="sectionHeader">Location Details</span>
@@ -333,7 +310,6 @@
                   </div>
                 </div>
               </div>
-
               <div class="row">
                 <div class="col-md-6 col-lg-6 col-sm-6">
                   <div class="form-group">
@@ -407,8 +383,6 @@
                     </select>
                     <label class="form-control-placeholder" for="city">City*</label>
                   </div>
-
-
                   <div class="form-control-feedback" *ngIf="city.errors && (city.dirty || city.touched)">
                     <p *ngIf="city.errors.required" class="haserror">City is required</p>
                   </div>
@@ -430,7 +404,8 @@
                   <div class="form-group">
                     <div class="input-group">
                       <input class="form-control" name="dp" [ngModel]="model" [readonly]="true" [minDate]="startDate"
-                        (ngModelChange)="onSelectDate($event)" ngbDatepicker #d="ngbDatepicker" placeholder="{{valuedate | date: 'yyyy-MM-dd'}}" pattern="^[a-zA-Z0-9 \,\.-]+$">
+                        (ngModelChange)="onSelectDate($event)" ngbDatepicker #d="ngbDatepicker" placeholder="{{valuedate | date: 'yyyy-MM-dd'}}"
+                        pattern="^[a-zA-Z0-9 \,\.-]+$">
                       <div class="input-group-append">
                         <button class="btn btn-outline-secondary dateButton" (click)="d.toggle()" type="button">
                           <span>
@@ -446,7 +421,8 @@
                 </div>
                 <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6">
                   <div class="form-group">
-                    <input type="text" id="notes" class="form-control" name="notes" [(ngModel)]="user.notes" #notes="ngModel" pattern="^[a-zA-Z0-9 \,\.\-\/\;\'\}\{\%]+$">
+                    <input type="text" id="notes" class="form-control" name="notes" [(ngModel)]="user.notes" #notes="ngModel"
+                      pattern="^[a-zA-Z0-9 \,\.\-\/\;\'\}\{\%]+$">
                     <label class="form-control-placeholder" for="notes">Notes</label>
                   </div>
                 </div>
@@ -477,7 +453,6 @@
                         Code</label>
                       <input type="text" class="form-control" name="countrycode" OnlyNumber="true" [readonly]="true"
                         value="+91" [(ngModel)]="countrycode1" #countrycode="ngModel">
-
                     </div>
                     <div class="form-group" style="display:inline-block;min-width: 58%;">
                       <input type="text" class="form-control" name="mobile1" OnlyNumber="true" maxlength="10" (blur)="getinfowithMobile()"
@@ -504,7 +479,6 @@
                           Code</label>
                         <input type="text" class="form-control" name="countrycode" OnlyNumber="true" [readonly]="true"
                           value="+91" [(ngModel)]="countrycode1" #countrycode="ngModel" pattern="^[0-9]{10}$">
-
                       </div>
                       <div class="form-group" style="display:inline-block;min-width: 58%;">
                         <input type="text" class="form-control" name="mobile2" OnlyNumber="true" maxlength="10"
@@ -713,8 +687,6 @@
                     </select>
                     <label class="form-control-placeholder" for="city">City*</label>
                   </div>
-
-
                   <div class="form-control-feedback" *ngIf="city.errors && (city.dirty || city.touched)">
                     <p *ngIf="city.errors.required" class="haserror">City is required</p>
                   </div>
@@ -752,7 +724,8 @@
                 </div>
                 <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6">
                   <div class="form-group">
-                    <input type="text" id="notes" class="form-control" name="notes" [(ngModel)]="user.notes" #notes="ngModel" pattern="^[a-zA-Z0-9 \,\.\-\/\;\'\}\{\%]+$">
+                    <input type="text" id="notes" class="form-control" name="notes" [(ngModel)]="user.notes" #notes="ngModel"
+                      pattern="^[a-zA-Z0-9 \,\.\-\/\;\'\}\{\%]+$">
                     <label class="form-control-placeholder" for="notes">Notes</label>
                   </div>
                 </div>
@@ -858,69 +831,45 @@
                 </div>
               </div>
               <span class="sectionHeader">Location Details</span>
-
+              <div class="pickup-map">
+                <agm-map id="pickUpMap" [zoom]="zoom" [latitude]="lat" [longitude]="lng" [disableDefaultUI]=false
+                  (mapReady)=pickUpMapReady($events)>
+                  <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+                </agm-map>
+              </div>
               <div class="row">
-                <div class="col-md-6 col-lg-6 col-sm-6">
+                <div class="col-lg-6 col-sm-6 col-md-6">
                   <div class="form-group">
-                    <input type="text" id="pickupdoor" class="form-control" name="pickupdoor" maxlength="6" required
-                      (ngModelChange)="changeEditpickupdoor($event)" [(ngModel)]="user.pickupdoor" #pickupdoor="ngModel">
-                    <label class="form-control-placeholder" for="pickupdoor">Pickup Door Number/Flat Number*
-                    </label>
-                  </div>
-                  <div class="form-control-feedback" *ngIf="pickupdoor.errors && (pickupdoor.dirty || pickupdoor.touched)">
-                    <p *ngIf="!pickupdoor.errors.required" class="haserror">Pickup Door Number/Flat Number
-                      is required</p>
+                    <input class="form-control" id="pickupsearch" #pickupsearchplace autocomplete="off" spellcheck="off"
+                      type="text" (keyup)="pickUpSearch($event)" />
+                    <label class="form-control-placeholder" for="city">Search Places*</label>
                   </div>
                 </div>
-                <div class="col-md-6 col-lg-6 col-sm-6">
+                <div class="col-lg-6 col-sm-6 col-md-6">
                   <div class="form-group">
-                    <input type="text" id="id" class="form-control" required name="pickupstreet" maxlength="70"
-                      #pickupstreet="ngModel" [(ngModel)]="user.pickupstreet" (ngModelChange)="changeEditupstreet($event)">
-                    <label class="form-control-placeholder" for="id">Pickup Apartment Name/Street Name*
-                    </label>
-                  </div>
-                  <div class="form-control-feedback" *ngIf="pickupstreet.errors && (pickupstreet.dirty || pickupstreet.touched)">
-                    <p *ngIf="!pickupstreet.errors.required" class="haserror">Pickup Apartment Name/Street Name
-                      is required</p>
+                    <input class="form-control" #pickupsearchplaceFill autocomplete="off" spellcheck="off" type="text" />
+                    <label class="form-control-placeholder" for="pickupsearch">Postal Address*</label>
                   </div>
                 </div>
               </div>
               <div class="row">
-                <div class="col-md-6 col-lg-6 col-sm-6">
+                <div class="col-lg-6 col-sm-6 col-md-6">
                   <div class="form-group">
-                    <input type="text" id="id" class="form-control" required name="pickuparea" maxlength="70"
-                      #pickuparea="ngModel" [(ngModel)]="user.pickuparea" (ngModelChange)="changeEditpickuparea($event)">
-                    <label class="form-control-placeholder" for="id">Pickup Area/Locality*</label>
-                  </div>
-                  <div class="form-control-feedback" *ngIf="pickuparea.errors && (pickuparea.dirty || pickuparea.touched)">
-                    <p *ngIf="!pickuparea.errors.required" class="haserror">Pickup Area/Locality is required</p>
+                    <input class="form-control" id="pickulandmark" placeholder="Landmark" #pickupsearchplaceLandmark
+                      autocomplete="off" spellcheck="off" type="text" />
+                    <label class="form-control-placeholder" for="pickulandmark">Landmark*</label>
                   </div>
                 </div>
-                <div class="col-md-6 col-lg-6 col-sm-6">
+                <div class="col-lg-6 col-sm-6 col-md-6">
                   <div class="form-group">
-                    <input type="text" id="id" class="form-control" name="pickuplandmark" maxlength="150"
-                      #pickuplandmark="ngModel" [(ngModel)]="user.pickuplandmark" (ngModelChange)="changeEditpickuplandmark($event)">
-                    <label class="form-control-placeholder" for="id">Pickup Landmark</label>
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-6 col-lg-6 col-sm-6" style="display:none;">
-                  <div class="form-group">
-                    <input type="text" id="id" class="form-control" name="pickuppincode" maxlength="6" #pickuppincode="ngModel"
-                      [(ngModel)]="user.pickuppincode" (ngModelChange)="changeEditpickuppincode($event)">
-                    <label class="form-control-placeholder" for="id">Pickup Pincode</label>
-                  </div>
-                </div>
-                <div class="col-md-6 col-lg-6 col-sm-6">
-                  <div class="form-group">
-                    <input type="text" id="id" class="form-control" name="picklatlong" #picklatlong="ngModel"
-                      [(ngModel)]="user.picklatlong" (ngModelChange)="changeEditpickuplatlong($event)" pattern="^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?),\s*[-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)$">
-                    <label class="form-control-placeholder" for="id">Pickup lat,long (12.99,77.6611)</label>
+                    <select id="addresstypepu" class="form-control" name="addresstypepu" [(ngModel)]="user.addresstypepu"
+                      #addresstypepu="ngModel" required>
+                      <option [value]="i.id" *ngFor="let i of addresstype">{{i.type_of_address}}</option>
+                    </select>
+                    <label class="form-control-placeholder" for="addresstypepu">Type of address*</label>
                   </div>
                 </div>
               </div>
-
               <div class="sameasDiv">
                 <label class="custom-control custom-checkbox">
                   <input type="checkbox" class="custom-control-input sameas" name="sameas" #same (click)="sameAsPickup(same.checked)">
@@ -928,8 +877,6 @@
                   <span class="custom-control-description">Drop Location is same as Pickup</span>
                 </label>
               </div>
-
-
               <div class="row">
                 <div class="col-md-6 col-lg-6 col-sm-6">
                   <div class="form-group">
@@ -1021,7 +968,7 @@
                     </select>
                     <label class="form-control-placeholder" for="city">City*</label>
                   </div>
-                   <div class="form-control-feedback" *ngIf="city.errors && (city.dirty || city.touched)">
+                  <div class="form-control-feedback" *ngIf="city.errors && (city.dirty || city.touched)">
                     <p *ngIf="city.errors.required" class="haserror">City is required</p>
                   </div>
                 </div>
@@ -1058,7 +1005,8 @@
                 </div>
                 <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6">
                   <div class="form-group">
-                    <input type="text" id="notes" class="form-control" name="notes" [(ngModel)]="user.notes" #notes="ngModel" pattern="^[a-zA-Z0-9 \,\.-]+$">
+                    <input type="text" id="notes" class="form-control" name="notes" [(ngModel)]="user.notes" #notes="ngModel"
+                      pattern="^[a-zA-Z0-9 \,\.-]+$">
                     <label class="form-control-placeholder" for="notes">Notes</label>
                   </div>
                 </div>
@@ -1115,7 +1063,6 @@
                           Code</label>
                         <input type="text" class="form-control" name="countrycode" OnlyNumber="true" [readonly]="true"
                           value="+91" [(ngModel)]="countrycode1" #countrycode="ngModel" pattern="^[0-9]{10}$">
-
                       </div>
                       <div class="form-group " style="display:inline-block;min-width: 58%;">
                         <input type="text" class="form-control" name="mobile2" OnlyNumber="true" maxlength="10"
@@ -1244,7 +1191,8 @@
               <div class="row">
                 <div class="col-md-6 col-lg-6 col-sm-6">
                   <div class="form-group">
-                    <input type="text" id="notes" class="form-control" name="notes" [(ngModel)]="user.notes" #notes="ngModel" pattern="^[a-zA-Z0-9 \,\.\-\/\;\'\}\{\%]+$">
+                    <input type="text" id="notes" class="form-control" name="notes" [(ngModel)]="user.notes" #notes="ngModel"
+                      pattern="^[a-zA-Z0-9 \,\.\-\/\;\'\}\{\%]+$">
                     <label class="form-control-placeholder" for="notes">Notes</label>
                   </div>
                 </div>

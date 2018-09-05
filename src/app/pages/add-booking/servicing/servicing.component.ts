@@ -12,13 +12,14 @@ import 'style-loader!angular2-toaster/toaster.css';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { TestserviceService } from '../../../testservice.service';
-import { AgmCoreModule } from '@agm/core'; 
+import { AgmCoreModule, MapsAPILoader } from '@agm/core'; 
+import {} from '@types/googlemaps';
 
 declare var google: any;
 @Component({
   selector: 'app-servicing',
   templateUrl: './servicing.component.html',
-  styleUrls: ['./servicing.component.scss']
+  styleUrls: ['./servicing.component.scss'],
 })
 
 
@@ -140,8 +141,8 @@ export class ServicingComponent implements OnInit {
   toastsLimit = 5;
   slothour:string;
   citylist:any = [];
-  lat: number = 51.678418;
-  lng: number = 7.809007;
+  public lat: number = 51.678418;
+  public lng: number = 7.809007;
   public latitude: number;
   public longitude: number;
   label:string ="a";
@@ -151,6 +152,8 @@ export class ServicingComponent implements OnInit {
   @ViewChild('pickupsearchplace') pickupsearchplace:ElementRef;
   @ViewChild('pickupsearchplaceFill') pickupsearchplaceFill: ElementRef;
   @ViewChild('pickupsearchplaceLandmark') pickupsearchplaceLandmark: ElementRef;
+  // @ViewChild('gmap') gmapElement: any;
+  // map: google.maps.Map;
   addresstype = [
     {
       "id": "1",
@@ -184,8 +187,8 @@ export class ServicingComponent implements OnInit {
     ) { 
       this.cityList = [];
       this.getCity();
-      this.lat= 12.993544199999999;
-      this.lng= 77.66068589999999;
+      // this.lat= 12.993544199999999;
+      // this.lng= 77.66068589999999;
     }
 
 
@@ -234,22 +237,6 @@ export class ServicingComponent implements OnInit {
     this.getAdvisor();
     this.getCre();
     this.getcreadv();
-
-
-    // var map;
-    // function init() {
-    //   var Map = google.maps.Map;
-    //       // LatLng = google.maps.Lat,
-    //       // Marker = google.maps.Marker;
-
-    //   map = new Map(document.getElementById('map-canvas'),{
-    //       center: {lat: -34.397, lng: 150.644},
-    //       zoom: 8
-    //   })
-
-    // }
-
-
    }
 
 public opt1={
@@ -304,8 +291,6 @@ public opt1={
   }
 
   pickUpSearch(e){
-    // console.log(e);
-    // console.log(this.pickupsearchplace.nativeElement.value);
     let autocomplete = new google.maps.places.Autocomplete(this.pickupsearchplace.nativeElement);
       autocomplete.addListener("place_changed", () => {
         this.ngZone.run(() => {
@@ -315,6 +300,11 @@ public opt1={
         }
         this.latitude = place.geometry.location.lat();
         this.longitude = place.geometry.location.lng();
+        this.lat = place.geometry.location.lat();
+        this.lng = place.geometry.location.lng();
+        this.zoom = 20;
+        console.log(this.latitude, this.longitude);
+        console.log(autocomplete.getPlace());
       })
     });
     this.pickupsearchplaceFill.nativeElement.value = this.pickupsearchplace.nativeElement.value;

@@ -224,7 +224,12 @@
             <div *ngIf="yourBoolean === 'onlypickup' || yourBoolean === 'servicing'">
 
               <!-- <div id="map-canvas"></div> -->
-
+              <!-- <agm-map [latitude]="lat" [longitude]="lng">
+                <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+              </agm-map> -->
+             <!--  <app-map></app-map> -->
+             <!-- <ngx-gmaps></ngx-gmaps> -->
+             <!-- <div id="map"></div> -->
               <div class="pickup-map">
                   <agm-map id="pickUpMap" 
                   [zoom]= "zoom" 
@@ -235,6 +240,7 @@
                     <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
                   </agm-map>
                 </div>
+                <!-- <div #gmap id="gmapp"></div> -->
 
 
               <div class="row">

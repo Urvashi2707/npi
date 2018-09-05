@@ -28,7 +28,7 @@ import {NavbarComponent} from './trends/navbar/navbar.component';
 import { TestserviceService } from './testservice.service';
 import { NgxSpinnerModule } from 'ngx-spinner';
 
-import { AgmCoreModule } from '@agm/core';
+
 
 @NgModule({
   declarations: [AppComponent,FilterPipe,TrendsComponent,NavbarComponent],
@@ -44,10 +44,6 @@ import { AgmCoreModule } from '@agm/core';
     ThemeModule.forRoot(),
     CoreModule.forRoot(),
     BarRatingModule,
-    AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyDfnAPNlrBT_dFPt5P0D7wfRJb7W7Q_WhQ',
-      language: 'en'
-      }),
 
     NbAuthModule.forRoot({
          providers: {

@@ -69,7 +69,28 @@
   -webkit-transition: .4s;
   transition: .4s;
 }
+.pickup-map{
+  height: 300px;
+}
+#pickUpMap{
+  height: 100%;
+  display: block;
+}
 
+agm-map {
+ height: 300px;
+}
+agm-map {
+   height: 100%;
+   width: 100%;
+}
+
+#map-canvas{
+ height: 200px;
+ width: 100%;
+ margin: 0;
+ padding: 0;
+}
 .slider:before {
   position: absolute;
   content: "";
