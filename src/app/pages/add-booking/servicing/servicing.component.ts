@@ -153,8 +153,11 @@ export class ServicingComponent implements OnInit {
   @ViewChild('pickupsearchplace') pickupsearchplace:ElementRef;
   @ViewChild('pickupsearchplaceFill') pickupsearchplaceFill: ElementRef;
   @ViewChild('pickupsearchplaceLandmark') pickupsearchplaceLandmark: ElementRef;
+  @ViewChild('dropoffsearchplace') dropoffsearchplace: ElementRef;
   // @ViewChild('gmap') gmapElement: any;
   // map: google.maps.Map;
+  ifSameAsPickUp: boolean;
+  dropOffOnly: boolean;
   addresstype = [
     {
       "id": "1",
@@ -165,9 +168,6 @@ export class ServicingComponent implements OnInit {
       "type_of_address": "Work"
     }
   ];
-    
-
-
   date: {year: number, month: number};
 
   public httpOptions = {
@@ -188,8 +188,8 @@ export class ServicingComponent implements OnInit {
     ) { 
       this.cityList = [];
       this.getCity();
-      // this.lat= 12.993544199999999;
-      // this.lng= 77.66068589999999;
+      this.ifSameAsPickUp = false;
+      this.dropOffOnly = false;
     }
 
 
@@ -240,7 +240,7 @@ export class ServicingComponent implements OnInit {
     this.getcreadv();
    }
 
-public opt1={
+  public opt1={
   headers: new HttpHeaders({'x-auth-token': sessionStorage.getItem('token'),'x-auth-user':sessionStorage.getItem('auth-user'),'Content-Type':  'application/json'})
   }
 
@@ -293,6 +293,33 @@ public opt1={
 
   pickUpSearch(e){
     let autocomplete = new google.maps.places.Autocomplete(this.pickupsearchplace.nativeElement);
+      autocomplete.addListener("place_changed", () => {
+        this.ngZone.run(() => {
+          let place: google.maps.places.PlaceResult = autocomplete.getPlace();
+          if (place.geometry === undefined || place.geometry === null) {
+            return;
+        }
+        this.latitude = place.geometry.location.lat();
+        this.longitude = place.geometry.location.lng();
+        this.lat = place.geometry.location.lat();
+        this.lng = place.geometry.location.lng();
+        this.zoom = 20;
+        console.log(this.latitude, this.longitude);
+        console.log(autocomplete.getPlace());
+      })
+    });
+    this.pickupsearchplaceFill.nativeElement.value = this.pickupsearchplace.nativeElement.value;
+  }
+
+  pickUpMapReady(e){ }
+  sameAsPickup(){
+    // console.log('check box click');
+  }
+  sameAsPickUpAdd(e){
+    this.ifSameAsPickUp = !this.ifSameAsPickUp;
+  }
+  dropOffSearch(e){
+    let autocomplete = new google.maps.places.Autocomplete(this.dropoffsearchplace.nativeElement);
       autocomplete.addListener("place_changed", () => {
         this.ngZone.run(() => {
           let place: google.maps.places.PlaceResult = autocomplete.getPlace();
@@ -754,6 +781,7 @@ public getCity() {
   }
 
   doDrop() {
+    this.dropOffOnly = !this.dropOffOnly;
     if (this.dateString.length > 0) {
       const reqpara11 = {
         requesttype: 'getslots',

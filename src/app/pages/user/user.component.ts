@@ -154,7 +154,7 @@ import 'style-loader!angular2-toaster/toaster.css';
             }
           });
         }
-      else if (tabData.tabTitle == "Enabled User"){
+      else if (tabData.tabTitle == "Disabled User"){
           this.userDisable = [];
           this.userList = [];
           const List1 =  {

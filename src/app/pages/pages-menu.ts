@@ -38,10 +38,6 @@ export const MENU_ITEMSADM: NbMenuItem[] = [
       {
         title: 'RSA',
         link: '/pages/add-booking/RSA',
-      },
-      {
-        title: 'Map',
-        link: '/pages/add-booking/map',
       }
     ],
   },
@@ -171,10 +167,6 @@ export const MENU_ITEMSUSR: NbMenuItem[] = [
       {
         title: 'RSA',
         link: '/pages/add-booking/RSA',
-      },
-      {
-        title: 'Map',
-        link: '/pages/add-booking/map',
       }
     ],
   },

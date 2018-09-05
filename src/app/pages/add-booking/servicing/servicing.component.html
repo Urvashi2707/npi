@@ -222,14 +222,6 @@
               </div>
             </div>
             <div *ngIf="yourBoolean === 'onlypickup' || yourBoolean === 'servicing'">
-
-              <!-- <div id="map-canvas"></div> -->
-              <!-- <agm-map [latitude]="lat" [longitude]="lng">
-                <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
-              </agm-map> -->
-             <!--  <app-map></app-map> -->
-             <!-- <ngx-gmaps></ngx-gmaps> -->
-             <!-- <div id="map"></div> -->
               <div class="pickup-map">
                   <agm-map id="pickUpMap" 
                   [zoom]= "zoom" 
@@ -239,10 +231,7 @@
                   (mapReady)= pickUpMapReady($events)>
                     <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
                   </agm-map>
-                </div>
-                <!-- <div #gmap id="gmapp"></div> -->
-
-
+              </div>
               <div class="row">
                 <div class="col-lg-6 col-sm-6 col-md-6">
                   <div class="form-group">
@@ -279,17 +268,30 @@
             </div>
             <div class="sameasDiv" *ngIf="yourBoolean === 'servicing'">
               <label class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input sameas" name="sameas" #same (click)="sameAsPickup(same.checked)">
+                <input type="checkbox" class="custom-control-input sameas" name="sameas" #same (click)="sameAsPickup(same.checked)" (change)="sameAsPickUpAdd($event)" checked="true">
                 <span class="custom-control-indicator"></span>
                 <span class="custom-control-description">Drop Location is same as Pickup</span>
               </label>
             </div>
-            <div *ngIf="yourBoolean === 'dropoff' || yourBoolean === 'servicing'">
+
+
+            <!-- <div *ngIf="yourBoolean === 'dropoff' || yourBoolean === 'servicing'"> -->
+            <div *ngIf="ifSameAsPickUp || dropOffOnly">
+              <div class="pickup-map">
+                  <agm-map id="pickUpMap2" 
+                  [zoom]= "zoom" 
+                  [latitude]= "lat" 
+                  [longitude]= "lng" 
+                  [disableDefaultUI]= false 
+                  (mapReady)= pickUpMapReady($events)>
+                    <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+                  </agm-map>
+              </div>
               <div class="row">
                 <div class="col-lg-6 col-sm-6 col-md-6">
                   <div class="form-group">
                     <input class="form-control" id="dropoffsearch" #dropoffsearchplace autocomplete="off" spellcheck="off"
-                      type="text" (keyup)="DropOffSearch($event)" />
+                      type="text" (keyup)="dropOffSearch($event)" />
                     <label class="form-control-placeholder" for="dropoffsearch">Search Places*</label>
                   </div>
                 </div>
