@@ -125,9 +125,31 @@ export class ChauffeurComponent implements OnInit {
   valuedate = new Date();
   countrycode1:string;
   insuranceFlag:boolean=false;
+  testdrivecheck = false;
   @ViewChild('pickupsearchplace') pickupsearchplace:ElementRef;
   @ViewChild('pickupsearchplaceFill') pickupsearchplaceFill: ElementRef;
   @ViewChild('pickupsearchplaceLandmark') pickupsearchplaceLandmark: ElementRef;
+  @ViewChild('testpickup') testpickup:ElementRef;
+  @ViewChild('testpickupsearchplaceFill') testpickupsearchplaceFill: ElementRef;
+  @ViewChild('testpickulandmark') testpickulandmark: ElementRef;
+  @ViewChild('testdropoff') testdropoff:ElementRef;
+  @ViewChild('testdropoffsearchplaceFill') testdropoffsearchplaceFill: ElementRef;
+  @ViewChild('testdropofflandmark') testdropofflandmark: ElementRef;
+  @ViewChild('homepickup') homepickup:ElementRef;
+  @ViewChild('homepickupsearchplaceFill') homepickupsearchplaceFill: ElementRef;
+  @ViewChild('homepickulandmark') homepickulandmark: ElementRef;
+  @ViewChild('homedropoff') homedropoff:ElementRef;
+  @ViewChild('homedropoffsearchplaceFill') homedropoffsearchplaceFill: ElementRef;
+  @ViewChild('homedropofflandmark') homedropofflandmark: ElementRef;
+  @ViewChild('custodyloc') custodyloc:ElementRef;
+  @ViewChild('custodysearchplaceFill') custodysearchplaceFill: ElementRef;
+  @ViewChild('custodylandmark') custodylandmark: ElementRef;
+  @ViewChild('internalpickup') internalpickup:ElementRef;
+  @ViewChild('internalpickupsearchplaceFill') internalpickupsearchplaceFill: ElementRef;
+  @ViewChild('internalpickulandmark') internalpickulandmark: ElementRef;
+  @ViewChild('internaldropoff') internaldropoff:ElementRef;
+  @ViewChild('internaldropoffsearchplaceFill') internaldropoffsearchplaceFill: ElementRef;
+  @ViewChild('internaldropofflandmark') internaldropofflandmark: ElementRef;
   
   constructor(public ngZone: NgZone,private spinner: NgxSpinnerService,private datePipe:DatePipe,private titlecasePipe:TitleCasePipe,private toasterService: ToasterService,private _data : ServerService,private router: Router,private ngbDateParserFormatter: NgbDateParserFormatter,private modalService: NgbModal) {
     this.cityList = [];
@@ -281,6 +303,12 @@ export class ChauffeurComponent implements OnInit {
     this.slotcheck = false;
  }
 
+ sameAsPickupTest(e){
+   console.log(this.testdrivecheck);
+   console.log(e);
+   this.testdrivecheck = !e;
+   console.log(this.testdrivecheck);
+ }
 
  pickUpSearch(e){
   let autocomplete = new google.maps.places.Autocomplete(this.pickupsearchplace.nativeElement);
@@ -300,6 +328,107 @@ export class ChauffeurComponent implements OnInit {
     })
   });
   this.pickupsearchplaceFill.nativeElement.value = this.pickupsearchplace.nativeElement.value;
+}
+
+TestPickup(e){
+  let autocomplete = new google.maps.places.Autocomplete(this.testpickup.nativeElement);
+      autocomplete.addListener("place_changed", () => {
+        this.ngZone.run(() => {
+          let place: google.maps.places.PlaceResult = autocomplete.getPlace();
+          if (place.geometry === undefined || place.geometry === null) {
+            return;
+      }
+      this.latitude = place.geometry.location.lat();
+      this.longitude = place.geometry.location.lng();
+      this.lat = place.geometry.location.lat();
+      this.lng = place.geometry.location.lng();
+      this.zoom = 20;
+      console.log(this.latitude, this.longitude);
+      console.log(autocomplete.getPlace());
+    })
+  });
+  this.testpickupsearchplaceFill.nativeElement.value = this.testpickup.nativeElement.value;
+}
+
+TestDropoff(e){
+  let autocomplete = new google.maps.places.Autocomplete(this.testdropoff.nativeElement);
+      autocomplete.addListener("place_changed", () => {
+        this.ngZone.run(() => {
+          let place: google.maps.places.PlaceResult = autocomplete.getPlace();
+          if (place.geometry === undefined || place.geometry === null) {
+            return;
+      }
+      this.latitude = place.geometry.location.lat();
+      this.longitude = place.geometry.location.lng();
+      this.lat = place.geometry.location.lat();
+      this.lng = place.geometry.location.lng();
+      this.zoom = 20;
+      console.log(this.latitude, this.longitude);
+      console.log(autocomplete.getPlace());
+    })
+  });
+  this.testdropoffsearchplaceFill.nativeElement.value = this.testdropoff.nativeElement.value;
+}
+
+
+HomePickup(e){
+  let autocomplete = new google.maps.places.Autocomplete(this.homepickup.nativeElement);
+      autocomplete.addListener("place_changed", () => {
+        this.ngZone.run(() => {
+          let place: google.maps.places.PlaceResult = autocomplete.getPlace();
+          if (place.geometry === undefined || place.geometry === null) {
+            return;
+      }
+      this.latitude = place.geometry.location.lat();
+      this.longitude = place.geometry.location.lng();
+      this.lat = place.geometry.location.lat();
+      this.lng = place.geometry.location.lng();
+      this.zoom = 20;
+      console.log(this.latitude, this.longitude);
+      console.log(autocomplete.getPlace());
+    })
+  });
+  this.homepickupsearchplaceFill.nativeElement.value = this.homepickup.nativeElement.value;
+}
+
+HomeDropoff(e){
+  let autocomplete = new google.maps.places.Autocomplete(this.homedropoff.nativeElement);
+      autocomplete.addListener("place_changed", () => {
+        this.ngZone.run(() => {
+          let place: google.maps.places.PlaceResult = autocomplete.getPlace();
+          if (place.geometry === undefined || place.geometry === null) {
+            return;
+      }
+      this.latitude = place.geometry.location.lat();
+      this.longitude = place.geometry.location.lng();
+      this.lat = place.geometry.location.lat();
+      this.lng = place.geometry.location.lng();
+      this.zoom = 20;
+      console.log(this.latitude, this.longitude);
+      console.log(autocomplete.getPlace());
+    })
+  });
+  this.homedropoffsearchplaceFill.nativeElement.value = this.homedropoff.nativeElement.value;
+}
+
+Custodyloc(e){
+  let autocomplete = new google.maps.places.Autocomplete(this.custodyloc.nativeElement);
+      autocomplete.addListener("place_changed", () => {
+        this.ngZone.run(() => {
+          let place: google.maps.places.PlaceResult = autocomplete.getPlace();
+          if (place.geometry === undefined || place.geometry === null) {
+            return;
+      }
+      this.latitude = place.geometry.location.lat();
+      this.longitude = place.geometry.location.lng();
+      this.lat = place.geometry.location.lat();
+      this.lng = place.geometry.location.lng();
+      this.zoom = 20;
+      console.log(this.latitude, this.longitude);
+      console.log(autocomplete.getPlace());
+    })
+  });
+  this.custodysearchplaceFill.nativeElement.value = this.custodyloc.nativeElement.value;
 }
 
   //Brand selection

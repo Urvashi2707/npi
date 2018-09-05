@@ -18,7 +18,7 @@ import { ToasterService, ToasterConfig, Toast, BodyOutputType } from 'angular2-t
 import { OnlyNumber } from '../number.directive';
 import { AddEmployee } from './modal/AddEmployee/AddEmployee.component';
 import { MapComponent } from './map/map.component';
-import {GmapsComponent} from '../maps/gmaps/gmaps.component';
+
 import { AgmCoreModule } from '@agm/core';
 // import { ModalComponent } from './modal/modal.component';
 @NgModule({
@@ -31,7 +31,8 @@ import { AgmCoreModule } from '@agm/core';
     NgbModule.forRoot(),
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyDfnAPNlrBT_dFPt5P0D7wfRJb7W7Q_WhQ',
-      language: 'en'
+      language: 'en',
+      libraries: ["places"]
       }),
   ],
   declarations: [
@@ -42,7 +43,7 @@ import { AgmCoreModule } from '@agm/core';
       BookingDetails,
       AddEmployee,
       MapComponent,
-      GmapsComponent
+     
       // ModalComponent,
 
   ],

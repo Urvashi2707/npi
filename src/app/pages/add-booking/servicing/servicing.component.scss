@@ -487,15 +487,19 @@ fieldset {
 
 agm-map {
   height: 300px;
+  display: block;
 }
 agm-map {
     height: 100%;
     width: 100%;
 }
-
-#map-canvas{
-  height: 200px;
-  width: 100%;
-  margin: 0;
-  padding: 0;
+agm-map {
+  height: 300px;
 }
+#map {
+  height: 100%;
+}
+// #gmapp{
+//   height: 400px;
+//   width: 400px;
+// }
