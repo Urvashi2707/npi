@@ -15,6 +15,7 @@ import { TestserviceService } from '../../../testservice.service';
 import { AgmCoreModule, MapsAPILoader } from '@agm/core'; 
 
 import {} from '@types/googlemaps';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 declare var google: any;
 @Component({
@@ -58,6 +59,7 @@ export class ServicingComponent implements OnInit {
   droplocation:string;
   showAddress = false;
   disableNext = false;
+  googlemapShow:boolean = false;
   showAddressDropDown = false;
   pickupdoor:string;
   pickupstreet:string;
@@ -759,6 +761,15 @@ public getCity() {
   }
 
   doPickup() {
+    console.log(this.yourBoolean);
+    if(this.yourBoolean === 'onlypickup'){
+        this.ifSameAsPickUp = false;
+        console.log('only pickup');
+    }
+    else{
+      this.ifSameAsPickUp = false;
+      console.log('pickup');
+    }
     if (this.dateString.length > 0) {
       const reqpara10 = {
         requesttype: 'getslots',
@@ -898,6 +909,10 @@ public getCity() {
         this.user.addresstypepu = this.addresstype[i].id;
       }
     }
+  }
+
+  ShowMap(){
+    this.googlemapShow = !this.googlemapShow;
   }
 
 

@@ -499,7 +499,30 @@ agm-map {
 #map {
   height: 100%;
 }
-// #gmapp{
-//   height: 400px;
-//   width: 400px;
-// }
+
+
+.savedAddBtn{
+  background-color: white;
+  border-radius: 11px;
+  border: 2px solid #40dc7e;
+  font-size: 12px;
+}
+.address-btn-cls {
+  button {
+    margin: 1rem 1rem;
+    padding: 1rem;
+    height: 200px;
+    width: calc(100%/6 - 1rem);
+    vertical-align: top;
+    img {
+      height: 100px;
+    }
+  }
+}
+.show-map-btn{
+  margin-top: 5px; 
+  vertical-align: top; 
+  border-radius: 11px; 
+  border: 2px solid #40dc7e; 
+  background-color: #dadada;
+}

@@ -30,7 +30,7 @@ import { AgmCoreModule } from '@agm/core';
     ToasterModule,
     NgbModule.forRoot(),
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyDfnAPNlrBT_dFPt5P0D7wfRJb7W7Q_WhQ',
+      apiKey: 'AIzaSyCbH3ty6Z6iOWfu6hxrlgs4JRc6jYa0piI',
       language: 'en',
       libraries: ["places"]
       }),
