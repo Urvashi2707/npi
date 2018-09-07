@@ -138,23 +138,27 @@
             <!-- stock yard -->
             <div *ngIf="serviceType === '1'">
               <span class="sectionHeader">Location Details</span>
-              <div class="pickup-map">
-                <agm-map id="pickUpMap" [zoom]="zoom" [latitude]="lat" [longitude]="lng" [disableDefaultUI]=false
-                  (mapReady)=pickUpMapReady($events)>
-                  <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
-                </agm-map>
-              </div>
               <div class="row">
                 <div class="col-lg-6 col-sm-6 col-md-6">
+                  <div class="pickup-map">
+                    <agm-map id="pickUpMap" [zoom]="zoom" [latitude]="lat" [longitude]="lng" [disableDefaultUI]=false
+                      (mapReady)=pickUpMapReady($events)>
+                      <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+                    </agm-map>
+                  </div>
+                </div>
+              </div>
+            <div class="row">
+                <div class="col-lg-6 col-sm-6 col-md-6">
                   <div class="form-group">
-                    <input class="form-control" id="pickupsearch" #pickupsearchplace autocomplete="off" spellcheck="off"
-                      type="text" (keyup)="pickUpSearch($event)" />
+                    <input class="form-control" name="pickupsearch" id="pickupsearch" #pickupsearchplace autocomplete="off" spellcheck="off"
+                      type="text" (keyup)="pickUpSearch($event,6)" />
                     <label class="form-control-placeholder" for="city">Search Places*</label>
                   </div>
                 </div>
                 <div class="col-lg-6 col-sm-6 col-md-6">
                   <div class="form-group">
-                    <input class="form-control" #pickupsearchplaceFill autocomplete="off" spellcheck="off" type="text" />
+                    <input class="form-control" name="pickupsearchplaceFill" #pickupsearchplaceFill="ngModel" autocomplete="off" spellcheck="off" type="text" [(ngModel)]="user.pickupsearch"/>
                     <label class="form-control-placeholder" for="pickupsearch">Postal Address*</label>
                   </div>
                 </div>
@@ -162,18 +166,9 @@
               <div class="row">
                 <div class="col-lg-6 col-sm-6 col-md-6">
                   <div class="form-group">
-                    <input class="form-control" id="pickulandmark" placeholder="Landmark" #pickupsearchplaceLandmark
-                      autocomplete="off" spellcheck="off" type="text" />
+                    <input class="form-control" name="pickupsearchplaceLandmark" id="pickulandmark" placeholder="Landmark" #pickupsearchplaceLandmark="ngModel"
+                      autocomplete="off" spellcheck="off" type="text" [(ngModel)]="user.pickulandmark"/>
                     <label class="form-control-placeholder" for="pickulandmark">Landmark*</label>
-                  </div>
-                </div>
-                <div class="col-lg-6 col-sm-6 col-md-6">
-                  <div class="form-group">
-                    <select id="addresstypepu" class="form-control" name="addresstypepu" [(ngModel)]="user.addresstypepu"
-                      #addresstypepu="ngModel" required>
-                      <option [value]="i.id" *ngFor="let i of addresstype">{{i.type_of_address}}</option>
-                    </select>
-                    <label class="form-control-placeholder" for="addresstypepu">Type of address*</label>
                   </div>
                 </div>
               </div>
@@ -248,23 +243,28 @@
             <!-- Internal Movement -->
             <div *ngIf="serviceType === '3'">
               <span class="sectionHeader">Location Details</span>
-              <div class="pickup-map">
-                <agm-map id="pickUpMap" [zoom]="zoom" [latitude]="lat" [longitude]="lng" [disableDefaultUI]=false
-                  (mapReady)=pickUpMapReady($events)>
-                  <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
-                </agm-map>
+              <div class="row">
+                <div  class="col-lg-6 col-sm-6 col-md-6">
+                    <div class="pickup-map">
+                        <agm-map id="pickUpMap" [zoom]="zoom" [latitude]="lat" [longitude]="lng" [disableDefaultUI]=false
+                          (mapReady)=pickUpMapReady($events)>
+                          <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+                        </agm-map>
+                      </div>
+                </div>
               </div>
+              
               <div class="row">
                 <div class="col-lg-6 col-sm-6 col-md-6">
                   <div class="form-group">
                     <input class="form-control" id="internalpickup" #internalpickup autocomplete="off" spellcheck="off"
-                      type="text" (keyup)="HomePickup($event)" />
+                      type="text" (keyup)="InternalSearch($event,1)" />
                     <label class="form-control-placeholder" for="internalpickup">Search Places*</label>
                   </div>
                 </div>
                 <div class="col-lg-6 col-sm-6 col-md-6">
                   <div class="form-group">
-                    <input class="form-control" #internalpickupsearchplaceFill autocomplete="off" spellcheck="off" type="text" />
+                    <input class="form-control" #internalpickupsearchplaceFill="ngModel" name="internalpickupsearchplaceFill" required [(ngModel)]="user.internalpickup" autocomplete="off" spellcheck="off" type="text" />
                     <label class="form-control-placeholder" for="internalpickupsearchplaceFill">Postal Address*</label>
                   </div>
                 </div>
@@ -272,39 +272,33 @@
               <div class="row">
                 <div class="col-lg-6 col-sm-6 col-md-6">
                   <div class="form-group">
-                    <input class="form-control" id="internalpickulandmark" placeholder="Landmark" #testpickulandmark
+                    <input class="form-control" id="internalpickulandmark"  #internalpickulandmark="ngModel" name="internalpickulandmark" required [(ngModel)]="user.internalpickulandmark"
                       autocomplete="off" spellcheck="off" type="text" />
                     <label class="form-control-placeholder" for="internalpickulandmark">Landmark*</label>
                   </div>
                 </div>
-                <div class="col-lg-6 col-sm-6 col-md-6">
-                  <div class="form-group">
-                    <select id="addresstypepu" class="form-control" name="addresstypepu" [(ngModel)]="user.addresstypepu"
-                      #addresstypepu="ngModel" required>
-                      <option [value]="i.id" *ngFor="let i of addresstype">{{i.type_of_address}}</option>
-                    </select>
-                    <label class="form-control-placeholder" for="addresstypepu">Type of address*</label>
-                  </div>
-                </div>
               </div>
-              <div>
-                <div class="pickup-map">
-                  <agm-map id="pickUpMap" [zoom]="zoom" [latitude]="lat" [longitude]="lng" [disableDefaultUI]=false
-                    (mapReady)=pickUpMapReady($events)>
-                    <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
-                  </agm-map>
-                </div>
-                <div class="row">
+              <div class="row">
+                      <div class="col-lg-6 col-sm-6 col-md-6">
+                          <div class="pickup-map">
+                            <agm-map id="pickUpMap" [zoom]="zoom" [latitude]="lat" [longitude]="lng" [disableDefaultUI]=false
+                                (mapReady)=pickUpMapReady($events)>
+                                <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+                              </agm-map>
+                            </div>
+                      </div>
+                    </div>
+             <div class="row">
                   <div class="col-lg-6 col-sm-6 col-md-6">
                     <div class="form-group">
-                      <input class="form-control" id="internaldropoff" #internaldropoff autocomplete="off" spellcheck="off"
-                        type="text" (keyup)="HomeDropoff($event)" />
+                      <input class="form-control" id="internaldropoff" #internaldropoff autocomplete="off" spellcheck="off" 
+                        type="text" (keyup)="InternalSearch($event,2)" />
                       <label class="form-control-placeholder" for="internaldropoff">Search Places*</label>
                     </div>
                   </div>
                   <div class="col-lg-6 col-sm-6 col-md-6">
                     <div class="form-group">
-                      <input class="form-control" #internaldropoffsearchplaceFill autocomplete="off" spellcheck="off" type="text" />
+                      <input class="form-control" #internaldropoffsearchplaceFill="ngModel" name="internaldropoffsearchplaceFill" autocomplete="off" spellcheck="off" type="text" [(ngModel)]="user.internaldroppostal" required/>
                       <label class="form-control-placeholder" for="internaldropoffsearchplaceFill">Postal Address*</label>
                     </div>
                   </div>
@@ -312,22 +306,12 @@
                 <div class="row">
                   <div class="col-lg-6 col-sm-6 col-md-6">
                     <div class="form-group">
-                      <input class="form-control" id="internaldropofflandmark" placeholder="Landmark" #testpickulandmark
-                        autocomplete="off" spellcheck="off" type="text" />
+                      <input class="form-control" id="internaldropofflandmark" name="internaldropofflandmark" #internaldropofflandmark="ngModel" [(ngModel)]="user.internaldropland"
+                        autocomplete="off" spellcheck="off" type="text" required/>
                       <label class="form-control-placeholder" for="internaldropofflandmark">Landmark*</label>
                     </div>
                   </div>
-                  <div class="col-lg-6 col-sm-6 col-md-6">
-                    <div class="form-group">
-                      <select id="addresstypepu" class="form-control" name="addresstypepu" [(ngModel)]="user.addresstypepu"
-                        #addresstypepu="ngModel" required>
-                        <option [value]="i.id" *ngFor="let i of addresstype">{{i.type_of_address}}</option>
-                      </select>
-                      <label class="form-control-placeholder" for="addresstypepu">Type of address*</label>
-                    </div>
-                  </div>
                 </div>
-              </div>
               <span class="sectionHeader">Slot Details</span>
               <div class="row" *ngIf="insuranceFlag">
                 <div class="col-md-6 col-lg-6 col-sm-6">
@@ -483,23 +467,28 @@
                 </div>
               </div>
               <span class="sectionHeader">Location Details</span>
-              <div class="pickup-map">
-                <agm-map id="pickUpMap" [zoom]="zoom" [latitude]="lat" [longitude]="lng" [disableDefaultUI]=false
-                  (mapReady)=pickUpMapReady($events)>
-                  <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
-                </agm-map>
+              <div class="row">
+                <div class="col-lg-6 col-sm-6 col-md-6">
+                    <div class="pickup-map">
+                        <agm-map id="pickUpMap" [zoom]="zoom" [latitude]="lat" [longitude]="lng" [disableDefaultUI]=false
+                          (mapReady)=pickUpMapReady($events)>
+                          <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+                        </agm-map>
+                      </div>
+                </div>
               </div>
+             
               <div class="row">
                 <div class="col-lg-6 col-sm-6 col-md-6">
                   <div class="form-group">
                     <input class="form-control" id="homepickup" #homepickup autocomplete="off" spellcheck="off"
-                      type="text" (keyup)="HomePickup($event)" />
+                      type="text" (keyup)="HomeTestPickup($event,5)" />
                     <label class="form-control-placeholder" for="homepickup">Search Places*</label>
                   </div>
                 </div>
                 <div class="col-lg-6 col-sm-6 col-md-6">
                   <div class="form-group">
-                    <input class="form-control" #homepickupsearchplaceFill autocomplete="off" spellcheck="off" type="text" />
+                    <input class="form-control" #homepickupsearchplaceFill="ngModel"  name="homepickupsearchplaceFill" required autocomplete="off" spellcheck="off" type="text" [(ngModel)]="user.postalhome"/>
                     <label class="form-control-placeholder" for="homepickupsearchplaceFill">Postal Address*</label>
                   </div>
                 </div>
@@ -507,46 +496,42 @@
               <div class="row">
                 <div class="col-lg-6 col-sm-6 col-md-6">
                   <div class="form-group">
-                    <input class="form-control" id="homepickulandmark" placeholder="Landmark" #testpickulandmark
-                      autocomplete="off" spellcheck="off" type="text" />
+                    <input class="form-control" id="homepickulandmark" name="homepickulandmark"  #homepickulandmark="ngModel"
+                      autocomplete="off" spellcheck="off" type="text" [(ngModel)]="user.landmarkhome" required/>
                     <label class="form-control-placeholder" for="homepickulandmark">Landmark*</label>
-                  </div>
-                </div>
-                <div class="col-lg-6 col-sm-6 col-md-6">
-                  <div class="form-group">
-                    <select id="addresstypepu" class="form-control" name="addresstypepu" [(ngModel)]="user.addresstypepu"
-                      #addresstypepu="ngModel" required>
-                      <option [value]="i.id" *ngFor="let i of addresstype">{{i.type_of_address}}</option>
-                    </select>
-                    <label class="form-control-placeholder" for="addresstypepu">Type of address*</label>
                   </div>
                 </div>
               </div>
               <div class="sameasDiv">
                 <label class="custom-control custom-checkbox">
-                  <input type="checkbox" class="custom-control-input sameas" name="sameas" #same (click)="sameAsPickupTest(same.checked)" checked>
+                  <input type="checkbox" class="custom-control-input sameas" name="sameas" #same (click)="sameAsPickupTest(same.checked,5)" checked>
                   <span class="custom-control-indicator"></span>
                   <span class="custom-control-description">Drop Location is same as Pickup</span>
                 </label>
               </div>
               <div *ngIf="testdrivecheck">
-                <div class="pickup-map">
-                  <agm-map id="pickUpMap" [zoom]="zoom" [latitude]="lat" [longitude]="lng" [disableDefaultUI]=false
-                    (mapReady)=pickUpMapReady($events)>
-                    <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
-                  </agm-map>
+                <div class="row">
+                  <div class="col-lg-6 col-sm-6 col-md-6"> 
+                      <div class="pickup-map">
+                          <agm-map id="pickUpMap" [zoom]="zoom" [latitude]="lat" [longitude]="lng" [disableDefaultUI]=false
+                            (mapReady)=pickUpMapReady($events)>
+                            <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+                          </agm-map>
+                        </div>
+                  </div>
                 </div>
+               
                 <div class="row">
                   <div class="col-lg-6 col-sm-6 col-md-6">
                     <div class="form-group">
                       <input class="form-control" id="homedropoff" #homedropoff autocomplete="off" spellcheck="off"
-                        type="text" (keyup)="HomeDropoff($event)" />
+                        type="text" (keyup)="HomeTestDropoff($event,5)" />
                       <label class="form-control-placeholder" for="homedropoff">Search Places*</label>
                     </div>
                   </div>
                   <div class="col-lg-6 col-sm-6 col-md-6">
                     <div class="form-group">
-                      <input class="form-control" #homedropoffsearchplaceFill autocomplete="off" spellcheck="off" type="text" />
+                      <input class="form-control" #homedropoffsearchplaceFill="ngModel" name="homedropoffsearchplaceFill" required autocomplete="off" spellcheck="off" type="text" [(ngModel)]="user.postalhomedo"/>
                       <label class="form-control-placeholder" for="homedropoffsearchplaceFill">Postal Address*</label>
                     </div>
                   </div>
@@ -554,18 +539,9 @@
                 <div class="row">
                   <div class="col-lg-6 col-sm-6 col-md-6">
                     <div class="form-group">
-                      <input class="form-control" id="homedropofflandmark" placeholder="Landmark" #testpickulandmark
+                      <input class="form-control" id="homedropofflandmark"  name="homedropofflandmark" required #homedropofflandmark="ngModel" [(ngModel)]="user.homedropofflandmark"
                         autocomplete="off" spellcheck="off" type="text" />
                       <label class="form-control-placeholder" for="homedropofflandmark">Landmark*</label>
-                    </div>
-                  </div>
-                  <div class="col-lg-6 col-sm-6 col-md-6">
-                    <div class="form-group">
-                      <select id="addresstypepu" class="form-control" name="addresstypepu" [(ngModel)]="user.addresstypepu"
-                        #addresstypepu="ngModel" required>
-                        <option [value]="i.id" *ngFor="let i of addresstype">{{i.type_of_address}}</option>
-                      </select>
-                      <label class="form-control-placeholder" for="addresstypepu">Type of address*</label>
                     </div>
                   </div>
                 </div>
@@ -746,23 +722,27 @@
                 </div>
               </div>
               <span class="sectionHeader">Location Details</span>
-              <div class="pickup-map">
-                <agm-map id="pickUpMap" [zoom]="zoom" [latitude]="lat" [longitude]="lng" [disableDefaultUI]=false
-                  (mapReady)=pickUpMapReady($events)>
-                  <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
-                </agm-map>
-              </div>
               <div class="row">
+                <div class="col-lg-6 col-sm-6 col-md-6">
+                  <div class="pickup-map">
+                    <agm-map id="pickUpMap" [zoom]="zoom" [latitude]="lat" [longitude]="lng" [disableDefaultUI]=false
+                      (mapReady)=pickUpMapReady($events)>
+                      <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+                    </agm-map>
+                  </div>
+                </div>
+              </div>
+            <div class="row">
                 <div class="col-lg-6 col-sm-6 col-md-6">
                   <div class="form-group">
                     <input class="form-control" id="testpickup" #testpickup autocomplete="off" spellcheck="off"
-                      type="text" (keyup)="TestPickup($event)" />
+                      type="text" (keyup)="HomeTestPickup($event,7)" required/>
                     <label class="form-control-placeholder" for="testpickup">Search Places*</label>
                   </div>
                 </div>
                 <div class="col-lg-6 col-sm-6 col-md-6">
                   <div class="form-group">
-                    <input class="form-control" #testpickupsearchplaceFill autocomplete="off" spellcheck="off" type="text" />
+                    <input class="form-control" #testpickupsearchplaceFill="ngModel" name="testpickupsearchplaceFill" required autocomplete="off" spellcheck="off" type="text" [(ngModel)]="user.testpickupsearchplaceFill"/>
                     <label class="form-control-placeholder" for="testpickupsearchplaceFill">Postal Address*</label>
                   </div>
                 </div>
@@ -770,46 +750,41 @@
               <div class="row">
                 <div class="col-lg-6 col-sm-6 col-md-6">
                   <div class="form-group">
-                    <input class="form-control" id="testpickulandmark" placeholder="Landmark" #testpickulandmark
+                    <input class="form-control" id="testpickulandmark" name="testpickulandmark"  required #testpickulandmark="ngModel" [(ngModel)]="user.testpickulandmark"
                       autocomplete="off" spellcheck="off" type="text" />
                     <label class="form-control-placeholder" for="testpickulandmark">Landmark*</label>
-                  </div>
-                </div>
-                <div class="col-lg-6 col-sm-6 col-md-6">
-                  <div class="form-group">
-                    <select id="addresstypepu" class="form-control" name="addresstypepu" [(ngModel)]="user.addresstypepu"
-                      #addresstypepu="ngModel" required>
-                      <option [value]="i.id" *ngFor="let i of addresstype">{{i.type_of_address}}</option>
-                    </select>
-                    <label class="form-control-placeholder" for="addresstypepu">Type of address*</label>
                   </div>
                 </div>
               </div>
               <div class="sameasDiv">
                 <label class="custom-control custom-checkbox">
-                  <input type="checkbox" class="custom-control-input sameas" name="sameas" #same (click)="sameAsPickupTest(same.checked)" checked>
+                  <input type="checkbox" class="custom-control-input sameas" name="sameas" #same (click)="sameAsPickupTest(same.checked,7)" checked>
                   <span class="custom-control-indicator"></span>
                   <span class="custom-control-description">Drop Location is same as Pickup</span>
                 </label>
               </div>
               <div *ngIf="testdrivecheck">
-                <div class="pickup-map">
-                  <agm-map id="pickUpMap" [zoom]="zoom" [latitude]="lat" [longitude]="lng" [disableDefaultUI]=false
-                    (mapReady)=pickUpMapReady($events)>
-                    <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
-                  </agm-map>
+                <div class="row">
+                  <div class="col-lg-6 col-sm-6 col-md-6">
+                      <div class="pickup-map">
+                          <agm-map id="pickUpMap" [zoom]="zoom" [latitude]="lat" [longitude]="lng" [disableDefaultUI]=false
+                            (mapReady)=pickUpMapReady($events)>
+                            <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+                          </agm-map>
+                        </div>
+                  </div>
                 </div>
                 <div class="row">
                   <div class="col-lg-6 col-sm-6 col-md-6">
                     <div class="form-group">
-                      <input class="form-control" id="testdropoff" #testdropoff autocomplete="off" spellcheck="off"
-                        type="text" (keyup)="TestDropoff($event)" />
+                      <input class="form-control" id="testdropoff" #testdropoff autocomplete="off" spellcheck="off" required
+                        type="text" (keyup)="HomeTestDropoff($event,7)" />
                       <label class="form-control-placeholder" for="testdropoff">Search Places*</label>
                     </div>
                   </div>
                   <div class="col-lg-6 col-sm-6 col-md-6">
                     <div class="form-group">
-                      <input class="form-control" #testdropoffsearchplaceFill autocomplete="off" spellcheck="off" type="text" />
+                      <input class="form-control" #testdropoffsearchplaceFill="ngModel" name="testdropoffsearchplaceFill" required autocomplete="off" spellcheck="off" type="text" [(ngModel)]="user.testdropoffsearchplaceFill"/>
                       <label class="form-control-placeholder" for="testdropoffsearchplaceFill">Postal Address*</label>
                     </div>
                   </div>
@@ -817,24 +792,14 @@
                 <div class="row">
                   <div class="col-lg-6 col-sm-6 col-md-6">
                     <div class="form-group">
-                      <input class="form-control" id="testdropofflandmark" placeholder="Landmark" #testpickulandmark
-                        autocomplete="off" spellcheck="off" type="text" />
+                      <input class="form-control" id="testdropofflandmark" name="testdropofflandmark" #testdropofflandmark="ngModel"
+                        autocomplete="off" spellcheck="off" type="text" [(ngModel)]="user.testdropofflandmark" required/>
                       <label class="form-control-placeholder" for="testdropofflandmark">Landmark*</label>
-                    </div>
-                  </div>
-                  <div class="col-lg-6 col-sm-6 col-md-6">
-                    <div class="form-group">
-                      <select id="addresstypepu" class="form-control" name="addresstypepu" [(ngModel)]="user.addresstypepu"
-                        #addresstypepu="ngModel" required>
-                        <option [value]="i.id" *ngFor="let i of addresstype">{{i.type_of_address}}</option>
-                      </select>
-                      <label class="form-control-placeholder" for="addresstypepu">Type of address*</label>
                     </div>
                   </div>
                 </div>
               </div>
-
-              <div class="row">
+             <div class="row">
                 <div class="col-md-6 col-lg-6 col-sm-6 col-12">
                   <div class="form-group salesExec">
                     <select name="salesExe" id="salesExe" class="form-control" style=" text-transform: uppercase" name="salesExe"
@@ -1004,42 +969,37 @@
                 </div>
               </div>
               <span class="sectionHeader"> Location Details</span>
-              <div class="pickup-map">
-                <agm-map id="pickUpMap" [zoom]="zoom" [latitude]="lat" [longitude]="lng" [disableDefaultUI]=false
-                  (mapReady)=pickUpMapReady($events)>
-                  <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
-                </agm-map>
-              </div>
               <div class="row">
                 <div class="col-lg-6 col-sm-6 col-md-6">
-                  <div class="form-group">
-                    <input class="form-control" id="custodyloc" #homedropoff autocomplete="off" spellcheck="off"
-                      type="text" (keyup)="HomeDropoff($event)" />
-                    <label class="form-control-placeholder" for="homedropoff">Search Places*</label>
-                  </div>
-                </div>
-                <div class="col-lg-6 col-sm-6 col-md-6">
-                  <div class="form-group">
-                    <input class="form-control" #custodysearchplaceFill autocomplete="off" spellcheck="off" type="text" />
-                    <label class="form-control-placeholder" for="custodysearchplaceFill">Postal Address*</label>
+                  <div class="pickup-map">
+                    <agm-map id="pickUpMap" [zoom]="zoom" [latitude]="lat" [longitude]="lng" [disableDefaultUI]=false
+                      (mapReady)=pickUpMapReady($events)>
+                      <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+                    </agm-map>
                   </div>
                 </div>
               </div>
               <div class="row">
                 <div class="col-lg-6 col-sm-6 col-md-6">
                   <div class="form-group">
-                    <input class="form-control" id="custodylandmark" placeholder="Landmark" #testpickulandmark
-                      autocomplete="off" spellcheck="off" type="text" />
-                    <label class="form-control-placeholder" for="homedropofflandmark">Landmark*</label>
+                    <input class="form-control" name="Custodysearchplace" id="Custodysearchplace" #Custodysearchplace autocomplete="off" spellcheck="off"
+                      type="text" (keyup)="pickUpSearch($event,15)" />
+                    <label class="form-control-placeholder" for="city">Search Places*</label>
                   </div>
                 </div>
                 <div class="col-lg-6 col-sm-6 col-md-6">
                   <div class="form-group">
-                    <select id="addresstypepu" class="form-control" name="addresstypepu" [(ngModel)]="user.addresstypepu"
-                      #addresstypepu="ngModel" required>
-                      <option [value]="i.id" *ngFor="let i of addresstype">{{i.type_of_address}}</option>
-                    </select>
-                    <label class="form-control-placeholder" for="addresstypepu">Type of address*</label>
+                    <input class="form-control" name="CustodysearchplaceFill" #CustodysearchplaceFill="ngModel" autocomplete="off" spellcheck="off" type="text" [(ngModel)]="user.Landmarksearch"/>
+                    <label class="form-control-placeholder" for="CustodysearchplaceFill">Postal Address*</label>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-6 col-sm-6 col-md-6">
+                  <div class="form-group">
+                    <input class="form-control" name="CustodysearchplaceLandmark" id="CustodysearchplaceLandmark" placeholder="Landmark" #CustodysearchplaceLandmark="ngModel"
+                      autocomplete="off" spellcheck="off" type="text" [(ngModel)]="user.Landmarkcust"/>
+                    <label class="form-control-placeholder" for="CustodysearchplaceLandmark">Landmark*</label>
                   </div>
                 </div>
               </div>

@@ -14,7 +14,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { TestserviceService } from '../../../testservice.service';
 import { AgmCoreModule, MapsAPILoader } from '@agm/core'; 
 import {} from '@types/googlemaps';
-// import { DecimalPipe} from '@angular/common';
+import { DecimalPipe} from '@angular/common';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 declare var google: any;
@@ -181,7 +181,7 @@ export class ServicingComponent implements OnInit {
   constructor(private router: Router,
     private toasterService: ToasterService,
     private ServicingService: ServicingService,
-    // private decimalpipe:DecimalPipe,
+    private decimalpipe:DecimalPipe,
     private http: HttpClient,
     private ngbDateParserFormatter: NgbDateParserFormatter,
     private modalService: NgbModal,
@@ -320,6 +320,7 @@ export class ServicingComponent implements OnInit {
         this.googleaddresspu = place.formatted_address;
         this.zoom = 20;
         console.log( this.googleaddresspu);
+        // this.googlepickuplat = this.googlepickuplat.decimalpipe.
       })
     });
   }
@@ -913,6 +914,7 @@ SelectSavedDropoffAddress(i){
           this.addresstypepu = f.value.addresstypepu;
           this.postaladdresspu = f.value.pickupsearchplaceFill;
           this.postaladdressdo = f.value.pickupsearchplaceFill;
+          
         }
         else if(this.yourBoolean === "dropoff"){
           console.log("bothgoolgemap",this.yourBoolean);

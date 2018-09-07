@@ -70,20 +70,28 @@ export class ChauffeurComponent implements OnInit {
   private brands: any=[];
   showAddress = false;
   showAddressDropDown = false;
-  pickupdoor:string;
-  pickupstreet:string;
-  pickuparea:string;
-  pickuplandmark:string;
-  pickuppincode:string;
-  dropofffdoor:string;
-  dropoffstreet:string;
-  dropoffarea:string;
-  pikup_lat:string;
-  dropofflandmark:string;
-  addresstype_do = "0";
+  addresspuprevious ="0";
+  googleaddresspu = "0";
+  postaladdresspu:string;
+  landmarkpu:string;
+  pickuplat:string;
+  pickuplong:string;
   addressdoprevious = "0";
-  addresspuprevious = "0";
-  dropoffpincode:string;
+  googleaddressdo = "0";
+  postaladdressdo:string;
+  googlepickuplat:number;
+  googlepickuplong:number;
+  googledropofflat:number;
+  googledropofflong:number;
+  googleMapPickupFlag:boolean = false;
+  googleMapDropoffFlag:boolean = false;
+  landmarkdo:string;
+  addresstypepu = "0";
+  addresstypedo = "0";
+  droplat:string;
+  pickupSelected = false;
+  DropoffSelected = false;
+  droplong:string;
   public slot_time:string;
   public mobile2:string;
   public disabled=false;
@@ -129,6 +137,9 @@ export class ChauffeurComponent implements OnInit {
   @ViewChild('pickupsearchplace') pickupsearchplace:ElementRef;
   @ViewChild('pickupsearchplaceFill') pickupsearchplaceFill: ElementRef;
   @ViewChild('pickupsearchplaceLandmark') pickupsearchplaceLandmark: ElementRef;
+  @ViewChild('Custodysearchplace') Custodysearchplace:ElementRef;
+  @ViewChild('CustodysearchplaceFill') CustodysearchplaceFill: ElementRef;
+  @ViewChild('CustodysearchplaceLandmark') CustodysearchplaceLandmark: ElementRef;
   @ViewChild('testpickup') testpickup:ElementRef;
   @ViewChild('testpickupsearchplaceFill') testpickupsearchplaceFill: ElementRef;
   @ViewChild('testpickulandmark') testpickulandmark: ElementRef;
@@ -141,9 +152,6 @@ export class ChauffeurComponent implements OnInit {
   @ViewChild('homedropoff') homedropoff:ElementRef;
   @ViewChild('homedropoffsearchplaceFill') homedropoffsearchplaceFill: ElementRef;
   @ViewChild('homedropofflandmark') homedropofflandmark: ElementRef;
-  @ViewChild('custodyloc') custodyloc:ElementRef;
-  @ViewChild('custodysearchplaceFill') custodysearchplaceFill: ElementRef;
-  @ViewChild('custodylandmark') custodylandmark: ElementRef;
   @ViewChild('internalpickup') internalpickup:ElementRef;
   @ViewChild('internalpickupsearchplaceFill') internalpickupsearchplaceFill: ElementRef;
   @ViewChild('internalpickulandmark') internalpickulandmark: ElementRef;
@@ -304,131 +312,149 @@ export class ChauffeurComponent implements OnInit {
  }
 
  sameAsPickupTest(e){
-   console.log(this.testdrivecheck);
-   console.log(e);
+   console.log("befor",this.testdrivecheck);
+   console.log("value",e);
    this.testdrivecheck = !e;
-   console.log(this.testdrivecheck);
+   console.log("after",this.testdrivecheck);
  }
 
- pickUpSearch(e){
-  let autocomplete = new google.maps.places.Autocomplete(this.pickupsearchplace.nativeElement);
-      autocomplete.addListener("place_changed", () => {
-        this.ngZone.run(() => {
-          let place: google.maps.places.PlaceResult = autocomplete.getPlace();
-          if (place.geometry === undefined || place.geometry === null) {
-            return;
-      }
-      this.latitude = place.geometry.location.lat();
-      this.longitude = place.geometry.location.lng();
-      this.lat = place.geometry.location.lat();
-      this.lng = place.geometry.location.lng();
-      this.zoom = 20;
-      console.log(this.latitude, this.longitude);
-      console.log(autocomplete.getPlace());
-    })
-  });
-  this.pickupsearchplaceFill.nativeElement.value = this.pickupsearchplace.nativeElement.value;
+ pickUpSearch(e,ServiceId){
+   if(ServiceId === 15){
+    let autocomplete = new google.maps.places.Autocomplete(this.Custodysearchplace.nativeElement);
+          autocomplete.addListener("place_changed", () => {
+            this.ngZone.run(() => {
+              let place: google.maps.places.PlaceResult = autocomplete.getPlace();
+              if (place.geometry === undefined || place.geometry === null) {
+                return;
+          }
+          this.googlepickuplat = place.geometry.location.lat();
+          this.googlepickuplong = place.geometry.location.lng();
+          this.googleaddresspu = place.formatted_address;
+          console.log(this.googlepickuplat);
+          console.log(this.googlepickuplong);
+          console.log(this.googleaddresspu);
+          this.zoom = 20;
+        })
+      });
+   }
+   else{
+    let autocomplete = new google.maps.places.Autocomplete(this.pickupsearchplace.nativeElement);
+          autocomplete.addListener("place_changed", () => {
+            this.ngZone.run(() => {
+              let place: google.maps.places.PlaceResult = autocomplete.getPlace();
+              if (place.geometry === undefined || place.geometry === null) {
+                return;
+          }
+          this.googlepickuplat = place.geometry.location.lat();
+          this.googlepickuplong = place.geometry.location.lng();
+          this.googleaddresspu = place.formatted_address;
+          console.log(this.googlepickuplat);
+          console.log(this.googlepickuplong);
+          console.log(this.googleaddresspu);
+          this.zoom = 20;
+        })
+      });
+   }
+ 
 }
 
-TestPickup(e){
-  let autocomplete = new google.maps.places.Autocomplete(this.testpickup.nativeElement);
-      autocomplete.addListener("place_changed", () => {
-        this.ngZone.run(() => {
-          let place: google.maps.places.PlaceResult = autocomplete.getPlace();
-          if (place.geometry === undefined || place.geometry === null) {
-            return;
-      }
-      this.latitude = place.geometry.location.lat();
-      this.longitude = place.geometry.location.lng();
-      this.lat = place.geometry.location.lat();
-      this.lng = place.geometry.location.lng();
-      this.zoom = 20;
-      console.log(this.latitude, this.longitude);
-      console.log(autocomplete.getPlace());
-    })
-  });
-  this.testpickupsearchplaceFill.nativeElement.value = this.testpickup.nativeElement.value;
+HomeTestPickup(e,ServiceId){
+  if(ServiceId === 5){
+    let autocomplete = new google.maps.places.Autocomplete(this.homepickup.nativeElement);
+          autocomplete.addListener("place_changed", () => {
+            this.ngZone.run(() => {
+              let place: google.maps.places.PlaceResult = autocomplete.getPlace();
+              if (place.geometry === undefined || place.geometry === null) {
+                return;
+          }
+          this.googlepickuplat = place.geometry.location.lat();
+          this.googlepickuplong = place.geometry.location.lng();
+          this.googleaddresspu = place.formatted_address;
+          this.zoom = 20;
+        })
+      });
+  }
+  else{
+    let autocomplete = new google.maps.places.Autocomplete(this.testpickup.nativeElement);
+          autocomplete.addListener("place_changed", () => {
+            this.ngZone.run(() => {
+              let place: google.maps.places.PlaceResult = autocomplete.getPlace();
+              if (place.geometry === undefined || place.geometry === null) {
+                return;
+          }
+          this.googlepickuplat = place.geometry.location.lat();
+          this.googlepickuplong = place.geometry.location.lng();
+          this.googleaddresspu = place.formatted_address;
+          this.zoom = 20;
+        })
+      });
+  }
 }
 
-TestDropoff(e){
-  let autocomplete = new google.maps.places.Autocomplete(this.testdropoff.nativeElement);
-      autocomplete.addListener("place_changed", () => {
-        this.ngZone.run(() => {
-          let place: google.maps.places.PlaceResult = autocomplete.getPlace();
-          if (place.geometry === undefined || place.geometry === null) {
-            return;
-      }
-      this.latitude = place.geometry.location.lat();
-      this.longitude = place.geometry.location.lng();
-      this.lat = place.geometry.location.lat();
-      this.lng = place.geometry.location.lng();
-      this.zoom = 20;
-      console.log(this.latitude, this.longitude);
-      console.log(autocomplete.getPlace());
-    })
-  });
-  this.testdropoffsearchplaceFill.nativeElement.value = this.testdropoff.nativeElement.value;
+HomeTestDropoff(e,ServiceId){
+  if(ServiceId === 5){
+    let autocomplete = new google.maps.places.Autocomplete(this.homedropoff.nativeElement);
+          autocomplete.addListener("place_changed", () => {
+            this.ngZone.run(() => {
+              let place: google.maps.places.PlaceResult = autocomplete.getPlace();
+              if (place.geometry === undefined || place.geometry === null) {
+                return;
+          }
+          this.googledropofflat = place.geometry.location.lat();
+          this.googledropofflong = place.geometry.location.lng();
+          this.googleaddressdo = place.formatted_address;
+          this.zoom = 20;
+        })
+      });
+  }
+  else{
+    let autocomplete = new google.maps.places.Autocomplete(this.testdropoff.nativeElement);
+          autocomplete.addListener("place_changed", () => {
+            this.ngZone.run(() => {
+              let place: google.maps.places.PlaceResult = autocomplete.getPlace();
+              if (place.geometry === undefined || place.geometry === null) {
+                return;
+          }
+          this.googledropofflat = place.geometry.location.lat();
+          this.googledropofflong = place.geometry.location.lng();
+          this.googleaddressdo = place.formatted_address;
+          this.zoom = 20;
+        })
+      });
+  }
 }
 
-
-HomePickup(e){
-  let autocomplete = new google.maps.places.Autocomplete(this.homepickup.nativeElement);
-      autocomplete.addListener("place_changed", () => {
-        this.ngZone.run(() => {
-          let place: google.maps.places.PlaceResult = autocomplete.getPlace();
-          if (place.geometry === undefined || place.geometry === null) {
-            return;
-      }
-      this.latitude = place.geometry.location.lat();
-      this.longitude = place.geometry.location.lng();
-      this.lat = place.geometry.location.lat();
-      this.lng = place.geometry.location.lng();
-      this.zoom = 20;
-      console.log(this.latitude, this.longitude);
-      console.log(autocomplete.getPlace());
-    })
-  });
-  this.homepickupsearchplaceFill.nativeElement.value = this.homepickup.nativeElement.value;
-}
-
-HomeDropoff(e){
-  let autocomplete = new google.maps.places.Autocomplete(this.homedropoff.nativeElement);
-      autocomplete.addListener("place_changed", () => {
-        this.ngZone.run(() => {
-          let place: google.maps.places.PlaceResult = autocomplete.getPlace();
-          if (place.geometry === undefined || place.geometry === null) {
-            return;
-      }
-      this.latitude = place.geometry.location.lat();
-      this.longitude = place.geometry.location.lng();
-      this.lat = place.geometry.location.lat();
-      this.lng = place.geometry.location.lng();
-      this.zoom = 20;
-      console.log(this.latitude, this.longitude);
-      console.log(autocomplete.getPlace());
-    })
-  });
-  this.homedropoffsearchplaceFill.nativeElement.value = this.homedropoff.nativeElement.value;
-}
-
-Custodyloc(e){
-  let autocomplete = new google.maps.places.Autocomplete(this.custodyloc.nativeElement);
-      autocomplete.addListener("place_changed", () => {
-        this.ngZone.run(() => {
-          let place: google.maps.places.PlaceResult = autocomplete.getPlace();
-          if (place.geometry === undefined || place.geometry === null) {
-            return;
-      }
-      this.latitude = place.geometry.location.lat();
-      this.longitude = place.geometry.location.lng();
-      this.lat = place.geometry.location.lat();
-      this.lng = place.geometry.location.lng();
-      this.zoom = 20;
-      console.log(this.latitude, this.longitude);
-      console.log(autocomplete.getPlace());
-    })
-  });
-  this.custodysearchplaceFill.nativeElement.value = this.custodyloc.nativeElement.value;
+InternalSearch(e,ServiceId){
+  if(ServiceId === 1){
+    let autocomplete = new google.maps.places.Autocomplete(this.internalpickup.nativeElement);
+          autocomplete.addListener("place_changed", () => {
+            this.ngZone.run(() => {
+              let place: google.maps.places.PlaceResult = autocomplete.getPlace();
+              if (place.geometry === undefined || place.geometry === null) {
+                return;
+          }
+          this.googlepickuplat = place.geometry.location.lat();
+          this.googlepickuplong = place.geometry.location.lng();
+          this.googleaddresspu = place.formatted_address;
+          this.zoom = 20;
+        })
+      });
+  }
+  else{
+    let autocomplete = new google.maps.places.Autocomplete(this.internaldropoff.nativeElement);
+          autocomplete.addListener("place_changed", () => {
+            this.ngZone.run(() => {
+              let place: google.maps.places.PlaceResult = autocomplete.getPlace();
+              if (place.geometry === undefined || place.geometry === null) {
+                return;
+          }
+          this.googledropofflat = place.geometry.location.lat();
+          this.googledropofflong = place.geometry.location.lng();
+          this.googleaddressdo = place.formatted_address;
+          this.zoom = 20;
+        })
+      });
+  }
 }
 
   //Brand selection
@@ -862,81 +888,9 @@ Custodyloc(e){
         });
     }
 
-    changeEditpickupdoor(value:any){
-      if (this.sameasvalue == true){
-        this.user.dropofffdoor = value;
-      }
-    }
   
-    changeEditupstreet(value:any){
-      if (this.sameasvalue == true){
-        this.user.dropoffstreet = value;
-      }
-    }
-  
-    changeEditpickuparea(value:any){
-      if (this.sameasvalue == true){
-      this.user.dropoffarea = value;
-      }
-    }
-  
-    changeEditpickuplandmark(value:any){
-      if (this.sameasvalue == true){
-        this.user.dropofflandmark = value;
-      }
-    }
-  
-    changeEditpickuppincode(value:any){
-      if (this.sameasvalue == true){
-        this.user.dropoffpincode = value;
-      }
-    }
-  
-    changeEditpickuplatlong(value:any){
-      if (this.sameasvalue == true){
-       this.user.droplatlong = value;
-      }
-    }
-
-    changeEditdropoffdoor(value:any){
-      if (this.sameasvalue == true){
-        this.user.pickupdoor = value;
-      }
-    }
-  
-    changeEditdropoffstreet(value:any){
-      if (this.sameasvalue == true){
-        this.user.pickupstreet = value;
-      }
-    }
-  
-    changeEditdropoffarea(value:any){
-      if (this.sameasvalue == true){
-      this.user.pickuparea = value;
-      }
-    }
-  
-    changeEditdropofflandmark(value:any){
-      if (this.sameasvalue == true){
-        this.user.pickuplandmark = value;
-      }
-    }
-  
-    changeEditdropoffpincode(value:any){
-      if (this.sameasvalue == true){
-        this.user.pickuppincode = value;
-      }
-    }
-  
-    changeEditdropofflatlong(value:any){
-      if (this.sameasvalue == true){
-       this.user.picklatlong = value;
-      }
-    }
-
  
-
-  customerCheck(){
+customerCheck(){
     const reqpara = {
         requesttype: 'getcustinfo_mobile',
         mobilenumber: this.cust_details.mobile,
@@ -975,6 +929,7 @@ Custodyloc(e){
   }
 
   onSubmit(f: NgForm) {
+    console.log(f.value);
     this.disabled =  true;
     if(f.value.city){
       this.cityid = f.value.city;
@@ -984,21 +939,6 @@ Custodyloc(e){
     }
     if(this.user.time){
       this.slot_time = this.user.time + ':00'
-    }
-    if(f.value.pickloc){
-      this.pickup_add = f.value.pickloc;
-      if(f.value.picklatlong){
-        let y = f.value.picklatlong.split(/[ ,;]+/);
-        this.pikup_lat = y[0];
-        this.pikup_long = y[1];
-      }
-      else {
-        this.pikup_lat = "0";
-        this.pikup_long = "0";
-      }
-    }
-    else{
-      this.pickup_add = "0";
     }
     if(this.serviceType == '1'){
       this.pickup_drop = 6;
@@ -1016,226 +956,134 @@ Custodyloc(e){
       this.pickup_drop = 15;
     }
     if(this.pickup_drop == 15 || this.pickup_drop == 6){
-      this.pickupdoor = f.value.pickupdoor;
-      this.pickupstreet = f.value.pickupstreet;
-      this.pickuparea = f.value.pickuparea;
-      if(f.value.pickuppincode){
-        this.pickuppincode = f.value.pickuppincode;
+      if(this.pickup_drop == 15){
+        this.landmarkpu = f.value.CustodysearchplaceLandmark;
+        this.landmarkdo = f.value.CustodysearchplaceLandmark;
+        this.googleaddressdo = this.googleaddresspu;
+        this.postaladdresspu = f.value.CustodysearchplaceFill;
+        this.postaladdressdo = f.value.CustodysearchplaceFill;
+        this.droplat = this.googlepickuplat.toString();;
+        this.droplong = this.googlepickuplong.toString();
+        this.pickuplat = this.googlepickuplat.toString();;
+        this.pickuplong = this.googlepickuplong.toString();
       }
       else{
-        this.pickuppincode = "0";
+        this.landmarkpu = f.value.pickupsearchplaceLandmark;
+        this.landmarkdo = f.value.pickupsearchplaceLandmark;
+        this.googleaddressdo = this.googleaddresspu;
+        this.postaladdresspu = f.value.pickupsearchplaceFill;
+        this.postaladdressdo = f.value.pickupsearchplaceFill;
+        this.droplat = this.googlepickuplat.toString();;
+        this.droplong = this.googlepickuplong.toString();
+        this.pickuplat = this.googlepickuplat.toString();;
+        this.pickuplong = this.googlepickuplong.toString();
       }
-      if(f.value.pickuplandmark){
-        this.pickuplandmark = f.value.pickuplandmark;
-      }
-      else{
-        this.pickuplandmark = "0";
-      }
-      this.dropofffdoor = f.value.pickupdoor;
-      this.dropoffstreet = f.value.pickupstreet;
-      this.dropoffarea = f.value.pickuparea;
-      if(f.value.pickuppincode){
-        this.dropoffpincode = f.value.pickuppincode;
-      }
-      else{
-        this.dropoffpincode = "0";
-      }
-      if(f.value.pickuplandmark){
-        this.dropofflandmark = f.value.pickuplandmark;
-      }
-      else{
-        this.dropofflandmark = "0";
-      }
-      this.addressdoprevious = "0";
-      this.addresspuprevious = "0";
-      this.addresstype_do="0";
-      this.addresstype_pu="0";
-      if(f.value.picklatlong){
-        let x = f.value.picklatlong.split(/[ ,;]+/);
-        this.pikup_lat = x[0];
-        this.pikup_long = x[1];
-        this.dropoff_lat = x[0];
-        this.dropoff_long = x[1];
-      }
-      result = 0.500;
     }
     else if (this.pickup_drop == 4){
-      this.pickupdoor = f.value.pickupdoor;
-      this.pickupstreet = f.value.pickupstreet;
-      this.pickuparea = f.value.pickuparea;
-      if(f.value.pickuppincode){
-        this.pickuppincode = f.value.pickuppincode;
-      }
-      else{
-        this.pickuppincode = "0";
-      }
-      if(f.value.pickuplandmark){
-        this.pickuplandmark = f.value.pickuplandmark;
-      }
-      else{
-        this.pickuplandmark = "0";
-      }
-      this.dropofffdoor = f.value.dropofffdoor;
-      this.dropoffstreet = f.value.dropoffstreet;
-      this.dropoffarea = f.value.dropoffarea;
-      if(f.value.dropoffpincode){
-        this.dropoffpincode = f.value.dropoffpincode;
-      }
-      else{
-        this.dropoffpincode = "0";
-      }
-      if(f.value.dropofflandmark){
-        this.dropofflandmark = f.value.dropofflandmark;
-      }
-      else{
-        this.dropofflandmark = "0";
-      }
-      this.addressdoprevious = "0";
-      this.addresspuprevious = "0";
-      this.addresstype_do="0";
-      this.addresstype_pu="0";
-      if(f.value.picklatlong){
-        let x = f.value.picklatlong.split(/[ ,;]+/);
-        this.pikup_lat = x[0];
-        var lat1 = +this.pikup_lat;
-        this.pikup_long = x[1];
-        var lon1 = +this.pikup_long;
-      }
-      if(f.value.droplatlong){
-        let y = f.value.droplatlong.split(/[ ,;]+/);
-        this.dropoff_lat = y[0];
-        var lat2 = +this.dropoff_lat;
-        this.dropoff_long = y[1];
-        var lon2 = +this.dropoff_long;
-      }
-      var result = this.getDistanceFromLatLonInKm(lat1,lon1,lat2,lon2);
-      console.log(result);
+      var result = this.getDistanceFromLatLonInKm(this.googlepickuplat,this.googlepickuplong,this.googledropofflat,this.googledropofflong);
+      this.postaladdresspu = f.value.internalpickupsearchplaceFill;
+      this.postaladdressdo = f.value.internaldropoffsearchplaceFill;
+      this.landmarkpu = f.value.internalpickulandmark;
+      this.landmarkdo = f.value.internaldropofflandmark;
+      this.droplat = this.googledropofflat.toString();;
+      this.droplong = this.googledropofflong.toString();
+      this.pickuplat = this.googlepickuplat.toString();;
+      this.pickuplong = this.googlepickuplong.toString();
+   
     }
     else if (this.pickup_drop == 5 || this.pickup_drop == 7){
-      this.pickupdoor = f.value.pickupdoor;
-      this.pickupstreet = f.value.pickupstreet;
-      this.pickuparea = f.value.pickuparea;
-      this.pickuplandmark = f.value.pickuplandmark;
-      if(f.value.pickuplandmark){
-        this.pickuplandmark = f.value.pickuplandmark;
-      }
-      else if (f.value.dropofflandmark){
-        this.pickuplandmark = f.value.dropofflandmark;;
-      }
-      else{
-        this.pickuplandmark = "0";
-      }
-      this.pickuppincode = f.value.pickuppincode;
-      this.dropofffdoor = f.value.dropofffdoor;
-      this.dropoffstreet = f.value.dropoffstreet;
-      this.dropoffarea = f.value.dropoffarea;
-      this.dropofflandmark = f.value.dropofflandmark;
-      if(f.value.dropofflandmark){
-        this.dropofflandmark = f.value.dropofflandmark;
-      }
-      else if (f.value.pickuplandmark){
-        this.dropofflandmark = f.value.pickuplandmark;;
+      if(this.pickup_drop == 5){
+        if(!this.testdrivecheck){
+          this.postaladdresspu = f.value.homepickupsearchplaceFill;
+          this.postaladdressdo = f.value.homepickupsearchplaceFill;
+          this.landmarkpu = f.value.homepickulandmark;
+          this.landmarkdo = f.value.homepickulandmark;
+          this.droplat = this.googlepickuplat.toString();;
+          this.droplong = this.googlepickuplong.toString();
+          this.pickuplat = this.googlepickuplat.toString();;
+          this.pickuplong = this.googlepickuplong.toString();
+        }
+        else{
+          this.postaladdresspu = f.value.homepickupsearchplaceFill;
+          this.postaladdressdo = f.value.homedropoffsearchplaceFill;
+          this.landmarkpu = f.value.homepickulandmark;
+          this.landmarkdo = f.value.homedropofflandmark;
+          this.droplat = this.googledropofflat.toString();;
+          this.droplong = this.googledropofflong.toString();
+          this.pickuplat = this.googlepickuplat.toString();;
+          this.pickuplong = this.googlepickuplong.toString();
+        }
       }
       else{
-        this.dropofflandmark = "0";
+        if(!this.testdrivecheck){
+          console.log("same as test");
+          this.googleaddressdo = this.googleaddresspu;
+          this.postaladdressdo = f.value.testpickupsearchplaceFill;
+          this.postaladdresspu = f.value.testpickupsearchplaceFill;
+          this.landmarkpu = f.value.testpickulandmark;
+          this.landmarkdo = f.value.testpickulandmark;
+          this.droplat = this.googlepickuplat.toString();;
+          this.droplong = this.googlepickuplong.toString();
+          this.pickuplat = this.googlepickuplat.toString();;
+          this.pickuplong = this.googlepickuplong.toString();
+        }
+        else{
+         console.log("not same test")
+          this.postaladdresspu = f.value.testpickupsearchplaceFill;
+          this.postaladdressdo = f.value.testdropoffsearchplaceFill;
+          this.landmarkpu = f.value.testpickulandmark;
+          this.landmarkdo = f.value.testdropofflandmark;
+          this.droplat = this.googledropofflat.toString();;
+          this.droplong = this.googledropofflong.toString();
+          this.pickuplat = this.googlepickuplat.toString();;
+          this.pickuplong = this.googlepickuplong.toString();
+        }
       }
-      this.dropoffpincode = f.value.dropoffpincode;
-      this.addressdoprevious = "0";
-      this.addresspuprevious = "0";
-      this.addresstype_do="0";
-      this.addresstype_pu="0";
-      if(f.value.picklatlong){
-        let x = f.value.picklatlong.split(/[ ,;]+/);
-        this.pikup_lat = x[0];
-        this.pikup_long = x[1];
-      }
-      else if (f.value.droplatlong){
-        let x = f.value.droplatlong.split(/[ ,;]+/);
-        this.pikup_lat = x[0];
-        this.pikup_long = x[1];
-      }
-      else {
-        this.pikup_lat = "0";
-        this.pikup_long = "0";
-      }
-      if(f.value.droplatlong){
-        let y = f.value.droplatlong.split(/[ ,;]+/);
-        this.dropoff_lat = y[0];
-        this.dropoff_long = y[1];
-      }
-      else if (f.value.picklatlong){
-        let y = f.value.picklatlong.split(/[ ,;]+/);
-        this.dropoff_lat = y[0];
-        this.dropoff_long = y[1];
-      }
-      else {
-        this.dropoff_lat = "0";
-        this.dropoff_long = "0";
-      }
-      result = 0.5000;
+     
     }
    
-  if(f.value.mobile2)
-  {
+  if(f.value.mobile2){
       this.mobile2 = f.value.mobile2;
     }
-  else 
-  {
+  else {
     this.mobile2 = "0";
   
   }
-  if(f.value.Cus_name)
-  {
+  if(f.value.Cus_name){
       this.cusName = f.value.Cus_name;
       this.salutation2 = f.value.salutation1
-      console.log(this.cusName);
     }
-  else 
-  {
+  else {
     this.cusName = "0";
     this.salutation2 = "0";
-    
-  }
-  if(f.value.mobile1)
-  {
+    }
+  if(f.value.mobile1){
       this.mobile1 = f.value.mobile1;
     }
-  else 
-  {
+  else {
     this.mobile1 = "0";
    
   }
-
-  if(f.value.email)
-  {
+  if(f.value.email){
       this.cusEmail = f.value.email;
     }
-  else 
-  {
+  else {
     this.cusEmail = "0";
   }
-
-  if(f.value.notes)
-  {
+  if(f.value.notes){
      this.notes = f.value.notes;
   }
-  else
-  {
+  else{
     this.notes = "-";
   }
 
-  if(f.value.amt)
-  {
+  if(f.value.amt){
      this.amt = f.value.amt;
   }
-  else
-  {
+  else{
     this.amt = "0";
   }
-  if(this.slot_time)
-  {
-    
-  }
+  if(this.slot_time){}
   else {
     this.slot_time = "0";
   } 
@@ -1275,19 +1123,19 @@ Custodyloc(e){
     customeremail: this.cusEmail,
     queuetime: this.queuetime,
     addresspuprevious:this.addresspuprevious,
-    // googleaddresspu: this.googleaddresspu,
-    // postaladdresspu: this.postaladdresspu,
-    // landmarkpu: this.landmarkpu,
-    // addresstypepu: this.addresstypepu,
-    // pickuplat: this.pickuplat,
-    // pickuplong: this.pickuplong,
-    // addressdoprevious:this.addressdoprevious,
-    // googleaddressdo: this.googleaddressdo,
-    // postaladdressdo: this.postaladdressdo,
-    // landmarkdo: this.landmarkdo,
-    // addresstypedo:this.addresstypedo,
-    // droplat: this.droplat,
-    // droplong: this.droplong,
+    googleaddresspu: this.googleaddresspu,
+    postaladdresspu: this.postaladdresspu,
+    landmarkpu: this.landmarkpu,
+    addresstypepu: this.addresstypepu,
+    pickuplat: this.pickuplat,
+    pickuplong: this.pickuplong,
+    addressdoprevious:this.addressdoprevious,
+    googleaddressdo: this.googleaddressdo,
+    postaladdressdo: this.postaladdressdo,
+    landmarkdo: this.landmarkdo,
+    addresstypedo:this.addresstypedo,
+    droplat: this.droplat,
+    droplong: this.droplong,
     servicetype: this.pickup_drop,
     advisorid: this.serviceAdv,
     creid: this.saleexce,
@@ -1335,7 +1183,8 @@ Custodyloc(e){
 else {
   console.log("Server-side error occured.");
   }
-});}
+});
+}
 else{
   this.showToast('alert', 'Message', 'Distance is less than 100 metre');
 }

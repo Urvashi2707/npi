@@ -18,7 +18,7 @@ import { ToasterService, ToasterConfig, Toast, BodyOutputType } from 'angular2-t
 import { OnlyNumber } from '../number.directive';
 import { AddEmployee } from './modal/AddEmployee/AddEmployee.component';
 import { MapComponent } from './map/map.component';
-
+import { DecimalPipe } from '@angular/common';
 import { AgmCoreModule } from '@agm/core';
 // import { ModalComponent } from './modal/modal.component';
 @NgModule({
@@ -52,6 +52,7 @@ import { AgmCoreModule } from '@agm/core';
     ChauffeurService,
     ToasterService,
     NgbActiveModal,
+    DecimalPipe,
     {provide: NgbDateParserFormatter, useFactory: () => new CustomNgbDateParserFormatter('yyyy-MM-dd')}
   ],
   entryComponents: [
