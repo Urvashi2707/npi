@@ -1137,7 +1137,7 @@ customerCheck(){
     }
     if(this.slot_time != "0" || this.pickup_drop == 15 ){
       
-      if(result >= 0.100000){
+      if(result >= 0.100000 || this.pickup_drop != 4){
   const reqpara6 = {
     requesttype: "createbookingv5",
     vehnumber:f.value.num,
@@ -1216,7 +1216,8 @@ else {
 else{
   this.showToast('alert', 'Message', 'Distance is less than 100 metre');
 }
-    }else{
+    }
+    else{
       this.showToast('alert', 'Message', 'Please select Slot and date');
     }
 };
