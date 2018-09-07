@@ -914,6 +914,10 @@ SelectSavedDropoffAddress(i){
           this.addresstypepu = f.value.addresstypepu;
           this.postaladdresspu = f.value.pickupsearchplaceFill;
           this.postaladdressdo = f.value.pickupsearchplaceFill;
+          this.droplat = this.droplat.substring(0, 14);
+          this.droplong = this.droplong.substring(0, 14);
+          this.pickuplat = this.pickuplat.substring(0, 14);
+          this.pickuplong = this.pickuplong.substring(0, 14);
           
         }
         else if(this.yourBoolean === "dropoff"){
@@ -931,6 +935,10 @@ SelectSavedDropoffAddress(i){
           this.addresstypepu = f.value.addresstypedo;
           this.postaladdresspu = f.value.dropoffsearchplaceFill;
           this.postaladdressdo = f.value.dropoffsearchplaceFill;
+          this.droplat = this.droplat.substring(0, 14);
+          this.droplong = this.droplong.substring(0, 14);
+          this.pickuplat = this.pickuplat.substring(0, 14);
+          this.pickuplong = this.pickuplong.substring(0, 14);
         }
         else{
           if(!this.ifSameAsPickUp){
@@ -949,6 +957,10 @@ SelectSavedDropoffAddress(i){
             this.addresstypepu = f.value.addresstypepu;
             this.postaladdresspu = f.value.pickupsearchplaceFill;
             this.postaladdressdo = f.value.pickupsearchplaceFill;
+            this.droplat = this.droplat.substring(0, 14);
+            this.droplong = this.droplong.substring(0, 14);
+            this.pickuplat = this.pickuplat.substring(0, 14);
+            this.pickuplong = this.pickuplong.substring(0, 14);
           }
           else{
             console.log("bothgoolgemap not",this.yourBoolean);
@@ -964,6 +976,10 @@ SelectSavedDropoffAddress(i){
             this.addresstypepu = f.value.addresstypepu;
             this.postaladdresspu = f.value.pickupsearchplaceFill;
             this.postaladdressdo = f.value.dropoffsearchplaceFill;
+            this.droplat = this.droplat.substring(0, 14);
+            this.droplong = this.droplong.substring(0, 14);
+            this.pickuplat = this.pickuplat.substring(0, 14);
+            this.pickuplong = this.pickuplong.substring(0, 14);
           }
         }
       }
@@ -983,6 +999,10 @@ SelectSavedDropoffAddress(i){
           this.addresstypepu = f.value.addresstypepu;
           this.postaladdresspu = f.value.pickupsearchplaceFill;
           this.postaladdressdo = f.value.pickupsearchplaceFill;
+          this.droplat = this.droplat.substring(0, 14);
+          this.droplong = this.droplong.substring(0, 14);
+          this.pickuplat = this.pickuplat.substring(0, 14);
+          this.pickuplong = this.pickuplong.substring(0, 14);
         }
         else if(this.yourBoolean === "dropoff"){
           this.postaladdresspu = this.postaladdressdo;
@@ -1006,6 +1026,10 @@ SelectSavedDropoffAddress(i){
             this.addresstypepu = f.value.addresstypepu;
             this.postaladdresspu = f.value.pickupsearchplaceFill;
             this.postaladdressdo = f.value.pickupsearchplaceFill;
+            this.droplat = this.droplat.substring(0, 14);
+            this.droplong = this.droplong.substring(0, 14);
+            this.pickuplat = this.pickuplat.substring(0, 14);
+            this.pickuplong = this.pickuplong.substring(0, 14);
           }
           else{
             this.landmarkpu = f.value.pickulandmark;
@@ -1014,6 +1038,8 @@ SelectSavedDropoffAddress(i){
             this.addresspuprevious = "0";
             this.addresstypepu = f.value.addresstypepu;
             this.postaladdresspu = f.value.pickupsearchplaceFill;
+            this.pickuplat = this.pickuplat.substring(0, 14);
+            this.pickuplong = this.pickuplong.substring(0, 14);
           }
         }
       }
@@ -1041,6 +1067,10 @@ SelectSavedDropoffAddress(i){
           this.addresstypepu = f.value.addresstypedo;
           this.postaladdresspu = f.value.dropoffsearchplaceFill;
           this.postaladdressdo = f.value.dropoffsearchplaceFill;
+          this.droplat = this.droplat.substring(0, 14);
+          this.droplong = this.droplong.substring(0, 14);
+          this.pickuplat = this.pickuplat.substring(0, 14);
+          this.pickuplong = this.pickuplong.substring(0, 14);
         }
         else{
           if(!this.ifSameAsPickUp){
@@ -1057,6 +1087,8 @@ SelectSavedDropoffAddress(i){
             this.addressdoprevious = "0";
             this.addresstypepu = f.value.addresstypedo;
             this.postaladdressdo = f.value.dropoffsearchplaceFill;
+            this.droplat = this.droplat.substring(0, 14);
+            this.droplong = this.droplong.substring(0, 14);
           }
         }
       }
@@ -1076,6 +1108,10 @@ SelectSavedDropoffAddress(i){
           this.addresstypepu = f.value.addresstypepu;
           this.postaladdresspu = f.value.pickupsearchplaceFill;
           this.postaladdressdo = f.value.pickupsearchplaceFill;
+          this.droplat = this.droplat.substring(0, 14);
+          this.droplong = this.droplong.substring(0, 14);
+          this.pickuplat = this.pickuplat.substring(0, 14);
+          this.pickuplong = this.pickuplong.substring(0, 14);
         }
         else if(this.yourBoolean === "dropoff"){
           console.log("pickupmap",this.yourBoolean);
@@ -1092,6 +1128,10 @@ SelectSavedDropoffAddress(i){
           this.addresstypepu = f.value.addresstypedo;
           this.postaladdresspu = f.value.dropoffsearchplaceFill;
           this.postaladdressdo = f.value.dropoffsearchplaceFill;
+          this.droplat = this.droplat.substring(0, 14);
+          this.droplong = this.droplong.substring(0, 14);
+          this.pickuplat = this.pickuplat.substring(0, 14);
+          this.pickuplong = this.pickuplong.substring(0, 14);
         }
         else{
           if(!this.ifSameAsPickUp){
@@ -1109,6 +1149,10 @@ SelectSavedDropoffAddress(i){
             this.addresstypepu = f.value.addresstypepu;
             this.postaladdresspu = f.value.pickupsearchplaceFill;
             this.postaladdressdo = f.value.pickupsearchplaceFill;
+            this.droplat = this.droplat.substring(0, 14);
+            this.droplong = this.droplong.substring(0, 14);
+            this.pickuplat = this.pickuplat.substring(0, 14);
+            this.pickuplong = this.pickuplong.substring(0, 14);
           }
           else{
           this.googleaddressdo = this.googleaddressdo;
@@ -1124,6 +1168,10 @@ SelectSavedDropoffAddress(i){
           this.addresstypepu = f.value.addresstypepu;
           this.postaladdresspu = f.value.pickupsearchplaceFill;
           this.postaladdressdo = f.value.dropoffsearchplaceFill;
+          this.droplat = this.droplat.substring(0, 14);
+          this.droplong = this.droplong.substring(0, 14);
+          this.pickuplat = this.pickuplat.substring(0, 14);
+          this.pickuplong = this.pickuplong.substring(0, 14);
           }
         }
         }
@@ -1143,6 +1191,10 @@ SelectSavedDropoffAddress(i){
           this.addresstypepu = f.value.addresstypepu;
           this.postaladdresspu = f.value.pickupsearchplaceFill;
           this.postaladdressdo = f.value.pickupsearchplaceFill;
+          this.droplat = this.droplat.substring(0, 14);
+          this.droplong = this.droplong.substring(0, 14);
+          this.pickuplat = this.pickuplat.substring(0, 14);
+          this.pickuplong = this.pickuplong.substring(0, 14);
         }
         else if(this.yourBoolean === "dropoff"){
           console.log("dropmap",this.yourBoolean);
@@ -1159,6 +1211,10 @@ SelectSavedDropoffAddress(i){
           this.addresstypepu = f.value.addresstypedo;
           this.postaladdresspu = f.value.dropoffsearchplaceFill;
           this.postaladdressdo = f.value.dropoffsearchplaceFill;
+          this.droplat = this.droplat.substring(0, 14);
+          this.droplong = this.droplong.substring(0, 14);
+          this.pickuplat = this.pickuplat.substring(0, 14);
+          this.pickuplong = this.pickuplong.substring(0, 14);
         }
         else{
           if(!this.ifSameAsPickUp){
@@ -1176,6 +1232,10 @@ SelectSavedDropoffAddress(i){
             this.addresstypepu = f.value.addresstypepu;
             this.postaladdresspu = f.value.pickupsearchplaceFill;
             this.postaladdressdo = f.value.pickupsearchplaceFill;
+            this.droplat = this.droplat.substring(0, 14);
+            this.droplong = this.droplong.substring(0, 14);
+            this.pickuplat = this.pickuplat.substring(0, 14);
+            this.pickuplong = this.pickuplong.substring(0, 14);
           }
           else{
             this.googleaddressdo = this.googleaddressdo;
@@ -1191,6 +1251,10 @@ SelectSavedDropoffAddress(i){
             this.addresstypepu = f.value.addresstypepu;
             this.postaladdresspu = f.value.pickupsearchplaceFill;
             this.postaladdressdo = f.value.dropoffsearchplaceFill;
+            this.droplat = this.droplat.substring(0, 14);
+            this.droplong = this.droplong.substring(0, 14);
+            this.pickuplat = this.pickuplat.substring(0, 14);
+            this.pickuplong = this.pickuplong.substring(0, 14);
           }
         }
       }
@@ -1235,6 +1299,10 @@ SelectSavedDropoffAddress(i){
           this.addresstypepu = f.value.addresstypepu;
           this.postaladdresspu = f.value.pickupsearchplaceFill;
           this.postaladdressdo = f.value.pickupsearchplaceFill;
+          this.droplat = this.droplat.substring(0, 14);
+          this.droplong = this.droplong.substring(0, 14);
+          this.pickuplat = this.pickuplat.substring(0, 14);
+          this.pickuplong = this.pickuplong.substring(0, 14);
         }
         else if(this.yourBoolean === "dropoff"){
           console.log("bothgoolgemap",this.yourBoolean);
@@ -1251,6 +1319,10 @@ SelectSavedDropoffAddress(i){
           this.addresstypepu = f.value.addresstypedo;
           this.postaladdresspu = f.value.dropoffsearchplaceFill;
           this.postaladdressdo = f.value.dropoffsearchplaceFill;
+          this.droplat = this.droplat.substring(0, 14);
+          this.droplong = this.droplong.substring(0, 14);
+          this.pickuplat = this.pickuplat.substring(0, 14);
+          this.pickuplong = this.pickuplong.substring(0, 14);
         }
         else{
           if(!this.ifSameAsPickUp){
@@ -1269,6 +1341,10 @@ SelectSavedDropoffAddress(i){
             this.addresstypepu = f.value.addresstypepu;
             this.postaladdresspu = f.value.pickupsearchplaceFill;
             this.postaladdressdo = f.value.pickupsearchplaceFill;
+            this.droplat = this.droplat.substring(0, 14);
+            this.droplong = this.droplong.substring(0, 14);
+            this.pickuplat = this.pickuplat.substring(0, 14);
+            this.pickuplong = this.pickuplong.substring(0, 14);
           }
           else{
             console.log("bothgoolgemap not",this.yourBoolean);
@@ -1284,6 +1360,10 @@ SelectSavedDropoffAddress(i){
             this.addresstypepu = f.value.addresstypepu;
             this.postaladdresspu = f.value.pickupsearchplaceFill;
             this.postaladdressdo = f.value.dropoffsearchplaceFill;
+            this.droplat = this.droplat.substring(0, 14);
+            this.droplong = this.droplong.substring(0, 14);
+            this.pickuplat = this.pickuplat.substring(0, 14);
+            this.pickuplong = this.pickuplong.substring(0, 14);
           }
         }
       }

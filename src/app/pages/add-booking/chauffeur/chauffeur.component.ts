@@ -962,10 +962,14 @@ customerCheck(){
         this.googleaddressdo = this.googleaddresspu;
         this.postaladdresspu = f.value.CustodysearchplaceFill;
         this.postaladdressdo = f.value.CustodysearchplaceFill;
-        this.droplat = this.googlepickuplat.toString();;
+        this.droplat = this.googlepickuplat.toString();
         this.droplong = this.googlepickuplong.toString();
         this.pickuplat = this.googlepickuplat.toString();;
         this.pickuplong = this.googlepickuplong.toString();
+        this.droplat = this.droplat.substring(0, 14);
+        this.droplong = this.droplong.substring(0, 14);
+        this.pickuplat = this.pickuplat.substring(0, 14);
+        this.pickuplong = this.pickuplong.substring(0, 14);
       }
       else{
         this.landmarkpu = f.value.pickupsearchplaceLandmark;
@@ -977,6 +981,10 @@ customerCheck(){
         this.droplong = this.googlepickuplong.toString();
         this.pickuplat = this.googlepickuplat.toString();;
         this.pickuplong = this.googlepickuplong.toString();
+        this.droplat = this.droplat.substring(0, 14);
+        this.droplong = this.droplong.substring(0, 14);
+        this.pickuplat = this.pickuplat.substring(0, 14);
+        this.pickuplong = this.pickuplong.substring(0, 14);
       }
     }
     else if (this.pickup_drop == 4){
@@ -989,6 +997,10 @@ customerCheck(){
       this.droplong = this.googledropofflong.toString();
       this.pickuplat = this.googlepickuplat.toString();;
       this.pickuplong = this.googlepickuplong.toString();
+      this.droplat = this.droplat.substring(0, 14);
+      this.droplong = this.droplong.substring(0, 14);
+      this.pickuplat = this.pickuplat.substring(0, 14);
+      this.pickuplong = this.pickuplong.substring(0, 14);
    
     }
     else if (this.pickup_drop == 5 || this.pickup_drop == 7){
@@ -1002,6 +1014,10 @@ customerCheck(){
           this.droplong = this.googlepickuplong.toString();
           this.pickuplat = this.googlepickuplat.toString();;
           this.pickuplong = this.googlepickuplong.toString();
+          this.droplat = this.droplat.substring(0, 14);
+          this.droplong = this.droplong.substring(0, 14);
+          this.pickuplat = this.pickuplat.substring(0, 14);
+          this.pickuplong = this.pickuplong.substring(0, 14);
         }
         else{
           this.postaladdresspu = f.value.homepickupsearchplaceFill;
@@ -1012,6 +1028,10 @@ customerCheck(){
           this.droplong = this.googledropofflong.toString();
           this.pickuplat = this.googlepickuplat.toString();;
           this.pickuplong = this.googlepickuplong.toString();
+          this.droplat = this.droplat.substring(0, 14);
+          this.droplong = this.droplong.substring(0, 14);
+          this.pickuplat = this.pickuplat.substring(0, 14);
+          this.pickuplong = this.pickuplong.substring(0, 14);
         }
       }
       else{
@@ -1026,6 +1046,10 @@ customerCheck(){
           this.droplong = this.googlepickuplong.toString();
           this.pickuplat = this.googlepickuplat.toString();;
           this.pickuplong = this.googlepickuplong.toString();
+          this.droplat = this.droplat.substring(0, 14);
+          this.droplong = this.droplong.substring(0, 14);
+          this.pickuplat = this.pickuplat.substring(0, 14);
+          this.pickuplong = this.pickuplong.substring(0, 14);
         }
         else{
          console.log("not same test")
@@ -1037,6 +1061,10 @@ customerCheck(){
           this.droplong = this.googledropofflong.toString();
           this.pickuplat = this.googlepickuplat.toString();;
           this.pickuplong = this.googlepickuplong.toString();
+          this.droplat = this.droplat.substring(0, 14);
+          this.droplong = this.droplong.substring(0, 14);
+          this.pickuplat = this.pickuplat.substring(0, 14);
+          this.pickuplong = this.pickuplong.substring(0, 14);
         }
       }
      
