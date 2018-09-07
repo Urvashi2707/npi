@@ -504,8 +504,15 @@ agm-map {
 .savedAddBtn{
   background-color: white;
   border-radius: 11px;
-  border: 2px solid #40dc7e;
+  border: 2px solid #dadfe6;
   font-size: 12px;
+}
+
+.savedAddBtn:visited{
+   border: 2px solid #40dc7e;
+}
+.savedAddBtn:focus {
+  outline: none;
 }
 .address-btn-cls {
   button {

@@ -224,35 +224,39 @@
             <div>
               <div *ngIf="showAddressDropDown">
                 <div>
-                <div class="row" *ngIf="yourBoolean === 'onlypickup' || yourBoolean === 'servicing'">
-                  <div class="col-lg-12 col-md-12 col-12 col-sm-12 address-btn-cls">
-                    <button (click)="ShowMap()" type="button" class="show-map-btn">
-                      <img src="../../../../assets/images/plus-symbol.svg">
-                    </button>
-                    <button type="button" *ngFor="let i of address" class="savedAddBtn">
-                      <p>#{{i.doornumber}},{{i.street}},</p>
-                      <p>{{i.area}},{{i.pincode}}</p>
-                    </button>
-                  </div>
-                  </div>
-                  <div *ngIf="googlemapShow">
-                    <div class="pickup-map">
-                      <agm-map id="pickUpMap" [zoom]="zoom" [latitude]="lat" [longitude]="lng" [disableDefaultUI]=false
-                        (mapReady)=pickUpMapReady($events)>
-                        <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
-                      </agm-map>
+                  <div class="row" *ngIf="yourBoolean === 'onlypickup' || yourBoolean === 'servicing'">
+                    <div class="col-lg-12 col-md-12 col-12 col-sm-12 address-btn-cls">
+                      <button  type="button" class="show-map-btn" (click)="ShowMapInSavedAddPickup()">
+                        <img src="../../../../assets/images/plus-symbol.svg">
+                      </button>
+                      <button type="button" *ngFor="let i of address" class="savedAddBtn" (click)="SelectSavedPickupAddress(i)">
+                        <p>#{{i.doornumber}},{{i.street}},</p>
+                        <p>{{i.area}},{{i.pincode}}</p>
+                      </button>
                     </div>
+                  </div>
+                  <div *ngIf="googleMapPickupFlag">
                     <div class="row">
+                      <div class="col-lg-6 col-sm-6 col-md-6">
+                          <div class="pickup-map">
+                              <agm-map id="pickUpMap" [zoom]="zoom" [latitude]="lat" [longitude]="lng" [disableDefaultUI]=false
+                                (mapReady)=pickUpMapReady($events)>
+                                <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+                              </agm-map>
+                            </div>
+                      </div>
+                    </div>
+                 <div class="row">
                       <div class="col-lg-6 col-sm-6 col-md-6">
                         <div class="form-group">
                           <input class="form-control" id="pickupsearch" #pickupsearchplace autocomplete="off"
-                            spellcheck="off" type="text" (keyup)="pickUpSearch($event)" />
+                            spellcheck="off" type="text" (keyup)="pickUpSearch($event)" required/>
                           <label class="form-control-placeholder" for="city">Search Places*</label>
                         </div>
                       </div>
                       <div class="col-lg-6 col-sm-6 col-md-6">
                         <div class="form-group">
-                          <input class="form-control" #pickupsearchplaceFill autocomplete="off" spellcheck="off" type="text" />
+                          <input class="form-control" name="pickupsearchplaceFill" #pickuppostal="ngModel" autocomplete="off" spellcheck="off" type="text" required [(ngModel)]="user.pickuppostal" />
                           <label class="form-control-placeholder" for="pickupsearch">Postal Address*</label>
                         </div>
                       </div>
@@ -260,8 +264,8 @@
                     <div class="row">
                       <div class="col-lg-6 col-sm-6 col-md-6">
                         <div class="form-group">
-                          <input class="form-control" id="pickulandmark" placeholder="Landmark"
-                            #pickupsearchplaceLandmark autocomplete="off" spellcheck="off" type="text" />
+                          <input class="form-control" name="pickulandmark" id="pickulandmark" placeholder="Landmark"
+                            #pickupsearchplaceLandmark="ngModel" autocomplete="off" spellcheck="off" type="text" required [(ngModel)]="user.pickulandmark" />
                           <label class="form-control-placeholder" for="pickulandmark">Landmark*</label>
                         </div>
                       </div>
@@ -285,25 +289,79 @@
                     <span class="custom-control-description">Drop Location is same as Pickup</span>
                   </label>
                 </div>
-                <div class="row" *ngIf="ifSameAsPickUp || dropOffOnly || !onlypickup">
-                  <div class="col-lg-12 col-md-12 col-12 col-sm-12 address-btn-cls">
-                    <button (click)="ShowMap()" class="show-map-btn">
-                      <img src="../../../../assets/images/plus-symbol.svg">
-                    </button>
-                    <button *ngFor="let i of address" class="savedAddBtn">
-                      <p>#{{i.doornumber}},{{i.street}},</p>
-                      <p>{{i.area}},{{i.pincode}}</p>
-                    </button>
+                <div *ngIf="ifSameAsPickUp || dropOffOnly || !onlypickup">
+                  <div class="row">
+                    <div class="col-lg-12 col-md-12 col-12 col-sm-12 address-btn-cls">
+                      <button type="button" (click)="ShowMapInSavedAddDropoff()" class="show-map-btn">
+                        <img src="../../../../assets/images/plus-symbol.svg">
+                      </button>
+                      <button type="button" *ngFor="let i of address" class="savedAddBtn" (click)="SelectSavedDropoffAddress(i)">
+                        <p>#{{i.doornumber}},{{i.street}},</p>
+                        <p>{{i.area}},{{i.pincode}}</p>
+                      </button>
+                    </div>
+                  </div>
+                  <div *ngIf="googleMapDropoffFlag">
+                    <div>
+                      <div class="row">
+                        <div class="col-lg-6 col-sm-6 col-md-6">
+                          <div class="pickup-map">
+                            <agm-map id="pickUpMap2" [zoom]="zoom" [latitude]="lat" [longitude]="lng"
+                              [disableDefaultUI]=false (mapReady)=pickUpMapReady($events)>
+                              <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+                            </agm-map>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-lg-6 col-sm-6 col-md-6">
+                          <div class="form-group">
+                            <input class="form-control" name="dropoffsearch" id="dropoffsearch" #dropoffsearchplace autocomplete="off"
+                              spellcheck="off" type="text" (keyup)="dropOffSearch($event)" required/>
+                            <label class="form-control-placeholder" for="dropoffsearch">Search Places*</label>
+                          </div>
+                        </div>
+                        <div class="col-lg-6 col-sm-6 col-md-6">
+                          <div class="form-group">
+                            <input class="form-control" name="dropoffsearchplaceFill" #dropoffsearchplaceFill="ngModel" autocomplete="off" id="dropoffsearchautofill"
+                              spellcheck="off" type="text" required [(ngModel)]="user.dropoffpostal"/>
+                            <label class="form-control-placeholder" for="dropoffsearchautofill">Postal Address*</label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-lg-6 col-sm-6 col-md-6">
+                          <div class="form-group">
+                            <input class="form-control" name="dropofflandmark" id="dropofflandmark" placeholder="Landmark"
+                              #dropofflandmark="ngModel" autocomplete="off" spellcheck="off" type="text" [(ngModel)]="user.dropofflandmark" required/>
+                            <label class="form-control-placeholder" for="dropofflandmark">Landmark*</label>
+                          </div>
+                        </div>
+                        <div class="col-lg-6 col-sm-6 col-md-6">
+                          <div class="form-group">
+                            <select id="addresstypedo" class="form-control" name="addresstypedo" [(ngModel)]="user.addresstypedo"
+                              #addresstypepu="ngModel" required>
+                              <option [value]="i.id" *ngFor="let i of addresstype">{{i.type_of_address}}</option>
+                            </select>
+                            <label class="form-control-placeholder" for="addresstypedo">Type of address*</label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
               <div *ngIf="showAddress">
                 <div *ngIf="yourBoolean === 'onlypickup' || yourBoolean === 'servicing'">
-                  <div class="pickup-map">
-                    <agm-map id="pickUpMap" [zoom]="zoom" [latitude]="lat" [longitude]="lng" [disableDefaultUI]=false
-                      (mapReady)=pickUpMapReady($events)>
-                      <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
-                    </agm-map>
+                  <div class="row">
+                    <div class="col-lg-6 col-sm-6 col-md-6">
+                      <div class="pickup-map">
+                        <agm-map id="pickUpMap" [zoom]="zoom" [latitude]="lat" [longitude]="lng" [disableDefaultUI]=false
+                          (mapReady)=pickUpMapReady($events)>
+                          <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+                        </agm-map>
+                      </div>
+                    </div>
                   </div>
                   <div class="row">
                     <div class="col-lg-6 col-sm-6 col-md-6">
@@ -348,11 +406,15 @@
                   </label>
                 </div>
                 <div *ngIf="ifSameAsPickUp || dropOffOnly">
-                  <div class="pickup-map">
-                    <agm-map id="pickUpMap2" [zoom]="zoom" [latitude]="lat" [longitude]="lng" [disableDefaultUI]=false
-                      (mapReady)=pickUpMapReady($events)>
-                      <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
-                    </agm-map>
+                  <div class="row">
+                    <div class="col-lg-6 col-sm-6 col-md-6">
+                      <div class="pickup-map">
+                        <agm-map id="pickUpMap2" [zoom]="zoom" [latitude]="lat" [longitude]="lng" [disableDefaultUI]=false
+                          (mapReady)=pickUpMapReady($events)>
+                          <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+                        </agm-map>
+                      </div>
+                    </div>
                   </div>
                   <div class="row">
                     <div class="col-lg-6 col-sm-6 col-md-6">

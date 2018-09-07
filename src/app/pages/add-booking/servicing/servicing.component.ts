@@ -13,8 +13,8 @@ import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { TestserviceService } from '../../../testservice.service';
 import { AgmCoreModule, MapsAPILoader } from '@agm/core'; 
-
 import {} from '@types/googlemaps';
+// import { DecimalPipe} from '@angular/common';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 declare var google: any;
@@ -38,6 +38,7 @@ export class ServicingComponent implements OnInit {
   private service_advisor: string[];
   private creName: string[];
   private Svclist: any = [];
+  advisorId:string
   public slot: any = [];
   public vehicle = [];
   cityID:string;
@@ -50,10 +51,6 @@ export class ServicingComponent implements OnInit {
   public pikup_lat: string;
   public carinfo: any = [];
   counter:number = 0;
-  public pikup_long: string;
-  public dropoff_lat: string;
-  public dropoff_long: string;
-  public pickup_add: string;
   public slot_time: string;
   public notes: string;
   droplocation:string;
@@ -61,20 +58,6 @@ export class ServicingComponent implements OnInit {
   disableNext = false;
   googlemapShow:boolean = false;
   showAddressDropDown = false;
-  pickupdoor:string;
-  pickupstreet:string;
-  pickuparea:string;
-  pickuplandmark:string;
-  pickuppincode:string;
-  dropofffdoor:string;
-  advisorId:string;
-  dropoffstreet:string;
-  dropoffarea:string;
-  dropofflandmark:string;
-  addresstype_do:string;
-  addressdoprevious:string;
-  addresspuprevious:string;
-  dropoffpincode:string;
   public amt: string;
   public Sid: string;
   public droplatlong: string;
@@ -149,15 +132,33 @@ export class ServicingComponent implements OnInit {
   public latitude: number;
   public longitude: number;
   label:string ="a";
-  // public lat: number = 12.993544199999999;
-  // public lng: number = 77.66068589999999;
   public zoom: number = 16;
+  addresspuprevious ="0";
+  googleaddresspu = "0";
+  postaladdresspu:string;
+  landmarkpu:string;
+  pickuplat:string;
+  pickuplong:string;
+  addressdoprevious = "0";
+  googleaddressdo = "0";
+  postaladdressdo:string;
+  googlepickuplat:number;
+  googlepickuplong:number;
+  googledropofflat:number;
+  googledropofflong:number;
+  googleMapPickupFlag:boolean = false;
+  googleMapDropoffFlag:boolean = false;
+  landmarkdo:string;
+  addresstypepu = "0";
+  addresstypedo = "0";
+  droplat:string;
+  pickupSelected = false;
+  DropoffSelected = false;
+  droplong:string;
   @ViewChild('pickupsearchplace') pickupsearchplace:ElementRef;
   @ViewChild('pickupsearchplaceFill') pickupsearchplaceFill: ElementRef;
   @ViewChild('pickupsearchplaceLandmark') pickupsearchplaceLandmark: ElementRef;
   @ViewChild('dropoffsearchplace') dropoffsearchplace: ElementRef;
-  // @ViewChild('gmap') gmapElement: any;
-  // map: google.maps.Map;
   ifSameAsPickUp: boolean;
   dropOffOnly: boolean;
   addresstype = [
@@ -180,6 +181,7 @@ export class ServicingComponent implements OnInit {
   constructor(private router: Router,
     private toasterService: ToasterService,
     private ServicingService: ServicingService,
+    // private decimalpipe:DecimalPipe,
     private http: HttpClient,
     private ngbDateParserFormatter: NgbDateParserFormatter,
     private modalService: NgbModal,
@@ -293,6 +295,16 @@ export class ServicingComponent implements OnInit {
     this.toasterService.popAsync(toast);
   }
 
+
+  pickUpMapReady(e){ }
+
+  sameAsPickup(){ }
+
+  sameAsPickUpAdd(e){
+    console.log(this.ifSameAsPickUp);
+    this.ifSameAsPickUp = !this.ifSameAsPickUp;
+  }
+
   pickUpSearch(e){
     let autocomplete = new google.maps.places.Autocomplete(this.pickupsearchplace.nativeElement);
       autocomplete.addListener("place_changed", () => {
@@ -301,25 +313,17 @@ export class ServicingComponent implements OnInit {
           if (place.geometry === undefined || place.geometry === null) {
             return;
         }
-        this.latitude = place.geometry.location.lat();
-        this.longitude = place.geometry.location.lng();
-        this.lat = place.geometry.location.lat();
-        this.lng = place.geometry.location.lng();
+        this.googlepickuplat = place.geometry.location.lat();
+        this.googlepickuplong = place.geometry.location.lng();
+        console.log(this.googlepickuplat);
+        console.log(this.googlepickuplong);
+        this.googleaddresspu = place.formatted_address;
         this.zoom = 20;
-        console.log(this.latitude, this.longitude);
-        console.log(autocomplete.getPlace());
+        console.log( this.googleaddresspu);
       })
     });
-    this.pickupsearchplaceFill.nativeElement.value = this.pickupsearchplace.nativeElement.value;
   }
 
-  pickUpMapReady(e){ }
-  sameAsPickup(){
-    // console.log('check box click');
-  }
-  sameAsPickUpAdd(e){
-    this.ifSameAsPickUp = !this.ifSameAsPickUp;
-  }
   dropOffSearch(e){
     let autocomplete = new google.maps.places.Autocomplete(this.dropoffsearchplace.nativeElement);
       autocomplete.addListener("place_changed", () => {
@@ -328,23 +332,13 @@ export class ServicingComponent implements OnInit {
           if (place.geometry === undefined || place.geometry === null) {
             return;
         }
-        this.latitude = place.geometry.location.lat();
-        this.longitude = place.geometry.location.lng();
-        this.lat = place.geometry.location.lat();
-        this.lng = place.geometry.location.lng();
+        this.googledropofflat = place.geometry.location.lat();
+        this.googledropofflong = place.geometry.location.lng();
+        this.googleaddressdo = place.formatted_address;
         this.zoom = 20;
-        console.log(this.latitude, this.longitude);
-        console.log(autocomplete.getPlace());
+        console.log(this.googleaddressdo);
       })
     });
-    this.pickupsearchplaceFill.nativeElement.value = this.pickupsearchplace.nativeElement.value;
-  }
-
-  changepickupdoor(value:any){
-    this.user.dropofffdoor = value;
-    if (this.sameasvalue == true){
-      this.user.dropofffdoor = value;
-    }
   }
 
   onCity(id){
@@ -372,40 +366,7 @@ public getCity() {
       });
   }
 
-  changepickupstreet(value:any){
-    this.user.dropoffstreet = value;
-    if (this.sameasvalue == true){
-      this.user.dropoffstreet = value;
-    }
-  }
 
-  changepickuparea(value:any){
-    this.user.dropoffarea = value;
-    if (this.sameasvalue == true){
-    this.user.dropoffarea = value;
-    }
-  }
-
-  changepickuplandmark(value:any){
-    this.user.dropofflandmark = value;
-    if (this.sameasvalue == true){
-      this.user.dropofflandmark = value;
-    }
-  }
-
-  changepickuppincode(value:any){
-    this.user.dropoffpincode = value;
-    if (this.sameasvalue == true){
-      this.user.dropoffpincode = value;
-    }
-  }
-
-  changepickuplatlong(value:any){
-    this.user.droplatlong = value;
-    if (this.sameasvalue == true){
-     this.user.droplatlong = value;
-    }
-  }
 
   saverange(value: any) {
     if (this.sameasvalue == true) {
@@ -486,112 +447,6 @@ public getCity() {
       });
   }
 
-  EditAddress(){
-    this.editAddress = true;
-  }
-
-  changeEditdropOffdoor(value:any){
-    this.counter ++;
-    this.editAddress = true;
-    if (this.sameasvalue == true){
-      this.user.pickupdoor = value;
-    }
-  }
-
-  changeEditdropOffstreet(value:any){
-    this.counter ++;
-    this.editAddress = true;
-    if (this.sameasvalue == true){
-      this.user.pickupstreet = value;
-    }
-  }
-
-  changeEditdropOffparea(value:any){
-    this.counter ++;
-    this.editAddress = true;
-    if (this.sameasvalue == true){
-    this.user.pickuparea = value;
-    }
-  }
-
-  changeEditdropOfflandmark(value:any){
-    this.counter ++;
-    this.editAddress = true;
-    if (this.sameasvalue == true){
-      this.user.pickuplandmark = value;
-    }
-  }
-
-  changeEditdropOffpincode(value:any){
-    this.counter ++;
-    this.editAddress = true;
-    if (this.sameasvalue == true){
-      this.user.pickuppincode = value;
-    }
-  }
-
-  changeEditdropOfflatlong(value:any){
-    this.counter ++;
-    this.editAddress = true;
-    if (this.sameasvalue == true){
-     this.user.droplatlong = value;
-    }
-  }
-  changeEditpickupdoor(value:any){
-    this.counter ++;
-    this.editAddress = true;
-    this.user.dropofffdoor = value;
-    console.log(this.sameasvalue);
-    if (this.sameasvalue == true){
-      this.user.dropofffdoor = value;
-    }
-  }
-
-  changeEditupstreet(value:any){
-    this.counter ++;
-    this.user.dropoffstreet = value;
-    this.editAddress = true;
-    if (this.sameasvalue == true){
-      this.user.dropoffstreet = value;
-    }
-  }
-
-  changeEditpickuparea(value:any){
-    this.counter ++;
-    this.user.dropoffarea = value;
-    this.editAddress = true;
-    if (this.sameasvalue == true){
-    this.user.dropoffarea = value;
-    }
-  }
-
-  changeEditpickuplandmark(value:any){
-    this.counter ++;
-    this.editAddress = true;
-    this.user.dropofflandmark = value;
-    if (this.sameasvalue == true){
-      this.user.dropofflandmark = value;
-    }
-  }
-
-  changeEditpickuppincode(value:any){
-    this.counter ++;
-    this.editAddress = true;
-    this.user.dropoffpincode = value;
-    if (this.sameasvalue == true){
-      this.user.dropoffpincode = value;
-    }
-  }
-
-  changeEditpickuplatlong(value:any){
-    this.counter ++;
-    this.editAddress = true;
-    this.user.droplatlong = value;
-    if (this.sameasvalue == true){
-     this.user.droplatlong = value;
-    }
-  }
-
   getAllBrands() {
     const reqpara1 ={
         requesttype: 'getallbrands',
@@ -631,15 +486,6 @@ public getCity() {
   some(value) {
     this.amb = value;
 }
-
-  onItemSelect(item: any) {}
-
-  OnItemDeSelect(item: any) {}
-
-  onSelectAll(items: any) {}
-
-  onDeSelectAll(items: any) {}
-
 
   onSelectModel(modelId) {
     for (let i = 0; i < this.Models.length; i++) {
@@ -761,6 +607,8 @@ public getCity() {
   }
 
   doPickup() {
+    this.googleMapDropoffFlag  = false;
+    this.googleMapPickupFlag = false;
     console.log(this.yourBoolean);
     if(this.yourBoolean === 'onlypickup'){
         this.ifSameAsPickUp = false;
@@ -792,6 +640,8 @@ public getCity() {
   }
 
   doDrop() {
+    this.googleMapDropoffFlag  = false;
+    this.googleMapPickupFlag = false;
     this.dropOffOnly = !this.dropOffOnly;
     if (this.dateString.length > 0) {
       const reqpara11 = {
@@ -849,72 +699,49 @@ public getCity() {
     return this.ngbDateParserFormatter.parse(startYear + "-" + startMonth.toString() + "-" + startDay);
   }
 
-  // at select pickup dropdown
-  onSelectPickup($event,id){
-    console.log(this.sameasvalue);
-    console.log(this.address);
-    var currentAddressPickup = this.address[$event];
-    if(this.sameasvalue == true){
-      if(this.user.addresspu){
-        console.log(this.user.addresspu);
-        for(let i = 0;i < this.address.length; i++){
-          if(this.user.addresspu == this.address[i].address_id){
-            this.user.addressdu = this.address[i].address_id ;
-            // console.log(this.address[i].address_id);
-            // console.log(this.user.addressdu);
-            // this.user.addresspu = this.addressPickup;
-            this.user.dropofffdoor = currentAddressPickup.doornumber;
-            this.user.dropoffstreet = currentAddressPickup.street;
-            this.user.dropoffarea = currentAddressPickup.area;
-            this.user.dropofflandmark = currentAddressPickup.landmark;
-            this.user.dropoffpincode = currentAddressPickup.pincode;
-            this.user.droplatlong = currentAddressPickup.latitude + ',' + currentAddressPickup.longitude;
-            for(let i = 0; i < this.addresstype.length;i ++){
-              if(this.addresstype[i].id == id){
-                this.user.addresspu = this.addresstype[i].id;
-                this.user.addresstypedu = this.addresstype[i].id;
-              }
-            }
-          }
-        }
-      }
-    }
-    this.user.addresspu = this.addressPickup;
-    this.user.pickupdoor = currentAddressPickup.doornumber;
-    this.user.pickupstreet = currentAddressPickup.street;
-    this.user.pickuparea = currentAddressPickup.area;
-    this.user.pickuplandmark = currentAddressPickup.landmark;
-    this.user.pickuppincode = currentAddressPickup.pincode;
-    this.user.picklatlong = currentAddressPickup.latitude + ',' + currentAddressPickup.longitude;
-    for(let i = 0; i < this.addresstype.length;i ++){
-      if(this.addresstype[i].id == id){
-        this.user.addresspu = this.addresstype[i].id;
-        this.user.addresstypepu = this.addresstype[i].id;
-      }
-    }
-  }
-
-   // at select dropoff dropdown
-  onSelectDropoff($event,id){
-    var currentAddressDropoff = this.address[$event];
-    this.user.dropofffdoor = currentAddressDropoff.doornumber;
-    this.user.dropoffstreet = currentAddressDropoff.street;
-    this.user.dropoffarea = currentAddressDropoff.area;
-    this.user.dropofflandmark = currentAddressDropoff.landmark;
-    this.user.dropoffpincode = currentAddressDropoff.pincode;
-    this.user.droplatlong = currentAddressDropoff.latitude + ',' + currentAddressDropoff.longitude;
-    for(let i = 0; i < this.addresstype.length;i ++){
-      if(this.addresstype[i].id == id){
-        this.user.addresspu = this.addresstype[i].id;
-        this.user.addresstypepu = this.addresstype[i].id;
-      }
-    }
-  }
-
-  ShowMap(){
+  ShowMapInSavedAddPickup(){
+    this.googleMapPickupFlag = true;
+    this.pickupSelected = false;
     this.googlemapShow = !this.googlemapShow;
   }
 
+  ShowMapInSavedAddDropoff(){
+    this.googleMapDropoffFlag = true;
+    this.DropoffSelected = false;
+    this.googlemapShow = !this.googlemapShow;
+  }
+
+  SelectSavedPickupAddress(i){
+    this.pickupSelected = true;
+    this.googleMapPickupFlag = false;
+    this.postaladdresspu = i.doornumber,i.area,i.street,i.pincode;
+    this.pickuplat = i.latitude;
+    this.pickuplong = i.longitude;
+    this.landmarkpu = i.landmark;
+    this.addresspuprevious = i.address_id;
+    for(var j = 0;j<this.addresstype.length;j++){
+      if(this.addresstype[j].type_of_address === i.type_of_address){
+        this.addresstypepu = this.addresstype[j].id;
+        console.log(this.addresstypepu);
+      }
+    }
+  }
+
+SelectSavedDropoffAddress(i){
+  this.DropoffSelected = true;
+  this.googleMapDropoffFlag = false;
+  this.postaladdressdo = i.doornumber,i.area,i.street,i.pincode;
+  this.droplat = i.latitude;
+  this.droplong = i.longitude;
+  this.landmarkdo = i.landmark;
+  this.addressdoprevious = i.address_id;
+  for(var k = 0;k <this.addresstype.length; k++){
+    if(this.addresstype[k].type_of_address === i.type_of_address){
+      this.addresstypepu = this.addresstype[k].id;
+      console.log(this.addresstypepu);
+    }
+  }
+}
 
   getinfowithMobile(){
     const reqpara112 = {
@@ -944,55 +771,11 @@ public getCity() {
           }
           else{
               this.showAddressDropDown = true;
-              this.showEditAddress = true;
-              this.addressPickup = this.address[0];
-              this.user.addresspu = this.addressPickup.address_id;
-              this.user.pickupdoor = this.addressPickup.doornumber;
-              this.user.pickupstreet = this.addressPickup.street;
-              this.user.pickuparea = this.addressPickup.area;
-              this.user.pickuplandmark = this.addressPickup.landmark;
-              this.user.pickuppincode = this.addressPickup.pincode;
-              for(let i = 0; i < this.addresstype.length;i ++){
-                if(this.addresstype[i].type_of_address == this.addressPickup.type_of_address){
-                  // this.user.addresspu = this.addresstype[i].id;
-                  this.user.addresstypepu = this.addresstype[i].id;
-                }
-              }
-              this.user.picklatlong = this.addressPickup.latitude + ',' +this.addressPickup.longitude;
-              this.user.address_typepu = this.addressPickup.address_id;
-              this.addressDropoff = this.address[0];
-                if(this.addressDropoff != undefined){
-                  this.user.addressdu = this.addressDropoff.address_id;
-                  this.user.dropofffdoor = this.addressDropoff.doornumber;
-                  this.user.dropoffstreet = this.addressDropoff.street;
-                  this.user.dropoffarea = this.addressDropoff.area;
-                  this.user.dropofflandmark = this.addressDropoff.landmark;
-                  this.user.dropoffpincode = this.addressDropoff.pincode;
-                  this.user.droplatlong = this.addressDropoff.latitude + ',' +this.addressDropoff.longitude;
-                  this.user.address_typedu = this.addressDropoff.address_id;
-                  for(let i = 0; i < this.addresstype.length;i ++){
-                    if(this.addresstype[i].type_of_address == this.addressDropoff.type_of_address){
-                      // this.user.addressdu = this.addresstype[i].id;
-                      this.user.addresstypedu = this.addresstype[i].id;
-                    }
-                  }
-                }
-                else{
-                  this.user.dropofffdoor = null ;
-                  this.user.dropoffstreet = null;
-                  this.user.dropoffarea = null;
-                  this.user.dropofflandmark = null;
-                  this.user.dropoffpincode = null;
-                  this.user.droplatlong = null;
-                  this.user.address_typedu = null;
-                }
           }
       }
       this.carinfo = this.customer[4].carinfo[0];
-      console.log( this.carinfo);
       if(this.carinfo.hasOwnProperty('no_records')){
         this.selectedBrand  = sessionStorage.getItem('brandid');
-         console.log(this.selectedBrand )
          this.getModelds(this.selectedBrand );
       }
       else{
@@ -1024,55 +807,6 @@ public getCity() {
 
   sameas(value) {
     this.sameasvalue = value;
-    console.log(this.sameasvalue);
-    if (value == true) {
-      if(this.user.addresspu){
-        console.log(this.user.addresspu);
-        console.log(this.address);
-        for(var i = 0;i < this.address.length; i++){
-          console.log(this.address[i].address_id,"adress_id")
-          if(this.user.addresspu == this.address[i].address_id){
-            this.user.addressdu = this.address[i].address_id ;
-          }
-        }
-      }
-      if (this.user.pickupdoor) {
-        this.user.dropofffdoor = this.user.pickupdoor;
-        if (this.user.pickupstreet) {
-          this.user.dropoffstreet = this.user.pickupstreet;
-
-        }
-        if(this.user.pickuparea){
-          this.user.dropoffarea = this.user.pickuparea;
-        }
-        if(this.user.pickuplandmark){
-          this.user.dropofflandmark = this.user.pickuplandmark;
-        }
-        if(this.user.pickuppincode){
-          this.user.dropoffpincode = this.user.pickuppincode;
-        }
-        if(this.user.picklatlong){
-          this.user.droplatlong = this.user.picklatlong;
-        }
-      // console.log(this.user.addresstypepu)
-        if(this.user.addresstypepu){
-          for(let j = 0 ; j < this.addresstype.length;j++){
-            if(this.addresstype[j].id == this.user.addresstypepu){
-              this.user.addresstypedu = this.addresstype[j].id ;
-              // console.log(this.user.addresstypedu);
-            }
-          }
-        }
-      }
-    }
-    else {
-      this.user.dropofffdoor = null;
-      this.user.dropoffstreet = null;
-      this.user.dropoffarea = null;
-      this.user.dropoffpincode = null;
-      this.user.dropofflatlong = null;
-      this.user.dropofflandmark  = null;
-    }
   }
 
   check(value: string,time:string) {
@@ -1102,9 +836,7 @@ public getCity() {
   }
 
   sameaddresstype(event){
-    console.log(event);
     if(this.sameasvalue){
-      console.log(event);
     }
   }
 
@@ -1158,335 +890,405 @@ public getCity() {
 
 
   onSubmit(f: NgForm) {
+    console.log(f.value);
     this.disabled = true;
+    if(this.showAddressDropDown){
+      console.log(this.googlemapShow)
+      if(this.googleMapDropoffFlag && this.googleMapPickupFlag){
+      
+        if(this.yourBoolean === "onlypickup"){
+          console.log("bothgoolgemap",this.yourBoolean);
+          this.googleaddressdo = this.googleaddresspu;
+          this.landmarkpu = f.value.pickulandmark;
+          this.landmarkdo = f.value.pickulandmark;
+          this.pickuplat = this.googlepickuplat.toString();
+          this.pickuplong = this.googlepickuplong.toString();
+          this.droplat = this.googlepickuplat.toString();
+          this.droplong = this.googlepickuplong.toString();
+          this.addressdoprevious = "0";
+          this.addresspuprevious = "0";
+          this.addresstypedo = f.value.addresstypepu;
+          this.addresstypepu = f.value.addresstypepu;
+          this.postaladdresspu = f.value.pickupsearchplaceFill;
+          this.postaladdressdo = f.value.pickupsearchplaceFill;
+        }
+        else if(this.yourBoolean === "dropoff"){
+          console.log("bothgoolgemap",this.yourBoolean);
+          this.googleaddresspu = this.googleaddressdo;
+          this.landmarkpu = f.value.dropofflandmark;
+          this.landmarkdo = f.value.dropofflandmark;
+          this.pickuplat = this.googledropofflat.toString();
+          this.pickuplong = this.googledropofflong.toString();
+          this.droplat = this.googledropofflat.toString();
+          this.droplong = this.googledropofflong.toString();
+          this.addressdoprevious = "0";
+          this.addresspuprevious = "0";
+          this.addresstypedo = f.value.addresstypedo;
+          this.addresstypepu = f.value.addresstypedo;
+          this.postaladdresspu = f.value.dropoffsearchplaceFill;
+          this.postaladdressdo = f.value.dropoffsearchplaceFill;
+        }
+        else{
+          if(!this.ifSameAsPickUp){
+            console.log("bothgoolgemap sameas",this.yourBoolean);
+            console.log("pickupmap",this.yourBoolean);
+            this.googleaddressdo = this.googleaddresspu;
+            this.landmarkpu = f.value.pickulandmark;
+            this.landmarkdo = f.value.pickulandmark;
+            this.pickuplat = this.googlepickuplat.toString();
+            this.pickuplong = this.googlepickuplong.toString();
+            this.droplat = this.googlepickuplat.toString();
+            this.droplong = this.googlepickuplong.toString();
+            this.addressdoprevious = "0";
+            this.addresspuprevious = "0";
+            this.addresstypedo = f.value.addresstypepu;
+            this.addresstypepu = f.value.addresstypepu;
+            this.postaladdresspu = f.value.pickupsearchplaceFill;
+            this.postaladdressdo = f.value.pickupsearchplaceFill;
+          }
+          else{
+            console.log("bothgoolgemap not",this.yourBoolean);
+            this.landmarkpu = f.value.pickulandmark;
+            this.landmarkdo = f.value.dropofflandmark;
+            this.pickuplat = this.googlepickuplat.toString();
+            this.pickuplong = this.googlepickuplong.toString();
+            this.droplat = this.googledropofflat.toString();
+            this.droplong = this.googledropofflong.toString();
+            this.addressdoprevious = "0";
+            this.addresspuprevious = "0";
+            this.addresstypedo = f.value.addresstypedo;
+            this.addresstypepu = f.value.addresstypepu;
+            this.postaladdresspu = f.value.pickupsearchplaceFill;
+            this.postaladdressdo = f.value.dropoffsearchplaceFill;
+          }
+        }
+      }
+      else if(this.googleMapPickupFlag && this.DropoffSelected){
+        console.log("PMDS",this.yourBoolean);
+        if(this.yourBoolean === "onlypickup"){
+          this.googleaddressdo = this.googleaddresspu;
+          this.landmarkpu = f.value.pickulandmark;
+          this.landmarkdo = f.value.pickulandmark;
+          this.pickuplat = this.googlepickuplat.toString();
+          this.pickuplong = this.googlepickuplong.toString();
+          this.droplat = this.googlepickuplat.toString();
+          this.droplong = this.googlepickuplong.toString();
+          this.addressdoprevious = "0";
+          this.addresspuprevious = "0";
+          this.addresstypedo = f.value.addresstypepu;
+          this.addresstypepu = f.value.addresstypepu;
+          this.postaladdresspu = f.value.pickupsearchplaceFill;
+          this.postaladdressdo = f.value.pickupsearchplaceFill;
+        }
+        else if(this.yourBoolean === "dropoff"){
+          this.postaladdresspu = this.postaladdressdo;
+          this.landmarkpu = this.landmarkdo;
+          this.pickuplat = this.droplat;
+          this.pickuplong = this.droplong;
+        }
+        else{
+          if(!this.ifSameAsPickUp){
+            console.log("PMDS",this.yourBoolean);
+            this.googleaddressdo = this.googleaddresspu;
+            this.landmarkpu = f.value.pickulandmark;
+            this.landmarkdo = f.value.pickulandmark;
+            this.pickuplat = this.googlepickuplat.toString();
+            this.pickuplong = this.googlepickuplong.toString();
+            this.droplat = this.googlepickuplat.toString();
+            this.droplong = this.googlepickuplong.toString();
+            this.addressdoprevious = "0";
+            this.addresspuprevious = "0";
+            this.addresstypedo = f.value.addresstypepu;
+            this.addresstypepu = f.value.addresstypepu;
+            this.postaladdresspu = f.value.pickupsearchplaceFill;
+            this.postaladdressdo = f.value.pickupsearchplaceFill;
+          }
+          else{
+            this.landmarkpu = f.value.pickulandmark;
+            this.pickuplat = this.googlepickuplat.toString();
+            this.pickuplong = this.googlepickuplong.toString();
+            this.addresspuprevious = "0";
+            this.addresstypepu = f.value.addresstypepu;
+            this.postaladdresspu = f.value.pickupsearchplaceFill;
+          }
+        }
+      }
+      else if(this.googleMapDropoffFlag && this.pickupSelected){
+        console.log("DMPS",this.yourBoolean);
+        if(this.yourBoolean === "onlypickup"){
+          console.log("DMPS",this.yourBoolean);
+          this.postaladdressdo = this.postaladdresspu;
+          this.droplat = this.pickuplat;
+          this.droplong = this.pickuplong;
+          this.landmarkdo = this.landmarkpu;
+        }
+        else if(this.yourBoolean === "dropoff"){
+          console.log("DMPS",this.yourBoolean);
+          this.googleaddresspu = this.googleaddressdo;
+          this.landmarkpu = f.value.dropofflandmark;
+          this.landmarkdo = f.value.dropofflandmark;
+          this.pickuplat = this.googledropofflat.toString();
+          this.pickuplong = this.googledropofflong.toString();
+          this.droplat = this.googledropofflat.toString();
+          this.droplong = this.googledropofflong.toString();
+          this.addressdoprevious = "0";
+          this.addresspuprevious = "0";
+          this.addresstypedo = f.value.addresstypedo;
+          this.addresstypepu = f.value.addresstypedo;
+          this.postaladdresspu = f.value.dropoffsearchplaceFill;
+          this.postaladdressdo = f.value.dropoffsearchplaceFill;
+        }
+        else{
+          if(!this.ifSameAsPickUp){
+            console.log("DMPS",this.yourBoolean);
+            this.postaladdressdo = this.postaladdresspu;
+            this.droplat = this.pickuplat;
+            this.droplong = this.pickuplong;
+            this.landmarkdo = this.landmarkpu;
+          }
+          else{
+            this.landmarkdo = f.value.dropofflandmark;
+            this.droplat = this.googledropofflat.toString();
+            this.droplong = this.googledropofflong.toString();
+            this.addressdoprevious = "0";
+            this.addresstypepu = f.value.addresstypedo;
+            this.postaladdressdo = f.value.dropoffsearchplaceFill;
+          }
+        }
+      }
+      else if(this.googleMapPickupFlag){
+        if(this.yourBoolean === "onlypickup"){
+          console.log("pickupmap",this.yourBoolean);
+          this.googleaddressdo = this.googleaddresspu;
+          this.landmarkpu = f.value.pickulandmark;
+          this.landmarkdo = f.value.pickulandmark;
+          this.pickuplat = this.googlepickuplat.toString();
+          this.pickuplong = this.googlepickuplong.toString();
+          this.droplat = this.googlepickuplat.toString();
+          this.droplong = this.googlepickuplong.toString();
+          this.addressdoprevious = "0";
+          this.addresspuprevious = "0";
+          this.addresstypedo = f.value.addresstypepu;
+          this.addresstypepu = f.value.addresstypepu;
+          this.postaladdresspu = f.value.pickupsearchplaceFill;
+          this.postaladdressdo = f.value.pickupsearchplaceFill;
+        }
+        else if(this.yourBoolean === "dropoff"){
+          console.log("pickupmap",this.yourBoolean);
+          this.googleaddresspu = this.googleaddressdo;
+          this.landmarkpu = f.value.dropofflandmark;
+          this.landmarkdo = f.value.dropofflandmark;
+          this.pickuplat = this.googledropofflat.toString();
+          this.pickuplong = this.googledropofflong.toString();
+          this.droplat = this.googledropofflat.toString();
+          this.droplong = this.googledropofflong.toString();
+          this.addressdoprevious = "0";
+          this.addresspuprevious = "0";
+          this.addresstypedo = f.value.addresstypedo;
+          this.addresstypepu = f.value.addresstypedo;
+          this.postaladdresspu = f.value.dropoffsearchplaceFill;
+          this.postaladdressdo = f.value.dropoffsearchplaceFill;
+        }
+        else{
+          if(!this.ifSameAsPickUp){
+            console.log("pickupmap",this.yourBoolean);
+            this.googleaddressdo = this.googleaddresspu;
+            this.landmarkpu = f.value.pickulandmark;
+            this.landmarkdo = f.value.pickulandmark;
+            this.pickuplat = this.googlepickuplat.toString();
+            this.pickuplong = this.googlepickuplong.toString();
+            this.droplat = this.googlepickuplat.toString();
+            this.droplong = this.googlepickuplong.toString();
+            this.addressdoprevious = "0";
+            this.addresspuprevious = "0";
+            this.addresstypedo = f.value.addresstypepu;
+            this.addresstypepu = f.value.addresstypepu;
+            this.postaladdresspu = f.value.pickupsearchplaceFill;
+            this.postaladdressdo = f.value.pickupsearchplaceFill;
+          }
+          else{
+          this.googleaddressdo = this.googleaddressdo;
+          this.landmarkpu = f.value.pickulandmark;
+          this.landmarkdo = f.value.dropofflandmark;
+          this.pickuplat = this.googlepickuplat.toString();
+          this.pickuplong = this.googlepickuplong.toString();
+          this.droplat = this.googledropofflat.toString();
+          this.droplong = this.googledropofflong.toString();
+          this.addressdoprevious = "0";
+          this.addresspuprevious = "0";
+          this.addresstypedo = f.value.addresstypedo;
+          this.addresstypepu = f.value.addresstypepu;
+          this.postaladdresspu = f.value.pickupsearchplaceFill;
+          this.postaladdressdo = f.value.dropoffsearchplaceFill;
+          }
+        }
+        }
+      else if(this.googleMapDropoffFlag){
+        if(this.yourBoolean === "onlypickup"){
+          console.log("dropmap",this.yourBoolean);
+          this.googleaddressdo = this.googleaddresspu;
+          this.landmarkpu = f.value.pickulandmark;
+          this.landmarkdo = f.value.pickulandmark;
+          this.pickuplat = this.googlepickuplat.toString();
+          this.pickuplong = this.googlepickuplong.toString();
+          this.droplat = this.googlepickuplat.toString();
+          this.droplong = this.googlepickuplong.toString();
+          this.addressdoprevious = "0";
+          this.addresspuprevious = "0";
+          this.addresstypedo = f.value.addresstypepu;
+          this.addresstypepu = f.value.addresstypepu;
+          this.postaladdresspu = f.value.pickupsearchplaceFill;
+          this.postaladdressdo = f.value.pickupsearchplaceFill;
+        }
+        else if(this.yourBoolean === "dropoff"){
+          console.log("dropmap",this.yourBoolean);
+          this.googleaddresspu = this.googleaddressdo;
+          this.landmarkpu = f.value.dropofflandmark;
+          this.landmarkdo = f.value.dropofflandmark;
+          this.pickuplat = this.googledropofflat.toString();
+          this.pickuplong = this.googledropofflong.toString();
+          this.droplat = this.googledropofflat.toString();
+          this.droplong = this.googledropofflong.toString();
+          this.addressdoprevious = "0";
+          this.addresspuprevious = "0";
+          this.addresstypedo = f.value.addresstypedo;
+          this.addresstypepu = f.value.addresstypedo;
+          this.postaladdresspu = f.value.dropoffsearchplaceFill;
+          this.postaladdressdo = f.value.dropoffsearchplaceFill;
+        }
+        else{
+          if(!this.ifSameAsPickUp){
+            console.log("pickupmap",this.yourBoolean);
+            this.googleaddressdo = this.googleaddresspu;
+            this.landmarkpu = f.value.pickulandmark;
+            this.landmarkdo = f.value.pickulandmark;
+            this.pickuplat = this.googlepickuplat.toString();
+            this.pickuplong = this.googlepickuplong.toString();
+            this.droplat = this.googlepickuplat.toString();
+            this.droplong = this.googlepickuplong.toString();
+            this.addressdoprevious = "0";
+            this.addresspuprevious = "0";
+            this.addresstypedo = f.value.addresstypepu;
+            this.addresstypepu = f.value.addresstypepu;
+            this.postaladdresspu = f.value.pickupsearchplaceFill;
+            this.postaladdressdo = f.value.pickupsearchplaceFill;
+          }
+          else{
+            this.googleaddressdo = this.googleaddressdo;
+            this.landmarkpu = f.value.pickulandmark;
+            this.landmarkdo = f.value.dropofflandmark;
+            this.pickuplat = this.googlepickuplat.toString();
+            this.pickuplong = this.googlepickuplong.toString();
+            this.droplat = this.googledropofflat.toString();
+            this.droplong = this.googledropofflong.toString();
+            this.addressdoprevious = "0";
+            this.addresspuprevious = "0";
+            this.addresstypedo = f.value.addresstypedo;
+            this.addresstypepu = f.value.addresstypepu;
+            this.postaladdresspu = f.value.pickupsearchplaceFill;
+            this.postaladdressdo = f.value.dropoffsearchplaceFill;
+          }
+        }
+      }
+      else{
+        if(this.yourBoolean === "onlypickup"){
+          this.postaladdressdo = this.postaladdresspu;
+          this.droplat = this.pickuplat;
+          this.droplong = this.pickuplong;
+          this.landmarkdo = this.landmarkpu;
+        }
+        else if(this.yourBoolean === "dropoff"){
+          this.postaladdresspu = this.postaladdressdo;
+          this.landmarkpu = this.landmarkdo;
+          this.pickuplat = this.droplat;
+          this.pickuplong = this.droplong;
+        }
+        else{
+          if(!this.ifSameAsPickUp){
+            this.postaladdressdo = this.postaladdresspu;
+            this.droplat = this.pickuplat;
+            this.droplong = this.pickuplong;
+            this.landmarkdo = this.landmarkpu;
+          }
+        }
+      }
+     }
+     else{
+      if(this.googleMapDropoffFlag && this.googleMapPickupFlag){
+      
+        if(this.yourBoolean === "onlypickup"){
+          console.log("bothgoolgemap",this.yourBoolean);
+          this.googleaddressdo = this.googleaddresspu;
+          this.landmarkpu = f.value.pickulandmark;
+          this.landmarkdo = f.value.pickulandmark;
+          this.pickuplat = this.googlepickuplat.toString();
+          this.pickuplong = this.googlepickuplong.toString();
+          this.droplat = this.googlepickuplat.toString();
+          this.droplong = this.googlepickuplong.toString();
+          this.addressdoprevious = "0";
+          this.addresspuprevious = "0";
+          this.addresstypedo = f.value.addresstypepu;
+          this.addresstypepu = f.value.addresstypepu;
+          this.postaladdresspu = f.value.pickupsearchplaceFill;
+          this.postaladdressdo = f.value.pickupsearchplaceFill;
+        }
+        else if(this.yourBoolean === "dropoff"){
+          console.log("bothgoolgemap",this.yourBoolean);
+          this.googleaddresspu = this.googleaddressdo;
+          this.landmarkpu = f.value.dropofflandmark;
+          this.landmarkdo = f.value.dropofflandmark;
+          this.pickuplat = this.googledropofflat.toString();
+          this.pickuplong = this.googledropofflong.toString();
+          this.droplat = this.googledropofflat.toString();
+          this.droplong = this.googledropofflong.toString();
+          this.addressdoprevious = "0";
+          this.addresspuprevious = "0";
+          this.addresstypedo = f.value.addresstypedo;
+          this.addresstypepu = f.value.addresstypedo;
+          this.postaladdresspu = f.value.dropoffsearchplaceFill;
+          this.postaladdressdo = f.value.dropoffsearchplaceFill;
+        }
+        else{
+          if(!this.ifSameAsPickUp){
+            console.log("bothgoolgemap sameas",this.yourBoolean);
+            console.log("pickupmap",this.yourBoolean);
+            this.googleaddressdo = this.googleaddresspu;
+            this.landmarkpu = f.value.pickulandmark;
+            this.landmarkdo = f.value.pickulandmark;
+            this.pickuplat = this.googlepickuplat.toString();
+            this.pickuplong = this.googlepickuplong.toString();
+            this.droplat = this.googlepickuplat.toString();
+            this.droplong = this.googlepickuplong.toString();
+            this.addressdoprevious = "0";
+            this.addresspuprevious = "0";
+            this.addresstypedo = f.value.addresstypepu;
+            this.addresstypepu = f.value.addresstypepu;
+            this.postaladdresspu = f.value.pickupsearchplaceFill;
+            this.postaladdressdo = f.value.pickupsearchplaceFill;
+          }
+          else{
+            console.log("bothgoolgemap not",this.yourBoolean);
+            this.landmarkpu = f.value.pickulandmark;
+            this.landmarkdo = f.value.dropofflandmark;
+            this.pickuplat = this.googlepickuplat.toString();
+            this.pickuplong = this.googlepickuplong.toString();
+            this.droplat = this.googledropofflat.toString();
+            this.droplong = this.googledropofflong.toString();
+            this.addressdoprevious = "0";
+            this.addresspuprevious = "0";
+            this.addresstypedo = f.value.addresstypedo;
+            this.addresstypepu = f.value.addresstypepu;
+            this.postaladdresspu = f.value.pickupsearchplaceFill;
+            this.postaladdressdo = f.value.dropoffsearchplaceFill;
+          }
+        }
+      }
+     }
+
     if(f.value.svclist){
       this.selectedBrand = f.value.svclist;
     }
     this.registrationNumber = f.value.num.toUpperCase();
-    if(this.showAddressDropDown){
-      if(this.editAddress){
-        if(f.value.pickupdoor){
-          this.pickupdoor = f.value.pickupdoor;
-        }
-        else {
-          this.pickupdoor = f.value.dropofffdoor;
-        }
-        if(f.value.pickupstreet){
-          this.pickupstreet = f.value.pickupstreet;
-        }
-        else{
-          this.pickupstreet = f.value.dropoffstreet;
-        }
-        if(f.value.pickuparea){
-          this.pickuparea = f.value.pickuparea;
-        }
-        else{
-          this.pickuparea = f.value.dropoffarea;
-        }
-        if(f.value.pickuplandmark){
-          this.pickuplandmark = f.value.pickuplandmark;
-        }
-        else if(f.value.dropofflandmark){
-          this.pickuplandmark = f.value.dropofflandmark;
-        }
-        else{
-          this.pickuplandmark = "0";
-        }
-        if(f.value.pickuppincode){
-          this.pickuppincode = f.value.pickuppincode;
-        }
-        else if(f.value.dropoffpincode){
-          this.pickuppincode = f.value.dropoffpincode;
-        }
-        else{
-          this.pickuppincode ="0";
-        }
-        if(f.value.dropoffarea){
-          this.dropoffarea = f.value.dropoffarea ;
-        }
-        else{
-          this.dropoffarea = f.value.pickuparea ;
-        }
-        if(f.value.dropofffdoor){
-          this.dropofffdoor = f.value.dropofffdoor;
-        }
-        else{
-          this.dropofffdoor = f.value.pickupdoor;
-        }
-        if(f.value.dropoffpincode){
-          this.dropoffpincode = f.value.dropoffpincode;
-        }
-        else if (f.value.pickuppincode){
-          this.dropoffpincode =  f.value.pickuppincode;
-        }
-        else{
-          this.dropoffpincode = "0";
-        }
-        if(f.value.dropofflandmark){
-          this.dropofflandmark = f.value.dropofflandmark;
-        }
-        else if (f.value.pickuplandmark){
-          this.dropofflandmark =  f.value.pickuplandmark;
-        }
-        else{
-          this.dropofflandmark = "0";
-        }
-        if(f.value.dropoffstreet){
-          this.dropoffstreet = f.value.dropoffstreet;
-        }
-        else{
-          this.dropoffstreet = f.value.pickupstreet;
-        }
-        this.addressdoprevious = "0";
-        this.addresspuprevious = "0";
-        if(f.value.addresstypepu){
-          this.addresstype_pu = this.user.addresstypepu;
-        }
-        else{
-          this.addresstype_pu = this.user.addresstypedu
-        }
-        if(f.value.addresstypedu){
-          this.addresstype_do = this.user.addresstypedu;
-        }
-        else{
-          this.addresstype_do= this.user.addresstypepu;
-        }
-        if (f.value.picklatlong) {
-          let x = f.value.picklatlong.split(/[ ,;]+/);
-          this.pikup_lat = x[0];
-          this.pikup_long = x[1];
-        }
-        else{
-          if(f.value.droplatlong){
-            let b = f.value.droplatlong.split(/[ ,;]+/);
-            this.pikup_lat= b[0];
-            this.pikup_long = b[1];
-          }
-          else{
-            this.pikup_lat = "0";
-            this.pikup_long = "0";
-          }
-         
-          }
-      
-        if(f.value.droplatlong){
-          let y = f.value.droplatlong.split(/[ ,;]+/);
-          this.dropoff_lat = y[0];
-          this.dropoff_long = y[1];
-        }
-        else {
-          if(f.value.picklatlong){
-            let c = f.value.picklatlong.split(/[ ,;]+/);
-            this.pikup_lat = c[0];
-            this.pikup_long = c[1];
-          }
-          else{
-            this.dropoff_lat = "0";
-          this.dropoff_long = "0";
-          }
-          
-        }
-      }
-      
-      else{
-        // this.addressdoprevious = f.value.addresspu;
-        // this.addresspuprevious = f.value.addressdu;
-        if(f.value.addresspu){
-          this.addresspuprevious = f.value.addresspu;
-        }
-        else{
-          this.addresspuprevious =  f.value.addressdu;
-        }
-        if( f.value.addressdu){
-          this.addressdoprevious =  f.value.addressdu;
-        }
-        else{
-          this.addressdoprevious =   f.value.addresspu;
-        }
-        this.pickupdoor = "0";
-        this.pickupstreet = "0";
-        this.pickuparea = "0";
-        this.pickuplandmark = "0";
-        this.pickuppincode = "0";
-        this.pikup_lat = "0";
-        this.pikup_long = "0";
-        this.dropoffarea = "0";
-        this.dropofffdoor = "0";
-        this.dropoffpincode = "0";
-        this.dropofflandmark = "0";
-        this.dropoffstreet = "0";
-        this.dropoff_long = "0";
-        this.dropoff_lat = "0";
-        if(f.value.addresspu){
-          this.addresstype_pu = this.user.addresspu;
-        }
-        else{
-          this.addresstype_pu = this.user.addressdu
-        }
-        if(f.value.addressdu){
-          this.addresstype_do = this.user.addressdu;
-        }
-        else{
-          this.addresstype_do= this.user.addresspu;
-        }
-      }
-    }
-    if(this.showAddress){
-      if(f.value.pickupdoor){
-        this.pickupdoor = f.value.pickupdoor;
-        this.addresspuprevious = "0";
-      }
-      else{
-        this.pickupdoor = f.value.dropofffdoor;
-        this.addresspuprevious = "0";
-      }
-  
-      if(f.value.pickupstreet){
-        this.pickupstreet = f.value.pickupstreet;
-        this.addresspuprevious = "0";
-      }
-      else{
-        this.pickupstreet = f.value.dropoffstreet;
-        this.addresspuprevious = "0";
-      }
-  
-      if(f.value.pickuparea){
-        this.pickuparea = f.value.pickuparea;
-        this.addresspuprevious = "0";
-      }
-      else{
-        this.pickuparea = f.value.dropoffarea;
-        this.addresspuprevious = "0";
-      }
-      if (f.value.picklatlong) {
-        let x = f.value.picklatlong.split(/[ ,;]+/);
-        this.pikup_lat = x[0];
-        this.pikup_long = x[1];
-      }
-      else{
-        if (f.value.droplatlong){
-          let y = f.value.droplatlong.split(/[ ,;]+/);
-          this.pikup_lat = y[0];
-          this.pikup_long = y[1];
-        }
-        else{
-          this.pikup_lat = "0";
-          this.pikup_long = "0";
-        }
-       } 
-      if(f.value.pickuplandmark){
-        this.pickuplandmark = f.value.pickuplandmark;
-        this.addresspuprevious = "0";
-      }
-      else if(f.value.dropofflandmark){
-        this.pickuplandmark = f.value.dropofflandmark;
-        this.addresspuprevious = "0";
-      }
-      else{
-        this.pickuplandmark = "0";
-        this.addresspuprevious = "0";
-      }
-      if(f.value.addresstypepu){
-        this.addresstype_pu = f.value.addresstypepu;
-        this.addresspuprevious = "0";
-      }
-      else{
-        this.addresstype_pu = f.value.addresstypedu;
-        this.addresspuprevious = "0";
-      }
-      if(f.value.addresstypedu){
-        this.addresstype_do = f.value.addresstypedu;
-        this.addresspuprevious = "0";
-      }
-      else{
-        this.addresstype_do = f.value.addresstypedu;
-        this.addresspuprevious = "0";
-      }
-      if(f.value.pickuppincode){
-        this.pickuppincode = f.value.pickuppincode;
-        this.addresspuprevious = "0";
-      }
-      else if(f.value.dropoffpincode){
-        this.pickuppincode = f.value.dropoffpincode;
-        this.addresspuprevious = "0";
-      }
-      else{
-        this.pickuppincode = "0";
-        this.addresspuprevious = "0";
-      }
-      if(f.value.dropoffarea){
-        this.dropoffarea = f.value.dropoffarea ;
-        this.addressdoprevious = "0";
-      }
-      else{
-        this.dropoffarea = f.value.pickuparea ;
-        this.addressdoprevious = "0";
-      }
-      if(f.value.dropofffdoor){
-        this.dropofffdoor = f.value.dropofffdoor;
-        this.addressdoprevious = "0";
-      }
-      else{
-        this.dropofffdoor = f.value.pickupdoor;
-        this.addressdoprevious = "0";
-      }
-      if(f.value.dropoffpincode){
-        this.dropoffpincode = f.value.dropoffpincode;
-        this.addressdoprevious = "0";
-      }
-      else if(f.value.pickuppincode){
-        this.dropoffpincode =f.value.pickuppincode;
-        this.addressdoprevious = "0";
-      }
-      else{
-        this.dropoffpincode = "0";
-        this.addressdoprevious = "0";
-      }
-      if(f.value.dropofflandmark){
-        this.dropofflandmark = f.value.dropofflandmark;
-        this.addressdoprevious = "0";
-      }
-      else if(f.value.pickuplandmark){
-        this.dropofflandmark =f.value.pickuplandmark;
-        this.addressdoprevious = "0";
-      }
-      else{
-        this.dropofflandmark = "0";
-        this.addressdoprevious = "0";
-      }
-      if(f.value.dropoffstreet){
-        this.dropoffstreet = f.value.dropoffstreet;
-        this.addressdoprevious = "0";
-      }
-      else{
-        this.dropoffstreet = f.value.pickupstreet;
-        this.addressdoprevious = "0";
-      }
-      if(f.value.addresstypedu){
-        this.addresstype_do = f.value.addresstypedu;
-        this.addresspuprevious = "0";
-      }
-      else{
-        this.addresstype_do = f.value.addresstypepu;
-        this.addresspuprevious = "0";
-      }
-      if(f.value.droplatlong){
-        let y = f.value.droplatlong.split(/[ ,;]+/);
-        this.dropoff_lat = y[0];
-        this.dropoff_long = y[1];
-      }
-      else{
-        if(f.value.picklatlong){
-          let a = f.value.picklatlong.split(/[ ,;]+/);
-          this.dropoff_lat = a[0];
-          this.dropoff_long = a[1];
-        }
-        else{
-          this.dropoff_lat = "0";
-          this.dropoff_long = "0";
-        }
-      }
-    }
     if (f.value.confirm) {
       this.isconfirm = "1";
     }
@@ -1501,7 +1303,6 @@ public getCity() {
       if (!this.slot_time) {
       }
     }
-
     if (f.value.mobile2) { 
       this.mobile2 = f.value.mobile2; 
     }
@@ -1541,8 +1342,6 @@ public getCity() {
     else{
       this.advisorId="0";
     }
-  
-      // console.log(this.selectedItems);
       if (this.selectedItems === null ) {
         this.complaint_id = ["0"];
       }
@@ -1563,7 +1362,7 @@ public getCity() {
   
     if(this.slot_time != "0"){
     const reqpara6 = {
-      requesttype: "createbookingv3",
+      requesttype: "createbookingv5",
       vehnumber: this.registrationNumber,
       city: this.cityID,
       vehbrand: this.selectedBrand,
@@ -1575,23 +1374,19 @@ public getCity() {
       customeremail: f.value.email,
       queuetime: this.dateString + ' ' + this.slot_time,
       addresspuprevious:this.addresspuprevious,
-      doornumberpu:this.pickupdoor,
-      streetpu:this.pickupstreet,
-      areapu:this.pickuparea,
-      landmarkpu:this.pickuplandmark,
-      pincodepu:this.pickuppincode,
-      addresstypepu:this.addresstype_pu,
-      pickuplat:this.pikup_lat,
-      pickuplong:this.pikup_long,
+      googleaddresspu: this.googleaddresspu,
+      postaladdresspu: this.postaladdresspu,
+      landmarkpu: this.landmarkpu,
+      addresstypepu: this.addresstypepu,
+      pickuplat: this.pickuplat,
+      pickuplong: this.pickuplong,
       addressdoprevious:this.addressdoprevious,
-      doornumberdo:this.dropofffdoor,
-      streetdo:this.dropoffstreet,
-      areado:this.dropoffarea,
-      landmarkdo:this.dropofflandmark,
-      pincodedo:this.dropoffpincode,
-      addresstypedo:this.addresstype_do,
-      droplat:this.dropoff_lat,
-      droplong:this.dropoff_long,
+      googleaddressdo: this.googleaddressdo,
+      postaladdressdo: this.postaladdressdo,
+      landmarkdo: this.landmarkdo,
+      addresstypedo:this.addresstypedo,
+      droplat: this.droplat,
+      droplong: this.droplong,
       servicetype:this.pickup_drop,
       advisorid:this.advisorId,
       creid:f.value.creName,
@@ -1602,11 +1397,8 @@ public getCity() {
       isconfirmed:this.isconfirm,
       eavalidcode:this.ea_respondID,
       complaint:this.complaint_id
-     
-    };
-
-    const ua = JSON.stringify(reqpara6);
-    // console.log(ua);
+     };
+     const ua = JSON.stringify(reqpara6);
     this.ServicingService.webServiceCall(ua).subscribe(data => {
       if (data[0].login === 0) {
         sessionStorage.removeItem('currentUser');
@@ -1639,6 +1431,8 @@ public getCity() {
         this.showtime = false;
         this.disableNext = false;
         this.user.mobile1 = null;
+        this.ifSameAsPickUp = false;
+        this.googlemapShow = false;
       }
       else if(data[0].hasOwnProperty('error')){
         this.showToast('alert', 'Alert', 'Sorry !! Something went wrong');
