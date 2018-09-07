@@ -714,7 +714,8 @@ public getCity() {
   SelectSavedPickupAddress(i){
     this.pickupSelected = true;
     this.googleMapPickupFlag = false;
-    this.postaladdresspu = i.doornumber,i.area,i.street,i.pincode;
+    this.postaladdresspu = i.doornumber +' '+ i.area +' '+ i.street +' '+ i.pincode;
+    console.log("postal address",this.postaladdresspu);
     this.pickuplat = i.latitude;
     this.pickuplong = i.longitude;
     this.landmarkpu = i.landmark;
@@ -730,7 +731,8 @@ public getCity() {
 SelectSavedDropoffAddress(i){
   this.DropoffSelected = true;
   this.googleMapDropoffFlag = false;
-  this.postaladdressdo = i.doornumber,i.area,i.street,i.pincode;
+  this.postaladdressdo = i.doornumber +' '+ i.area +' '+ i.street +' '+i.pincode;
+  console.log("postal address",this.postaladdressdo);
   this.droplat = i.latitude;
   this.droplong = i.longitude;
   this.landmarkdo = i.landmark;

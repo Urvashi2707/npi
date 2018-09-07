@@ -52,7 +52,7 @@ export class ChauffeurComponent implements OnInit {
   show3  = true;
   show  = false;
   public zoom: number = 16;
-  addresstype_pu:string;
+  addresstype_pu = "0";
   cust_details:any={};
   public pikup_long: string;
   public dropoff_lat: string;
@@ -80,9 +80,9 @@ export class ChauffeurComponent implements OnInit {
   dropoffarea:string;
   pikup_lat:string;
   dropofflandmark:string;
-  addresstype_do:string;
-  addressdoprevious:string;
-  addresspuprevious:string;
+  addresstype_do = "0";
+  addressdoprevious = "0";
+  addresspuprevious = "0";
   dropoffpincode:string;
   public slot_time:string;
   public mobile2:string;
@@ -1263,7 +1263,7 @@ Custodyloc(e){
       
       if(result >= 0.100000){
   const reqpara6 = {
-    requesttype: "createbookingv3",
+    requesttype: "createbookingv5",
     vehnumber:f.value.num,
     city: this.cityid,
     vehbrand:this.selectedBrand,
@@ -1275,23 +1275,19 @@ Custodyloc(e){
     customeremail: this.cusEmail,
     queuetime: this.queuetime,
     addresspuprevious:this.addresspuprevious,
-    doornumberpu:this.pickupdoor,
-    streetpu:this.pickupstreet,
-    areapu:this.pickuparea,
-    landmarkpu:this.pickuplandmark,
-    pincodepu:"0",
-    addresstypepu:this.addresstype_pu,
-    pickuplat:this.pikup_lat,
-    pickuplong:this.pikup_long,
-    addressdoprevious:this.addressdoprevious,
-    doornumberdo:this.dropofffdoor,
-    streetdo:this.dropoffstreet,
-    areado:this.dropoffarea,
-    landmarkdo:this.dropofflandmark,
-    pincodedo:"0",
-    addresstypedo:this.addresstype_do,
-    droplat:this.dropoff_lat,
-    droplong:this.dropoff_long,
+    // googleaddresspu: this.googleaddresspu,
+    // postaladdresspu: this.postaladdresspu,
+    // landmarkpu: this.landmarkpu,
+    // addresstypepu: this.addresstypepu,
+    // pickuplat: this.pickuplat,
+    // pickuplong: this.pickuplong,
+    // addressdoprevious:this.addressdoprevious,
+    // googleaddressdo: this.googleaddressdo,
+    // postaladdressdo: this.postaladdressdo,
+    // landmarkdo: this.landmarkdo,
+    // addresstypedo:this.addresstypedo,
+    // droplat: this.droplat,
+    // droplong: this.droplong,
     servicetype: this.pickup_drop,
     advisorid: this.serviceAdv,
     creid: this.saleexce,
