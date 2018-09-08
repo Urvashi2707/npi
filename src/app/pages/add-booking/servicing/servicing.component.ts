@@ -127,10 +127,6 @@ export class ServicingComponent implements OnInit {
   toastsLimit = 5;
   slothour:string;
   citylist:any = [];
-  public lat: number = 51.678418;
-  public lng: number = 7.809007;
-  public latitude: number;
-  public longitude: number;
   label:string ="a";
   public zoom: number = 16;
   addresspuprevious ="0";
@@ -155,6 +151,11 @@ export class ServicingComponent implements OnInit {
   pickupSelected = false;
   DropoffSelected = false;
   droplong:string;
+  latPickup:number;
+  lngPickup:number;
+  latDrop:number;
+  lngDrop:number;
+  ifClicked: boolean;
   @ViewChild('pickupsearchplace') pickupsearchplace:ElementRef;
   @ViewChild('pickupsearchplaceFill') pickupsearchplaceFill: ElementRef;
   @ViewChild('pickupsearchplaceLandmark') pickupsearchplaceLandmark: ElementRef;
@@ -194,6 +195,7 @@ export class ServicingComponent implements OnInit {
       this.getCity();
       this.ifSameAsPickUp = false;
       this.dropOffOnly = false;
+      this.ifClicked = false;
     }
 
 
@@ -313,6 +315,8 @@ export class ServicingComponent implements OnInit {
           if (place.geometry === undefined || place.geometry === null) {
             return;
         }
+        this.latPickup = place.geometry.location.lat();
+        this.lngPickup = place.geometry.location.lng();
         this.googlepickuplat = place.geometry.location.lat();
         this.googlepickuplong = place.geometry.location.lng();
         console.log(this.googlepickuplat);
@@ -333,6 +337,8 @@ export class ServicingComponent implements OnInit {
           if (place.geometry === undefined || place.geometry === null) {
             return;
         }
+        this.latDrop = place.geometry.location.lat();
+        this.lngDrop = place.geometry.location.lng();
         this.googledropofflat = place.geometry.location.lat();
         this.googledropofflong = place.geometry.location.lng();
         this.googleaddressdo = place.formatted_address;
@@ -713,6 +719,7 @@ public getCity() {
   }
 
   SelectSavedPickupAddress(i){
+    this.ifClicked = true;
     this.pickupSelected = true;
     this.googleMapPickupFlag = false;
     this.postaladdresspu = i.doornumber +' '+ i.area +' '+ i.street +' '+ i.pincode;

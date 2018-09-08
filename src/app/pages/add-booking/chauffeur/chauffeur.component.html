@@ -13,11 +13,12 @@
             <div class="col-md-5 col-sm-5 col-lg-5">
               <div class="form-group">
                 <input type="text" id="num" name="num" style="text-transform: uppercase" class="form-control" required
-                  [(ngModel)]="registrationNumber" #num="ngModel" maxlength="15" pattern="^[a-zA-Z0-9 \,\.\-\/\;\'\}\{\%]+$">
+                  [(ngModel)]="registrationNumber" #num="ngModel" maxlength="15" pattern="^[ A-Za-z0-9_@./#&+-;%]*$">
                 <label class="form-control-placeholder" for="num">Registration Number*</label>
               </div>
               <div class="form-control-feedback" *ngIf="num.errors && (num.dirty || num.touched)">
                 <p *ngIf="num.errors.required" class="haserror">Registration Number is required</p>
+                <p *ngIf="!num.errors.valid" class="haserror">Accepted Special Charaters are -@./#7+-;%</p>
               </div>
             </div>
             <div class="col-md-5 col-sm-5 col-lg-5">
@@ -141,9 +142,9 @@
               <div class="row">
                 <div class="col-lg-6 col-sm-6 col-md-6">
                   <div class="pickup-map">
-                    <agm-map id="pickUpMap" [zoom]="zoom" [latitude]="lat" [longitude]="lng" [disableDefaultUI]=false
+                    <agm-map id="pickUpMap" [zoom]="zoom" [latitude]="latPickup" [longitude]="lngPickup" [disableDefaultUI]=false
                       (mapReady)=pickUpMapReady($events)>
-                      <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+                      <agm-marker [latitude]="latPickup" [longitude]="lngPickup"></agm-marker>
                     </agm-map>
                   </div>
                 </div>
@@ -151,25 +152,33 @@
             <div class="row">
                 <div class="col-lg-6 col-sm-6 col-md-6">
                   <div class="form-group">
-                    <input class="form-control" name="pickupsearch" id="pickupsearch" #pickupsearchplace autocomplete="off" spellcheck="off"
+                    <input class="form-control" name="pickupsearch" id="pickupsearch" #pickupsearchplace autocomplete="off" spellcheck="off" required
                       type="text" (keyup)="pickUpSearch($event,6)" />
                     <label class="form-control-placeholder" for="city">Search Places*</label>
                   </div>
                 </div>
                 <div class="col-lg-6 col-sm-6 col-md-6">
                   <div class="form-group">
-                    <input class="form-control" name="pickupsearchplaceFill" #pickupsearchplaceFill="ngModel" autocomplete="off" spellcheck="off" type="text" [(ngModel)]="user.pickupsearch"/>
+                    <input class="form-control" name="pickupsearchplaceFill" #pickupsearchplaceFill="ngModel" autocomplete="off" required spellcheck="off" type="text" [(ngModel)]="user.pickupsearch" pattern="^[ A-Za-z0-9_@./#&+-;%]*$"/>
                     <label class="form-control-placeholder" for="pickupsearch">Postal Address*</label>
                   </div>
+                  <div class="form-control-feedback" *ngIf="pickupsearchplaceFill.errors && (pickupsearchplaceFill.dirty || pickupsearchplaceFill.touched)">
+                      <p *ngIf="pickupsearchplaceFill.errors.required" class="haserror">Postal Address is required</p>
+                      <p *ngIf="!pickupsearchplaceFill.errors.valid" class="haserror">Accepted Special Charaters are -@./#7+-;%</p>
+                    </div>
                 </div>
               </div>
               <div class="row">
                 <div class="col-lg-6 col-sm-6 col-md-6">
                   <div class="form-group">
-                    <input class="form-control" name="pickupsearchplaceLandmark" id="pickulandmark"  #pickupsearchplaceLandmark="ngModel"
-                      autocomplete="off" spellcheck="off" type="text" [(ngModel)]="user.pickulandmark"/>
+                    <input class="form-control" name="pickupsearchplaceLandmark" id="pickulandmark" required  #pickupsearchplaceLandmark="ngModel"
+                      autocomplete="off" spellcheck="off" type="text" [(ngModel)]="user.pickulandmark" pattern="^[ A-Za-z0-9_@./#&+-;%]*$"/>
                     <label class="form-control-placeholder" for="pickulandmark">Landmark*</label>
                   </div>
+                  <div class="form-control-feedback" *ngIf="pickupsearchplaceLandmark.errors && (pickupsearchplaceLandmark.dirty || pickupsearchplaceLandmark.touched)">
+                      <p *ngIf="pickupsearchplaceLandmark.errors.required" class="haserror">Landmark is required</p>
+                      <p *ngIf="!pickupsearchplaceLandmark.errors.valid" class="haserror">Accepted Special Charaters are -@./#7+-;%</p>
+                    </div>
                 </div>
               </div>
               <span class="sectionHeader">Slot Details</span>
@@ -220,8 +229,11 @@
                 <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6">
                   <div class="form-group">
                     <input type="text" id="notes" class="form-control" name="notes" [(ngModel)]="user.notes" #notes="ngModel"
-                      pattern="^[a-zA-Z0-9 \,\.\-\/\;\'\}\{\%]+$">
+                    pattern="^[ A-Za-z0-9_@./#&+-;%]*$">
                     <label class="form-control-placeholder" for="notes">Notes</label>
+                  </div>
+                  <div class="form-control-feedback" *ngIf="notes.errors && (notes.dirty || notes.touched)">
+                    <p *ngIf="!notes.errors.valid" class="haserror">Accepted Special Charaters are -@./#7+-;%</p>
                   </div>
                 </div>
               </div>
@@ -246,9 +258,9 @@
               <div class="row">
                 <div  class="col-lg-6 col-sm-6 col-md-6">
                     <div class="pickup-map">
-                        <agm-map id="pickUpMap" [zoom]="zoom" [latitude]="lat" [longitude]="lng" [disableDefaultUI]=false
+                        <agm-map id="pickUpMap" [zoom]="zoom" [latitude]="latPickup" [longitude]="lngPickup" [disableDefaultUI]=false
                           (mapReady)=pickUpMapReady($events)>
-                          <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+                          <agm-marker [latitude]="latPickup" [longitude]="lngPickup"></agm-marker>
                         </agm-map>
                       </div>
                 </div>
@@ -264,26 +276,34 @@
                 </div>
                 <div class="col-lg-6 col-sm-6 col-md-6">
                   <div class="form-group">
-                    <input class="form-control" #internalpickupsearchplaceFill="ngModel" name="internalpickupsearchplaceFill" required [(ngModel)]="user.internalpickup" autocomplete="off" spellcheck="off" type="text" />
+                    <input class="form-control" #internalpickupsearchplaceFill="ngModel" name="internalpickupsearchplaceFill" required [(ngModel)]="user.internalpickup" autocomplete="off" spellcheck="off" type="text" pattern="^[ A-Za-z0-9_@./#&+-;%]*$"/>
                     <label class="form-control-placeholder" for="internalpickupsearchplaceFill">Postal Address*</label>
                   </div>
+                  <div class="form-control-feedback" *ngIf="internalpickupsearchplaceFill.errors && (internalpickupsearchplaceFill.dirty || internalpickupsearchplaceFill.touched)">
+                      <p *ngIf="internalpickupsearchplaceFill.errors.required" class="haserror">Postal Address is required</p>
+                      <p *ngIf="!internalpickupsearchplaceFill.errors.valid" class="haserror">Accepted Special Charaters are -@./#7+-;%</p>
+                    </div>
                 </div>
               </div>
               <div class="row">
                 <div class="col-lg-6 col-sm-6 col-md-6">
                   <div class="form-group">
                     <input class="form-control" id="internalpickulandmark"  #internalpickulandmark="ngModel" name="internalpickulandmark" required [(ngModel)]="user.internalpickulandmark"
-                      autocomplete="off" spellcheck="off" type="text" />
+                      autocomplete="off" spellcheck="off" type="text" pattern="^[ A-Za-z0-9_@./#&+-;%]*$"/>
                     <label class="form-control-placeholder" for="internalpickulandmark">Landmark*</label>
                   </div>
+                  <div class="form-control-feedback" *ngIf="internalpickulandmark.errors && (internalpickulandmark.dirty || internalpickulandmark.touched)">
+                      <p *ngIf="internalpickulandmark.errors.required" class="haserror">Landmark is required</p>
+                      <p *ngIf="!internalpickulandmark.errors.valid" class="haserror">Accepted Special Charaters are -@./#7+-;%</p>
+                    </div>
                 </div>
               </div>
               <div class="row">
                       <div class="col-lg-6 col-sm-6 col-md-6">
                           <div class="pickup-map">
-                            <agm-map id="pickUpMap" [zoom]="zoom" [latitude]="lat" [longitude]="lng" [disableDefaultUI]=false
+                            <agm-map id="pickUpMap" [zoom]="zoom" [latitude]="latDrop" [longitude]="lngDrop" [disableDefaultUI]=false
                                 (mapReady)=pickUpMapReady($events)>
-                                <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+                                <agm-marker [latitude]="latDrop" [longitude]="lngDrop"></agm-marker>
                               </agm-map>
                             </div>
                       </div>
@@ -298,18 +318,26 @@
                   </div>
                   <div class="col-lg-6 col-sm-6 col-md-6">
                     <div class="form-group">
-                      <input class="form-control" #internaldropoffsearchplaceFill="ngModel" name="internaldropoffsearchplaceFill" autocomplete="off" spellcheck="off" type="text" [(ngModel)]="user.internaldroppostal" required/>
+                      <input class="form-control" #internaldropoffsearchplaceFill="ngModel" name="internaldropoffsearchplaceFill" autocomplete="off" spellcheck="off" type="text" [(ngModel)]="user.internaldroppostal" required pattern="^[ A-Za-z0-9_@./#&+-;%]*$"/>
                       <label class="form-control-placeholder" for="internaldropoffsearchplaceFill">Postal Address*</label>
                     </div>
+                    <div class="form-control-feedback" *ngIf="internaldropoffsearchplaceFill.errors && (internaldropoffsearchplaceFill.dirty || internaldropoffsearchplaceFill.touched)">
+                        <p *ngIf="internaldropoffsearchplaceFill.errors.required" class="haserror">Postal Address is required</p>
+                        <p *ngIf="!internaldropoffsearchplaceFill.errors.valid" class="haserror">Accepted Special Charaters are -@./#7+-;%</p>
+                      </div>
                   </div>
                 </div>
                 <div class="row">
                   <div class="col-lg-6 col-sm-6 col-md-6">
                     <div class="form-group">
                       <input class="form-control" id="internaldropofflandmark" name="internaldropofflandmark" #internaldropofflandmark="ngModel" [(ngModel)]="user.internaldropland"
-                        autocomplete="off" spellcheck="off" type="text" required/>
+                        autocomplete="off" spellcheck="off" type="text" required pattern="^[ A-Za-z0-9_@./#&+-;%]*$"/>
                       <label class="form-control-placeholder" for="internaldropofflandmark">Landmark*</label>
                     </div>
+                    <div class="form-control-feedback" *ngIf="internaldropofflandmark.errors && (internaldropofflandmark.dirty || internaldropofflandmark.touched)">
+                        <p *ngIf="internaldropofflandmark.errors.required" class="haserror">Landmark is required</p>
+                        <p *ngIf="!internaldropofflandmark.errors.valid" class="haserror">Accepted Special Charaters are -@./#7+-;%</p>
+                      </div>
                   </div>
                 </div>
               <span class="sectionHeader">Slot Details</span>
@@ -361,8 +389,11 @@
                 <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6">
                   <div class="form-group">
                     <input type="text" id="notes" class="form-control" name="notes" [(ngModel)]="user.notes" #notes="ngModel"
-                      pattern="^[a-zA-Z0-9 \,\.\-\/\;\'\}\{\%]+$">
+                    pattern="^[ A-Za-z0-9_@./#&+-;%]*$">
                     <label class="form-control-placeholder" for="notes">Notes</label>
+                  </div>
+                  <div class="form-control-feedback" *ngIf="notes.errors && (notes.dirty || notes.touched)">
+                    <p *ngIf="!notes.errors.valid" class="haserror">Accepted Special Charaters are -@./#7+-;%</p>
                   </div>
                 </div>
               </div>
@@ -470,9 +501,9 @@
               <div class="row">
                 <div class="col-lg-6 col-sm-6 col-md-6">
                     <div class="pickup-map">
-                        <agm-map id="pickUpMap" [zoom]="zoom" [latitude]="lat" [longitude]="lng" [disableDefaultUI]=false
+                        <agm-map id="pickUpMap" [zoom]="zoom" [latitude]="latPickup" [longitude]="lngPickup" [disableDefaultUI]=false
                           (mapReady)=pickUpMapReady($events)>
-                          <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+                          <agm-marker [latitude]="lngPickup" [longitude]="lngPickup"></agm-marker>
                         </agm-map>
                       </div>
                 </div>
@@ -482,24 +513,32 @@
                 <div class="col-lg-6 col-sm-6 col-md-6">
                   <div class="form-group">
                     <input class="form-control" id="homepickup" #homepickup autocomplete="off" spellcheck="off"
-                      type="text" (keyup)="HomeTestPickup($event,5)" />
+                      type="text" (keyup)="HomeTestPickup($event,5)" required/>
                     <label class="form-control-placeholder" for="homepickup">Search Places*</label>
                   </div>
                 </div>
                 <div class="col-lg-6 col-sm-6 col-md-6">
                   <div class="form-group">
-                    <input class="form-control" #homepickupsearchplaceFill="ngModel"  name="homepickupsearchplaceFill" required autocomplete="off" spellcheck="off" type="text" [(ngModel)]="user.postalhome"/>
+                    <input class="form-control" #homepickupsearchplaceFill="ngModel" pattern="^[ A-Za-z0-9_@./#&+-;%]*$" name="homepickupsearchplaceFill" required autocomplete="off" spellcheck="off" type="text" [(ngModel)]="user.postalhome"/>
                     <label class="form-control-placeholder" for="homepickupsearchplaceFill">Postal Address*</label>
                   </div>
+                  <div class="form-control-feedback" *ngIf="homepickupsearchplaceFill.errors && (homepickupsearchplaceFill.dirty || homepickupsearchplaceFill.touched)">
+                      <p *ngIf="homepickupsearchplaceFill.errors.required" class="haserror">Postal Address is required</p>
+                      <p *ngIf="!homepickupsearchplaceFill.errors.valid" class="haserror">Accepted Special Charaters are -@./#7+-;%</p>
+                    </div>
                 </div>
               </div>
               <div class="row">
                 <div class="col-lg-6 col-sm-6 col-md-6">
                   <div class="form-group">
                     <input class="form-control" id="homepickulandmark" name="homepickulandmark"  #homepickulandmark="ngModel"
-                      autocomplete="off" spellcheck="off" type="text" [(ngModel)]="user.landmarkhome" required/>
+                      autocomplete="off" spellcheck="off" type="text" [(ngModel)]="user.landmarkhome" required pattern="^[ A-Za-z0-9_@./#&+-;%]*$"/>
                     <label class="form-control-placeholder" for="homepickulandmark">Landmark*</label>
                   </div>
+                  <div class="form-control-feedback" *ngIf="homepickulandmark.errors && (homepickulandmark.dirty || homepickulandmark.touched)">
+                      <p *ngIf="homepickulandmark.errors.required" class="haserror">Landmark is required</p>
+                      <p *ngIf="!homepickulandmark.errors.valid" class="haserror">Accepted Special Charaters are -@./#7+-;%</p>
+                    </div>
                 </div>
               </div>
               <div class="sameasDiv">
@@ -513,9 +552,9 @@
                 <div class="row">
                   <div class="col-lg-6 col-sm-6 col-md-6"> 
                       <div class="pickup-map">
-                          <agm-map id="pickUpMap" [zoom]="zoom" [latitude]="lat" [longitude]="lng" [disableDefaultUI]=false
+                          <agm-map id="pickUpMap" [zoom]="zoom" [latitude]="latDrop" [longitude]="lngDrop" [disableDefaultUI]=false
                             (mapReady)=pickUpMapReady($events)>
-                            <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+                            <agm-marker [latitude]="latDrop" [longitude]="lngDrop"></agm-marker>
                           </agm-map>
                         </div>
                   </div>
@@ -531,18 +570,26 @@
                   </div>
                   <div class="col-lg-6 col-sm-6 col-md-6">
                     <div class="form-group">
-                      <input class="form-control" #homedropoffsearchplaceFill="ngModel" name="homedropoffsearchplaceFill" required autocomplete="off" spellcheck="off" type="text" [(ngModel)]="user.postalhomedo"/>
+                      <input class="form-control" #homedropoffsearchplaceFill="ngModel" name="homedropoffsearchplaceFill" pattern="^[ A-Za-z0-9_@./#&+-;%]*$" required autocomplete="off" spellcheck="off" type="text" [(ngModel)]="user.postalhomedo"/>
                       <label class="form-control-placeholder" for="homedropoffsearchplaceFill">Postal Address*</label>
                     </div>
+                    <div class="form-control-feedback" *ngIf="homedropoffsearchplaceFill.errors && (homedropoffsearchplaceFill.dirty || homedropoffsearchplaceFill.touched)">
+                        <p *ngIf="homedropoffsearchplaceFill.errors.required" class="haserror">Postal Address is required</p>
+                        <p *ngIf="!homedropoffsearchplaceFill.errors.valid" class="haserror">Accepted Special Charaters are -@./#7+-;%</p>
+                      </div>
                   </div>
                 </div>
                 <div class="row">
                   <div class="col-lg-6 col-sm-6 col-md-6">
                     <div class="form-group">
-                      <input class="form-control" id="homedropofflandmark"  name="homedropofflandmark" required #homedropofflandmark="ngModel" [(ngModel)]="user.homedropofflandmark"
+                      <input class="form-control" id="homedropofflandmark"  name="homedropofflandmark" pattern="^[ A-Za-z0-9_@./#&+-;%]*$" required #homedropofflandmark="ngModel" [(ngModel)]="user.homedropofflandmark"
                         autocomplete="off" spellcheck="off" type="text" />
                       <label class="form-control-placeholder" for="homedropofflandmark">Landmark*</label>
                     </div>
+                    <div class="form-control-feedback" *ngIf="homedropofflandmark.errors && (homedropofflandmark.dirty || homedropofflandmark.touched)">
+                        <p *ngIf="homedropofflandmark.errors.required" class="haserror">Landmark is required</p>
+                        <p *ngIf="!homedropofflandmark.errors.valid" class="haserror">Accepted Special Charaters are -@./#7+-;%</p>
+                      </div>
                   </div>
                 </div>
               </div>
@@ -563,8 +610,12 @@
                 </div>
                 <div class="col-md-6 col-lg-6 col-sm-6 col-12">
                   <div class="form-group">
-                    <input type="text" id="amount" class="form-control" name="amt" [(ngModel)]="user.amount" #amt="ngModel">
+                    <input type="text" id="amount" class="form-control" name="amt" [(ngModel)]="user.amount" #amt="ngModel" pattern="^[ A-Za-z0-9_@./#&+-;%]*$">
                     <label class="form-control-placeholder" for="amount">Amount to be collected</label>
+                  </div>
+                  <div class="form-control-feedback" *ngIf="amt.errors && (amt.dirty || amt.touched)">
+                    <p *ngIf="amt.errors.required" class="haserror">Landmark is required</p>
+                    <p *ngIf="!amt.errors.valid" class="haserror">Accepted Special Charaters are -@./#7+-;%</p>
                   </div>
                 </div>
               </div>
@@ -616,8 +667,11 @@
                 <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6">
                   <div class="form-group">
                     <input type="text" id="notes" class="form-control" name="notes" [(ngModel)]="user.notes" #notes="ngModel"
-                      pattern="^[a-zA-Z0-9 \,\.\-\/\;\'\}\{\%]+$">
+                      pattern="^[ A-Za-z0-9_@./#&+-;%]*$">
                     <label class="form-control-placeholder" for="notes">Notes</label>
+                  </div>
+                  <div class="form-control-feedback" *ngIf="notes.errors && (notes.dirty || notes.touched)">
+                    <p *ngIf="!notes.errors.valid" class="haserror">Accepted Special Charaters are -@./#7+-;%</p>
                   </div>
                 </div>
               </div>
@@ -725,9 +779,9 @@
               <div class="row">
                 <div class="col-lg-6 col-sm-6 col-md-6">
                   <div class="pickup-map">
-                    <agm-map id="pickUpMap" [zoom]="zoom" [latitude]="lat" [longitude]="lng" [disableDefaultUI]=false
+                    <agm-map id="pickUpMap" [zoom]="zoom" [latitude]="latPickup" [longitude]="lngPickup" [disableDefaultUI]=false
                       (mapReady)=pickUpMapReady($events)>
-                      <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+                      <agm-marker [latitude]="latPickup" [longitude]="lngPickup"></agm-marker>
                     </agm-map>
                   </div>
                 </div>
@@ -742,18 +796,26 @@
                 </div>
                 <div class="col-lg-6 col-sm-6 col-md-6">
                   <div class="form-group">
-                    <input class="form-control" #testpickupsearchplaceFill="ngModel" name="testpickupsearchplaceFill" required autocomplete="off" spellcheck="off" type="text" [(ngModel)]="user.testpickupsearchplaceFill"/>
+                    <input class="form-control" #testpickupsearchplaceFill="ngModel" name="testpickupsearchplaceFill" required autocomplete="off" spellcheck="off" type="text" [(ngModel)]="user.testpickupsearchplaceFill" pattern="^[ A-Za-z0-9_@./#&+-;%]*$"/>
                     <label class="form-control-placeholder" for="testpickupsearchplaceFill">Postal Address*</label>
                   </div>
+                  <div class="form-control-feedback" *ngIf="testpickupsearchplaceFill.errors && (testpickupsearchplaceFill.dirty || testpickupsearchplaceFill.touched)">
+                      <p *ngIf="testpickupsearchplaceFill.errors.required" class="haserror">Postal Address is required</p>
+                      <p *ngIf="!testpickupsearchplaceFill.errors.valid" class="haserror">Accepted Special Charaters are -@./#7+-;%</p>
+                    </div>
                 </div>
               </div>
               <div class="row">
                 <div class="col-lg-6 col-sm-6 col-md-6">
                   <div class="form-group">
-                    <input class="form-control" id="testpickulandmark" name="testpickulandmark"  required #testpickulandmark="ngModel" [(ngModel)]="user.testpickulandmark"
+                    <input class="form-control" id="testpickulandmark" name="testpickulandmark"  required #testpickulandmark="ngModel" [(ngModel)]="user.testpickulandmark" pattern="^[ A-Za-z0-9_@./#&+-;%]*$"
                       autocomplete="off" spellcheck="off" type="text" />
                     <label class="form-control-placeholder" for="testpickulandmark">Landmark*</label>
                   </div>
+                  <div class="form-control-feedback" *ngIf="testpickulandmark.errors && (testpickulandmark.dirty || testpickulandmark.touched)">
+                      <p *ngIf="testpickulandmark.errors.required" class="haserror">Landmark is required</p>
+                      <p *ngIf="!testpickulandmark.errors.valid" class="haserror">Accepted Special Charaters are -@./#7+-;%</p>
+                    </div>
                 </div>
               </div>
               <div class="sameasDiv">
@@ -767,9 +829,9 @@
                 <div class="row">
                   <div class="col-lg-6 col-sm-6 col-md-6">
                       <div class="pickup-map">
-                          <agm-map id="pickUpMap" [zoom]="zoom" [latitude]="lat" [longitude]="lng" [disableDefaultUI]=false
+                          <agm-map id="pickUpMap" [zoom]="zoom" [latitude]="latDrop" [longitude]="lngDrop" [disableDefaultUI]=false
                             (mapReady)=pickUpMapReady($events)>
-                            <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+                            <agm-marker [latitude]="latDrop" [longitude]="lngDrop"></agm-marker>
                           </agm-map>
                         </div>
                   </div>
@@ -784,18 +846,26 @@
                   </div>
                   <div class="col-lg-6 col-sm-6 col-md-6">
                     <div class="form-group">
-                      <input class="form-control" #testdropoffsearchplaceFill="ngModel" name="testdropoffsearchplaceFill" required autocomplete="off" spellcheck="off" type="text" [(ngModel)]="user.testdropoffsearchplaceFill"/>
+                      <input class="form-control" #testdropoffsearchplaceFill="ngModel" name="testdropoffsearchplaceFill" required autocomplete="off" spellcheck="off" type="text" [(ngModel)]="user.testdropoffsearchplaceFill" pattern="^[ A-Za-z0-9_@./#&+-;%]*$"/>
                       <label class="form-control-placeholder" for="testdropoffsearchplaceFill">Postal Address*</label>
                     </div>
+                    <div class="form-control-feedback" *ngIf="testdropoffsearchplaceFill.errors && (testdropoffsearchplaceFill.dirty || testdropoffsearchplaceFill.touched)">
+                        <p *ngIf="testdropoffsearchplaceFill.errors.required" class="haserror">Postal Address is required</p>
+                        <p *ngIf="!testdropoffsearchplaceFill.errors.valid" class="haserror">Accepted Special Charaters are -@./#7+-;%</p>
+                      </div>
                   </div>
                 </div>
                 <div class="row">
                   <div class="col-lg-6 col-sm-6 col-md-6">
                     <div class="form-group">
                       <input class="form-control" id="testdropofflandmark" name="testdropofflandmark" #testdropofflandmark="ngModel"
-                        autocomplete="off" spellcheck="off" type="text" [(ngModel)]="user.testdropofflandmark" required/>
+                        autocomplete="off" spellcheck="off" type="text" [(ngModel)]="user.testdropofflandmark" required pattern="^[ A-Za-z0-9_@./#&+-;%]*$"/>
                       <label class="form-control-placeholder" for="testdropofflandmark">Landmark*</label>
                     </div>
+                    <div class="form-control-feedback" *ngIf="testdropofflandmark.errors && (testdropofflandmark.dirty || testdropofflandmark.touched)">
+                        <p *ngIf="testdropofflandmark.errors.required" class="haserror">Postal Address is required</p>
+                        <p *ngIf="!testdropofflandmark.errors.valid" class="haserror">Accepted Special Charaters are -@./#7+-;%</p>
+                      </div>
                   </div>
                 </div>
               </div>
@@ -865,6 +935,9 @@
                     <input type="text" id="notes" class="form-control" name="notes" [(ngModel)]="user.notes" #notes="ngModel"
                       pattern="^[a-zA-Z0-9 \,\.-]+$">
                     <label class="form-control-placeholder" for="notes">Notes</label>
+                  </div>
+                  <div class="form-control-feedback" *ngIf="notes.errors && (notes.dirty || notes.touched)">
+                    <p *ngIf="!notes.errors.valid" class="haserror">Accepted Special Charaters are -@./#7+-;%</p>
                   </div>
                 </div>
               </div>
@@ -943,13 +1016,14 @@
                   </div>
                   <div class="form-group CusName">
                     <input type="text" id="Cus_name" class="form-control" required [(ngModel)]="cust_details.first_name"
-                      name="Cus_name" #Cus_name="ngModel" style="text-transform: capitalize;" pattern="^[a-zA-Z0-9 \,\.\-\/\;\'\}\{\%]+$">
+                      name="Cus_name" #Cus_name="ngModel" style="text-transform: capitalize;" pattern="^[ A-Za-z0-9_@./#&+-;%]*$">
                     <label class="form-control-placeholder" for="Cus_name">Customer Name*</label>
                   </div>
                 </div>
                 <div class="col-md-6 col-lg-6 col-sm-6">
                   <div class="form-control-feedback" *ngIf="Cus_name.errors && (Cus_name.dirty || Cus_name.touched)">
                     <p *ngIf="Cus_name.errors.required" class="haserror">Customer Name is required</p>
+                    <p *ngIf="!Cus_name.errors.valid" class="haserror">Accepted Special Charaters are -@./#7+-;%</p>
                   </div>
                 </div>
               </div>
@@ -968,13 +1042,13 @@
                   </div>
                 </div>
               </div>
-              <span class="sectionHeader"> Location Details</span>
+              <span class="sectionHeader">Location Details</span>
               <div class="row">
                 <div class="col-lg-6 col-sm-6 col-md-6">
                   <div class="pickup-map">
-                    <agm-map id="pickUpMap" [zoom]="zoom" [latitude]="lat" [longitude]="lng" [disableDefaultUI]=false
+                    <agm-map id="pickUpMap" [zoom]="zoom" [latitude]="latPickup" [longitude]="lngPickup" [disableDefaultUI]=false
                       (mapReady)=pickUpMapReady($events)>
-                      <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+                      <agm-marker [latitude]="latPickup" [longitude]="latPickup"></agm-marker>
                     </agm-map>
                   </div>
                 </div>
@@ -983,24 +1057,32 @@
                 <div class="col-lg-6 col-sm-6 col-md-6">
                   <div class="form-group">
                     <input class="form-control" name="Custodysearchplace" id="Custodysearchplace" #Custodysearchplace autocomplete="off" spellcheck="off"
-                      type="text" (keyup)="pickUpSearch($event,15)" />
+                      type="text" (keyup)="pickUpSearch($event,15)"/>
                     <label class="form-control-placeholder" for="city">Search Places*</label>
                   </div>
                 </div>
                 <div class="col-lg-6 col-sm-6 col-md-6">
                   <div class="form-group">
-                    <input class="form-control" name="CustodysearchplaceFill" #CustodysearchplaceFill="ngModel" autocomplete="off" spellcheck="off" type="text" [(ngModel)]="user.Landmarksearch"/>
+                    <input class="form-control" name="CustodysearchplaceFill" #CustodysearchplaceFill="ngModel" required autocomplete="off" spellcheck="off" type="text" [(ngModel)]="user.Landmarksearch" pattern="^[ A-Za-z0-9_@./#&+-;%]*$"/>
                     <label class="form-control-placeholder" for="CustodysearchplaceFill">Postal Address*</label>
                   </div>
+                  <div class="form-control-feedback" *ngIf="CustodysearchplaceFill.errors && (CustodysearchplaceFill.dirty || CustodysearchplaceFill.touched)">
+                      <p *ngIf="CustodysearchplaceFill.errors.required" class="haserror">Postal Address is required</p>
+                      <p *ngIf="!CustodysearchplaceFill.errors.valid" class="haserror">Accepted Special Charaters are -@./#7+-;%</p>
+                    </div>
                 </div>
               </div>
               <div class="row">
                 <div class="col-lg-6 col-sm-6 col-md-6">
                   <div class="form-group">
-                    <input class="form-control" name="CustodysearchplaceLandmark" id="CustodysearchplaceLandmark" placeholder="Landmark" #CustodysearchplaceLandmark="ngModel"
-                      autocomplete="off" spellcheck="off" type="text" [(ngModel)]="user.Landmarkcust"/>
+                    <input class="form-control" name="CustodysearchplaceLandmark" id="CustodysearchplaceLandmark"  #CustodysearchplaceLandmark="ngModel"
+                      autocomplete="off" spellcheck="off" type="text" [(ngModel)]="user.Landmarkcust" pattern="^[ A-Za-z0-9_@./#&+-;%]*$" required/>
                     <label class="form-control-placeholder" for="CustodysearchplaceLandmark">Landmark*</label>
                   </div>
+                  <div class="form-control-feedback" *ngIf="CustodysearchplaceLandmark.errors && (CustodysearchplaceLandmark.dirty || CustodysearchplaceLandmark.touched)">
+                      <p *ngIf="CustodysearchplaceLandmark.errors.required" class="haserror">Landmark is required</p>
+                      <p *ngIf="!CustodysearchplaceLandmark.errors.valid" class="haserror">Accepted Special Charaters are -@./#7+-;%</p>
+                    </div>
                 </div>
               </div>
               <div class="row">
@@ -1017,8 +1099,11 @@
                 <div class="col-md-6 col-lg-6 col-sm-6">
                   <div class="form-group">
                     <input type="text" id="notes" class="form-control" name="notes" [(ngModel)]="user.notes" #notes="ngModel"
-                      pattern="^[a-zA-Z0-9 \,\.\-\/\;\'\}\{\%]+$">
+                    pattern="^[ A-Za-z0-9_@./#&+-;%]*$">
                     <label class="form-control-placeholder" for="notes">Notes</label>
+                  </div>
+                  <div class="form-control-feedback" *ngIf="notes.errors && (notes.dirty || notes.touched)">
+                    <p *ngIf="!notes.errors.valid" class="haserror">Accepted Special Charaters are -@./#7+-;%</p>
                   </div>
                 </div>
               </div>

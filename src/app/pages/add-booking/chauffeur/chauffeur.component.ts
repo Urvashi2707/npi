@@ -134,6 +134,10 @@ export class ChauffeurComponent implements OnInit {
   countrycode1:string;
   insuranceFlag:boolean=false;
   testdrivecheck = false;
+  latPickup:number;
+  lngPickup:number;
+  latDrop:number;
+  lngDrop:number;
   @ViewChild('pickupsearchplace') pickupsearchplace:ElementRef;
   @ViewChild('pickupsearchplaceFill') pickupsearchplaceFill: ElementRef;
   @ViewChild('pickupsearchplaceLandmark') pickupsearchplaceLandmark: ElementRef;
@@ -318,6 +322,7 @@ export class ChauffeurComponent implements OnInit {
    console.log("after",this.testdrivecheck);
  }
 
+ //Stockyard(6),Custody(15)
  pickUpSearch(e,ServiceId){
    if(ServiceId === 15){
     let autocomplete = new google.maps.places.Autocomplete(this.Custodysearchplace.nativeElement);
@@ -327,12 +332,11 @@ export class ChauffeurComponent implements OnInit {
               if (place.geometry === undefined || place.geometry === null) {
                 return;
           }
+          this.latPickup = place.geometry.location.lat();
+          this.lngPickup = place.geometry.location.lng();
           this.googlepickuplat = place.geometry.location.lat();
           this.googlepickuplong = place.geometry.location.lng();
           this.googleaddresspu = place.formatted_address;
-          console.log(this.googlepickuplat);
-          console.log(this.googlepickuplong);
-          console.log(this.googleaddresspu);
           this.zoom = 20;
         })
       });
@@ -345,12 +349,11 @@ export class ChauffeurComponent implements OnInit {
               if (place.geometry === undefined || place.geometry === null) {
                 return;
           }
+          this.latPickup = place.geometry.location.lat();
+          this.lngPickup = place.geometry.location.lng();
           this.googlepickuplat = place.geometry.location.lat();
           this.googlepickuplong = place.geometry.location.lng();
           this.googleaddresspu = place.formatted_address;
-          console.log(this.googlepickuplat);
-          console.log(this.googlepickuplong);
-          console.log(this.googleaddresspu);
           this.zoom = 20;
         })
       });
@@ -358,6 +361,7 @@ export class ChauffeurComponent implements OnInit {
  
 }
 
+//Home Delivery() and TestDrive Pickup
 HomeTestPickup(e,ServiceId){
   if(ServiceId === 5){
     let autocomplete = new google.maps.places.Autocomplete(this.homepickup.nativeElement);
@@ -367,6 +371,8 @@ HomeTestPickup(e,ServiceId){
               if (place.geometry === undefined || place.geometry === null) {
                 return;
           }
+          this.latPickup = place.geometry.location.lat();
+          this.lngPickup = place.geometry.location.lng();
           this.googlepickuplat = place.geometry.location.lat();
           this.googlepickuplong = place.geometry.location.lng();
           this.googleaddresspu = place.formatted_address;
@@ -382,6 +388,8 @@ HomeTestPickup(e,ServiceId){
               if (place.geometry === undefined || place.geometry === null) {
                 return;
           }
+          this.latPickup = place.geometry.location.lat();
+          this.lngPickup = place.geometry.location.lng();
           this.googlepickuplat = place.geometry.location.lat();
           this.googlepickuplong = place.geometry.location.lng();
           this.googleaddresspu = place.formatted_address;
@@ -391,6 +399,7 @@ HomeTestPickup(e,ServiceId){
   }
 }
 
+//Home Delivery() and TestDrive Dropoff
 HomeTestDropoff(e,ServiceId){
   if(ServiceId === 5){
     let autocomplete = new google.maps.places.Autocomplete(this.homedropoff.nativeElement);
@@ -400,6 +409,8 @@ HomeTestDropoff(e,ServiceId){
               if (place.geometry === undefined || place.geometry === null) {
                 return;
           }
+          this.latDrop = place.geometry.location.lat();
+          this.lngDrop = place.geometry.location.lng();
           this.googledropofflat = place.geometry.location.lat();
           this.googledropofflong = place.geometry.location.lng();
           this.googleaddressdo = place.formatted_address;
@@ -415,6 +426,8 @@ HomeTestDropoff(e,ServiceId){
               if (place.geometry === undefined || place.geometry === null) {
                 return;
           }
+          this.latDrop = place.geometry.location.lat();
+          this.lngDrop = place.geometry.location.lng();
           this.googledropofflat = place.geometry.location.lat();
           this.googledropofflong = place.geometry.location.lng();
           this.googleaddressdo = place.formatted_address;
@@ -424,6 +437,7 @@ HomeTestDropoff(e,ServiceId){
   }
 }
 
+//Internal movement (1-Pickup)
 InternalSearch(e,ServiceId){
   if(ServiceId === 1){
     let autocomplete = new google.maps.places.Autocomplete(this.internalpickup.nativeElement);
@@ -433,6 +447,8 @@ InternalSearch(e,ServiceId){
               if (place.geometry === undefined || place.geometry === null) {
                 return;
           }
+          this.latPickup = place.geometry.location.lat();
+          this.lngPickup = place.geometry.location.lng();
           this.googlepickuplat = place.geometry.location.lat();
           this.googlepickuplong = place.geometry.location.lng();
           this.googleaddresspu = place.formatted_address;
@@ -448,6 +464,8 @@ InternalSearch(e,ServiceId){
               if (place.geometry === undefined || place.geometry === null) {
                 return;
           }
+          this.latDrop = place.geometry.location.lat();
+          this.lngDrop = place.geometry.location.lng();
           this.googledropofflat = place.geometry.location.lat();
           this.googledropofflong = place.geometry.location.lng();
           this.googleaddressdo = place.formatted_address;
