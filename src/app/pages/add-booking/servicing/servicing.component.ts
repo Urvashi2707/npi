@@ -304,6 +304,7 @@ export class ServicingComponent implements OnInit {
 
   sameAsPickUpAdd(e){
     console.log(this.ifSameAsPickUp);
+    this.dropOffOnly = false;
     this.ifSameAsPickUp = !this.ifSameAsPickUp;
   }
 
@@ -619,7 +620,12 @@ public getCity() {
     console.log(this.yourBoolean);
     if(this.yourBoolean === 'onlypickup'){
         this.ifSameAsPickUp = false;
+        this.dropOffOnly = false;
         console.log('only pickup');
+    }
+    else if(this.yourBoolean === 'servicing'){
+      this.ifSameAsPickUp = false;
+        this.dropOffOnly = false;
     }
     else{
       this.ifSameAsPickUp = false;
@@ -647,9 +653,18 @@ public getCity() {
   }
 
   doDrop() {
+    if(this.yourBoolean === 'onlypickup'){
+      this.ifSameAsPickUp = false;
+      console.log('only pickup');
+  }
+  else{
+    this.ifSameAsPickUp = false;
+    console.log('pickup');
+  }
     this.googleMapDropoffFlag  = false;
     this.googleMapPickupFlag = false;
-    this.dropOffOnly = !this.dropOffOnly;
+    this.dropOffOnly = true;
+    console.log(this.dropOffOnly);
     if (this.dateString.length > 0) {
       const reqpara11 = {
         requesttype: 'getslots',
@@ -718,7 +733,39 @@ public getCity() {
     this.googlemapShow = !this.googlemapShow;
   }
 
-  SelectSavedPickupAddress(i){
+  removeActiveBorder(el,index){
+		console.log('Keep active ',el ,'active index ',index );
+		var els = el.parentElement.children
+
+		for(var i=0;i<els.length;i++)
+		{
+			els[i].classList.remove('borderCls');
+		}
+	}
+
+  SelectSavedPickupAddress(i,x, ev){
+    console.log("event",ev);
+    console.log("index",x)
+    if(ev.target.classList.contains('savedAddBtn'))
+		{
+			this.removeActiveBorder(ev.target,x);
+			ev.target.classList.add('borderCls');
+		}
+		else if(ev.target.parentElement.classList.contains('savedAddBtn'))
+		{
+			this.removeActiveBorder(ev.target.parentElement,x);
+			ev.target.parentElement.classList.add('borderCls');
+		}
+		else
+		{
+			console.log('Dekh kr click kro');
+		}
+
+
+		console.log(x);
+		if (x==x) {
+			this.ifClicked = true;
+		}
     this.ifClicked = true;
     this.pickupSelected = true;
     this.googleMapPickupFlag = false;

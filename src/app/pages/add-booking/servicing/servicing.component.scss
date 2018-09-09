@@ -520,6 +520,7 @@ agm-map {
     padding: 1rem;
     height: 200px;
     width: calc(100%/6 - 1rem);
+    position: relative;
     vertical-align: top;
     img {
       height: 100px;
@@ -532,4 +533,14 @@ agm-map {
   border-radius: 11px; 
   border: 2px solid #40dc7e; 
   background-color: #dadada;
+}
+.address-type-para{
+  position: absolute;
+  bottom: -28px;
+  margin: auto;
+  text-align: center;
+  width: 100%;
+}
+.borderCls{
+  border:3px solid #40dc7e !important;
 }
