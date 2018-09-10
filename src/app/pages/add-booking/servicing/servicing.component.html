@@ -251,7 +251,7 @@
                     <div class="row">
                       <div class="col-lg-6 col-sm-6 col-md-6">
                           <div class="pickup-map">
-                              <agm-map id="pickUpMap" [zoom]="zoom" [latitude]="latPickup" [longitude]="lngPickup" [disableDefaultUI]=false
+                              <agm-map id="pickUpMap" [zoom]="zoom" [latitude]="latPickup" [longitude]="lngPickup" [disableDefaultUI]=false [mapDraggable]=false
                                 (mapReady)=pickUpMapReady($events)>
                                 <agm-marker [latitude]="latPickup" [longitude]="lngPickup"></agm-marker>
                               </agm-map>
@@ -328,7 +328,7 @@
                         <div class="col-lg-6 col-sm-6 col-md-6">
                           <div class="pickup-map">
                             <agm-map id="pickUpMap2" [zoom]="zoom" [latitude]="latDrop" [longitude]="lngDrop"
-                              [disableDefaultUI]=false (mapReady)=pickUpMapReady($events)>
+                              [disableDefaultUI]=false (mapReady)=pickUpMapReady($events) [mapDraggable]=false>
                               <agm-marker [latitude]="latDrop" [longitude]="lngDrop"></agm-marker>
                             </agm-map>
                           </div>
@@ -385,7 +385,7 @@
                   <div class="row">
                     <div class="col-lg-6 col-sm-6 col-md-6">
                       <div class="pickup-map">
-                        <agm-map id="pickUpMap" [zoom]="zoom" [latitude]="latPickup" [longitude]="lngPickup" [disableDefaultUI]=false
+                        <agm-map id="pickUpMap" [zoom]="zoom" [latitude]="latPickup" [longitude]="lngPickup" [disableDefaultUI]=false [mapDraggable]=false
                           (mapReady)=pickUpMapReady($events)>
                           <agm-marker [latitude]="latPickup" [longitude]="lngPickup"></agm-marker>
                         </agm-map>
@@ -446,7 +446,7 @@
                   <div class="row">
                     <div class="col-lg-6 col-sm-6 col-md-6">
                       <div class="pickup-map">
-                        <agm-map id="pickUpMap2" [zoom]="zoom" [latitude]="latDrop" [longitude]="lngDrop" [disableDefaultUI]=false
+                        <agm-map id="pickUpMap2" [zoom]="zoom" [latitude]="latDrop" [longitude]="lngDrop" [disableDefaultUI]=false  [mapDraggable]=false
                           (mapReady)=pickUpMapReady($events)>
                           <agm-marker [latitude]="latDrop" [longitude]="lngDrop"></agm-marker>
                         </agm-map>
