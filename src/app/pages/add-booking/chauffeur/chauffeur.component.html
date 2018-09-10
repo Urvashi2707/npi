@@ -270,7 +270,7 @@
                 <div class="col-lg-6 col-sm-6 col-md-6">
                   <div class="form-group">
                     <input class="form-control" id="internalpickup" #internalpickup autocomplete="off" spellcheck="off"
-                      type="text" (keyup)="InternalSearch($event,1)" />
+                      type="text" (keyup)="InternalSearch($event,1)" required/>
                     <label class="form-control-placeholder" for="internalpickup">Search Places*</label>
                   </div>
                 </div>
@@ -312,7 +312,7 @@
                   <div class="col-lg-6 col-sm-6 col-md-6">
                     <div class="form-group">
                       <input class="form-control" id="internaldropoff" #internaldropoff autocomplete="off" spellcheck="off" 
-                        type="text" (keyup)="InternalSearch($event,2)" />
+                        type="text" (keyup)="InternalSearch($event,2)" required/>
                       <label class="form-control-placeholder" for="internaldropoff">Search Places*</label>
                     </div>
                   </div>
@@ -564,7 +564,7 @@
                   <div class="col-lg-6 col-sm-6 col-md-6">
                     <div class="form-group">
                       <input class="form-control" id="homedropoff" #homedropoff autocomplete="off" spellcheck="off"
-                        type="text" (keyup)="HomeTestDropoff($event,5)" />
+                        type="text" (keyup)="HomeTestDropoff($event,5)" required/>
                       <label class="form-control-placeholder" for="homedropoff">Search Places*</label>
                     </div>
                   </div>
@@ -1057,7 +1057,7 @@
                 <div class="col-lg-6 col-sm-6 col-md-6">
                   <div class="form-group">
                     <input class="form-control" name="Custodysearchplace" id="Custodysearchplace" #Custodysearchplace autocomplete="off" spellcheck="off"
-                      type="text" (keyup)="pickUpSearch($event,15)"/>
+                      type="text" (keyup)="pickUpSearch($event,15)" required/>
                     <label class="form-control-placeholder" for="city">Search Places*</label>
                   </div>
                 </div>

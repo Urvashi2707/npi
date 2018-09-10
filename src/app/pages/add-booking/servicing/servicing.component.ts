@@ -1336,13 +1336,55 @@ SelectSavedDropoffAddress(i){
       }
      }
      else{
-      if(this.googleMapDropoffFlag && this.googleMapPickupFlag){
-      
-        if(this.yourBoolean === "onlypickup"){
-          console.log("bothgoolgemap",this.yourBoolean);
+       console.log("new number");
+       console.log("dropoffflaf",this.googleMapDropoffFlag);
+       console.log("pickupflag",this.googleMapPickupFlag)
+       if(this.yourBoolean === "onlypickup"){
+         console.log("new number only pickup");
+        this.googleaddressdo = this.googleaddresspu;
+        this.landmarkpu = f.value.pickupsearchplaceLandmark;
+        this.landmarkdo = f.value.pickupsearchplaceLandmark;
+        this.pickuplat = this.googlepickuplat.toString();
+        this.pickuplong = this.googlepickuplong.toString();
+        this.droplat = this.googlepickuplat.toString();
+        this.droplong = this.googlepickuplong.toString();
+        this.addressdoprevious = "0";
+        this.addresspuprevious = "0";
+        this.addresstypedo = f.value.addresstypepu;
+        this.addresstypepu = f.value.addresstypepu;
+        this.postaladdresspu = f.value.pickupsearchplaceFill;
+        this.postaladdressdo = f.value.pickupsearchplaceFill;
+        this.droplat = this.droplat.substring(0, 14);
+        this.droplong = this.droplong.substring(0, 14);
+        this.pickuplat = this.pickuplat.substring(0, 14);
+        this.pickuplong = this.pickuplong.substring(0, 14);
+      }
+      else if(this.yourBoolean === "dropoff"){
+        console.log("new number only dropoff");
+        this.googleaddresspu = this.googleaddressdo;
+        this.landmarkpu = f.value.dropofflandmark;
+        this.landmarkdo = f.value.dropofflandmark;
+        this.pickuplat = this.googledropofflat.toString();
+        this.pickuplong = this.googledropofflong.toString();
+        this.droplat = this.googledropofflat.toString();
+        this.droplong = this.googledropofflong.toString();
+        this.addressdoprevious = "0";
+        this.addresspuprevious = "0";
+        this.addresstypedo = f.value.addresstypedo;
+        this.addresstypepu = f.value.addresstypedo;
+        this.postaladdresspu = f.value.dropoffsearchplaceFill;
+        this.postaladdressdo = f.value.dropoffsearchplaceFill;
+        this.droplat = this.droplat.substring(0, 14);
+        this.droplong = this.droplong.substring(0, 14);
+        this.pickuplat = this.pickuplat.substring(0, 14);
+        this.pickuplong = this.pickuplong.substring(0, 14);
+      }
+      else{
+        if(!this.ifSameAsPickUp){
+          console.log("new number same as");
           this.googleaddressdo = this.googleaddresspu;
-          this.landmarkpu = f.value.pickulandmark;
-          this.landmarkdo = f.value.pickulandmark;
+          this.landmarkpu = f.value.pickupsearchplaceLandmark;
+          this.landmarkdo = f.value.pickupsearchplaceLandmark;
           this.pickuplat = this.googlepickuplat.toString();
           this.pickuplong = this.googlepickuplong.toString();
           this.droplat = this.googlepickuplat.toString();
@@ -1358,67 +1400,24 @@ SelectSavedDropoffAddress(i){
           this.pickuplat = this.pickuplat.substring(0, 14);
           this.pickuplong = this.pickuplong.substring(0, 14);
         }
-        else if(this.yourBoolean === "dropoff"){
-          console.log("bothgoolgemap",this.yourBoolean);
-          this.googleaddresspu = this.googleaddressdo;
-          this.landmarkpu = f.value.dropofflandmark;
+        else{
+          this.googleaddressdo = this.googleaddressdo;
+          this.landmarkpu = f.value.pickupsearchplaceLandmark;
           this.landmarkdo = f.value.dropofflandmark;
-          this.pickuplat = this.googledropofflat.toString();
-          this.pickuplong = this.googledropofflong.toString();
+          this.pickuplat = this.googlepickuplat.toString();
+          this.pickuplong = this.googlepickuplong.toString();
           this.droplat = this.googledropofflat.toString();
           this.droplong = this.googledropofflong.toString();
           this.addressdoprevious = "0";
           this.addresspuprevious = "0";
           this.addresstypedo = f.value.addresstypedo;
-          this.addresstypepu = f.value.addresstypedo;
-          this.postaladdresspu = f.value.dropoffsearchplaceFill;
+          this.addresstypepu = f.value.addresstypepu;
+          this.postaladdresspu = f.value.pickupsearchplaceFill;
           this.postaladdressdo = f.value.dropoffsearchplaceFill;
           this.droplat = this.droplat.substring(0, 14);
           this.droplong = this.droplong.substring(0, 14);
           this.pickuplat = this.pickuplat.substring(0, 14);
           this.pickuplong = this.pickuplong.substring(0, 14);
-        }
-        else{
-          if(!this.ifSameAsPickUp){
-            console.log("bothgoolgemap sameas",this.yourBoolean);
-            console.log("pickupmap",this.yourBoolean);
-            this.googleaddressdo = this.googleaddresspu;
-            this.landmarkpu = f.value.pickulandmark;
-            this.landmarkdo = f.value.pickulandmark;
-            this.pickuplat = this.googlepickuplat.toString();
-            this.pickuplong = this.googlepickuplong.toString();
-            this.droplat = this.googlepickuplat.toString();
-            this.droplong = this.googlepickuplong.toString();
-            this.addressdoprevious = "0";
-            this.addresspuprevious = "0";
-            this.addresstypedo = f.value.addresstypepu;
-            this.addresstypepu = f.value.addresstypepu;
-            this.postaladdresspu = f.value.pickupsearchplaceFill;
-            this.postaladdressdo = f.value.pickupsearchplaceFill;
-            this.droplat = this.droplat.substring(0, 14);
-            this.droplong = this.droplong.substring(0, 14);
-            this.pickuplat = this.pickuplat.substring(0, 14);
-            this.pickuplong = this.pickuplong.substring(0, 14);
-          }
-          else{
-            console.log("bothgoolgemap not",this.yourBoolean);
-            this.landmarkpu = f.value.pickulandmark;
-            this.landmarkdo = f.value.dropofflandmark;
-            this.pickuplat = this.googlepickuplat.toString();
-            this.pickuplong = this.googlepickuplong.toString();
-            this.droplat = this.googledropofflat.toString();
-            this.droplong = this.googledropofflong.toString();
-            this.addressdoprevious = "0";
-            this.addresspuprevious = "0";
-            this.addresstypedo = f.value.addresstypedo;
-            this.addresstypepu = f.value.addresstypepu;
-            this.postaladdresspu = f.value.pickupsearchplaceFill;
-            this.postaladdressdo = f.value.dropoffsearchplaceFill;
-            this.droplat = this.droplat.substring(0, 14);
-            this.droplong = this.droplong.substring(0, 14);
-            this.pickuplat = this.pickuplat.substring(0, 14);
-            this.pickuplong = this.pickuplong.substring(0, 14);
-          }
         }
       }
      }

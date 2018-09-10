@@ -243,7 +243,7 @@
                       <button type="button" *ngFor="let i of address;let x = index" class="savedAddBtn" (click)="SelectSavedPickupAddress(i, x, $event)">
                         <p>#{{i.doornumber}},{{i.street}},</p>
                         <p>{{i.area}},{{i.pincode}}</p>
-                        <p class="address-type-para">Home</p>
+                        <p class="address-type-para">{{i.type_of_address}}</p>
                       </button>
                     </div>
                   </div>
@@ -318,7 +318,7 @@
                       <button type="button" *ngFor="let i of address; let x = index" class="savedAddBtn" (click)="SelectSavedDropoffAddress(i, x, $event)">
                         <p>#{{i.doornumber}},{{i.street}},</p>
                         <p>{{i.area}},{{i.pincode}}</p>
-                        <p class="address-type-para">Home</p>
+                        <p class="address-type-para">{{i.type_of_address}}</p>
                       </button>
                     </div>
                   </div>
@@ -396,7 +396,7 @@
                     <div class="col-lg-6 col-sm-6 col-md-6">
                       <div class="form-group">
                         <input class="form-control" id="pickupsearch" #pickupsearchplace autocomplete="off" spellcheck="off"
-                          type="text" (keyup)="pickUpSearch($event)" />
+                          type="text" (keyup)="pickUpSearch($event)" required/>
                         <label class="form-control-placeholder" for="city">Search Places*</label>
                       </div>
                     </div>
@@ -457,7 +457,7 @@
                     <div class="col-lg-6 col-sm-6 col-md-6">
                       <div class="form-group">
                         <input class="form-control" id="dropoffsearch" #dropoffsearchplace autocomplete="off"
-                          spellcheck="off" type="text" (keyup)="dropOffSearch($event)" />
+                          spellcheck="off" type="text" (keyup)="dropOffSearch($event)" required/>
                         <label class="form-control-placeholder" for="dropoffsearch">Search Places*</label>
                       </div>
                     </div>
