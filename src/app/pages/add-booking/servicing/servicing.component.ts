@@ -1314,12 +1314,16 @@ SelectSavedDropoffAddress(i){
       }
       else{
         if(this.yourBoolean === "onlypickup"){
+          this.googleaddressdo = "0";
+          this.googleaddresspu = "0";
           this.postaladdressdo = this.postaladdresspu;
           this.droplat = this.pickuplat;
           this.droplong = this.pickuplong;
           this.landmarkdo = this.landmarkpu;
         }
         else if(this.yourBoolean === "dropoff"){
+          this.googleaddressdo = "0";
+          this.googleaddresspu = "0";
           this.postaladdresspu = this.postaladdressdo;
           this.landmarkpu = this.landmarkdo;
           this.pickuplat = this.droplat;
@@ -1327,6 +1331,8 @@ SelectSavedDropoffAddress(i){
         }
         else{
           if(!this.ifSameAsPickUp){
+            this.googleaddressdo = "0";
+            this.googleaddresspu = "0";
             this.postaladdressdo = this.postaladdresspu;
             this.droplat = this.pickuplat;
             this.droplong = this.pickuplong;
