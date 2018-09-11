@@ -13,7 +13,7 @@
             <div class="col-md-5 col-sm-5 col-lg-5">
               <div class="form-group">
                 <input type="text" id="num" name="num" style="text-transform: uppercase" class="form-control" required
-                  [(ngModel)]="registrationNumber" #num="ngModel" maxlength="15" pattern="^[ A-Za-z0-9_@./#&+-;%]*$">
+                  [(ngModel)]="registrationNumber" #num="ngModel" maxlength="15" pattern="^[0-9a-zA-Z#,\-/_ .@]+$">
                 <label class="form-control-placeholder" for="num">Registration Number*</label>
               </div>
               <div class="form-control-feedback" *ngIf="num.errors && (num.dirty || num.touched)">
@@ -159,7 +159,7 @@
                 </div>
                 <div class="col-lg-6 col-sm-6 col-md-6">
                   <div class="form-group">
-                    <input class="form-control" name="pickupsearchplaceFill" #pickupsearchplaceFill="ngModel" autocomplete="off" required spellcheck="off" type="text" [(ngModel)]="user.pickupsearch" pattern="^[ A-Za-z0-9_@./#&+-;%]*$"/>
+                    <input class="form-control" name="pickupsearchplaceFill" #pickupsearchplaceFill="ngModel" autocomplete="off" required spellcheck="off" type="text" [(ngModel)]="user.pickupsearch" pattern="^[0-9a-zA-Z#,\-/_ .@]+$"/>
                     <label class="form-control-placeholder" for="pickupsearch">Postal Address*</label>
                   </div>
                   <div class="form-control-feedback" *ngIf="pickupsearchplaceFill.errors && (pickupsearchplaceFill.dirty || pickupsearchplaceFill.touched)">
@@ -172,7 +172,7 @@
                 <div class="col-lg-6 col-sm-6 col-md-6">
                   <div class="form-group">
                     <input class="form-control" name="pickupsearchplaceLandmark" id="pickulandmark" required  #pickupsearchplaceLandmark="ngModel"
-                      autocomplete="off" spellcheck="off" type="text" [(ngModel)]="user.pickulandmark" pattern="^[ A-Za-z0-9_@./#&+-;%]*$"/>
+                      autocomplete="off" spellcheck="off" type="text" [(ngModel)]="user.pickulandmark" pattern="^[0-9a-zA-Z#,\-/_ .@]+$"/>
                     <label class="form-control-placeholder" for="pickulandmark">Landmark*</label>
                   </div>
                   <div class="form-control-feedback" *ngIf="pickupsearchplaceLandmark.errors && (pickupsearchplaceLandmark.dirty || pickupsearchplaceLandmark.touched)">
@@ -229,7 +229,7 @@
                 <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6">
                   <div class="form-group">
                     <input type="text" id="notes" class="form-control" name="notes" [(ngModel)]="user.notes" #notes="ngModel"
-                    pattern="^[ A-Za-z0-9_@./#&+-;%]*$">
+                    pattern="^[0-9a-zA-Z#,\-/_ .@]+$">
                     <label class="form-control-placeholder" for="notes">Notes</label>
                   </div>
                   <div class="form-control-feedback" *ngIf="notes.errors && (notes.dirty || notes.touched)">
@@ -276,7 +276,7 @@
                 </div>
                 <div class="col-lg-6 col-sm-6 col-md-6">
                   <div class="form-group">
-                    <input class="form-control" #internalpickupsearchplaceFill="ngModel" name="internalpickupsearchplaceFill" required [(ngModel)]="user.internalpickup" autocomplete="off" spellcheck="off" type="text" pattern="^[ A-Za-z0-9_@./#&+-;%]*$"/>
+                    <input class="form-control" #internalpickupsearchplaceFill="ngModel" name="internalpickupsearchplaceFill" required [(ngModel)]="user.internalpickup" autocomplete="off" spellcheck="off" type="text" pattern="^[0-9a-zA-Z#,\-/_ .@]+$"/>
                     <label class="form-control-placeholder" for="internalpickupsearchplaceFill">Postal Address*</label>
                   </div>
                   <div class="form-control-feedback" *ngIf="internalpickupsearchplaceFill.errors && (internalpickupsearchplaceFill.dirty || internalpickupsearchplaceFill.touched)">
@@ -289,7 +289,7 @@
                 <div class="col-lg-6 col-sm-6 col-md-6">
                   <div class="form-group">
                     <input class="form-control" id="internalpickulandmark"  #internalpickulandmark="ngModel" name="internalpickulandmark" required [(ngModel)]="user.internalpickulandmark"
-                      autocomplete="off" spellcheck="off" type="text" pattern="^[ A-Za-z0-9_@./#&+-;%]*$"/>
+                      autocomplete="off" spellcheck="off" type="text" pattern="^[0-9a-zA-Z#,\-/_ .@]+$"/>
                     <label class="form-control-placeholder" for="internalpickulandmark">Landmark*</label>
                   </div>
                   <div class="form-control-feedback" *ngIf="internalpickulandmark.errors && (internalpickulandmark.dirty || internalpickulandmark.touched)">
@@ -318,7 +318,7 @@
                   </div>
                   <div class="col-lg-6 col-sm-6 col-md-6">
                     <div class="form-group">
-                      <input class="form-control" #internaldropoffsearchplaceFill="ngModel" name="internaldropoffsearchplaceFill" autocomplete="off" spellcheck="off" type="text" [(ngModel)]="user.internaldroppostal" required pattern="^[ A-Za-z0-9_@./#&+-;%]*$"/>
+                      <input class="form-control" #internaldropoffsearchplaceFill="ngModel" name="internaldropoffsearchplaceFill" autocomplete="off" spellcheck="off" type="text" [(ngModel)]="user.internaldroppostal" required pattern="^[0-9a-zA-Z#,\-/_ .@]+$"/>
                       <label class="form-control-placeholder" for="internaldropoffsearchplaceFill">Postal Address*</label>
                     </div>
                     <div class="form-control-feedback" *ngIf="internaldropoffsearchplaceFill.errors && (internaldropoffsearchplaceFill.dirty || internaldropoffsearchplaceFill.touched)">
@@ -331,7 +331,7 @@
                   <div class="col-lg-6 col-sm-6 col-md-6">
                     <div class="form-group">
                       <input class="form-control" id="internaldropofflandmark" name="internaldropofflandmark" #internaldropofflandmark="ngModel" [(ngModel)]="user.internaldropland"
-                        autocomplete="off" spellcheck="off" type="text" required pattern="^[ A-Za-z0-9_@./#&+-;%]*$"/>
+                        autocomplete="off" spellcheck="off" type="text" required pattern="^[0-9a-zA-Z#,\-/_ .@]+$"/>
                       <label class="form-control-placeholder" for="internaldropofflandmark">Landmark*</label>
                     </div>
                     <div class="form-control-feedback" *ngIf="internaldropofflandmark.errors && (internaldropofflandmark.dirty || internaldropofflandmark.touched)">
@@ -389,7 +389,7 @@
                 <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6">
                   <div class="form-group">
                     <input type="text" id="notes" class="form-control" name="notes" [(ngModel)]="user.notes" #notes="ngModel"
-                    pattern="^[ A-Za-z0-9_@./#&+-;%]*$">
+                    pattern="^[0-9a-zA-Z#,\-/_ .@]+$">
                     <label class="form-control-placeholder" for="notes">Notes</label>
                   </div>
                   <div class="form-control-feedback" *ngIf="notes.errors && (notes.dirty || notes.touched)">
@@ -532,7 +532,7 @@
                 <div class="col-lg-6 col-sm-6 col-md-6">
                   <div class="form-group">
                     <input class="form-control" id="homepickulandmark" name="homepickulandmark"  #homepickulandmark="ngModel"
-                      autocomplete="off" spellcheck="off" type="text" [(ngModel)]="user.landmarkhome" required pattern="^[ A-Za-z0-9_@./#&+-;%]*$"/>
+                      autocomplete="off" spellcheck="off" type="text" [(ngModel)]="user.landmarkhome" required pattern="^[0-9a-zA-Z#,\-/_ .@]+$"/>
                     <label class="form-control-placeholder" for="homepickulandmark">Landmark*</label>
                   </div>
                   <div class="form-control-feedback" *ngIf="homepickulandmark.errors && (homepickulandmark.dirty || homepickulandmark.touched)">
@@ -582,7 +582,7 @@
                 <div class="row">
                   <div class="col-lg-6 col-sm-6 col-md-6">
                     <div class="form-group">
-                      <input class="form-control" id="homedropofflandmark"  name="homedropofflandmark" pattern="^[ A-Za-z0-9_@./#&+-;%]*$" required #homedropofflandmark="ngModel" [(ngModel)]="user.homedropofflandmark"
+                      <input class="form-control" id="homedropofflandmark"  name="homedropofflandmark" pattern="^[0-9a-zA-Z#,\-/_ .@]+$" required #homedropofflandmark="ngModel" [(ngModel)]="user.homedropofflandmark"
                         autocomplete="off" spellcheck="off" type="text" />
                       <label class="form-control-placeholder" for="homedropofflandmark">Landmark*</label>
                     </div>
@@ -610,7 +610,7 @@
                 </div>
                 <div class="col-md-6 col-lg-6 col-sm-6 col-12">
                   <div class="form-group">
-                    <input type="text" id="amount" class="form-control" name="amt" [(ngModel)]="user.amount" #amt="ngModel" pattern="^[ A-Za-z0-9_@./#&+-;%]*$">
+                    <input type="text" id="amount" class="form-control" name="amt" [(ngModel)]="user.amount" #amt="ngModel" pattern="^[0-9a-zA-Z#,\-/_ .@]+$">
                     <label class="form-control-placeholder" for="amount">Amount to be collected</label>
                   </div>
                   <div class="form-control-feedback" *ngIf="amt.errors && (amt.dirty || amt.touched)">
@@ -667,7 +667,7 @@
                 <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6">
                   <div class="form-group">
                     <input type="text" id="notes" class="form-control" name="notes" [(ngModel)]="user.notes" #notes="ngModel"
-                    pattern="^[ A-Za-z0-9_@./#&+-;%]*$">
+                    pattern="^[0-9a-zA-Z#,\-/_ .@]+$">
                     <label class="form-control-placeholder" for="notes">Notes</label>
                   </div>
                   <div class="form-control-feedback" *ngIf="notes.errors && (notes.dirty || notes.touched)">
@@ -796,7 +796,7 @@
                 </div>
                 <div class="col-lg-6 col-sm-6 col-md-6">
                   <div class="form-group">
-                    <input class="form-control" #testpickupsearchplaceFill="ngModel" name="testpickupsearchplaceFill" required autocomplete="off" spellcheck="off" type="text" [(ngModel)]="user.testpickupsearchplaceFill" pattern="^[ A-Za-z0-9_@./#&+-;%]*$"/>
+                    <input class="form-control" #testpickupsearchplaceFill="ngModel" name="testpickupsearchplaceFill" required autocomplete="off" spellcheck="off" type="text" [(ngModel)]="user.testpickupsearchplaceFill" pattern="^[0-9a-zA-Z#,\-/_ .@]+$"/>
                     <label class="form-control-placeholder" for="testpickupsearchplaceFill">Postal Address*</label>
                   </div>
                   <div class="form-control-feedback" *ngIf="testpickupsearchplaceFill.errors && (testpickupsearchplaceFill.dirty || testpickupsearchplaceFill.touched)">
@@ -808,7 +808,7 @@
               <div class="row">
                 <div class="col-lg-6 col-sm-6 col-md-6">
                   <div class="form-group">
-                    <input class="form-control" id="testpickulandmark" name="testpickulandmark"  required #testpickulandmark="ngModel" [(ngModel)]="user.testpickulandmark" pattern="^[ A-Za-z0-9_@./#&+-;%]*$"
+                    <input class="form-control" id="testpickulandmark" name="testpickulandmark"  required #testpickulandmark="ngModel" [(ngModel)]="user.testpickulandmark" pattern="^[0-9a-zA-Z#,\-/_ .@]+$"
                       autocomplete="off" spellcheck="off" type="text" />
                     <label class="form-control-placeholder" for="testpickulandmark">Landmark*</label>
                   </div>
@@ -859,7 +859,7 @@
                   <div class="col-lg-6 col-sm-6 col-md-6">
                     <div class="form-group">
                       <input class="form-control" id="testdropofflandmark" name="testdropofflandmark" #testdropofflandmark="ngModel"
-                        autocomplete="off" spellcheck="off" type="text" [(ngModel)]="user.testdropofflandmark" required pattern="^[ A-Za-z0-9_@./#&+-;%]*$"/>
+                        autocomplete="off" spellcheck="off" type="text" [(ngModel)]="user.testdropofflandmark" required pattern="^[0-9a-zA-Z#,\-/_ .@]+$"/>
                       <label class="form-control-placeholder" for="testdropofflandmark">Landmark*</label>
                     </div>
                     <div class="form-control-feedback" *ngIf="testdropofflandmark.errors && (testdropofflandmark.dirty || testdropofflandmark.touched)">
@@ -933,7 +933,7 @@
                 <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6">
                   <div class="form-group">
                     <input type="text" id="notes" class="form-control" name="notes" [(ngModel)]="user.notes" #notes="ngModel"
-                    pattern="^[ A-Za-z0-9_@./#&+-;%]*$">
+                    pattern="^[0-9a-zA-Z#,\-/_ .@]+$">
                     <label class="form-control-placeholder" for="notes">Notes</label>
                   </div>
                   <div class="form-control-feedback" *ngIf="notes.errors && (notes.dirty || notes.touched)">
@@ -1063,7 +1063,7 @@
                 </div>
                 <div class="col-lg-6 col-sm-6 col-md-6">
                   <div class="form-group">
-                    <input class="form-control" name="CustodysearchplaceFill" #CustodysearchplaceFill="ngModel" required autocomplete="off" spellcheck="off" type="text" [(ngModel)]="user.Landmarksearch" pattern="^[ A-Za-z0-9_@./#&+-;%]*$"/>
+                    <input class="form-control" name="CustodysearchplaceFill" #CustodysearchplaceFill="ngModel" required autocomplete="off" spellcheck="off" type="text" [(ngModel)]="user.Landmarksearch" pattern="^[0-9a-zA-Z#,\-/_ .@]+$"/>
                     <label class="form-control-placeholder" for="CustodysearchplaceFill">Postal Address*</label>
                   </div>
                   <div class="form-control-feedback" *ngIf="CustodysearchplaceFill.errors && (CustodysearchplaceFill.dirty || CustodysearchplaceFill.touched)">
@@ -1076,7 +1076,7 @@
                 <div class="col-lg-6 col-sm-6 col-md-6">
                   <div class="form-group">
                     <input class="form-control" name="CustodysearchplaceLandmark" id="CustodysearchplaceLandmark"  #CustodysearchplaceLandmark="ngModel"
-                      autocomplete="off" spellcheck="off" type="text" [(ngModel)]="user.Landmarkcust" pattern="^[ A-Za-z0-9_@./#&+-;%]*$" required/>
+                      autocomplete="off" spellcheck="off" type="text" [(ngModel)]="user.Landmarkcust" pattern="^[0-9a-zA-Z#,\-/_ .@]+$" required/>
                     <label class="form-control-placeholder" for="CustodysearchplaceLandmark">Landmark*</label>
                   </div>
                   <div class="form-control-feedback" *ngIf="CustodysearchplaceLandmark.errors && (CustodysearchplaceLandmark.dirty || CustodysearchplaceLandmark.touched)">
@@ -1099,7 +1099,7 @@
                 <div class="col-md-6 col-lg-6 col-sm-6">
                   <div class="form-group">
                     <input type="text" id="notes" class="form-control" name="notes" [(ngModel)]="user.notes" #notes="ngModel"
-                    pattern="^[ A-Za-z0-9_@./#&+-;%]*$">
+                    pattern="^[0-9a-zA-Z#,\-/_ .@]+$">
                     <label class="form-control-placeholder" for="notes">Notes</label>
                   </div>
                   <div class="form-control-feedback" *ngIf="notes.errors && (notes.dirty || notes.touched)">
