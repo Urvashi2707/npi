@@ -783,7 +783,29 @@ public getCity() {
     }
   }
 
-SelectSavedDropoffAddress(i){
+SelectSavedDropoffAddress(i,x, ev){
+  console.log("event",ev);
+  console.log("index",x)
+  if(ev.target.classList.contains('savedAddBtn'))
+  {
+    this.removeActiveBorder(ev.target,x);
+    ev.target.classList.add('borderCls');
+  }
+  else if(ev.target.parentElement.classList.contains('savedAddBtn'))
+  {
+    this.removeActiveBorder(ev.target.parentElement,x);
+    ev.target.parentElement.classList.add('borderCls');
+  }
+  else
+  {
+    console.log('Dekh kr click kro');
+  }
+
+
+  console.log(x);
+  if (x==x) {
+    this.ifClicked = true;
+  }
   this.DropoffSelected = true;
   this.googleMapDropoffFlag = false;
   this.postaladdressdo = i.doornumber +' '+ i.area +' '+ i.street +' '+i.pincode;
@@ -794,7 +816,7 @@ SelectSavedDropoffAddress(i){
   this.addressdoprevious = i.address_id;
   for(var k = 0;k <this.addresstype.length; k++){
     if(this.addresstype[k].type_of_address === i.type_of_address){
-      this.addresstypepu = this.addresstype[k].id;
+      this.addresstypedo = this.addresstype[k].id;
       console.log(this.addresstypepu);
     }
   }
@@ -1334,6 +1356,7 @@ SelectSavedDropoffAddress(i){
             this.googleaddressdo = "0";
             this.googleaddresspu = "0";
             this.postaladdressdo = this.postaladdresspu;
+            this.addresstypedo = this.addresstypepu;
             this.droplat = this.pickuplat;
             this.droplong = this.pickuplong;
             this.landmarkdo = this.landmarkpu;
