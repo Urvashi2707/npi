@@ -769,11 +769,13 @@ public getCity() {
     this.ifClicked = true;
     this.pickupSelected = true;
     this.googleMapPickupFlag = false;
-    this.postaladdresspu = i.doornumber +' '+ i.area +' '+ i.street +' '+ i.pincode;
+    this.postaladdresspu = i.postal_address;
+    this.googleaddresspu = i.google_address;
     console.log("postal address",this.postaladdresspu);
     this.pickuplat = i.latitude;
     this.pickuplong = i.longitude;
-    this.landmarkpu = i.landmark;
+    this.landmarkpu = i.land_mark;
+    console.log(this.landmarkpu);
     this.addresspuprevious = i.address_id;
     for(var j = 0;j<this.addresstype.length;j++){
       if(this.addresstype[j].type_of_address === i.type_of_address){
@@ -808,11 +810,12 @@ SelectSavedDropoffAddress(i,x, ev){
   }
   this.DropoffSelected = true;
   this.googleMapDropoffFlag = false;
-  this.postaladdressdo = i.doornumber +' '+ i.area +' '+ i.street +' '+i.pincode;
+  this.googleaddressdo = i.google_address;
+  this.postaladdressdo = i.postal_address;
   console.log("postal address",this.postaladdressdo);
   this.droplat = i.latitude;
   this.droplong = i.longitude;
-  this.landmarkdo = i.landmark;
+  this.landmarkdo = i.land_mark;
   this.addressdoprevious = i.address_id;
   for(var k = 0;k <this.addresstype.length; k++){
     if(this.addresstype[k].type_of_address === i.type_of_address){
@@ -824,7 +827,7 @@ SelectSavedDropoffAddress(i,x, ev){
 
   getinfowithMobile(){
     const reqpara112 = {
-      requesttype:'getcustinfo_mobilev2',
+      requesttype:'getcustinfo_mobilev3',
       mobilenumber:this.user.mobile1,
       svcidvar:this.svcid,
       vehnumber:this.registrationNumber
@@ -1336,25 +1339,20 @@ SelectSavedDropoffAddress(i,x, ev){
       }
       else{
         if(this.yourBoolean === "onlypickup"){
-          this.googleaddressdo = "0";
-          this.googleaddresspu = "0";
           this.postaladdressdo = this.postaladdresspu;
           this.droplat = this.pickuplat;
           this.droplong = this.pickuplong;
           this.landmarkdo = this.landmarkpu;
         }
         else if(this.yourBoolean === "dropoff"){
-          this.googleaddressdo = "0";
-          this.googleaddresspu = "0";
-          this.postaladdresspu = this.postaladdressdo;
+          this.googleaddresspu = this.googleaddressdo;
           this.landmarkpu = this.landmarkdo;
           this.pickuplat = this.droplat;
           this.pickuplong = this.droplong;
         }
         else{
           if(!this.ifSameAsPickUp){
-            this.googleaddressdo = "0";
-            this.googleaddresspu = "0";
+            this.googleaddressdo = this.googleaddresspu;
             this.postaladdressdo = this.postaladdresspu;
             this.addresstypedo = this.addresstypepu;
             this.droplat = this.pickuplat;

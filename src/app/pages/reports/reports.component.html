@@ -184,7 +184,7 @@
         <select id="status" class="form-control" name="status" [(ngModel)]="user.status" #servicetype="ngModel" required>
           <option *ngFor="let stat of status" [value]="stat.id"> {{stat.type}}</option>
         </select>
-        <label class="form-control-placeholder" for="serviceType">Service Type</label>
+        <label class="form-control-placeholder" for="serviceType">Service Status</label>
       </div>
     </div>
   </div>

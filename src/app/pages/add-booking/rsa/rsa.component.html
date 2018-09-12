@@ -10,17 +10,18 @@
           <div class="row">
             <div class="col-md-5 col-sm-5 col-lg-5">
               <div class="form-group">
-                <input type="text" id="num" name="num" class="form-control" required [(ngModel)]="registrationNumber" #num="ngModel" style=" text-transform: uppercase" pattern="^[a-zA-Z0-9 \,\.\-\/\;\'\}\{\%]+$">
+                <input type="text" id="num" name="num" class="form-control" required [(ngModel)]="registrationNumber" #num="ngModel" style=" text-transform: uppercase" pattern="^[0-9a-zA-Z#,\-/_ .@]+$">
                 <label class="form-control-placeholder" for="num">Registration Number</label>
               </div>
               <div class="form-control-feedback" *ngIf="num.errors && (num.dirty || num.touched)">
                 <p *ngIf="num.errors.required" class="haserror">Registration Number is required</p>
+                <p *ngIf="!num.errors.valid" class="haserror">\$^*'}'`;> these characters are not accepted</p>
               </div>
             </div>
             <div class="col-md-5 col-sm-5 col-lg-5">
               <div class="form-group">
                 <input type="text" id="mobile1" name="mobile1" class="form-control" maxlength="10" OnlyNumber="true" required [(ngModel)]="user.mobile1"
-                  #mobile1="ngModel">
+                  #mobile1="ngModel" pattern="^[0-9a-zA-Z#,\-/_ .@]+$">
                 <label class="form-control-placeholder" for="mobile1">Customer Mobile Number</label>
               </div>
             </div>
@@ -73,15 +74,21 @@
             <div class="row">
               <div class="col-md-4 col-sm-4 col-lg-4">
                 <div class="form-group">
-                  <input type="text" id="vin" name="vin" class="form-control" [(ngModel)]="user.vin" #vin="ngModel">
+                  <input type="text" id="vin" name="vin" class="form-control" [(ngModel)]="user.vin" #vin="ngModel" pattern="^[0-9a-zA-Z#,\-/_ .@]+$">
                   <label class="form-control-placeholder" for="vin">Vin/chassis number</label>
                 </div>
+                <div class="form-control-feedback" *ngIf="vin.errors && (vin.dirty || vin.touched)">
+                    <p *ngIf="!vin.errors.valid" class="haserror">\$^*'}'`;> these characters are not accepted</p>
+                  </div>
               </div>
               <div class="col-md-4 col-sm-4 col-lg-4">
                 <div class="form-group">
-                  <input type="text" id="policy" name="policy" class="form-control" [(ngModel)]="user.policy" #policy="ngModel">
+                  <input type="text" id="policy" name="policy" class="form-control" [(ngModel)]="user.policy" #policy="ngModel" pattern="^[0-9a-zA-Z#,\-/_ .@]+$">
                   <label class="form-control-placeholder" for="policy">Policy Number</label>
                 </div>
+                <div class="form-control-feedback" *ngIf="policy.errors && (policy.dirty || policy.touched)">
+                    <p *ngIf="!policy.errors.valid" class="haserror">\$^*'}'`;> these characters are not accepted</p>
+                  </div>
               </div>
               <div class="col-md-2 col-sm-2 col-lg-2" style="display:inherit">
                 <div style="padding-right:29%;">
@@ -155,13 +162,14 @@
                 </div>
                 <div class="form-group CusName">
                   <input type="text" id="Cus_name" class="form-control" required [(ngModel)]="cust_details.first_name" name="Cus_name" #Cus_name="ngModel"
-                    style="text-transform: capitalize;" pattern="^[a-zA-Z0-9 \,\.\-\/\;\'\}\{\%]+$">
+                    style="text-transform: capitalize;" pattern="^[0-9a-zA-Z#,\-/_ .@]+$">
                   <label class="form-control-placeholder" for="Cus_name">Customer Name*</label>
                 </div>
               </div>
               <div class="col-md-6 col-lg-6 col-sm-6">
                 <div class="form-control-feedback" *ngIf="Cus_name.errors && (Cus_name.dirty || Cus_name.touched)">
                   <p *ngIf="Cus_name.errors.required" class="haserror">Customer Name is required</p>
+                  <p *ngIf="!Cus_name.errors.valid" class="haserror">\$^*'}'`;> these characters are not accepted</p>
                 </div>
               </div>
             </div>
@@ -229,11 +237,12 @@
               <div class="row">
                 <div class="col-md-6 col-lg-6 col-sm-6">
                   <div class="form-group">
-                    <input type="text" id="custloc" class="form-control" name="custloc" [(ngModel)]="user.custloc" #custloc="ngModel" required pattern="^[a-zA-Z0-9 \,\.-]+$">
+                    <input type="text" id="custloc" class="form-control" name="custloc" [(ngModel)]="user.custloc" #custloc="ngModel" required pattern="^[0-9a-zA-Z#,\-/_ .@]+$">
                     <label class="form-control-placeholder" for="custloc">BreakDown Location*</label>
                   </div>
                   <div class="form-control-feedback" *ngIf="custloc.errors && (custloc.dirty || custloc.touched)">
                     <p *ngIf="custloc.errors.required" class="haserror">BreakDown Location is required</p>
+                    <p *ngIf="!custloc.errors.valid" class="haserror">\$^*'}'`;> these characters are not accepted</p>
                   </div>
                 </div>
                 <div class="col-md-6 col-lg-6 col-sm-6">
@@ -304,11 +313,12 @@
                 <div class="row" *ngIf="hideDropoff">
                   <div class="col-md-6 col-lg-6 col-sm-6">
                     <div class="form-group">
-                      <input type="text" id="dropoff" class="form-control" name="dropoff" [(ngModel)]="user.dropoff" #dropoff="ngModel" required pattern="^[a-zA-Z0-9 \,\.-]+$">
+                      <input type="text" id="dropoff" class="form-control" name="dropoff" [(ngModel)]="user.dropoff" #dropoff="ngModel" required pattern="^[0-9a-zA-Z#,\-/_ .@]+$">
                       <label class="form-control-placeholder" for="custloc">Drop-off Location*</label>
                     </div>
                     <div class="form-control-feedback" *ngIf="dropoff.errors && (dropoff.dirty || dropoff.touched)">
                       <p *ngIf="dropoff.errors.required" class="haserror">Drop-off Location is required</p>
+                      <p *ngIf="!dropoff.errors.valid" class="haserror">\$^*'}'`;> these characters are not accepted</p>
                     </div>
                   </div>
                   <div class="col-md-6 col-lg-6 col-sm-6">
@@ -326,29 +336,38 @@
               <div class="row" *ngIf="yourBoolean === 'towing'">
                 <div class="col-md-6 col-lg-6 col-sm-6">
                   <div class="form-group">
-                    <input type="text" id="notes" class="form-control" name="notes" [(ngModel)]="user.notes"  #notes="ngModel" pattern="^[a-zA-Z0-9 \,\.\-\/\;\'\}\{\%]+$">
+                    <input type="text" id="notes" class="form-control" name="notes" [(ngModel)]="user.notes"  #notes="ngModel" pattern="^[0-9a-zA-Z#,\-/_ .@]+$">
                     <label class="form-control-placeholder" for="notes">Notes</label>
                   </div>
                 </div>
                 <div class="col-md-6 col-lg-6 col-sm-6">
                   <div class="form-group">
-                    <input type="text" id="amt" class="form-control" name="amt" [(ngModel)]="user.amt"  #amt="ngModel">
+                    <input type="text" id="amt" class="form-control" name="amt" [(ngModel)]="user.amt"  #amt="ngModel" pattern="^[0-9a-zA-Z#,\-/_ .@]+$">
                     <label class="form-control-placeholder" for="notes">Estimated Amount</label>
                   </div>
+                  <div class="form-control-feedback" *ngIf="amt.errors && (amt.dirty || amt.touched)">
+                      <p *ngIf="!amt.errors.valid" class="haserror">\$^*'}'`;> these characters are not accepted</p>
+                    </div>
                 </div>
               </div>
               <div class="row" *ngIf="yourBoolean != 'towing'">
                 <div class="col-md-6 col-lg-6 col-sm-6">
                   <div class="form-group">
-                    <input type="text" id="amt" class="form-control" name="amt" [(ngModel)]="user.amt" #amt="ngModel">
+                    <input type="text" id="amt" class="form-control" name="amt" [(ngModel)]="user.amt" #amt="ngModel" pattern="^[0-9a-zA-Z#,\-/_ .@]+$">
                     <label class="form-control-placeholder" for="notes">Estimated Amount</label>
                   </div>
+                  <div class="form-control-feedback" *ngIf="amt.errors && (amt.dirty || amt.touched)">
+                      <p *ngIf="!amt.errors.valid" class="haserror">\$^*'}'`;> these characters are not accepted</p>
+                    </div>
                 </div>
                 <div class="col-md-6 col-lg-6 col-sm-6">
                   <div class="form-group">
-                    <input type="text" id="notes" class="form-control" name="notes" [(ngModel)]="user.notes" #notes="ngModel" pattern="^[a-zA-Z0-9 \,\.\-\/\;\'\}\{\%]+$">
+                    <input type="text" id="notes" class="form-control" name="notes" [(ngModel)]="user.notes" #notes="ngModel" pattern="^[0-9a-zA-Z#,\-/_ .@]+$">
                     <label class="form-control-placeholder" for="notes">Notes</label>
                   </div>
+                  <div class="form-control-feedback" *ngIf="notes.errors && (notes.dirty || notes.touched)">
+                      <p *ngIf="!notes.errors.valid" class="haserror">\$^*'}'`;> these characters are not accepted</p>
+                    </div>
                 </div>
               </div>
               <div class="row">
