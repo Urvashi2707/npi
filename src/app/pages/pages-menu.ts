@@ -356,6 +356,11 @@ export const MENU_INSURANCESUSR: NbMenuItem[] = [
     title: 'Unconfirmed',
     icon: 'nb-tables',
     link: '/pages/unconfirmed',
+  },
+  {
+    title: 'Escalation Matrix',
+    icon: 'nb-tables',
+    link: '/pages/matrix',
   }
 ];
 
