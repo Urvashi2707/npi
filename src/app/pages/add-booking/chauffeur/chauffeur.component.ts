@@ -978,7 +978,7 @@ customerCheck(){
         this.landmarkpu = f.value.CustodysearchplaceLandmark;
         this.landmarkdo = f.value.CustodysearchplaceLandmark;
         this.googleaddressdo = this.googleaddresspu;
-        this.postaladdresspu = f.value.CustodysearchplaceFill;
+        this.postaladdresspu = f.value.Custodyflatno + ' ' + f.value.Custodybuildingname;
         this.postaladdressdo = f.value.CustodysearchplaceFill;
         this.droplat = this.googlepickuplat.toString();
         this.droplong = this.googlepickuplong.toString();
@@ -993,8 +993,8 @@ customerCheck(){
         this.landmarkpu = f.value.pickupsearchplaceLandmark;
         this.landmarkdo = f.value.pickupsearchplaceLandmark;
         this.googleaddressdo = this.googleaddresspu;
-        this.postaladdresspu = f.value.pickupsearchplaceFill;
-        this.postaladdressdo = f.value.pickupsearchplaceFill;
+        this.postaladdresspu = f.value.pickflatno + ' ' + f.value.pickupbuildingname;
+        this.postaladdressdo = f.value.pickflatno + ' ' + f.value.pickupbuildingname;
         this.droplat = this.googlepickuplat.toString();;
         this.droplong = this.googlepickuplong.toString();
         this.pickuplat = this.googlepickuplat.toString();;
@@ -1007,8 +1007,8 @@ customerCheck(){
     }
     else if (this.pickup_drop == 4){
       var result = this.getDistanceFromLatLonInKm(this.googlepickuplat,this.googlepickuplong,this.googledropofflat,this.googledropofflong);
-      this.postaladdresspu = f.value.internalpickupsearchplaceFill;
-      this.postaladdressdo = f.value.internaldropoffsearchplaceFill;
+      this.postaladdresspu = f.value.internalpickupflatno + '' + f.value.internalpickupbilding;
+      this.postaladdressdo = f.value.internaldropoffflatno + '' + f.value.internaldropoffbuildingname;
       this.landmarkpu = f.value.internalpickulandmark;
       this.landmarkdo = f.value.internaldropofflandmark;
       this.droplat = this.googledropofflat.toString();;
@@ -1024,8 +1024,8 @@ customerCheck(){
     else if (this.pickup_drop == 5 || this.pickup_drop == 7){
       if(this.pickup_drop == 5){
         if(!this.testdrivecheck){
-          this.postaladdresspu = f.value.homepickupsearchplaceFill;
-          this.postaladdressdo = f.value.homepickupsearchplaceFill;
+          this.postaladdresspu = f.value.homepickupflatno + '' + f.value.homepickupbuildingname;
+          this.postaladdressdo = f.value.homepickupflatno + '' + f.value.homepickupbuildingname;
           this.landmarkpu = f.value.homepickulandmark;
           this.landmarkdo = f.value.homepickulandmark;
           this.droplat = this.googlepickuplat.toString();;
@@ -1038,8 +1038,8 @@ customerCheck(){
           this.pickuplong = this.pickuplong.substring(0, 14);
         }
         else{
-          this.postaladdresspu = f.value.homepickupsearchplaceFill;
-          this.postaladdressdo = f.value.homedropoffsearchplaceFill;
+          this.postaladdresspu = f.value.homepickupflatno + '' + f.value.homepickupbuildingname;
+          this.postaladdressdo = f.value.homedropoffflatno + '' + f.value.homedropoffbuildingmname;
           this.landmarkpu = f.value.homepickulandmark;
           this.landmarkdo = f.value.homedropofflandmark;
           this.droplat = this.googledropofflat.toString();;
@@ -1056,8 +1056,8 @@ customerCheck(){
         if(!this.testdrivecheck){
           console.log("same as test");
           this.googleaddressdo = this.googleaddresspu;
-          this.postaladdressdo = f.value.testpickupsearchplaceFill;
-          this.postaladdresspu = f.value.testpickupsearchplaceFill;
+          this.postaladdressdo = f.value.testpickupflatno + '' + f.value.testpickupbuildingname;
+          this.postaladdresspu = f.value.testpickupflatno + '' + f.value.testpickupbuildingname;
           this.landmarkpu = f.value.testpickulandmark;
           this.landmarkdo = f.value.testpickulandmark;
           this.droplat = this.googlepickuplat.toString();;
@@ -1071,8 +1071,8 @@ customerCheck(){
         }
         else{
          console.log("not same test")
-          this.postaladdresspu = f.value.testpickupsearchplaceFill;
-          this.postaladdressdo = f.value.testdropoffsearchplaceFill;
+          this.postaladdresspu = f.value.testpickupflatno + '' + f.value.testpickupbuildingname;
+          this.postaladdressdo = f.value.testdropofffaltno + '' + f.value.testdropoffbuildingname;
           this.landmarkpu = f.value.testpickulandmark;
           this.landmarkdo = f.value.testdropofflandmark;
           this.droplat = this.googledropofflat.toString();;

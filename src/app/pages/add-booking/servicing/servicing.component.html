@@ -267,19 +267,29 @@
                         </div>
                       </div>
                       <div class="col-lg-6 col-sm-6 col-md-6">
-                        <div class="form-group" style="margin-top: 0.3%;">
-                            <label for="pickupsearch" style="margin-bottom: 0.2rem;color: #a4abb3;font-size: 14px;margin-left: 0.2rem;">Postal Address*</label>
-                          <!-- <label for="pickupsearchplaceFill">Postal Address*</label> -->
-                          <input class="form-control" name="pickupsearchplaceFill" #pickuppostal="ngModel" autocomplete="off" spellcheck="off" type="text" placeholder="Doornumber,street name,area*" required [(ngModel)]="user.pickuppostal" pattern="^[0-9a-zA-Z#,\-/_ .@]+$" minlength="20" maxlength="200"/>
+                        <div class="form-group">
+                          <input class="form-control" name="pickflatno" #pickflatno="ngModel" autocomplete="off" spellcheck="off" type="text"  required [(ngModel)]="user.pickflatno" pattern="^[0-9a-zA-Z#,\-/_ .@]+$" minlength="20" maxlength="200"/>
+                          <label class="form-control-placeholder" for="pickflatno">Flat No./House No.*</label>
                         </div>
-                        <div class="form-control-feedback" *ngIf="pickuppostal.errors && (pickuppostal.dirty || pickuppostal.touched)">
-                            <p *ngIf="pickuppostal.errors.required" class="haserror">Postal Address is required</p>
-                            <p *ngIf="!pickuppostal.errors.valid" class="haserror">\$^*'}'`;> these characters are not accepted</p>
-                            <p *ngIf="pickuppostal.errors.minlength" class="haserror">Minimum 20 characters</p>
+                        <div class="form-control-feedback" *ngIf="pickflatno.errors && (pickflatno.dirty || pickflatno.touched)">
+                            <p *ngIf="pickflatno.errors.required" class="haserror">Flat No./House No. is required</p>
+                            <p *ngIf="!pickflatno.errors.valid" class="haserror">\$^*'}'`;> these characters are not accepted</p>
+                            <p *ngIf="pickflatno.errors.minlength" class="haserror">Minimum 20 characters</p>
                           </div>
                       </div>
                     </div>
                     <div class="row">
+                        <div class="col-lg-6 col-sm-6 col-md-6">
+                            <div class="form-group">
+                              <input class="form-control" name="pickupbuildingname" #pickupbuildingname="ngModel" autocomplete="off" spellcheck="off" type="text"  required [(ngModel)]="user.pickupbuildingname" pattern="^[0-9a-zA-Z#,\-/_ .@]+$" minlength="20" maxlength="200"/>
+                              <label class="form-control-placeholder" for="pickupbuildingname">Building Name/Street Name*</label>
+                            </div>
+                            <div class="form-control-feedback" *ngIf="pickupbuildingname.errors && (pickupbuildingname.dirty || pickupbuildingname.touched)">
+                                <p *ngIf="pickupbuildingname.errors.required" class="haserror">Building Name/Street Name is required</p>
+                                <p *ngIf="!pickupbuildingname.errors.valid" class="haserror">\$^*'}'`;> these characters are not accepted</p>
+                                <p *ngIf="pickupbuildingname.errors.minlength" class="haserror">Minimum 20 characters</p>
+                              </div>
+                          </div>
                       <div class="col-lg-6 col-sm-6 col-md-6">
                         <div class="form-group">
                           <input class="form-control" name="pickulandmark" id="pickulandmark" 
@@ -292,6 +302,8 @@
                             <p *ngIf="pickupsearchplaceLandmark.errors.minlength" class="haserror">Minimum 10 characters</p>
                           </div>
                       </div>
+                   </div>
+                    <div class="row">
                       <div class="col-lg-6 col-sm-6 col-md-6">
                         <div class="form-group">
                           <select id="addresstypepu" class="form-control" name="addresstypepu" [(ngModel)]="user.addresstypepu"
@@ -346,20 +358,31 @@
                           </div>
                         </div>
                         <div class="col-lg-6 col-sm-6 col-md-6">
-                          <div class="form-group" style="margin-top: 0.3%;">
-                              <label for="pickupsearch" style="margin-bottom: 0.2rem;color: #a4abb3;font-size: 14px;margin-left: 0.2rem;">Postal Address*</label>
-                            <input class="form-control" name="dropoffsearchplaceFill" #dropoffsearchplaceFill="ngModel" autocomplete="off" id="dropoffsearchautofill"
-                              spellcheck="off" type="text" required [(ngModel)]="user.dropoffpostal" pattern="^[0-9a-zA-Z#,\-/_ .@]+$" minlength="20" maxlength="200" placeholder="Doornumber,street name,area*"/>
-                            <!-- <label class="form-control-placeholder" for="dropoffsearchautofill">Postal Address*</label> -->
-                          </div>
-                          <div class="form-control-feedback" *ngIf="dropoffsearchplaceFill.errors && (dropoffsearchplaceFill.dirty || dropoffsearchplaceFill.touched)">
-                              <p *ngIf="dropoffsearchplaceFill.errors.required" class="haserror">Postal Address is required</p>
-                              <p *ngIf="!dropoffsearchplaceFill.errors.valid" class="haserror">\$^*'}'`;> these characters are not accepted</p>
-                              <p *ngIf="dropoffsearchplaceFill.errors.minlength" class="haserror">Minimum 20 characters</p>
+                          <div class="form-group">
+                            <input class="form-control" name="dropoffflatno" #dropoffflatno="ngModel" autocomplete="off" id="dropoffflatno"
+                              spellcheck="off" type="text" required [(ngModel)]="user.dropoffflatno" pattern="^[0-9a-zA-Z#,\-/_ .@]+$" minlength="20" maxlength="200"/>
+                              <label class="form-control-placeholder" for="dropoffflatno">Flat No./House No.*</label>
+                            </div>
+                          <div class="form-control-feedback" *ngIf="dropoffflatno.errors && (dropoffflatno.dirty || dropoffflatno.touched)">
+                              <p *ngIf="dropoffflatno.errors.required" class="haserror">Flat No./House No. is required</p>
+                              <p *ngIf="!dropoffflatno.errors.valid" class="haserror">\$^*'}'`;> these characters are not accepted</p>
+                              <p *ngIf="dropoffflatno.errors.minlength" class="haserror">Minimum 20 characters</p>
                             </div>
                         </div>
                       </div>
                       <div class="row">
+                          <div class="col-lg-6 col-sm-6 col-md-6">
+                              <div class="form-group">
+                                <input class="form-control" name="dropoffbuildingname" #dropoffbuildingname="ngModel" autocomplete="off" id="dropoffbuildingname"
+                                  spellcheck="off" type="text" required [(ngModel)]="user.dropoffbuildingname" pattern="^[0-9a-zA-Z#,\-/_ .@]+$" minlength="20" maxlength="200"/>
+                                  <label class="form-control-placeholder" for="dropoffbuildingname">Building Name/Street Name*</label>
+                                </div>
+                              <div class="form-control-feedback" *ngIf="dropoffbuildingname.errors && (dropoffbuildingname.dirty || dropoffbuildingname.touched)">
+                                  <p *ngIf="dropoffbuildingname.errors.required" class="haserror">Building Name/Street Name is required</p>
+                                  <p *ngIf="!dropoffbuildingname.errors.valid" class="haserror">\$^*'}'`;> these characters are not accepted</p>
+                                  <p *ngIf="dropoffbuildingname.errors.minlength" class="haserror">Minimum 20 characters</p>
+                                </div>
+                            </div>
                         <div class="col-lg-6 col-sm-6 col-md-6">
                           <div class="form-group">
                             <input class="form-control" name="dropofflandmark" id="dropofflandmark" 
@@ -372,14 +395,17 @@
                               <p *ngIf="dropofflandmark.errors.minlength" class="haserror">Minimum 10 characters</p>
                             </div>
                         </div>
+                       
+                      </div>
+                      <div class="row">
                         <div class="col-lg-6 col-sm-6 col-md-6">
-                          <div class="form-group">
-                            <select id="addresstypedo" class="form-control" name="addresstypedo" [(ngModel)]="user.addresstypedo"
-                              #addresstypepu="ngModel" required>
-                              <option [value]="i.id" *ngFor="let i of addresstype">{{i.type_of_address}}</option>
-                            </select>
-                            <label class="form-control-placeholder" for="addresstypedo">Type of address*</label>
-                          </div>
+                            <div class="form-group">
+                                <select id="addresstypedo" class="form-control" name="addresstypedo" [(ngModel)]="user.addresstypedo"
+                                  #addresstypepu="ngModel" required>
+                                  <option [value]="i.id" *ngFor="let i of addresstype">{{i.type_of_address}}</option>
+                                </select>
+                                <label class="form-control-placeholder" for="addresstypedo">Type of address*</label>
+                              </div>
                         </div>
                       </div>
                     </div>
@@ -407,31 +433,44 @@
                       </div>
                     </div>
                     <div class="col-lg-6 col-sm-6 col-md-6">
-                      <div class="form-group" style="margin-top: 0.3%;">
-                         <label for="pickupsearch" style="margin-bottom: 0.2rem;color: #a4abb3;font-size: 14px;margin-left: 0.2rem;">Postal Address*</label>
-                        <input class="form-control" name="pickupsearchplaceFill" #pickupsearchplaceFill="ngModel" autocomplete="off" spellcheck="off" type="text" pattern="^[0-9a-zA-Z#,\-/_ .@]+$" required [(ngModel)]="user.pikuppostal" minlength="20" maxlength="200" placeholder="Doornumber,street name,area*"/>
-                       
+                      <div class="form-group">
+                        <input class="form-control" name="pickflatno" #pickflatno="ngModel" autocomplete="off" spellcheck="off" type="text" pattern="^[0-9a-zA-Z#,\-/_ .@]+$" required [(ngModel)]="user.pickflatno" minlength="20" maxlength="200" />
+                        <label class="form-control-placeholder" for="pickflatno">Flat No./House No.*</label>
                       </div>
-                      <div class="form-control-feedback" *ngIf="pickupsearchplaceFill.errors && (pickupsearchplaceFill.dirty || pickupsearchplaceFill.touched)">
-                          <p *ngIf="pickupsearchplaceFill.errors.required" class="haserror">Postal Address is required</p>
-                          <p *ngIf="!pickupsearchplaceFill.errors.valid" class="haserror">\$^*'}'`;> these characters are not accepted</p>
-                          <p *ngIf="pickupsearchplaceFill.errors.minlength" class="haserror">Minimum 20 characters</p>
+                      <div class="form-control-feedback" *ngIf="pickflatno.errors && (pickflatno.dirty || pickflatno.touched)">
+                          <p *ngIf="pickflatno.errors.required" class="haserror">Flat No/House No is required</p>
+                          <p *ngIf="!pickflatno.errors.valid" class="haserror">\$^*'}'`;> these characters are not accepted</p>
+                          <p *ngIf="pickflatno.errors.minlength" class="haserror">Minimum 20 characters</p>
                         </div>
                     </div>
                   </div>
                   <div class="row">
                     <div class="col-lg-6 col-sm-6 col-md-6">
-                      <div class="form-group">
-                        <input class="form-control" id="pickulandmark" name="pickupsearchplaceLandmark"
-                          #pickupsearchplaceLandmark="ngModel" autocomplete="off" spellcheck="off" type="text" pattern="^[0-9a-zA-Z#,\-/_ .@]+$" required [(ngModel)]="user.pickuplandmark" minlength="10" maxlength="200"/>
-                        <label class="form-control-placeholder" for="pickulandmark">Landmark*</label>
-                      </div>
-                      <div class="form-control-feedback" *ngIf="pickupsearchplaceLandmark.errors && (pickupsearchplaceLandmark.dirty || pickupsearchplaceLandmark.touched)">
-                          <p *ngIf="pickupsearchplaceLandmark.errors.required" class="haserror">Landmark is required</p>
-                          <p *ngIf="!pickupsearchplaceLandmark.errors.valid" class="haserror">\$^*'}'`;> these characters are not accepted</p>
-                          <p *ngIf="pickupsearchplaceLandmark.errors.minlength" class="haserror">Minimum 10 characters</p>
-                        </div>
+                        <div class="form-group">
+                           <input class="form-control" name="pickupbuildingname" #pickupbuildingname="ngModel" autocomplete="off" spellcheck="off" type="text" pattern="^[0-9a-zA-Z#,\-/_ .@]+$" required [(ngModel)]="user.pickupbuildingname" minlength="20" maxlength="200"/>
+                           <label class="form-control-placeholder" for="pickupbuildingname">Building Name/Street Name*</label>
+                           </div>
+                         <div class="form-control-feedback" *ngIf="pickupbuildingname.errors && (pickupbuildingname.dirty || pickupbuildingname.touched)">
+                             <p *ngIf="pickupbuildingname.errors.required" class="haserror">Building Name/Street Name is required</p>
+                             <p *ngIf="!pickupbuildingname.errors.valid" class="haserror">\$^*'}'`;> these characters are not accepted</p>
+                             <p *ngIf="pickupbuildingname.errors.minlength" class="haserror">Minimum 20 characters</p>
+                           </div>
                     </div>
+                    <div class="col-lg-6 col-sm-6 col-md-6">
+                        <div class="form-group">
+                          <input class="form-control" id="pickulandmark" name="pickupsearchplaceLandmark"
+                            #pickupsearchplaceLandmark="ngModel" autocomplete="off" spellcheck="off" type="text" pattern="^[0-9a-zA-Z#,\-/_ .@]+$" required [(ngModel)]="user.pickuplandmark" minlength="10" maxlength="200"/>
+                          <label class="form-control-placeholder" for="pickulandmark">Landmark*</label>
+                        </div>
+                        <div class="form-control-feedback" *ngIf="pickupsearchplaceLandmark.errors && (pickupsearchplaceLandmark.dirty || pickupsearchplaceLandmark.touched)">
+                            <p *ngIf="pickupsearchplaceLandmark.errors.required" class="haserror">Landmark is required</p>
+                            <p *ngIf="!pickupsearchplaceLandmark.errors.valid" class="haserror">\$^*'}'`;> these characters are not accepted</p>
+                            <p *ngIf="pickupsearchplaceLandmark.errors.minlength" class="haserror">Minimum 10 characters</p>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="row">
+                 
                     <div class="col-lg-6 col-sm-6 col-md-6">
                       <div class="form-group">
                         <select id="addresstypepu" class="form-control" name="addresstypepu" [(ngModel)]="user.addresstypepu"
@@ -471,20 +510,32 @@
                       </div>
                     </div>
                     <div class="col-lg-6 col-sm-6 col-md-6">
-                      <div class="form-group" style="margin-top: 0.3%;">
-                          <label for="pickupsearch" style="margin-bottom: 0.2rem;color: #a4abb3;font-size: 14px;margin-left: 0.2rem;">Postal Address*</label>
-                        <input class="form-control" name="dropoffsearchplaceFill" #dropoffsearchplaceFill="ngModel" autocomplete="off" id="dropoffsearchautofill"
-                          spellcheck="off" type="text" required pattern="^[0-9a-zA-Z#,\-/_ .@]+$" [(ngModel)]="user.dropoffsearchautofill" minlength="20" maxlength="200" placeholder="Doornumber,street name,area*"/>
-                        <!-- <label class="form-control-placeholder" for="dropoffsearchautofill">Postal Address*</label> -->
-                      </div>
-                      <div class="form-control-feedback" *ngIf="dropoffsearchplaceFill.errors && (dropoffsearchplaceFill.dirty || dropoffsearchplaceFill.touched)">
-                          <p *ngIf="dropoffsearchplaceFill.errors.required" class="haserror">Postal Address is required</p>
-                          <p *ngIf="!dropoffsearchplaceFill.errors.valid" class="haserror">\$^*'}'`;> these characters are not accepted</p>
-                          <p *ngIf="dropoffsearchplaceFill.errors.minlength" class="haserror">Minimum 20 characters</p>
+                      <div class="form-group">
+                        <input class="form-control" name="dropoffflatno" #dropoffflatno="ngModel" autocomplete="off" id="dropoffflatno"
+                          spellcheck="off" type="text" required pattern="^[0-9a-zA-Z#,\-/_ .@]+$" [(ngModel)]="user.dropoffflatno" minlength="20" maxlength="200" />
+                          <label class="form-control-placeholder" for="dropoffflatno">Flat No./House No.*</label>
+                     
+                        </div>
+                      <div class="form-control-feedback" *ngIf="dropoffflatno.errors && (dropoffflatno.dirty || dropoffflatno.touched)">
+                          <p *ngIf="dropoffflatno.errors.required" class="haserror">Flat No./House No.* is required</p>
+                          <p *ngIf="!dropoffflatno.errors.valid" class="haserror">\$^*'}'`;> these characters are not accepted</p>
+                          <p *ngIf="dropoffflatno.errors.minlength" class="haserror">Minimum 20 characters</p>
                         </div>
                     </div>
                   </div>
                   <div class="row">
+                      <div class="col-lg-6 col-sm-6 col-md-6">
+                          <div class="form-group">
+                              <input class="form-control" name="dropoffbuildingname" #dropoffbuildingname="ngModel" autocomplete="off" id="dropoffbuildingname"
+                                spellcheck="off" type="text" required pattern="^[0-9a-zA-Z#,\-/_ .@]+$" [(ngModel)]="user.dropoffflatno" minlength="20" maxlength="200" />
+                                <label class="form-control-placeholder" for="dropoffbuildingname">Building Name/Street Name*</label>
+                             </div>
+                              <div class="form-control-feedback" *ngIf="dropoffbuildingname.errors && (dropoffbuildingname.dirty || dropoffbuildingname.touched)">
+                                  <p *ngIf="dropoffbuildingname.errors.required" class="haserror">Postal Address is required</p>
+                                  <p *ngIf="!dropoffbuildingname.errors.valid" class="haserror">\$^*'}'`;> these characters are not accepted</p>
+                                  <p *ngIf="dropoffbuildingname.errors.minlength" class="haserror">Minimum 20 characters</p>
+                                </div>
+                        </div>
                     <div class="col-lg-6 col-sm-6 col-md-6">
                       <div class="form-group">
                         <input class="form-control" id="dropofflandmark" name="dropofflandmark"
@@ -497,14 +548,17 @@
                           <p *ngIf="dropoffsearchplaceLandmark.errors.minlength" class="haserror">Minimum 10 characters</p>
                         </div>
                     </div>
+                   
+                  </div>
+                  <div class="row">
                     <div class="col-lg-6 col-sm-6 col-md-6">
-                      <div class="form-group">
-                        <select id="addresstypedo" class="form-control" name="addresstypedo" [(ngModel)]="user.addresstypedo"
-                          #addresstypepu="ngModel" required>
-                          <option [value]="i.id" *ngFor="let i of addresstype">{{i.type_of_address}}</option>
-                        </select>
-                        <label class="form-control-placeholder" for="addresstypedo">Type of address*</label>
-                      </div>
+                        <div class="form-group">
+                            <select id="addresstypedo" class="form-control" name="addresstypedo" [(ngModel)]="user.addresstypedo"
+                              #addresstypepu="ngModel" required>
+                              <option [value]="i.id" *ngFor="let i of addresstype">{{i.type_of_address}}</option>
+                            </select>
+                            <label class="form-control-placeholder" for="addresstypedo">Type of address*</label>
+                          </div>
                     </div>
                   </div>
                 </div>

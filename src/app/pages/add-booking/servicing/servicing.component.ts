@@ -991,8 +991,8 @@ SelectSavedDropoffAddress(i,x, ev){
           this.addresspuprevious = "0";
           this.addresstypedo = f.value.addresstypepu;
           this.addresstypepu = f.value.addresstypepu;
-          this.postaladdresspu = f.value.pickupsearchplaceFill;
-          this.postaladdressdo = f.value.pickupsearchplaceFill;
+          this.postaladdresspu =  f.value.pickflatno + '' + f.value.pickupbuildingname ;
+          this.postaladdressdo =  f.value.pickflatno + '' + f.value.pickupbuildingname ;
           this.droplat = this.droplat.substring(0, 14);
           this.droplong = this.droplong.substring(0, 14);
           this.pickuplat = this.pickuplat.substring(0, 14);
@@ -1012,8 +1012,8 @@ SelectSavedDropoffAddress(i,x, ev){
           this.addresspuprevious = "0";
           this.addresstypedo = f.value.addresstypedo;
           this.addresstypepu = f.value.addresstypedo;
-          this.postaladdresspu = f.value.dropoffsearchplaceFill;
-          this.postaladdressdo = f.value.dropoffsearchplaceFill;
+          this.postaladdresspu = f.value.dropoffflatno + '' + f.value.dropoffbuildingname ;
+          this.postaladdressdo = f.value.dropoffflatno + '' + f.value.dropoffbuildingname ;
           this.droplat = this.droplat.substring(0, 14);
           this.droplong = this.droplong.substring(0, 14);
           this.pickuplat = this.pickuplat.substring(0, 14);
@@ -1034,8 +1034,8 @@ SelectSavedDropoffAddress(i,x, ev){
             this.addresspuprevious = "0";
             this.addresstypedo = f.value.addresstypepu;
             this.addresstypepu = f.value.addresstypepu;
-            this.postaladdresspu = f.value.pickupsearchplaceFill;
-            this.postaladdressdo = f.value.pickupsearchplaceFill;
+            this.postaladdresspu =  f.value.pickflatno + '' + f.value.pickupbuildingname ;
+            this.postaladdressdo =  f.value.pickflatno + '' + f.value.pickupbuildingname ;
             this.droplat = this.droplat.substring(0, 14);
             this.droplong = this.droplong.substring(0, 14);
             this.pickuplat = this.pickuplat.substring(0, 14);
@@ -1053,8 +1053,8 @@ SelectSavedDropoffAddress(i,x, ev){
             this.addresspuprevious = "0";
             this.addresstypedo = f.value.addresstypedo;
             this.addresstypepu = f.value.addresstypepu;
-            this.postaladdresspu = f.value.pickupsearchplaceFill;
-            this.postaladdressdo = f.value.dropoffsearchplaceFill;
+            this.postaladdresspu =  f.value.pickflatno + '' + f.value.pickupbuildingname ;
+            this.postaladdressdo = f.value.dropoffflatno + '' + f.value.dropoffbuildingname ;
             this.droplat = this.droplat.substring(0, 14);
             this.droplong = this.droplong.substring(0, 14);
             this.pickuplat = this.pickuplat.substring(0, 14);
@@ -1076,8 +1076,8 @@ SelectSavedDropoffAddress(i,x, ev){
           this.addresspuprevious = "0";
           this.addresstypedo = f.value.addresstypepu;
           this.addresstypepu = f.value.addresstypepu;
-          this.postaladdresspu = f.value.pickupsearchplaceFill;
-          this.postaladdressdo = f.value.pickupsearchplaceFill;
+          this.postaladdresspu =  f.value.pickflatno + '' + f.value.pickupbuildingname ;
+          this.postaladdressdo =  f.value.pickflatno + '' + f.value.pickupbuildingname ;
           this.droplat = this.droplat.substring(0, 14);
           this.droplong = this.droplong.substring(0, 14);
           this.pickuplat = this.pickuplat.substring(0, 14);
@@ -1103,8 +1103,8 @@ SelectSavedDropoffAddress(i,x, ev){
             this.addresspuprevious = "0";
             this.addresstypedo = f.value.addresstypepu;
             this.addresstypepu = f.value.addresstypepu;
-            this.postaladdresspu = f.value.pickupsearchplaceFill;
-            this.postaladdressdo = f.value.pickupsearchplaceFill;
+            this.postaladdresspu = f.value.pickflatno + '' + f.value.pickupbuildingname ;
+            this.postaladdressdo =  f.value.pickflatno + '' + f.value.pickupbuildingname ;
             this.droplat = this.droplat.substring(0, 14);
             this.droplong = this.droplong.substring(0, 14);
             this.pickuplat = this.pickuplat.substring(0, 14);
@@ -1116,7 +1116,7 @@ SelectSavedDropoffAddress(i,x, ev){
             this.pickuplong = this.googlepickuplong.toString();
             this.addresspuprevious = "0";
             this.addresstypepu = f.value.addresstypepu;
-            this.postaladdresspu = f.value.pickupsearchplaceFill;
+            this.postaladdresspu =  f.value.pickflatno + '' + f.value.pickupbuildingname ;
             this.pickuplat = this.pickuplat.substring(0, 14);
             this.pickuplong = this.pickuplong.substring(0, 14);
           }
@@ -1144,8 +1144,8 @@ SelectSavedDropoffAddress(i,x, ev){
           this.addresspuprevious = "0";
           this.addresstypedo = f.value.addresstypedo;
           this.addresstypepu = f.value.addresstypedo;
-          this.postaladdresspu = f.value.dropoffsearchplaceFill;
-          this.postaladdressdo = f.value.dropoffsearchplaceFill;
+          this.postaladdresspu =  f.value.dropoffflatno + '' + f.value.dropoffbuildingname ;
+          this.postaladdressdo =  f.value.dropoffflatno + '' + f.value.dropoffbuildingname ;
           this.droplat = this.droplat.substring(0, 14);
           this.droplong = this.droplong.substring(0, 14);
           this.pickuplat = this.pickuplat.substring(0, 14);
@@ -1165,7 +1165,7 @@ SelectSavedDropoffAddress(i,x, ev){
             this.droplong = this.googledropofflong.toString();
             this.addressdoprevious = "0";
             this.addresstypepu = f.value.addresstypedo;
-            this.postaladdressdo = f.value.dropoffsearchplaceFill;
+            this.postaladdressdo =  f.value.dropoffflatno + '' + f.value.dropoffbuildingname ;
             this.droplat = this.droplat.substring(0, 14);
             this.droplong = this.droplong.substring(0, 14);
           }
@@ -1185,8 +1185,8 @@ SelectSavedDropoffAddress(i,x, ev){
           this.addresspuprevious = "0";
           this.addresstypedo = f.value.addresstypepu;
           this.addresstypepu = f.value.addresstypepu;
-          this.postaladdresspu = f.value.pickupsearchplaceFill;
-          this.postaladdressdo = f.value.pickupsearchplaceFill;
+          this.postaladdresspu = f.value.pickflatno + '' + f.value.pickupbuildingname ;
+          this.postaladdressdo = f.value.pickflatno + '' + f.value.pickupbuildingname ;
           this.droplat = this.droplat.substring(0, 14);
           this.droplong = this.droplong.substring(0, 14);
           this.pickuplat = this.pickuplat.substring(0, 14);
@@ -1205,8 +1205,8 @@ SelectSavedDropoffAddress(i,x, ev){
           this.addresspuprevious = "0";
           this.addresstypedo = f.value.addresstypedo;
           this.addresstypepu = f.value.addresstypedo;
-          this.postaladdresspu = f.value.dropoffsearchplaceFill;
-          this.postaladdressdo = f.value.dropoffsearchplaceFill;
+          this.postaladdresspu =f.value.dropoffflatno + '' + f.value.dropoffbuildingname ;
+          this.postaladdressdo = f.value.dropoffflatno + '' + f.value.dropoffbuildingname ;
           this.droplat = this.droplat.substring(0, 14);
           this.droplong = this.droplong.substring(0, 14);
           this.pickuplat = this.pickuplat.substring(0, 14);
@@ -1226,8 +1226,8 @@ SelectSavedDropoffAddress(i,x, ev){
             this.addresspuprevious = "0";
             this.addresstypedo = f.value.addresstypepu;
             this.addresstypepu = f.value.addresstypepu;
-            this.postaladdresspu = f.value.pickupsearchplaceFill;
-            this.postaladdressdo = f.value.pickupsearchplaceFill;
+            this.postaladdresspu = f.value.pickflatno + '' + f.value.pickupbuildingname ;
+            this.postaladdressdo = f.value.pickflatno + '' + f.value.pickupbuildingname ;
             this.droplat = this.droplat.substring(0, 14);
             this.droplong = this.droplong.substring(0, 14);
             this.pickuplat = this.pickuplat.substring(0, 14);
@@ -1245,8 +1245,8 @@ SelectSavedDropoffAddress(i,x, ev){
           this.addresspuprevious = "0";
           this.addresstypedo = f.value.addresstypedo;
           this.addresstypepu = f.value.addresstypepu;
-          this.postaladdresspu = f.value.pickupsearchplaceFill;
-          this.postaladdressdo = f.value.dropoffsearchplaceFill;
+          this.postaladdresspu =  f.value.pickflatno + '' + f.value.pickupbuildingname ;
+          this.postaladdressdo = f.value.dropoffflatno + '' + f.value.dropoffbuildingname ;
           this.droplat = this.droplat.substring(0, 14);
           this.droplong = this.droplong.substring(0, 14);
           this.pickuplat = this.pickuplat.substring(0, 14);
@@ -1268,8 +1268,8 @@ SelectSavedDropoffAddress(i,x, ev){
           this.addresspuprevious = "0";
           this.addresstypedo = f.value.addresstypepu;
           this.addresstypepu = f.value.addresstypepu;
-          this.postaladdresspu = f.value.pickupsearchplaceFill;
-          this.postaladdressdo = f.value.pickupsearchplaceFill;
+          this.postaladdresspu =  f.value.pickflatno + '' + f.value.pickupbuildingname ;
+          this.postaladdressdo =  f.value.pickflatno + '' + f.value.pickupbuildingname ;
           this.droplat = this.droplat.substring(0, 14);
           this.droplong = this.droplong.substring(0, 14);
           this.pickuplat = this.pickuplat.substring(0, 14);
@@ -1288,8 +1288,8 @@ SelectSavedDropoffAddress(i,x, ev){
           this.addresspuprevious = "0";
           this.addresstypedo = f.value.addresstypedo;
           this.addresstypepu = f.value.addresstypedo;
-          this.postaladdresspu = f.value.dropoffsearchplaceFill;
-          this.postaladdressdo = f.value.dropoffsearchplaceFill;
+          this.postaladdresspu = f.value.dropoffflatno + '' + f.value.dropoffbuildingname ;
+          this.postaladdressdo = f.value.dropoffflatno + '' + f.value.dropoffbuildingname ;
           this.droplat = this.droplat.substring(0, 14);
           this.droplong = this.droplong.substring(0, 14);
           this.pickuplat = this.pickuplat.substring(0, 14);
@@ -1309,8 +1309,8 @@ SelectSavedDropoffAddress(i,x, ev){
             this.addresspuprevious = "0";
             this.addresstypedo = f.value.addresstypepu;
             this.addresstypepu = f.value.addresstypepu;
-            this.postaladdresspu = f.value.pickupsearchplaceFill;
-            this.postaladdressdo = f.value.pickupsearchplaceFill;
+            this.postaladdresspu = f.value.pickflatno + '' + f.value.pickupbuildingname ;
+            this.postaladdressdo = f.value.pickflatno + '' + f.value.pickupbuildingname ;
             this.droplat = this.droplat.substring(0, 14);
             this.droplong = this.droplong.substring(0, 14);
             this.pickuplat = this.pickuplat.substring(0, 14);
@@ -1328,8 +1328,8 @@ SelectSavedDropoffAddress(i,x, ev){
             this.addresspuprevious = "0";
             this.addresstypedo = f.value.addresstypedo;
             this.addresstypepu = f.value.addresstypepu;
-            this.postaladdresspu = f.value.pickupsearchplaceFill;
-            this.postaladdressdo = f.value.dropoffsearchplaceFill;
+            this.postaladdresspu =f.value.pickflatno + '' + f.value.pickupbuildingname ;
+            this.postaladdressdo = f.value.dropoffflatno + '' + f.value.dropoffbuildingname ;
             this.droplat = this.droplat.substring(0, 14);
             this.droplong = this.droplong.substring(0, 14);
             this.pickuplat = this.pickuplat.substring(0, 14);
@@ -1379,8 +1379,8 @@ SelectSavedDropoffAddress(i,x, ev){
         this.addresspuprevious = "0";
         this.addresstypedo = f.value.addresstypepu;
         this.addresstypepu = f.value.addresstypepu;
-        this.postaladdresspu = f.value.pickupsearchplaceFill;
-        this.postaladdressdo = f.value.pickupsearchplaceFill;
+        this.postaladdresspu = f.value.pickflatno + '' + f.value.pickupbuildingname ;
+        this.postaladdressdo = f.value.pickflatno + '' + f.value.pickupbuildingname ;
         this.droplat = this.droplat.substring(0, 14);
         this.droplong = this.droplong.substring(0, 14);
         this.pickuplat = this.pickuplat.substring(0, 14);
@@ -1399,8 +1399,8 @@ SelectSavedDropoffAddress(i,x, ev){
         this.addresspuprevious = "0";
         this.addresstypedo = f.value.addresstypedo;
         this.addresstypepu = f.value.addresstypedo;
-        this.postaladdresspu = f.value.dropoffsearchplaceFill;
-        this.postaladdressdo = f.value.dropoffsearchplaceFill;
+        this.postaladdresspu = f.value.dropoffflatno + '' + f.value.dropoffbuildingname ;
+        this.postaladdressdo = f.value.dropoffflatno + '' + f.value.dropoffbuildingname ;
         this.droplat = this.droplat.substring(0, 14);
         this.droplong = this.droplong.substring(0, 14);
         this.pickuplat = this.pickuplat.substring(0, 14);
@@ -1420,8 +1420,8 @@ SelectSavedDropoffAddress(i,x, ev){
           this.addresspuprevious = "0";
           this.addresstypedo = f.value.addresstypepu;
           this.addresstypepu = f.value.addresstypepu;
-          this.postaladdresspu = f.value.pickupsearchplaceFill;
-          this.postaladdressdo = f.value.pickupsearchplaceFill;
+          this.postaladdresspu = f.value.pickflatno + '' + f.value.pickupbuildingname ;
+          this.postaladdressdo = f.value.pickflatno + '' + f.value.pickupbuildingname ;
           this.droplat = this.droplat.substring(0, 14);
           this.droplong = this.droplong.substring(0, 14);
           this.pickuplat = this.pickuplat.substring(0, 14);
@@ -1439,8 +1439,8 @@ SelectSavedDropoffAddress(i,x, ev){
           this.addresspuprevious = "0";
           this.addresstypedo = f.value.addresstypedo;
           this.addresstypepu = f.value.addresstypepu;
-          this.postaladdresspu = f.value.pickupsearchplaceFill;
-          this.postaladdressdo = f.value.dropoffsearchplaceFill;
+          this.postaladdresspu = f.value.pickflatno + '' + f.value.pickupbuildingname ;
+          this.postaladdressdo =f.value.dropoffflatno + '' + f.value.dropoffbuildingname ;
           this.droplat = this.droplat.substring(0, 14);
           this.droplong = this.droplong.substring(0, 14);
           this.pickuplat = this.pickuplat.substring(0, 14);
