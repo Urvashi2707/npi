@@ -43,6 +43,7 @@ export class AtCentreComponent implements OnInit {
                 private _detailsTable: QueueTableService, 
                 private _data: ServerService, 
                 private _tableService: QueueTableService) {
+                  
                   this.barRate = 4;
                   this.barRateNull = 0;
     this._tableService.clickedID.subscribe(value => {
@@ -86,9 +87,9 @@ export class AtCentreComponent implements OnInit {
     activeModal.componentInstance.modalHeader = 'Upload File';
     activeModal.componentInstance.modalContent = this.datatopass;
     activeModal.result.then(() => { 
-      console.log('When user closes');
       this.FilterCheck(page);
-    }, () => { console.log('Backdrop click')})
+    }, () => {    
+    })
   }
 
       //On select of End Date
@@ -123,9 +124,7 @@ export class AtCentreComponent implements OnInit {
 
   }
 
-
-  //AtCenter table API call
-
+ //AtCenter table API call
   FilterCheck(p:number){
     this.MessageNoData = null;
     this.spinner.show();
@@ -158,5 +157,6 @@ export class AtCentreComponent implements OnInit {
 }
 }
 });
-  }
+ 
+}
 }

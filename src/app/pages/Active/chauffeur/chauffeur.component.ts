@@ -64,13 +64,11 @@ export class ChauffeurComponent implements OnInit {
             this.model = date;
             this.EndDateString = this.ngbDateParserFormatter.format(date);
         }
-
-    }
+}
 
      //On select of startDate
     onSelectStartDate(date: NgbDateStruct){
-
-    if (date != null) {
+      if (date != null) {
             this.model1 = date;
             this.StartDateString = this.ngbDateParserFormatter.format(date);
         }
@@ -78,13 +76,10 @@ export class ChauffeurComponent implements OnInit {
 
 
   img(event){
-    console.log(event);
     event.target.src = '../../../assets/images/profile.svg';
-    console.log("image broken");
   }
 
-
-      //Open Queue Details Page
+//Open Queue Details Page
   openQDetails(details:any) {
     sessionStorage.setItem('QueueId',details.queueid);
     this._detailsTable.queueID = details.queueid;
@@ -134,4 +129,5 @@ export class ChauffeurComponent implements OnInit {
     }
     });
   }
+  
 }

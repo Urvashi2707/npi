@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient,HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
+import { environment } from '../../../environments/environment';
 
 @Injectable()
 export class ChauffeurService {
@@ -8,7 +9,7 @@ export class ChauffeurService {
   constructor(private http: HttpClient) { }
   private _url :string = 'https://api.myjson.com/bins/tjkvh'
   employees = []
-  public url:string='http://m.21north.in/notify/svcwebservice.php';
+  public url = environment.Mainurl;
 
   public httpOptions = {
   headers: new HttpHeaders({'Content-Type':  'application/json'}),

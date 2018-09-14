@@ -3,6 +3,9 @@ import { HttpClient,HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Rx';
+import { environment } from '../../../environments/environment';
+
+
 
 @Injectable()
 export class ServicingService {
@@ -14,23 +17,21 @@ export class ServicingService {
   constructor(private http: HttpClient,private router: Router) {
     var myArray = this.getCity().subscribe(data => this.result = data);
     var myArray1 = this.getCity();
-    // console.log("widout subs" ,myArray1);
-    // console.log(myArray);
-    // this.getCity();
-    // this.testService();
-    // console.log(this.testService());
    }
 
+   //Easy Auto
   private getSession_url :string = 'http://plsuat.europassistance.in:444/getSession';
   private Ea_check1_url:string = 'http://plsuat.europassistance.in:444/checkInitialEligibility';
   private Ea_check2_url:string = 'http://plsuat.europassistance.in:444/checkFinalEligibility';
-
-  public url:string='http://m.21north.in/notify/svcwebservice.php';
-  public logout_url:string = 'http://m.21north.in/notify/logout.php';
-  public graph:string = 'http://m.21north.in/notify/svcgraph.php';
-  public slotgraph =  'http://m.21north.in/notify/svcgraphslot.php';
-  check_url = 'http://m.21north.in/notify/eaws.php';
   public destroySession_url = 'http://plsuat.europassistance.in:444/destroysession';
+
+  //21North
+  public url = environment.Mainurl;
+  public logout_url:string = environment.logout_url;
+  public graph:string = environment.graph;
+  public slotgraph =  environment.slot_graph;
+  check_url = 'http://m.21north.in/notify/eaws.php';
+
   public data:string;
   data1 = "vfdxvxd";
   public httpOptions = {
@@ -109,28 +110,6 @@ slot(reqpara){
   webServiceCall(reqpara){
     return this.http.post(this.url, reqpara, this.httpOptions);
   }
-
-  // getCity():Observable<any>{
-  //   const reqpara1 ={
-  //     requesttype: 'getcitylist',
-  //   }
-  //   const as1 = JSON.stringify(reqpara1)
-  //   return this.webServiceCall(as1).map
-  //     ((response: Response) => {
-  //       if (response[0].login === 0) {
-  //         sessionStorage.removeItem('currentUser');
-  //         this.router.navigate(['/auth/login']);
-  //       }
-  //       else {
-  //         this.cityList = response[0].citylist;
-  //         var newData = JSON.stringify(this.cityList)
-  //         let result = JSON.parse(newData);
-  //         console.log(response);
-  //         return response;
-
-  //       }
-  //     });
-  // }
 
   getCity():Observable<any>{
     const reqpara1 ={

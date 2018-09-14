@@ -82,20 +82,17 @@ export class PickupComponent implements OnInit {
         }
       }
 
-       //On select of startDate
-      onSelectStartDate(date: NgbDateStruct){
+//On select of startDate
+onSelectStartDate(date: NgbDateStruct){
     if (date != null) {
             this.model1 = date;
             this.StartDateString = this.ngbDateParserFormatter.format(date);
         }
+}
 
-      }
 //Open Queue Details Page
-
-  img(event){
-    console.log(event);
+img(event){
     event.target.src = '../../../assets/images/profile.svg';
-    console.log("image broken");
   }
 
   openQDetails(indexId: any){
@@ -104,6 +101,7 @@ export class PickupComponent implements OnInit {
     this._detailsTable.queueID = indexId;
     this.router.navigate(['/pages/queue-details']);
   }
+  
 //Pickup table API call
   FilterCheck(p:number){
     this.MessageNoData=" ";

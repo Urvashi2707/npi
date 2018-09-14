@@ -73,21 +73,21 @@ export class DropOffComponent implements OnInit {
             this.model = date;
             this.EndDateString = this.ngbDateParserFormatter.format(date);
         }
-      }
+  }
 
-      //sort
+  //sort
   sort(key){
     this.key = key;
     this.reverse = !this.reverse;
   }
 
-    //On select of startDate
+  //On select of startDate
   onSelectStartDate(date: NgbDateStruct){
     if (date != null) {
             this.model1 = date;
             this.StartDateString = this.ngbDateParserFormatter.format(date);
         }
-       }
+    }
 
    //Open Queue Details Page     
   openQDetails(details:any) {
@@ -95,14 +95,11 @@ export class DropOffComponent implements OnInit {
     this._detailsTable.queueID = details.queueid;
     sessionStorage.removeItem('clickedOn');
     this.router.navigate(['/pages/queue-details']);
-
 }
+
 //Dropoff table API call
 
-
-  
-
-  img(event){
+img(event){
     console.log(event);
     event.target.src = '../../../assets/images/profile.svg';
     console.log("image broken");
@@ -140,4 +137,5 @@ export class DropOffComponent implements OnInit {
   }
     });
       }
+      
     }

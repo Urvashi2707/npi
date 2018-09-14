@@ -10,4 +10,9 @@
 
 export const environment = {
   production: false,
+  Mainurl:"/notify/svcwebservice.php",
+  logout_url:"/notify/logout.php'",
+  graph:"/notify/svcgraph.php",
+  slot_graph:"/notify/svcgraphslot.php",
+  upload_file:"/notify/uploadfile.php",
 };

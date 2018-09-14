@@ -4,6 +4,8 @@ import {HttpClient,HttpHeaders} from '@angular/common/http';
 import { HttpErrorResponse } from '@angular/common/http/src/response';
 import { ToasterService, ToasterConfig, Toast, BodyOutputType } from 'angular2-toaster';
 import 'style-loader!angular2-toaster/toaster.css';
+
+
 @Component({
   selector: 'ngx-modal1',
   templateUrl: './BookingDetails.component.html',
