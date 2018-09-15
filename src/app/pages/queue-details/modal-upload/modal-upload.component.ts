@@ -5,7 +5,8 @@ import { HttpErrorResponse } from '@angular/common/http/src/response';
 import { ToasterService, ToasterConfig, Toast, BodyOutputType } from 'angular2-toaster';
 import 'style-loader!angular2-toaster/toaster.css';
 import { Router } from '@angular/router';
-import { ServerService } from '../../services/user.service'
+import { ServerService } from '../../services/user.service';
+import {environment} from '../../../../environments/environment'
 
 @Component({
   selector: 'app-modal-upload',
@@ -38,6 +39,7 @@ export class ModalUploadComponent implements OnInit {
   showAnimation = '0';
   public slot: any[];
   showSlot = '0';
+  upload_file = environment.upload_file;
 
   constructor(private toasterService: ToasterService, private activeModal: NgbActiveModal, private httpService: HttpClient, private router: Router, private _data: ServerService) { }
   
@@ -52,26 +54,7 @@ export class ModalUploadComponent implements OnInit {
     withCredentials: true
   };
 
-  private showToast(type: string, title: string, body: string) {
-    this.config = new ToasterConfig({
-      positionClass: this.position,
-      timeout: this.timeout,
-      newestOnTop: this.isNewestOnTop,
-      tapToDismiss: this.isHideOnClick,
-      preventDuplicates: this.isDuplicatesPrevented,
-      animation: this.animationType,
-      limit: this.toastsLimit,
-    });
-    const toast: Toast = {
-      type: type,
-      title: title,
-      body: body,
-      timeout: this.timeout,
-      showCloseButton: this.isCloseButton,
-      bodyOutputType: BodyOutputType.TrustedHtml,
-    };
-    this.toasterService.popAsync(toast);
-  }
+
   getSlot(){
     const reqpara5 = {
       requesttype: 'getslots',
@@ -138,7 +121,7 @@ export class ModalUploadComponent implements OnInit {
     }
     const us = JSON.stringify(frmData);
     console.log(us);
-    this.httpService.post('http://m.21north.in/notify/uploadfile.php', frmData, this.httpOptions).subscribe(
+    this.httpService.post(this.upload_file, frmData, this.httpOptions).subscribe(
       data => {
         // SHOW A MESSAGE RECEIVED FROM THE WEB API.
         // this.showToast('default', 'Message', 'File uploaded successfully');

@@ -4,7 +4,7 @@ import {HttpClient,HttpHeaders} from '@angular/common/http';
 import { HttpErrorResponse } from '@angular/common/http/src/response';
 import { ToasterService, ToasterConfig, Toast, BodyOutputType } from 'angular2-toaster';
 import 'style-loader!angular2-toaster/toaster.css';
-
+import {environment} from '../../../../../environments/environment'
 
 @Component({
   selector: 'ngx-modal1',
@@ -32,6 +32,7 @@ export class BookingDetails implements OnInit {
   animationType = 'fade';
   timeout = 5000;
   toastsLimit = 5;
+  uploade_file = environment.upload_file;
 
   constructor(private toasterService: ToasterService,private activeModal: NgbActiveModal,private httpService: HttpClient) { }
   ngOnInit() {
@@ -112,7 +113,7 @@ export class BookingDetails implements OnInit {
     }
     const us = JSON.stringify(frmData);
     console.log(us);
-    this.httpService.post('http://m.21north.in/notify/uploadfile.php', frmData,this.httpOptions).subscribe(
+    this.httpService.post(this.uploade_file, frmData,this.httpOptions).subscribe(
       data => {
         // SHOW A MESSAGE RECEIVED FROM THE WEB API.
          this.showToast('default', 'Message', 'File uploaded successfully');

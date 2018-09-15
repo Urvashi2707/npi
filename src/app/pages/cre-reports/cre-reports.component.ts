@@ -3,6 +3,7 @@ import { QueueTableService } from '../services/queue-table.service';
 import { ServerService } from '../services/user.service';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
+
 @Component({
   selector: 'app-cre-reports',
   templateUrl: './cre-reports.component.html',

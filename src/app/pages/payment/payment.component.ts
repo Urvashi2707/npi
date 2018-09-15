@@ -1,17 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {FormsModule} from '@angular/forms';
-import {NgForm} from '@angular/forms';
 import {ServicingService } from '../services/addServicing.service';
-import {HttpClient,HttpHeaders,HttpErrorResponse,HttpRequest} from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
-import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
-import { catchError,retry } from 'rxjs/operators';
-import {NgbDateAdapter, NgbDateStruct, NgbDatepickerConfig, NgbDateParserFormatter} from '@ng-bootstrap/ng-bootstrap';
-import { defaultIfEmpty } from 'rxjs/operator/defaultIfEmpty';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDateStruct, NgbDateParserFormatter} from '@ng-bootstrap/ng-bootstrap';
 import {Router} from '@angular/router';
-import { ToasterService, ToasterConfig, Toast, BodyOutputType } from 'angular2-toaster';
-import * as FileSaver from "file-saver";
 import { DatePipe } from '@angular/common';
 import { NgxSpinnerService } from 'ngx-spinner';
 

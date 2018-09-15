@@ -8,6 +8,8 @@ import 'style-loader!angular2-toaster/toaster.css';
 import { HttpErrorResponse } from '@angular/common/http/src/response';
 import { NgbDateStruct, NgbDateParserFormatter} from '@ng-bootstrap/ng-bootstrap';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
+import {environment} from '../../../../environments/environment'
+
 @Component({
   selector: 'app-modal',
   templateUrl: './searchModal.component.html',
@@ -56,6 +58,7 @@ export class SearchModalComponent implements OnInit {
   public startDate;
   public minDate;
   public maxDate;
+  upload_file = environment.upload_file;
 
   //toaster variable
   isNewestOnTop = true;
@@ -260,7 +263,7 @@ export class SearchModalComponent implements OnInit {
       }
       const us = JSON.stringify(frmData);
       console.log(us);
-      this.http.post('http://m.21north.in/notify/uploadfile.php', frmData,this.httpOptions).subscribe(
+      this.http.post(this.upload_file, frmData,this.httpOptions).subscribe(
         data => {
           this.sMsg = data as string;
           console.log (this.sMsg);
@@ -306,7 +309,7 @@ export class SearchModalComponent implements OnInit {
     }
     const us = JSON.stringify(frmData);
     console.log(us);
-    this.http.post('http://m.21north.in/notify/uploadfile.php', frmData,this.httpOptions).subscribe(
+    this.http.post(this.upload_file, frmData,this.httpOptions).subscribe(
       data => {
         this.sMsg = data as string;
         console.log (this.sMsg);

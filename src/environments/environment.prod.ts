@@ -9,5 +9,5 @@ export const environment = {
   logout_url:"http://m.21north.in/notify/logout.php",
   graph:"http://m.21north.in/notify/svcgraph.php",
   slot_graph:"http://m.21north.in/notify/svcgraphslot.php",
-  upload_file:"http://m.21north.in/notify/uploadfile.php"
+  upload_file:"http://m.21north.in/notify/uploadfile.php",
 };

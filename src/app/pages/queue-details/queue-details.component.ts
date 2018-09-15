@@ -8,7 +8,6 @@ import { ModalQueueComponent } from './modal-queue/modal-queue.component';
 import { ModalSendLinkComponent } from './modal-send-link/modal-send-link.component'
 import { SearchModalComponent } from '../search/modal/searchModal.component';
 import { ModalPickupComponent } from './modal-pickup/modal-pickup.component';
-
 import { ModalDropoffComponent } from './modal-dropoff/modal-dropoff.component';
 import { ModalAdvComponent } from './modal-adv/modal-adv.component';
 
