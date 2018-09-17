@@ -861,7 +861,7 @@
                   </div>
                 </div>
                 <div class="col-lg-6 col-sm-6 col-md-6">
-                  <div class="form-group" style="margin-top: 0.3%;">
+                  <div class="form-group">
                     <input class="form-control" #testpickupflatno="ngModel" name="testpickupflatno"  required autocomplete="off" spellcheck="off" type="text" [(ngModel)]="user.testpickupflatno" pattern="^[0-9a-zA-Z#,\-/_ .@]+$"  minlength="4" maxlength="100"/>
                     <label class="form-control-placeholder" for="testpickupflatno" >Flat No./House No.*</label>
                   
@@ -875,7 +875,7 @@
               </div>
               <div class="row">
                   <div class="col-lg-6 col-sm-6 col-md-6">
-                      <div class="form-group" style="margin-top: 0.3%;">
+                      <div class="form-group">
                         <input class="form-control" #testpickupbuildingname="ngModel" name="testpickupbuildingname"  required autocomplete="off" spellcheck="off" type="text" [(ngModel)]="user.testpickupbuildingname" pattern="^[0-9a-zA-Z#,\-/_ .@]+$"  minlength="4" maxlength="100"/>
                         <label  class="form-control-placeholder" for="testpickupbuildingname" >Building Name/Street Name*</label>
                       
@@ -1142,7 +1142,7 @@
                   <div class="pickup-map">
                     <agm-map id="pickUpMap" [zoom]="zoom" [latitude]="latPickup" [longitude]="lngPickup" [disableDefaultUI]=false
                       (mapReady)=pickUpMapReady($events) [mapDraggable]=false>
-                      <agm-marker [latitude]="latPickup" [longitude]="latPickup"></agm-marker>
+                      <agm-marker [latitude]="latPickup" [longitude]="lngPickup"></agm-marker>
                     </agm-map>
                   </div>
                 </div>

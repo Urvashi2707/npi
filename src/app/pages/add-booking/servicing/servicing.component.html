@@ -527,7 +527,7 @@
                       <div class="col-lg-6 col-sm-6 col-md-6">
                           <div class="form-group">
                               <input class="form-control" name="dropoffbuildingname" #dropoffbuildingname="ngModel" autocomplete="off" id="dropoffbuildingname"
-                                spellcheck="off" type="text" required pattern="^[0-9a-zA-Z#,\-/_ .@]+$" [(ngModel)]="user.dropoffflatno" minlength="4" maxlength="100" />
+                                spellcheck="off" type="text" required pattern="^[0-9a-zA-Z#,\-/_ .@]+$" [(ngModel)]="user.dropoffbuildingname" minlength="4" maxlength="100" />
                                 <label class="form-control-placeholder" for="dropoffbuildingname">Building Name/Street Name*</label>
                              </div>
                               <div class="form-control-feedback" *ngIf="dropoffbuildingname.errors && (dropoffbuildingname.dirty || dropoffbuildingname.touched)">
