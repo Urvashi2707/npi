@@ -1,757 +1,765 @@
-<div class="row">
+<div class=“row">
   <div class="col-md-12 col-lg-12 col-sm-12">
-    <nb-card class="nb-icons">
-      <nb-card-header>
-        Pickup and Dropoff
-      </nb-card-header>
-      <nb-card-body>
-        <toaster-container [toasterconfig]="config"></toaster-container>
-        <form ngNativeValidate #f="ngForm" (ngSubmit)="onSubmit(f)">
-          <div class="row">
-            <div class="col-md-5 col-sm-5 col-lg-5">
-              <div class="form-group">
-                <input type="text" id="num" name="num" class="form-control" style=" text-transform: uppercase" required
-                  (change)="onBlurMethod($event.target.value)" [(ngModel)]="registrationNumber" #num="ngModel"
-                  maxlength="15" pattern="^[0-9a-zA-Z#,\-/_ .@]+$">
-                <label class="form-control-placeholder" for="num">Registration Number*</label>
-              </div>
-              <div class="form-control-feedback" *ngIf="num.errors && (num.dirty || num.touched)">
-                <p *ngIf="num.errors.required" class="haserror">Registration Number is required</p>
-                <p *ngIf="!num.errors.valid" class="haserror">\$^*'}'`;> these characters are not accepted</p>
-              </div>
-            </div>
-            <div class="col-md-5 col-sm-5 col-lg-5">
-              <div class="form-group">
-                <input type="text" id="mobile1" name="mobile1" class="form-control" maxlength="10" [(ngModel)]="user.mobile1"
-                  OnlyNumber="true" required #mobile1="ngModel" pattern="^[0-9]{10}$">
-                <label class="form-control-placeholder" for="mobile1">Customer Mobile Number*</label>
-              </div>
-              <div class="form-control-feedback" *ngIf="mobile1.errors && (mobile1.dirty || mobile1.touched)">
-                <p *ngIf="mobile1.errors.required" class="haserror">Mobile Number is required</p>
-              </div>
-            </div>
-            <div class="col-md-2 col-sm-2 col-lg-2 NextRow">
-              <div>
-                <button type="button" class="btn btn-warning NextButton" [disabled]="!registrationNumber || !user.mobile1 || disableNext"
-                  (click)='eligibiltycheck1();'>Next</button>
-              </div>
-            </div>
-          </div>
-          <div *ngIf="showstep2">
-            <div class="row">
-              <div class="col-md-4 col-sm-4 col-lg-4">
-                <div class="form-group">
-                  <input type="text" id="vin" name="vin" class="form-control" [(ngModel)]="user.vin" #vin="ngModel" pattern="^[0-9a-zA-Z#,\-/_ .@]+$">
-                  <label class="form-control-placeholder" for="vin">Vin/chassis number</label>
-                </div>
-                <div class="form-control-feedback" *ngIf="vin.errors && (vin.dirty || vin.touched)">
-                  <p *ngIf="!vin.errors.valid" class="haserror">\$^*'}'`;> these characters are not accepted</p>
-                </div>
-              </div>
-              <div class="col-md-4 col-sm-4 col-lg-4">
-                <div class="form-group">
-                  <input type="text" id="policy" name="policy" class="form-control" [(ngModel)]="user.policy" #policy="ngModel" pattern="^[0-9a-zA-Z#,\-/_ .@]+$">
-                  <label class="form-control-placeholder" for="policy">Policy Number</label>
-                </div>
-                <div class="form-control-feedback" *ngIf="policy.errors && (policy.dirty || policy.touched)">
-                  <p *ngIf="!policy.errors.valid" class="haserror">\$^*'}'`;> these characters are not accepted</p>
-                </div>
-              </div>
-              <div class="col-md-2 col-sm-2 col-lg-2" style="display:inherit">
-                <div style="padding-right:29%;">
-                  <button type="button" class="btn btn-warning" [disabled]="!user.vin || !user.policy" (click)="eligibiltycheck2()">Next</button>
-                </div>
-                <div>
-                  <button type="button" class="btn btn-warning" (click)="skip()">Skip</button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div *ngIf="showstep3">
-            <div class="line">
-              <span class="sectionHeader">Vehicle Details</span>
-            </div>
-            <div class="row" *ngIf="insuranceFlag">
-              <div class="col-md-6 col-lg-6 col-sm-6">
-                <div class="form-group">
-                  <select name="brand" id="brand" class="form-control" (change)="onSelectBrand($event.target.value)"
-                    [(ngModel)]="selectedBrand" #brand="ngModel" required>
-                    <option *ngFor="let b of brands" [value]="b.brand_id"> {{b.brand_name}}</option>
-                  </select>
-                  <label class="form-control-placeholder" for="brand">Vehicle Brand*</label>
-                </div>
-              </div>
-              <div class="col-md-6 col-lg-6 col-sm-6">
-                <div class="form-control-feedback" *ngIf="brand.errors && (brand.dirty || brand.touched)">
-                  <p *ngIf="brand.errors.required" class="haserror">Brand is required</p>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6 col-lg-6 col-sm-6">
-                <div class="form-group">
-                  <select name="model" id="model" class="form-control" (change)="onSelectModel($event.value)"
-                    [(ngModel)]="selectedModel" #model="ngModel" required>
-                    <option *ngFor="let ma of Models" [value]="ma.model_id"> {{ma.model_name}}</option>
-                  </select>
-                  <label class="form-control-placeholder" for="model">Vehicle Model*</label>
-                </div>
-              </div>
-              <div class="col-md-6 col-lg-6 col-sm-6">
-                <div class="form-control-feedback" *ngIf="model.errors && (model.dirty || model.touched)">
-                  <p *ngIf="model.errors.required" class="haserror">Model is required</p>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6 col-lg-6 col-sm-6">
-                <div class="form-group">
-                  <select name="variant" id="variant" class="form-control" (change)="onSelectVariant($event.value)"
-                    [(ngModel)]="selectedVariant" #variant="ngModel" required>
-                    <option *ngFor="let va of Variant" [value]="va.variant_id"> {{va.variant_name}}</option>
-                  </select>
-                  <label class="form-control-placeholder" for="ServiceAdvisor">Vehicle Variant*</label>
-                </div>
-              </div>
-              <div class="col-md-6 col-lg-6 col-sm-6">
-                <div class="form-control-feedback" *ngIf="variant.errors && (variant.dirty || variant.touched)">
-                  <p *ngIf="variant.errors.required" class="haserror">Variant is required</p>
-                </div>
-              </div>
-            </div>
-            <div class="line">
-              <span class="sectionHeader">Customer Details</span>
-            </div>
-            <div class="row">
-              <div class="col-md-8 col-lg-8 col-sm-8 col-xs-8">
-                <div class="form-group" style="display:inline-block;min-width:15%;">
-                  <select id="salutation1" class="form-control" name="salutation1" [(ngModel)]="user.salutation"
-                    #salutation1="ngModel" required>
-                    <option *ngFor="let s of salutation" [value]="s.type"> {{s.type}}</option>
-                  </select>
-                </div>
-                <div class="form-group CusFormGroup">
-                  <input type="text" id="Cus_name" class="form-control" required [(ngModel)]="cust_details.first_name"
-                    name="Cus_name" #Cus_name="ngModel" style="text-transform: capitalize;" pattern="^[0-9a-zA-Z#,\-/_ .@]+$">
-                  <label class="form-control-placeholder" for="Cus_name">Customer Name*</label>
-                </div>
-              </div>
-              <div class="col-md-6 col-lg-6 col-sm-6">
-                <div class="form-control-feedback" *ngIf="Cus_name.errors && (Cus_name.dirty || Cus_name.touched)">
-                  <p *ngIf="Cus_name.errors.required" class="haserror">Customer Name is required</p>
-                  <p *ngIf="!Cus_name.errors.valid" class="haserror">\$^*'}'`;> these characters are not accepted</p>
-                </div>
-              </div>
-            </div>
-            <div class="container1">
-              <div class="row">
-                <div class="col-md-8 col-lg-8 col-sm-8 col-xs-8 mob">
-                  <div class="form-group" class="countryCode">
-                    <label for="countrycode" class="countryCodelabel">Country Code</label>
-                    <input type="text" class="form-control" name="countrycode" OnlyNumber="true" [readonly]="true"
-                      value="+91" [(ngModel)]="countrycode1" required #countrycode>
-                  </div>
-                  <div class="form-group" class="mobile1">
-                    <input type="text" class="form-control" name="mobile1" maxlength="10" [(ngModel)]="cust_details.mobile"
-                      required OnlyNumber="true" #mobile1="ngModel" pattern="^[0-9]{10}$">
-                    <label class="form-control-placeholder" for="mobile1">Mobile Number*</label>
-                  </div>
-                  <div class="addNumber">
-                    <button type="button" (click)="show1=!show1" class="addnumber">
-                      <i class="fa" [ngClass]="{'fa-plus': !show1, 'fa-minus': show1}" style="color:#ffa100"
-                        aria-hidden="true"></i>
-                    </button>
-                  </div>
-                  <div class="form-control-feedback" *ngIf="mobile1.errors && (mobile1.dirty || mobile1.touched)">
-                    <p *ngIf="mobile1.errors.required" class="haserror">mobile is required</p>
-                    <p *ngIf="!mobile1.errors.valid" class="haserror">mobile must contain digits only</p>
-                  </div>
-                </div>
-              </div>
-              <div *ngIf="show1">
-                <div class="row">
-                  <div class="col-md-8 col-lg-8 col-sm-8 col-xs-8">
-                    <div class="form-group" style="display:inline-block;max-width: 16%;">
-                      <label for="countrycode" style="font-size: 12px;padding-left: 2%;margin-bottom: 0px;">Country
-                        Code</label>
-                      <input type="text" class="form-control" name="countrycode" OnlyNumber="true" [readonly]="true"
-                        value="+91" [(ngModel)]="countrycode1" required #countrycode="ngModel">
-                    </div>
-                    <div class="form-group" style="display:inline-block;min-width:58%;">
-                      <input type="text" class="form-control" name="mobile2" maxlength="10" [(ngModel)]="cust_details.mobile2"
-                        OnlyNumber="true" #mobile2="ngModel" pattern="^[0-9]{10}$">
-                      <label class="form-control-placeholder" for="mobile2">Mobile2 Number*</label>
-                    </div>
-                    <div class="form-control-feedback" *ngIf="mobile2.errors && (mobile2.dirty || mobile2.touched)">
-                      <p *ngIf="!mobile2.errors.valid" class="haserror">mobile must contain digits only</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6 col-lg-6 col-sm-6">
-                <div class="form-group">
-                  <input type="text" id="email" class="form-control" name="email" [(ngModel)]="cust_details.email"
-                    #email="ngModel" required pattern="^([a-zA-Z0-9_\.\-])+@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$">
-                  <label class="form-control-placeholder" for="email">Email Id*</label>
-                </div>
-              </div>
-              <div class="col-md-6 col-lg-6 col-sm-6">
-                <div class="form-control-feedback" *ngIf="email.errors && (email.dirty || email.touched)">
-                  <p *ngIf="email.errors.required" class="haserror">Email is required</p>
-                  <p *ngIf="!email.errors.valid" class="haserror">Email must contain at least the @ character</p>
-                </div>
-              </div>
-            </div>
-            <div class="line" style="padding-bottom: 2%;">
-              <span class="sectionHeader">Location Details</span></div>
-            <div class="row" style="margin-bottom: 2%;">
-              <div class="col-lg-2 col-sm-2 col-md-2">
-                <label class="custom-control custom-radio">
-                  <input type="radio" class="custom-control-input" #onlypickup [(ngModel)]="yourBoolean" (change)=doPickup()
-                    value="onlypickup" name="customRadio">
-                  <span class="custom-control-indicator"></span>
-                  <span class="custom-control-description"> Only Pickup</span>
-                </label>
-              </div>
-              <div class="col-lg-3 col-sm-3 col-md-3">
-                <label class="custom-control custom-radio">
-                  <input type="radio" class="custom-control-input" #servicing [(ngModel)]="yourBoolean" (change)=doPickup()
-                    value="servicing" name="customRadio" checked>
-                  <span class="custom-control-indicator"></span>
-                  <span class="custom-control-description">Pickup & Drop-off</span>
-                </label>
-              </div>
-              <div class="col-lg-2 col-sm-2 col-md-2">
-                <label class="custom-control custom-radio">
-                  <input type="radio" class="custom-control-input" #dropoff [(ngModel)]="yourBoolean" (change)=doDrop()
-                    value="dropoff" name="customRadio">
-                  <span class="custom-control-indicator"></span>
-                  <span class="custom-control-description">Only Drop-off</span>
-                </label>
-              </div>
-            </div>
-            <div>
-              <div *ngIf="showAddressDropDown">
-                <div>
-                  <div class="row" *ngIf="yourBoolean === 'onlypickup' || yourBoolean === 'servicing'">
-                    <div class="col-lg-12 col-md-12 col-12 col-sm-12 address-btn-cls" style="padding-bottom: 2%;">
-                      <button  type="button" class="show-map-btn" (click)="ShowMapInSavedAddPickup()">
-                        <img src="../../../../assets/images/plus-symbol.svg">
-                      </button>
-                      <button type="button" *ngFor="let i of address;let x = index" class="savedAddBtn" (click)="SelectSavedPickupAddress(i, x, $event)">
-                        <p>#{{i.postal_address}},{{i.google_address}},</p>
-                        <p>{{i.area}}</p>
-                        <p class="address-type-para">{{i.type_of_address}}</p>
-                      </button>
-                    </div>
-                  </div>
-                  <div *ngIf="googleMapPickupFlag">
-                    <div class="row">
-                      <div class="col-lg-6 col-sm-6 col-md-6">
-                          <div class="pickup-map">
-                              <agm-map id="pickUpMap" [zoom]="zoom" [latitude]="latPickup" [longitude]="lngPickup" [disableDefaultUI]=false [mapDraggable]=false
-                                (mapReady)=pickUpMapReady($events)>
-                                <agm-marker [latitude]="latPickup" [longitude]="lngPickup"></agm-marker>
-                              </agm-map>
-                            </div>
-                      </div>
-                    </div>
-                 <div class="row">
-                      <div class="col-lg-6 col-sm-6 col-md-6">
-                        <div class="form-group">
-                          <input class="form-control" id="pickupsearch" #pickupsearchplace autocomplete="off"
-                            spellcheck="off" type="text" (keyup)="pickUpSearch($event)" required/>
-                          <label class="form-control-placeholder" for="city">Search Places*</label>
-                        </div>
-                      </div>
-                      <div class="col-lg-6 col-sm-6 col-md-6">
-                        <div class="form-group">
-                          <input class="form-control" name="pickflatno" #pickflatno="ngModel" autocomplete="off" spellcheck="off" type="text"  required [(ngModel)]="user.pickflatno" pattern="^[0-9a-zA-Z#,\-/_ .@]+$" minlength="4" maxlength="100"/>
-                          <label class="form-control-placeholder" for="pickflatno">Flat No./House No.*</label>
-                        </div>
-                        <div class="form-control-feedback" *ngIf="pickflatno.errors && (pickflatno.dirty || pickflatno.touched)">
-                            <p *ngIf="pickflatno.errors.required" class="haserror">Flat No./House No. is required</p>
-                            <p *ngIf="!pickflatno.errors.valid" class="haserror">\$^*'}'`;> these characters are not accepted</p>
-                            <p *ngIf="pickflatno.errors.minlength" class="haserror">Minimum 20 characters</p>
-                          </div>
-                      </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-6 col-sm-6 col-md-6">
-                            <div class="form-group">
-                              <input class="form-control" name="pickupbuildingname" #pickupbuildingname="ngModel" autocomplete="off" spellcheck="off" type="text"  required [(ngModel)]="user.pickupbuildingname" pattern="^[0-9a-zA-Z#,\-/_ .@]+$" minlength="4" maxlength="100"/>
-                              <label class="form-control-placeholder" for="pickupbuildingname">Building Name/Street Name*</label>
-                            </div>
-                            <div class="form-control-feedback" *ngIf="pickupbuildingname.errors && (pickupbuildingname.dirty || pickupbuildingname.touched)">
-                                <p *ngIf="pickupbuildingname.errors.required" class="haserror">Building Name/Street Name is required</p>
-                                <p *ngIf="!pickupbuildingname.errors.valid" class="haserror">\$^*'}'`;> these characters are not accepted</p>
-                                <p *ngIf="pickupbuildingname.errors.minlength" class="haserror">Minimum 20 characters</p>
-                              </div>
-                          </div>
-                      <div class="col-lg-6 col-sm-6 col-md-6">
-                        <div class="form-group">
-                          <input class="form-control" name="pickulandmark" id="pickulandmark" 
-                            #pickupsearchplaceLandmark="ngModel" autocomplete="off" spellcheck="off" type="text" required [(ngModel)]="user.pickulandmark" pattern="^[0-9a-zA-Z#,\-/_ .@]+$" minlength="10" maxlength="200"/>
-                          <label class="form-control-placeholder" for="pickulandmark">Landmark*</label>
-                        </div>
-                        <div class="form-control-feedback" *ngIf="pickupsearchplaceLandmark.errors && (pickupsearchplaceLandmark.dirty || pickupsearchplaceLandmark.touched)">
-                            <p *ngIf="pickupsearchplaceLandmark.errors.required" class="haserror">Landmark is required</p>
-                            <p *ngIf="!pickupsearchplaceLandmark.errors.valid" class="haserror">\$^*'}'`;> these characters are not accepted</p>
-                            <p *ngIf="pickupsearchplaceLandmark.errors.minlength" class="haserror">Minimum 10 characters</p>
-                          </div>
-                      </div>
+     <nb-card class="nb-icons">
+       <nb-card-header>
+         Pickup and Dropoff
+       </nb-card-header>
+       <nb-card-body>
+         <toaster-container [toasterconfig]="config"></toaster-container>
+         <form ngNativeValidate #f="ngForm" (ngSubmit)="onSubmit(f)">
+           <div class="row">
+             <div class="col-md-5 col-sm-5 col-lg-5">
+               <div class="form-group">
+                 <input type="text" id="num" name="num" class="form-control" style=" text-transform: uppercase" required
+                   (change)="onBlurMethod($event.target.value)" [(ngModel)]="registrationNumber" #num="ngModel"
+                   maxlength="15" pattern="^[0-9a-zA-Z#,\-/_ .@]+$">
+                 <label class="form-control-placeholder" for="num">Registration Number*</label>
+               </div>
+               <div class="form-control-feedback" *ngIf="num.errors && (num.dirty || num.touched)">
+                 <p *ngIf="num.errors.required" class="haserror">Registration Number is required</p>
+                 <p *ngIf="!num.errors.valid" class="haserror">\$^*'}'`;> these characters are not accepted</p>
+               </div>
+             </div>
+             <div class="col-md-5 col-sm-5 col-lg-5">
+               <div class="form-group">
+                 <input type="text" id="mobile1" name="mobile1" class="form-control" maxlength="10" [(ngModel)]="user.mobile1"
+                   OnlyNumber="true" required #mobile1="ngModel" pattern="^[0-9]{10}$">
+                 <label class="form-control-placeholder" for="mobile1">Customer Mobile Number*</label>
+               </div>
+               <div class="form-control-feedback" *ngIf="mobile1.errors && (mobile1.dirty || mobile1.touched)">
+                 <p *ngIf="mobile1.errors.required" class="haserror">Mobile Number is required</p>
+               </div>
+             </div>
+             <div class="col-md-2 col-sm-2 col-lg-2 NextRow">
+               <div>
+                 <button type="button" class="btn btn-warning NextButton" [disabled]="!registrationNumber || !user.mobile1 || disableNext"
+                   (click)='eligibiltycheck1();'>Next</button>
+               </div>
+             </div>
+           </div>
+           <div *ngIf="showstep2">
+             <div class="row">
+               <div class="col-md-4 col-sm-4 col-lg-4">
+                 <div class="form-group">
+                   <input type="text" id="vin" name="vin" class="form-control" [(ngModel)]="user.vin" #vin="ngModel" pattern="^[0-9a-zA-Z#,\-/_ .@]+$">
+                   <label class="form-control-placeholder" for="vin">Vin/chassis number</label>
+                 </div>
+                 <div class="form-control-feedback" *ngIf="vin.errors && (vin.dirty || vin.touched)">
+                   <p *ngIf="!vin.errors.valid" class="haserror">\$^*'}'`;> these characters are not accepted</p>
+                 </div>
+               </div>
+               <div class="col-md-4 col-sm-4 col-lg-4">
+                 <div class="form-group">
+                   <input type="text" id="policy" name="policy" class="form-control" [(ngModel)]="user.policy" #policy="ngModel" pattern="^[0-9a-zA-Z#,\-/_ .@]+$">
+                   <label class="form-control-placeholder" for="policy">Policy Number</label>
+                 </div>
+                 <div class="form-control-feedback" *ngIf="policy.errors && (policy.dirty || policy.touched)">
+                   <p *ngIf="!policy.errors.valid" class="haserror">\$^*'}'`;> these characters are not accepted</p>
+                 </div>
+               </div>
+               <div class="col-md-2 col-sm-2 col-lg-2" style="display:inherit">
+                 <div style="padding-right:29%;">
+                   <button type="button" class="btn btn-warning" [disabled]="!user.vin || !user.policy" (click)="eligibiltycheck2()">Next</button>
+                 </div>
+                 <div>
+                   <button type="button" class="btn btn-warning" (click)="skip()">Skip</button>
+                 </div>
+               </div>
+             </div>
+           </div>
+           <div *ngIf="showstep3">
+             <div class="line">
+               <span class="sectionHeader">Vehicle Details</span>
+             </div>
+             <div class="row" *ngIf="insuranceFlag">
+               <div class="col-md-6 col-lg-6 col-sm-6">
+                 <div class="form-group">
+                   <select name="brand" id="brand" class="form-control" (change)="onSelectBrand($event.target.value)"
+                     [(ngModel)]="selectedBrand" #brand="ngModel" required>
+                     <option *ngFor="let b of brands" [value]="b.brand_id"> {{b.brand_name}}</option>
+                   </select>
+                   <label class="form-control-placeholder" for="brand">Vehicle Brand*</label>
+                 </div>
+               </div>
+               <div class="col-md-6 col-lg-6 col-sm-6">
+                 <div class="form-control-feedback" *ngIf="brand.errors && (brand.dirty || brand.touched)">
+                   <p *ngIf="brand.errors.required" class="haserror">Brand is required</p>
+                 </div>
+               </div>
+             </div>
+             <div class="row">
+               <div class="col-md-6 col-lg-6 col-sm-6">
+                 <div class="form-group">
+                   <select name="model" id="model" class="form-control" (change)="onSelectModel($event.value)"
+                     [(ngModel)]="selectedModel" #model="ngModel" required>
+                     <option *ngFor="let ma of Models" [value]="ma.model_id"> {{ma.model_name}}</option>
+                   </select>
+                   <label class="form-control-placeholder" for="model">Vehicle Model*</label>
+                 </div>
+               </div>
+               <div class="col-md-6 col-lg-6 col-sm-6">
+                 <div class="form-control-feedback" *ngIf="model.errors && (model.dirty || model.touched)">
+                   <p *ngIf="model.errors.required" class="haserror">Model is required</p>
+                 </div>
+               </div>
+             </div>
+             <div class="row">
+               <div class="col-md-6 col-lg-6 col-sm-6">
+                 <div class="form-group">
+                   <select name="variant" id="variant" class="form-control" (change)="onSelectVariant($event.value)"
+                     [(ngModel)]="selectedVariant" #variant="ngModel" required>
+                     <option *ngFor="let va of Variant" [value]="va.variant_id"> {{va.variant_name}}</option>
+                   </select>
+                   <label class="form-control-placeholder" for="ServiceAdvisor">Vehicle Variant*</label>
+                 </div>
+               </div>
+               <div class="col-md-6 col-lg-6 col-sm-6">
+                 <div class="form-control-feedback" *ngIf="variant.errors && (variant.dirty || variant.touched)">
+                   <p *ngIf="variant.errors.required" class="haserror">Variant is required</p>
+                 </div>
+               </div>
+             </div>
+             <div class="line">
+               <span class="sectionHeader">Customer Details</span>
+             </div>
+             <div class="row">
+               <div class="col-md-8 col-lg-8 col-sm-8 col-xs-8">
+                 <div class="form-group" style="display:inline-block;min-width:15%;">
+                   <select id="salutation1" class="form-control" name="salutation1" [(ngModel)]="user.salutation"
+                     #salutation1="ngModel" required>
+                     <option *ngFor="let s of salutation" [value]="s.type"> {{s.type}}</option>
+                   </select>
+                 </div>
+                 <div class="form-group CusFormGroup">
+                   <input type="text" id="Cus_name" class="form-control" required [(ngModel)]="cust_details.first_name"
+                     name="Cus_name" #Cus_name="ngModel" style="text-transform: capitalize;" pattern="^[0-9a-zA-Z#,\-/_ .@]+$">
+                   <label class="form-control-placeholder" for="Cus_name">Customer Name*</label>
+                 </div>
+               </div>
+               <div class="col-md-6 col-lg-6 col-sm-6">
+                 <div class="form-control-feedback" *ngIf="Cus_name.errors && (Cus_name.dirty || Cus_name.touched)">
+                   <p *ngIf="Cus_name.errors.required" class="haserror">Customer Name is required</p>
+                   <p *ngIf="!Cus_name.errors.valid" class="haserror">\$^*'}'`;> these characters are not accepted</p>
+                 </div>
+               </div>
+             </div>
+             <div class="container1">
+               <div class="row">
+                 <div class="col-md-8 col-lg-8 col-sm-8 col-xs-8 mob">
+                   <div class="form-group" class="countryCode">
+                     <label for="countrycode" class="countryCodelabel">Country Code</label>
+                     <input type="text" class="form-control" name="countrycode" OnlyNumber="true" [readonly]="true"
+                       value="+91" [(ngModel)]="countrycode1" required #countrycode>
                    </div>
-                    <div class="row">
-                      <div class="col-lg-6 col-sm-6 col-md-6">
-                        <div class="form-group">
-                          <select id="addresstypepu" class="form-control" name="addresstypepu" [(ngModel)]="user.addresstypepu"
-                            #addresstypepu="ngModel" required>
-                            <option [value]="i.id" *ngFor="let i of addresstype">{{i.type_of_address}}</option>
-                          </select>
-                          <label class="form-control-placeholder" for="addresstypepu">Type of address*</label>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="sameasDiv" *ngIf="yourBoolean === 'servicing'" style="padding-bottom: 2%;">
-                  <label class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input sameas" name="sameas" #same (click)="sameAsPickup(same.checked)"
-                      (change)="sameAsPickUpAdd($event)" checked="true">
-                    <span class="custom-control-indicator"></span>
-                    <span class="custom-control-description">Drop Location is same as Pickup</span>
-                  </label>
-                </div>
-                <div *ngIf="ifSameAsPickUp || dropOffOnly || !onlypickup">
-                  <div class="row">
-                    <div class="col-lg-12 col-md-12 col-12 col-sm-12 address-btn-cls" style="padding-bottom: 2%;">
-                      <button type="button" (click)="ShowMapInSavedAddDropoff()" class="show-map-btn">
-                        <img src="../../../../assets/images/plus-symbol.svg">
-                      </button>
-                      <button type="button" *ngFor="let i of address; let x = index" class="savedAddBtn" (click)="SelectSavedDropoffAddress(i, x, $event)">
-                        <p>#{{i.postal_address}},{{i.google_address}},</p>
-                        <p>{{i.area}}</p>
-                        <p class="address-type-para">{{i.type_of_address}}</p>
-                      </button>
-                    </div>
-                  </div>
-                  <div *ngIf="googleMapDropoffFlag">
-                    <div>
-                      <div class="row">
-                        <div class="col-lg-6 col-sm-6 col-md-6">
-                          <div class="pickup-map">
-                            <agm-map id="pickUpMap2" [zoom]="zoom" [latitude]="latDrop" [longitude]="lngDrop"
-                              [disableDefaultUI]=false (mapReady)=pickUpMapReady($events) [mapDraggable]=false>
-                              <agm-marker [latitude]="latDrop" [longitude]="lngDrop"></agm-marker>
-                            </agm-map>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-lg-6 col-sm-6 col-md-6">
-                          <div class="form-group">
-                            <input class="form-control" name="dropoffsearch" id="dropoffsearch" #dropoffsearchplace autocomplete="off"
-                              spellcheck="off" type="text" (keyup)="dropOffSearch($event)" required/>
-                            <label class="form-control-placeholder" for="dropoffsearch">Search Places*</label>
-                          </div>
-                        </div>
-                        <div class="col-lg-6 col-sm-6 col-md-6">
-                          <div class="form-group">
-                            <input class="form-control" name="dropoffflatno" #dropoffflatno="ngModel" autocomplete="off" id="dropoffflatno"
-                              spellcheck="off" type="text" required [(ngModel)]="user.dropoffflatno" pattern="^[0-9a-zA-Z#,\-/_ .@]+$" minlength="4" maxlength="100"/>
-                              <label class="form-control-placeholder" for="dropoffflatno">Flat No./House No.*</label>
-                            </div>
-                          <div class="form-control-feedback" *ngIf="dropoffflatno.errors && (dropoffflatno.dirty || dropoffflatno.touched)">
-                              <p *ngIf="dropoffflatno.errors.required" class="haserror">Flat No./House No. is required</p>
-                              <p *ngIf="!dropoffflatno.errors.valid" class="haserror">\$^*'}'`;> these characters are not accepted</p>
-                              <p *ngIf="dropoffflatno.errors.minlength" class="haserror">Minimum 4 characters</p>
-                            </div>
-                        </div>
-                      </div>
-                      <div class="row">
-                          <div class="col-lg-6 col-sm-6 col-md-6">
-                              <div class="form-group">
-                                <input class="form-control" name="dropoffbuildingname" #dropoffbuildingname="ngModel" autocomplete="off" id="dropoffbuildingname"
-                                  spellcheck="off" type="text" required [(ngModel)]="user.dropoffbuildingname" pattern="^[0-9a-zA-Z#,\-/_ .@]+$" minlength="4" maxlength="100"/>
-                                  <label class="form-control-placeholder" for="dropoffbuildingname">Building Name/Street Name*</label>
-                                </div>
-                              <div class="form-control-feedback" *ngIf="dropoffbuildingname.errors && (dropoffbuildingname.dirty || dropoffbuildingname.touched)">
-                                  <p *ngIf="dropoffbuildingname.errors.required" class="haserror">Building Name/Street Name is required</p>
-                                  <p *ngIf="!dropoffbuildingname.errors.valid" class="haserror">\$^*'}'`;> these characters are not accepted</p>
-                                  <p *ngIf="dropoffbuildingname.errors.minlength" class="haserror">Minimum 4 characters</p>
-                                </div>
-                            </div>
-                        <div class="col-lg-6 col-sm-6 col-md-6">
-                          <div class="form-group">
-                            <input class="form-control" name="dropofflandmark" id="dropofflandmark" 
-                              #dropofflandmark="ngModel" autocomplete="off" spellcheck="off" type="text" [(ngModel)]="user.dropofflandmark" required pattern="^[0-9a-zA-Z#,\-/_ .@]+$" minlength="4" maxlength="100"/>
-                            <label class="form-control-placeholder" for="dropofflandmark">Landmark*</label>
-                          </div>
-                          <div class="form-control-feedback" *ngIf="dropofflandmark.errors && (dropofflandmark.dirty || dropofflandmark.touched)">
-                              <p *ngIf="dropofflandmark.errors.required" class="haserror">Landmark is required</p>
-                              <p *ngIf="!dropofflandmark.errors.valid" class="haserror">\$^*'}'`;> these characters are not accepted</p>
-                              <p *ngIf="dropofflandmark.errors.minlength" class="haserror">Minimum 4 characters</p>
-                            </div>
-                        </div>
-                       
-                      </div>
-                      <div class="row">
-                        <div class="col-lg-6 col-sm-6 col-md-6">
-                            <div class="form-group">
-                                <select id="addresstypedo" class="form-control" name="addresstypedo" [(ngModel)]="user.addresstypedo"
-                                  #addresstypepu="ngModel" required>
-                                  <option [value]="i.id" *ngFor="let i of addresstype">{{i.type_of_address}}</option>
-                                </select>
-                                <label class="form-control-placeholder" for="addresstypedo">Type of address*</label>
-                              </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div *ngIf="showAddress">
-                <div *ngIf="yourBoolean === 'onlypickup' || yourBoolean === 'servicing'">
-                  <div class="row">
-                    <div class="col-lg-6 col-sm-6 col-md-6">
-                      <div class="pickup-map">
-                        <agm-map id="pickUpMap" [zoom]="zoom" [latitude]="latPickup" [longitude]="lngPickup" [disableDefaultUI]=false [mapDraggable]=false
-                          (mapReady)=pickUpMapReady($events)>
-                          <agm-marker [latitude]="latPickup" [longitude]="lngPickup"></agm-marker>
-                        </agm-map>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-lg-6 col-sm-6 col-md-6">
-                      <div class="form-group">
-                        <input class="form-control" id="pickupsearch" #pickupsearchplace autocomplete="off" spellcheck="off"
-                          type="text" (keyup)="pickUpSearch($event)" required/>
-                        <label class="form-control-placeholder" for="city">Search Places*</label>
-                      </div>
-                    </div>
-                    <div class="col-lg-6 col-sm-6 col-md-6">
-                      <div class="form-group">
-                        <input class="form-control" name="pickflatno" #pickflatno="ngModel" autocomplete="off" spellcheck="off" type="text" pattern="^[0-9a-zA-Z#,\-/_ .@]+$" required [(ngModel)]="user.pickflatno" minlength="4" maxlength="100" />
-                        <label class="form-control-placeholder" for="pickflatno">Flat No./House No.*</label>
-                      </div>
-                      <div class="form-control-feedback" *ngIf="pickflatno.errors && (pickflatno.dirty || pickflatno.touched)">
-                          <p *ngIf="pickflatno.errors.required" class="haserror">Flat No/House No is required</p>
-                          <p *ngIf="!pickflatno.errors.valid" class="haserror">\$^*'}'`;> these characters are not accepted</p>
-                          <p *ngIf="pickflatno.errors.minlength" class="haserror">Minimum 4 characters</p>
-                        </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-lg-6 col-sm-6 col-md-6">
-                        <div class="form-group">
-                           <input class="form-control" name="pickupbuildingname" #pickupbuildingname="ngModel" autocomplete="off" spellcheck="off" type="text" pattern="^[0-9a-zA-Z#,\-/_ .@]+$" required [(ngModel)]="user.pickupbuildingname" minlength="4" maxlength="100"/>
-                           <label class="form-control-placeholder" for="pickupbuildingname">Building Name/Street Name*</label>
-                           </div>
-                         <div class="form-control-feedback" *ngIf="pickupbuildingname.errors && (pickupbuildingname.dirty || pickupbuildingname.touched)">
-                             <p *ngIf="pickupbuildingname.errors.required" class="haserror">Building Name/Street Name is required</p>
-                             <p *ngIf="!pickupbuildingname.errors.valid" class="haserror">\$^*'}'`;> these characters are not accepted</p>
-                             <p *ngIf="pickupbuildingname.errors.minlength" class="haserror">Minimum 4 characters</p>
-                           </div>
-                    </div>
-                    <div class="col-lg-6 col-sm-6 col-md-6">
-                        <div class="form-group">
-                          <input class="form-control" id="pickulandmark" name="pickupsearchplaceLandmark"
-                            #pickupsearchplaceLandmark="ngModel" autocomplete="off" spellcheck="off" type="text" pattern="^[0-9a-zA-Z#,\-/_ .@]+$" required [(ngModel)]="user.pickuplandmark" minlength="4" maxlength="100"/>
-                          <label class="form-control-placeholder" for="pickulandmark">Landmark*</label>
-                        </div>
-                        <div class="form-control-feedback" *ngIf="pickupsearchplaceLandmark.errors && (pickupsearchplaceLandmark.dirty || pickupsearchplaceLandmark.touched)">
-                            <p *ngIf="pickupsearchplaceLandmark.errors.required" class="haserror">Landmark is required</p>
-                            <p *ngIf="!pickupsearchplaceLandmark.errors.valid" class="haserror">\$^*'}'`;> these characters are not accepted</p>
-                            <p *ngIf="pickupsearchplaceLandmark.errors.minlength" class="haserror">Minimum 4 characters</p>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="row">
-                 
-                    <div class="col-lg-6 col-sm-6 col-md-6">
-                      <div class="form-group">
-                        <select id="addresstypepu" class="form-control" name="addresstypepu" [(ngModel)]="user.addresstypepu"
-                          #addresstypepu="ngModel" required>
-                          <option [value]="i.id" *ngFor="let i of addresstype">{{i.type_of_address}}</option>
-                        </select>
-                        <label class="form-control-placeholder" for="addresstypepu">Type of address*</label>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="sameasDiv" *ngIf="yourBoolean === 'servicing'">
-                  <label class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input sameas" name="sameas" #same (click)="sameAsPickup(same.checked)"
-                      (change)="sameAsPickUpAdd($event)" checked="true">
-                    <span class="custom-control-indicator"></span>
-                    <span class="custom-control-description">Drop Location is same as Pickup</span>
-                  </label>
-                </div>
-                <div *ngIf="ifSameAsPickUp || dropOffOnly">
-                  <div class="row">
-                    <div class="col-lg-6 col-sm-6 col-md-6">
-                      <div class="pickup-map">
-                        <agm-map id="pickUpMap2" [zoom]="zoom" [latitude]="latDrop" [longitude]="lngDrop" [disableDefaultUI]=false  [mapDraggable]=false
-                          (mapReady)=pickUpMapReady($events)>
-                          <agm-marker [latitude]="latDrop" [longitude]="lngDrop"></agm-marker>
-                        </agm-map>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-lg-6 col-sm-6 col-md-6">
-                      <div class="form-group">
-                        <input class="form-control" id="dropoffsearch" #dropoffsearchplace autocomplete="off"
-                          spellcheck="off" type="text" (keyup)="dropOffSearch($event)" required/>
-                        <label class="form-control-placeholder" for="dropoffsearch">Search Places*</label>
-                      </div>
-                    </div>
-                    <div class="col-lg-6 col-sm-6 col-md-6">
-                      <div class="form-group">
-                        <input class="form-control" name="dropoffflatno" #dropoffflatno="ngModel" autocomplete="off" id="dropoffflatno"
-                          spellcheck="off" type="text" required pattern="^[0-9a-zA-Z#,\-/_ .@]+$" [(ngModel)]="user.dropoffflatno" minlength="4" maxlength="100" />
-                          <label class="form-control-placeholder" for="dropoffflatno">Flat No./House No.*</label>
-                     
-                        </div>
-                      <div class="form-control-feedback" *ngIf="dropoffflatno.errors && (dropoffflatno.dirty || dropoffflatno.touched)">
-                          <p *ngIf="dropoffflatno.errors.required" class="haserror">Flat No./House No.* is required</p>
-                          <p *ngIf="!dropoffflatno.errors.valid" class="haserror">\$^*'}'`;> these characters are not accepted</p>
-                          <p *ngIf="dropoffflatno.errors.minlength" class="haserror">Minimum 4 characters</p>
-                        </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                      <div class="col-lg-6 col-sm-6 col-md-6">
-                          <div class="form-group">
-                              <input class="form-control" name="dropoffbuildingname" #dropoffbuildingname="ngModel" autocomplete="off" id="dropoffbuildingname"
-                                spellcheck="off" type="text" required pattern="^[0-9a-zA-Z#,\-/_ .@]+$" [(ngModel)]="user.dropoffbuildingname" minlength="4" maxlength="100" />
-                                <label class="form-control-placeholder" for="dropoffbuildingname">Building Name/Street Name*</label>
+                   <div class="form-group" class="mobile1">
+                     <input type="text" class="form-control" name="mobile1" maxlength="10" [(ngModel)]="cust_details.mobile"
+                       required OnlyNumber="true" #mobile1="ngModel" pattern="^[0-9]{10}$">
+                     <label class="form-control-placeholder" for="mobile1">Mobile Number*</label>
+                   </div>
+                   <div class="addNumber">
+                     <button type="button" (click)="show1=!show1" class="addnumber">
+                       <i class="fa" [ngClass]="{'fa-plus': !show1, 'fa-minus': show1}" style="color:#ffa100"
+                         aria-hidden="true"></i>
+                     </button>
+                   </div>
+                   <div class="form-control-feedback" *ngIf="mobile1.errors && (mobile1.dirty || mobile1.touched)">
+                     <p *ngIf="mobile1.errors.required" class="haserror">mobile is required</p>
+                     <p *ngIf="!mobile1.errors.valid" class="haserror">mobile must contain digits only</p>
+                   </div>
+                 </div>
+               </div>
+               <div *ngIf="show1">
+                 <div class="row">
+                   <div class="col-md-8 col-lg-8 col-sm-8 col-xs-8">
+                     <div class="form-group" style="display:inline-block;max-width: 16%;">
+                       <label for="countrycode" style="font-size: 12px;padding-left: 2%;margin-bottom: 0px;">Country
+                         Code</label>
+                       <input type="text" class="form-control" name="countrycode" OnlyNumber="true" [readonly]="true"
+                         value="+91" [(ngModel)]="countrycode1" required #countrycode="ngModel">
+                     </div>
+                     <div class="form-group" style="display:inline-block;min-width:58%;">
+                       <input type="text" class="form-control" name="mobile2" maxlength="10" [(ngModel)]="cust_details.mobile2"
+                         OnlyNumber="true" #mobile2="ngModel" pattern="^[0-9]{10}$">
+                       <label class="form-control-placeholder" for="mobile2">Mobile2 Number*</label>
+                     </div>
+                     <div class="form-control-feedback" *ngIf="mobile2.errors && (mobile2.dirty || mobile2.touched)">
+                       <p *ngIf="!mobile2.errors.valid" class="haserror">mobile must contain digits only</p>
+                     </div>
+                   </div>
+                 </div>
+               </div>
+             </div>
+             <div class="row">
+               <div class="col-md-6 col-lg-6 col-sm-6">
+                 <div class="form-group">
+                   <input type="text" id="email" class="form-control" name="email" [(ngModel)]="cust_details.email"
+                     #email="ngModel" required pattern="^([a-zA-Z0-9_\.\-])+@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$">
+                   <label class="form-control-placeholder" for="email">Email Id*</label>
+                 </div>
+               </div>
+               <div class="col-md-6 col-lg-6 col-sm-6">
+                 <div class="form-control-feedback" *ngIf="email.errors && (email.dirty || email.touched)">
+                   <p *ngIf="email.errors.required" class="haserror">Email is required</p>
+                   <p *ngIf="!email.errors.valid" class="haserror">Email must contain at least the @ character</p>
+                 </div>
+               </div>
+             </div>
+             <div class="line" style="padding-bottom: 2%;">
+               <span class="sectionHeader">Location Details</span></div>
+             <div class="row" style="margin-bottom: 2%;">
+               <div class="col-lg-2 col-sm-2 col-md-2">
+                 <label class="custom-control custom-radio">
+                   <input type="radio" class="custom-control-input" #onlypickup [(ngModel)]="yourBoolean" (change)=doPickup()
+                     value="onlypickup" name="customRadio">
+                   <span class="custom-control-indicator"></span>
+                   <span class="custom-control-description"> Only Pickup</span>
+                 </label>
+               </div>
+               <div class="col-lg-3 col-sm-3 col-md-3">
+                 <label class="custom-control custom-radio">
+                   <input type="radio" class="custom-control-input" #servicing [(ngModel)]="yourBoolean" (change)=doPickup()
+                     value="servicing" name="customRadio" checked>
+                   <span class="custom-control-indicator"></span>
+                   <span class="custom-control-description">Pickup & Drop-off</span>
+                 </label>
+               </div>
+               <div class="col-lg-2 col-sm-2 col-md-2">
+                 <label class="custom-control custom-radio">
+                   <input type="radio" class="custom-control-input" #dropoff [(ngModel)]="yourBoolean" (change)=doDrop()
+                     value="dropoff" name="customRadio">
+                   <span class="custom-control-indicator"></span>
+                   <span class="custom-control-description">Only Drop-off</span>
+                 </label>
+               </div>
+             </div>
+             <div>
+               <div *ngIf="showAddressDropDown">
+                 <div>
+                  
+                   <div class="row" *ngIf="yourBoolean === 'onlypickup' || yourBoolean === 'servicing'">
+                       <p style="margin-left: 2rem;font-weight: 500;">Pickup Location</p>
+                     <div class="col-lg-12 col-md-12 col-12 col-sm-12 address-btn-cls" style="padding-bottom: 2%;">
+                       <button  type="button" class="show-map-btn" (click)="ShowMapInSavedAddPickup()">
+                         <img src="../../../../assets/images/plus-symbol.svg">
+                       </button>
+                       <button type="button" *ngFor="let i of address;let x = index" class="savedAddBtn" (click)="SelectSavedPickupAddress(i, x, $event)">
+                         <p>#{{i.postal_address}},{{i.google_address}},</p>
+                         <p>{{i.area}}</p>
+                         <p class="address-type-para">{{i.type_of_address}}</p>
+                       </button>
+                     </div>
+                   </div>
+                   <div *ngIf="googleMapPickupFlag">
+                     <div class="row">
+                       <div class="col-lg-6 col-sm-6 col-md-6">
+                           <div class="pickup-map">
+                               <agm-map id="pickUpMap" [zoom]="zoom" [latitude]="latPickup" [longitude]="lngPickup" [disableDefaultUI]=false [mapDraggable]=false
+                                 (mapReady)=pickUpMapReady($events)>
+                                 <agm-marker [latitude]="latPickup" [longitude]="lngPickup"></agm-marker>
+                               </agm-map>
                              </div>
-                              <div class="form-control-feedback" *ngIf="dropoffbuildingname.errors && (dropoffbuildingname.dirty || dropoffbuildingname.touched)">
-                                  <p *ngIf="dropoffbuildingname.errors.required" class="haserror">Postal Address is required</p>
-                                  <p *ngIf="!dropoffbuildingname.errors.valid" class="haserror">\$^*'}'`;> these characters are not accepted</p>
-                                  <p *ngIf="dropoffbuildingname.errors.minlength" class="haserror">Minimum 4 characters</p>
-                                </div>
-                        </div>
-                    <div class="col-lg-6 col-sm-6 col-md-6">
-                      <div class="form-group">
-                        <input class="form-control" id="dropofflandmark" name="dropofflandmark"
-                          #dropoffsearchplaceLandmark="ngModel" autocomplete="off" spellcheck="off" type="text" pattern="^[0-9a-zA-Z#,\-/_ .@]+$" required [(ngModel)]="user.droplandmark" minlength="4" maxlength="100"/>
-                        <label class="form-control-placeholder" for="dropofflandmark">Landmark*</label>
-                      </div>
-                      <div class="form-control-feedback" *ngIf="dropoffsearchplaceLandmark.errors && (dropoffsearchplaceLandmark.dirty || dropoffsearchplaceLandmark.touched)">
-                          <p *ngIf="dropoffsearchplaceLandmark.errors.required" class="haserror">Landmark is required</p>
-                          <p *ngIf="!dropoffsearchplaceLandmark.errors.valid" class="haserror">\$^*'}'`;> these characters are not accepted</p>
-                          <p *ngIf="dropoffsearchplaceLandmark.errors.minlength" class="haserror">Minimum 4 characters</p>
-                        </div>
-                    </div>
-                   
-                  </div>
+                       </div>
+                     </div>
                   <div class="row">
-                    <div class="col-lg-6 col-sm-6 col-md-6">
-                        <div class="form-group">
-                            <select id="addresstypedo" class="form-control" name="addresstypedo" [(ngModel)]="user.addresstypedo"
-                              #addresstypepu="ngModel" required>
-                              <option [value]="i.id" *ngFor="let i of addresstype">{{i.type_of_address}}</option>
-                            </select>
-                            <label class="form-control-placeholder" for="addresstypedo">Type of address*</label>
-                          </div>
+                       <div class="col-lg-6 col-sm-6 col-md-6">
+                         <div class="form-group">
+                           <input class="form-control" id="pickupsearch" #pickupsearchplace autocomplete="off"
+                             spellcheck="off" type="text" (keyup)="pickUpSearch($event)" required/>
+                           <label class="form-control-placeholder" for="city">Search Places*</label>
+                         </div>
+                       </div>
+                       <div class="col-lg-6 col-sm-6 col-md-6">
+                         <div class="form-group">
+                           <input class="form-control" name="pickflatno" #pickflatno="ngModel" autocomplete="off" spellcheck="off" type="text"  required [(ngModel)]="user.pickflatno" pattern="^[0-9a-zA-Z#,\-/_ .@]+$" minlength="1" maxlength="5"/>
+                           <label class="form-control-placeholder" for="pickflatno">Flat No./House No.*</label>
+                         </div>
+                         <div class="form-control-feedback" *ngIf="pickflatno.errors && (pickflatno.dirty || pickflatno.touched)">
+                             <p *ngIf="pickflatno.errors.required" class="haserror">Flat No./House No. is required</p>
+                             <p *ngIf="!pickflatno.errors.valid" class="haserror">\$^*'}'`;> these characters are not accepted</p>
+                             <p *ngIf="pickflatno.errors.minlength" class="haserror">Minimum 1 characters</p>
+                           </div>
+                       </div>
+                     </div>
+                     <div class="row">
+                         <div class="col-lg-6 col-sm-6 col-md-6">
+                             <div class="form-group">
+                               <input class="form-control" name="pickupbuildingname" #pickupbuildingname="ngModel" autocomplete="off" spellcheck="off" type="text"  required [(ngModel)]="user.pickupbuildingname" pattern="^[0-9a-zA-Z#,\-/_ .@]+$" minlength="4" maxlength="100"/>
+                               <label class="form-control-placeholder" for="pickupbuildingname">Building name/Street name*</label>
+                             </div>
+                             <div class="form-control-feedback" *ngIf="pickupbuildingname.errors && (pickupbuildingname.dirty || pickupbuildingname.touched)">
+                                 <p *ngIf="pickupbuildingname.errors.required" class="haserror">Building Name/Street Name is required</p>
+                                 <p *ngIf="!pickupbuildingname.errors.valid" class="haserror">\$^*'}'`;> these characters are not accepted</p>
+                                 <p *ngIf="pickupbuildingname.errors.minlength" class="haserror">Minimum 4 characters</p>
+                               </div>
+                           </div>
+                       <div class="col-lg-6 col-sm-6 col-md-6">
+                         <div class="form-group">
+                           <input class="form-control" name="pickulandmark" id="pickulandmark" 
+                             #pickupsearchplaceLandmark="ngModel" autocomplete="off" spellcheck="off" type="text" required [(ngModel)]="user.pickulandmark" pattern="^[0-9a-zA-Z#,\-/_ .@]+$" minlength="4" maxlength="100"/>
+                           <label class="form-control-placeholder" for="pickulandmark">Landmark*</label>
+                         </div>
+                         <div class="form-control-feedback" *ngIf="pickupsearchplaceLandmark.errors && (pickupsearchplaceLandmark.dirty || pickupsearchplaceLandmark.touched)">
+                             <p *ngIf="pickupsearchplaceLandmark.errors.required" class="haserror">Landmark is required</p>
+                             <p *ngIf="!pickupsearchplaceLandmark.errors.valid" class="haserror">\$^*'}'`;> these characters are not accepted</p>
+                             <p *ngIf="pickupsearchplaceLandmark.errors.minlength" class="haserror">Minimum 4 characters</p>
+                           </div>
+                       </div>
                     </div>
-                  </div>
-                </div>
-              </div>
-              <div class="line">
-                <span class="sectionHeader">Slot Details</span>
-              </div>
-              <div> </div>
-              <div class="row" *ngIf="insuranceFlag">
-                <div class="col-md-6 col-lg-6 col-sm-6">
-                  <div class="form-group">
-                    <select name="city" id="city" class="form-control" [(ngModel)]="user.city" required #city="ngModel"
-                      (change)="onCity($event)">
-                      <option *ngFor="let d of cityList; let i = index" [value]="d.cityid">{{d.cityname}}</option>
-                    </select>
-                    <label class="form-control-placeholder" for="city">City*</label>
-                  </div>
-                  <div class="form-control-feedback" *ngIf="city.errors && (city.dirty || city.touched)">
-                    <p *ngIf="city.errors.required" class="haserror">City is required</p>
-                  </div>
-                </div>
-                <div class="col-md-6 col-lg-6 col-sm-6">
-                  <div class="form-group">
-                    <select id="svclist" class="form-control" name="svclist" [(ngModel)]="user.svc" #svclist="ngModel"
-                      required>
-                      <optgroup label="{{i.associated}}" *ngFor="let i of svcList;let j = index;">
-                        <option [value]="i.id">{{i.name}}</option>
-                      </optgroup>
-                    </select>
-                    <label class="form-control-placeholder" for="svclist">Service Centre List*</label>
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-6 col-lg-6 col-sm-6">
-                  <div class="form-group">
-                    <div class="input-group">
-                      <input class="form-control" name="dp" [ngModel]="model" required [minDate]="startDate"
-                        placeholder="{{valuedate | date: 'yyyy-MM-dd'}}" (ngModelChange)="onSelectDate($event)"
-                        ngbDatepicker #d="ngbDatepicker">
-                      <div class="input-group-append">
-                        <button class="btn btn-outline-secondary dateButton" (click)="d.toggle()" type="button">
-                          <span>
-                            <i class="fa fa-calendar"></i>
-                          </span>
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="form-control-feedback" *ngIf="d.errors && (d.dirty || d.touched)">
-                    <p *ngIf="d.errors.required" class="haserror">Date is required</p>
-                  </div>
-                </div>
-              </div>
-              <div class="row" style="padding-bottom: 3%;">
-                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6" *ngIf="showtime">
-                  <table cellspacing="20" *ngIf="show3">
-                    <tr *ngFor="let row of buildArr(slot);let i = index">
-                      <td *ngFor="let s of row" class="timeRow">
-                        <a (click)=check(s.time_format,s.slothour) class="timeAnchor">
-                          <span>{{s.time_format}}</span>
-                        </a>
-                      </td>
-                    </tr>
-                  </table>
-                </div>
-                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 showtimeinput" *ngIf="showtime">
-                  <input class="form-control" name="slot" [readonly]="true" *ngIf="slot_time" [(ngModel)]="slothour" />
-                </div>
-              </div>
-              <div class="line">
-                <span class="sectionHeader">Service Details</span>
-              </div>
-              <div class="row">
-                <div class="col-md-6 col-lg-6 col-sm-6">
-                  <div class="form-group">
-                    <select name="serviceType" id="serviceType" class="form-control" name="service_type" [(ngModel)]="user.service_type"
-                      #servicetype="ngModel" required>
-                      <option *ngFor="let s of service_type" [value]="s.id"> {{s.type}}</option>
-                    </select>
-                    <label class="form-control-placeholder" for="serviceType">Service Type*</label>
-                  </div>
-                  <div class="form-control-feedback" *ngIf="servicetype.errors && (servicetype.dirty || servicetype.touched)">
-                    <p *ngIf="servicetype.errors.required" class="haserror">Service Type is required</p>
-                  </div>
-                </div>
-                <div class="col-md-6 col-lg-6 col-sm-6" *ngIf="yourBoolean != 'dropoff'">
-                  <div class="form-group">
-                    <angular2-multiselect [data]="itemList" [(ngModel)]="selectedItems" [settings]="settings" name="something"
-                      #comp (onSelect)="onItemSelect($event)" (onDeSelect)="OnItemDeSelect($event)" (onSelectAll)="onSelectAll($event)"
-                      (onDeSelectAll)="onDeSelectAll($event)">
-                    </angular2-multiselect>
-                  </div>
-                </div>
-                <div class="col-md-6 col-lg-6 col-sm-6" *ngIf="yourBoolean === 'dropoff'">
-                  <div class="form-group">
-                    <input type="text" id="notes" class="form-control" name="notes" [(ngModel)]="user.notes"
-                      placeholder="Notes" #notes="ngModel" pattern="^[0-9a-zA-Z#,\-/_ .@]+$">
-                    <label class="form-control-placeholder" for="notes">Notes</label>
-                  </div>
-                  <div class="form-control-feedback" *ngIf="notes.errors && (notes.dirty || notes.touched)">
-                    <p *ngIf="!notes.errors.valid" class="haserror">\$^*'}'`;> these characters are not accepted</p>
-                    </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-6 col-lg-6 col-sm-6 col-12 creCol AddUserCre">
-                  <div class="creContainer">
-                    <div class="form-group" class="AddUserRow">
-                      <select name="creName" id="creName" class="form-control" [(ngModel)]="user.cre" #creName="ngModel"
-                        required>
-                        <option *ngFor="let ca of cre" [value]="ca.id"> {{ca.first_name}} - {{ca.mobile_number}}</option>
-                      </select>
-                      <label class="form-control-placeholder" for="cre">CRE*</label>
-                    </div>
-                    <div style="display:inline-block;">
-                      <button type="button" (click)="showModal(1)" class="addnumber" style="background-color: white;border-color: orange;">
-                        <i class="fa fa-plus" style="color:#ffa100" aria-hidden="true"></i>
-                      </button>
-                    </div>
-                  </div>
-                  <div class="form-control-feedback" *ngIf="creName.errors && (creName.dirty || creName.touched)">
-                    <p *ngIf="creName.errors.required" class="haserror">CRE is required</p>
-                  </div>
-                </div>
-                <div class="col-md-6 col-lg-6 col-sm-6 col-12 AddUserCre" *ngIf="!insuranceFlag">
-                  <div class="form-group" class="AddUserRow">
-                    <select name="ServiceAdvisor" id="ServiceAdvisor" class="form-control" name="ServiceAdvisor"
-                      [(ngModel)]="user.service_advisor" #ServiceAdvisor="ngModel" required>
-                      <option *ngFor="let sa of serviceadv" [value]="sa.id"> {{sa.first_name}} - {{sa.mobile_number}}</option>
-                    </select>
-                    <label class="form-control-placeholder" for="ServiceAdvisor">Service Advisor*</label>
-                  </div>
-                  <div style="display:inline-block;">
-                    <button type="button" (click)="showModal(2)" class="addnumber" style="background-color: white;border-color: orange;">
-                      <i class="fa fa-plus" style="color:#ffa100" aria-hidden="true"></i>
-                    </button>
-                  </div>
-                </div>
-                <div class="col-md-6 col-lg-6 col-sm-6 col-12 AddUserCre" *ngIf="insuranceFlag">
-                  <div class="form-group" class="AddUserRow">
-                    <select name="ServiceAdvisor" id="ServiceAdvisor" class="form-control" name="ServiceAdvisor"
-                      [(ngModel)]="user.service_advisor" #ServiceAdvisor="ngModel">
-                      <option *ngFor="let sa of serviceadv" [value]="sa.id"> {{sa.first_name}} - {{sa.mobile_number}}</option>
-                    </select>
-                    <label class="form-control-placeholder" for="ServiceAdvisor">Service Advisor*</label>
-                  </div>
-                  <div style="display:inline-block;">
-                    <button type="button" (click)="showModal(2)" class="addnumber" style="background-color: white;border-color: orange;">
-                      <i class="fa fa-plus" style="color:#ffa100" aria-hidden="true"></i>
-                    </button>
-                  </div>
-                </div>
-              </div>
-              <div class="row" *ngIf="yourBoolean != 'dropoff'">
-                <div class="col-md-6 col-lg-6 col-sm-6">
-                  <div class="form-group">
-                    <input type="text" id="notes" class="form-control" name="notes" [(ngModel)]="user.notes"
-                      placeholder="Notes" #notes="ngModel" pattern="^[0-9a-zA-Z#,\-/_ .@]+$">
-                    <label class="form-control-placeholder" for="notes">Notes</label>
-                  </div>
-                  <div class="form-control-feedback" *ngIf="notes.errors && (notes.dirty || notes.touched)">
-                    <p *ngIf="!notes.errors.valid" class="haserror">\$^*'}'`;> these characters are not accepted</p>
-                    </div>
-                </div>
-              </div>
-              <div class="row" style="padding-top: 2%;">
-                <div class="col-md-6 col-lg-6 col-sm-6">
-                  <div>
-                    <label class="custom-control custom-checkbox">
-                      <input type="checkbox" class="custom-control-input" name="confirm" checked [(ngModel)]="user.confirm"
-                        #confirm="ngModel">
-                      <span class="custom-control-indicator"></span>
-                      <span class="custom-control-description">Confirmed Booking</span>
-                    </label>
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-12 col-lg-12 col-sm-12">
-                  <div style="float:right">
-                    <button type="submit" class="btn btn-primary">Schedule</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </form>
-        <!-- </div> -->
-      </nb-card-body>
-      <nb-card-footer>
-      </nb-card-footer>
-    </nb-card>
-  </div>
-</div>
-<ngx-spinner bdColor="rgba(51,51,51,0.09)" size="large" color="#ea5810" type="ball-clip-rotate-pulse"></ngx-spinner>
+                     <div class="row">
+                       <div class="col-lg-6 col-sm-6 col-md-6">
+                         <div class="form-group">
+                           <select id="addresstypepu" class="form-control" name="addresstypepu" [(ngModel)]="user.addresstypepu"
+                             #addresstypepu="ngModel" required>
+                             <option [value]="i.id" *ngFor="let i of addresstype">{{i.type_of_address}}</option>
+                           </select>
+                           <label class="form-control-placeholder" for="addresstypepu">Type of address*</label>
+                         </div>
+                       </div>
+                     </div>
+                   </div>
+                 </div>
+                 <div class="sameasDiv" *ngIf="yourBoolean === 'servicing'" style="padding-bottom: 2%;">
+                   <label class="custom-control custom-checkbox">
+                     <input type="checkbox" class="custom-control-input sameas" name="sameas" #same (click)="sameAsPickup(same.checked)"
+                       (change)="sameAsPickUpAdd($event)" checked="true">
+                     <span class="custom-control-indicator"></span>
+                     <span class="custom-control-description">Drop Location is same as Pickup</span>
+                   </label>
+                 </div>
+                 <div *ngIf="ifSameAsPickUp || dropOffOnly || !onlypickup">
+                     <p style="margin-left: 1rem;font-weight: 500;">Dropoff Location</p>
+                   <div class="row">
+                     <div class="col-lg-12 col-md-12 col-12 col-sm-12 address-btn-cls" style="padding-bottom: 2%;">
+                       <button type="button" (click)="ShowMapInSavedAddDropoff()" class="show-map-btn">
+                         <img src="../../../../assets/images/plus-symbol.svg">
+                       </button>
+                       <button type="button" *ngFor="let i of address; let x = index" class="savedAddBtn" (click)="SelectSavedDropoffAddress(i, x, $event)">
+                         <p>#{{i.postal_address}},{{i.google_address}},</p>
+                         <p>{{i.area}}</p>
+                         <p class="address-type-para">{{i.type_of_address}}</p>
+                       </button>
+                     </div>
+                   </div>
+                   <div *ngIf="googleMapDropoffFlag">
+                     <div>
+                       <div class="row">
+                         <div class="col-lg-6 col-sm-6 col-md-6">
+                           <div class="pickup-map">
+                             <agm-map id="pickUpMap2" [zoom]="zoom" [latitude]="latDrop" [longitude]="lngDrop"
+                               [disableDefaultUI]=false (mapReady)=pickUpMapReady($events) [mapDraggable]=false>
+                               <agm-marker [latitude]="latDrop" [longitude]="lngDrop"></agm-marker>
+                             </agm-map>
+                           </div>
+                         </div>
+                       </div>
+                       <div class="row">
+                         <div class="col-lg-6 col-sm-6 col-md-6">
+                           <div class="form-group">
+                             <input class="form-control" name="dropoffsearch" id="dropoffsearch" #dropoffsearchplace autocomplete="off"
+                               spellcheck="off" type="text" (keyup)="dropOffSearch($event)" required/>
+                             <label class="form-control-placeholder" for="dropoffsearch">Search Places*</label>
+                           </div>
+                         </div>
+                         <div class="col-lg-6 col-sm-6 col-md-6">
+                           <div class="form-group">
+                             <input class="form-control" name="dropoffflatno" #dropoffflatno="ngModel" autocomplete="off" id="dropoffflatno"
+                               spellcheck="off" type="text" required [(ngModel)]="user.dropoffflatno" pattern="^[0-9a-zA-Z#,\-/_ .@]+$" minlength="1" maxlength="5"/>
+                               <label class="form-control-placeholder" for="dropoffflatno">Flat No./House No.*</label>
+                             </div>
+                           <div class="form-control-feedback" *ngIf="dropoffflatno.errors && (dropoffflatno.dirty || dropoffflatno.touched)">
+                               <p *ngIf="dropoffflatno.errors.required" class="haserror">Flat No./House No. is required</p>
+                               <p *ngIf="!dropoffflatno.errors.valid" class="haserror">\$^*'}'`;> these characters are not accepted</p>
+                               <p *ngIf="dropoffflatno.errors.minlength" class="haserror">Minimum 1 characters</p>
+                             </div>
+                         </div>
+                       </div>
+                       <div class="row">
+                           <div class="col-lg-6 col-sm-6 col-md-6">
+                               <div class="form-group">
+                                 <input class="form-control" name="dropoffbuildingname" #dropoffbuildingname="ngModel" autocomplete="off" id="dropoffbuildingname"
+                                   spellcheck="off" type="text" required [(ngModel)]="user.dropoffbuildingname" pattern="^[0-9a-zA-Z#,\-/_ .@]+$" minlength="4" maxlength="100"/>
+                                   <label class="form-control-placeholder" for="dropoffbuildingname">Building name/Street name*</label>
+                                 </div>
+                               <div class="form-control-feedback" *ngIf="dropoffbuildingname.errors && (dropoffbuildingname.dirty || dropoffbuildingname.touched)">
+                                   <p *ngIf="dropoffbuildingname.errors.required" class="haserror">Building name/Street name is required</p>
+                                   <p *ngIf="!dropoffbuildingname.errors.valid" class="haserror">\$^*'}'`;> these characters are not accepted</p>
+                                   <p *ngIf="dropoffbuildingname.errors.minlength" class="haserror">Minimum 4 characters</p>
+                                 </div>
+                             </div>
+                         <div class="col-lg-6 col-sm-6 col-md-6">
+                           <div class="form-group">
+                             <input class="form-control" name="dropofflandmark" id="dropofflandmark" 
+                               #dropofflandmark="ngModel" autocomplete="off" spellcheck="off" type="text" [(ngModel)]="user.dropofflandmark" required pattern="^[0-9a-zA-Z#,\-/_ .@]+$" minlength="4" maxlength="100"/>
+                             <label class="form-control-placeholder" for="dropofflandmark">Landmark*</label>
+                           </div>
+                           <div class="form-control-feedback" *ngIf="dropofflandmark.errors && (dropofflandmark.dirty || dropofflandmark.touched)">
+                               <p *ngIf="dropofflandmark.errors.required" class="haserror">Landmark is required</p>
+                               <p *ngIf="!dropofflandmark.errors.valid" class="haserror">\$^*'}'`;> these characters are not accepted</p>
+                               <p *ngIf="dropofflandmark.errors.minlength" class="haserror">Minimum 4 characters</p>
+                             </div>
+                         </div>
+                        
+                       </div>
+                       <div class="row">
+                         <div class="col-lg-6 col-sm-6 col-md-6">
+                             <div class="form-group">
+                                 <select id="addresstypedo" class="form-control" name="addresstypedo" [(ngModel)]="user.addresstypedo"
+                                   #addresstypepu="ngModel" required>
+                                   <option [value]="i.id" *ngFor="let i of addresstype">{{i.type_of_address}}</option>
+                                 </select>
+                                 <label class="form-control-placeholder" for="addresstypedo">Type of address*</label>
+                               </div>
+                         </div>
+                       </div>
+                     </div>
+                   </div>
+                 </div>
+               </div>
+               <div *ngIf="showAddress">
+                 <div *ngIf="yourBoolean === 'onlypickup' || yourBoolean === 'servicing'">
+                     <p style="font-weight: 500;">Pickup Location</p>
+                   <div class="row">
+                     <div class="col-lg-6 col-sm-6 col-md-6">
+                       <div class="pickup-map">
+                         <agm-map id="pickUpMap" [zoom]="zoom" [latitude]="latPickup" [longitude]="lngPickup" [disableDefaultUI]=false [mapDraggable]=false
+                           (mapReady)=pickUpMapReady($events)>
+                           <agm-marker [latitude]="latPickup" [longitude]="lngPickup"></agm-marker>
+                         </agm-map>
+                       </div>
+                     </div>
+                   </div>
+                   <div class="row">
+                     <div class="col-lg-6 col-sm-6 col-md-6">
+                       <div class="form-group">
+                         <input class="form-control" id="pickupsearch" #pickupsearchplace autocomplete="off" spellcheck="off"
+                           type="text" (keyup)="pickUpSearch($event)" required/>
+                         <label class="form-control-placeholder" for="city">Search Places*</label>
+                       </div>
+                     </div>
+                     <div class="col-lg-6 col-sm-6 col-md-6">
+                       <div class="form-group">
+                         <input class="form-control" name="pickflatno" #pickflatno="ngModel" autocomplete="off" spellcheck="off" type="text" pattern="^[0-9a-zA-Z#,\-/_ .@]+$" required [(ngModel)]="user.pickflatno" minlength="1" maxlength="5" />
+                         <label class="form-control-placeholder" for="pickflatno">Flat No./House No.*</label>
+                       </div>
+                       <div class="form-control-feedback" *ngIf="pickflatno.errors && (pickflatno.dirty || pickflatno.touched)">
+                           <p *ngIf="pickflatno.errors.required" class="haserror">Flat No/House No is required</p>
+                           <p *ngIf="!pickflatno.errors.valid" class="haserror">\$^*'}'`;> these characters are not accepted</p>
+                           <p *ngIf="pickflatno.errors.minlength" class="haserror">Minimum 1 characters</p>
+                         </div>
+                     </div>
+                   </div>
+                   <div class="row">
+                     <div class="col-lg-6 col-sm-6 col-md-6">
+                         <div class="form-group">
+                            <input class="form-control" name="pickupbuildingname" #pickupbuildingname="ngModel" autocomplete="off" spellcheck="off" type="text" pattern="^[0-9a-zA-Z#,\-/_ .@]+$" required [(ngModel)]="user.pickupbuildingname" minlength="4" maxlength="100"/>
+                            <label class="form-control-placeholder" for="pickupbuildingname">Building name/Street name*</label>
+                            </div>
+                          <div class="form-control-feedback" *ngIf="pickupbuildingname.errors && (pickupbuildingname.dirty || pickupbuildingname.touched)">
+                              <p *ngIf="pickupbuildingname.errors.required" class="haserror">Building name/Street name is required</p>
+                              <p *ngIf="!pickupbuildingname.errors.valid" class="haserror">\$^*'}'`;> these characters are not accepted</p>
+                              <p *ngIf="pickupbuildingname.errors.minlength" class="haserror">Minimum 4 characters</p>
+                            </div>
+                     </div>
+                     <div class="col-lg-6 col-sm-6 col-md-6">
+                         <div class="form-group">
+                           <input class="form-control" id="pickulandmark" name="pickupsearchplaceLandmark"
+                             #pickupsearchplaceLandmark="ngModel" autocomplete="off" spellcheck="off" type="text" pattern="^[0-9a-zA-Z#,\-/_ .@]+$" required [(ngModel)]="user.pickuplandmark" minlength="4" maxlength="100"/>
+                           <label class="form-control-placeholder" for="pickulandmark">Landmark*</label>
+                         </div>
+                         <div class="form-control-feedback" *ngIf="pickupsearchplaceLandmark.errors && (pickupsearchplaceLandmark.dirty || pickupsearchplaceLandmark.touched)">
+                             <p *ngIf="pickupsearchplaceLandmark.errors.required" class="haserror">Landmark is required</p>
+                             <p *ngIf="!pickupsearchplaceLandmark.errors.valid" class="haserror">\$^*'}'`;> these characters are not accepted</p>
+                             <p *ngIf="pickupsearchplaceLandmark.errors.minlength" class="haserror">Minimum 4 characters</p>
+                           </div>
+                       </div>
+                   </div>
+                   <div class="row">
+                  
+                     <div class="col-lg-6 col-sm-6 col-md-6">
+                       <div class="form-group">
+                         <select id="addresstypepu" class="form-control" name="addresstypepu" [(ngModel)]="user.addresstypepu"
+                           #addresstypepu="ngModel" required>
+                           <option [value]="i.id" *ngFor="let i of addresstype">{{i.type_of_address}}</option>
+                         </select>
+                         <label class="form-control-placeholder" for="addresstypepu">Type of address*</label>
+                       </div>
+                     </div>
+                   </div>
+                 </div>
+                 <div class="sameasDiv" *ngIf="yourBoolean === 'servicing'">
+                   
+                   <label class="custom-control custom-checkbox">
+                     <input type="checkbox" class="custom-control-input sameas" name="sameas" #same (click)="sameAsPickup(same.checked)"
+                       (change)="sameAsPickUpAdd($event)" checked="true">
+                     <span class="custom-control-indicator"></span>
+                     <span class="custom-control-description">Drop Location is same as Pickup</span>
+                   </label>
+                 </div>
+                 <div *ngIf="ifSameAsPickUp || dropOffOnly">
+                     <p style="margin-top: 1rem;font-weight: 500;">Dropoff Location</p>
+                   <div class="row">
+                     <div class="col-lg-6 col-sm-6 col-md-6">
+                       <div class="pickup-map">
+                         <agm-map id="pickUpMap2" [zoom]="zoom" [latitude]="latDrop" [longitude]="lngDrop" [disableDefaultUI]=false  [mapDraggable]=false
+                           (mapReady)=pickUpMapReady($events)>
+                           <agm-marker [latitude]="latDrop" [longitude]="lngDrop"></agm-marker>
+                         </agm-map>
+                       </div>
+                     </div>
+                   </div>
+                   <div class="row">
+                     <div class="col-lg-6 col-sm-6 col-md-6">
+                       <div class="form-group">
+                         <input class="form-control" id="dropoffsearch" #dropoffsearchplace autocomplete="off"
+                           spellcheck="off" type="text" (keyup)="dropOffSearch($event)" required/>
+                         <label class="form-control-placeholder" for="dropoffsearch">Search Places*</label>
+                       </div>
+                     </div>
+                     <div class="col-lg-6 col-sm-6 col-md-6">
+                       <div class="form-group">
+                         <input class="form-control" name="dropoffflatno" #dropoffflatno="ngModel" autocomplete="off" id="dropoffflatno"
+                           spellcheck="off" type="text" required pattern="^[0-9a-zA-Z#,\-/_ .@]+$" [(ngModel)]="user.dropoffflatno" minlength="1" maxlength="5" />
+                           <label class="form-control-placeholder" for="dropoffflatno">Flat No./House No.*</label>
+                      
+                         </div>
+                       <div class="form-control-feedback" *ngIf="dropoffflatno.errors && (dropoffflatno.dirty || dropoffflatno.touched)">
+                           <p *ngIf="dropoffflatno.errors.required" class="haserror">Flat No./House No.* is required</p>
+                           <p *ngIf="!dropoffflatno.errors.valid" class="haserror">\$^*'}'`;> these characters are not accepted</p>
+                           <p *ngIf="dropoffflatno.errors.minlength" class="haserror">Minimum 1 characters</p>
+                         </div>
+                     </div>
+                   </div>
+                   <div class="row">
+                       <div class="col-lg-6 col-sm-6 col-md-6">
+                           <div class="form-group">
+                               <input class="form-control" name="dropoffbuildingname" #dropoffbuildingname="ngModel" autocomplete="off" id="dropoffbuildingname"
+                                 spellcheck="off" type="text" required pattern="^[0-9a-zA-Z#,\-/_ .@]+$" [(ngModel)]="user.dropoffbuildingname" minlength="4" maxlength="100"/>
+                                 <label class="form-control-placeholder" for="dropoffbuildingname">Building name/Street name*</label>
+                              </div>
+                               <div class="form-control-feedback" *ngIf="dropoffbuildingname.errors && (dropoffbuildingname.dirty || dropoffbuildingname.touched)">
+                                   <p *ngIf="dropoffbuildingname.errors.required" class="haserror">Building name/Street name is required</p>
+                                   <p *ngIf="!dropoffbuildingname.errors.valid" class="haserror">\$^*'}'`;> these characters are not accepted</p>
+                                   <p *ngIf="dropoffbuildingname.errors.minlength" class="haserror">Minimum 4 characters</p>
+                                 </div>
+                         </div>
+                     <div class="col-lg-6 col-sm-6 col-md-6">
+                       <div class="form-group">
+                         <input class="form-control" id="dropofflandmark" name="dropofflandmark"
+                           #dropoffsearchplaceLandmark="ngModel" autocomplete="off" spellcheck="off" type="text" pattern="^[0-9a-zA-Z#,\-/_ .@]+$" required [(ngModel)]="user.droplandmark" minlength="4" maxlength="100"/>
+                         <label class="form-control-placeholder" for="dropofflandmark">Landmark*</label>
+                       </div>
+                       <div class="form-control-feedback" *ngIf="dropoffsearchplaceLandmark.errors && (dropoffsearchplaceLandmark.dirty || dropoffsearchplaceLandmark.touched)">
+                           <p *ngIf="dropoffsearchplaceLandmark.errors.required" class="haserror">Landmark is required</p>
+                           <p *ngIf="!dropoffsearchplaceLandmark.errors.valid" class="haserror">\$^*'}'`;> these characters are not accepted</p>
+                           <p *ngIf="dropoffsearchplaceLandmark.errors.minlength" class="haserror">Minimum 4 characters</p>
+                         </div>
+                     </div>
+                    
+                   </div>
+                   <div class="row">
+                     <div class="col-lg-6 col-sm-6 col-md-6">
+                         <div class="form-group">
+                             <select id="addresstypedo" class="form-control" name="addresstypedo" [(ngModel)]="user.addresstypedo"
+                               #addresstypepu="ngModel" required>
+                               <option [value]="i.id" *ngFor="let i of addresstype">{{i.type_of_address}}</option>
+                             </select>
+                             <label class="form-control-placeholder" for="addresstypedo">Type of address*</label>
+                           </div>
+                     </div>
+                   </div>
+                 </div>
+               </div>
+               <div class="line">
+                 <span class="sectionHeader">Slot Details</span>
+               </div>
+               <div> </div>
+               <div class="row" *ngIf="insuranceFlag">
+                 <div class="col-md-6 col-lg-6 col-sm-6">
+                   <div class="form-group">
+                     <select name="city" id="city" class="form-control" [(ngModel)]="user.city" required #city="ngModel"
+                       (change)="onCity($event)">
+                       <option *ngFor="let d of cityList; let i = index" [value]="d.cityid">{{d.cityname}}</option>
+                     </select>
+                     <label class="form-control-placeholder" for="city">City*</label>
+                   </div>
+                   <div class="form-control-feedback" *ngIf="city.errors && (city.dirty || city.touched)">
+                     <p *ngIf="city.errors.required" class="haserror">City is required</p>
+                   </div>
+                 </div>
+                 <div class="col-md-6 col-lg-6 col-sm-6">
+                   <div class="form-group">
+                     <select id="svclist" class="form-control" name="svclist" [(ngModel)]="user.svc" #svclist="ngModel"
+                       required>
+                       <optgroup label="{{i.associated}}" *ngFor="let i of svcList;let j = index;">
+                         <option [value]="i.id">{{i.name}}</option>
+                       </optgroup>
+                     </select>
+                     <label class="form-control-placeholder" for="svclist">Service Centre List*</label>
+                   </div>
+                 </div>
+               </div>
+               <div class="row">
+                 <div class="col-md-6 col-lg-6 col-sm-6">
+                   <div class="form-group">
+                     <div class="input-group">
+                       <input class="form-control" name="dp" [ngModel]="model" required [minDate]="startDate"
+                         placeholder="{{valuedate | date: 'yyyy-MM-dd'}}" (ngModelChange)="onSelectDate($event)"
+                         ngbDatepicker #d="ngbDatepicker">
+                       <div class="input-group-append">
+                         <button class="btn btn-outline-secondary dateButton" (click)="d.toggle()" type="button">
+                           <span>
+                             <i class="fa fa-calendar"></i>
+                           </span>
+                         </button>
+                       </div>
+                     </div>
+                   </div>
+                   <div class="form-control-feedback" *ngIf="d.errors && (d.dirty || d.touched)">
+                     <p *ngIf="d.errors.required" class="haserror">Date is required</p>
+                   </div>
+                 </div>
+               </div>
+               <div class="row" style="padding-bottom: 3%;">
+                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6" *ngIf="showtime">
+                   <table cellspacing="20" *ngIf="show3">
+                     <tr *ngFor="let row of buildArr(slot);let i = index">
+                       <td *ngFor="let s of row" class="timeRow">
+                         <a (click)=check(s.time_format,s.slothour) class="timeAnchor">
+                           <span>{{s.time_format}}</span>
+                         </a>
+                       </td>
+                     </tr>
+                   </table>
+                 </div>
+                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 showtimeinput" *ngIf="showtime">
+                   <input class="form-control" name="slot" [readonly]="true" *ngIf="slot_time" [(ngModel)]="slothour" />
+                 </div>
+               </div>
+               <div class="line">
+                 <span class="sectionHeader">Service Details</span>
+               </div>
+               <div class="row">
+                 <div class="col-md-6 col-lg-6 col-sm-6">
+                   <div class="form-group">
+                     <select name="serviceType" id="serviceType" class="form-control" name="service_type" [(ngModel)]="user.service_type"
+                       #servicetype="ngModel" required>
+                       <option *ngFor="let s of service_type" [value]="s.id"> {{s.type}}</option>
+                     </select>
+                     <label class="form-control-placeholder" for="serviceType">Service Type*</label>
+                   </div>
+                   <div class="form-control-feedback" *ngIf="servicetype.errors && (servicetype.dirty || servicetype.touched)">
+                     <p *ngIf="servicetype.errors.required" class="haserror">Service Type is required</p>
+                   </div>
+                 </div>
+                 <div class="col-md-6 col-lg-6 col-sm-6" *ngIf="yourBoolean != 'dropoff'">
+                   <div class="form-group">
+                     <angular2-multiselect [data]="itemList" [(ngModel)]="selectedItems" [settings]="settings" name="something"
+                       #comp (onSelect)="onItemSelect($event)" (onDeSelect)="OnItemDeSelect($event)" (onSelectAll)="onSelectAll($event)"
+                       (onDeSelectAll)="onDeSelectAll($event)">
+                     </angular2-multiselect>
+                   </div>
+                 </div>
+                 <div class="col-md-6 col-lg-6 col-sm-6" *ngIf="yourBoolean === 'dropoff'">
+                   <div class="form-group">
+                     <input type="text" id="notes" class="form-control" name="notes" [(ngModel)]="user.notes"
+                       placeholder="Notes" #notes="ngModel" pattern="^[0-9a-zA-Z#,\-/_ .@]+$">
+                     <label class="form-control-placeholder" for="notes">Notes</label>
+                   </div>
+                   <div class="form-control-feedback" *ngIf="notes.errors && (notes.dirty || notes.touched)">
+                     <p *ngIf="!notes.errors.valid" class="haserror">\$^*'}'`;> these characters are not accepted</p>
+                     </div>
+                 </div>
+               </div>
+               <div class="row">
+                 <div class="col-md-6 col-lg-6 col-sm-6 col-12 creCol AddUserCre">
+                   <div class="creContainer">
+                     <div class="form-group" class="AddUserRow">
+                       <select name="creName" id="creName" class="form-control" [(ngModel)]="user.cre" #creName="ngModel"
+                         required>
+                         <option *ngFor="let ca of cre" [value]="ca.id"> {{ca.first_name}} - {{ca.mobile_number}}</option>
+                       </select>
+                       <label class="form-control-placeholder" for="cre">CRE*</label>
+                     </div>
+                     <div style="display:inline-block;">
+                       <button type="button" (click)="showModal(1)" class="addnumber" style="background-color: white;border-color: orange;">
+                         <i class="fa fa-plus" style="color:#ffa100" aria-hidden="true"></i>
+                       </button>
+                     </div>
+                   </div>
+                   <div class="form-control-feedback" *ngIf="creName.errors && (creName.dirty || creName.touched)">
+                     <p *ngIf="creName.errors.required" class="haserror">CRE is required</p>
+                   </div>
+                 </div>
+                 <div class="col-md-6 col-lg-6 col-sm-6 col-12 AddUserCre" *ngIf="!insuranceFlag">
+                   <div class="form-group" class="AddUserRow">
+                     <select name="ServiceAdvisor" id="ServiceAdvisor" class="form-control" name="ServiceAdvisor"
+                       [(ngModel)]="user.service_advisor" #ServiceAdvisor="ngModel" required>
+                       <option *ngFor="let sa of serviceadv" [value]="sa.id"> {{sa.first_name}} - {{sa.mobile_number}}</option>
+                     </select>
+                     <label class="form-control-placeholder" for="ServiceAdvisor">Service Advisor*</label>
+                   </div>
+                   <div style="display:inline-block;">
+                     <button type="button" (click)="showModal(2)" class="addnumber" style="background-color: white;border-color: orange;">
+                       <i class="fa fa-plus" style="color:#ffa100" aria-hidden="true"></i>
+                     </button>
+                   </div>
+                 </div>
+                 <div class="col-md-6 col-lg-6 col-sm-6 col-12 AddUserCre" *ngIf="insuranceFlag">
+                   <div class="form-group" class="AddUserRow">
+                     <select name="ServiceAdvisor" id="ServiceAdvisor" class="form-control" name="ServiceAdvisor"
+                       [(ngModel)]="user.service_advisor" #ServiceAdvisor="ngModel">
+                       <option *ngFor="let sa of serviceadv" [value]="sa.id"> {{sa.first_name}} - {{sa.mobile_number}}</option>
+                     </select>
+                     <label class="form-control-placeholder" for="ServiceAdvisor">Service Advisor*</label>
+                   </div>
+                   <div style="display:inline-block;">
+                     <button type="button" (click)="showModal(2)" class="addnumber" style="background-color: white;border-color: orange;">
+                       <i class="fa fa-plus" style="color:#ffa100" aria-hidden="true"></i>
+                     </button>
+                   </div>
+                 </div>
+               </div>
+               <div class="row" *ngIf="yourBoolean != 'dropoff'">
+                 <div class="col-md-6 col-lg-6 col-sm-6">
+                   <div class="form-group">
+                     <input type="text" id="notes" class="form-control" name="notes" [(ngModel)]="user.notes"
+                       placeholder="Notes" #notes="ngModel" pattern="^[0-9a-zA-Z#,\-/_ .@]+$">
+                     <label class="form-control-placeholder" for="notes">Notes</label>
+                   </div>
+                   <div class="form-control-feedback" *ngIf="notes.errors && (notes.dirty || notes.touched)">
+                     <p *ngIf="!notes.errors.valid" class="haserror">\$^*'}'`;> these characters are not accepted</p>
+                     </div>
+                 </div>
+               </div>
+               <div class="row" style="padding-top: 2%;">
+                 <div class="col-md-6 col-lg-6 col-sm-6">
+                   <div>
+                     <label class="custom-control custom-checkbox">
+                       <input type="checkbox" class="custom-control-input" name="confirm" checked [(ngModel)]="user.confirm"
+                         #confirm="ngModel">
+                       <span class="custom-control-indicator"></span>
+                       <span class="custom-control-description">Confirmed Booking</span>
+                     </label>
+                   </div>
+                 </div>
+               </div>
+               <div class="row">
+                 <div class="col-md-12 col-lg-12 col-sm-12">
+                   <div style="float:right">
+                     <button type="submit" class="btn btn-primary">Schedule</button>
+                   </div>
+                 </div>
+               </div>
+             </div>
+           </div>
+         </form>
+         <!-- </div> -->
+       </nb-card-body>
+       <nb-card-footer>
+       </nb-card-footer>
+     </nb-card>
+   </div>
+ </div>
+ <ngx-spinner bdColor="rgba(51,51,51,0.09)" size="large" color="#ea5810" type="ball-clip-rotate-pulse"></ngx-spinner>
+ 
+ 
