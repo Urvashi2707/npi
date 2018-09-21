@@ -334,10 +334,14 @@ export class ChauffeurComponent implements OnInit {
           }
           this.latPickup = place.geometry.location.lat();
           this.lngPickup = place.geometry.location.lng();
+          console.log(this.latPickup);
+          // this.latitude = this.latPickup;
+          // this.longitude = this.lngPickup;
+          console.log(this.lngPickup);
           this.googlepickuplat = place.geometry.location.lat();
           this.googlepickuplong = place.geometry.location.lng();
           this.googleaddresspu = place.formatted_address;
-          this.zoom = 20;
+          this.zoom = 12;
         })
       });
    }
@@ -354,7 +358,7 @@ export class ChauffeurComponent implements OnInit {
           this.googlepickuplat = place.geometry.location.lat();
           this.googlepickuplong = place.geometry.location.lng();
           this.googleaddresspu = place.formatted_address;
-          this.zoom = 20;
+          this.zoom = 12;
         })
       });
    }
@@ -376,7 +380,7 @@ HomeTestPickup(e,ServiceId){
           this.googlepickuplat = place.geometry.location.lat();
           this.googlepickuplong = place.geometry.location.lng();
           this.googleaddresspu = place.formatted_address;
-          this.zoom = 20;
+          this.zoom = 12;
         })
       });
   }
@@ -393,7 +397,7 @@ HomeTestPickup(e,ServiceId){
           this.googlepickuplat = place.geometry.location.lat();
           this.googlepickuplong = place.geometry.location.lng();
           this.googleaddresspu = place.formatted_address;
-          this.zoom = 20;
+          this.zoom = 12;
         })
       });
   }
@@ -414,7 +418,7 @@ HomeTestDropoff(e,ServiceId){
           this.googledropofflat = place.geometry.location.lat();
           this.googledropofflong = place.geometry.location.lng();
           this.googleaddressdo = place.formatted_address;
-          this.zoom = 20;
+          this.zoom = 12;
         })
       });
   }
@@ -431,7 +435,7 @@ HomeTestDropoff(e,ServiceId){
           this.googledropofflat = place.geometry.location.lat();
           this.googledropofflong = place.geometry.location.lng();
           this.googleaddressdo = place.formatted_address;
-          this.zoom = 20;
+          this.zoom = 12;
         })
       });
   }
@@ -452,7 +456,7 @@ InternalSearch(e,ServiceId){
           this.googlepickuplat = place.geometry.location.lat();
           this.googlepickuplong = place.geometry.location.lng();
           this.googleaddresspu = place.formatted_address;
-          this.zoom = 20;
+          this.zoom = 12;
         })
       });
   }
@@ -469,7 +473,7 @@ InternalSearch(e,ServiceId){
           this.googledropofflat = place.geometry.location.lat();
           this.googledropofflong = place.geometry.location.lng();
           this.googleaddressdo = place.formatted_address;
-          this.zoom = 20;
+          this.zoom = 12;
         })
       });
   }
@@ -979,7 +983,7 @@ customerCheck(){
         this.landmarkdo = f.value.CustodysearchplaceLandmark;
         this.googleaddressdo = this.googleaddresspu;
         this.postaladdresspu = f.value.Custodyflatno + ' ' + f.value.Custodybuildingname;
-        this.postaladdressdo = f.value.CustodysearchplaceFill;
+        this.postaladdressdo = f.value.Custodyflatno + ' ' + f.value.Custodybuildingname;
         this.droplat = this.googlepickuplat.toString();
         this.droplong = this.googlepickuplong.toString();
         this.pickuplat = this.googlepickuplat.toString();;
@@ -1007,8 +1011,8 @@ customerCheck(){
     }
     else if (this.pickup_drop == 4){
       var result = this.getDistanceFromLatLonInKm(this.googlepickuplat,this.googlepickuplong,this.googledropofflat,this.googledropofflong);
-      this.postaladdresspu = f.value.internalpickupflatno + '' + f.value.internalpickupbilding;
-      this.postaladdressdo = f.value.internaldropoffflatno + '' + f.value.internaldropoffbuildingname;
+      this.postaladdresspu = f.value.internalpickupflatno + ' ' + f.value.internalpickupbilding;
+      this.postaladdressdo = f.value.internaldropoffflatno + ' ' + f.value.internaldropoffbuildingname;
       this.landmarkpu = f.value.internalpickulandmark;
       this.landmarkdo = f.value.internaldropofflandmark;
       this.droplat = this.googledropofflat.toString();;
@@ -1023,9 +1027,8 @@ customerCheck(){
     }
     else if (this.pickup_drop == 5 || this.pickup_drop == 7){
       if(this.pickup_drop == 5){
-        if(!this.testdrivecheck){
-          this.postaladdresspu = f.value.homepickupflatno + '' + f.value.homepickupbuildingname;
-          this.postaladdressdo = f.value.homepickupflatno + '' + f.value.homepickupbuildingname;
+          this.postaladdresspu = f.value.homepickupflatno + ' ' + f.value.homepickupbuildingname;
+          this.postaladdressdo = f.value.homepickupflatno + ' ' + f.value.homepickupbuildingname;
           this.landmarkpu = f.value.homepickulandmark;
           this.landmarkdo = f.value.homepickulandmark;
           this.droplat = this.googlepickuplat.toString();;
@@ -1036,28 +1039,12 @@ customerCheck(){
           this.droplong = this.droplong.substring(0, 14);
           this.pickuplat = this.pickuplat.substring(0, 14);
           this.pickuplong = this.pickuplong.substring(0, 14);
-        }
-        else{
-          this.postaladdresspu = f.value.homepickupflatno + '' + f.value.homepickupbuildingname;
-          this.postaladdressdo = f.value.homedropoffflatno + '' + f.value.homedropoffbuildingmname;
-          this.landmarkpu = f.value.homepickulandmark;
-          this.landmarkdo = f.value.homedropofflandmark;
-          this.droplat = this.googledropofflat.toString();;
-          this.droplong = this.googledropofflong.toString();
-          this.pickuplat = this.googlepickuplat.toString();;
-          this.pickuplong = this.googlepickuplong.toString();
-          this.droplat = this.droplat.substring(0, 14);
-          this.droplong = this.droplong.substring(0, 14);
-          this.pickuplat = this.pickuplat.substring(0, 14);
-          this.pickuplong = this.pickuplong.substring(0, 14);
-        }
       }
       else{
-        if(!this.testdrivecheck){
           console.log("same as test");
           this.googleaddressdo = this.googleaddresspu;
-          this.postaladdressdo = f.value.testpickupflatno + '' + f.value.testpickupbuildingname;
-          this.postaladdresspu = f.value.testpickupflatno + '' + f.value.testpickupbuildingname;
+          this.postaladdressdo = f.value.testpickupflatno + ' ' + f.value.testpickupbuildingname;
+          this.postaladdresspu = f.value.testpickupflatno + ' ' + f.value.testpickupbuildingname;
           this.landmarkpu = f.value.testpickulandmark;
           this.landmarkdo = f.value.testpickulandmark;
           this.droplat = this.googlepickuplat.toString();;
@@ -1068,24 +1055,7 @@ customerCheck(){
           this.droplong = this.droplong.substring(0, 14);
           this.pickuplat = this.pickuplat.substring(0, 14);
           this.pickuplong = this.pickuplong.substring(0, 14);
-        }
-        else{
-         console.log("not same test")
-          this.postaladdresspu = f.value.testpickupflatno + '' + f.value.testpickupbuildingname;
-          this.postaladdressdo = f.value.testdropofffaltno + '' + f.value.testdropoffbuildingname;
-          this.landmarkpu = f.value.testpickulandmark;
-          this.landmarkdo = f.value.testdropofflandmark;
-          this.droplat = this.googledropofflat.toString();;
-          this.droplong = this.googledropofflong.toString();
-          this.pickuplat = this.googlepickuplat.toString();;
-          this.pickuplong = this.googlepickuplong.toString();
-          this.droplat = this.droplat.substring(0, 14);
-          this.droplong = this.droplong.substring(0, 14);
-          this.pickuplat = this.pickuplat.substring(0, 14);
-          this.pickuplong = this.pickuplong.substring(0, 14);
-        }
       }
-     
     }
    
   if(f.value.mobile2){
