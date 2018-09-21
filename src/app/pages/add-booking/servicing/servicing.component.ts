@@ -323,7 +323,7 @@ export class ServicingComponent implements OnInit {
         console.log(this.googlepickuplat);
         console.log(this.googlepickuplong);
         this.googleaddresspu = place.formatted_address;
-        this.zoom = 20;
+        this.zoom = 12;
         console.log( this.googleaddresspu);
         // this.googlepickuplat = this.googlepickuplat.decimalpipe.
       })
@@ -343,7 +343,7 @@ export class ServicingComponent implements OnInit {
         this.googledropofflat = place.geometry.location.lat();
         this.googledropofflong = place.geometry.location.lng();
         this.googleaddressdo = place.formatted_address;
-        this.zoom = 20;
+        this.zoom = 12;
         console.log(this.googleaddressdo);
       })
     });
@@ -734,38 +734,38 @@ public getCity() {
   }
 
   removeActiveBorder(el,index){
-		console.log('Keep active ',el ,'active index ',index );
-		var els = el.parentElement.children
+    console.log('Keep active ',el ,'active index ',index );
+    var els = el.parentElement.children
 
-		for(var i=0;i<els.length;i++)
-		{
-			els[i].classList.remove('borderCls');
-		}
-	}
+    for(var i=0;i<els.length;i++)
+    {
+      els[i].classList.remove('borderCls');
+    }
+  }
 
   SelectSavedPickupAddress(i,x, ev){
     console.log("event",ev);
     console.log("index",x)
     if(ev.target.classList.contains('savedAddBtn'))
-		{
-			this.removeActiveBorder(ev.target,x);
-			ev.target.classList.add('borderCls');
-		}
-		else if(ev.target.parentElement.classList.contains('savedAddBtn'))
-		{
-			this.removeActiveBorder(ev.target.parentElement,x);
-			ev.target.parentElement.classList.add('borderCls');
-		}
-		else
-		{
-			console.log('Dekh kr click kro');
-		}
+    {
+      this.removeActiveBorder(ev.target,x);
+      ev.target.classList.add('borderCls');
+    }
+    else if(ev.target.parentElement.classList.contains('savedAddBtn'))
+    {
+      this.removeActiveBorder(ev.target.parentElement,x);
+      ev.target.parentElement.classList.add('borderCls');
+    }
+    else
+    {
+      console.log('Dekh kr click kro');
+    }
 
 
-		console.log(x);
-		if (x==x) {
-			this.ifClicked = true;
-		}
+    console.log(x);
+    if (x==x) {
+      this.ifClicked = true;
+    }
     this.ifClicked = true;
     this.pickupSelected = true;
     this.googleMapPickupFlag = false;
@@ -1625,4 +1625,5 @@ interface marker {
   lng:number;
   draggable:boolean;
 }
+
 
