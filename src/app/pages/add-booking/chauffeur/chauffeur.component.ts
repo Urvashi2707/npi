@@ -1190,8 +1190,7 @@ customerCheck(){
         this.disableNext = false;
         this.model=null;
     }
- 
-  },
+ },
   (err: HttpErrorResponse) =>{
   if (err.error instanceof Error) {
     console.log("Client-side error occured.");
