@@ -4,6 +4,17 @@
 
 .line h6 { width:100%; text-align:center;  line-height:0.1em; margin:10px 0 20px; }
 .line h6 span { padding:0 10px; }
+nb-theme-default{
+  .form-control{
+    text-transform: capitalize;
+  }
+}
+
+.form-control{
+  text-transform: capitalize;
+}
+
+
 .upload-btn-wrapper {
   position: relative;
   overflow: hidden;

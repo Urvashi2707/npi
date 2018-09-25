@@ -179,6 +179,7 @@ export class ServicingComponent implements OnInit {
     withCredentials: true
   };
 
+public iconurl: String;
   constructor(private router: Router,
     private toasterService: ToasterService,
     private ServicingService: ServicingService,
@@ -196,6 +197,7 @@ export class ServicingComponent implements OnInit {
       this.ifSameAsPickUp = false;
       this.dropOffOnly = false;
       this.ifClicked = false;
+      this.iconurl = './../../../assets/images/image.png';
     }
 
 

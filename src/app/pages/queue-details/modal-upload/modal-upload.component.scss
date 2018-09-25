@@ -19,7 +19,9 @@
     transition: all 200ms;
     opacity: 0.5;
   }
-  
+  .form-control{
+    text-transform: capitalize;
+  }
   .addnumber{
     display:inline-block;
   

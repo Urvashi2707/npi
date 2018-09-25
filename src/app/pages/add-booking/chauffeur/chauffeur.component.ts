@@ -138,6 +138,7 @@ export class ChauffeurComponent implements OnInit {
   lngPickup:number;
   latDrop:number;
   lngDrop:number;
+  public iconurl: String;
   @ViewChild('pickupsearchplace') pickupsearchplace:ElementRef;
   @ViewChild('pickupsearchplaceFill') pickupsearchplaceFill: ElementRef;
   @ViewChild('pickupsearchplaceLandmark') pickupsearchplaceLandmark: ElementRef;
@@ -166,6 +167,7 @@ export class ChauffeurComponent implements OnInit {
   constructor(public ngZone: NgZone,private spinner: NgxSpinnerService,private datePipe:DatePipe,private titlecasePipe:TitleCasePipe,private toasterService: ToasterService,private _data : ServerService,private router: Router,private ngbDateParserFormatter: NgbDateParserFormatter,private modalService: NgbModal) {
     this.cityList = [];
     this.getCity();
+    this.iconurl = './../../../assets/images/image.png';
    }
 
   ngOnInit() {

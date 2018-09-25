@@ -21,7 +21,9 @@
   margin-bottom: 1.5rem;
   margin-top: 1.5em;
 }
-
+.form-control{
+  text-transform: capitalize;
+}
 .form-control-placeholder {
   position: absolute;
   top: 0;
@@ -30,12 +32,9 @@
   opacity: 0.5;
 }
 
-// .addnumber{
-//   display:inline-block;
-//   font-family: FontAwesome;
-//   content:'\f0fe';
-
-// }
+.form-control input{
+  text-transform: capitalize; 
+}
 
 .addnumber{
   border-color: orange;
@@ -48,6 +47,10 @@
   font-size: 75%;
   transform: translate3d(0, -100%, 0);
   opacity: 1;
+  // text-transform: capitalize; 
+}
+.form-control input{
+  text-transform: capitalize; 
 }
 .switch {
   position: relative;

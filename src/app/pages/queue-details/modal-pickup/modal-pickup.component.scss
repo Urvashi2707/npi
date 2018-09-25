@@ -22,6 +22,9 @@ input[readonly]
    .SlotCol{
     margin-left: 18%;
 }
+.form-control{
+  text-transform: capitalize;
+}
    @media only screen and (max-width: 420px) {
        .SlotCol{
            margin-left: 0%;

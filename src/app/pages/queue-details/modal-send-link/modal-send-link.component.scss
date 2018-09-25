@@ -11,7 +11,9 @@
     margin-bottom: 1.5rem;
     margin-top: 1.5em;
   }
-  
+  .form-control{
+    text-transform: capitalize;
+  }
   .form-control-placeholder {
     position: absolute;
     top: 0;

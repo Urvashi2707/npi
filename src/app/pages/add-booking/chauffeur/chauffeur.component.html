@@ -144,7 +144,7 @@
                   <div class="pickup-map">
                     <agm-map id="pickUpMap" [zoom]="zoom" [latitude]="latPickup" [longitude]="lngPickup" [disableDefaultUI]=false
                       (mapReady)=pickUpMapReady($events) [mapDraggable]=false>
-                      <agm-marker [latitude]="latPickup" [longitude]="lngPickup"></agm-marker>
+                      <agm-marker [latitude]="latPickup" [longitude]="lngPickup" [iconUrl] = "iconurl"></agm-marker>
                     </agm-map>
                   </div>
                 </div>
@@ -153,13 +153,13 @@
                 <div class="col-lg-6 col-sm-6 col-md-6">
                   <div class="form-group">
                     <input class="form-control" name="pickupsearch" id="pickupsearch" #pickupsearchplace autocomplete="off" spellcheck="off" required
-                      type="text" (keyup)="pickUpSearch($event,6)" />
+                      type="text" (keyup)="pickUpSearch($event,6)" style="text-transform: capitalize;"/>
                     <label class="form-control-placeholder" for="city">Search Places*</label>
                   </div>
                 </div>
                 <div class="col-lg-6 col-sm-6 col-md-6">
                   <div class="form-group">
-                    <input class="form-control" name="pickflatno" #pickflatno="ngModel" autocomplete="off" required spellcheck="off" type="text" [(ngModel)]="user.pickflatno" pattern="^[0-9a-zA-Z#,\-/_ .@]+$"  minlength="1" maxlength="5"/>
+                    <input class="form-control" name="pickflatno" #pickflatno="ngModel" autocomplete="off" required spellcheck="off" type="text" [(ngModel)]="user.pickflatno" pattern="^[0-9a-zA-Z#,\-/_ .@]+$"  minlength="1" maxlength="5" style="text-transform: capitalize;"/>
                     <label class="form-control-placeholder" for="pickflatno">Flat No./House No.*</label>
                   </div>
                   <div class="form-control-feedback" *ngIf="pickflatno.errors && (pickflatno.dirty || pickflatno.touched)">
@@ -173,7 +173,7 @@
                   <div class="col-lg-6 col-sm-6 col-md-6">
                       <div class="form-group" >
                         <input class="form-control" name="pickupbuildingname" #pickupbuildingname="ngModel" autocomplete="off" required spellcheck="off" type="text" [(ngModel)]="user.pickupbuildingname" pattern="^[0-9a-zA-Z#,\-/_ .@]+$"  minlength="4" maxlength="100" />
-                        <label class="form-control-placeholder" for="pickupbuildingname">Building name/Street name**</label>
+                        <label class="form-control-placeholder" for="pickupbuildingname">Building name/Street name*</label>
                      </div>
                       <div class="form-control-feedback" *ngIf="pickupbuildingname.errors && (pickupbuildingname.dirty || pickupbuildingname.touched)">
                           <p *ngIf="pickupbuildingname.errors.required" class="haserror">Building name/Street name* is required</p>
@@ -273,7 +273,7 @@
                     <div class="pickup-map">
                         <agm-map id="pickUpMap" [zoom]="zoom" [latitude]="latPickup" [longitude]="lngPickup" [disableDefaultUI]=false
                           (mapReady)=pickUpMapReady($events) [mapDraggable]=false>
-                          <agm-marker [latitude]="latPickup" [longitude]="lngPickup"></agm-marker>
+                          <agm-marker [latitude]="latPickup" [longitude]="lngPickup" [iconUrl] = "iconurl"></agm-marker>
                         </agm-map>
                       </div>
                 </div>
@@ -330,7 +330,7 @@
                           <div class="pickup-map">
                             <agm-map id="pickUpMap" [zoom]="zoom" [latitude]="latDrop" [longitude]="lngDrop" [disableDefaultUI]=false
                                 (mapReady)=pickUpMapReady($events) [mapDraggable]=false>
-                                <agm-marker [latitude]="latDrop" [longitude]="lngDrop"></agm-marker>
+                                <agm-marker [latitude]="latDrop" [longitude]="lngDrop" [iconUrl] = "iconurl"></agm-marker>
                               </agm-map>
                             </div>
                       </div>
@@ -543,7 +543,7 @@
                     <div class="pickup-map">
                         <agm-map id="pickUpMap" [zoom]="zoom" [latitude]="latPickup" [longitude]="lngPickup" [disableDefaultUI]=false
                           (mapReady)=pickUpMapReady($events) [mapDraggable]=false>
-                          <agm-marker [latitude]="lngPickup" [longitude]="lngPickup"></agm-marker>
+                          <agm-marker [latitude]="latPickup" [longitude]="lngPickup" [iconUrl] = "iconurl"></agm-marker>
                         </agm-map>
                       </div>
                 </div>
@@ -782,7 +782,7 @@
                   <div class="pickup-map">
                     <agm-map id="pickUpMap" [zoom]="zoom" [latitude]="latPickup" [longitude]="lngPickup" [disableDefaultUI]=false
                       (mapReady)=pickUpMapReady($events) [mapDraggable]=false>
-                      <agm-marker [latitude]="latPickup" [longitude]="lngPickup"></agm-marker>
+                      <agm-marker [latitude]="latPickup" [longitude]="lngPickup" [iconUrl] = "iconurl"></agm-marker>
                     </agm-map>
                   </div>
                 </div>
@@ -1013,7 +1013,7 @@
                   <div class="pickup-map">
                     <agm-map id="pickUpMap" [zoom]="zoom" [latitude]="latPickup" [longitude]="lngPickup" [disableDefaultUI]=false
                       (mapReady)=pickUpMapReady($events) [mapDraggable]=false>
-                      <agm-marker [latitude]="latPickup" [longitude]="lngPickup"></agm-marker>
+                      <agm-marker [latitude]="latPickup" [longitude]="lngPickup" [iconUrl] = "iconurl"></agm-marker>
                     </agm-map>
                   </div>
                 </div>

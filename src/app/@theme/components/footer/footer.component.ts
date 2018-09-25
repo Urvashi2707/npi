@@ -4,9 +4,9 @@ import { Component, OnInit } from '@angular/core';
   selector: 'ngx-footer',
   styleUrls: ['./footer.component.scss'],
   template: `
-    <span class="created-by">© <b><a href="http://www.21north.in/" target="_blank">21North</a></b> 2018 v:1.01</span>
+    <span class="created-by">© <b><a href="http://www.21north.in/" target="_blank">21North</a></b> 2018 v:1.2</span>
     <div>
-    <div class="logo" *ngIf="brandid === '19' || brandid === '27'"><span style="    padding-right: 17px;">Powered By :</span> <img src="/assets/images/logo.png" class="img-responsive" style="height: 25px;"></div>
+    <div class="logo" *ngIf="brandid === '19' || brandid === '27'"><span style="padding-right: 17px;">Powered By :</span> <img src="/assets/images/logo.png" class="img-responsive" style="height: 25px;"></div>
     </div>
   `,
 })

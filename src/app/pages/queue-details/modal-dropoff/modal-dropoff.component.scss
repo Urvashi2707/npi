@@ -8,6 +8,11 @@ input[readonly]
   padding-top: 2%;
   padding-bottom: 3%;
 }
+
+.form-control{
+  text-transform: capitalize;
+}
+
 .timeAnchor{
     padding:4px;
     border: 1px solid #ececec;
