@@ -193,7 +193,7 @@
                <div class="col-md-6 col-lg-6 col-sm-6">
                  <div class="form-group">
                    <input type="text" id="email" class="form-control" name="email" [(ngModel)]="cust_details.email"
-                     #email="ngModel" required pattern="^([a-zA-Z0-9_\.\-])+@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$">
+                     #email="ngModel" required pattern="^([a-zA-Z0-9_\.\-])+@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$" style="text-transform: lowercase;">
                    <label class="form-control-placeholder" for="email">Email Id*</label>
                  </div>
                </div>
@@ -239,10 +239,10 @@
                    <div class="row" *ngIf="yourBoolean === 'onlypickup' || yourBoolean === 'servicing'">
                        <p style="margin-left: 2rem;font-weight: 500;">Pickup Location</p>
                      <div class="col-lg-12 col-md-12 col-12 col-sm-12 address-btn-cls" style="padding-bottom: 2%;">
-                       <button  type="button" class="show-map-btn" (click)="ShowMapInSavedAddPickup()">
+                       <button  type="button" class="show-map-btn" (click)="ShowMapInSavedAddPickup($event)">
                          <img src="../../../../assets/images/plus-symbol.svg">
                        </button>
-                       <button type="button" *ngFor="let i of address;let x = index" class="savedAddBtn" (click)="SelectSavedPickupAddress(i, x, $event)">
+                       <button type="button" *ngFor="let i of address;let x = index" class="savedAddBtn" id="pickupsaved" #pickupSavedRef (click)="SelectSavedPickupAddress(i, x, $event)">
                          <p>#{{i.postal_address}},{{i.google_address}},</p>
                          <p>{{i.area}}</p>
                          <p class="address-type-para">{{i.type_of_address}}</p>
@@ -333,7 +333,7 @@
                        <button type="button" (click)="ShowMapInSavedAddDropoff()" class="show-map-btn">
                          <img src="../../../../assets/images/plus-symbol.svg">
                        </button>
-                       <button type="button" *ngFor="let i of address; let x = index" class="savedAddBtn" (click)="SelectSavedDropoffAddress(i, x, $event)">
+                       <button type="button" *ngFor="let i of address; let x = index" class="savedAddBtn" id="dropoffsaved" (click)="SelectSavedDropoffAddress(i, x, $event)">
                          <p>#{{i.postal_address}},{{i.google_address}},</p>
                          <p>{{i.area}}</p>
                          <p class="address-type-para">{{i.type_of_address}}</p>

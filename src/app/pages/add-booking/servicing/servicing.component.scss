@@ -542,8 +542,11 @@ agm-map {
   margin-top: 5px; 
   vertical-align: top; 
   border-radius: 11px; 
-  border: 2px solid #40dc7e; 
+  border: 2px solid #dadada; 
   background-color: #dadada;
+}
+.show-map-btn:focus{
+  border: 2px solid #40dc7e !important;
 }
 .address-type-para{
   position: absolute;
@@ -551,6 +554,13 @@ agm-map {
   margin: auto;
   text-align: center;
   width: 100%;
+}
+.deactive{
+  border: 2px solid #dadada; 
+  background-color: white;
+  border-radius: 11px;
+  border: 2px solid #dadfe6;
+  font-size: 12px;
 }
 .borderCls{
   border:3px solid #40dc7e !important;

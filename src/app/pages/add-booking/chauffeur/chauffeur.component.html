@@ -267,7 +267,13 @@
             </div>
             <!-- Internal Movement -->
             <div *ngIf="serviceType === '3'" style="padding-bottom: 2%;">
-              <span class="sectionHeader" style="padding-bottom: 2%;">Location Details</span>
+              <div style="padding-bottom: 2%;">
+                <span class="sectionHeader" style="padding-bottom: 2%;">Location Details</span>
+              </div>
+             
+              <div style="padding-bottom: 2%;">
+                <span style="font-weight: 400;">Pickup Location</span>
+              </div>
               <div class="row">
                 <div  class="col-lg-6 col-sm-6 col-md-6">
                     <div class="pickup-map">
@@ -325,7 +331,7 @@
                     </div>
                 </div>
               </div>
-              <div class="row">
+              <div class="row" style="padding-bottom: 2%;">
                       <div class="col-lg-6 col-sm-6 col-md-6">
                           <div class="pickup-map">
                             <agm-map id="pickUpMap" [zoom]="zoom" [latitude]="latDrop" [longitude]="lngDrop" [disableDefaultUI]=false
@@ -334,6 +340,9 @@
                               </agm-map>
                             </div>
                       </div>
+                    </div>
+                    <div style="padding-bottom: 2%;">
+                      <span style="font-weight: 400;">Drop off Location</span>
                     </div>
              <div class="row">
                   <div class="col-lg-6 col-sm-6 col-md-6">
@@ -526,7 +535,7 @@
                 <div class="col-md-6 col-lg-6 col-sm-6">
                   <div class="form-group">
                     <input type="text" id="email" class="form-control" name="email" [(ngModel)]="cust_details.email"
-                      #email="ngModel" required pattern="^([a-zA-Z0-9_\.\-])+@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$">
+                      #email="ngModel" required pattern="^([a-zA-Z0-9_\.\-])+@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$" style="text-transform: lowercase;">
                     <label class="form-control-placeholder" for="email">Email Id*</label>
                   </div>
                 </div>
@@ -765,7 +774,7 @@
                 <div class="col-md-6 col-lg-6 col-sm-6">
                   <div class="form-group">
                     <input type="text" id="email" class="form-control" name="email" [(ngModel)]="cust_details.email"
-                      #email="ngModel" required pattern="^([a-zA-Z0-9_\.\-])+@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$">
+                      #email="ngModel" required pattern="^([a-zA-Z0-9_\.\-])+@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$" style="text-transform: lowercase;">
                     <label class="form-control-placeholder" for="email">Email Id*</label>
                   </div>
                 </div>
@@ -996,7 +1005,7 @@
                 <div class="col-md-6 col-lg-6 col-sm-6">
                   <div class="form-group">
                     <input type="text" id="email" class="form-control" name="email" [(ngModel)]="cust_details.email"
-                      #email="ngModel" required pattern="^([a-zA-Z0-9_\.\-])+@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$">
+                      #email="ngModel" required pattern="^([a-zA-Z0-9_\.\-])+@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$" style="text-transform: lowercase;">
                     <label class="form-control-placeholder" for="email">Email Id*</label>
                   </div>
                 </div>

@@ -156,6 +156,7 @@ export class ServicingComponent implements OnInit {
   latDrop:number;
   lngDrop:number;
   ifClicked: boolean;
+  @ViewChild('pickupSavedRef') pickupSavedRef: ElementRef;
   @ViewChild('pickupsearchplace') pickupsearchplace:ElementRef;
   @ViewChild('pickupsearchplaceFill') pickupsearchplaceFill: ElementRef;
   @ViewChild('pickupsearchplaceLandmark') pickupsearchplaceLandmark: ElementRef;
@@ -723,31 +724,41 @@ public getCity() {
     return this.ngbDateParserFormatter.parse(startYear + "-" + startMonth.toString() + "-" + startDay);
   }
 
-  ShowMapInSavedAddPickup(){
+  ShowMapInSavedAddPickup(ev){
+    console.log(ev);
+    console.log(this.pickupSavedRef.nativeElement);
     this.googleMapPickupFlag = true;
     this.pickupSelected = false;
     this.googlemapShow = !this.googlemapShow;
+    for (var i =0; i<= document.getElementsByClassName("savedAddBtn").length; i++){
+      document.getElementsByClassName("savedAddBtn")[i].classList.remove('borderCls');
+    }
   }
+
+  removeActiveBorder(el,index){
+      console.log('Keep active ',el ,'active index ',index );
+      var els = el.parentElement.children
+
+      for(var i=0;i<els.length;i++)
+      {
+        els[i].classList.remove('borderCls');
+      }
+    }
 
   ShowMapInSavedAddDropoff(){
     this.googleMapDropoffFlag = true;
     this.DropoffSelected = false;
     this.googlemapShow = !this.googlemapShow;
+    for (var i =0; i<= document.getElementsByClassName("savedAddBtn").length; i++){
+      document.getElementsByClassName("savedAddBtn")[i].classList.remove('borderCls');
+    }
   }
-
-  removeActiveBorder(el,index){
-    console.log('Keep active ',el ,'active index ',index );
-    var els = el.parentElement.children
-
-    for(var i=0;i<els.length;i++)
-    {
-      els[i].classList.remove('borderCls');
-    }
-  }
 
   SelectSavedPickupAddress(i,x, ev){
     console.log("event",ev);
-    console.log("index",x)
+    console.log("index",x);
+    // this.googleMapPickupFlag = false;
+    // var x = document.getElementById('pickupsaved').classList.remove= "deactive";
     if(ev.target.classList.contains('savedAddBtn'))
     {
       this.removeActiveBorder(ev.target,x);
@@ -758,13 +769,10 @@ public getCity() {
       this.removeActiveBorder(ev.target.parentElement,x);
       ev.target.parentElement.classList.add('borderCls');
     }
-    else
-    {
-      console.log('Dekh kr click kro');
+    else{
+      console.log('Click');
     }
-
-
-    console.log(x);
+    console.log(x);
     if (x==x) {
       this.ifClicked = true;
     }
@@ -789,7 +797,8 @@ public getCity() {
 
 SelectSavedDropoffAddress(i,x, ev){
   console.log("event",ev);
-  console.log("index",x)
+  console.log("index",x);
+  // this.googleMapDropoffFlag = false;
   if(ev.target.classList.contains('savedAddBtn'))
   {
     this.removeActiveBorder(ev.target,x);
@@ -800,12 +809,9 @@ SelectSavedDropoffAddress(i,x, ev){
     this.removeActiveBorder(ev.target.parentElement,x);
     ev.target.parentElement.classList.add('borderCls');
   }
-  else
-  {
+  else{
     console.log('Dekh kr click kro');
   }
-
-
   console.log(x);
   if (x==x) {
     this.ifClicked = true;
@@ -1599,6 +1605,7 @@ SelectSavedDropoffAddress(i,x, ev){
         this.user.mobile1 = null;
         this.ifSameAsPickUp = false;
         this.googlemapShow = false;
+        this.dropOffOnly = false;
       }
       else if(data[0].hasOwnProperty('error')){
         this.showToast('alert', 'Alert', 'Sorry !! Something went wrong');
