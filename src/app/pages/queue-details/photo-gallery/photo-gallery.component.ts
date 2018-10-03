@@ -52,21 +52,21 @@ export class PhotoGalleryComponent implements OnInit {
     });
   }
   sendImages(){
-    
-      const activeModal = this.modalService.open(ModalSendLinkComponent, { size: 'lg', container: 'nb-layout' });
+    const activeModal = this.modalService.open(ModalSendLinkComponent, { size: 'lg', container: 'nb-layout' });
       sessionStorage.setItem('clickedOn', '20')
       activeModal.componentInstance.modalHeader = 'Send Images';
       activeModal.componentInstance.modalContent = sessionStorage.getItem('customerNo');
   }
+
   showLargeModal(name: string) {
     const activeModal = this.modalService.open(ModalPhotoComponent, { size: 'lg', container: 'nb-layout' });
-
     activeModal.componentInstance.modalHeader = 'Large Modal';
     activeModal.componentInstance.modalContent = name;
   }
+
   public beforeChange($event: NgbPanelChangeEvent) {
     const reqpara3 = {
-      requesttype: 'getimages',
+      requesttype: 'getimagesv2',
       queueid: sessionStorage.getItem('QueueId'),
       state: $event.panelId
     }
@@ -78,6 +78,7 @@ export class PhotoGalleryComponent implements OnInit {
       const check1 = check[0];
       const check2 = ['imagelist']
       this.tableData = check1[check2[0]];
+      console.log(this.tableData);
       this.keyValues = ["id", "filename", "title"];
     });
   };

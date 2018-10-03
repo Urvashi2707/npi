@@ -74,7 +74,7 @@
         <ng-template ngbPanelContent>
           <div class="row">
             <div class="column" *ngFor="let image of tableData; let i = index">
-              <img src="{{photoLink}}{{tableData[i][keyValues[1]]}}" (click)="onViewerVisibilityChanged(i)" style="width:100%">
+              <img src="{{tableData[i][keyValues[1]]}}" (click)="onViewerVisibilityChanged(i)" style="width:100%">
               <div>
                 <label>{{tableData[i][keyValues[2]]}}</label>
               </div>
