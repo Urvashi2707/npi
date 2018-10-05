@@ -937,6 +937,7 @@ export class RsaComponent implements OnInit {
         this.user.confirm = true;
         this.datecheck = false;
         this.disabledNext = false;
+        this.showsvclist = false;
       }
     },
     (err: HttpErrorResponse) => {
