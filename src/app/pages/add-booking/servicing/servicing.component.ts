@@ -1533,6 +1533,22 @@ SelectSavedDropoffAddress(i,x, ev){
       }
   
     if(this.slot_time != "0"){
+      if(this.postaladdresspu || this.landmarkpu){
+        console.log("Pickup is selected");
+      }
+      else {
+        this.showToast('alert', 'Message', 'Please select Pickup');
+      }
+      if(this.ifSameAsPickUp){
+        console.log("not same as selected");
+        if(this.postaladdressdo || this.landmarkdo){
+          console.log("Drop off is selected");
+        }
+        else {
+          this.showToast('alert', 'Message', 'Please select Drop off');
+        }
+      }
+    
     const reqpara6 = {
       requesttype: "createbookingv5",
       vehnumber: this.registrationNumber,
@@ -1610,16 +1626,12 @@ SelectSavedDropoffAddress(i,x, ev){
       else if(data[0].hasOwnProperty('error')){
         this.showToast('alert', 'Alert', 'Sorry !! Something went wrong');
       }
-    },
+    }),
       (err: HttpErrorResponse) => {
-        if (err.error instanceof Error) {
-         
-        }
-        else {
-          
-        }
+        if (err.error instanceof Error) {}
+        else {}
       }
-    );
+    
   }
   else {
     this.showToast('alert', 'Message', 'Please select Slot and date');

@@ -5,9 +5,9 @@
  */
 export const environment = {
   production: true,
-  Mainurl:'http://m.21north.in/notify/svcwebservice.php',
-  logout_url:"http://m.21north.in/notify/logout.php",
-  graph:"http://m.21north.in/notify/svcgraph.php",
-  slot_graph:"http://m.21north.in/notify/svcgraphslot.php",
-  upload_file:"http://m.21north.in/notify/uploadfile.php",
+  Mainurl:'https://m.21north.in/notify/svcwebservice.php',
+  logout_url:"https://m.21north.in/notify/logout.php",
+  graph:"https://m.21north.in/notify/svcgraph.php",
+  slot_graph:"https://m.21north.in/notify/svcgraphslot.php",
+  upload_file:"https://m.21north.in/notify/uploadfile.php",
 };
