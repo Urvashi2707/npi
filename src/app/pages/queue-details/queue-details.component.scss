@@ -9,6 +9,17 @@
   margin-top: 12%;
   margin-left: 62%;
 }
+
+.grp-btn-cls button{
+    border: 1px solid #00C99B;
+    color: #2a2a2a;
+    background-color: transparent;
+    padding: 0.3rem;
+    font-size: 13px;
+    width: 47px;
+    border-radius: 4px;
+    }
+
 .PickupPencilIcon{
   color: #ffa100;
   font-size: 1.5rem;
@@ -99,7 +110,7 @@ h6 {
 }
 .Feedbacktitle{
   margin-top: 23px;
-  font-weight: 700;
+  font-weight: 400;
 }
 .brandlogo{
   float:left;
@@ -124,11 +135,11 @@ h6 {
       padding-bottom: 4px;
       color: white;
       background-color: #FF8400;
-      border-radius: 8PX;
+      border-radius: 4PX;
 }
 .TextReview{
   padding: 2px;
-  border-bottom: 1px solid orange;
+  border-bottom: 1px solid #00C99B;
 }
 @include media-breakpoint-down(sm) {
     .star {

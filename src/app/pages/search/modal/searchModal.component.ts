@@ -86,7 +86,7 @@ export class SearchModalComponent implements OnInit {
     this.maxDate = { year: now.getFullYear(), month: now.getMonth() + 1, day: now.getDate() + 15};
     this.globalsvcid = JSON.parse(sessionStorage.getItem('globalsvcid'));
     this.getAdvisor();
-    this.getDetails()
+    // this.getDetails()
    }
   public httpOptions = {
     withCredentials: true

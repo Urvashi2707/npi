@@ -326,7 +326,7 @@ export class QueueDetailsComponent implements OnInit {
     else if (tabData.tabTitle == "Details") {
       const reqpara3 = {
         // requesttype: 'getqueuebasichistory',
-        requesttype: 'getqueuebasichistoryv2',
+        requesttype: 'getqueuebasichistoryv3',
         queueidvar: sessionStorage.getItem('QueueId'),
       }
       const as3 = JSON.stringify(reqpara3);
