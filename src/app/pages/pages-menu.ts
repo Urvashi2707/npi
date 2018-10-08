@@ -270,12 +270,6 @@ export const MENU_INSURANCESUSR: NbMenuItem[] = [
     group: true,
   },
   {
-    title: 'Manage Centre',
-    icon: 'nb-tables',
-    link: '/pages/manage'
-
-  },
-  {
     title: 'Manage User',
     icon: 'nb-tables',
     link: '/pages/user'
