@@ -12,7 +12,7 @@ export const MENU_ITEMSADM: NbMenuItem[] = [
     group: true,
   },
   {
-    title: 'Manage Centre',
+    title: 'View Centre',
     icon: 'nb-tables',
     link: '/pages/manage'
 
@@ -141,7 +141,7 @@ export const MENU_ITEMSUSR: NbMenuItem[] = [
     group: true,
   },
   {
-    title: 'Manage Centre',
+    title: 'View Centre',
     icon: 'nb-tables',
     link: '/pages/manage'
 
