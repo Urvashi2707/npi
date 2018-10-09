@@ -15,26 +15,27 @@ export class PagesComponent {
 
   public permission
   menu:any;
+
   ngOnInit(){
     var GrpAdmin = JSON.parse(sessionStorage.getItem('groupadmin'));
     var SvcAdmin = JSON.parse(sessionStorage.getItem('svcadmin'));
     var InsuAdmin = JSON.parse(sessionStorage.getItem('insurance'));
     console.log(InsuAdmin);
-    if(GrpAdmin == "1" || SvcAdmin == "1"){
-      // this.permission = false;
+    if((GrpAdmin == "1" || SvcAdmin == "1") && InsuAdmin == "0"){
       this.menu = MENU_ITEMSADM;
-}
-else if (InsuAdmin == "1"){
-  this.menu = MENU_INSURANCESUSR;
-}
-else {
-  // this.permission = true;
-  this.menu = MENU_ITEMSUSR;
-  }
+      console.log("GrpAdmin")
+      }
+    else if (InsuAdmin == "1" && GrpAdmin == "1"){
+      this.menu = MENU_INSURANCESUSR;
+      console.log("Insurance Menu");
+    }
+    else {
+      this.menu = MENU_ITEMSUSR;
+      console.log("User Menu");
+      }
   }
 
   onActivate(e){
     console.log(e)
   }
-  // menu = MENU_ITEMS;
 }
