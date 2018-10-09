@@ -23,9 +23,14 @@
           
             <label *ngIf="tableData[j].com_type=='Call' && keyValues[k]=='message'; else label">
             
-              <a href={{tableData[j].message}} target="_blank">
+              <a href={{tableData[j].message}} target="_blank" *ngIf="tableData[j].message !=''">
                 <img src="https://www.clker.com/cliparts/z/w/L/x/K/Z/orange-play.svg" width="20px" height="20px">
               </a>
+              <a *ngIf="tableData[j].message ===''"> 
+                <img src="../../../../assets/images/download.png" width="20px" height="20px">
+                Link not available
+              </a>
+
               </label>
           
             <ng-template #label>{{tableData[j][keyValues[k]]}}</ng-template>
