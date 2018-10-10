@@ -11,7 +11,7 @@
 export const environment = {
   production: false,
   Mainurl:"https://m.21north.in/notify/svcwebservice.php",
-  logout_url:"https://m.21north.in/notify/logout.php'",
+  logout_url:"https://m.21north.in/notify/logout.php",
   graph:"https://m.21north.in/notify/svcgraph.php",
   slot_graph:"https://m.21north.in/notify/svcgraphslot.php",
   upload_file:"https://m.21north.in/notify/uploadfile.php",
