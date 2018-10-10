@@ -6,7 +6,7 @@
 export const environment = {
   production: true,
   Mainurl:"/notify/svcwebservice.php",
-  logout_url:"/notify/logout.php'",
+  logout_url:"/notify/logout.php",
   graph:"/notify/svcgraph.php",
   slot_graph:"/notify/svcgraphslot.php",
   upload_file:"/notify/uploadfile.php",
