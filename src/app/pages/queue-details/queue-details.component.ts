@@ -332,6 +332,7 @@ export class QueueDetailsComponent implements OnInit {
       const as3 = JSON.stringify(reqpara3);
       this._data.webServiceCall(as3).subscribe(res => {
         const check = res.valueOf();
+        console.log(check,"check");
         const objectlength = Object.keys(check).length;
         if (objectlength > 0) {
           if (check[0].hasOwnProperty('custinfo')) {
@@ -616,26 +617,30 @@ export class QueueDetailsComponent implements OnInit {
         //     }
         //   }
         // }
-        if (objectlength > 12) {
-          if (check[12].hasOwnProperty('newfeedback')) {
+        // console.log("lenght",objectlength )
+        if (objectlength > 10) {
+          console.log("new feedback");
+          if (check[10].hasOwnProperty('newfeedback')) {
+            console.log("show new feedback");
             this.showNewFeedbackCards = "1";
-            this.feedback = check[12].newfeedback;
-            if(check[12].newfeedback[0].hasOwnProperty('no_records'))
+            this.feedback = check[10].newfeedback;
+            if(check[10].newfeedback[0].hasOwnProperty('no_records'))
             {
+              console.log("no new feedback");
               this.showNewFeedbackCards = "0";
-              if (objectlength > 11) {
-                if (check[11].hasOwnProperty('feedback')) {
-                  this.showFeedbackCards = "1";
+              // if (objectlength > 11) {
+              //   if (check[11].hasOwnProperty('feedback')) {
+              //     this.showFeedbackCards = "1";
                  
-                  if(check[11].feedback[0].hasOwnProperty('no_records'))
-                  {
-                    this.showFeedbackCards = "0";
-                  }
-                  else{
-                    this.feedback = check[11].feedback;
-                  }
-                }
-              }
+              //     if(check[11].feedback[0].hasOwnProperty('no_records'))
+              //     {
+              //       this.showFeedbackCards = "0";
+              //     }
+              //     else{
+              //       this.feedback = check[11].feedback;
+              //     }
+              //   }
+              // }
             }
             else{}
           }
