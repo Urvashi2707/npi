@@ -407,8 +407,11 @@ export class QueueDetailsComponent implements OnInit {
               }
 
               let dropAmbName = this.dropoffForm.get('dropAmbName');
+
               if (this.dropInfo[0].amb_name) {
+                console.log("AMb name in drop ",this.dropInfo[0].amb_name)
                 dropAmbName.setValue(this.dropInfo[0].amb_name);
+                console.log("Input Amb",dropAmbName)
               }
 
               let amount = this.dropoffForm.get('amount');
