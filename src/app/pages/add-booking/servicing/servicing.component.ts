@@ -1354,6 +1354,7 @@ SelectSavedDropoffAddress(i,x, ev){
         }
         else if(this.yourBoolean === "dropoff"){
           this.googleaddresspu = this.googleaddressdo;
+          this.postaladdresspu = this.postaladdressdo;
           this.landmarkpu = this.landmarkdo;
           this.pickuplat = this.droplat;
           this.pickuplong = this.droplong;
