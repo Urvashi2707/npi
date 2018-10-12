@@ -559,8 +559,10 @@ export class QueueDetailsComponent implements OnInit {
         }
 
         if (objectlength > 6) {
-          if (check[6].hasOwnProperty('vehicleinfo')) {
-            const vehInfo = check[6].vehicleinfo;
+          console.log("car info if");
+          console.log(check[6]);
+          if (check[5].hasOwnProperty('vehicleinfo')) {
+            const vehInfo = check[5].vehicleinfo;
             this.VehicleNumber = vehInfo[0].veh_number;
             this.VehicleBrand = vehInfo[0].veh_brand;
             this.VehicleModel = vehInfo[0].veh_model;
