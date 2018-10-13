@@ -120,7 +120,8 @@ export class ChauffeurComponent implements OnInit {
   position = 'toast-top-full-width';
   animationType = 'fade';
   timeout = 5000;
-  toastsLimit = 5;
+  toastsLimit = 5;  public addrKeys: string[];
+  public addr: object;
   public lat: number = 51.678418;
   public lng: number = 7.809007;
   public latitude: number;
@@ -139,6 +140,12 @@ export class ChauffeurComponent implements OnInit {
   latDrop:number;
   lngDrop:number;
   public iconurl: String;
+  drag_pickup_lat:number;
+  drag_pickup_lng:number;
+  drag_drop_lat:number;
+  drag_drp_lng:number;
+  drag_pickup_add:string = "0";
+  drag_dropoff_add:string = "0";
   @ViewChild('pickupsearchplace') pickupsearchplace:ElementRef;
   @ViewChild('pickupsearchplaceFill') pickupsearchplaceFill: ElementRef;
   @ViewChild('pickupsearchplaceLandmark') pickupsearchplaceLandmark: ElementRef;
@@ -324,6 +331,32 @@ export class ChauffeurComponent implements OnInit {
    console.log("after",this.testdrivecheck);
  }
 
+
+ setAddress(addrObj,service_type) {
+  console.log(addrObj);
+  console.log(service_type,"service_type")
+  if(service_type == 'pickup'){
+    this.latPickup = addrObj.lat;
+    this.lngPickup = addrObj.long;
+    this.googlepickuplat = addrObj.lat;
+    this.googlepickuplong = addrObj.long;
+    this.googleaddresspu = addrObj.formatted_address;
+    console.log("pickup",this.googlepickuplat,this.googlepickuplong,this.googleaddresspu)
+  }
+ else{
+   this.latDrop = addrObj.lat;
+   this.lngDrop = addrObj.long;
+  this.googledropofflat = addrObj.lat;
+  this.googledropofflong = addrObj.long;
+  this.googleaddressdo = addrObj.formatted_address;
+  console.log("dropoff",this.googledropofflat,this.googledropofflong,this.googleaddressdo)
+ }
+  this.ngZone.run(() => {
+    this.addr = addrObj;
+    this.addrKeys = Object.keys(addrObj);
+  });
+}
+
  //Stockyard(6),Custody(15)
  pickUpSearch(e,ServiceId){
    if(ServiceId === 15){
@@ -403,6 +436,64 @@ HomeTestPickup(e,ServiceId){
         })
       });
   }
+}
+
+markerDragEndd(ev,val) {
+  // console.log("indicator",val);
+  let input = ev.coords.lat + ',' + ev.coords.lng;
+  // console.log("selected value drag",ev.coords.lat + ',' + ev.coords.lng)
+  var latlngStr = input.split(',', 2);
+  var latlng = {lat: parseFloat(latlngStr[0]), lng: parseFloat(latlngStr[1])
+  };
+  var geocoder = new google.maps.Geocoder;
+  let me = this;
+  geocoder.geocode({'location': latlng}, function(results, status) {
+    if (status === 'OK') {
+      if (results[0]) {
+        console.log(results[0].formatted_address);
+        if(val == 1){
+          me.pickupsearchplace.nativeElement.value = results[0].formatted_address;
+          sessionStorage.setItem('pickup_add_drag',results[0].formatted_address);
+          sessionStorage.setItem('pickup_lat_drag',ev.coords.lat);
+          sessionStorage.setItem('pickup_lng_drag',ev.coords.lng);
+        }
+       else if (val == 2){
+        me.internalpickup.nativeElement.value = results[0].formatted_address;
+        sessionStorage.setItem('pickup_add_drag',results[0].formatted_address);
+        sessionStorage.setItem('pickup_lat_drag',ev.coords.lat);
+        sessionStorage.setItem('pickup_lng_drag',ev.coords.lng);
+       }
+       else if (val == 3){
+        me.internaldropoff.nativeElement.value = results[0].formatted_address;
+        sessionStorage.setItem('pickup_add_drag',results[0].formatted_address);
+        sessionStorage.setItem('pickup_lat_drag',ev.coords.lat);
+        sessionStorage.setItem('pickup_lng_drag',ev.coords.lng);
+       }
+       else if (val == 4){
+        me.homepickup.nativeElement.value = results[0].formatted_address;
+        sessionStorage.setItem('dropoff_add_drag',results[0].formatted_address);
+        sessionStorage.setItem('dropoff_lat_drag',ev.coords.lat);
+        sessionStorage.setItem('dropoff_lng_drag',ev.coords.lng);
+       }
+       else if (val == 5){
+        me.testpickup.nativeElement.value = results[0].formatted_address;
+        sessionStorage.setItem('dropoff_add_drag',results[0].formatted_address);
+        sessionStorage.setItem('dropoff_lat_drag',ev.coords.lat);
+        sessionStorage.setItem('dropoff_lng_drag',ev.coords.lng);
+       }
+       else if (val == 6){
+        me.Custodysearchplace.nativeElement.value = results[0].formatted_address;
+        sessionStorage.setItem('dropoff_add_drag',results[0].formatted_address);
+        sessionStorage.setItem('dropoff_lat_drag',ev.coords.lat);
+        sessionStorage.setItem('dropoff_lng_drag',ev.coords.lng);
+       }
+      } else {
+        window.alert('No results found');
+      }
+    } else {
+      window.alert('Geocoder failed due to: ' + status);
+    }
+  });
 }
 
 //Home Delivery() and TestDrive Dropoff
@@ -954,6 +1045,16 @@ customerCheck(){
 
   onSubmit(f: NgForm) {
     console.log(f.value);
+    if(sessionStorage.getItem('pickup_add_drag')){
+      this.googleaddresspu = sessionStorage.getItem('pickup_add_drag');
+      this.googlepickuplat = JSON.parse(sessionStorage.getItem('pickup_lat_drag'));
+      this.googledropofflat = JSON.parse(sessionStorage.getItem('pickup_lng_drag'));
+    }
+    if(sessionStorage.getItem('dropoff_add_drag')){
+      this.googleaddressdo = sessionStorage.getItem('dropoff_add_drag');
+      this.googledropofflat = JSON.parse(sessionStorage.getItem('dropoff_lat_drag'));
+      this.googledropofflong = JSON.parse(sessionStorage.getItem('dropoff_lng_drag'));
+    }
     this.disabled =  true;
     if(f.value.city){
       this.cityid = f.value.city;
@@ -1191,6 +1292,12 @@ customerCheck(){
         this.getCoordinator();
         this.disableNext = false;
         this.model=null;
+        sessionStorage.removeItem('pickup_add_drag');
+        sessionStorage.removeItem('pickup_lat_drag');
+        sessionStorage.removeItem('pickup_lng_drag');
+        sessionStorage.removeItem('dropoff_add_drag');
+        sessionStorage.removeItem('dropoff_lat_drag');
+        sessionStorage.removeItem('dropoff_lng_drag');
     }
  },
   (err: HttpErrorResponse) =>{

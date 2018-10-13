@@ -20,6 +20,7 @@ import { AddEmployee } from './modal/AddEmployee/AddEmployee.component';
 import { MapComponent } from './map/map.component';
 import { DecimalPipe } from '@angular/common';
 import { AgmCoreModule } from '@agm/core';
+import { GooglePlacesDirective } from '../../pages/google-place.directive';
 // import { ModalComponent } from './modal/modal.component';
 @NgModule({
   imports: [
@@ -43,7 +44,7 @@ import { AgmCoreModule } from '@agm/core';
       BookingDetails,
       AddEmployee,
       MapComponent,
-     
+      GooglePlacesDirective
       // ModalComponent,
 
   ],
