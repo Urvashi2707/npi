@@ -13,7 +13,7 @@
             <div class="col-md-5 col-sm-5 col-lg-5">
               <div class="form-group">
                 <input type="text" id="num" name="num" style="text-transform: uppercase" class="form-control" required
-                  [(ngModel)]="registrationNumber" #num="ngModel" maxlength="15" pattern="^[0-9a-zA-Z#,\-/_ .@]+$">
+                  [(ngModel)]="registrationNumber" #num="ngModel" maxlength="15" pattern="^[0-9a-zA-Z#,\-/_ .@]+$" onkeydown="javascript: return event.keyCode == 32 ? false : true">
                 <label class="form-control-placeholder" for="num">Registration Number*</label>
               </div>
               <div class="form-control-feedback" *ngIf="num.errors && (num.dirty || num.touched)">
@@ -157,14 +157,14 @@
             <div class="row">
                 <div class="col-lg-6 col-sm-6 col-md-6">
                   <div class="form-group">
-                    <input class="form-control" name="pickupsearch" id="pickupsearch" #pickupsearchplace autocomplete="off" spellcheck="off" required
+                    <input class="form-control noPlaceholder" name="pickupsearch" id="pickupsearch" #pickupsearchplace autocomplete="off" spellcheck="off" required
                       type="text" (onSelect)="setAddress($event,'pickup')" google-place style="text-transform: capitalize;"/>
                     <label class="form-control-placeholder" for="city">Search Places*</label>
                   </div>
                 </div>
                 <div class="col-lg-6 col-sm-6 col-md-6">
                   <div class="form-group">
-                    <input class="form-control" name="pickflatno" #pickflatno="ngModel" autocomplete="off" required spellcheck="off" type="text" [(ngModel)]="user.pickflatno" pattern="^[0-9a-zA-Z#,\-/_ .@]+$"  minlength="1" maxlength="5" style="text-transform: capitalize;"/>
+                    <input class="form-control" name="pickflatno" #pickflatno="ngModel" autocomplete="off" required spellcheck="off" type="text" [(ngModel)]="user.pickflatno" pattern="^[0-9a-zA-Z#,\-/_ .@]+$"  minlength="1" maxlength="10" style="text-transform: capitalize;"/>
                     <label class="form-control-placeholder" for="pickflatno">Flat No./House No.*</label>
                   </div>
                   <div class="form-control-feedback" *ngIf="pickflatno.errors && (pickflatno.dirty || pickflatno.touched)">
@@ -298,14 +298,14 @@
               <div class="row">
                 <div class="col-lg-6 col-sm-6 col-md-6">
                   <div class="form-group">
-                    <input class="form-control" id="internalpickup" #internalpickup autocomplete="off" spellcheck="off"
+                    <input class="form-control noPlaceholder" id="internalpickup" #internalpickup autocomplete="off" spellcheck="off"
                       type="text" (onSelect)="setAddress($event,'pickup')" google-place required/>
                     <label class="form-control-placeholder" for="internalpickup">Search Places*</label>
                   </div>
                 </div>
                 <div class="col-lg-6 col-sm-6 col-md-6">
                   <div class="form-group">
-                    <input class="form-control" #internalpickupflatno="ngModel" name="internalpickupflatno"  required [(ngModel)]="user.internalpickupflatno" autocomplete="off" spellcheck="off" type="text" pattern="^[0-9a-zA-Z#,\-/_ .@]+$" minlength="1" maxlength="5"/>
+                    <input class="form-control" #internalpickupflatno="ngModel" name="internalpickupflatno"  required [(ngModel)]="user.internalpickupflatno" autocomplete="off" spellcheck="off" type="text" pattern="^[0-9a-zA-Z#,\-/_ .@]+$" minlength="1" maxlength="10"/>
                     <label class="form-control-placeholder" for="internalpickupflatno">Flat No./House No.*</label>
                   </div>
                   <div class="form-control-feedback" *ngIf="internalpickupflatno.errors && (internalpickupflatno.dirty || internalpickupflatno.touched)">
@@ -363,14 +363,14 @@
              <div class="row">
                   <div class="col-lg-6 col-sm-6 col-md-6">
                     <div class="form-group">
-                      <input class="form-control" id="internaldropoff" #internaldropoff autocomplete="off" spellcheck="off" 
+                      <input class="form-control noPlaceholder" ng-minlength="3" id="internaldropoff" #internaldropoff autocomplete="off" spellcheck="off" 
                         type="text" (onSelect)="setAddress($event,'dropoff')" google-place required/>
                       <label class="form-control-placeholder" for="internaldropoff">Search Places*</label>
                     </div>
                   </div>
                   <div class="col-lg-6 col-sm-6 col-md-6">
                     <div class="form-group">
-                      <input class="form-control" #internaldropoffflatno="ngModel" name="internaldropoffflatno"  autocomplete="off" spellcheck="off" type="text" [(ngModel)]="user.internaldropoffflatno" required pattern="^[0-9a-zA-Z#,\-/_ .@]+$" minlength="1" maxlength="5"/>
+                      <input class="form-control" #internaldropoffflatno="ngModel" name="internaldropoffflatno"  autocomplete="off" spellcheck="off" type="text" [(ngModel)]="user.internaldropoffflatno" required pattern="^[0-9a-zA-Z#,\-/_ .@]+$" minlength="1" maxlength="10"/>
                       <label class="form-control-placeholder" for="internaldropoffflatno">Flat No./House No.*</label>
                     </div>
                     <div class="form-control-feedback" *ngIf="internaldropoffflatno.errors && (internaldropoffflatno.dirty || internaldropoffflatno.touched)">
@@ -582,14 +582,14 @@
               <div class="row">
                 <div class="col-lg-6 col-sm-6 col-md-6">
                   <div class="form-group">
-                    <input class="form-control" id="homepickup" #homepickup autocomplete="off" spellcheck="off"
+                    <input class="form-control noPlaceholder" id="homepickup" #homepickup autocomplete="off" spellcheck="off"
                       type="text" (onSelect)="setAddress($event,'pickup')" google-place required/>
                     <label class="form-control-placeholder" for="homepickup">Search Places*</label>
                   </div>
                 </div>
                 <div class="col-lg-6 col-sm-6 col-md-6">
                   <div class="form-group" >
-                    <input class="form-control" #homepickupflatno="ngModel" pattern="^[ A-Za-z0-9_@./#&+-;%]*$" name="homepickupflatno" required autocomplete="off" spellcheck="off" type="text" [(ngModel)]="user.homepickupflatno" minlength="1" maxlength="5"/>
+                    <input class="form-control" #homepickupflatno="ngModel" pattern="^[ A-Za-z0-9_@./#&+-;%]*$" name="homepickupflatno" required autocomplete="off" spellcheck="off" type="text" [(ngModel)]="user.homepickupflatno" minlength="1" maxlength="10"/>
                     <label class="form-control-placeholder" for="homepickupflatno">Flat No./House No.*</label>
                   </div>
                   <div class="form-control-feedback" *ngIf="homepickupflatno.errors && (homepickupflatno.dirty || homepickupflatno.touched)">
@@ -825,14 +825,14 @@
             <div class="row">
                 <div class="col-lg-6 col-sm-6 col-md-6">
                   <div class="form-group">
-                    <input class="form-control" id="testpickup" #testpickup autocomplete="off" spellcheck="off"
+                    <input class="form-control noPlaceholder" id="testpickup" #testpickup autocomplete="off" spellcheck="off"
                       type="text" (onSelect)="setAddress($event,'pickup')" google-place required/>
                     <label class="form-control-placeholder" for="testpickup">Search Places*</label>
                   </div>
                 </div>
                 <div class="col-lg-6 col-sm-6 col-md-6">
                   <div class="form-group">
-                    <input class="form-control" #testpickupflatno="ngModel" name="testpickupflatno"  required autocomplete="off" spellcheck="off" type="text" [(ngModel)]="user.testpickupflatno" pattern="^[0-9a-zA-Z#,\-/_ .@]+$"  minlength="1" maxlength="5"/>
+                    <input class="form-control" #testpickupflatno="ngModel" name="testpickupflatno"  required autocomplete="off" spellcheck="off" type="text" [(ngModel)]="user.testpickupflatno" pattern="^[0-9a-zA-Z#,\-/_ .@]+$"  minlength="1" maxlength="10"/>
                     <label class="form-control-placeholder" for="testpickupflatno" >Flat No./House No.*</label>
                   
                   </div>
@@ -1060,14 +1060,14 @@
               <div class="row">
                 <div class="col-lg-6 col-sm-6 col-md-6">
                   <div class="form-group">
-                    <input class="form-control" name="Custodysearchplace" id="Custodysearchplace" #Custodysearchplace autocomplete="off" spellcheck="off"
+                    <input class="form-control noPlaceholder" name="Custodysearchplace" id="Custodysearchplace" #Custodysearchplace autocomplete="off" spellcheck="off"
                       type="text" (onSelect)="setAddress($event,'pickup')" google-place required/>
                     <label class="form-control-placeholder" for="city">Search Places*</label>
                   </div>
                 </div>
                 <div class="col-lg-6 col-sm-6 col-md-6">
                   <div class="form-group">
-                    <input class="form-control" name="Custodyflatno" #Custodyflatno="ngModel" required autocomplete="off" spellcheck="off" type="text" [(ngModel)]="user.Custodyflatno" pattern="^[0-9a-zA-Z#,\-/_ .@]+$" minlength="1" maxlength="5"/>
+                    <input class="form-control" name="Custodyflatno" #Custodyflatno="ngModel" required autocomplete="off" spellcheck="off" type="text" [(ngModel)]="user.Custodyflatno" pattern="^[0-9a-zA-Z#,\-/_ .@]+$" minlength="1" maxlength="10"/>
                     <label class="form-control-placeholder" for="Custodyflatno">Flat No./House No.*</label>
                   </div>
                   <div class="form-control-feedback" *ngIf="Custodyflatno.errors && (Custodyflatno.dirty || Custodyflatno.touched)">

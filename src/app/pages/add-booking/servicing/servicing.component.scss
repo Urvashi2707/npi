@@ -565,3 +565,8 @@ agm-map {
 .borderCls{
   border:3px solid #40dc7e !important;
 }
+
+
+.noPlaceholder::placeholder {
+  visibility: hidden;
+}

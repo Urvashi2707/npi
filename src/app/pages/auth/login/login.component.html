@@ -19,8 +19,8 @@
             <div class="row">
               <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12">
                 <div class="form-group">
-                  <input type="text" id="mobile" name="mobile" class="form-control" required pattern="^[0-9]*$" OnlyNumber="true" maxlength="10"
-                    [(ngModel)]="user.mobile" #mob="ngModel">
+                  <input type="number" id="mobile" name="mobile" class="form-control" required pattern="^[0-9]*$"  maxlength="10"
+                    [(ngModel)]="user.mobile" #mob="ngModel" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" onkeydown="javascript: return event.keyCode == 69 ? false : true">
                   <label class="form-control-placeholder" for="mobile">Mobile</label>
                 </div>
                 <div class="form-control-feedback" style="color:red" *ngIf="mob.errors && (mob.dirty || mob.touched)">
@@ -66,7 +66,9 @@
                   <span>* Choosing LogIn means that you agree to the 21North Services Agreement
                     <a href="http://www.21north.in/" target="_blank">21North</a>
                     and privacy and cookies statement.
-                  </span>
+                  </span><br>
+                  <span><img src="../../../../assets/images/chrome-512.png" style="width: 20px;"></span>
+                  <span style="padding-left: 2%;">For better user exprience use Chrome</span>
                 </div>
               </div>
             </div>

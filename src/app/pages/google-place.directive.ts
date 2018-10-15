@@ -1,4 +1,3 @@
-
 import { Directive, ElementRef,OnInit, Output, EventEmitter } from '@angular/core';
 import {} from '@types/googlemaps';
 // const google = require('@types/googlemaps');
@@ -16,11 +15,11 @@ export class GooglePlacesDirective implements OnInit {
 
   ngOnInit() {
     setTimeout(()=> {
-            const autocomplete = new google.maps.places.Autocomplete(this.element);
-    google.maps.event.addListener(autocomplete, 'place_changed', () => {
-      this.onSelect.emit(this.getFormattedAddress(autocomplete.getPlace()));
-    });
-      }, 1000);
+        const autocomplete = new google.maps.places.Autocomplete(this.element);
+        google.maps.event.addListener(autocomplete, 'place_changed', () => {
+            this.onSelect.emit(this.getFormattedAddress(autocomplete.getPlace()));
+          });
+        }, 1000);
    }
 
    getFormattedAddress(place) {

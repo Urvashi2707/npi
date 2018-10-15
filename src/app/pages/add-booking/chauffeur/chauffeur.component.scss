@@ -16,6 +16,11 @@
   top: 0;
   opacity: 0;
 }
+
+.noPlaceholder::placeholder {
+  visibility: hidden;
+}
+
 .form-group {
   position: relative;
   margin-bottom: 1.5rem;

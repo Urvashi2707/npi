@@ -47,6 +47,45 @@ export class CompletedComponent implements OnInit {
      dt.setDate( dt.getDate() - 5 );
     this.model1 = { day: dt.getUTCDate(), month: dt.getUTCMonth() + 1, year: dt.getUTCFullYear()};
     this.StrtDateString = this.model1.year + '-' + this.model1.month + '-' + this.model1.day;
+    console.log("starting model",this.model);
+    console.log(localStorage.getItem('startDate'));
+    if(localStorage.getItem('startDate') == null && localStorage.getItem('endDate') == null){
+      console.log("not changed");
+      const date = new Date();
+      this.model = {day:date.getUTCDate(),month:date.getUTCMonth() + 1,year: date.getUTCFullYear() };
+      this.EndDateString = this.model.year + '-' + this.model.month + '-' + this.model.day;
+      var dt = new Date();
+           dt.setDate( dt.getDate() - 5 );
+      this.model1 = { day: dt.getUTCDate(), month: dt.getUTCMonth() + 1, year: dt.getUTCFullYear()};
+      this.StrtDateString = this.model1.year + '-' + this.model1.month + '-' + this.model1.day;
+    }
+    else if(localStorage.getItem('startDate') == null){
+      console.log("Start Date Changed");
+      var EndDate = JSON.parse(localStorage.getItem('endDate'));
+      this.model = JSON.parse(localStorage.getItem('endDate'));
+    }
+    else if(localStorage.getItem('endDate') == null){
+      console.log("End Date Changed");
+      var StartDate = JSON.parse(localStorage.getItem('startDate'));
+      this.model1 = JSON.parse(localStorage.getItem('startDate'));
+    }
+    else{
+      console.log("both changed");
+      console.log(localStorage.getItem('startDate'));
+      console.log(localStorage.getItem('endDate'));
+      var EndDate = JSON.parse(localStorage.getItem('endDate'));
+      var StartDate = JSON.parse(localStorage.getItem('startDate'));
+      this.model1 = JSON.parse(localStorage.getItem('startDate'));
+      this.model = JSON.parse(localStorage.getItem('endDate'));
+      this.EndDateString = this.ngbDateParserFormatter.format(EndDate);
+      this.StrtDateString = this.ngbDateParserFormatter.format(StartDate);
+    }
+
+    window.onbeforeunload = function(e) {
+      console.log("page refreshed");
+      localStorage.removeItem('startDate');
+      localStorage.removeItem('endDate');
+    };
   }
 
   ngOnInit() {
@@ -73,6 +112,7 @@ export class CompletedComponent implements OnInit {
     if (date != null) {
             this.model1 = date;
             this.StrtDateString = this.ngbDateParserFormatter.format(date);
+            localStorage.setItem('startDate',JSON.stringify(this.model1));
         }
       }
 
@@ -86,6 +126,7 @@ export class CompletedComponent implements OnInit {
         if (date != null) {
                 this.model = date;
                 this.EndDateString = this.ngbDateParserFormatter.format(date);
+                localStorage.setItem('endDate',JSON.stringify(this.model));
             }
            }
 

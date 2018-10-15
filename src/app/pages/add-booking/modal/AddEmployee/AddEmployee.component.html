@@ -38,7 +38,7 @@
     <div class="row">
       <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6">
         <div class="form-group" style="display:inline-block;min-width: 100%;">
-          <input type="text" class="form-control" name="mobile1" [(ngModel)]="modalContent.mobilenumber" required #mobile1="ngModel" pattern="^[0-9]{10}$" maxlength="10">
+          <input type="number" class="form-control" maxlength="10" name="mobile1" [(ngModel)]="modalContent.mobilenumber" required #mobile1="ngModel" pattern="^[0-9]{10}$" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" onkeydown="javascript: return event.keyCode == 69 ? false : true">
           <label class="form-control-placeholder" for="mobile1">Mobile Number*</label>
         </div>
         <div class="form-control-feedback" *ngIf="mobile1.errors && (mobile1.dirty || mobile1.touched)">

@@ -332,9 +332,9 @@ export class ChauffeurComponent implements OnInit {
  }
 
 
- setAddress(addrObj,service_type) {
+ setAddress(addrObj, service_type) {
   console.log(addrObj);
-  console.log(service_type,"service_type")
+  console.log(service_type, "service_type")
   if(service_type == 'pickup'){
     this.latPickup = addrObj.lat;
     this.lngPickup = addrObj.long;
