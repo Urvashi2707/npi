@@ -11,7 +11,7 @@
              <div class="col-md-5 col-sm-5 col-lg-5">
                <div class="form-group">
                  <input type="text" id="num" name="num" class="form-control" style=" text-transform: uppercase" required
-                   (change)="onBlurMethod($event.target.value)" [(ngModel)]="registrationNumber" #num="ngModel"
+                   (change)="onBlurMethod($event.target.value)" [(ngModel)]="registrationNumber" #num="ngModel" (keyup)="checkVehicleNum()"
                    maxlength="15" pattern="^[0-9a-zA-Z#,\-/_ .@]+$" onkeydown="javascript: return event.keyCode == 32 ? false : true">
                  <label class="form-control-placeholder" for="num">Registration Number*</label>
                </div>
@@ -22,7 +22,7 @@
              </div>
              <div class="col-md-5 col-sm-5 col-lg-5">
                <div class="form-group">
-                 <input type="number" id="mobile1" name="mobile1" class="form-control"  maxlength="10" [(ngModel)]="user.mobile1"
+                 <input type="number" id="mobile1" name="mobile1" class="form-control" maxlength="10" [(ngModel)]="user.mobile1" (keyup)="checkMobile($event)"
                  required #mobile1="ngModel"  oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" onkeydown="javascript: return event.keyCode == 69 ? false : true">
                  <label class="form-control-placeholder" for="mobile1">Customer Mobile Number*</label>
                </div>
@@ -32,7 +32,7 @@
              </div>
              <div class="col-md-2 col-sm-2 col-lg-2 NextRow">
                <div>
-                 <button type="button" class="btn btn-warning NextButton" [disabled]="!registrationNumber || !user.mobile1 || disableNext"
+                 <button type="button" class="btn btn-warning NextButton" [disabled]="mobileLength"
                    (click)='eligibiltycheck1();'>Next</button>
                </div>
              </div>

@@ -14,6 +14,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { TestserviceService } from '../../../testservice.service';
 import { AgmCoreModule, MapsAPILoader } from '@agm/core'; 
 import { DecimalPipe} from '@angular/common';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 declare var google: any;
 @Component({
@@ -38,7 +39,8 @@ export class ServicingComponent implements OnInit {
   private Svclist: any = [];
   public addrKeys: string[];
   public addr: object;
-  advisorId:string
+  advisorId:string;
+  mobileLength:boolean = true;
   public slot: any = [];
   public vehicle = [];
   cityID:string;
@@ -55,7 +57,7 @@ export class ServicingComponent implements OnInit {
   public notes: string;
   droplocation:string;
   showAddress = false;
-  disableNext = false;
+  disableNext = true;
   googlemapShow:boolean = false;
   showAddressDropDown = false;
   public amt: string;
@@ -1027,6 +1029,28 @@ SelectSavedDropoffAddress(i,x, ev){
         this.serviceadv = res[0].users;
       }
     });
+  }
+
+  checkMobile(e){
+    if(e.target.value.length == 10 && this.registrationNumber){
+      this.mobileLength = false;
+    }
+    else{
+      this.mobileLength = true;
+    }
+  }
+
+  checkVehicleNum(){
+    if(document.getElementById('mobile1').innerHTML.length == undefined){}
+    else{
+      if(document.getElementById('mobile1').innerHTML.length == 10 && this.registrationNumber){
+        this.mobileLength = false;
+      }
+      else{
+        this.mobileLength = true;
+      }
+    }
+  
   }
 
 
