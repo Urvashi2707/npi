@@ -455,6 +455,7 @@ public getCity() {
           this.spinner.hide();
           this.getinfowithMobile();
           this.disableNext = true;
+          this.mobileLength = true;
           this.showToast('Message', 'Policy Message', 'Policy is not valid');
           this.showstep3 = true;
           this.ea_respondID = "0";
@@ -463,6 +464,7 @@ public getCity() {
           this.spinner.hide();
           this.getinfowithMobile();
           this.disableNext = true;
+          this.mobileLength = true;
           this.showToast('Message', 'Policy Message', 'Policy is valid');
         this.showstep2 = true;
         this.ea_respondID = res['responseId'];
@@ -472,6 +474,7 @@ public getCity() {
           this.getinfowithMobile();
           this.showstep3 = true;
           this.disableNext = true;
+          this.mobileLength = true;
           this.ea_respondID = "0";
         }
       },(err: HttpErrorResponse) => {
@@ -479,12 +482,14 @@ public getCity() {
           this.spinner.hide();
           this.getinfowithMobile();
           this.disableNext = true;
+          this.mobileLength = true;
           this.ea_respondID = "0";
         }
         else {
           this.spinner.hide();
           this.getinfowithMobile();
           this.disableNext = true;
+          this.mobileLength = true;
           this.ea_respondID = "0";
         }
       });
@@ -1697,6 +1702,7 @@ SelectSavedDropoffAddress(i,x, ev){
         f.reset();
         this.countrycode1 = "+91";
         this.dateString = null;
+        this.mobileLength = true;
         this.yourBoolean = 'servicing';
         this.user.salutation = 'Mr';
         this.user.confirm = true;
