@@ -1,4 +1,4 @@
-import { Component, OnInit,ViewChild, ElementRef, NgZone } from '@angular/core';
+import { Component, OnInit,ViewChild, ElementRef, NgZone, asNativeElements } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { TitleCasePipe } from '@angular/common';
 import { ServicingService } from '../../services/addServicing.service';
@@ -25,7 +25,7 @@ declare var google: any;
 
 
 export class ServicingComponent implements OnInit {
-  
+  @ViewChild('mobile1') mob1 :ElementRef;
   public registrationNumber: string;
   public mobile11: string;
   private brands: any = [];
@@ -443,6 +443,15 @@ public getCity() {
 
   eligibiltycheck1(){
     this.spinner.show();
+    (<HTMLInputElement>document.getElementById('mobile1')).disabled = true;
+    (<HTMLInputElement>document.getElementById('num')).disabled = true;
+    document.getElementById("num_label").style.fontSize = "75%";
+    document.getElementById("num_label").style.opacity = "1";
+    document.getElementById("num_label").style.transform = "translate3d(0, -100%, 0)";
+    document.getElementById("mobile_label").style.fontSize = "75%";
+    document.getElementById("mobile_label").style.opacity = "1";
+    document.getElementById("mobile_label").style.transform = "translate3d(0, -100%, 0)";
+
     const reqpara0 = {
       customerMobileNumber:this.user.mobile1,
       vehicleRegNumbe:this.registrationNumber,
@@ -1036,28 +1045,25 @@ SelectSavedDropoffAddress(i,x, ev){
     });
   }
 
-  checkMobile(e){
-    if(e.target.value.length == 10 && this.registrationNumber){
+  checkVehicleNum(ev) {
+    var mobile_length = (<HTMLInputElement>document.getElementById('mobile1')).value.length;
+    var vehicle_reg_length = (<HTMLInputElement>document.getElementById('num')).value.length;
+    if(mobile_length == 10 && vehicle_reg_length > 5) {
       this.mobileLength = false;
     }
-    else{
+    else {
       this.mobileLength = true;
     }
   }
-
-  checkVehicleNum(){
-    if(document.getElementById('mobile1').innerHTML.length == undefined){}
-    else{
-      if(document.getElementById('mobile1').innerHTML.length == 10 && this.registrationNumber){
-        this.mobileLength = false;
-      }
-      else{
-        this.mobileLength = true;
-      }
+  checkMobile(ev) {
+    console.log(ev);
+    if(this.registrationNumber == '' || this.registrationNumber == null || ev.target.value.length == 10) {
+      this.mobileLength = false;
     }
-  
+    else {
+      this.mobileLength = true;
+    }
   }
-
 
   onSubmit(f: NgForm) {
     console.log(f.value);

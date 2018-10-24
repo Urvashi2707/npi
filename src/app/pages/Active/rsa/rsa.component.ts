@@ -64,19 +64,16 @@ if(localStorage.getItem('startDate') == null && localStorage.getItem('endDate') 
   this.StrtDateString = this.model1.year + '-' + this.model1.month + '-' + this.model1.day;
 }
 else if(localStorage.getItem('startDate') == null){
-  console.log("Start Date Changed");
   var EndDate = JSON.parse(localStorage.getItem('endDate'));
   this.model = JSON.parse(localStorage.getItem('endDate'));
+  this.EndDateString = this.ngbDateParserFormatter.format(EndDate);
 }
 else if(localStorage.getItem('endDate') == null){
-  console.log("End Date Changed");
   var StartDate = JSON.parse(localStorage.getItem('startDate'));
   this.model1 = JSON.parse(localStorage.getItem('startDate'));
+  this.StrtDateString = this.ngbDateParserFormatter.format(StartDate);
 }
 else{
-  console.log("both changed");
-  console.log(localStorage.getItem('startDate'));
-  console.log(localStorage.getItem('endDate'));
   var EndDate = JSON.parse(localStorage.getItem('endDate'));
   var StartDate = JSON.parse(localStorage.getItem('startDate'));
   this.model1 = JSON.parse(localStorage.getItem('startDate'));
@@ -85,7 +82,6 @@ else{
   this.StrtDateString = this.ngbDateParserFormatter.format(StartDate);
 }
 window.onbeforeunload = function(e) {
-  console.log("page refreshed");
   localStorage.removeItem('startDate');
   localStorage.removeItem('endDate');
 };
@@ -176,6 +172,21 @@ dataForUpload: any;
         }
       }
     });
+    }
+
+    ngOnDestroy(){
+      var prev_url = this._tableService.getPreviousUrl();
+        var curr_url = this._tableService.getCurrentUrl();
+        console.log(prev_url);
+        console.log(curr_url);
+        if(prev_url === '/pages/queue-details' && curr_url === '/pages/Active/rsa'){
+          console.log("inside if previous url");
+          localStorage.removeItem('startDate');
+          localStorage.removeItem('endDate');
+        }
+        else{
+          console.log("inside else previous url");
+        }
     }
 
 }

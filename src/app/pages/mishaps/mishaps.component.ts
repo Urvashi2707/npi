@@ -50,12 +50,8 @@ export class MishapsComponent implements OnInit {
     this.dateString1 = this.model1.year + '-' + this.model1.month + '-' + this.model1.day
 
     var days = date.setDate(date.getDate() - numberOfDays);
-    console.log(days)
     this.dateString1 = this.datePipe.transform(days,"yyyy-MM-dd");
-    console.log("starting model",this.model);
-    console.log(localStorage.getItem('startDate'));
     if(localStorage.getItem('startDate') == null && localStorage.getItem('endDate') == null){
-      console.log("not changed");
       const date = new Date();
       this.model = {day:date.getUTCDate(),month:date.getUTCMonth() + 1,year: date.getUTCFullYear() };
       this.dateString = this.model.year + '-' + this.model.month + '-' + this.model.day;
@@ -65,19 +61,16 @@ export class MishapsComponent implements OnInit {
       this.dateString1 = this.model1.year + '-' + this.model1.month + '-' + this.model1.day;
     }
     else if(localStorage.getItem('startDate') == null){
-      console.log("Start Date Changed");
       var EndDate = JSON.parse(localStorage.getItem('endDate'));
       this.model = JSON.parse(localStorage.getItem('endDate'));
+      this.dateString = this.ngbDateParserFormatter.format(EndDate);
     }
     else if(localStorage.getItem('endDate') == null){
-      console.log("End Date Changed");
       var StartDate = JSON.parse(localStorage.getItem('startDate'));
       this.model1 = JSON.parse(localStorage.getItem('startDate'));
+      this.dateString1 = this.ngbDateParserFormatter.format(StartDate);
     }
     else{
-      console.log("both changed");
-      console.log(localStorage.getItem('startDate'));
-      console.log(localStorage.getItem('endDate'));
       var EndDate = JSON.parse(localStorage.getItem('endDate'));
       var StartDate = JSON.parse(localStorage.getItem('startDate'));
       this.model1 = JSON.parse(localStorage.getItem('startDate'));
@@ -87,7 +80,6 @@ export class MishapsComponent implements OnInit {
     }
 
     window.onbeforeunload = function(e) {
-      console.log("page refreshed");
       localStorage.removeItem('startDate');
       localStorage.removeItem('endDate');
     };
@@ -102,8 +94,6 @@ export class MishapsComponent implements OnInit {
       this.svcid = JSON.parse(sessionStorage.getItem('globalsvcid'));
     }
     this.globalsvcid = JSON.parse(sessionStorage.getItem('globalsvcid'));
-    console.log(this.globalsvcid);
-    
     this.FilterCheck(1);
     if(this.InsuranceUsr == "1"){
       this.InsuranceCheck = true;
@@ -120,7 +110,6 @@ export class MishapsComponent implements OnInit {
     if (date != null) {
             this.model = date;
             this.dateString = this.ngbDateParserFormatter.format(date);
-            console.log(this.dateString);
             localStorage.setItem('endDate',JSON.stringify(this.dateString));
         }
   }
@@ -129,28 +118,20 @@ export class MishapsComponent implements OnInit {
     if (date != null) {
             this.model1 = date;
             this.dateString1 = this.ngbDateParserFormatter.format(date);
-            console.log(this.dateString1);
             localStorage.setItem('startDate',JSON.stringify(this.dateString1));
         }
    }
    
-  // openQDetails(data){
-  //   sessionStorage.removeItem('clickedOn');
-  //   sessionStorage.setItem('QueueId',this.tableData[indexId][this.keyValues[0]])
-  //   this._detailsTable.queueID = this.tableData[indexId][this.keyValues[0]];
-  //   this.router.navigate(['/pages/queue-details']);
-  // }
-
-  openQDetails(data:any){
+   openQDetails(data:any){
     sessionStorage.removeItem('clickedOn');
     sessionStorage.setItem('QueueId',data.queueid)
     this._detailsTable.queueID = data.queueid;
     this.router.navigate(['/pages/queue-details']);
   }
+
   FilterCheck(p:number){
     this.spinner.show();
     this.p = p - 1 ;
-   
     this.message = "";
     const reqpara3 = {
       requesttype: 'getqueueinfonew',
@@ -161,11 +142,8 @@ export class MishapsComponent implements OnInit {
       svcid:this.svcid
     }
     const as3 = JSON.stringify(reqpara3);
-    console.log(as3);
     this._data.webServiceCall(as3).subscribe(res => {
-      console.log(res);
       if(res[0].pagecount[0].hasOwnProperty('noqueues')){
-        console.log('No queue');
         this.message = "No Data" ;
         this.spinner.hide();
        }
@@ -178,13 +156,23 @@ export class MishapsComponent implements OnInit {
            }
           
          }
-         console.log(this.mishap);
          this.record_count = res[0].pagecount[0].record_count;
          this.dataperpage = res[0].pagecount[0].pagelimit;
-         console.log(this.record_count);
          this.spinner.hide();
        }
-      // this._detailsTable.setTableData(res, 11);
     });
+  }
+
+  ngOnDestroy(){
+    var prev_url = this._detailsTable.getPreviousUrl();
+    var curr_url = this._detailsTable.getCurrentUrl();
+    if(prev_url === '/pages/queue-details' && curr_url === '/pages/mishaps'){
+      localStorage.removeItem('startDate');
+      localStorage.removeItem('endDate');
+    }
+  
+    else{
+      console.log("inside else previous url");
+    }
   }
 }

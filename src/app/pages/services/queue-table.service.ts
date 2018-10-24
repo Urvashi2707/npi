@@ -1,11 +1,27 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { DatePipe } from '@angular/common';
+import { Router,NavigationEnd } from '@angular/router';
+
 
 @Injectable()
 export class QueueTableService {
 
-  constructor(private datePipe:DatePipe,) { }
+
+  private previousUrl: string;
+  private currentUrl: string;
+
+  constructor(private router: Router,private datePipe:DatePipe) {
+    this.currentUrl = this.router.url;
+    router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {        
+        this.previousUrl = this.currentUrl;
+        this.currentUrl = event.url;
+      };
+    });
+  }
+
+
 
   public clickedID: Subject<number> = new Subject<number>();
   public table_data: any[] = new Array;
@@ -106,9 +122,15 @@ export class QueueTableService {
           Table[j].dropdate = "--";
         }
       }
-   
-     
-
-  }
+    }
 }
+
+public getPreviousUrl() {
+  return this.previousUrl;
+} 
+
+public getCurrentUrl(){
+  return this.currentUrl;
+}
+
 }

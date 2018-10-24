@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { QueueTableService } from '../../services/queue-table.service';
 import { ServerService } from '../../services/user.service';
-import { Router } from '@angular/router';
+import { Router,NavigationEnd } from '@angular/router';
 import { NgbDateStruct, NgbDateParserFormatter} from '@ng-bootstrap/ng-bootstrap';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { SearchModalComponent } from '../../search/modal/searchModal.component';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-at-centre',
@@ -35,6 +36,8 @@ export class AtCentreComponent implements OnInit {
   reverse: boolean = false;
   barRate:number;
   barRateNull:number;
+  private previousUrl: string;
+  private currentUrl: string;
 
   constructor(private spinner: NgxSpinnerService, 
                 private router:Router,
@@ -42,7 +45,8 @@ export class AtCentreComponent implements OnInit {
                 private modalService: NgbModal, 
                 private _detailsTable: QueueTableService, 
                 private _data: ServerService, 
-                private _tableService: QueueTableService) {
+                private _tableService: QueueTableService,
+                private _location: Location) {
                   
                   this.barRate = 4;
                   this.barRateNull = 0;
@@ -56,10 +60,7 @@ export class AtCentreComponent implements OnInit {
          dt.setDate( dt.getDate() - 5 );
     this.model1 = { day: dt.getUTCDate(), month: dt.getUTCMonth() + 1, year: dt.getUTCFullYear()};
     this.StrtDateString = this.model1.year + '-' + this.model1.month + '-' + this.model1.day;
-    console.log("starting model",this.model);
-    console.log(localStorage.getItem('startDate'));
     if(localStorage.getItem('startDate') == null && localStorage.getItem('endDate') == null){
-      console.log("not changed");
       const date = new Date();
       this.model = {day:date.getUTCDate(),month:date.getUTCMonth() + 1,year: date.getUTCFullYear() };
       this.EndDateString = this.model.year + '-' + this.model.month + '-' + this.model.day;
@@ -69,19 +70,16 @@ export class AtCentreComponent implements OnInit {
       this.StrtDateString = this.model1.year + '-' + this.model1.month + '-' + this.model1.day;
     }
     else if(localStorage.getItem('startDate') == null){
-      console.log("Start Date Changed");
       var EndDate = JSON.parse(localStorage.getItem('endDate'));
       this.model = JSON.parse(localStorage.getItem('endDate'));
+      this.EndDateString = this.ngbDateParserFormatter.format(EndDate);
     }
     else if(localStorage.getItem('endDate') == null){
-      console.log("End Date Changed");
       var StartDate = JSON.parse(localStorage.getItem('startDate'));
       this.model1 = JSON.parse(localStorage.getItem('startDate'));
+      this.StrtDateString = this.ngbDateParserFormatter.format(StartDate);
     }
     else{
-      console.log("both changed");
-      console.log(localStorage.getItem('startDate'));
-      console.log(localStorage.getItem('endDate'));
       var EndDate = JSON.parse(localStorage.getItem('endDate'));
       var StartDate = JSON.parse(localStorage.getItem('startDate'));
       this.model1 = JSON.parse(localStorage.getItem('startDate'));
@@ -91,7 +89,6 @@ export class AtCentreComponent implements OnInit {
     }
 
     window.onbeforeunload = function(e) {
-      console.log("page refreshed");
       localStorage.removeItem('startDate');
       localStorage.removeItem('endDate');
     };
@@ -202,4 +199,20 @@ export class AtCentreComponent implements OnInit {
 });
  
 }
+
+ngOnDestroy(){
+  var prev_url = this._tableService.getPreviousUrl();
+  var curr_url = this._tableService.getCurrentUrl();
+  console.log(prev_url);
+  console.log(curr_url);
+  if(prev_url === '/pages/queue-details' && curr_url === '/pages/Active/pickup'){
+    console.log("inside if previous url");
+    localStorage.removeItem('startDate');
+    localStorage.removeItem('endDate');
+  }
+  else{
+    console.log("inside else previous url");
+  }
+ }
+
 }

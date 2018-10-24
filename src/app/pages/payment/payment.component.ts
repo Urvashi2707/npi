@@ -4,7 +4,7 @@ import { NgbDateStruct, NgbDateParserFormatter} from '@ng-bootstrap/ng-bootstrap
 import {Router} from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { NgxSpinnerService } from 'ngx-spinner';
-
+import { QueueTableService } from '../services/queue-table.service';
 @Component({
   selector: 'app-payment',
   templateUrl: './payment.component.html',
@@ -28,7 +28,7 @@ export class PaymentComponent implements OnInit {
   message:string;
   globalsvcid:string;
   svcid:string;
-  constructor(private spinner: NgxSpinnerService,private datePipe:DatePipe,private ngbDateParserFormatter: NgbDateParserFormatter,private router:Router,private service:ServicingService ) { }
+  constructor(  private _tableService: QueueTableService,private spinner: NgxSpinnerService,private datePipe:DatePipe,private ngbDateParserFormatter: NgbDateParserFormatter,private router:Router,private service:ServicingService ) { }
 
   ngOnInit() {
     if(sessionStorage.getItem('selectedsvc')){
@@ -49,14 +49,9 @@ export class PaymentComponent implements OnInit {
       this.model1 = { day: dt.getUTCDate(), month: dt.getUTCMonth() + 1, year: dt.getUTCFullYear()};
       this.dateString1 = this.model1.year + '-' + this.model1.month + '-' + this.model1.day;
       this.today = this.datePipe.transform(date,"yyyy-MM-dd");
-      console.log(this.today)
       var days = date.setDate(date.getDate() - numberOfDays);
       this.pastdate = this.datePipe.transform(days,"yyyy-MM-dd");
-      console.log(this.pastdate);
-      console.log("pehle se",this.model);
-      console.log(localStorage.getItem('startDate'));
       if(localStorage.getItem('startDate') == null && localStorage.getItem('endDate') == null){
-        console.log("not changed");
         const date = new Date();
         this.model = {day:date.getUTCDate(),month:date.getUTCMonth() + 1,year: date.getUTCFullYear() };
         this.dateString1 = this.model.year + '-' + this.model.month + '-' + this.model.day;
@@ -66,19 +61,16 @@ export class PaymentComponent implements OnInit {
         this.dateString1 = this.model1.year + '-' + this.model1.month + '-' + this.model1.day;
       }
       else if(localStorage.getItem('startDate') == null){
-        console.log("Start Date Changed");
         var EndDate = JSON.parse(localStorage.getItem('endDate'));
         this.model = JSON.parse(localStorage.getItem('endDate'));
+        this.dateString = this.ngbDateParserFormatter.format(EndDate);
       }
       else if(localStorage.getItem('endDate') == null){
-        console.log("End Date Changed");
         var StartDate = JSON.parse(localStorage.getItem('startDate'));
         this.model1 = JSON.parse(localStorage.getItem('startDate'));
+        this.dateString1 = this.ngbDateParserFormatter.format(StartDate);
       }
       else{
-        console.log("both changed");
-        console.log(localStorage.getItem('startDate'));
-        console.log(localStorage.getItem('endDate'));
         var EndDate = JSON.parse(localStorage.getItem('endDate'));
         var StartDate = JSON.parse(localStorage.getItem('startDate'));
         this.model1 = JSON.parse(localStorage.getItem('startDate'));
@@ -155,6 +147,21 @@ export class PaymentComponent implements OnInit {
        
        }
     });
+  }
+
+  ngOnDestroy(){
+    var prev_url = this._tableService.getPreviousUrl();
+    var curr_url = this._tableService.getCurrentUrl();
+    console.log(prev_url);
+    console.log(curr_url);
+    if(curr_url === '/pages/payment'){
+      console.log("inside if previous url");
+      localStorage.removeItem('startDate');
+      localStorage.removeItem('endDate');
+    }
+    else{
+      console.log("inside else previous url");
+    }
   }
 
 }

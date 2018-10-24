@@ -50,10 +50,7 @@ export class ReportsComponent implements OnInit {
            dt.setDate( dt.getDate() - 14 );
       this.model1 = { day: dt.getUTCDate(), month: dt.getUTCMonth() + 1, year: dt.getUTCFullYear()};
       this.StrtDateString = this.model1.year + '-' + this.model1.month + '-' + this.model1.day;
-      console.log("starting model",this.model);
-    console.log(localStorage.getItem('startDate'));
     if(localStorage.getItem('startDate') == null && localStorage.getItem('endDate') == null){
-      console.log("not changed");
       const date = new Date();
       this.model = {day:date.getUTCDate(),month:date.getUTCMonth() + 1,year: date.getUTCFullYear() };
       this.EndDateString = this.model.year + '-' + this.model.month + '-' + this.model.day;
@@ -63,19 +60,16 @@ export class ReportsComponent implements OnInit {
       this.StrtDateString = this.model1.year + '-' + this.model1.month + '-' + this.model1.day;
     }
     else if(localStorage.getItem('startDate') == null){
-      console.log("Start Date Changed");
       var EndDate = JSON.parse(localStorage.getItem('endDate'));
       this.model = JSON.parse(localStorage.getItem('endDate'));
+      this.EndDateString = this.ngbDateParserFormatter.format(EndDate);
     }
     else if(localStorage.getItem('endDate') == null){
-      console.log("End Date Changed");
       var StartDate = JSON.parse(localStorage.getItem('startDate'));
       this.model1 = JSON.parse(localStorage.getItem('startDate'));
+      this.StrtDateString = this.ngbDateParserFormatter.format(StartDate);
     }
     else{
-      console.log("both changed");
-      console.log(localStorage.getItem('startDate'));
-      console.log(localStorage.getItem('endDate'));
       var EndDate = JSON.parse(localStorage.getItem('endDate'));
       var StartDate = JSON.parse(localStorage.getItem('startDate'));
       this.model1 = JSON.parse(localStorage.getItem('startDate'));
@@ -85,7 +79,6 @@ export class ReportsComponent implements OnInit {
     }
 
     window.onbeforeunload = function(e) {
-      console.log("page refreshed");
       localStorage.removeItem('startDate');
       localStorage.removeItem('endDate');
     };
@@ -193,10 +186,23 @@ export class ReportsComponent implements OnInit {
       }
   
       openQDetails(data:any){
-        console.log(data);
         sessionStorage.removeItem('clickedOn');
         sessionStorage.setItem('QueueId',data.id)
         this._detailsTable.queueID = data.id;
         this.router.navigate(['/pages/queue-details']);
       }
+
+
+      ngOnDestroy(){
+        var prev_url = this._detailsTable.getPreviousUrl();
+        var curr_url = this._detailsTable.getCurrentUrl();
+        if(prev_url === '/pages/queue-details' && curr_url === '/pages/reports'){
+          localStorage.removeItem('startDate');
+          localStorage.removeItem('endDate');
+        }
+        else{
+          console.log("inside else previous url");
+        }
+      }
+
 }

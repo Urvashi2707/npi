@@ -79,11 +79,13 @@ export class UnconfirmedComponent implements OnInit {
       console.log("Start Date Changed");
       var EndDate = JSON.parse(localStorage.getItem('endDate'));
       this.model = JSON.parse(localStorage.getItem('endDate'));
+      this.EndDateString = this.ngbDateParserFormatter.format(EndDate);
     }
     else if(localStorage.getItem('endDate') == null){
       console.log("End Date Changed");
       var StartDate = JSON.parse(localStorage.getItem('startDate'));
       this.model1 = JSON.parse(localStorage.getItem('startDate'));
+      this.StrtDateString = this.ngbDateParserFormatter.format(StartDate);
     }
     else{
       console.log("both changed");
@@ -171,6 +173,22 @@ export class UnconfirmedComponent implements OnInit {
          }
       }
      });
+  }
+
+  ngOnDestroy(){
+    var prev_url = this._tableService.getPreviousUrl();
+    var curr_url = this._tableService.getCurrentUrl();
+    console.log(prev_url);
+    console.log(curr_url);
+    if(prev_url === '/pages/queue-details' && curr_url === '/pages/unconfirmed'){
+      console.log("inside if previous url");
+      localStorage.removeItem('startDate');
+      localStorage.removeItem('endDate');
+    }
+  
+    else{
+      console.log("inside else previous url");
+    }
   }
 
 }

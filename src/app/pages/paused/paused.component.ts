@@ -171,6 +171,24 @@ export class PausedComponent implements OnInit {
          }
     }
   });
+}
 
+
+ngOnDestroy(){
+  var prev_url = this._tableService.getPreviousUrl();
+  var curr_url = this._tableService.getCurrentUrl();
+  console.log(prev_url);
+  console.log(curr_url);
+  if(prev_url === '/pages/queue-details' && curr_url === '/pages/paused'){
+    console.log("inside if previous url");
+    localStorage.removeItem('startDate');
+    localStorage.removeItem('endDate');
   }
+
+  else{
+    console.log("inside else previous url");
+  }
+}
+
+
 }

@@ -61,19 +61,16 @@ export class PickupComponent implements OnInit {
       this.StartDateString = this.model1.year + '-' + this.model1.month + '-' + this.model1.day;
     }
     else if(localStorage.getItem('startDate') == null){
-      console.log("Start Date Changed");
       var EndDate = JSON.parse(localStorage.getItem('endDate'));
       this.model = JSON.parse(localStorage.getItem('endDate'));
+      this.EndDateString = this.ngbDateParserFormatter.format(EndDate);
     }
     else if(localStorage.getItem('endDate') == null){
-      console.log("End Date Changed");
       var StartDate = JSON.parse(localStorage.getItem('startDate'));
       this.model1 = JSON.parse(localStorage.getItem('startDate'));
+      this.StartDateString = this.ngbDateParserFormatter.format(StartDate);
     }
     else{
-      console.log("both changed");
-      console.log(localStorage.getItem('startDate'));
-      console.log(localStorage.getItem('endDate'));
       var EndDate = JSON.parse(localStorage.getItem('endDate'));
       var StartDate = JSON.parse(localStorage.getItem('startDate'));
       this.model1 = JSON.parse(localStorage.getItem('startDate'));
@@ -82,7 +79,6 @@ export class PickupComponent implements OnInit {
       this.StartDateString = this.ngbDateParserFormatter.format(StartDate);
     }
     window.onbeforeunload = function(e) {
-      console.log("page refreshed");
       localStorage.removeItem('startDate');
       localStorage.removeItem('endDate');
     };
@@ -156,7 +152,6 @@ img(event){
       svcid:this.SvcId 
     }
     const as3 = JSON.stringify(reqpara3);
-    console.log(as3);
     this._data.webServiceCall(as3).subscribe(res => {
     if(res[0].login === 0){
         sessionStorage.removeItem('currentUser');
@@ -172,13 +167,25 @@ img(event){
         this.RecordCount = res[0].pagecount[0].record_count;
         this.DataPerPage = res[0].pagecount[0].pagelimit;
         this.spinner.hide();
-        // this._tableService.DateFormat(this.pickup);
-        // this._tableService.TimeFormat(this.pickup);
         this._tableService.DateTimeFormat(this.pickup);
-        console.log(this.pickup);
     }
   }
 });
+  }
+
+  ngOnDestroy(){
+    var prev_url = this._tableService.getPreviousUrl();
+    var curr_url = this._tableService.getCurrentUrl();
+    console.log(prev_url);
+    console.log(curr_url);
+    if(prev_url === '/pages/queue-details' && curr_url === '/pages/Active/pickup'){
+      console.log("inside if previous url");
+      localStorage.removeItem('startDate');
+      localStorage.removeItem('endDate');
+    }
+    else{
+      console.log("inside else previous url");
+    }
   }
 }
 
