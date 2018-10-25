@@ -161,6 +161,8 @@ export class ServicingComponent implements OnInit {
   lngPickup:number;
   latDrop:number;
   lngDrop:number;
+  map:string;
+  LatLngObj: any;
   ifClicked: boolean;
   drag_pickup_add:string = "0";
   drag_dropoff_add:string = "0";
@@ -322,7 +324,62 @@ public setDrag: Boolean;
   }
 
 
-  pickUpMapReady(e){ }
+  pickUpMapReady(e, val){
+    console.log("I am called",e);
+    var map1 = e;
+    var that = this;
+    var value = val;
+    console.log(value,"value");
+    map1.addListener("dragend", function (e, val) {
+      console.log(that.LatLngObj.lat, that.LatLngObj.lng);
+     
+      console.log("map ready event", map1);
+
+      let input = that.LatLngObj.lat + ',' + that.LatLngObj.lng;
+    // console.log("selected value drag",ev.coords.lat + ',' + ev.coords.lng)
+    var latlngStr = input.split(',', 2);
+    var latlng = {lat: parseFloat(latlngStr[0]), lng: parseFloat(latlngStr[1])
+    };
+    var geocoder = new google.maps.Geocoder;
+    geocoder.geocode({'location': latlng}, function(results, status) {
+      if (status === 'OK') {
+        if (results[0]) {
+          console.log(results[0].formatted_address);
+          if(value == 3){
+            // console.log('saved pickup drag');
+            that.latPickup = that.LatLngObj.lat;
+            that.lngPickup = that.LatLngObj.lng;
+            that.pickupsearchplace.nativeElement.value = results[0].formatted_address;
+            that.drag_pickup_add = results[0].formatted_address;
+            sessionStorage.setItem('pickup_add_drag',results[0].formatted_address);
+            sessionStorage.setItem('pickup_lat_drag',that.LatLngObj.lat);
+            sessionStorage.setItem('pickup_lng_drag',that.LatLngObj.lng);
+            that.drag_pickup_lat = that.LatLngObj.lat;
+            that.drag_pickup_lng = that.LatLngObj.lng;
+            // console.log( me.drag_pickup_add,me.drag_pickup_lat,me.drag_pickup_lng);
+          }
+         else if (value == 4){
+          console.log('saved dropoff drag');
+          that.latDrop = that.LatLngObj.lat;
+          that.lngDrop = that.LatLngObj.lng;
+          that.dropoffsearchplace.nativeElement.value = results[0].formatted_address;
+          that.googleaddressdo = results[0].formatted_address;
+          this.drag_dropoff_add = results[0].formatted_address;
+          sessionStorage.setItem('dropoff_add_drag',results[0].formatted_address);
+          sessionStorage.setItem('dropoff_lat_drag',that.LatLngObj.lat);
+          sessionStorage.setItem('dropoff_lng_drag',that.LatLngObj.lng);
+          // console.log( this.drag_dropoff_add,this.drag_drop_lat,this.drag_drp_lng);
+         }
+         
+        } else {
+          window.alert('No results found');
+        }
+      } else {
+        window.alert('Geocoder failed due to: ' + status);
+      }
+    });
+    });
+  }
 
   sameAsPickup(){ }
 
@@ -332,6 +389,16 @@ public setDrag: Boolean;
     this.ifSameAsPickUp = !this.ifSameAsPickUp;
   }
 
+  mapClk(ev) {
+    console.log('clicked map');
+    // console.log(ev);
+  }
+
+  centerChang(ev) {
+    this.LatLngObj = ev;
+    // console.log(ev)
+  }
+  
   setAddress(addrObj,service_type) {
     console.log(addrObj);
     console.log(service_type,"service_type")
@@ -451,8 +518,7 @@ public getCity() {
     document.getElementById("mobile_label").style.fontSize = "75%";
     document.getElementById("mobile_label").style.opacity = "1";
     document.getElementById("mobile_label").style.transform = "translate3d(0, -100%, 0)";
-
-    const reqpara0 = {
+   const reqpara0 = {
       customerMobileNumber:this.user.mobile1,
       vehicleRegNumbe:this.registrationNumber,
       typeofservice:1
@@ -1056,7 +1122,6 @@ SelectSavedDropoffAddress(i,x, ev){
     }
   }
   checkMobile(ev) {
-    console.log(ev);
     if(this.registrationNumber == '' || this.registrationNumber == null || ev.target.value.length == 10) {
       this.mobileLength = false;
     }
@@ -1732,6 +1797,10 @@ SelectSavedDropoffAddress(i,x, ev){
         sessionStorage.removeItem('dropoff_add_drag');
         sessionStorage.removeItem('dropoff_lat_drag');
         sessionStorage.removeItem('dropoff_lng_drag');
+        (<HTMLInputElement>document.getElementById('mobile1')).disabled = false;
+        (<HTMLInputElement>document.getElementById('num')).disabled = false;
+        document.getElementById("num_label").style.transform = "translate3d(0, -120%, 0)";
+        document.getElementById("mobile_label").style.transform = "translate3d(0, -120%, 0)";
       }
       else if(data[0].hasOwnProperty('error')){
         this.showToast('alert', 'Alert', 'Sorry !! Something went wrong');

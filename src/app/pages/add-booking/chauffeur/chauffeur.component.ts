@@ -138,6 +138,7 @@ export class ChauffeurComponent implements OnInit {
   latPickup:number;
   lngPickup:number;
   latDrop:number;
+  LatLngObj:any;
   lngDrop:number;
   public iconurl: String;
   drag_pickup_lat:number;
@@ -324,24 +325,110 @@ export class ChauffeurComponent implements OnInit {
     this.slotcheck = false;
  }
 
+ mapClk(ev) {
+  console.log('clicked map');
+  // console.log(ev);
+}
+
+centerChang(ev) {
+  this.LatLngObj = ev;
+  // console.log(ev)
+}
+
+ pickUpMapReady(e, val){
+  console.log("I am called",e);
+  var map1 = e;
+  var that = this;
+  var value = val;
+  console.log(value,"value");
+  map1.addListener("dragend", function (e, val) {
+    console.log(that.LatLngObj.lat, that.LatLngObj.lng);
+   
+    console.log("map ready event", map1);
+
+    let input = that.LatLngObj.lat + ',' + that.LatLngObj.lng;
+  // console.log("selected value drag",ev.coords.lat + ',' + ev.coords.lng)
+  var latlngStr = input.split(',', 2);
+  var latlng = {lat: parseFloat(latlngStr[0]), lng: parseFloat(latlngStr[1])
+  };
+  var geocoder = new google.maps.Geocoder;
+  geocoder.geocode({'location': latlng}, function(results, status) {
+    if (status === 'OK') {
+      if (results[0]) {
+        console.log(results[0].formatted_address);
+        if(value == 1){
+          console.log("enter in stockyard condition")
+          that.latPickup = that.LatLngObj.lat;
+          that.lngPickup = that.LatLngObj.lng;
+          that.pickupsearchplace.nativeElement.value = results[0].formatted_address;
+          sessionStorage.setItem('pickup_add_drag',results[0].formatted_address);
+          sessionStorage.setItem('pickup_lat_drag',that.LatLngObj.lat);
+          sessionStorage.setItem('pickup_lng_drag',that.LatLngObj.lng);
+        }
+       else if (value == 2){
+        that.latPickup = that.LatLngObj.lat;
+        that.lngPickup = that.LatLngObj.lng;
+        that.internalpickup.nativeElement.value = results[0].formatted_address;
+        sessionStorage.setItem('pickup_add_drag',results[0].formatted_address);
+        sessionStorage.setItem('pickup_lat_drag',that.LatLngObj.lat);
+        sessionStorage.setItem('pickup_lng_drag',that.LatLngObj.lng);
+       }
+       else if (value == 3){
+        that.latDrop = that.LatLngObj.lat;
+        that.lngDrop = that.LatLngObj.lng;
+        that.internaldropoff.nativeElement.value = results[0].formatted_address;
+        sessionStorage.setItem('pickup_add_drag',results[0].formatted_address);
+        sessionStorage.setItem('pickup_add_drag',results[0].formatted_address);
+        sessionStorage.setItem('pickup_lat_drag',that.LatLngObj.lat);
+        sessionStorage.setItem('pickup_lng_drag',that.LatLngObj.lng);
+       }
+       else if (value == 4){
+        that.latPickup = that.LatLngObj.lat;
+        that.lngPickup = that.LatLngObj.lng;
+        that.homepickup.nativeElement.value = results[0].formatted_address;
+        sessionStorage.setItem('dropoff_add_drag',results[0].formatted_address);
+        sessionStorage.setItem('dropoff_lat_drag',that.LatLngObj.lat);
+        sessionStorage.setItem('dropoff_lng_drag',that.LatLngObj.lng);
+       }
+       else if (value == 5){
+        that.latPickup = that.LatLngObj.lat;
+        that.lngPickup = that.LatLngObj.lng;
+        that.testpickup.nativeElement.value = results[0].formatted_address;
+        sessionStorage.setItem('dropoff_add_drag',results[0].formatted_address);
+        sessionStorage.setItem('dropoff_lat_drag',that.LatLngObj.lat);
+        sessionStorage.setItem('dropoff_lng_drag',that.LatLngObj.lng);
+       }
+       else if (value == 6){
+        that.latPickup = that.LatLngObj.lat;
+        that.lngPickup = that.LatLngObj.lng;
+        that.Custodysearchplace.nativeElement.value = results[0].formatted_address;
+        sessionStorage.setItem('dropoff_add_drag',results[0].formatted_address);
+        sessionStorage.setItem('dropoff_lat_drag',that.LatLngObj.lat);
+        sessionStorage.setItem('dropoff_lng_drag',that.LatLngObj.lng);
+       }
+      } else {
+        window.alert('No results found');
+      }
+    } else {
+      window.alert('Geocoder failed due to: ' + status);
+    }
+  });
+  });
+}
+
+
  sameAsPickupTest(e){
-   console.log("befor",this.testdrivecheck);
-   console.log("value",e);
    this.testdrivecheck = !e;
-   console.log("after",this.testdrivecheck);
  }
 
 
  setAddress(addrObj, service_type) {
-  console.log(addrObj);
-  console.log(service_type, "service_type")
   if(service_type == 'pickup'){
     this.latPickup = addrObj.lat;
     this.lngPickup = addrObj.long;
     this.googlepickuplat = addrObj.lat;
     this.googlepickuplong = addrObj.long;
     this.googleaddresspu = addrObj.formatted_address;
-    console.log("pickup",this.googlepickuplat,this.googlepickuplong,this.googleaddresspu)
   }
  else{
    this.latDrop = addrObj.lat;
@@ -349,7 +436,6 @@ export class ChauffeurComponent implements OnInit {
   this.googledropofflat = addrObj.lat;
   this.googledropofflong = addrObj.long;
   this.googleaddressdo = addrObj.formatted_address;
-  console.log("dropoff",this.googledropofflat,this.googledropofflong,this.googleaddressdo)
  }
   this.ngZone.run(() => {
     this.addr = addrObj;
@@ -358,9 +444,7 @@ export class ChauffeurComponent implements OnInit {
 }
 
 markerDragEndd(ev,val) {
-  // console.log("indicator",val);
   let input = ev.coords.lat + ',' + ev.coords.lng;
-  // console.log("selected value drag",ev.coords.lat + ',' + ev.coords.lng)
   var latlngStr = input.split(',', 2);
   var latlng = {lat: parseFloat(latlngStr[0]), lng: parseFloat(latlngStr[1])
   };

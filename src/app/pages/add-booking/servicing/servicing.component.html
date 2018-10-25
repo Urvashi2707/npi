@@ -245,7 +245,7 @@
                          <img src="../../../../assets/images/plus-symbol.svg">
                        </button>
                        <button type="button" *ngFor="let i of address;let x = index" class="savedAddBtn" id="pickupsaved" #pickupSavedRef (click)="SelectSavedPickupAddress(i, x, $event)">
-                         <p>#{{i.postal_address}},{{i.google_address}},</p>
+                         <p style="word-break: break-all;">#{{i.postal_address}},{{i.google_address}},</p>
                          <p>{{i.area}}</p>
                          <p class="address-type-para">{{i.type_of_address}}</p>
                        </button>
@@ -256,7 +256,8 @@
                        <div class="col-lg-6 col-sm-6 col-md-6">
                            <div class="pickup-map">
                                  <agm-map id="pickUpMap" [zoom]="zoom" [latitude]="latPickup" [longitude]="lngPickup" [disableDefaultUI]=false
-                                 (mapReady)=pickUpMapReady($events)>
+                                 (mapReady)=pickUpMapReady($event,3) (mapClick)="mapClk($event)" (centerChange)="centerChang($event)" 
+                                 (dragEnd)="mapDragEnd($event)">
                                  <agm-marker 
                                  [latitude]="latPickup" 
                                  [longitude]="lngPickup" 
@@ -269,7 +270,7 @@
                              </div>
                        </div>
                      </div>
-                  <div class="row">
+                  <div class="row" style="margin-top: 2%;">
                        <div class="col-lg-6 col-sm-6 col-md-6">
                          <div class="form-group">
                            <input class="form-control noPlaceholder" id="pickupsearch" #pickupsearchplace 
@@ -343,7 +344,7 @@
                          <img src="../../../../assets/images/plus-symbol.svg">
                        </button>
                        <button type="button" *ngFor="let i of address; let x = index" class="savedAddBtn" id="dropoffsaved" (click)="SelectSavedDropoffAddress(i, x, $event)">
-                         <p>#{{i.postal_address}},{{i.google_address}},</p>
+                         <p style="word-break: break-all;">#{{i.postal_address}},{{i.google_address}},</p>
                          <p>{{i.area}}</p>
                          <p class="address-type-para">{{i.type_of_address}}</p>
                        </button>
@@ -355,15 +356,15 @@
                          <div class="col-lg-6 col-sm-6 col-md-6">
                            <div class="pickup-map">
                              <agm-map id="pickUpMap2" [zoom]="zoom" [latitude]="latDrop" [longitude]="lngDrop"
-                               [disableDefaultUI]=false 
-                               (mapReady)=pickUpMapReady($events) 
-                               [mapDraggable]=false>
-                               <agm-marker [latitude]="latDrop" [longitude]="lngDrop" 
-                               [iconUrl] = "iconurl"
-                               [markerDraggable]=true 
-                               (markerClick)="updateLocClk($events)" 
-                               (dragEnd)="markerDragEndd($event,4)"
-                               ></agm-marker>
+                             [disableDefaultUI]=false
+                             (mapReady)=pickUpMapReady($event,4) (mapClick)="mapClk($event)" (centerChange)="centerChang($event)" 
+                             (dragEnd)="mapDragEnd($event)">
+                                <agm-marker [latitude]="latDrop" [longitude]="lngDrop" 
+                                [iconUrl] = "iconurl"
+                                [markerDraggable]=true 
+                                (markerClick)="updateLocClk($events)" 
+                                (dragEnd)="markerDragEndd($event,4)"
+                                ></agm-marker>
                              </agm-map>
                            </div>
                          </div>
@@ -437,8 +438,20 @@
                    <div class="row">
                      <div class="col-lg-6 col-sm-6 col-md-6">
                        <div class="pickup-map">
-                         <agm-map id="pickUpMap" [zoom]="zoom" [latitude]="latPickup" [longitude]="lngPickup" [disableDefaultUI]=false [mapDraggable]=false
-                           (mapReady)=pickUpMapReady($events)>
+                          <!-- <agm-map id="pickUpMap2" [zoom]="zoom" [latitude]="latDrop" [longitude]="lngDrop"
+                          [disableDefaultUI]=false
+                          (mapReady)=pickUpMapReady($event,4) (mapClick)="mapClk($event)" (centerChange)="centerChang($event)" 
+                          (dragEnd)="mapDragEnd($event)">
+                             <agm-marker [latitude]="latDrop" [longitude]="lngDrop" 
+                             [iconUrl] = "iconurl"
+                             [markerDraggable]=true 
+                             (markerClick)="updateLocClk($events)" 
+                             (dragEnd)="markerDragEndd($event,4)"
+                             ></agm-marker>
+                          </agm-map> -->
+                         <agm-map id="pickUpMap3" [zoom]="zoom" [latitude]="latPickup" [longitude]="lngPickup" [disableDefaultUI]=false 
+                         (mapReady)=pickUpMapReady($event,3) (mapClick)="mapClk($event)" (centerChange)="centerChang($event)" 
+                         (dragEnd)="mapDragEnd($event)">
                            <agm-marker 
                            [latitude]="latPickup" 
                            [longitude]="lngPickup" 
@@ -525,8 +538,20 @@
                    <div class="row">
                      <div class="col-lg-6 col-sm-6 col-md-6">
                        <div class="pickup-map">
-                         <agm-map id="pickUpMap2" [zoom]="zoom" [latitude]="latDrop" [longitude]="lngDrop" [disableDefaultUI]=false  [mapDraggable]=false
-                           (mapReady)=pickUpMapReady($events)>
+                            <!-- <agm-map id="pickUpMap2" [zoom]="zoom" [latitude]="latDrop" [longitude]="lngDrop"
+                          [disableDefaultUI]=false
+                          (mapReady)=pickUpMapReady($event,4) (mapClick)="mapClk($event)" (centerChange)="centerChang($event)" 
+                          (dragEnd)="mapDragEnd($event)">
+                             <agm-marker [latitude]="latDrop" [longitude]="lngDrop" 
+                             [iconUrl] = "iconurl"
+                             [markerDraggable]=true 
+                             (markerClick)="updateLocClk($events)" 
+                             (dragEnd)="markerDragEndd($event,4)"
+                             ></agm-marker>
+                          </agm-map> -->
+                         <agm-map id="pickUpMap2" [zoom]="zoom" [latitude]="latDrop" [longitude]="lngDrop" [disableDefaultUI]=false  
+                         (mapReady)=pickUpMapReady($event,4) (mapClick)="mapClk($event)" (centerChange)="centerChang($event)" 
+                         (dragEnd)="mapDragEnd($event)">>
                            <agm-marker [latitude]="latDrop" 
                            [longitude]="lngDrop" 
                            [iconUrl] = "iconurl"
