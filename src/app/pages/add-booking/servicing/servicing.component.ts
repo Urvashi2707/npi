@@ -167,6 +167,8 @@ export class ServicingComponent implements OnInit {
   drag_pickup_add:string = "0";
   drag_dropoff_add:string = "0";
   @ViewChild('pickupSavedRef') pickupSavedRef: ElementRef;
+  @ViewChild('pickupmap') mappickup: ElementRef;
+  @ViewChild('pickupmarker') pickupmarker: ElementRef;
   @ViewChild('pickupsearchplace') pickupsearchplace:ElementRef;
   @ViewChild('pickupsearchplaceFill') pickupsearchplaceFill: ElementRef;
   @ViewChild('pickupsearchplaceLandmark') pickupsearchplaceLandmark: ElementRef;
@@ -394,9 +396,17 @@ public setDrag: Boolean;
     // console.log(ev);
   }
 
-  centerChang(ev) {
+  centerChang(ev,val) {
+   var bounds  = new google.maps.LatLngBounds();
+    console.log(ev);
     this.LatLngObj = ev;
-    // console.log(ev)
+    var mapElement: this.mappickup.nativeElement;
+    var markerObj = {
+      this.latPickup: ev.lat,
+      this.lngPickup: ev.lng
+    }
+    var marker = this.pickupmarker.nativeElement;
+    marker.panTo(markerObj);
   }
   
   setAddress(addrObj,service_type) {
