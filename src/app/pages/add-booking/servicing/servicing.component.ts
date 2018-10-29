@@ -166,7 +166,7 @@ export class ServicingComponent implements OnInit {
   ifClicked: boolean;
   drag_pickup_add:string = "0";
   drag_dropoff_add:string = "0";
-  
+  ma1:any;
   @ViewChild('pickupSavedRef') pickupSavedRef: ElementRef;
   @ViewChild('pickupmap') mappickup: ElementRef;
   @ViewChild('pickupmarker') pickupmarker: ElementRef;
@@ -263,17 +263,7 @@ public setDrag: Boolean;
     this.getAdvisor();
     this.getCre();
     this.getcreadv();
-
-
-    // const autocomplete = new google.maps.places.Autocomplete(this.pickupsearchplace.nativeElement);
-
-    // google.maps.event.addListener(autocomplete, 'place_changed', () => {
-  
-    //   this.pickUpSearch(autocomplete.getPlace());
-    // });
-
-    
-   }
+    }
 
   public opt1={
   headers: new HttpHeaders({'x-auth-token': sessionStorage.getItem('token'),'x-auth-user':sessionStorage.getItem('auth-user'),'Content-Type':  'application/json'})
@@ -391,10 +381,30 @@ public setDrag: Boolean;
     }
    }
 
+   mapReady(evt) {
+    console.log("map ready",evt);
+     this.ma1 = evt;
+    }
+
+    centerChange(ev) {
+      console.log("centre change called");
+      // console.log(this.ma1.center)
+    // console.log(this.ma1.centre.lat, this.ma1.centre.lng )
+    this.ma1.setCenter({lat:ev.lat,lng:ev.lng});
+    console.log(ev)
+    var newmarker = {
+      name:'untitled',
+      lat:event.coords.lat,
+      lng:event.coords.lng,
+      draggable:false
+    };
+    // console.log(this.ma1.setCenter({lat:ev.lat,lng:ev.lng}));
+  // console.log('clicked', markerObj, { lat: markerObj.latitude, lng: markerObj.longitude });
+    }
+
   sameAsPickup(){ }
 
   sameAsPickUpAdd(e){
-    console.log(this.ifSameAsPickUp);
     this.dropOffOnly = false;
     this.ifSameAsPickUp = !this.ifSameAsPickUp;
   }
@@ -404,26 +414,18 @@ public setDrag: Boolean;
     // console.log(ev);
   }
 
-  // google.maps.event.addDomListener(window, 'load', initMap);
-
-  
-  
   idlefunct(){
-    console.log(this.LatLngObj,"calledin idle function");
    this.latPickup = this.LatLngObj.lat;
    this.lngPickup = this.LatLngObj.lng;
   }
 
   setAddress(addrObj,service_type) {
-    console.log(addrObj);
-    console.log(service_type,"service_type")
     if(service_type == 'pickup'){
       this.latPickup = addrObj.lat;
       this.lngPickup = addrObj.long;
       this.googlepickuplat = addrObj.lat;
       this.googlepickuplong = addrObj.long;
       this.googleaddresspu = addrObj.formatted_address;
-      console.log("pickup",this.googlepickuplat,this.googlepickuplong,this.googleaddresspu)
     }
    else{
      this.latDrop = addrObj.lat;
@@ -431,7 +433,6 @@ public setDrag: Boolean;
     this.googledropofflat = addrObj.lat;
     this.googledropofflong = addrObj.long;
     this.googleaddressdo = addrObj.formatted_address;
-    console.log("dropoff",this.googledropofflat,this.googledropofflong,this.googleaddressdo)
    }
     this.ngZone.run(() => {
       this.addr = addrObj;
@@ -444,9 +445,7 @@ public setDrag: Boolean;
   }
   
   markerDragEndd(ev,val) {
-    // console.log("indicator",val);
     let input = ev.coords.lat + ',' + ev.coords.lng;
-    // console.log("selected value drag",ev.coords.lat + ',' + ev.coords.lng)
     var latlngStr = input.split(',', 2);
     var latlng = {lat: parseFloat(latlngStr[0]), lng: parseFloat(latlngStr[1])
     };
@@ -457,7 +456,6 @@ public setDrag: Boolean;
         if (results[0]) {
           console.log(results[0].formatted_address);
           if(val == 3){
-            // console.log('saved pickup drag');
             me.pickupsearchplace.nativeElement.value = results[0].formatted_address;
             me.drag_pickup_add = results[0].formatted_address;
             sessionStorage.setItem('pickup_add_drag',results[0].formatted_address);
@@ -465,17 +463,14 @@ public setDrag: Boolean;
             sessionStorage.setItem('pickup_lng_drag',ev.coords.lng);
             me.drag_pickup_lat = ev.coords.lat;
             me.drag_pickup_lng = ev.coords.lng;
-            // console.log( me.drag_pickup_add,me.drag_pickup_lat,me.drag_pickup_lng);
           }
          else if (val == 4){
-          // console.log('saved dropoff drag');
           me.dropoffsearchplace.nativeElement.value = results[0].formatted_address;
           me.googleaddressdo = results[0].formatted_address;
           this.drag_dropoff_add = results[0].formatted_address;
           sessionStorage.setItem('dropoff_add_drag',results[0].formatted_address);
           sessionStorage.setItem('dropoff_lat_drag',ev.coords.lat);
           sessionStorage.setItem('dropoff_lng_drag',ev.coords.lng);
-          // console.log( this.drag_dropoff_add,this.drag_drop_lat,this.drag_drp_lng);
          }
          
         } else {
@@ -873,8 +868,6 @@ public getCity() {
   }
 
   ShowMapInSavedAddPickup(ev){
-    console.log(ev);
-    console.log(this.pickupSavedRef.nativeElement);
     this.googleMapPickupFlag = true;
     this.pickupSelected = false;
     this.googlemapShow = !this.googlemapShow;
@@ -884,7 +877,6 @@ public getCity() {
   }
 
   removeActiveBorder(el,index){
-      console.log('Keep active ',el ,'active index ',index );
       var els = el.parentElement.children
 
       for(var i=0;i<els.length;i++)
@@ -903,10 +895,6 @@ public getCity() {
   }
 
   SelectSavedPickupAddress(i,x, ev){
-    console.log("event",ev);
-    console.log("index",x);
-    // this.googleMapPickupFlag = false;
-    // var x = document.getElementById('pickupsaved').classList.remove= "deactive";
     if(ev.target.classList.contains('savedAddBtn'))
     {
       this.removeActiveBorder(ev.target,x);
@@ -944,9 +932,6 @@ public getCity() {
   }
 
 SelectSavedDropoffAddress(i,x, ev){
-  console.log("event",ev);
-  console.log("index",x);
-  // this.googleMapDropoffFlag = false;
   if(ev.target.classList.contains('savedAddBtn'))
   {
     this.removeActiveBorder(ev.target,x);
@@ -1146,8 +1131,6 @@ SelectSavedDropoffAddress(i,x, ev){
   }
 
   onSubmit(f: NgForm) {
-    console.log(f.value);
-    console.log(sessionStorage.getItem('pickup_add_drag'));
     if(sessionStorage.getItem('pickup_add_drag')){
       this.googleaddresspu = sessionStorage.getItem('pickup_add_drag');
       this.googlepickuplat = JSON.parse(sessionStorage.getItem('pickup_lat_drag'));

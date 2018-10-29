@@ -203,15 +203,17 @@ export class AtCentreComponent implements OnInit {
 ngOnDestroy(){
   var prev_url = this._tableService.getPreviousUrl();
   var curr_url = this._tableService.getCurrentUrl();
-  console.log(prev_url);
-  console.log(curr_url);
-  if(prev_url === '/pages/queue-details' && curr_url === '/pages/Active/pickup'){
+  console.log("prev url",prev_url);
+  console.log("current url",curr_url);
+  if(prev_url === '/pages/queue-details' && curr_url === '/pages/Active/at-centre'){
     console.log("inside if previous url");
-    localStorage.removeItem('startDate');
-    localStorage.removeItem('endDate');
+    // localStorage.removeItem('startDate');
+    // localStorage.removeItem('endDate');
   }
   else{
     console.log("inside else previous url");
+    localStorage.removeItem('startDate');
+    localStorage.removeItem('endDate');
   }
  }
 
