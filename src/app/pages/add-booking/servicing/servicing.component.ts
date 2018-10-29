@@ -166,6 +166,7 @@ export class ServicingComponent implements OnInit {
   ifClicked: boolean;
   drag_pickup_add:string = "0";
   drag_dropoff_add:string = "0";
+  
   @ViewChild('pickupSavedRef') pickupSavedRef: ElementRef;
   @ViewChild('pickupmap') mappickup: ElementRef;
   @ViewChild('pickupmarker') pickupmarker: ElementRef;
@@ -329,59 +330,66 @@ public setDrag: Boolean;
   pickUpMapReady(e, val){
     console.log("I am called",e);
     var map1 = e;
-    var that = this;
-    var value = val;
-    console.log(value,"value");
-    map1.addListener("dragend", function (e, val) {
-      console.log(that.LatLngObj.lat, that.LatLngObj.lng);
+    // var that = this;
+    // var value = val;
+    // console.log(value,"value");
+    // map1.addListener("dragend", function (e, val) {
+    //   console.log(that.LatLngObj.lat, that.LatLngObj.lng);
      
-      console.log("map ready event", map1);
+    //   console.log("map ready event", map1);
 
-      let input = that.LatLngObj.lat + ',' + that.LatLngObj.lng;
-    // console.log("selected value drag",ev.coords.lat + ',' + ev.coords.lng)
-    var latlngStr = input.split(',', 2);
-    var latlng = {lat: parseFloat(latlngStr[0]), lng: parseFloat(latlngStr[1])
-    };
-    var geocoder = new google.maps.Geocoder;
-    geocoder.geocode({'location': latlng}, function(results, status) {
-      if (status === 'OK') {
-        if (results[0]) {
-          console.log(results[0].formatted_address);
-          if(value == 3){
-            // console.log('saved pickup drag');
-            that.latPickup = that.LatLngObj.lat;
-            that.lngPickup = that.LatLngObj.lng;
-            that.pickupsearchplace.nativeElement.value = results[0].formatted_address;
-            that.drag_pickup_add = results[0].formatted_address;
-            sessionStorage.setItem('pickup_add_drag',results[0].formatted_address);
-            sessionStorage.setItem('pickup_lat_drag',that.LatLngObj.lat);
-            sessionStorage.setItem('pickup_lng_drag',that.LatLngObj.lng);
-            that.drag_pickup_lat = that.LatLngObj.lat;
-            that.drag_pickup_lng = that.LatLngObj.lng;
-            // console.log( me.drag_pickup_add,me.drag_pickup_lat,me.drag_pickup_lng);
-          }
-         else if (value == 4){
-          console.log('saved dropoff drag');
-          that.latDrop = that.LatLngObj.lat;
-          that.lngDrop = that.LatLngObj.lng;
-          that.dropoffsearchplace.nativeElement.value = results[0].formatted_address;
-          that.googleaddressdo = results[0].formatted_address;
-          this.drag_dropoff_add = results[0].formatted_address;
-          sessionStorage.setItem('dropoff_add_drag',results[0].formatted_address);
-          sessionStorage.setItem('dropoff_lat_drag',that.LatLngObj.lat);
-          sessionStorage.setItem('dropoff_lng_drag',that.LatLngObj.lng);
-          // console.log( this.drag_dropoff_add,this.drag_drop_lat,this.drag_drp_lng);
-         }
+    //   let input = that.LatLngObj.lat + ',' + that.LatLngObj.lng;
+    // // console.log("selected value drag",ev.coords.lat + ',' + ev.coords.lng)
+    // var latlngStr = input.split(',', 2);
+    // var latlng = {lat: parseFloat(latlngStr[0]), lng: parseFloat(latlngStr[1])
+    // };
+    // var geocoder = new google.maps.Geocoder;
+    // geocoder.geocode({'location': latlng}, function(results, status) {
+    //   if (status === 'OK') {
+    //     if (results[0]) {
+    //       console.log(results[0].formatted_address);
+    //       if(value == 3){
+    //         // console.log('saved pickup drag');
+    //         that.latPickup = that.LatLngObj.lat;
+    //         that.lngPickup = that.LatLngObj.lng;
+    //         that.pickupsearchplace.nativeElement.value = results[0].formatted_address;
+    //         that.drag_pickup_add = results[0].formatted_address;
+    //         sessionStorage.setItem('pickup_add_drag',results[0].formatted_address);
+    //         sessionStorage.setItem('pickup_lat_drag',that.LatLngObj.lat);
+    //         sessionStorage.setItem('pickup_lng_drag',that.LatLngObj.lng);
+    //         that.drag_pickup_lat = that.LatLngObj.lat;
+    //         that.drag_pickup_lng = that.LatLngObj.lng;
+    //         // console.log( me.drag_pickup_add,me.drag_pickup_lat,me.drag_pickup_lng);
+    //       }
+    //      else if (value == 4){
+    //       console.log('saved dropoff drag');
+    //       that.latDrop = that.LatLngObj.lat;
+    //       that.lngDrop = that.LatLngObj.lng;
+    //       that.dropoffsearchplace.nativeElement.value = results[0].formatted_address;
+    //       that.googleaddressdo = results[0].formatted_address;
+    //       this.drag_dropoff_add = results[0].formatted_address;
+    //       sessionStorage.setItem('dropoff_add_drag',results[0].formatted_address);
+    //       sessionStorage.setItem('dropoff_lat_drag',that.LatLngObj.lat);
+    //       sessionStorage.setItem('dropoff_lng_drag',that.LatLngObj.lng);
+    //       // console.log( this.drag_dropoff_add,this.drag_drop_lat,this.drag_drp_lng);
+    //      }
          
-        } else {
-          window.alert('No results found');
-        }
-      } else {
-        window.alert('Geocoder failed due to: ' + status);
-      }
-    });
-    });
+    //     } else {
+    //       window.alert('No results found');
+    //     }
+    //   } else {
+    //     window.alert('Geocoder failed due to: ' + status);
+    //   }
+    // });
+    // });
   }
+
+  centerChang(ev) {
+    this.LatLngObj = { 
+      lat: ev.lat,
+      lng: ev.lng
+    }
+   }
 
   sameAsPickup(){ }
 
@@ -396,19 +404,16 @@ public setDrag: Boolean;
     // console.log(ev);
   }
 
-  centerChang(ev,val) {
-   var bounds  = new google.maps.LatLngBounds();
-    console.log(ev);
-    this.LatLngObj = ev;
-    var mapElement: this.mappickup.nativeElement;
-    var markerObj = {
-      this.latPickup: ev.lat,
-      this.lngPickup: ev.lng
-    }
-    var marker = this.pickupmarker.nativeElement;
-    marker.panTo(markerObj);
-  }
+  // google.maps.event.addDomListener(window, 'load', initMap);
+
   
+  
+  idlefunct(){
+    console.log(this.LatLngObj,"calledin idle function");
+   this.latPickup = this.LatLngObj.lat;
+   this.lngPickup = this.LatLngObj.lng;
+  }
+
   setAddress(addrObj,service_type) {
     console.log(addrObj);
     console.log(service_type,"service_type")

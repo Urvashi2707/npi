@@ -552,6 +552,17 @@ export class RsaComponent implements OnInit {
     headers: new HttpHeaders({'x-auth-token': sessionStorage.getItem('token'),'x-auth-user':sessionStorage.getItem('auth-user'),'Content-Type':  'application/json'})
     }
   eligibiltycheck1(){
+    // (<HTMLInputElement>document.getElementById('mobile1')).disabled = true;
+    (<HTMLInputElement>document.getElementById('num')).disabled = true;
+    (<HTMLInputElement>document.getElementById('num')).disabled = true;
+    (<HTMLInputElement>document.getElementById('towing')).disabled = true;
+    (<HTMLInputElement>document.getElementById('onspot')).disabled = true;
+    document.getElementById("num_label").style.fontSize = "75%";
+    document.getElementById("num_label").style.opacity = "1";
+    document.getElementById("num_label").style.transform = "translate3d(0, -100%, 0)";
+    document.getElementById("mobile_label").style.fontSize = "75%";
+    document.getElementById("mobile_label").style.opacity = "1";
+    document.getElementById("mobile_label").style.transform = "translate3d(0, -100%, 0)";
     if(this.user.onSpotType){
       this.servicetypeid = this.user.onSpotType;
     }
@@ -936,6 +947,12 @@ export class RsaComponent implements OnInit {
         this.yourBoolean = 'onSpot';
         this.user.confirm = true;
         this.datecheck = false;
+        (<HTMLInputElement>document.getElementById('mobile1')).disabled = false;
+        (<HTMLInputElement>document.getElementById('num')).disabled = false;
+        (<HTMLInputElement>document.getElementById('onspot')).disabled = false;
+        (<HTMLInputElement>document.getElementById('towing')).disabled = false;
+        document.getElementById("num_label").style.transform = "translate3d(0, -120%, 0)";
+        document.getElementById("mobile_label").style.transform = "translate3d(0, -120%, 0)";
         this.disabledNext = false;
         this.showsvclist = false;
       }

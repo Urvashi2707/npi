@@ -14,7 +14,7 @@
               <div class="form-group">
                 <input type="text" id="num" name="num" style="text-transform: uppercase" class="form-control" required
                   [(ngModel)]="registrationNumber" #num="ngModel" maxlength="15" pattern="^[0-9a-zA-Z#,\-/_ .@]+$" onkeydown="javascript: return event.keyCode == 32 ? false : true">
-                <label class="form-control-placeholder" for="num">Registration Number*</label>
+                <label class="form-control-placeholder" for="num" id="num_label">Registration Number*</label>
               </div>
               <div class="form-control-feedback" *ngIf="num.errors && (num.dirty || num.touched)">
                 <p *ngIf="num.errors.required" class="haserror">Registration Number is required</p>

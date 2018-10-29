@@ -256,7 +256,7 @@
                        <div class="col-lg-6 col-sm-6 col-md-6">
                            <div class="pickup-map">
                                  <agm-map id="pickUpMap" [zoom]="zoom" [usePanning] = "true" [latitude]="latPickup" [longitude]="lngPickup" [disableDefaultUI]=false
-                                 (mapReady)=pickUpMapReady($event,3) (mapClick)="mapClk($event)" (centerChange)="centerChang($event)" #pickupmap (dragEnd)="mapDragEnd($event)">
+                                 (mapReady)=pickUpMapReady($event,3) (mapClick)="mapClk($event)" (centerChange)="centerChang($event)"  (idle)=idlefunct() #pickupmap (dragEnd)="mapDragEnd($event)">
                                  <agm-marker 
                                  [latitude]="latPickup" 
                                  [longitude]="lngPickup" 

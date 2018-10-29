@@ -11,7 +11,7 @@
             <div class="col-md-5 col-sm-5 col-lg-5">
               <div class="form-group">
                 <input type="text" id="num" name="num" class="form-control" required [(ngModel)]="registrationNumber" #num="ngModel" style=" text-transform: uppercase" pattern="^[0-9a-zA-Z#,\-/_ .@]+$">
-                <label class="form-control-placeholder" for="num">Registration Number</label>
+                <label class="form-control-placeholder" for="num" id="num_label">Registration Number</label>
               </div>
               <div class="form-control-feedback" *ngIf="num.errors && (num.dirty || num.touched)">
                 <p *ngIf="num.errors.required" class="haserror">Registration Number is required</p>
@@ -22,21 +22,21 @@
               <div class="form-group">
                 <input type="text" id="mobile1" name="mobile1" class="form-control" maxlength="10" OnlyNumber="true" required [(ngModel)]="user.mobile1"
                   #mobile1="ngModel" pattern="^[0-9a-zA-Z#,\-/_ .@]+$">
-                <label class="form-control-placeholder" for="mobile1">Customer Mobile Number</label>
+                <label class="form-control-placeholder" for="mobile1" id="mobile_label">Customer Mobile Number</label>
               </div>
             </div>
           </div>
           <div class="row">
             <div class="col-lg-3 col-sm-3 col-md-3">
               <label class="custom-control custom-radio">
-                <input type="radio" class="custom-control-input" #towing [(ngModel)]="yourBoolean" value="towing" name="customRadio">
+                <input type="radio" class="custom-control-input" id ="towing"  #towing [(ngModel)]="yourBoolean" value="towing" name="customRadio">
                 <span class="custom-control-indicator"></span>
                 <span class="custom-control-description">Towing </span>
               </label>
             </div>
             <div class="col-lg-2 col-sm-2 col-md-2" class="OnSpotRadio">
               <label class="custom-control custom-radio">
-                <input type="radio" class="custom-control-input" #onSpot [(ngModel)]="yourBoolean" value="onSpot" name="customRadio"
+                <input type="radio" class="custom-control-input" id ="onspot"  #onSpot [(ngModel)]="yourBoolean" value="onSpot" name="customRadio"
                    checked>
                 <span class="custom-control-indicator"></span>
                 <span class="custom-control-description">On Spot Service</span>
