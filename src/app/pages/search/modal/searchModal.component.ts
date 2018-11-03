@@ -45,6 +45,7 @@ export class SearchModalComponent implements OnInit {
   public details:any=[];
   queuetime:string;
   svcid:string;
+  uploadbtn = false;
   requesttype= 'uploadfilev2';
   est = '0';
   inv = '1';
@@ -239,6 +240,7 @@ export class SearchModalComponent implements OnInit {
     }
 
     uploadFilesInv (f: NgForm) {
+      this.uploadbtn = true;
       const frmData: FormData = new FormData();
       if(this.dateString){
         this.invoiceDate = this.dateString;
@@ -271,10 +273,12 @@ export class SearchModalComponent implements OnInit {
           {
               this.visible = true;
               this.showAnimation = '1';
+              this.uploadbtn = false;
               this.getData();
           }
           else{
             this.visible = true;
+            this.uploadbtn = false;
             this.showAnimation = '0';
           }
         },
@@ -285,6 +289,7 @@ export class SearchModalComponent implements OnInit {
     }
 
   uploadFilesEst (f: NgForm) {
+    this.uploadbtn = true;
     const frmData: FormData = new FormData();
     if(this.dateString){
       this.estDate = this.dateString;
@@ -315,11 +320,13 @@ export class SearchModalComponent implements OnInit {
         console.log (this.sMsg);
         if(data[0].queueupdate[0].queue_updated == 1)
         {
+          this.uploadbtn = false;
           this.visible = true;
           this.showAnimation = '1';
           this.getData();
         }
         else{
+          this.uploadbtn = false;
           this.visible = true;
           this.showAnimation = '0';
         }

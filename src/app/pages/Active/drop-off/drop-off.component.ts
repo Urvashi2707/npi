@@ -40,14 +40,23 @@ export class DropOffComponent implements OnInit {
     this._tableService.clickedID.subscribe(value => {
       this.tableData = _tableService.table_data;
     });
-    const date = new Date();
-    this.model = {day:date.getUTCDate(),month:date.getUTCMonth() + 1,year: date.getUTCFullYear() };
-    this.EndDateString = this.model.year + '-' + this.model.month + '-' + this.model.day;
-    var dt = new Date();
-         dt.setDate( dt.getDate() - 5 );
-    this.model1 = { day: dt.getUTCDate(), month: dt.getUTCMonth() + 1, year: dt.getUTCFullYear()};
-    this.StartDateString = this.model1.year + '-' + this.model1.month + '-' + this.model1.day;
-    if(localStorage.getItem('startDate') == null && localStorage.getItem('endDate') == null){
+    var prev_url = this._tableService.getPreviousUrl();
+    var curr_url = this._tableService.getCurrentUrl();
+    console.log("prev url",prev_url);
+    console.log("current url",curr_url);
+    if(curr_url === '/pages/queue-details' && prev_url === '/pages/Active/drop-off'){
+      console.log("inside if previous url");
+      // localStorage.removeItem('startDate');
+      // localStorage.removeItem('endDate');
+    }
+    else{
+      console.log("inside else previous url");
+      localStorage.removeItem('dp_off_startDate');
+      localStorage.removeItem('dp_off_endDate');
+    }
+  
+   
+    if(localStorage.getItem('dp_off_startDate') == null && localStorage.getItem('dp_off_endDate') == null){
       const date = new Date();
       this.model = {day:date.getUTCDate(),month:date.getUTCMonth() + 1,year: date.getUTCFullYear() };
       this.EndDateString = this.model.year + '-' + this.model.month + '-' + this.model.day;
@@ -56,31 +65,52 @@ export class DropOffComponent implements OnInit {
       this.model1 = { day: dt.getUTCDate(), month: dt.getUTCMonth() + 1, year: dt.getUTCFullYear()};
       this.StartDateString = this.model1.year + '-' + this.model1.month + '-' + this.model1.day;
     }
-    else if(localStorage.getItem('startDate') == null){
-      var EndDate = JSON.parse(localStorage.getItem('endDate'));
-      this.model = JSON.parse(localStorage.getItem('endDate'));
+    else if(localStorage.getItem('dp_off_startDate') == null){
+      var EndDate = JSON.parse(localStorage.getItem('dp_off_endDate'));
+      this.model = JSON.parse(localStorage.getItem('dp_off_endDate'));
       this.EndDateString = this.ngbDateParserFormatter.format(EndDate);
+      var dt = new Date();
+               dt.setDate( dt.getDate() - 5 );
+          this.model1 = { day: dt.getUTCDate(), month: dt.getUTCMonth() + 1, year: dt.getUTCFullYear()};
+          this.StartDateString = this.model1.year + '-' + this.model1.month + '-' + this.model1.day;
     }
-    else if(localStorage.getItem('endDate') == null){
-      var StartDate = JSON.parse(localStorage.getItem('startDate'));
-      this.model1 = JSON.parse(localStorage.getItem('startDate'));
+    else if(localStorage.getItem('dp_off_endDate') == null){
+      var StartDate = JSON.parse(localStorage.getItem('dp_off_startDate'));
+      this.model1 = JSON.parse(localStorage.getItem('dp_off_startDate'));
       this.StartDateString = this.ngbDateParserFormatter.format(StartDate);
+      const date = new Date();
+      this.model = {day:date.getUTCDate(),month:date.getUTCMonth() + 1,year: date.getUTCFullYear() };
+      this.EndDateString = this.model.year + '-' + this.model.month + '-' + this.model.day;
     }
     else{
-      var EndDate = JSON.parse(localStorage.getItem('endDate'));
-      var StartDate = JSON.parse(localStorage.getItem('startDate'));
-      this.model1 = JSON.parse(localStorage.getItem('startDate'));
-      this.model = JSON.parse(localStorage.getItem('endDate'));
+      var EndDate = JSON.parse(localStorage.getItem('dp_off_endDate'));
+      var StartDate = JSON.parse(localStorage.getItem('dp_off_startDate'));
+      this.model1 = JSON.parse(localStorage.getItem('dp_off_startDate'));
+      this.model = JSON.parse(localStorage.getItem('dp_off_endDate'));
       this.EndDateString = this.ngbDateParserFormatter.format(EndDate);
       this.StartDateString = this.ngbDateParserFormatter.format(StartDate);
     }
     window.onbeforeunload = function(e) {
-      localStorage.removeItem('startDate');
-      localStorage.removeItem('endDate');
+      localStorage.removeItem('dp_off_startDate');
+      localStorage.removeItem('dp_off_endDate');
     };
   }
 
   ngOnInit() {
+    var prev_url = this._tableService.getPreviousUrl();
+    var curr_url = this._tableService.getCurrentUrl();
+    console.log("prev url",prev_url);
+    console.log("current url",curr_url);
+    if(prev_url === '/pages/queue-details' && curr_url === '/pages/Active/drop-off'){
+      console.log("inside if previous url");
+      // localStorage.removeItem('startDate');
+      // localStorage.removeItem('endDate');
+    }
+    else{
+      console.log("inside else previous url");
+      localStorage.removeItem('dp_off_startDate');
+      localStorage.removeItem('dp_off_endDate');
+    }
     this.InsuranceUsr = JSON.parse(sessionStorage.getItem('insurance'));
     if(sessionStorage.getItem('selectedsvc')){
       this.SvcId = sessionStorage.getItem('selectedsvc');
@@ -103,7 +133,7 @@ export class DropOffComponent implements OnInit {
     if (date != null) {
             this.model = date;
             this.EndDateString = this.ngbDateParserFormatter.format(date);
-            localStorage.setItem('endDate',JSON.stringify(this.model));
+            localStorage.setItem('dp_off_endDate',JSON.stringify(this.model));
         }
   }
 
@@ -118,7 +148,7 @@ export class DropOffComponent implements OnInit {
     if (date != null) {
             this.model1 = date;
             this.StartDateString = this.ngbDateParserFormatter.format(date);
-            localStorage.setItem('startDate',JSON.stringify(this.model1));
+            localStorage.setItem('dp_off_startDate',JSON.stringify(this.model1));
         }
     }
 
@@ -175,14 +205,14 @@ img(event){
         var curr_url = this._tableService.getCurrentUrl();
         console.log(prev_url);
         console.log(curr_url);
-        if(prev_url === '/pages/queue-details' && curr_url === '/pages/Active/drop-off'){
-          console.log("inside if previous url");
-          localStorage.removeItem('startDate');
-          localStorage.removeItem('endDate');
-        }
-        else{
-          console.log("inside else previous url");
-        }
+        // if(prev_url === '/pages/queue-details' && curr_url === '/pages/Active/drop-off'){
+        //   console.log("inside if previous url");
+        //   localStorage.removeItem('startDate');
+        //   localStorage.removeItem('endDate');
+        // }
+        // else{
+        //   console.log("inside else previous url");
+        // }
       }
 
     }

@@ -22,7 +22,6 @@
              </div>
              <div class="col-md-5 col-sm-5 col-lg-5">
                <div class="form-group">
-                 <!-- <label *ngIf="!mobileLength" style="font-size: 12px;margin-bottom:0px">Customer Mobile Number*</label> -->
                  <input type="number" id="mobile1" name="mobile1" class="form-control" maxlength="10" [(ngModel)]="user.mobile1" (keyup)="checkMobile($event)"
                  required #mobile1="ngModel"  oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" onkeydown="javascript: return event.keyCode == 69 ? false : true">
                  <label  class="form-control-placeholder" for="mobile1" id="mobile_label">Customer Mobile Number*</label>
@@ -244,7 +243,7 @@
                          <img src="../../../../assets/images/plus-symbol.svg">
                        </button>
                        <button type="button" *ngFor="let i of address;let x = index" class="savedAddBtn" id="pickupsaved" #pickupSavedRef (click)="SelectSavedPickupAddress(i, x, $event)">
-                         <p style="word-break: break-all;">#{{i.postal_address}},{{i.google_address}},</p>
+                         <p style="word-break: break-all;">#{{i.postal_address}} , {{i.google_address}},</p>
                          <p>{{i.area}}</p>
                          <p class="address-type-para">{{i.type_of_address}}</p>
                        </button>
@@ -255,12 +254,12 @@
                        <div class="col-lg-6 col-sm-6 col-md-6">
                            <div class="pickup-map">
                                  <agm-map id="pickUpMap" [zoom]="zoom" [usePanning] = "true" [latitude]="latPickup" [longitude]="lngPickup" [disableDefaultUI]=false
-                                 (mapReady)=mapReady($event) (mapClick)="mapClk($event)" (centerChange)="centerChange($event)"  (idle)=idlefunct() #pickupmap (dragEnd)="mapDragEnd($event)">
+                                 (mapReady)=pickUpMapReady($event,3) (mapClick)="mapClk($event)" (centerChange)="centerChang($event,3)" (idle)=idle($event) #pickupmap (dragEnd)="mapDragEnd($event)">
                                  <agm-marker 
-                                 [latitude]="latPickup" 
-                                 [longitude]="lngPickup" 
+                                 [latitude]="x" 
+                                 [longitude]="y" 
                                  [iconUrl] = "iconurl" 
-                                 [markerDraggable]=true 
+                                 [markerDraggable]=false 
                                  (markerClick)="updateLocClk($events)" 
                                  (dragEnd)="markerDragEndd($event,3)"
                                  ></agm-marker>
@@ -342,7 +341,7 @@
                          <img src="../../../../assets/images/plus-symbol.svg">
                        </button>
                        <button type="button" *ngFor="let i of address; let x = index" class="savedAddBtn" id="dropoffsaved" (click)="SelectSavedDropoffAddress(i, x, $event)">
-                         <p style="word-break: break-all;">#{{i.postal_address}},{{i.google_address}},</p>
+                         <p style="word-break: break-all;">#{{i.postal_address}} , {{i.google_address}}</p>
                          <p>{{i.area}}</p>
                          <p class="address-type-para">{{i.type_of_address}}</p>
                        </button>
@@ -355,9 +354,9 @@
                            <div class="pickup-map">
                              <agm-map id="pickUpMap2" [zoom]="zoom" [latitude]="latDrop" [longitude]="lngDrop"
                              [disableDefaultUI]=false
-                             (mapReady)=pickUpMapReady($event,4) (mapClick)="mapClk($event)" (centerChange)="centerChang($event)" 
+                             (mapReady)=pickUpMapReady($event,4) (mapClick)="mapClk($event)" (centerChange)="centerChang($event,4)" 
                              (dragEnd)="mapDragEnd($event)">
-                                <agm-marker [latitude]="latDrop" [longitude]="lngDrop" 
+                                <agm-marker [latitude]="a" [longitude]="b" 
                                 [iconUrl] = "iconurl"
                                 [markerDraggable]=true 
                                 (markerClick)="updateLocClk($events)" 
@@ -448,15 +447,15 @@
                              ></agm-marker>
                           </agm-map> -->
                          <agm-map id="pickUpMap3" [zoom]="zoom" [latitude]="latPickup" [longitude]="lngPickup" [disableDefaultUI]=false 
-                         (mapReady)=pickUpMapReady($event,3) (mapClick)="mapClk($event)" (centerChange)="centerChang($event)" 
+                         (mapReady)=pickUpMapReady($event,3) (mapClick)="mapClk($event)" (centerChange)="centerChang($event,3)" 
                          (dragEnd)="mapDragEnd($event)">
                            <agm-marker 
-                           [latitude]="latPickup" 
-                           [longitude]="lngPickup" 
+                           [latitude]="x" 
+                           [longitude]="y" 
                            [markerOptions]="markerOptions" 
                            [renderOptions]="renderOptions" 
                            [iconUrl] = "iconurl"
-                           [markerDraggable]=true 
+                           [markerDraggable]=false 
                            (markerClick)="updateLocClk($events)" 
                            (dragEnd)="markerDragEndd($event,3)"
                            ></agm-marker>
@@ -548,12 +547,12 @@
                              ></agm-marker>
                           </agm-map> -->
                          <agm-map id="pickUpMap2" [zoom]="zoom" [latitude]="latDrop" [longitude]="lngDrop" [disableDefaultUI]=false  
-                         (mapReady)=pickUpMapReady($event,4) (mapClick)="mapClk($event)" (centerChange)="centerChang($event)" 
+                         (mapReady)=pickUpMapReady($event,4) (mapClick)="mapClk($event)" (centerChange)="centerChang($event,4)" 
                          (dragEnd)="mapDragEnd($event)">>
-                           <agm-marker [latitude]="latDrop" 
-                           [longitude]="lngDrop" 
+                           <agm-marker [latitude]="a" 
+                           [longitude]="b" 
                            [iconUrl] = "iconurl"
-                           [markerDraggable]=true 
+                           [markerDraggable]=false 
                            (markerClick)="updateLocClk($events)" 
                            (dragEnd)="markerDragEndd($event,4)"
                            ></agm-marker>
@@ -800,7 +799,7 @@
                <div class="row">
                  <div class="col-md-12 col-lg-12 col-sm-12">
                    <div style="float:right">
-                     <button type="submit" class="btn btn-primary">Schedule</button>
+                     <button type="submit" class="btn btn-primary" [disabled]="BookingBtn">Schedule</button>
                    </div>
                  </div>
                </div>

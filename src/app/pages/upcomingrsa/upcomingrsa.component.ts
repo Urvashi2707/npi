@@ -38,18 +38,21 @@ export class UpcomingrsaComponent implements OnInit {
 this._tableService.clickedID.subscribe(value => {
 this.tableData = _tableService.table_data;
 });
-const date = new Date();
-this.model1 = {day:date.getUTCDate(),month:date.getUTCMonth() + 1,year: date.getUTCFullYear() };
-this.StrtDateString = this.model1.year + '-' + this.model1.month + '-' + this.model1.day;
-var numberOfDays = 1;
-var dt = new Date();
-         dt.setDate( dt.getDate() + numberOfDays );
-this.model = { day: dt.getUTCDate(), month: dt.getUTCMonth() + 1, year: dt.getUTCFullYear()};
-this.EndDateString = this.model.year + '-' + this.model.month + '-' + this.model.day;
-console.log("starting model",this.model);
-console.log(localStorage.getItem('startDate'));
+   var prev_url = this._tableService.getPreviousUrl();
+    var curr_url = this._tableService.getCurrentUrl();
+    console.log(prev_url);
+    console.log(curr_url);
+    if(curr_url === '/pages/queue-details' && prev_url === '/pages/upcomingrsa'){
+      console.log("inside if previous url");
+      localStorage.removeItem('startDate');
+      localStorage.removeItem('endDate');
+    }
+    else{
+      console.log("inside else previous url");
+    }
+
+
 if(localStorage.getItem('startDate') == null && localStorage.getItem('endDate') == null){
-  console.log("not changed");
   const date = new Date();
   this.model = {day:date.getUTCDate(),month:date.getUTCMonth() + 1,year: date.getUTCFullYear() };
   this.EndDateString = this.model.year + '-' + this.model.month + '-' + this.model.day;
@@ -62,11 +65,19 @@ else if(localStorage.getItem('startDate') == null){
   var EndDate = JSON.parse(localStorage.getItem('endDate'));
   this.model = JSON.parse(localStorage.getItem('endDate'));
   this.EndDateString = this.ngbDateParserFormatter.format(EndDate);
+  const date = new Date();
+this.model1 = {day:date.getUTCDate(),month:date.getUTCMonth() + 1,year: date.getUTCFullYear() };
+this.StrtDateString = this.model1.year + '-' + this.model1.month + '-' + this.model1.day;
 }
 else if(localStorage.getItem('endDate') == null){
   var StartDate = JSON.parse(localStorage.getItem('startDate'));
   this.model1 = JSON.parse(localStorage.getItem('startDate'));
   this.StrtDateString = this.ngbDateParserFormatter.format(StartDate);
+  var numberOfDays = 1;
+var dt = new Date();
+         dt.setDate( dt.getDate() + numberOfDays );
+this.model = { day: dt.getUTCDate(), month: dt.getUTCMonth() + 1, year: dt.getUTCFullYear()};
+this.EndDateString = this.model.year + '-' + this.model.month + '-' + this.model.day;
 }
 else{
   var EndDate = JSON.parse(localStorage.getItem('endDate'));
@@ -85,6 +96,18 @@ window.onbeforeunload = function(e) {
 }
 
 ngOnInit() {
+     var prev_url = this._tableService.getPreviousUrl();
+    var curr_url = this._tableService.getCurrentUrl();
+    console.log(prev_url);
+    console.log(curr_url);
+    if(prev_url === '/pages/queue-details' && curr_url === '/pages/upcomingrsa'){
+      console.log("inside if previous url");
+      localStorage.removeItem('startDate');
+      localStorage.removeItem('endDate');
+    }
+    else{
+      console.log("inside else previous url");
+    }
   this.InsuranceUsr = JSON.parse(sessionStorage.getItem('insurance'));
   if(sessionStorage.getItem('selectedsvc')){
     this.SvcId = sessionStorage.getItem('selectedsvc');
@@ -172,18 +195,18 @@ ngOnInit() {
   }
 
   ngOnDestroy(){
-    var prev_url = this._tableService.getPreviousUrl();
-    var curr_url = this._tableService.getCurrentUrl();
-    console.log(prev_url);
-    console.log(curr_url);
-    if(prev_url === '/pages/queue-details' && curr_url === '/pages/upcomingrsa'){
-      console.log("inside if previous url");
-      localStorage.removeItem('startDate');
-      localStorage.removeItem('endDate');
-    }
-    else{
-      console.log("inside else previous url");
-    }
+    // var prev_url = this._tableService.getPreviousUrl();
+    // var curr_url = this._tableService.getCurrentUrl();
+    // console.log(prev_url);
+    // console.log(curr_url);
+    // if(prev_url === '/pages/queue-details' && curr_url === '/pages/upcomingrsa'){
+    //   console.log("inside if previous url");
+    //   localStorage.removeItem('startDate');
+    //   localStorage.removeItem('endDate');
+    // }
+    // else{
+    //   console.log("inside else previous url");
+    // }
   }
 
 }

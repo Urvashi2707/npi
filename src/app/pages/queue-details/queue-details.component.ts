@@ -193,15 +193,15 @@ export class QueueDetailsComponent implements OnInit {
   on_time: any = "1";
 
   showUploadModal(name: string) {
-    console.log(this.service_status);
-    console.log(this.advInfo[0].adv_name);
+    // console.log(this.service_status);
+    // console.log(this.advInfo[0].adv_name);
     if(this.InvAmt != "0"){
               this.Amt = this.InvAmt;
-              console.log(this.Amt)
+              // console.log(this.Amt)
             }
             else{
               this.Amt = this.estAmount;
-              console.log(this.Amt)
+              // console.log(this.Amt)
             }
    
    const activeModal = this.modalService.open(SearchModalComponent, { size: 'lg', container: 'nb-layout' });
@@ -226,12 +226,14 @@ export class QueueDetailsComponent implements OnInit {
     activeModal.componentInstance.modalHeader = 'Pickup Details';
     activeModal.componentInstance.modalContent = res;
     activeModal.result.then(() => { 
-      console.log('When user closes');
+      // console.log('When user closes');
       var event = {
         "tabTitle":"Details"
       };
       this.tabChanged(event);
-    }, () => { console.log('Backdrop click')})
+    }, () => { 
+      // console.log('Backdrop click')
+    })
 
   }
   showdropoffModal(res:any){
@@ -240,12 +242,14 @@ export class QueueDetailsComponent implements OnInit {
     activeModal.componentInstance.modalHeader = 'DropOff Details';
     activeModal.componentInstance.modalContent = res;
     activeModal.result.then(() => { 
-      console.log('When user closes');
+      // console.log('When user closes');
       var event = {
         "tabTitle":"Details"
       };
       this.tabChanged(event);
-    }, () => { console.log('Backdrop click')})
+    }, () => { 
+      // console.log('Backdrop click')
+    })
 
   }
   showdAdv(res:any){
@@ -253,7 +257,7 @@ export class QueueDetailsComponent implements OnInit {
     activeModal.componentInstance.modalHeader = 'Select Advisor';
     activeModal.componentInstance.modalContent = res;
     activeModal.result.then(() => { 
-      console.log('When user closes');
+      // console.log('When user closes');
       var event = {
         "tabTitle":"Details"
       };
@@ -332,7 +336,7 @@ export class QueueDetailsComponent implements OnInit {
       const as3 = JSON.stringify(reqpara3);
       this._data.webServiceCall(as3).subscribe(res => {
         const check = res.valueOf();
-        console.log(check,"check");
+        // console.log(check,"check");
         const objectlength = Object.keys(check).length;
         if (objectlength > 0) {
           if (check[0].hasOwnProperty('custinfo')) {
@@ -348,9 +352,9 @@ export class QueueDetailsComponent implements OnInit {
           if (check[1].hasOwnProperty('puinfo')) {
 
              this.pickupInfo = check[1].puinfo;
-            console.log(this.pickupInfo);
+            // console.log(this.pickupInfo);
             if(this.pickupInfo[0].hasOwnProperty('type_service')){
-              console.log("inside typeofserviceif");
+              // console.log("inside typeofserviceif");
               this.type_of_service = JSON.parse(this.pickupInfo[0].type_service);
              this.servicestatus = JSON.parse(this.pickupInfo[0].active);
             }
@@ -409,9 +413,9 @@ export class QueueDetailsComponent implements OnInit {
               let dropAmbName = this.dropoffForm.get('dropAmbName');
 
               if (this.dropInfo[0].amb_name) {
-                console.log("AMb name in drop ",this.dropInfo[0].amb_name)
+                // console.log("AMb name in drop ",this.dropInfo[0].amb_name)
                 dropAmbName.setValue(this.dropInfo[0].amb_name);
-                console.log("Input Amb",dropAmbName)
+                // console.log("Input Amb",dropAmbName)
               }
 
               let amount = this.dropoffForm.get('amount');
@@ -448,7 +452,7 @@ export class QueueDetailsComponent implements OnInit {
         if(objectlength > 3){
           if (check[3].hasOwnProperty('atsvc')) {
             const atSVC = check[3].atsvc;
-            console.log(this.servicestatus);
+            // console.log(this.servicestatus);
             if(this.servicestatus === 3){
               this.showAtSVCCard = '1';
             }
@@ -458,20 +462,20 @@ export class QueueDetailsComponent implements OnInit {
               if (atSVC[0].est_amount) {
                 estAmount.setValue(atSVC[0].est_amount);
                 this.estAmount = atSVC[0].est_amount;
-                console.log("EST",this.estAmount);
+                // console.log("EST",this.estAmount);
               }
             }
             if (atSVC[0].est_time) {
               let estTime = this.vehicle_at_svc_formGroup.get('ETD');
               estTime.setValue(atSVC[0].est_time);
               this.QueueTIme = atSVC[0].est_time;
-              console.log(this.QueueTIme);
+              // console.log(this.QueueTIme);
             }
             if (atSVC[0].queue_total) {
               let invoiceAmount = this.vehicle_at_svc_formGroup.get('invoiceAmount');
               invoiceAmount.setValue(atSVC[0].queue_total);
               this.InvAmt = atSVC[0].queue_total;
-              console.log("INV",this.InvAmt)
+              // console.log("INV",this.InvAmt)
             }
             if (atSVC[0].est_amount) {
 
@@ -559,8 +563,8 @@ export class QueueDetailsComponent implements OnInit {
         }
 
         if (objectlength > 6) {
-          console.log("car info if");
-          console.log(check[6]);
+          // console.log("car info if");
+          // console.log(check[6]);
           if (check[5].hasOwnProperty('vehicleinfo')) {
             const vehInfo = check[5].vehicleinfo;
             this.VehicleNumber = vehInfo[0].veh_number;
@@ -586,8 +590,8 @@ export class QueueDetailsComponent implements OnInit {
               this.showCRECard = '1';
               let adv_name = this.creFormGroup.get('advName');
               adv_name.setValue(this.advInfo[0].adv_name);
-              console.log('Adv_Name');
-              console.log(this.advInfo[0].adv_name);
+              // console.log('Adv_Name');
+              // console.log(this.advInfo[0].adv_name);
 
               let adv_number = this.creFormGroup.get('advNumber');
               adv_number.setValue(this.advInfo[0].adv_mobile);
@@ -600,7 +604,7 @@ export class QueueDetailsComponent implements OnInit {
           if (check[10].hasOwnProperty('complaints')) {
             const complaints1 = check[10].complaints;
             this.showComplaintsCard = "0";
-            console.log(this.type_of_service);
+            // console.log(this.type_of_service);
             if (complaints1[0].hasOwnProperty('complaint')) {
             this.complaints = complaints1[0].complaint;
             if(this.type_of_service === 1 || this.type_of_service === 0){
@@ -624,14 +628,14 @@ export class QueueDetailsComponent implements OnInit {
         // }
         // console.log("lenght",objectlength )
         if (objectlength > 10) {
-          console.log("new feedback");
+          // console.log("new feedback");
           if (check[10].hasOwnProperty('newfeedback')) {
-            console.log("show new feedback");
+            // console.log("show new feedback");
             this.showNewFeedbackCards = "1";
             this.feedback = check[10].newfeedback;
             if(check[10].newfeedback[0].hasOwnProperty('no_records'))
             {
-              console.log("no new feedback");
+              // console.log("no new feedback");
               this.showNewFeedbackCards = "0";
               // if (objectlength > 11) {
               //   if (check[11].hasOwnProperty('feedback')) {

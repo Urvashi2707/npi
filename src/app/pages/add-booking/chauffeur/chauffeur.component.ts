@@ -14,6 +14,7 @@ import 'style-loader!angular2-toaster/toaster.css';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AgmCoreModule, MapsAPILoader } from '@agm/core'; 
 import {} from '@types/googlemaps';
+import { ThemeSettingsComponent } from '../../../@theme/components';
 declare var google: any;
 
 @Component({
@@ -33,6 +34,7 @@ export class ChauffeurComponent implements OnInit {
   addressDropoff:any;
   dontShowModel = false;
   dontShowVariant = false;
+  BookingBtn = true;
   public slothour:string;
   public selectedVariant: any = [];
   public selectedCoordinator: any = [];
@@ -139,6 +141,10 @@ export class ChauffeurComponent implements OnInit {
   lngPickup:number;
   latDrop:number;
   LatLngObj:any;
+  x:number;
+  y:number;
+  a:number;
+  b:number;
   lngDrop:number;
   public iconurl: String;
   drag_pickup_lat:number;
@@ -179,14 +185,11 @@ export class ChauffeurComponent implements OnInit {
    }
 
   ngOnInit() {
-    console.log(sessionStorage.getItem('insurance'))
     if(JSON.parse(sessionStorage.getItem('insurance')) == "1"){
       this.insuranceFlag = true;
-      console.log(this.insuranceFlag , "flag")
     }
     else{
       this.insuranceFlag = false;
-      console.log(this.insuranceFlag , "flag")
     }
     if(sessionStorage.getItem('selectedsvc')){
       this.svcid = sessionStorage.getItem('selectedsvc');
@@ -334,24 +337,64 @@ export class ChauffeurComponent implements OnInit {
   // console.log(ev);
 }
 
-centerChang(ev) {
+centerChang(ev,value) {
   this.LatLngObj = ev;
-  // console.log(ev)
+  this.x = ev.lat;
+  this.y = ev.lng;
+  // stockyard
+  if(value == 1){
+   
+    sessionStorage.setItem('pickup_lat_drag',ev.lat);
+    sessionStorage.setItem('pickup_lng_drag',ev.lng);
+  }
+  //internal movement pickup
+ else if (value == 2){
+  this.x = ev.lat;
+  this.y = ev.lng;
+  console.log("internal movement pickup",ev)
+  sessionStorage.setItem('pickup_lat_drag',ev.lat);
+  sessionStorage.setItem('pickup_lng_drag',ev.lng);
+ }
+  //internal movement dropoff
+ else if (value == 3){
+  this.a = ev.lat;
+  this.b = ev.lng;
+  console.log("internal movement dropoff",ev)
+  sessionStorage.setItem('dropoff_lat_drag',ev.lat);
+  sessionStorage.setItem('dropoff_lng_drag',ev.lng);
+ }
+ //home delivery
+ else if (value == 4){
+ sessionStorage.setItem('pickup_lat_drag',ev.lat);
+  sessionStorage.setItem('pickup_lng_drag',ev.lng);
+  sessionStorage.setItem('dropoff_lat_drag',ev.lat);
+  sessionStorage.setItem('dropoff_lng_drag',ev.lng);
+ }
+ //test drive
+ else if (value == 5){
+  sessionStorage.setItem('pickup_lat_drag',ev.lat);
+  sessionStorage.setItem('pickup_lng_drag',ev.lng);
+  sessionStorage.setItem('dropoff_lat_drag',ev.lat);
+  sessionStorage.setItem('dropoff_lng_drag',ev.lng);
+ }
+ //custody
+ else if (value == 6){
+   sessionStorage.setItem('pickup_lat_drag',ev.lat);
+  sessionStorage.setItem('pickup_lng_drag',ev.lng);
+ }
 }
 
  pickUpMapReady(e, val){
-  console.log("I am called",e);
   var map1 = e;
   var that = this;
   var value = val;
-  console.log(value,"value");
+  this.latPickup = map1.center.lat();
+  this.lngPickup = map1.center.lng();
+  console.log(this.latPickup,this.lngPickup,"map ready")
   map1.addListener("dragend", function (e, val) {
-    console.log(that.LatLngObj.lat, that.LatLngObj.lng);
-   
-    console.log("map ready event", map1);
-
-    let input = that.LatLngObj.lat + ',' + that.LatLngObj.lng;
-  // console.log("selected value drag",ev.coords.lat + ',' + ev.coords.lng)
+    this.latPickup = map1.center.lat();
+    this.lngPickup = map1.center.lng();
+   let input = that.LatLngObj.lat + ',' + that.LatLngObj.lng;
   var latlngStr = input.split(',', 2);
   var latlng = {lat: parseFloat(latlngStr[0]), lng: parseFloat(latlngStr[1])
   };
@@ -359,16 +402,17 @@ centerChang(ev) {
   geocoder.geocode({'location': latlng}, function(results, status) {
     if (status === 'OK') {
       if (results[0]) {
-        console.log(results[0].formatted_address);
+        //stockyard
         if(value == 1){
-          console.log("enter in stockyard condition")
           that.latPickup = that.LatLngObj.lat;
           that.lngPickup = that.LatLngObj.lng;
           that.pickupsearchplace.nativeElement.value = results[0].formatted_address;
           sessionStorage.setItem('pickup_add_drag',results[0].formatted_address);
+          sessionStorage.setItem('dropoff_add_drag',results[0].formatted_address);
           sessionStorage.setItem('pickup_lat_drag',that.LatLngObj.lat);
           sessionStorage.setItem('pickup_lng_drag',that.LatLngObj.lng);
         }
+        //internal movement pickup
        else if (value == 2){
         that.latPickup = that.LatLngObj.lat;
         that.lngPickup = that.LatLngObj.lng;
@@ -377,38 +421,48 @@ centerChang(ev) {
         sessionStorage.setItem('pickup_lat_drag',that.LatLngObj.lat);
         sessionStorage.setItem('pickup_lng_drag',that.LatLngObj.lng);
        }
+        //internal movement dropoff
        else if (value == 3){
         that.latDrop = that.LatLngObj.lat;
         that.lngDrop = that.LatLngObj.lng;
         that.internaldropoff.nativeElement.value = results[0].formatted_address;
-        sessionStorage.setItem('pickup_add_drag',results[0].formatted_address);
-        sessionStorage.setItem('pickup_add_drag',results[0].formatted_address);
-        sessionStorage.setItem('pickup_lat_drag',that.LatLngObj.lat);
-        sessionStorage.setItem('pickup_lng_drag',that.LatLngObj.lng);
+        sessionStorage.setItem('dropoff_add_drag',results[0].formatted_address);
+        sessionStorage.setItem('dropoff_lat_drag',that.LatLngObj.lat);
+        sessionStorage.setItem('dropoff_lng_drag',that.LatLngObj.lng);
        }
+       //home delivery
        else if (value == 4){
         that.latPickup = that.LatLngObj.lat;
         that.lngPickup = that.LatLngObj.lng;
         that.homepickup.nativeElement.value = results[0].formatted_address;
+        sessionStorage.setItem('pickup_add_drag',results[0].formatted_address);
+        sessionStorage.setItem('pickup_lat_drag',that.LatLngObj.lat);
+        sessionStorage.setItem('pickup_lng_drag',that.LatLngObj.lng);
         sessionStorage.setItem('dropoff_add_drag',results[0].formatted_address);
         sessionStorage.setItem('dropoff_lat_drag',that.LatLngObj.lat);
         sessionStorage.setItem('dropoff_lng_drag',that.LatLngObj.lng);
        }
+       //test drive
        else if (value == 5){
         that.latPickup = that.LatLngObj.lat;
         that.lngPickup = that.LatLngObj.lng;
         that.testpickup.nativeElement.value = results[0].formatted_address;
+        sessionStorage.setItem('pickup_add_drag',results[0].formatted_address);
+        sessionStorage.setItem('pickup_lat_drag',that.LatLngObj.lat);
+        sessionStorage.setItem('pickup_lng_drag',that.LatLngObj.lng);
         sessionStorage.setItem('dropoff_add_drag',results[0].formatted_address);
         sessionStorage.setItem('dropoff_lat_drag',that.LatLngObj.lat);
         sessionStorage.setItem('dropoff_lng_drag',that.LatLngObj.lng);
        }
+       //custody
        else if (value == 6){
         that.latPickup = that.LatLngObj.lat;
         that.lngPickup = that.LatLngObj.lng;
         that.Custodysearchplace.nativeElement.value = results[0].formatted_address;
+        sessionStorage.setItem('pickup_add_drag',results[0].formatted_address);
         sessionStorage.setItem('dropoff_add_drag',results[0].formatted_address);
-        sessionStorage.setItem('dropoff_lat_drag',that.LatLngObj.lat);
-        sessionStorage.setItem('dropoff_lng_drag',that.LatLngObj.lng);
+        sessionStorage.setItem('pickup_lat_drag',that.LatLngObj.lat);
+        sessionStorage.setItem('pickup_lng_drag',that.LatLngObj.lng);
        }
       } else {
         window.alert('No results found');
@@ -448,6 +502,7 @@ centerChang(ev) {
 }
 
 markerDragEndd(ev,val) {
+  console.log("marker draggable called");
   let input = ev.coords.lat + ',' + ev.coords.lng;
   var latlngStr = input.split(',', 2);
   var latlng = {lat: parseFloat(latlngStr[0]), lng: parseFloat(latlngStr[1])
@@ -975,11 +1030,12 @@ customerCheck(){
   }
 
   onSubmit(f: NgForm) {
+    this.BookingBtn = false;
     console.log(f.value);
     if(sessionStorage.getItem('pickup_add_drag')){
       this.googleaddresspu = sessionStorage.getItem('pickup_add_drag');
       this.googlepickuplat = JSON.parse(sessionStorage.getItem('pickup_lat_drag'));
-      this.googledropofflat = JSON.parse(sessionStorage.getItem('pickup_lng_drag'));
+      this.googlepickuplong = JSON.parse(sessionStorage.getItem('pickup_lng_drag'));
     }
     if(sessionStorage.getItem('dropoff_add_drag')){
       this.googleaddressdo = sessionStorage.getItem('dropoff_add_drag');
@@ -1044,6 +1100,7 @@ customerCheck(){
       }
     }
     else if (this.pickup_drop == 4){
+      console.log(this.googlepickuplat,this.googlepickuplong,this.googledropofflat,this.googledropofflong,"im")
       var result = this.getDistanceFromLatLonInKm(this.googlepickuplat,this.googlepickuplong,this.googledropofflat,this.googledropofflong);
       this.postaladdresspu = f.value.internalpickupflatno + ' ' + f.value.internalpickupbilding;
       this.postaladdressdo = f.value.internaldropoffflatno + ' ' + f.value.internaldropoffbuildingname;
@@ -1203,10 +1260,12 @@ customerCheck(){
     if(data[0].login === 0){
       sessionStorage.removeItem('currentUser');
       this.router.navigate(['/auth/login']);
+      this.BookingBtn = true;
     }
     else{
         this.message = data[0].queue,
         this.disabled=false;
+        this.BookingBtn = true;
         this.showLargeModal(this.message[0]);
         this.slot_time = "0";
         f.reset();
@@ -1236,18 +1295,22 @@ customerCheck(){
   (err: HttpErrorResponse) =>{
   if (err.error instanceof Error) {
     console.log("Client-side error occured.");
+    this.BookingBtn = true;
   }
 else {
   console.log("Server-side error occured.");
+  this.BookingBtn = true;
   }
 });
 }
 else{
   this.showToast('alert', 'Message', 'Distance is less than 100 metre');
+  this.BookingBtn = true;
 }
     }
     else{
       this.showToast('alert', 'Message', 'Please select Slot and date');
+      this.BookingBtn = true;
     }
 };
 

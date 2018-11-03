@@ -37,50 +37,78 @@ export class ReportsComponent implements OnInit {
               private router: Router, 
               private ngbDateParserFormatter: NgbDateParserFormatter,
               private service: ServicingService) {
+                   var prev_url = this._detailsTable.getPreviousUrl();
+                   var curr_url = this._detailsTable.getCurrentUrl();
+                   console.log("cons",prev_url);
+                   console.log("cons",curr_url);
+        if(curr_url === '/pages/queue-details' && prev_url === '/pages/reports'){
+          // localStorage.removeItem('startDate');
+          // localStorage.removeItem('endDate');
+        }
+        else{
+          console.log("inside else previous url");
+          localStorage.removeItem('startDate');
+          localStorage.removeItem('endDate');
+        }
+        if(localStorage.getItem('reports_startDate') == null && localStorage.getItem('reports_endDate') == null){
+          const date = new Date();
+          this.model = {day:date.getUTCDate(),month:date.getUTCMonth() + 1,year: date.getUTCFullYear() };
+          this.EndDateString = this.model.year + '-' + this.model.month + '-' + this.model.day;
+          var dt = new Date();
+               dt.setDate( dt.getDate() - 14 );
+          this.model1 = { day: dt.getUTCDate(), month: dt.getUTCMonth() + 1, year: dt.getUTCFullYear()};
+          this.StrtDateString = this.model1.year + '-' + this.model1.month + '-' + this.model1.day;
+        }
+        else if(localStorage.getItem('reports_startDate') == null){
+          var EndDate = JSON.parse(localStorage.getItem('reports_endDate'));
+          this.model = JSON.parse(localStorage.getItem('reports_endDate'));
+          this.EndDateString = this.ngbDateParserFormatter.format(EndDate);
+          var date = new Date();
+          this.model1 = {day:date.getUTCDate(),month:date.getUTCMonth() + 1,year: date.getUTCFullYear() };
+          this.StrtDateString = this.model1.year + '-' + this.model1.month + '-' + this.model1.day;
+        }
+        else if(localStorage.getItem('reports_endDate') == null){
+          var StartDate = JSON.parse(localStorage.getItem('reports_startDate'));
+          this.model1 = JSON.parse(localStorage.getItem('reports_startDate'));
+          this.StrtDateString = this.ngbDateParserFormatter.format(StartDate);
+          var dt = new Date();
+              this.model = { day: dt.getUTCDate(), month: dt.getUTCMonth() + 1, year: dt.getUTCFullYear()};
+              this.EndDateString = this.model.year + '-' + this.model.month + '-' + this.model.day;
+        }
+        else{
+          var EndDate = JSON.parse(localStorage.getItem('reports_endDate'));
+          var StartDate = JSON.parse(localStorage.getItem('reports_startDate'));
+          this.model1 = JSON.parse(localStorage.getItem('reports_startDate'));
+          this.model = JSON.parse(localStorage.getItem('reports_endDate'));
+          this.EndDateString = this.ngbDateParserFormatter.format(EndDate);
+          this.StrtDateString = this.ngbDateParserFormatter.format(StartDate);
+        }
             }
 
   ngOnInit() {
+       var prev_url = this._detailsTable.getPreviousUrl();
+        var curr_url = this._detailsTable.getCurrentUrl();
+        console.log("init",prev_url);
+        console.log("init",curr_url);
+        if(prev_url === '/pages/queue-details' && curr_url === '/pages/reports'){
+          // localStorage.removeItem('startDate');
+          // localStorage.removeItem('endDate');
+        }
+        else{
+          console.log("inside else previous url");
+          localStorage.removeItem('startDate');
+          localStorage.removeItem('endDate');
+        }
     this.InsuranceUsr = JSON.parse(sessionStorage.getItem('insurance'));
     this.user.service_type = "1";
     this.user.status = "1";
-    var date = new Date();
-    this.model = {day:date.getUTCDate(),month:date.getUTCMonth() + 1,year: date.getUTCFullYear() };
-    this.EndDateString = this.model.year + '-' + this.model.month + '-' + this.model.day;
-    var dt = new Date();
-           dt.setDate( dt.getDate() - 14 );
-      this.model1 = { day: dt.getUTCDate(), month: dt.getUTCMonth() + 1, year: dt.getUTCFullYear()};
-      this.StrtDateString = this.model1.year + '-' + this.model1.month + '-' + this.model1.day;
-    if(localStorage.getItem('startDate') == null && localStorage.getItem('endDate') == null){
-      const date = new Date();
-      this.model = {day:date.getUTCDate(),month:date.getUTCMonth() + 1,year: date.getUTCFullYear() };
-      this.EndDateString = this.model.year + '-' + this.model.month + '-' + this.model.day;
-      var dt = new Date();
-           dt.setDate( dt.getDate() - 5 );
-      this.model1 = { day: dt.getUTCDate(), month: dt.getUTCMonth() + 1, year: dt.getUTCFullYear()};
-      this.StrtDateString = this.model1.year + '-' + this.model1.month + '-' + this.model1.day;
-    }
-    else if(localStorage.getItem('startDate') == null){
-      var EndDate = JSON.parse(localStorage.getItem('endDate'));
-      this.model = JSON.parse(localStorage.getItem('endDate'));
-      this.EndDateString = this.ngbDateParserFormatter.format(EndDate);
-    }
-    else if(localStorage.getItem('endDate') == null){
-      var StartDate = JSON.parse(localStorage.getItem('startDate'));
-      this.model1 = JSON.parse(localStorage.getItem('startDate'));
-      this.StrtDateString = this.ngbDateParserFormatter.format(StartDate);
-    }
-    else{
-      var EndDate = JSON.parse(localStorage.getItem('endDate'));
-      var StartDate = JSON.parse(localStorage.getItem('startDate'));
-      this.model1 = JSON.parse(localStorage.getItem('startDate'));
-      this.model = JSON.parse(localStorage.getItem('endDate'));
-      this.EndDateString = this.ngbDateParserFormatter.format(EndDate);
-      this.StrtDateString = this.ngbDateParserFormatter.format(StartDate);
-    }
+  
+  
+
 
     window.onbeforeunload = function(e) {
-      localStorage.removeItem('startDate');
-      localStorage.removeItem('endDate');
+      localStorage.removeItem('reports_startDate');
+      localStorage.removeItem('reports_endDate');
     };
 
     if(sessionStorage.getItem('selectedsvc')){
@@ -117,7 +145,7 @@ export class ReportsComponent implements OnInit {
     if (date != null) {
       this.model = date;
       this.EndDateString = this.ngbDateParserFormatter.format(date);
-      localStorage.setItem('endDate',JSON.stringify(this.model));
+      localStorage.setItem('reports_endDate',JSON.stringify(this.model));
 
     }
 }
@@ -126,7 +154,7 @@ export class ReportsComponent implements OnInit {
     if (date != null) {
       this.model1 = date;
       this.StrtDateString = this.ngbDateParserFormatter.format(date);
-      localStorage.setItem('startDate',JSON.stringify(this.model1));
+      localStorage.setItem('reports_startDate',JSON.stringify(this.model1));
     }
 }
 
@@ -194,15 +222,15 @@ export class ReportsComponent implements OnInit {
 
 
       ngOnDestroy(){
-        var prev_url = this._detailsTable.getPreviousUrl();
-        var curr_url = this._detailsTable.getCurrentUrl();
-        if(prev_url === '/pages/queue-details' && curr_url === '/pages/reports'){
-          localStorage.removeItem('startDate');
-          localStorage.removeItem('endDate');
-        }
-        else{
-          console.log("inside else previous url");
-        }
+        // var prev_url = this._detailsTable.getPreviousUrl();
+        // var curr_url = this._detailsTable.getCurrentUrl();
+        // if(prev_url === '/pages/queue-details' && curr_url === '/pages/reports'){
+        //   localStorage.removeItem('startDate');
+        //   localStorage.removeItem('endDate');
+        // }
+        // else{
+        //   console.log("inside else previous url");
+        // }
       }
 
 }

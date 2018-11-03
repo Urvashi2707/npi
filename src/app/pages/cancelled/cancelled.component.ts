@@ -34,17 +34,23 @@ export class CancelledComponent implements OnInit {
     this._tableService.clickedID.subscribe(value => {
       this.tableData = _tableService.table_data;
       });
-    const date = new Date();
-    this.model = {day:date.getUTCDate(),month:date.getUTCMonth() + 1,year: date.getUTCFullYear() };
-    this.EndDateString = this.model.year + '-' + this.model.month + '-' + this.model.day;
-    var dt = new Date();
-         dt.setDate( dt.getDate() - 5 );
-    this.model1 = { day: dt.getUTCDate(), month: dt.getUTCMonth() + 1, year: dt.getUTCFullYear()};
-    this.StartDateString = this.model1.year + '-' + this.model1.month + '-' + this.model1.day;
-    console.log("starting model",this.model);
-    console.log(localStorage.getItem('startDate'));
-    if(localStorage.getItem('startDate') == null && localStorage.getItem('endDate') == null){
-      console.log("not changed");
+
+      var prev_url = this._tableService.getPreviousUrl();
+      var curr_url = this._tableService.getCurrentUrl();
+      console.log("cons",prev_url);
+      console.log("cons",curr_url);
+      if(curr_url === '/pages/queue-details' && prev_url === '/pages/cancelled'){
+        console.log("inside if previous url");
+      }
+      else{
+        console.log("inside else previous url");
+         localStorage.removeItem('can_startDate');
+        localStorage.removeItem('can_endDate');
+      }
+
+ 
+    
+    if(localStorage.getItem('can_startDate') == null && localStorage.getItem('can_endDate') == null){
       const date = new Date();
       this.model = {day:date.getUTCDate(),month:date.getUTCMonth() + 1,year: date.getUTCFullYear() };
       this.EndDateString = this.model.year + '-' + this.model.month + '-' + this.model.day;
@@ -53,32 +59,53 @@ export class CancelledComponent implements OnInit {
       this.model1 = { day: dt.getUTCDate(), month: dt.getUTCMonth() + 1, year: dt.getUTCFullYear()};
       this.StartDateString = this.model1.year + '-' + this.model1.month + '-' + this.model1.day;
     }
-    else if(localStorage.getItem('startDate') == null){
-      var EndDate = JSON.parse(localStorage.getItem('endDate'));
-      this.model = JSON.parse(localStorage.getItem('endDate'));
+    else if(localStorage.getItem('can_startDate') == null){
+      var EndDate = JSON.parse(localStorage.getItem('can_endDate'));
+      this.model = JSON.parse(localStorage.getItem('can_endDate'));
       this.EndDateString = this.ngbDateParserFormatter.format(EndDate);
+      var dt = new Date();
+         dt.setDate( dt.getDate() - 5 );
+    this.model1 = { day: dt.getUTCDate(), month: dt.getUTCMonth() + 1, year: dt.getUTCFullYear()};
+    this.StartDateString = this.model1.year + '-' + this.model1.month + '-' + this.model1.day;
     }
-    else if(localStorage.getItem('endDate') == null){
-      var StartDate = JSON.parse(localStorage.getItem('startDate'));
-      this.model1 = JSON.parse(localStorage.getItem('startDate'));
+    else if(localStorage.getItem('can_endDate') == null){
+      var StartDate = JSON.parse(localStorage.getItem('can_startDate'));
+      this.model1 = JSON.parse(localStorage.getItem('can_startDate'));
       this.StartDateString = this.ngbDateParserFormatter.format(StartDate);
+      const date = new Date();
+      this.model = {day:date.getUTCDate(),month:date.getUTCMonth() + 1,year: date.getUTCFullYear() };
+      this.EndDateString = this.model.year + '-' + this.model.month + '-' + this.model.day;
     }
     else{
-      var EndDate = JSON.parse(localStorage.getItem('endDate'));
-      var StartDate = JSON.parse(localStorage.getItem('startDate'));
-      this.model1 = JSON.parse(localStorage.getItem('startDate'));
-      this.model = JSON.parse(localStorage.getItem('endDate'));
+      var EndDate = JSON.parse(localStorage.getItem('can_endDate'));
+      var StartDate = JSON.parse(localStorage.getItem('can_startDate'));
+      this.model1 = JSON.parse(localStorage.getItem('can_startDate'));
+      this.model = JSON.parse(localStorage.getItem('can_endDate'));
       this.EndDateString = this.ngbDateParserFormatter.format(EndDate);
       this.StartDateString = this.ngbDateParserFormatter.format(StartDate);
     }
 
     window.onbeforeunload = function(e) {
-      localStorage.removeItem('startDate');
-      localStorage.removeItem('endDate');
+      localStorage.removeItem('can_startDate');
+      localStorage.removeItem('can_endDate');
     };
   }
 
   ngOnInit() {
+    var prev_url = this._tableService.getPreviousUrl();
+    var curr_url = this._tableService.getCurrentUrl();
+    console.log("init",prev_url);
+    console.log("init",curr_url);
+    if(prev_url === '/pages/queue-details' && curr_url === '/pages/cancelled'){
+      console.log("inside if previous url");
+      // localStorage.removeItem('startDate');
+      // localStorage.removeItem('endDate');
+    }
+    else{
+      console.log("inside else previous url");
+       localStorage.removeItem('can_startDate');
+      localStorage.removeItem('can_endDate');
+    }
     this.InsuranceUsr = JSON.parse(sessionStorage.getItem('insurance'));
     if(this.InsuranceUsr == "1"){
       this.InsuranceCheck = true;
@@ -101,7 +128,7 @@ export class CancelledComponent implements OnInit {
             this.model = date;
             this.EndDateString = this.ngbDateParserFormatter.format(date);
             console.log(this.EndDateString);
-            localStorage.setItem('endDate',JSON.stringify(this.model));
+            localStorage.setItem('can_endDate',JSON.stringify(this.model));
         }
       }
 
@@ -111,7 +138,7 @@ export class CancelledComponent implements OnInit {
             this.model1 = date;
             this.StartDateString = this.ngbDateParserFormatter.format(date);
             console.log(this.StartDateString);
-            localStorage.setItem('startDate',JSON.stringify(this.model1));
+            localStorage.setItem('can_startDate',JSON.stringify(this.model1));
         }
     }
 
@@ -167,17 +194,17 @@ export class CancelledComponent implements OnInit {
 }
 
 ngOnDestroy(){
-  var prev_url = this._tableService.getPreviousUrl();
-  var curr_url = this._tableService.getCurrentUrl();
-  console.log(prev_url);
-  console.log(curr_url);
-  if(prev_url === '/pages/queue-details' && curr_url === '/pages/cancelled'){
-    console.log("inside if previous url");
-    localStorage.removeItem('startDate');
-    localStorage.removeItem('endDate');
-  }
-  else{
-    console.log("inside else previous url");
-  }
+  // var prev_url = this._tableService.getPreviousUrl();
+  // var curr_url = this._tableService.getCurrentUrl();
+  // console.log(prev_url);
+  // console.log(curr_url);
+  // if(prev_url === '/pages/queue-details' && curr_url === '/pages/cancelled'){
+  //   console.log("inside if previous url");
+  //   localStorage.removeItem('startDate');
+  //   localStorage.removeItem('endDate');
+  // }
+  // else{
+  //   console.log("inside else previous url");
+  // }
 }
 }

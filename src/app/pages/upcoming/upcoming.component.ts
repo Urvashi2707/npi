@@ -38,50 +38,81 @@ export class UpcomingComponent implements OnInit {
       this._tableService.clickedID.subscribe(value => {
       this.tableData = _tableService.table_data;
     });
-    const date = new Date();
-    this.model1 = {day:date.getUTCDate(),month:date.getUTCMonth() + 1,year: date.getUTCFullYear() };
-    this.StrtDateString = this.model1.year + '-' + this.model1.month + '-' + this.model1.day;
-    var numberOfDays = 1;
-    var dt = new Date();
+
+
+    var prev_url = this._tableService.getPreviousUrl();
+    var curr_url = this._tableService.getCurrentUrl();
+    console.log(prev_url);
+    console.log(curr_url);
+    if(curr_url === '/pages/queue-details' && prev_url === '/pages/upcoming'){
+      console.log("inside if previous url");
     
-         dt.setDate( dt.getDate() + numberOfDays );
-    this.model = { day: dt.getUTCDate(), month: dt.getUTCMonth() + 1, year: dt.getUTCFullYear()};
-    this.EndDateString = this.model.year + '-' + this.model.month + '-' + this.model.day;
-if(localStorage.getItem('startDate') == null && localStorage.getItem('endDate') == null){
+    }
+    else{
+      console.log("inside else previous url");
+      localStorage.removeItem('up_startDate');
+      localStorage.removeItem('up_endDate');
+    }
+
+  
+  
+if(localStorage.getItem('up_startDate') == null && localStorage.getItem('up_endDate') == null){
   const date = new Date();
   this.model = {day:date.getUTCDate(),month:date.getUTCMonth() + 1,year: date.getUTCFullYear() };
   this.EndDateString = this.model.year + '-' + this.model.month + '-' + this.model.day;
   var dt = new Date();
-         dt.setDate( dt.getDate() - 5 );
+         dt.setDate( dt.getDate() - 1 );
   this.model1 = { day: dt.getUTCDate(), month: dt.getUTCMonth() + 1, year: dt.getUTCFullYear()};
   this.StrtDateString = this.model1.year + '-' + this.model1.month + '-' + this.model1.day;
 }
-else if(localStorage.getItem('startDate') == null){
-  var EndDate = JSON.parse(localStorage.getItem('endDate'));
-  this.model = JSON.parse(localStorage.getItem('endDate'));
-  this.StrtDateString = this.ngbDateParserFormatter.format(StartDate);
-}
-else if(localStorage.getItem('endDate') == null){
-  var StartDate = JSON.parse(localStorage.getItem('startDate'));
-  this.model1 = JSON.parse(localStorage.getItem('startDate'));
+else if(localStorage.getItem('up_startDate') == null){
+  var EndDate = JSON.parse(localStorage.getItem('up_endDate'));
+  this.model = JSON.parse(localStorage.getItem('up_endDate'));
   this.EndDateString = this.ngbDateParserFormatter.format(EndDate);
+  const date = new Date();
+  this.model1 = {day:date.getUTCDate(),month:date.getUTCMonth() + 1,year: date.getUTCFullYear() };
+  this.StrtDateString = this.model1.year + '-' + this.model1.month + '-' + this.model1.day;
+  var numberOfDays = 1;
+}
+else if(localStorage.getItem('up_endDate') == null){
+  var StartDate = JSON.parse(localStorage.getItem('up_startDate'));
+  this.model1 = JSON.parse(localStorage.getItem('up_startDate'));
+  this.StrtDateString = this.ngbDateParserFormatter.format(StartDate);
+  var dt = new Date();
+  var numberOfDays = 1;
+           dt.setDate( dt.getDate() + numberOfDays );
+      this.model = { day: dt.getUTCDate(), month: dt.getUTCMonth() + 1, year: dt.getUTCFullYear()};
+      this.EndDateString = this.model.year + '-' + this.model.month + '-' + this.model.day;
 }
 else{
-  var EndDate = JSON.parse(localStorage.getItem('endDate'));
-  var StartDate = JSON.parse(localStorage.getItem('startDate'));
-  this.model1 = JSON.parse(localStorage.getItem('startDate'));
-  this.model = JSON.parse(localStorage.getItem('endDate'));
+  var EndDate = JSON.parse(localStorage.getItem('up_endDate'));
+  var StartDate = JSON.parse(localStorage.getItem('up_startDate'));
+  this.model1 = JSON.parse(localStorage.getItem('up_startDate'));
+  this.model = JSON.parse(localStorage.getItem('up_endDate'));
   this.EndDateString = this.ngbDateParserFormatter.format(EndDate);
   this.StrtDateString = this.ngbDateParserFormatter.format(StartDate);
 }
 window.onbeforeunload = function(e) {
   console.log("page refreshed");
-  localStorage.removeItem('startDate');
-  localStorage.removeItem('endDate');
+  localStorage.removeItem('up_startDate');
+  localStorage.removeItem('up_endDate');
 };
   }
  
   ngOnInit() {
+       var prev_url = this._tableService.getPreviousUrl();
+    var curr_url = this._tableService.getCurrentUrl();
+    console.log(prev_url);
+    console.log(curr_url);
+    if(prev_url === '/pages/queue-details' && curr_url === '/pages/upcoming'){
+      console.log("inside if previous url");
+    
+    }
+    else{
+      console.log("inside else previous url");
+      localStorage.removeItem('up_startDate');
+      localStorage.removeItem('up_endDate');
+    }
     this.InsuranceUsr = JSON.parse(sessionStorage.getItem('insurance'));
     if(sessionStorage.getItem('selectedsvc')){
       this.SvcId = sessionStorage.getItem('selectedsvc');
@@ -119,7 +150,7 @@ window.onbeforeunload = function(e) {
     if (date != null) {
             this.model1 = date;
             this.StrtDateString = this.ngbDateParserFormatter.format(date);
-            localStorage.setItem('startDate',JSON.stringify(this.model1));
+            localStorage.setItem('up_startDate',JSON.stringify(this.model1));
         }
       }
 
@@ -128,7 +159,7 @@ window.onbeforeunload = function(e) {
     if (date != null) {
             this.model = date;
             this.EndDateString = this.ngbDateParserFormatter.format(date);
-            localStorage.setItem('endDate',JSON.stringify(this.model));
+            localStorage.setItem('up_endDate',JSON.stringify(this.model));
         }
        }
 
@@ -169,18 +200,18 @@ window.onbeforeunload = function(e) {
   }
 
   ngOnDestroy(){
-    var prev_url = this._tableService.getPreviousUrl();
-    var curr_url = this._tableService.getCurrentUrl();
-    console.log(prev_url);
-    console.log(curr_url);
-    if(prev_url === '/pages/queue-details' && curr_url === '/pages/upcoming'){
-      console.log("inside if previous url");
-      localStorage.removeItem('startDate');
-      localStorage.removeItem('endDate');
-    }
-    else{
-      console.log("inside else previous url");
-    }
+    // var prev_url = this._tableService.getPreviousUrl();
+    // var curr_url = this._tableService.getCurrentUrl();
+    // console.log(prev_url);
+    // console.log(curr_url);
+    // if(prev_url === '/pages/queue-details' && curr_url === '/pages/upcoming'){
+    //   console.log("inside if previous url");
+    //   localStorage.removeItem('startDate');
+    //   localStorage.removeItem('endDate');
+    // }
+    // else{
+    //   console.log("inside else previous url");
+    // }
   }
 
 }

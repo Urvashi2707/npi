@@ -19,8 +19,17 @@ export class RouteTakenComponent implements OnInit {
     }
     const as3 = JSON.stringify(reqpara3);
     this._data.webServiceCall(as3).subscribe(res => {
-      this.pickup = res[0].ambassadorposition[0].iframe_link;
-      this.dropoff = res[0].ambassadorposition[1].iframe_link;
+      if(res[0].ambassadorposition.length == 0){
+        console.log("no amb position");
+      }
+      else if(res[0].ambassadorposition[0].hasOwnProperty('iframe_link')){
+        this.pickup = res[0].ambassadorposition[0].iframe_link;
+        // this.dropoff = res[0].ambassadorposition[1].iframe_link;
+      }
+      else if(res[0].ambassadorposition[1].hasOwnProperty('iframe_link')){
+        // this.pickup = res[0].ambassadorposition[0].iframe_link;
+        this.dropoff = res[0].ambassadorposition[1].iframe_link;
+      }
     });
   }
 

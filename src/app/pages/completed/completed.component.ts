@@ -40,17 +40,20 @@ export class CompletedComponent implements OnInit {
       this.tableData = _tableService.table_data;
       
     });
-    const date = new Date();
-    this.model = {day:date.getUTCDate(),month:date.getUTCMonth() + 1,year: date.getUTCFullYear() };
-    this.EndDateString = this.model.year + '-' + this.model.month + '-' + this.model.day;
-    var dt = new Date();
-     dt.setDate( dt.getDate() - 5 );
-    this.model1 = { day: dt.getUTCDate(), month: dt.getUTCMonth() + 1, year: dt.getUTCFullYear()};
-    this.StrtDateString = this.model1.year + '-' + this.model1.month + '-' + this.model1.day;
-    console.log("starting model",this.model);
-    console.log(localStorage.getItem('startDate'));
-    if(localStorage.getItem('startDate') == null && localStorage.getItem('endDate') == null){
-      console.log("not changed");
+    var prev_url = this._tableService.getPreviousUrl();
+    var curr_url = this._tableService.getCurrentUrl();
+    console.log("cons",prev_url);
+    console.log("cons",curr_url);
+    if(curr_url === '/pages/queue-details' && prev_url === '/pages/completed'){
+      console.log("inside if previous url");
+      
+    }
+    else{
+      console.log("inside else previous url");
+      localStorage.removeItem('com_startDate');
+      localStorage.removeItem('com_endDate');
+    }
+    if(localStorage.getItem('com_startDate') == null && localStorage.getItem('com_endDate') == null){
       const date = new Date();
       this.model = {day:date.getUTCDate(),month:date.getUTCMonth() + 1,year: date.getUTCFullYear() };
       this.EndDateString = this.model.year + '-' + this.model.month + '-' + this.model.day;
@@ -59,38 +62,52 @@ export class CompletedComponent implements OnInit {
       this.model1 = { day: dt.getUTCDate(), month: dt.getUTCMonth() + 1, year: dt.getUTCFullYear()};
       this.StrtDateString = this.model1.year + '-' + this.model1.month + '-' + this.model1.day;
     }
-    else if(localStorage.getItem('startDate') == null){
-      console.log("Start Date Changed");
-      var EndDate = JSON.parse(localStorage.getItem('endDate'));
-      this.model = JSON.parse(localStorage.getItem('endDate'));
+    else if(localStorage.getItem('com_startDate') == null){
+      var EndDate = JSON.parse(localStorage.getItem('com_endDate'));
+      this.model = JSON.parse(localStorage.getItem('com_endDate'));
       this.EndDateString = this.ngbDateParserFormatter.format(EndDate);
+      var dt = new Date();
+     dt.setDate( dt.getDate() - 5 );
+    this.model1 = { day: dt.getUTCDate(), month: dt.getUTCMonth() + 1, year: dt.getUTCFullYear()};
+    this.StrtDateString = this.model1.year + '-' + this.model1.month + '-' + this.model1.day;
     }
-    else if(localStorage.getItem('endDate') == null){
-      console.log("End Date Changed");
-      var StartDate = JSON.parse(localStorage.getItem('startDate'));
-      this.model1 = JSON.parse(localStorage.getItem('startDate'));
+    else if(localStorage.getItem('com_endDate') == null){
+      var StartDate = JSON.parse(localStorage.getItem('com_startDate'));
+      this.model1 = JSON.parse(localStorage.getItem('com_startDate'));
       this.StrtDateString = this.ngbDateParserFormatter.format(StartDate);
+      console.log(StartDate);
+      const date = new Date();
+      this.model = {day:date.getUTCDate(),month:date.getUTCMonth() + 1,year: date.getUTCFullYear() };
+      this.EndDateString = this.model.year + '-' + this.model.month + '-' + this.model.day;
     }
     else{
-      console.log("both changed");
-      console.log(localStorage.getItem('startDate'));
-      console.log(localStorage.getItem('endDate'));
-      var EndDate = JSON.parse(localStorage.getItem('endDate'));
-      var StartDate = JSON.parse(localStorage.getItem('startDate'));
-      this.model1 = JSON.parse(localStorage.getItem('startDate'));
-      this.model = JSON.parse(localStorage.getItem('endDate'));
+      var EndDate = JSON.parse(localStorage.getItem('com_endDate'));
+      var StartDate = JSON.parse(localStorage.getItem('com_startDate'));
+      this.model1 = JSON.parse(localStorage.getItem('com_startDate'));
+      this.model = JSON.parse(localStorage.getItem('com_endDate'));
       this.EndDateString = this.ngbDateParserFormatter.format(EndDate);
       this.StrtDateString = this.ngbDateParserFormatter.format(StartDate);
     }
 
     window.onbeforeunload = function(e) {
-      console.log("page refreshed");
-      localStorage.removeItem('startDate');
-      localStorage.removeItem('endDate');
+      localStorage.removeItem('com_startDate');
+      localStorage.removeItem('com_endDate');
     };
   }
 
   ngOnInit() {
+    var prev_url = this._tableService.getPreviousUrl();
+    var curr_url = this._tableService.getCurrentUrl();
+    console.log("init",prev_url);
+    console.log("init",curr_url);
+    if(prev_url === '/pages/queue-details' && curr_url === '/pages/completed'){
+      console.log("inside if previous url");
+    }
+    else{
+      console.log("inside else previous url");
+      localStorage.removeItem('com_startDate');
+      localStorage.removeItem('com_endDate');
+    }
     this.InsuranceUsr = JSON.parse(sessionStorage.getItem('insurance'));
     if(sessionStorage.getItem('selectedsvc')){
       this.SvcId = sessionStorage.getItem('selectedsvc');
@@ -114,7 +131,7 @@ export class CompletedComponent implements OnInit {
     if (date != null) {
             this.model1 = date;
             this.StrtDateString = this.ngbDateParserFormatter.format(date);
-            localStorage.setItem('startDate',JSON.stringify(this.model1));
+            localStorage.setItem('com_startDate',JSON.stringify(this.model1));
         }
       }
 
@@ -128,7 +145,7 @@ export class CompletedComponent implements OnInit {
         if (date != null) {
                 this.model = date;
                 this.EndDateString = this.ngbDateParserFormatter.format(date);
-                localStorage.setItem('endDate',JSON.stringify(this.model));
+                localStorage.setItem('com_endDate',JSON.stringify(this.model));
             }
            }
 
@@ -155,7 +172,6 @@ export class CompletedComponent implements OnInit {
     }
     const ComRq = JSON.stringify(ComReq);
     this._data.webServiceCall(ComRq).subscribe(res => {
-      console.log(res);
       if(res[0].login === 0){
         sessionStorage.removeItem('currentUser');
         this.router.navigate(['/auth/login']);
@@ -175,20 +191,6 @@ export class CompletedComponent implements OnInit {
     });
   }
 
-  ngOnDestroy(){
-    var prev_url = this._tableService.getPreviousUrl();
-    var curr_url = this._tableService.getCurrentUrl();
-    console.log(prev_url);
-    console.log(curr_url);
-    if(prev_url === '/pages/queue-details' && curr_url === '/pages/completed'){
-      console.log("inside if previous url");
-      localStorage.removeItem('startDate');
-      localStorage.removeItem('endDate');
-    }
- 
-    else{
-      console.log("inside else previous url");
-    }
-  }
+  ngOnDestroy(){}
 
 }

@@ -40,52 +40,66 @@ export class MishapsComponent implements OnInit {
       this.tableData = _tableService.table_data;
       this.keyValues = ['queueid', 'date_of_mishap', 'cust_name', 'veh_number', 'amount', 'mishap_status'];
     });
-    const date = new Date();
-    this.model = {day:date.getDate(),month:date.getMonth() + 1,year: date.getFullYear() };
-    this.dateString = this.model.year + '-' + this.model.month + '-' + this.model.day;
-    var numberOfDays = 14;
-    var dt = new Date();
-         dt.setDate( dt.getDate() - 14 );
-    this.model1= { day:dt.getDate(), month: dt.getMonth() + 1, year: dt.getFullYear()};
-    this.dateString1 = this.model1.year + '-' + this.model1.month + '-' + this.model1.day
-
-    var days = date.setDate(date.getDate() - numberOfDays);
-    this.dateString1 = this.datePipe.transform(days,"yyyy-MM-dd");
-    if(localStorage.getItem('startDate') == null && localStorage.getItem('endDate') == null){
+   
+    
+    if(localStorage.getItem('mis_startDate') == null && localStorage.getItem('mis_endDate') == null){
       const date = new Date();
       this.model = {day:date.getUTCDate(),month:date.getUTCMonth() + 1,year: date.getUTCFullYear() };
       this.dateString = this.model.year + '-' + this.model.month + '-' + this.model.day;
       var dt = new Date();
-           dt.setDate( dt.getDate() - 5 );
+           dt.setDate( dt.getDate() - 14 );
       this.model1 = { day: dt.getUTCDate(), month: dt.getUTCMonth() + 1, year: dt.getUTCFullYear()};
       this.dateString1 = this.model1.year + '-' + this.model1.month + '-' + this.model1.day;
     }
-    else if(localStorage.getItem('startDate') == null){
-      var EndDate = JSON.parse(localStorage.getItem('endDate'));
-      this.model = JSON.parse(localStorage.getItem('endDate'));
+    else if(localStorage.getItem('mis_startDate') == null){
+      var EndDate = JSON.parse(localStorage.getItem('mis_endDate'));
+      this.model = JSON.parse(localStorage.getItem('mis_endDate'));
       this.dateString = this.ngbDateParserFormatter.format(EndDate);
+      var dt = new Date();
+         dt.setDate( dt.getDate() - 14 );
+    this.model1= { day:dt.getDate(), month: dt.getMonth() + 1, year: dt.getFullYear()};
+    this.dateString1 = this.model1.year + '-' + this.model1.month + '-' + this.model1.day
+    const date = new Date();
+    var numberOfDays = 14;
+    var days = date.setDate(date.getDate() - numberOfDays);
+    this.dateString1 = this.datePipe.transform(days,"yyyy-MM-dd");
     }
-    else if(localStorage.getItem('endDate') == null){
-      var StartDate = JSON.parse(localStorage.getItem('startDate'));
-      this.model1 = JSON.parse(localStorage.getItem('startDate'));
+    else if(localStorage.getItem('mis_endDate') == null){
+      var StartDate = JSON.parse(localStorage.getItem('mis_startDate'));
+      this.model1 = JSON.parse(localStorage.getItem('mis_startDate'));
+      console.log(StartDate);
       this.dateString1 = this.ngbDateParserFormatter.format(StartDate);
+      const date = new Date();
+      this.model = {day:date.getDate(),month:date.getMonth() + 1,year: date.getFullYear() };
+      this.dateString = this.model.year + '-' + this.model.month + '-' + this.model.day;
+
     }
     else{
-      var EndDate = JSON.parse(localStorage.getItem('endDate'));
-      var StartDate = JSON.parse(localStorage.getItem('startDate'));
-      this.model1 = JSON.parse(localStorage.getItem('startDate'));
-      this.model = JSON.parse(localStorage.getItem('endDate'));
+      var EndDate = JSON.parse(localStorage.getItem('mis_endDate'));
+      var StartDate = JSON.parse(localStorage.getItem('mis_startDate'));
+      this.model1 = JSON.parse(localStorage.getItem('mis_startDate'));
+      this.model = JSON.parse(localStorage.getItem('mis_endDate'));
       this.dateString = this.ngbDateParserFormatter.format(EndDate);
       this.dateString1 = this.ngbDateParserFormatter.format(StartDate);
     }
 
     window.onbeforeunload = function(e) {
-      localStorage.removeItem('startDate');
-      localStorage.removeItem('endDate');
+      localStorage.removeItem('mis_startDate');
+      localStorage.removeItem('mis_endDate');
     };
   }
 
   ngOnInit() {
+    var prev_url = this._detailsTable.getPreviousUrl();
+    var curr_url = this._detailsTable.getCurrentUrl();
+    if(prev_url === '/pages/queue-details' && curr_url === '/pages/mishaps'){
+      localStorage.removeItem('mis_startDate');
+      localStorage.removeItem('mis_endDate');
+    }
+  
+    else{
+      console.log("inside else previous url");
+    }
     this.InsuranceUsr = JSON.parse(sessionStorage.getItem('insurance'));
     if(sessionStorage.getItem('selectedsvc')){
       this.svcid = sessionStorage.getItem('selectedsvc');
@@ -110,7 +124,7 @@ export class MishapsComponent implements OnInit {
     if (date != null) {
             this.model = date;
             this.dateString = this.ngbDateParserFormatter.format(date);
-            localStorage.setItem('endDate',JSON.stringify(this.dateString));
+            localStorage.setItem('mis_endDate',JSON.stringify(this.model));
         }
   }
 
@@ -118,7 +132,7 @@ export class MishapsComponent implements OnInit {
     if (date != null) {
             this.model1 = date;
             this.dateString1 = this.ngbDateParserFormatter.format(date);
-            localStorage.setItem('startDate',JSON.stringify(this.dateString1));
+            localStorage.setItem('mis_startDate',JSON.stringify(this.model1));
         }
    }
    
@@ -163,16 +177,5 @@ export class MishapsComponent implements OnInit {
     });
   }
 
-  ngOnDestroy(){
-    var prev_url = this._detailsTable.getPreviousUrl();
-    var curr_url = this._detailsTable.getCurrentUrl();
-    if(prev_url === '/pages/queue-details' && curr_url === '/pages/mishaps'){
-      localStorage.removeItem('startDate');
-      localStorage.removeItem('endDate');
-    }
-  
-    else{
-      console.log("inside else previous url");
-    }
-  }
+  ngOnDestroy(){  }
 }

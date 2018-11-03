@@ -47,20 +47,23 @@ export class AtCentreComponent implements OnInit {
                 private _data: ServerService, 
                 private _tableService: QueueTableService,
                 private _location: Location) {
-                  
-                  this.barRate = 4;
+                   this.barRate = 4;
                   this.barRateNull = 0;
     this._tableService.clickedID.subscribe(value => {
       this.tableData = _tableService.table_data;
     });
-    const date = new Date();
-    this.model = {day:date.getUTCDate(),month:date.getUTCMonth() + 1,year: date.getUTCFullYear() };
-    this.EndDateString = this.model.year + '-' + this.model.month + '-' + this.model.day;
-    var dt = new Date();
-         dt.setDate( dt.getDate() - 5 );
-    this.model1 = { day: dt.getUTCDate(), month: dt.getUTCMonth() + 1, year: dt.getUTCFullYear()};
-    this.StrtDateString = this.model1.year + '-' + this.model1.month + '-' + this.model1.day;
-    if(localStorage.getItem('startDate') == null && localStorage.getItem('endDate') == null){
+
+    var prev_url = this._tableService.getPreviousUrl();
+    var curr_url = this._tableService.getCurrentUrl();
+    if(curr_url === '/pages/queue-details' && prev_url === '/pages/Active/at-centre'){}
+    else{
+      localStorage.removeItem('atc_startDate');
+      localStorage.removeItem('atc_endDate');
+    }
+   
+   
+
+    if(localStorage.getItem('atc_startDate') == null && localStorage.getItem('atc_endDate') == null){
       const date = new Date();
       this.model = {day:date.getUTCDate(),month:date.getUTCMonth() + 1,year: date.getUTCFullYear() };
       this.EndDateString = this.model.year + '-' + this.model.month + '-' + this.model.day;
@@ -69,33 +72,48 @@ export class AtCentreComponent implements OnInit {
       this.model1 = { day: dt.getUTCDate(), month: dt.getUTCMonth() + 1, year: dt.getUTCFullYear()};
       this.StrtDateString = this.model1.year + '-' + this.model1.month + '-' + this.model1.day;
     }
-    else if(localStorage.getItem('startDate') == null){
-      var EndDate = JSON.parse(localStorage.getItem('endDate'));
-      this.model = JSON.parse(localStorage.getItem('endDate'));
+    else if(localStorage.getItem('atc_startDate') == null){
+      var EndDate = JSON.parse(localStorage.getItem('atc_endDate'));
+      this.model = JSON.parse(localStorage.getItem('atc_endDate'));
       this.EndDateString = this.ngbDateParserFormatter.format(EndDate);
+      var dt = new Date();
+      dt.setDate( dt.getDate() - 5 );
+          this.model1 = { day: dt.getUTCDate(), month: dt.getUTCMonth() + 1, year: dt.getUTCFullYear()};
+          this.StrtDateString = this.model1.year + '-' + this.model1.month + '-' + this.model1.day;
     }
-    else if(localStorage.getItem('endDate') == null){
-      var StartDate = JSON.parse(localStorage.getItem('startDate'));
-      this.model1 = JSON.parse(localStorage.getItem('startDate'));
+    else if(localStorage.getItem('atc_endDate') == null){
+      var StartDate = JSON.parse(localStorage.getItem('atc_startDate'));
+      this.model1 = JSON.parse(localStorage.getItem('atc_startDate'));
       this.StrtDateString = this.ngbDateParserFormatter.format(StartDate);
+      const date = new Date();
+      this.model = {day:date.getUTCDate(),month:date.getUTCMonth() + 1,year: date.getUTCFullYear() };
+      this.EndDateString = this.model.year + '-' + this.model.month + '-' + this.model.day;
     }
     else{
-      var EndDate = JSON.parse(localStorage.getItem('endDate'));
-      var StartDate = JSON.parse(localStorage.getItem('startDate'));
-      this.model1 = JSON.parse(localStorage.getItem('startDate'));
-      this.model = JSON.parse(localStorage.getItem('endDate'));
+      var EndDate = JSON.parse(localStorage.getItem('atc_endDate'));
+      var StartDate = JSON.parse(localStorage.getItem('atc_startDate'));
+      this.model1 = JSON.parse(localStorage.getItem('atc_startDate'));
+      this.model = JSON.parse(localStorage.getItem('atc_endDate'));
       this.EndDateString = this.ngbDateParserFormatter.format(EndDate);
       this.StrtDateString = this.ngbDateParserFormatter.format(StartDate);
     }
 
     window.onbeforeunload = function(e) {
-      localStorage.removeItem('startDate');
-      localStorage.removeItem('endDate');
+      localStorage.removeItem('atc_startDate');
+      localStorage.removeItem('atc_endDate');
     };
 
   }
 
   ngOnInit() {
+     var prev_url = this._tableService.getPreviousUrl();
+  var curr_url = this._tableService.getCurrentUrl();
+  if(prev_url === '/pages/queue-details' && curr_url === '/pages/Active/at-centre'){
+  }
+  else{
+    localStorage.removeItem('atc_startDate');
+    localStorage.removeItem('atc_endDate');
+  }
     this.InsuranceUsr = JSON.parse(sessionStorage.getItem('insurance'));
     if(sessionStorage.getItem('selectedsvc')){
       this.SvcId = sessionStorage.getItem('selectedsvc');
@@ -117,7 +135,7 @@ export class AtCentreComponent implements OnInit {
 
   //File Upload Function 
   UploadFiles(data:any,page){
-    console.log(page);
+    // console.log(page);
     const activeModal = this.modalService.open(SearchModalComponent, { size: 'lg', container: 'nb-layout' });
     this.datatopass = {id:data.queueid, queue_exists: "0",amt:data.queue_total, service_status:data.service_status, queue_time:data.queue_time,service_advisor:data.service_advisor};
     this.dataForUpload = { id: sessionStorage.getItem('QueueId'), queue_date: new Date, service_status: data.service_status}
@@ -130,11 +148,11 @@ export class AtCentreComponent implements OnInit {
   }
 
       //On select of End Date
-  onSelectEndDate(date: NgbDateStruct){
+    onSelectEndDate(date: NgbDateStruct){
     if (date != null) {
             this.model = date;
             this.EndDateString = this.ngbDateParserFormatter.format(date);
-            localStorage.setItem('endDate',JSON.stringify(this.model));
+            localStorage.setItem('atc_endDate',JSON.stringify(this.model));
 
         }
      }
@@ -151,7 +169,7 @@ export class AtCentreComponent implements OnInit {
     if (date != null) {
             this.model1 = date;
             this.StrtDateString = this.ngbDateParserFormatter.format(date);
-            localStorage.setItem('startDate',JSON.stringify(this.model1));
+            localStorage.setItem('atc_startDate',JSON.stringify(this.model1));
            }
       }
 
@@ -203,18 +221,18 @@ export class AtCentreComponent implements OnInit {
 ngOnDestroy(){
   var prev_url = this._tableService.getPreviousUrl();
   var curr_url = this._tableService.getCurrentUrl();
-  console.log("prev url",prev_url);
-  console.log("current url",curr_url);
-  if(prev_url === '/pages/queue-details' && curr_url === '/pages/Active/at-centre'){
-    console.log("inside if previous url");
-    // localStorage.removeItem('startDate');
-    // localStorage.removeItem('endDate');
-  }
-  else{
-    console.log("inside else previous url");
-    localStorage.removeItem('startDate');
-    localStorage.removeItem('endDate');
-  }
+  // console.log("prev url",prev_url);
+  // console.log("current url",curr_url);
+  // if(prev_url === '/pages/queue-details' && curr_url === '/pages/Active/at-centre'){
+  //   console.log("inside if previous url");
+  //   // localStorage.removeItem('startDate');
+  //   // localStorage.removeItem('endDate');
+  // }
+  // else{
+  //   console.log("inside else previous url");
+  //   localStorage.removeItem('startDate');
+  //   localStorage.removeItem('endDate');
+  // }
  }
 
 }

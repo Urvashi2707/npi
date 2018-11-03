@@ -41,16 +41,22 @@ export class PickupComponent implements OnInit {
     this._tableService.clickedID.subscribe(value => {
       this.tableData = _tableService.table_data;
     });
-    const date = new Date();
-    this.model = {day:date.getUTCDate(),month:date.getUTCMonth() + 1,year: date.getUTCFullYear() };
-    this.EndDateString = this.model.year + '-' + this.model.month + '-' + this.model.day;
-    var dt = new Date();
-         dt.setDate( dt.getDate() - 5 );
-    this.model1 = { day: dt.getUTCDate(), month: dt.getUTCMonth() + 1, year: dt.getUTCFullYear()};
-    this.StartDateString = this.model1.year + '-' + this.model1.month + '-' + this.model1.day;
-    console.log("pehle se",this.model);
-    console.log(localStorage.getItem('startDate'));
-    if(localStorage.getItem('startDate') == null && localStorage.getItem('endDate') == null){
+    var prev_url = this._tableService.getPreviousUrl();
+    var curr_url = this._tableService.getCurrentUrl();
+    console.log("prev url",prev_url);
+    console.log("current url",curr_url);
+    if(curr_url === '/pages/queue-details' && prev_url === '/pages/Active/pickup'){
+      console.log("inside if previous url");
+      // localStorage.removeItem('startDate');
+      // localStorage.removeItem('endDate');
+    }
+    else{
+      console.log("inside else previous url");
+      localStorage.removeItem('pickup_startDate');
+      localStorage.removeItem('pickup_endDate');
+    }
+   
+    if(localStorage.getItem('pickup_startDate') == null && localStorage.getItem('pickup_endDate') == null){
       console.log("not changed");
       const date = new Date();
       this.model = {day:date.getUTCDate(),month:date.getUTCMonth() + 1,year: date.getUTCFullYear() };
@@ -60,31 +66,53 @@ export class PickupComponent implements OnInit {
       this.model1 = { day: dt.getUTCDate(), month: dt.getUTCMonth() + 1, year: dt.getUTCFullYear()};
       this.StartDateString = this.model1.year + '-' + this.model1.month + '-' + this.model1.day;
     }
-    else if(localStorage.getItem('startDate') == null){
-      var EndDate = JSON.parse(localStorage.getItem('endDate'));
-      this.model = JSON.parse(localStorage.getItem('endDate'));
+    else if(localStorage.getItem('pickup_startDate') == null){
+      var EndDate = JSON.parse(localStorage.getItem('pickup_endDate'));
+      this.model = JSON.parse(localStorage.getItem('pickup_endDate'));
       this.EndDateString = this.ngbDateParserFormatter.format(EndDate);
+      var dt = new Date();
+               dt.setDate( dt.getDate() - 5 );
+          this.model1 = { day: dt.getUTCDate(), month: dt.getUTCMonth() + 1, year: dt.getUTCFullYear()};
+          this.StartDateString = this.model1.year + '-' + this.model1.month + '-' + this.model1.day;
+          console.log("pehle se",this.model);
     }
-    else if(localStorage.getItem('endDate') == null){
-      var StartDate = JSON.parse(localStorage.getItem('startDate'));
-      this.model1 = JSON.parse(localStorage.getItem('startDate'));
+    else if(localStorage.getItem('pickup_endDate') == null){
+      var StartDate = JSON.parse(localStorage.getItem('pickup_startDate'));
+      this.model1 = JSON.parse(localStorage.getItem('pickup_startDate'));
       this.StartDateString = this.ngbDateParserFormatter.format(StartDate);
+      const date = new Date();
+      this.model = {day:date.getUTCDate(),month:date.getUTCMonth() + 1,year: date.getUTCFullYear() };
+      this.EndDateString = this.model.year + '-' + this.model.month + '-' + this.model.day;
     }
     else{
-      var EndDate = JSON.parse(localStorage.getItem('endDate'));
-      var StartDate = JSON.parse(localStorage.getItem('startDate'));
-      this.model1 = JSON.parse(localStorage.getItem('startDate'));
-      this.model = JSON.parse(localStorage.getItem('endDate'));
+      var EndDate = JSON.parse(localStorage.getItem('pickup_endDate'));
+      var StartDate = JSON.parse(localStorage.getItem('pickup_startDate'));
+      this.model1 = JSON.parse(localStorage.getItem('pickup_startDate'));
+      this.model = JSON.parse(localStorage.getItem('pickup_endDate'));
       this.EndDateString = this.ngbDateParserFormatter.format(EndDate);
       this.StartDateString = this.ngbDateParserFormatter.format(StartDate);
     }
     window.onbeforeunload = function(e) {
-      localStorage.removeItem('startDate');
-      localStorage.removeItem('endDate');
+      localStorage.removeItem('pickup_startDate');
+      localStorage.removeItem('pickup_endDate');
     };
   }
 
   ngOnInit() {
+    var prev_url = this._tableService.getPreviousUrl();
+    var curr_url = this._tableService.getCurrentUrl();
+    console.log("prev url",prev_url);
+    console.log("current url",curr_url);
+    if(prev_url === '/pages/queue-details' && curr_url === '/pages/Active/pickup'){
+      console.log("inside if previous url");
+      // localStorage.removeItem('startDate');
+      // localStorage.removeItem('endDate');
+    }
+    else{
+      console.log("inside else previous url");
+      localStorage.removeItem('pickup_startDate');
+      localStorage.removeItem('pickup_endDate');
+    }
     this.InsuranceUsr = JSON.parse(sessionStorage.getItem('insurance'));
     if(sessionStorage.getItem('selectedsvc')){
       this.SvcId = sessionStorage.getItem('selectedsvc');
@@ -113,7 +141,7 @@ export class PickupComponent implements OnInit {
     if (date != null) {
             this.model = date;
             this.EndDateString = this.ngbDateParserFormatter.format(date);
-            localStorage.setItem('endDate',JSON.stringify(this.model));
+            localStorage.setItem('pickup_endDate',JSON.stringify(this.model));
         }
       }
 
@@ -122,7 +150,7 @@ onSelectStartDate(date: NgbDateStruct){
     if (date != null) {
             this.model1 = date;
             this.StartDateString = this.ngbDateParserFormatter.format(date);
-            localStorage.setItem('startDate',JSON.stringify(this.model1));
+            localStorage.setItem('pickup_startDate',JSON.stringify(this.model1));
         }
 }
 
@@ -180,11 +208,13 @@ img(event){
     console.log(curr_url);
     if(prev_url === '/pages/queue-details' && curr_url === '/pages/Active/pickup'){
       console.log("inside if previous url");
-      localStorage.removeItem('startDate');
-      localStorage.removeItem('endDate');
+      localStorage.removeItem('pickup_startDate');
+      localStorage.removeItem('pickup_endDate');
     }
     else{
       console.log("inside else previous url");
+      // localStorage.removeItem('startDate');
+      // localStorage.removeItem('endDate');
     }
   }
 }
