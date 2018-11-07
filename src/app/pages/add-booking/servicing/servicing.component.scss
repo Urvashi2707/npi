@@ -14,6 +14,11 @@ nb-theme-default{
   text-transform: capitalize;
 }
 
+.disabled_label{
+  font-size: 75%;
+  opacity: 1;
+  transform: translate3d(0, -100%, 0);
+}
 
 .upload-btn-wrapper {
   position: relative;

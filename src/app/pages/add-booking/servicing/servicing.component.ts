@@ -542,12 +542,10 @@ public getCity() {
     this.spinner.show();
     (<HTMLInputElement>document.getElementById('mobile1')).disabled = true;
     (<HTMLInputElement>document.getElementById('num')).disabled = true;
-    document.getElementById("num_label").style.fontSize = "75%";
+    document.getElementById("num_label").classList.add("disabled_label");
     document.getElementById("num_label").style.opacity = "1";
-    document.getElementById("num_label").style.transform = "translate3d(0, -100%, 0)";
-    document.getElementById("mobile_label").style.fontSize = "75%";
+    document.getElementById("mobile_label").classList.add("disabled_label");
     document.getElementById("mobile_label").style.opacity = "1";
-    document.getElementById("mobile_label").style.transform = "translate3d(0, -100%, 0)";
    const reqpara0 = {
       customerMobileNumber:this.user.mobile1,
       vehicleRegNumbe:this.registrationNumber,
@@ -1129,6 +1127,10 @@ SelectSavedDropoffAddress(i,x, ev){
         this.serviceadv = res[0].users;
       }
     });
+  }
+
+  zoomChanged(ev){
+    console.log(ev);
   }
 
   checkVehicleNum(ev) {
@@ -1819,9 +1821,11 @@ SelectSavedDropoffAddress(i,x, ev){
         sessionStorage.removeItem('dropoff_lat_drag');
         sessionStorage.removeItem('dropoff_lng_drag');
         (<HTMLInputElement>document.getElementById('mobile1')).disabled = false;
-        (<HTMLInputElement>document.getElementById('num')).disabled = false;
-        document.getElementById("num_label").style.transform = "translate3d(0, -120%, 0)";
-        document.getElementById("mobile_label").style.transform = "translate3d(0, -120%, 0)";
+        (<HTMLInputElement>document.getElementById('num')).disabled = false;   
+         document.getElementById("num_label").classList.remove("disabled_label");
+         document.getElementById("num_label").style.opacity = "0.5";
+         document.getElementById("mobile_label").classList.remove("disabled_label");
+         document.getElementById("mobile_label").style.opacity = "0.5";
       }
       else if(data[0].hasOwnProperty('error')){
         this.showToast('alert', 'Alert', 'Sorry !! Something went wrong');
