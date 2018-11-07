@@ -81,6 +81,7 @@ export class RsaComponent implements OnInit {
   public salutation:any;
   public globalsvcid:string;
   public selectedsvcid:string;
+  selected_service_type = false;
   showtime = false;
   position = 'toast-top-full-width';
   animationType = 'fade';
@@ -551,6 +552,15 @@ export class RsaComponent implements OnInit {
   public opt1={
     headers: new HttpHeaders({'x-auth-token': sessionStorage.getItem('token'),'x-auth-user':sessionStorage.getItem('auth-user'),'Content-Type':  'application/json'})
     }
+
+
+    service_type_selected(){
+      console.log("selected value");
+      this.selected_service_type = true;
+    }
+
+
+
   eligibiltycheck1(){
     // (<HTMLInputElement>document.getElementById('mobile1')).disabled = true;
     (<HTMLInputElement>document.getElementById('num')).disabled = true;
@@ -954,6 +964,7 @@ export class RsaComponent implements OnInit {
         (<HTMLInputElement>document.getElementById('onspot')).disabled = false;
         (<HTMLInputElement>document.getElementById('towing')).disabled = false;
         this.disabledNext = false;
+        this.selected_service_type = false;
         this.showsvclist = false;
       }
     },

@@ -46,7 +46,7 @@
             <div class="col-md-5 col-sm-5 col-lg-5" *ngIf="yourBoolean === 'onSpot'">
               <div class="form-group">
                 <select name="serviceType" id="serviceType" class="form-control" name="serviceType" [(ngModel)]="user.onSpotType"  [disabled]="disabledNext" #serviceType="ngModel"
-                  required>
+                  required (change)="service_type_selected()">
                   <option *ngFor="let c of OnSpotTypes" [value]="c.eaid"> {{c.description}}</option>
                 </select>
                 <label class="form-control-placeholder" for="serviceType" *ngIf="!disabledNext">On Spot Type</label>
@@ -56,7 +56,7 @@
             <div class="col-md-5 col-sm-5 col-lg-5" *ngIf="yourBoolean === 'towing'">
               <div class="form-group">
                 <select name="TowingTruck" id="TowingTruck" class="form-control" name="TowingTruck" [(ngModel)]="user.towingTruckType" [disabled]="disabledNext" #serviceType="ngModel"
-                  #TowingTruck required>
+                  #TowingTruck required (change)="service_type_selected()">
                   <option *ngFor="let d of TowingTypes" [value]="d.eaid"> {{d.description}}</option>
                 </select>
                 <label class="form-control-placeholder" for="TowingTruck" *ngIf="!disabledNext">Select Towing Truck Type</label>
@@ -65,7 +65,7 @@
          
           <div class="col-md-2 col-sm-2 col-lg-2">
             <div class="NextButton">
-              <button type="button" class="btn btn-warning" (click)='eligibiltycheck1()' [disabled]="!registrationNumber || !user.mobile1 || disabledNext">Next</button>
+              <button type="button" class="btn btn-warning" (click)='eligibiltycheck1()' [disabled]="!registrationNumber || !user.mobile1 || disabledNext || !selected_service_type">Next</button>
             </div>
           </div>
         </div>
