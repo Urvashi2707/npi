@@ -16,6 +16,11 @@
   top: 0;
   opacity: 0;
 }
+.disabled_label{
+  font-size: 75%;
+  opacity: 1;
+  transform: translate3d(0, -100%, 0);
+}
 
 .noPlaceholder::placeholder {
   visibility: hidden;

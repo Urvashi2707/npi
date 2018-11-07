@@ -264,9 +264,13 @@ export class ChauffeurComponent implements OnInit {
 
    data(){
     (<HTMLInputElement>document.getElementById('num')).disabled = true;
-    document.getElementById("num_label").style.fontSize = "75%";
+    // document.getElementById("num_label").style.fontSize = "75%";
+    // document.getElementById("num_label").style.opacity = "1";
+    // document.getElementById("num_label").style.transform = "translate3d(0, -100%, 0)";
+    document.getElementById("num_label").classList.add("disabled_label");
     document.getElementById("num_label").style.opacity = "1";
-    document.getElementById("num_label").style.transform = "translate3d(0, -100%, 0)";
+    // document.getElementById("mobile_label").classList.add("disabled_label");
+    // document.getElementById("mobile_label").style.opacity = "1";
     this.show = true;
     this.disableNext = true;
     var defaultBrand = JSON.parse(sessionStorage.getItem('brandid'));
@@ -1288,8 +1292,9 @@ customerCheck(){
         sessionStorage.removeItem('dropoff_add_drag');
         sessionStorage.removeItem('dropoff_lat_drag');
         sessionStorage.removeItem('dropoff_lng_drag');
-        (<HTMLInputElement>document.getElementById('num')).disabled = false;
-        document.getElementById("num_label").style.transform = "translate3d(0, -120%, 0)";
+        (<HTMLInputElement>document.getElementById('num')).disabled = false; 
+         document.getElementById("num_label").classList.remove("disabled_label");
+         document.getElementById("num_label").style.opacity = "0.5";
     }
  },
   (err: HttpErrorResponse) =>{
