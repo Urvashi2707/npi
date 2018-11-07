@@ -10,7 +10,7 @@
           <div class="row">
             <div class="col-md-5 col-sm-5 col-lg-5">
               <div class="form-group">
-                <input type="text" id="num" name="num" class="form-control" required [(ngModel)]="registrationNumber" #num="ngModel" style=" text-transform: uppercase" pattern="^[0-9a-zA-Z#,\-/_ .@]+$">
+                <input type="text" id="num" name="num" class="form-control" required [(ngModel)]="registrationNumber" #num="ngModel" style=" text-transform: uppercase" pattern="^[0-9a-zA-Z#,\-/_ .@]+$" onkeydown="javascript: return event.keyCode == 32 ? false : true">
                 <label class="form-control-placeholder" for="num" id="num_label">Registration Number</label>
               </div>
               <div class="form-control-feedback" *ngIf="num.errors && (num.dirty || num.touched)">
@@ -20,8 +20,8 @@
             </div>
             <div class="col-md-5 col-sm-5 col-lg-5">
               <div class="form-group">
-                <input type="text" id="mobile1" name="mobile1" class="form-control" maxlength="10" OnlyNumber="true" required [(ngModel)]="user.mobile1"
-                  #mobile1="ngModel" pattern="^[0-9a-zA-Z#,\-/_ .@]+$">
+                <input type="number" id="mobile1" name="mobile1" class="form-control" maxlength="10" OnlyNumber="true" required [(ngModel)]="user.mobile1"
+                  #mobile1="ngModel" pattern="^[0-9a-zA-Z#,\-/_ .@]+$"  oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" onkeydown="javascript: return event.keyCode == 69 ? false : true">
                 <label class="form-control-placeholder" for="mobile1" id="mobile_label">Customer Mobile Number</label>
               </div>
             </div>
