@@ -142,7 +142,7 @@
               <div class="row" style="padding-top: 2%;">
                 <div class="col-lg-6 col-sm-6 col-md-6">
                   <div class="pickup-map">
-                    <agm-map id="pickUpMap" [zoom]="zoom" [latitude]="latPickup" [longitude]="lngPickup" [streetViewControl]="false" [disableDefaultUI]=false [disableDoubleClickZoom]="true" gestureHandling= "none"
+                    <agm-map id="pickUpMap" [zoom]="zoom" [latitude]="latPickup" [longitude]="lngPickup" [streetViewControl]="false" [disableDefaultUI]=false [disableDoubleClickZoom]="true" ggestureHandling="cooperative" [mapDraggable]=true [scrollwheel]=false
                     (mapReady)=pickUpMapReady($event,1) (mapClick)="mapClk($event)" (centerChange)="centerChang($event,1)"  [usePanning]="true"
                     (dragEnd)="mapDragEnd($event)">
                       <agm-marker [latitude]="x" [longitude]="y" 
@@ -295,7 +295,7 @@
                     </agm-map> -->
                         <agm-map id="pickUpMap" [zoom]="zoom" [latitude]="latPickup" [longitude]="lngPickup" [disableDefaultUI]=false
                         (mapReady)=pickUpMapReady($event,2) (mapClick)="mapClk($event)" (centerChange)="centerChang($event,2)" 
-                          (dragEnd)="mapDragEnd($event)" [streetViewControl]="false" [disableDefaultUI]=false [disableDoubleClickZoom]="true" gestureHandling= "none">
+                          (dragEnd)="mapDragEnd($event)" [streetViewControl]="false" [disableDoubleClickZoom]="true" ggestureHandling="cooperative" [mapDraggable]=true [scrollwheel]=false>
                           <agm-marker [latitude]="x" [longitude]="y" 
                           [iconUrl] = "iconurl"
                           [markerDraggable]=false 
@@ -361,7 +361,7 @@
                           <div class="pickup-map">
                             <agm-map id="pickUpMap" [zoom]="zoom" [latitude]="latDrop" [longitude]="lngDrop" [disableDefaultUI]=false
                             (mapReady)=pickUpMapReady($event,3) (mapClick)="mapClk($event)" (centerChange)="centerChang($event,3)" 
-                              (dragEnd)="mapDragEnd($event)" [streetViewControl]="false" [disableDefaultUI]=false [disableDoubleClickZoom]="true" gestureHandling= "none">
+                              (dragEnd)="mapDragEnd($event)" [streetViewControl]="false" [disableDefaultUI]=false [disableDoubleClickZoom]="true" ggestureHandling="cooperative" [mapDraggable]=true [scrollwheel]=false>
                                 <agm-marker [latitude]="a" [longitude]="b" 
                                 [iconUrl] = "iconurl"
                                 [markerDraggable]=false 
@@ -580,7 +580,7 @@
                 <div class="col-lg-6 col-sm-6 col-md-6">
                     <div class="pickup-map">
                         <agm-map id="pickUpMap" [zoom]="zoom" [latitude]="latPickup" [longitude]="lngPickup" [disableDefaultUI]=false
-                        [disableDefaultUI]=false [streetViewControl]="false" [disableDefaultUI]=false [disableDoubleClickZoom]="true" gestureHandling= "none"
+                        [disableDefaultUI]=false [streetViewControl]="false" [disableDefaultUI]=false [disableDoubleClickZoom]="true" ggestureHandling="cooperative" [mapDraggable]=true [scrollwheel]=false
                         (mapReady)=pickUpMapReady($event,4) (mapClick)="mapClk($event)" (centerChange)="centerChang($event,4)" 
                           (dragEnd)="mapDragEnd($event)">
                           <agm-marker [latitude]="x" [longitude]="y" 
@@ -837,7 +837,7 @@
                     <agm-map id="pickUpMap" [zoom]="zoom" [latitude]="latPickup" [longitude]="lngPickup" [disableDefaultUI]=false
                     [disableDefaultUI]=false [streetViewControl]="false"
                     (mapReady)=pickUpMapReady($event,5) (mapClick)="mapClk($event)" (centerChange)="centerChang($event,5)" 
-                      (dragEnd)="mapDragEnd($event)" [disableDoubleClickZoom]="true" gestureHandling= "none">
+                      (dragEnd)="mapDragEnd($event)" [disableDoubleClickZoom]="true" ggestureHandling="cooperative" [mapDraggable]=true [scrollwheel]=false>
                       <agm-marker [latitude]="x" [longitude]="y" 
                       [iconUrl] = "iconurl"
                       [markerDraggable]=false 
@@ -1084,7 +1084,7 @@
                     </agm-map> -->
                     <agm-map id="pickUpMap" [zoom]="zoom" [latitude]="latPickup" [longitude]="lngPickup" [disableDefaultUI]=false
                     (mapReady)=pickUpMapReady($event,6) (mapClick)="mapClk($event)" (centerChange)="centerChang($event,6)" [streetViewControl]="false"
-                      (dragEnd)="mapDragEnd($event)" [disableDoubleClickZoom]="true" gestureHandling= "none">
+                      (dragEnd)="mapDragEnd($event)" [disableDoubleClickZoom]="true" ggestureHandling="cooperative" [mapDraggable]=true [scrollwheel]=false>
                       <agm-marker [latitude]="x" [longitude]="y" 
                       [iconUrl] = "iconurl"
                       [markerDraggable]=false 
