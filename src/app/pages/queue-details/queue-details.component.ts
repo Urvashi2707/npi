@@ -163,6 +163,7 @@ export class QueueDetailsComponent implements OnInit {
     activeModal.componentInstance.modalHeader = 'Send Payment Link';
     activeModal.componentInstance.modalContent = this.CustomerNumber;
   }
+
   viewInvoice() {
     this.showUploadModal("");
     // window.open(this.invoice_link, "_blank");
@@ -193,8 +194,8 @@ export class QueueDetailsComponent implements OnInit {
   on_time: any = "1";
 
   showUploadModal(name: string) {
-    // console.log(this.service_status);
-    // console.log(this.advInfo[0].adv_name);
+    console.log(this.service_status);
+    console.log(this.advInfo[0].adv_name);
     if(this.InvAmt != "0"){
               this.Amt = this.InvAmt;
               // console.log(this.Amt)
@@ -210,6 +211,10 @@ export class QueueDetailsComponent implements OnInit {
     console.log("urvashi urvi");
     activeModal.componentInstance.modalHeader = 'Upload File';
     activeModal.componentInstance.modalContent = this.dataForModal;
+    activeModal.result.then(() => { 
+      this.getQueueDetails();
+    }, () => {    
+    })
   }
 
   showLargeModal(name: string) {
@@ -328,335 +333,343 @@ export class QueueDetailsComponent implements OnInit {
       // this._detailsTable.setData(2);
     }
     else if (tabData.tabTitle == "Details") {
-      const reqpara3 = {
-        // requesttype: 'getqueuebasichistory',
-        requesttype: 'getqueuebasichistoryv3',
-        queueidvar: sessionStorage.getItem('QueueId'),
-      }
-      const as3 = JSON.stringify(reqpara3);
-      this._data.webServiceCall(as3).subscribe(res => {
-        const check = res.valueOf();
-        // console.log(check,"check");
-        const objectlength = Object.keys(check).length;
-        if (objectlength > 0) {
-          if (check[0].hasOwnProperty('custinfo')) {
-            const custInfo = check[0].custinfo;
-            this.CustomerName = custInfo[0].cust_name;
-            this.CustomerNumber = custInfo[0].cust_country_code + " " + custInfo[0].cust_mobile;
-            this.CustomerEmail = custInfo[0].cust_email;
-            this.custInfo.custNo = custInfo[0].cust_mobile;
-            sessionStorage.setItem('customerNo', custInfo[0].cust_mobile);
-          }
-        }
-        if (objectlength > 1) {
-          if (check[1].hasOwnProperty('puinfo')) {
+     this.getQueueDetails();
+  }
+}
 
-             this.pickupInfo = check[1].puinfo;
-            // console.log(this.pickupInfo);
-            if(this.pickupInfo[0].hasOwnProperty('type_service')){
-              // console.log("inside typeofserviceif");
-              this.type_of_service = JSON.parse(this.pickupInfo[0].type_service);
-             this.servicestatus = JSON.parse(this.pickupInfo[0].active);
-            }
-            if (this.pickupInfo[0].hasOwnProperty('pu_address')) {
-              this.showPickupCard = '1';
-              let pick_address = this.pickCardForm.get('pickupAddress');
-              if (this.pickupInfo[0].pu_address) {
-                pick_address.setValue(this.pickupInfo[0].pu_address);
-              }
-            }
-            if (this.pickupInfo[0].pu_time) {
-              let pick_slot = this.pickCardForm.get('pickup_slot');
-              pick_slot.setValue(this.pickupInfo[0].pu_time);
-            }
 
-            if (this.pickupInfo[0].handed_to_name) {
-              let hand_to_name = this.pickupHandedToForm.get('hand_to_name');
-              hand_to_name.setValue(this.pickupInfo[0].handed_to_name);
-            }
-
-            if (this.pickupInfo[0].handed_to_number) {
-              let handed_to_number = this.pickupHandedToForm.get('handed_to_number');
-              handed_to_number.setValue(this.pickupInfo[0].handed_to_number);
-            }
-
-            let amb_name = this.pickCardForm.get('puambName');
-            if (this.pickupInfo[0].amb_name) {
-              amb_name.setValue(this.pickupInfo[0].amb_name);
-            }
-            this.on_time =this.pickupInfo[0].on_time
-            if (this.pickupInfo[0].on_time) {
-              if (this.pickupInfo[0].on_time == '0') {
-                this.pickOnTimeImage = this.failimg;
-              } else {
-                this.pickOnTimeImage = this.successImg;
-              }
-            }
-          }
-        }
-        if (objectlength > 2) {
-          if (check[2].hasOwnProperty('doinfo')) {
-            this.dropInfo = check[2].doinfo;
-            if (this.dropInfo[0].hasOwnProperty('do_address')) {
-              this.showDropCard = '1';
-              let dropAddress = this.dropoffForm.get('dropAddress');
-              if (this.dropInfo[0].do_address) {
-                dropAddress.setValue(this.dropInfo[0].do_address);
-              }
-
-              let dropSlot = this.dropoffForm.get('dropSlot');
-              if (this.dropInfo[0].do_time) {
-                this.dropSlotTime = this.dropInfo[0].do_time;
-                dropSlot.setValue(this.dropInfo[0].do_time);
-              }
-
-              let dropAmbName = this.dropoffForm.get('dropAmbName');
-
-              if (this.dropInfo[0].amb_name) {
-                // console.log("AMb name in drop ",this.dropInfo[0].amb_name)
-                dropAmbName.setValue(this.dropInfo[0].amb_name);
-                // console.log("Input Amb",dropAmbName)
-              }
-
-              let amount = this.dropoffForm.get('amount');
-              if (this.dropInfo[0].total) {
-                amount.setValue(this.dropInfo[0].total);
-              }
-
-              let payment_type = this.dropoffForm.get('payment_type');
-              if (this.dropInfo[0].payment_type) {
-                payment_type.setValue(this.dropInfo[0].payment_type);
-              }
-
-              let dropHandoverName = this.dropHandedToForm.get('dropHandoverName');
-              if (this.dropInfo[0].handed_to_name) {
-                dropHandoverName.setValue(this.dropInfo[0].handed_to_name);
-              }
-
-              let dropHandoverNumber = this.dropHandedToForm.get('dropHandoverNumber');
-              if (this.dropInfo[0].handed_to_number) {
-                dropHandoverNumber.setValue(this.dropInfo[0].handed_to_number);
-              }
-
-              if (this.dropInfo[0].on_time) {
-                if (this.dropInfo[0].on_time == '0') {
-                  this.dropOffOnTimeImage = this.failimg;
-                }
-                else {
-                  this.dropOffOnTimeImage = this.successImg;
-                }
-              }
-            }
-          }
-        }
-        if(objectlength > 3){
-          if (check[3].hasOwnProperty('atsvc')) {
-            const atSVC = check[3].atsvc;
-            // console.log(this.servicestatus);
-            if(this.servicestatus === 3){
-              this.showAtSVCCard = '1';
-            }
-            if (atSVC[0].hasOwnProperty('est_amount')) {
-              this.showAtSVCCard = '1';
-              let estAmount = this.vehicle_at_svc_formGroup.get('estAmount');
-              if (atSVC[0].est_amount) {
-                estAmount.setValue(atSVC[0].est_amount);
-                this.estAmount = atSVC[0].est_amount;
-                // console.log("EST",this.estAmount);
-              }
-            }
-            if (atSVC[0].est_time) {
-              let estTime = this.vehicle_at_svc_formGroup.get('ETD');
-              estTime.setValue(atSVC[0].est_time);
-              this.QueueTIme = atSVC[0].est_time;
-              // console.log(this.QueueTIme);
-            }
-            if (atSVC[0].queue_total) {
-              let invoiceAmount = this.vehicle_at_svc_formGroup.get('invoiceAmount');
-              invoiceAmount.setValue(atSVC[0].queue_total);
-              this.InvAmt = atSVC[0].queue_total;
-              // console.log("INV",this.InvAmt)
-            }
-            if (atSVC[0].est_amount) {
-
-            }
-            if (atSVC[0].est_link) {
-              this.est_link = atSVC[0].est_link;
-            }
-            if (atSVC[0].inv_link) {
-              this.invoice_link = atSVC[0].inv_link;
-            }
-            if (atSVC[0].service_status) {
-              this.service_status = atSVC[0].service_status;
-            }
-          }
-        }
-        // if (objectlength > 3) {
-        //   if (check[3].hasOwnProperty('atsvc')) {
-        //     const atSVC = check[3].atsvc;
-        //     if (atSVC[0].hasOwnProperty('est_amount')) {
-        //       this.showAtSVCCard = '1';
-        //       let estAmount = this.vehicle_at_svc_formGroup.get('estAmount');
-        //       const EstAmt = estAmount;
-        //       if (atSVC[0].est_amount) {
-        //         estAmount.setValue(atSVC[0].est_amount);
-        //         this.estAmount = atSVC[0].est_amount;
-        //         console.log(this.estAmount);
-        //       }
-        //     }
-        //     if (atSVC[0].est_time) {
-        //       let estTime = this.vehicle_at_svc_formGroup.get('ETD');
-        //       estTime.setValue(atSVC[0].est_time);
-        //       this.QueueTIme = atSVC[0].est_time;
-
-        //     }
-        //     if (atSVC[0].queue_total) {
-        //       let invoiceAmount = this.vehicle_at_svc_formGroup.get('invoiceAmount');
-        //       invoiceAmount.setValue(atSVC[0].queue_total);
-        //       this.InvAmt = atSVC[0].queue_total;
-        //     }
-        //     if (atSVC[0].est_amount) {
-
-        //     }
-        //     if (atSVC[0].est_link) {
-        //       this.est_link = atSVC[0].est_link;
-        //     }
-        //     if (atSVC[0].inv_link) {
-        //       this.invoice_link = atSVC[0].inv_link;
-        //     }
-        //     if (atSVC[0].service_status) {
-        //       this.service_status = atSVC[0].service_status;
-        //       console.log(this.service_status);
-        //     }
-        //   }
-        // }
-        if (objectlength > 4) {
-          if (check[4].hasOwnProperty('notes')) {
-            const notes = check[4].notes;
-            if (notes[0].notes) {
-              let notesData = this.notesFormGroup.get('notesData');
-              notesData.setValue(notes[0].notes);
-            }
-          }
-        }
-
-        if (objectlength > 9) {
-          if (check[9].hasOwnProperty('ambinfo')) {
-            const ambInfo = check[9].ambinfo;
-            if (ambInfo[0].hasOwnProperty('amb_name')) {
-              this.showAmbCard = '1';
-              if (ambInfo[0].amb_name) {
-                let amb_name = this.ambassadorFormGroup.get('ambassadorName');
-                amb_name.setValue(ambInfo[0].amb_name);
-              }
-
-              if (ambInfo[0].amb_mobile) {
-                let amb_number = this.ambassadorFormGroup.get('ambassadorNumber');
-                amb_number.setValue(ambInfo[0].amb_mobile);
-              }
-
-              if (ambInfo[0].amb_link) {
-                this.ProfileLink = ambInfo[0].amb_link;
-              }
-            }
-          }
-        }
-
-        if (objectlength > 6) {
-          // console.log("car info if");
-          // console.log(check[6]);
-          if (check[5].hasOwnProperty('vehicleinfo')) {
-            const vehInfo = check[5].vehicleinfo;
-            this.VehicleNumber = vehInfo[0].veh_number;
-            this.VehicleBrand = vehInfo[0].veh_brand;
-            this.VehicleModel = vehInfo[0].veh_model;
-            this.VehicleVariant = vehInfo[0].veh_submodel;
-          }
-        }
-        if (objectlength > 7) {
-          if (check[7].hasOwnProperty('creinfo') || check[8].hasOwnProperty('adviserinfo')) {
-            const creInfo = check[7].creinfo;
-            this.advInfo = check[8].adviserinfo;
-            if (creInfo[0].hasOwnProperty('cre_name')) {
-              this.showCRECard = '1';
-              let cre_name = this.creFormGroup.get('creName');
-              cre_name.setValue(creInfo[0].cre_name);
-
-              let cre_number = this.creFormGroup.get('creNumber');
-              cre_number.setValue(creInfo[0].cre_mobile);
-
-            }
-            if(this.advInfo[0].hasOwnProperty('adv_name')){
-              this.showCRECard = '1';
-              let adv_name = this.creFormGroup.get('advName');
-              adv_name.setValue(this.advInfo[0].adv_name);
-              // console.log('Adv_Name');
-              // console.log(this.advInfo[0].adv_name);
-
-              let adv_number = this.creFormGroup.get('advNumber');
-              adv_number.setValue(this.advInfo[0].adv_mobile);
-            }
-             
-            }
-          }
-        
-        if (objectlength > 10) {
-          if (check[10].hasOwnProperty('complaints')) {
-            const complaints1 = check[10].complaints;
-            this.showComplaintsCard = "0";
-            // console.log(this.type_of_service);
-            if (complaints1[0].hasOwnProperty('complaint')) {
-            this.complaints = complaints1[0].complaint;
-            if(this.type_of_service === 1 || this.type_of_service === 0){
-              this.showComplaintsCard = "1";
-            }
-            else{
-              this.showComplaintsCard = "0";
-            }
-            }
-          }
-        }
-        // if (objectlength > 11) {
-        //   if (check[11].hasOwnProperty('feedback')) {
-        //     this.showFeedbackCards = "1";
-        //     this.feedback = check[11].feedback;
-        //     if(check[11].feedback[0].hasOwnProperty('no_records'))
-        //     {
-        //       this.showFeedbackCards = "0";
-        //     }
-        //   }
-        // }
-        // console.log("lenght",objectlength )
-        if (objectlength > 10) {
-          // console.log("new feedback");
-          if (check[10].hasOwnProperty('newfeedback')) {
-            // console.log("show new feedback");
-            this.showNewFeedbackCards = "1";
-            this.feedback = check[10].newfeedback;
-            if(check[10].newfeedback[0].hasOwnProperty('no_records'))
-            {
-              // console.log("no new feedback");
-              this.showNewFeedbackCards = "0";
-              // if (objectlength > 11) {
-              //   if (check[11].hasOwnProperty('feedback')) {
-              //     this.showFeedbackCards = "1";
-                 
-              //     if(check[11].feedback[0].hasOwnProperty('no_records'))
-              //     {
-              //       this.showFeedbackCards = "0";
-              //     }
-              //     else{
-              //       this.feedback = check[11].feedback;
-              //     }
-              //   }
-              // }
-            }
-            else{}
-          }
-        }
-
-      });
+  getQueueDetails(){
+    const reqpara3 = {
+      // requesttype: 'getqueuebasichistory',
+      requesttype: 'getqueuebasichistoryv3',
+      queueidvar: sessionStorage.getItem('QueueId'),
     }
+    const as3 = JSON.stringify(reqpara3);
+    this._data.webServiceCall(as3).subscribe(res => {
+      const check = res.valueOf();
+      // console.log(check,"check");
+      const objectlength = Object.keys(check).length;
+      if (objectlength > 0) {
+        if (check[0].hasOwnProperty('custinfo')) {
+          const custInfo = check[0].custinfo;
+          this.CustomerName = custInfo[0].cust_name;
+          this.CustomerNumber = custInfo[0].cust_country_code + " " + custInfo[0].cust_mobile;
+          this.CustomerEmail = custInfo[0].cust_email;
+          this.custInfo.custNo = custInfo[0].cust_mobile;
+          sessionStorage.setItem('customerNo', custInfo[0].cust_mobile);
+        }
+      }
+      if (objectlength > 1) {
+        if (check[1].hasOwnProperty('puinfo')) {
+
+           this.pickupInfo = check[1].puinfo;
+          // console.log(this.pickupInfo);
+          if(this.pickupInfo[0].hasOwnProperty('type_service')){
+            // console.log("inside typeofserviceif");
+            this.type_of_service = JSON.parse(this.pickupInfo[0].type_service);
+           this.servicestatus = JSON.parse(this.pickupInfo[0].active);
+          }
+          if (this.pickupInfo[0].hasOwnProperty('pu_address')) {
+            this.showPickupCard = '1';
+            let pick_address = this.pickCardForm.get('pickupAddress');
+            if (this.pickupInfo[0].pu_address) {
+              pick_address.setValue(this.pickupInfo[0].pu_address);
+            }
+          }
+          if (this.pickupInfo[0].pu_time) {
+            let pick_slot = this.pickCardForm.get('pickup_slot');
+            pick_slot.setValue(this.pickupInfo[0].pu_time);
+          }
+
+          if (this.pickupInfo[0].handed_to_name) {
+            let hand_to_name = this.pickupHandedToForm.get('hand_to_name');
+            hand_to_name.setValue(this.pickupInfo[0].handed_to_name);
+          }
+
+          if (this.pickupInfo[0].handed_to_number) {
+            let handed_to_number = this.pickupHandedToForm.get('handed_to_number');
+            handed_to_number.setValue(this.pickupInfo[0].handed_to_number);
+          }
+
+          let amb_name = this.pickCardForm.get('puambName');
+          if (this.pickupInfo[0].amb_name) {
+            amb_name.setValue(this.pickupInfo[0].amb_name);
+          }
+          this.on_time =this.pickupInfo[0].on_time
+          if (this.pickupInfo[0].on_time) {
+            if (this.pickupInfo[0].on_time == '0') {
+              this.pickOnTimeImage = this.failimg;
+            } else {
+              this.pickOnTimeImage = this.successImg;
+            }
+          }
+        }
+      }
+      if (objectlength > 2) {
+        if (check[2].hasOwnProperty('doinfo')) {
+          this.dropInfo = check[2].doinfo;
+          if (this.dropInfo[0].hasOwnProperty('do_address')) {
+            this.showDropCard = '1';
+            let dropAddress = this.dropoffForm.get('dropAddress');
+            if (this.dropInfo[0].do_address) {
+              dropAddress.setValue(this.dropInfo[0].do_address);
+            }
+
+            let dropSlot = this.dropoffForm.get('dropSlot');
+            if (this.dropInfo[0].do_time) {
+              this.dropSlotTime = this.dropInfo[0].do_time;
+              dropSlot.setValue(this.dropInfo[0].do_time);
+            }
+
+            let dropAmbName = this.dropoffForm.get('dropAmbName');
+
+            if (this.dropInfo[0].amb_name) {
+              // console.log("AMb name in drop ",this.dropInfo[0].amb_name)
+              dropAmbName.setValue(this.dropInfo[0].amb_name);
+              // console.log("Input Amb",dropAmbName)
+            }
+
+            let amount = this.dropoffForm.get('amount');
+            if (this.dropInfo[0].total) {
+              amount.setValue(this.dropInfo[0].total);
+            }
+
+            let payment_type = this.dropoffForm.get('payment_type');
+            if (this.dropInfo[0].payment_type) {
+              payment_type.setValue(this.dropInfo[0].payment_type);
+            }
+
+            let dropHandoverName = this.dropHandedToForm.get('dropHandoverName');
+            if (this.dropInfo[0].handed_to_name) {
+              dropHandoverName.setValue(this.dropInfo[0].handed_to_name);
+            }
+
+            let dropHandoverNumber = this.dropHandedToForm.get('dropHandoverNumber');
+            if (this.dropInfo[0].handed_to_number) {
+              dropHandoverNumber.setValue(this.dropInfo[0].handed_to_number);
+            }
+
+            if (this.dropInfo[0].on_time) {
+              if (this.dropInfo[0].on_time == '0') {
+                this.dropOffOnTimeImage = this.failimg;
+              }
+              else {
+                this.dropOffOnTimeImage = this.successImg;
+              }
+            }
+          }
+        }
+      }
+      if(objectlength > 3){
+        if (check[3].hasOwnProperty('atsvc')) {
+          const atSVC = check[3].atsvc;
+          // console.log(this.servicestatus);
+          if(this.servicestatus === 3){
+            this.showAtSVCCard = '1';
+          }
+          if (atSVC[0].hasOwnProperty('est_amount')) {
+            this.showAtSVCCard = '1';
+            let estAmount = this.vehicle_at_svc_formGroup.get('estAmount');
+            if (atSVC[0].est_amount) {
+              estAmount.setValue(atSVC[0].est_amount);
+              this.estAmount = atSVC[0].est_amount;
+              // console.log("EST",this.estAmount);
+            }
+          }
+          if (atSVC[0].est_time) {
+            let estTime = this.vehicle_at_svc_formGroup.get('ETD');
+            estTime.setValue(atSVC[0].est_time);
+            this.QueueTIme = atSVC[0].est_time;
+            // console.log(this.QueueTIme);
+          }
+          if (atSVC[0].queue_total) {
+            let invoiceAmount = this.vehicle_at_svc_formGroup.get('invoiceAmount');
+            invoiceAmount.setValue(atSVC[0].queue_total);
+            this.InvAmt = atSVC[0].queue_total;
+            // console.log("INV",this.InvAmt)
+          }
+          if (atSVC[0].est_amount) {
+
+          }
+          if (atSVC[0].est_link) {
+            this.est_link = atSVC[0].est_link;
+          }
+          if (atSVC[0].inv_link) {
+            this.invoice_link = atSVC[0].inv_link;
+          }
+          if (atSVC[0].service_status) {
+            this.service_status = atSVC[0].service_status;
+          }
+        }
+      }
+      // if (objectlength > 3) {
+      //   if (check[3].hasOwnProperty('atsvc')) {
+      //     const atSVC = check[3].atsvc;
+      //     if (atSVC[0].hasOwnProperty('est_amount')) {
+      //       this.showAtSVCCard = '1';
+      //       let estAmount = this.vehicle_at_svc_formGroup.get('estAmount');
+      //       const EstAmt = estAmount;
+      //       if (atSVC[0].est_amount) {
+      //         estAmount.setValue(atSVC[0].est_amount);
+      //         this.estAmount = atSVC[0].est_amount;
+      //         console.log(this.estAmount);
+      //       }
+      //     }
+      //     if (atSVC[0].est_time) {
+      //       let estTime = this.vehicle_at_svc_formGroup.get('ETD');
+      //       estTime.setValue(atSVC[0].est_time);
+      //       this.QueueTIme = atSVC[0].est_time;
+
+      //     }
+      //     if (atSVC[0].queue_total) {
+      //       let invoiceAmount = this.vehicle_at_svc_formGroup.get('invoiceAmount');
+      //       invoiceAmount.setValue(atSVC[0].queue_total);
+      //       this.InvAmt = atSVC[0].queue_total;
+      //     }
+      //     if (atSVC[0].est_amount) {
+
+      //     }
+      //     if (atSVC[0].est_link) {
+      //       this.est_link = atSVC[0].est_link;
+      //     }
+      //     if (atSVC[0].inv_link) {
+      //       this.invoice_link = atSVC[0].inv_link;
+      //     }
+      //     if (atSVC[0].service_status) {
+      //       this.service_status = atSVC[0].service_status;
+      //       console.log(this.service_status);
+      //     }
+      //   }
+      // }
+      if (objectlength > 4) {
+        if (check[4].hasOwnProperty('notes')) {
+          const notes = check[4].notes;
+          if (notes[0].notes) {
+            let notesData = this.notesFormGroup.get('notesData');
+            notesData.setValue(notes[0].notes);
+          }
+        }
+      }
+
+      if (objectlength > 9) {
+        if (check[9].hasOwnProperty('ambinfo')) {
+          const ambInfo = check[9].ambinfo;
+          if (ambInfo[0].hasOwnProperty('amb_name')) {
+            this.showAmbCard = '1';
+            if (ambInfo[0].amb_name) {
+              let amb_name = this.ambassadorFormGroup.get('ambassadorName');
+              amb_name.setValue(ambInfo[0].amb_name);
+            }
+
+            if (ambInfo[0].amb_mobile) {
+              let amb_number = this.ambassadorFormGroup.get('ambassadorNumber');
+              amb_number.setValue(ambInfo[0].amb_mobile);
+            }
+
+            if (ambInfo[0].amb_link) {
+              this.ProfileLink = ambInfo[0].amb_link;
+            }
+          }
+        }
+      }
+
+      if (objectlength > 6) {
+        // console.log("car info if");
+        // console.log(check[6]);
+        if (check[5].hasOwnProperty('vehicleinfo')) {
+          const vehInfo = check[5].vehicleinfo;
+          this.VehicleNumber = vehInfo[0].veh_number;
+          this.VehicleBrand = vehInfo[0].veh_brand;
+          this.VehicleModel = vehInfo[0].veh_model;
+          this.VehicleVariant = vehInfo[0].veh_submodel;
+        }
+      }
+      if (objectlength > 7) {
+        if (check[6].hasOwnProperty('creinfo') || check[7].hasOwnProperty('adviserinfo')) {
+          const creInfo = check[6].creinfo;
+          this.advInfo = check[7].adviserinfo;
+          if (creInfo[0].hasOwnProperty('cre_name')) {
+            this.showCRECard = '1';
+            let cre_name = this.creFormGroup.get('creName');
+            cre_name.setValue(creInfo[0].cre_name);
+
+            let cre_number = this.creFormGroup.get('creNumber');
+            cre_number.setValue(creInfo[0].cre_mobile);
+
+          }
+          if(this.advInfo[0].hasOwnProperty('adv_name')){
+            this.showCRECard = '1';
+            let adv_name = this.creFormGroup.get('advName');
+            adv_name.setValue(this.advInfo[0].adv_name);
+            console.log('Adv_Name');
+            console.log(this.advInfo[0].adv_name);
+
+            let adv_number = this.creFormGroup.get('advNumber');
+            adv_number.setValue(this.advInfo[0].adv_mobile);
+          }
+           
+          }
+        }
+      
+      if (objectlength > 9) {
+        console.log("inside complaint");
+        if (check[9].hasOwnProperty('complaints')) {
+          console.log("has property inside complaint");
+          const complaints1 = check[9].complaints;
+          this.showComplaintsCard = "0";
+          // console.log(this.type_of_service);
+          if (complaints1[0].hasOwnProperty('complaint')) {
+          this.complaints = complaints1[0].complaint;
+          if(this.type_of_service === 1 || this.type_of_service === 0){
+            this.showComplaintsCard = "1";
+          }
+          else{
+            this.showComplaintsCard = "0";
+          }
+          }
+        }
+      }
+      // if (objectlength > 11) {
+      //   if (check[11].hasOwnProperty('feedback')) {
+      //     this.showFeedbackCards = "1";
+      //     this.feedback = check[11].feedback;
+      //     if(check[11].feedback[0].hasOwnProperty('no_records'))
+      //     {
+      //       this.showFeedbackCards = "0";
+      //     }
+      //   }
+      // }
+      // console.log("lenght",objectlength )
+      if (objectlength > 10) {
+        // console.log("new feedback");
+        if (check[10].hasOwnProperty('newfeedback')) {
+          // console.log("show new feedback");
+          this.showNewFeedbackCards = "1";
+          this.feedback = check[10].newfeedback;
+          if(check[10].newfeedback[0].hasOwnProperty('no_records'))
+          {
+            // console.log("no new feedback");
+            this.showNewFeedbackCards = "0";
+            // if (objectlength > 11) {
+            //   if (check[11].hasOwnProperty('feedback')) {
+            //     this.showFeedbackCards = "1";
+               
+            //     if(check[11].feedback[0].hasOwnProperty('no_records'))
+            //     {
+            //       this.showFeedbackCards = "0";
+            //     }
+            //     else{
+            //       this.feedback = check[11].feedback;
+            //     }
+            //   }
+            // }
+          }
+          else{}
+        }
+      }
+
+    });
+  
   }
 
   public beforeChange($event: NgbPanelChangeEvent) {

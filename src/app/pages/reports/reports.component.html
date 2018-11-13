@@ -41,7 +41,7 @@
           <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
             <div class="form-group">
               <select id="serviceType" class="form-control" name="service_type" [(ngModel)]="user.service_type" #servicetype="ngModel"
-                required>
+                required (change)="service_type_changed($event.target.value)">
                 <option *ngFor="let s of service_type" [value]="s.id"> {{s.type}}</option>
               </select>
               <label class="form-control-placeholder" for="serviceType">Service Type</label>
@@ -49,10 +49,10 @@
           </div>
           <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
             <div class="form-group">
-              <select id="status" class="form-control" name="status" [(ngModel)]="user.status" #servicetype="ngModel" required>
+              <select id="status" class="form-control" name="status" [(ngModel)]="user.status" #servicetype="ngModel" required (change)="service_status_changed($event.target.value)">
                 <option *ngFor="let stat of status" [value]="stat.id"> {{stat.type}}</option>
               </select>
-              <label class="form-control-placeholder" for="serviceType">Service Type</label>
+              <label class="form-control-placeholder" for="serviceType">Service Status</label>
             </div>
           </div>
           <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">

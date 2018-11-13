@@ -243,7 +243,7 @@
                          <img src="../../../../assets/images/plus-symbol.svg">
                        </button>
                        <button type="button" *ngFor="let i of address;let x = index" class="savedAddBtn" id="pickupsaved" #pickupSavedRef (click)="SelectSavedPickupAddress(i, x, $event)">
-                         <p style="word-break: break-all;">#{{i.postal_address}} , {{i.google_address}},</p>
+                         <p style="word-break: break-all;">#{{i.postal_address}}, {{i.google_address}},</p>
                          <p>{{i.area}}</p>
                          <p class="address-type-para">{{i.type_of_address}}</p>
                        </button>
