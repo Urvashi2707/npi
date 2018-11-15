@@ -20,7 +20,7 @@ export class ServicingService {
    }
 
    //Easy Auto
-  private getSession_url :string = 'http://plsuat.europassistance.in:444/getSession';
+  private getSession_url :string = 'https://plsuat.europassistance.in:8000/api/eaiExt/getsession';
   private Ea_check1_url:string = 'http://plsuat.europassistance.in:444/checkInitialEligibility';
   private Ea_check2_url:string = 'http://plsuat.europassistance.in:444/checkFinalEligibility';
   public destroySession_url = 'http://plsuat.europassistance.in:444/destroysession';
@@ -44,7 +44,7 @@ public options = {
 }
 
 public opt={
-  headers: new HttpHeaders().set('x-auth-token', JSON.stringify(localStorage.getItem('token'))),
+  headers: new HttpHeaders({'Content-Type':'application/json','x-auth-token':'pass123','x-auth-user':'21NorthUser01'})
   
 }
 
@@ -54,7 +54,9 @@ public opt1={
 }
 
 session(){
-    return this.http.post(this.getSession_url,this.options)
+  const reqpara1 = {}
+  console.log(this.opt);
+    return this.http.post(this.getSession_url,reqpara1,this.opt)
 }
 
 ForgotPassword(reqpara){
@@ -67,11 +69,9 @@ Login(reqpara){
 
 setter(Data){
 this.data = Data;
-console.log(this.data);
 }
 
 getter(): string{
-  console.log(this.data);
   return this.data;
 }
 
@@ -84,7 +84,6 @@ Finalcheck(reqpara){
 }
 
 destroySession(){
-  console.log(this.opt1);
   const reqpara = {}
   return this.http.post(this.destroySession_url,reqpara,this.opt1 )
 }
@@ -98,7 +97,7 @@ slot(reqpara){
 }
 
   getSession(){
-    return this.http.post(this.getSession_url,this.options)
+    return this.http.post(this.getSession_url,this.opt)
   }
 
   logout(){

@@ -378,7 +378,7 @@ public setDrag: Boolean;
            if(value == 3){
             this.x = ev.lat;
             this.y = ev.lng;
-            console.log("pickup",ev)
+            // console.log("pickup",ev)
             sessionStorage.setItem('pickup_lat_drag',ev.lat);
             sessionStorage.setItem('pickup_lng_drag',ev.lng);
           }
@@ -386,7 +386,7 @@ public setDrag: Boolean;
          else if (value == 4){
           this.a = ev.lat;
           this.b = ev.lng;
-          console.log("dropff",ev)
+          // console.log("dropff",ev)
           sessionStorage.setItem('dropoff_lat_drag',ev.lat);
           sessionStorage.setItem('dropoff_lng_drag',ev.lng);
          }
