@@ -35,6 +35,7 @@ export class ServicingComponent implements OnInit {
   private Variant: any = [];
   private cre: any = [];
   private Slot: any = [];
+  eligibiltycheck_final:boolean;
   private Complaints: string[];
   private service_advisor: string[];
   private creName: string[];
@@ -540,6 +541,8 @@ public getCity() {
 
   eligibiltycheck1(){
     this.spinner.show();
+    this.mobileLength = true;
+    document.getElementById("eligibiltycheck1_btn").innerHTML = 'Processing..';
     (<HTMLInputElement>document.getElementById('mobile1')).disabled = true;
     (<HTMLInputElement>document.getElementById('num')).disabled = true;
     document.getElementById("num_label").classList.add("disabled_label");
@@ -548,13 +551,14 @@ public getCity() {
     document.getElementById("mobile_label").style.opacity = "1";
    const reqpara0 = {
       customerMobileNumber:this.user.mobile1,
-      vehicleRegNumbe:this.registrationNumber,
+      vehicleRegNumber:this.registrationNumber,
       typeofservice:1
     }
     const as0 = JSON.stringify(reqpara0);
-    this.http.post('https://plsuat.europassistance.in:444/checkInitialEligibility',as0,this.opt1).subscribe(
+    this.http.post('https://plsuat.europassistance.in:8000/api/eaiExt/checkInitialEligibility',reqpara0,this.opt1).subscribe(
       res => {
         if (res['message'] === 'policy is not valid'){
+          document.getElementById("eligibiltycheck1_btn").innerHTML = 'Next';
           this.spinner.hide();
           this.getinfowithMobile();
           this.disableNext = true;
@@ -564,16 +568,29 @@ public getCity() {
           this.ea_respondID = "0";
         }
         else if (res['message'] === 'policy is valid'){
+          document.getElementById("eligibiltycheck1_btn").innerHTML = 'Next';
           this.spinner.hide();
           this.getinfowithMobile();
           this.disableNext = true;
           this.mobileLength = true;
           this.showToast('Message', 'Policy Message', 'Policy is valid');
         this.showstep2 = true;
-        this.ea_respondID = res['responseId'];
+        this.showstep3 = false;
+        this.ea_respondID = "0";
+        }
+        else if (res['message'] === 'session not valid'){
+          document.getElementById("eligibiltycheck1_btn").innerHTML = 'Next';
+          this.spinner.hide();
+          this.getinfowithMobile();
+          this.disableNext = true;
+          this.mobileLength = true;
+          this.showToast('Message', 'Policy Message', 'session not valid');
+          this.showstep3 = true;
+          this.ea_respondID = "0";
         }
         else{
           this.spinner.hide();
+          document.getElementById("eligibiltycheck1_btn").innerHTML = 'Next';
           this.getinfowithMobile();
           this.showstep3 = true;
           this.disableNext = true;
@@ -606,6 +623,8 @@ public getCity() {
 
 
   eligibiltycheck2(){
+  this.eligibiltycheck_final = true;
+    document.getElementById("eligibiltycheck2_btn").innerHTML = 'Processing..';
     const reqpara01 ={
       customerMobileNumber:this.user.mobile1,
       vehicleRegNumber:this.registrationNumber,
@@ -614,9 +633,60 @@ public getCity() {
       typeofservice:1,
       }
     const as01 = JSON.stringify(reqpara01);
-    this.http.post('https://plsuat.europassistance.in:444/checkFinalEligibility',as01,this.opt1).subscribe(
+    this.http.post('https://plsuat.europassistance.in:8000/api/eaiExt/checkFinalEligibility',reqpara01,this.opt1).subscribe(
         res => {
-      });
+          console.log(res);
+          if (res['message'] === 'policy is not valid'){
+            document.getElementById("eligibiltycheck2_btn").innerHTML = 'Next';
+            this.spinner.hide();
+            this.showToast('Message', 'Policy Message', 'Policy is not valid');
+            this.showstep3 = true;
+            this.ea_respondID = "0";
+          }
+          else if (res['message'] === 'policy is valid'){
+            document.getElementById("eligibiltycheck2_btn").innerHTML = 'Next';
+            this.spinner.hide();
+            this.showToast('Message', 'Policy Message', 'Policy is valid');
+          this.showstep3 = true;
+          this.ea_respondID = res['responseId'];
+          }
+          else if (res['message'] === 'session not valid'){
+            document.getElementById("eligibiltycheck2_btn").innerHTML = 'Next';
+            this.spinner.hide();
+            this.showToast('Message', 'Policy Message', 'session not valid');
+            this.showstep3 = true;
+            this.ea_respondID = "0";
+          }
+          else if (res['message'] === 'policy got expired'){
+            document.getElementById("eligibiltycheck2_btn").innerHTML = 'Next';
+            this.spinner.hide();
+            this.showToast('Message', 'Policy Message', 'policy got expired');
+            this.showstep3 = true;
+            this.ea_respondID = "0";
+          }
+          else if (res['message'] === 'vehicle not found for the given policy details'){
+            document.getElementById("eligibiltycheck2_btn").innerHTML = 'Next';
+            this.spinner.hide();
+            this.showToast('Message', 'Policy Message', 'vehicle not found for the given policy details');
+            this.showstep3 = true;
+            this.ea_respondID = "0";
+          }
+          else{
+            this.spinner.hide();
+            document.getElementById("eligibiltycheck2_btn").innerHTML = 'Next';
+            this.showstep3 = true;
+            this.ea_respondID = "0";
+          }
+        },(err: HttpErrorResponse) => {
+          if (err.error instanceof Error) {
+            this.spinner.hide();
+            this.ea_respondID = "0";
+          }
+          else {
+            this.spinner.hide();
+            this.ea_respondID = "0";
+          }
+        });
   }
 
   getAllBrands() {
@@ -999,7 +1069,6 @@ SelectSavedDropoffAddress(i,x, ev){
       }
       else {
         this.customer = data;
-        this.showstep3 = true;
         if (this.customer[1].custinfo[0].hasOwnProperty('no_records')) {
           this.cust_details.mobile = this.user.mobile1,
           this.showAddress = true;
@@ -1780,6 +1849,7 @@ SelectSavedDropoffAddress(i,x, ev){
         this.BookingBtn = false;
         this.message = data[0].queue,
           this.disabled = false;
+          this.eligibiltycheck_final = false;
         this.showLargeModal(this.message[0], this.notes);
         this.slot_time = "0";
         this.show1 = false;

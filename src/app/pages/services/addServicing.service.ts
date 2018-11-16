@@ -102,7 +102,6 @@ slot(reqpara){
 
   logout(){
     console.log(this.httpOptions);
-    
     return this.http.post(this.logout_url,this.data1,this.httpOptions)
   }
 
@@ -127,8 +126,7 @@ slot(reqpara){
           let result = JSON.parse(newData);
           console.log(response);
           return response;
-
-        }
+      }
       });
   }
 

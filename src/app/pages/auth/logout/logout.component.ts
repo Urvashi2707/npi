@@ -30,7 +30,7 @@ export class LogoutComponent implements OnInit {
       this.service.logout().subscribe(response => {
         sessionStorage.clear();
         localStorage.clear();
-        this.http.post('https://plsuat.europassistance.in:444/destroysession',data1,this.EasyAuto).subscribe(res=>{
+        this.http.post('https://plsuat.europassistance.in:8000/api/eaiExt/destroysession',data1,this.EasyAuto).subscribe(res=>{
         console.log('inside dest-logout');
         this.router.navigate(['auth/login']);
        },

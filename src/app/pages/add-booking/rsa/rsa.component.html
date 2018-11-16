@@ -65,7 +65,7 @@
          
           <div class="col-md-2 col-sm-2 col-lg-2">
             <div class="NextButton">
-              <button type="button" class="btn btn-warning" (click)='eligibiltycheck1()' [disabled]="!registrationNumber || !user.mobile1 || disabledNext || !selected_service_type">Next</button>
+              <button type="button" class="btn btn-warning" id="eligibiltycheck1_btn" (click)='eligibiltycheck1()' [disabled]="!registrationNumber || !user.mobile1 || disabledNext || !selected_service_type">Next</button>
             </div>
           </div>
         </div>
@@ -92,7 +92,7 @@
               </div>
               <div class="col-md-2 col-sm-2 col-lg-2" style="display:inherit">
                 <div style="padding-right:29%;">
-                  <button type="button" class="btn btn-warning" [disabled]="!user.vin || !user.policy" (click)="eligibiltycheck2()">Next</button>
+                  <button type="button" class="btn btn-warning" [disabled]="!user.vin || !user.policy || eligibiltycheck_final" id="eligibiltycheck2_btn" (click)="eligibiltycheck2()">Next</button>
                 </div>
                 <div>
                   <button type="button" class="btn btn-warning" (click)="skip()">Skip</button>
