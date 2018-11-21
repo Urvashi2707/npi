@@ -1,6 +1,5 @@
 import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
-
 import { PagesComponent } from './pages.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ManageComponent } from './manageSvc/manageSvc.component';
@@ -11,10 +10,8 @@ import { QueueDetailsComponent } from './queue-details/queue-details.component';
 import { UpcomingComponent } from './upcoming/upcoming.component';
 import { PausedComponent } from './paused/paused.component';
 import {UpcomingrsaComponent} from './upcomingrsa/upcomingrsa.component'
-
 import {CreReportsComponent} from './cre-reports/cre-reports.component';
-
-import { NotcheckedinComponent } from './notcheckedin/notcheckedin.component'
+import { NotcheckedinComponent } from './notcheckedin/notcheckedin.component';
 import { CancelledComponent } from './cancelled/cancelled.component';
 import { CompletedComponent } from './completed/completed.component';
 import { MishapsComponent} from './mishaps/mishaps.component';
@@ -22,6 +19,7 @@ import { SearchComponent} from './search/search.component';
 import {ProfileComponent} from './profile/profile.component';
 import {MatrixComponent} from './matrix/matrix.component';
 import {UnconfirmedComponent} from './unconfirmed/unconfirmed.component';
+
 const routes: Routes = [{
   // path: '/home',
   path:'',
@@ -29,10 +27,7 @@ const routes: Routes = [{
   children: [{
     path: 'dashboard',
     component: DashboardComponent,
-  }, {
-    path: 'ui-features',
-    loadChildren: './ui-features/ui-features.module#UiFeaturesModule',
-  },
+  }, 
   {
     path: 'queue-details',
     component: QueueDetailsComponent,
@@ -44,6 +39,10 @@ const routes: Routes = [{
   {
     path: 'Active',
     loadChildren: './Active/active.module#ActiveModule',
+  },
+  {
+    path: 'wallet',
+    loadChildren: './wallet/wallet.module#WalletModule',
   },
   {
     path: 'upcoming',
@@ -84,33 +83,11 @@ const routes: Routes = [{
   {
     path: 'mishaps',
     component: MishapsComponent,
-  },{
-    path: 'components',
-    loadChildren: './components/components.module#ComponentsModule',
-  }, {
-    path: 'maps',
-    loadChildren: './maps/maps.module#MapsModule',
-  }, {
-    path: 'charts',
-    loadChildren: './charts/charts.module#ChartsModule',
-  }, {
-    path: 'editors',
-    loadChildren: './editors/editors.module#EditorsModule',
-  }, {
-    path: 'forms',
-    loadChildren: './forms/forms.module#FormsModule',
-  }, {
-    path: 'tables',
-    loadChildren: './tables/tables.module#TablesModule',
   },
   {
     path: 'matrix',
     component: MatrixComponent,
   },
-  // {
-  //   path: 'user',
-  //   loadChildren: './user/user.module#UserModule',
-  // },
   {
   path: 'manage',
   component: ManageComponent,
@@ -123,7 +100,6 @@ component: UserComponent,
   path: 'cre-reports',
     component: CreReportsComponent,
   },
-
 {
   path: 'reports',
   component: ReportsComponent,

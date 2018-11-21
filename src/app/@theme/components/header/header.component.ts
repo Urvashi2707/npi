@@ -116,6 +116,10 @@ export class HeaderComponent implements OnInit {
   });
 }
 
+GoToNeft(){
+  this.router.navigate(['pages/neft']);
+}
+
 
 getNotification(){
   const reqpara3 = {

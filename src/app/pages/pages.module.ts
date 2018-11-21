@@ -52,6 +52,8 @@ import { Ng2OrderModule } from 'ng2-order-pipe';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { UpcomingrsaComponent } from './upcomingrsa/upcomingrsa.component';
 import { CreReportsComponent } from './cre-reports/cre-reports.component';
+import { OnlinePayModalComponent } from './wallet/Add_credit/online-pay-modal/online-pay-modal.component';
+
 
 const PAGES_COMPONENTS = [
   PagesComponent,
@@ -103,8 +105,12 @@ const PAGES_COMPONENTS = [
     ModalAdvComponent,
     OnlyNumber,
     NotcheckedinComponent,
-
-    columnPipe,rowPipe,searchPipe, UpcomingrsaComponent,CreReportsComponent
+    columnPipe,
+    rowPipe,
+    searchPipe, 
+    UpcomingrsaComponent,
+    CreReportsComponent, 
+    OnlinePayModalComponent,
 
   ],
   entryComponents: [

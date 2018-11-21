@@ -109,8 +109,25 @@ export const MENU_ITEMSADM: NbMenuItem[] = [
     icon: 'nb-tables',
     link: '/pages/payment',
     hidden:false
-
-  },
+},
+{
+  title: 'Wallet',
+  icon: 'nb-tables',
+  children: [
+    {
+      title: 'Add Credit',
+      link: '/pages/wallet/add-credit',
+    },
+    {
+      title: 'Account Statement',
+      link: '/pages/wallet/account-statement',
+    },
+    {
+      title: 'Pending Approval',
+      link: '/pages/wallet/pending-approval',
+    }
+  ],
+},
   {
     title: 'Unconfirmed',
     icon: 'nb-tables',
@@ -240,6 +257,24 @@ export const MENU_ITEMSUSR: NbMenuItem[] = [
     hidden:true
 
   },
+{
+  title: 'Wallet',
+  icon: 'nb-tables',
+  children: [
+    {
+      title: 'Add Credit',
+      link: '/pages/wallet/add-credit',
+    },
+    {
+      title: 'Account Statement',
+      link: '/pages/wallet/pending-approval',
+    },
+    {
+      title: 'Pending Approval',
+      link: '/pages/wallet/account-statement',
+    }
+  ],
+},
   {
     title: 'Unconfirmed',
     icon: 'nb-tables',

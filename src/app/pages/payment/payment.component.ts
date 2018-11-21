@@ -150,18 +150,18 @@ export class PaymentComponent implements OnInit {
   }
 
   ngOnDestroy(){
-    var prev_url = this._tableService.getPreviousUrl();
-    var curr_url = this._tableService.getCurrentUrl();
-    console.log(prev_url);
-    console.log(curr_url);
-    if(curr_url === '/pages/payment'){
-      console.log("inside if previous url");
-      localStorage.removeItem('startDate');
-      localStorage.removeItem('endDate');
-    }
-    else{
-      console.log("inside else previous url");
-    }
+    // var prev_url = this._tableService.getPreviousUrl();
+    // var curr_url = this._tableService.getCurrentUrl();
+    // console.log(prev_url);
+    // console.log(curr_url);
+    // if(curr_url === '/pages/payment'){
+    //   console.log("inside if previous url");
+    //   localStorage.removeItem('startDate');
+    //   localStorage.removeItem('endDate');
+    // }
+    // else{
+    //   console.log("inside else previous url");
+    // }
   }
 
 }

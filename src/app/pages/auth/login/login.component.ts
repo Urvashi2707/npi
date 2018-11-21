@@ -82,6 +82,7 @@ CloseAlert(){
                 sessionStorage.setItem('brandid',response[0].login[0].brand_id);
                 sessionStorage.setItem('insurance',JSON.stringify(response[0].login[0].is_insurance));
                 sessionStorage.setItem('username',(response[0].login[0].first_name));
+                sessionStorage.setItem('userId',(response[0].login[0].userid));
                 sessionStorage.setItem('User',value.mobile);
                 if(response[0].login[0].is_manufacturer == "1"){
                   this.router.navigate(['/trend']);

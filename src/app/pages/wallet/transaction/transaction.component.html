@@ -1,0 +1,106 @@
+<nb-card class="desktopView">
+  <nb-card-header>
+      Transaction
+  </nb-card-header>
+  <nb-card-body>
+    <table width="100%">
+      <thead>
+        <th (click)="sort('creationdatetime')">Date
+          <span class="sort-span">
+            <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i>
+          </span>
+        </th>
+        <th (click)="sort('type_of_transaction')">Description
+          <span class="sort-span">
+            <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i>
+          </span>
+        </th>
+        <th (click)="sort('credit')">Credit Amount
+          <span class="sort-span">
+            <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i>
+          </span>
+        </th>
+        <th (click)="sort('debit')">Debit Amount
+          <span class="sort-span">
+            <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i>
+          </span>
+        </th>
+        <th (click)="sort('balance')">Balance
+          <span class="sort-span">
+            <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i>
+          </span>
+        </th>
+      </thead>
+      <tbody>
+        <tr *ngFor="let i of transaction | orderBy: key : reverse ">
+          <td>{{i.creationdatetime}}</td>
+          <td>{{i.type_of_transaction}}</td>
+          <td>{{i.credit}}</td>
+          <td>{{i.debit}}</td>
+          <td>{{i.balance}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <table class="NoData" *ngIf="MessageNoData">
+        {{MessageNoData}}
+      </table>
+  </nb-card-body>
+</nb-card>
+<!-- <div class="mobileView">
+    <div class="row headerRow">
+        <div class="col-4 col-sm-4">
+          <span class="header">CRE Reports</span>
+        </div>
+        <div class="col-8 col-sm-8">
+          <div class="right-inner-addon">
+            <i class="fa fa-search"></i>
+            <input type="search" class="form-control" placeholder="Search" [(ngModel)]="SearchData" />
+          </div>
+        </div>
+      </div>
+  <hr/>
+  <div class="row">
+    <div class="col-12 col-sm-12">
+      <ul>
+        <li *ngFor="let i of CreReports | filter : SearchData">
+          <div class="card">
+            <div class="row">
+              <div class="col-12 col-sm-12">
+                <span class="name">{{i.first_name}}</span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12 col-sm-12">
+                <div>{{i.mobilenumber}}</div>
+              </div>
+            </div>
+            <div>
+              <div>
+                <table width="100%">
+                  <thead>
+                    <th></th>
+                    <th>Added</th>
+                    <th>Deleted</th>
+                  </thead>
+                  <tbody>
+                      <tr>
+                          <td>Today</td>
+                          <td>{{i.added_today}}</td>
+                          <td>{{i.deleted_today}}</td>
+                        </tr>
+                    <tr>
+                      <td>Monthly</td>
+                      <td>{{i.added_month}}</td>
+                      <td>{{i.deleted_month}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </li>
+      </ul>
+      <ngx-spinner bdColor="rgba(51,51,51,0.09)" size="large" color="#ea5810" type="ball-clip-rotate-pulse"></ngx-spinner>
+    </div>
+  </div>
+</div> -->

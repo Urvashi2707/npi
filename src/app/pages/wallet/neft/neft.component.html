@@ -1,0 +1,44 @@
+<nb-card class="desktopView">
+    <nb-card-header>
+       NEFT Table
+    </nb-card-header>
+    <nb-card-body>
+        <table width="100%">
+            <thead>
+              <th (click)="sort('creationdatetime')">Date
+                <span class="sort-span">
+                  <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i>
+                </span>
+              </th>
+              <th (click)="sort('reference_number')">Description
+                <span class="sort-span">
+                  <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i>
+                </span>
+              </th>
+              <th (click)="sort('amount')">Amount
+                <span class="sort-span">
+                  <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i>
+                </span>
+              </th>
+              <th (click)="sort('added_today')">Status
+                <span class="sort-span">
+                  <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i>
+                </span>
+              </th>
+            </thead>
+            <tbody>
+              <tr *ngFor="let i of neft | orderBy: key : reverse ">
+                <td>{{i.creationdatetime}}</td>
+                <td>{{i.reference_number}}</td>
+                <td>{{i.amount}}</td>
+                <td *ngIf="i.added_today === '0'" >Pending Approval</td>
+                <td *ngIf="i.added_today === '1'" >Approved</td>
+              </tr>
+            </tbody>
+          </table>
+          <table class="NoData" *ngIf="MessageNoData">
+              {{MessageNoData}}
+            </table>
+    </nb-card-body>
+  </nb-card>
+  

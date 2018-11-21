@@ -15,7 +15,10 @@ export class ModalSendLinkComponent implements OnInit {
   number_formgroup: FormGroup;
   type: number;
   modalHeader:string;
-  constructor(private activeModal: NgbActiveModal, private _data: ServerService, private fb: FormBuilder, private _detailsTable: QueueTableService) {
+  constructor(private activeModal: NgbActiveModal, 
+              private _data: ServerService, 
+              private fb: FormBuilder, 
+              private _detailsTable: QueueTableService) {
     this.number_formgroup = this.fb.group({
       mobile_number: [{ value: '', disabled: false}]
     });
