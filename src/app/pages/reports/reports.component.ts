@@ -38,6 +38,7 @@ export class ReportsComponent implements OnInit {
               private ngbDateParserFormatter: NgbDateParserFormatter,
               private service: ServicingService) {
                 this.service_type = [
+                  { id: "15", type: 'Custody' },
                   { id: "1", type: 'Servicing Pickup and Dropoff'},
                   { id: "4", type: 'Internal Movement' },
                   { id: "5", type: 'Home Delivery' },
@@ -52,14 +53,9 @@ export class ReportsComponent implements OnInit {
                 ];
                    var prev_url = this._detailsTable.getPreviousUrl();
                    var curr_url = this._detailsTable.getCurrentUrl();
-                   console.log("cons",prev_url);
-                   console.log("cons",curr_url);
         if(curr_url === '/pages/queue-details' && prev_url === '/pages/reports'){
-          // localStorage.removeItem('startDate');
-          // localStorage.removeItem('endDate');
         }
         else{
-          console.log("inside else previous url");
           localStorage.removeItem('startDate');
           localStorage.removeItem('endDate');
           localStorage.removeItem('service_status');
@@ -74,18 +70,14 @@ export class ReportsComponent implements OnInit {
           this.model1 = { day: dt.getUTCDate(), month: dt.getUTCMonth() + 1, year: dt.getUTCFullYear()};
           this.StrtDateString = this.model1.year + '-' + this.model1.month + '-' + this.model1.day;
           if(localStorage.getItem('service_status') != null){
-            console.log("service status when nothing is changed",localStorage.getItem('service_status'));
             this.user.status = JSON.parse(localStorage.getItem('service_status'))
             for(var i = 0; i<this.status.length ;i++){
               if(this.status[i].id === JSON.parse(localStorage.getItem('service_status'))){
-                console.log("selected service status is",this.status[i].type);
                 this.user.status = this.status[i];
-                console.log(this.user.status,this.status[i].id)
               }
             }
           }
           if(localStorage.getItem('service_type') != null){
-            console.log("service type when nothing is changed",localStorage.getItem('service_type'));
             this.user.service_type = JSON.parse(localStorage.getItem('service_type'))
           }
         }
@@ -97,17 +89,14 @@ export class ReportsComponent implements OnInit {
           this.model1 = {day:date.getUTCDate(),month:date.getUTCMonth() + 1,year: date.getUTCFullYear() };
           this.StrtDateString = this.model1.year + '-' + this.model1.month + '-' + this.model1.day;
           if(localStorage.getItem('service_status') != null){
-            console.log("service status when enddate is changed",localStorage.getItem('service_status'));
             this.user.status = JSON.parse(localStorage.getItem('service_status'))
             for(var i = 0; i<this.status.length ;i++){
               if(this.status[i].id === localStorage.getItem('service_status')){
-                console.log("selected service status is",this.status[i].type);
                 this.user.status = this.status[i].id
               }
             }
           }
           if(localStorage.getItem('service_type') != null){
-            console.log("service status when enddate is changed",localStorage.getItem('service_type'));
             this.user.service_type = JSON.parse(localStorage.getItem('service_type'))
           }
         }
@@ -119,17 +108,14 @@ export class ReportsComponent implements OnInit {
               this.model = { day: dt.getUTCDate(), month: dt.getUTCMonth() + 1, year: dt.getUTCFullYear()};
               this.EndDateString = this.model.year + '-' + this.model.month + '-' + this.model.day;
               if(localStorage.getItem('service_status') != null){
-                console.log("service status when startdate is changed",localStorage.getItem('service_status'));
                 this.user.status = JSON.parse(localStorage.getItem('service_status'))
                 for(var i = 0; i<this.status.length ;i++){
                   if(this.status[i].id === localStorage.getItem('service_status')){
-                    console.log("selected service status is",this.status[i].type);
                     this.user.status = this.status[i].id
                   }
                 }
               }
               if(localStorage.getItem('service_type') != null){
-                console.log("service status when startdate is changed",localStorage.getItem('service_type'));
                 this.user.service_type = JSON.parse(localStorage.getItem('service_type'))
               }
         }
@@ -141,17 +127,14 @@ export class ReportsComponent implements OnInit {
           this.EndDateString = this.ngbDateParserFormatter.format(EndDate);
           this.StrtDateString = this.ngbDateParserFormatter.format(StartDate);
           if(localStorage.getItem('service_status') != null){
-            console.log("service status when both is changed",localStorage.getItem('service_status'));
             for(var i = 0; i<this.status.length ;i++){
               if(this.status[i].id === localStorage.getItem('service_status')){
-                console.log("selected service status is",this.status[i].type);
                 this.user.status = this.status[i].id
               }
             }
             
           }
           if(localStorage.getItem('service_type') != null){
-            console.log("service status when both is changed" , localStorage.getItem('service_type'));
             this.user.service_type = localStorage.getItem('service_type')
           }
         }
@@ -201,10 +184,8 @@ export class ReportsComponent implements OnInit {
 }
 
 service_status_changed(ev){
-  console.log("service_status_chnaged",ev);
   for(var i = 0; i<this.status.length ;i++){
     if(this.status[i].id === ev){
-      console.log("selected service status is",this.status[i].type);
       localStorage.setItem('service_status',ev);
     }
   }
@@ -212,10 +193,8 @@ service_status_changed(ev){
 
 
 service_type_changed(ev){
-  console.log("service_type_chnaged",ev);
   for(var i = 0; i<this.service_type.length ;i++){
     if(this.service_type[i].id === ev){
-      console.log("selected type is",this.service_type[i].type);
       localStorage.setItem('service_type',JSON.stringify(ev));
     }
   }
