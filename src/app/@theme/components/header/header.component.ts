@@ -4,7 +4,6 @@ import { NbMenuService, NbSidebarService,NbSearchService } from '@nebular/theme'
 import { UserService } from '../../../@core/data/users.service';
 import { AnalyticsService } from '../../../@core/utils/analytics.service';
 import {ServerService} from '../../../pages/services/user.service';
-import { DatePipe } from '@angular/common';
 import {SearchComponent} from '../../../pages/search/search.component'
 
 @Component({
@@ -25,6 +24,7 @@ export class HeaderComponent implements OnInit {
   brandid:string;
   show = false;
   message:any;
+  Show_credit_Btn:boolean = false;
   noNotification : boolean = false;
   notification : any = [];
   today: number = Date.now();
@@ -58,8 +58,6 @@ export class HeaderComponent implements OnInit {
               private menuService: NbMenuService,
               private userService: UserService,
               private searchService : NbSearchService,
-              private datePipe:DatePipe,
-              private comp:SearchComponent,
               private analyticsService: AnalyticsService,
               private router:Router,
               private _data : ServerService,
@@ -73,6 +71,15 @@ export class HeaderComponent implements OnInit {
     this.getNotification();
     this.not = this.notifications[0].notifications;
     this.brandid = sessionStorage.getItem('brandid');
+    var Add_credit_flag = sessionStorage.getItem('show_credit_btn');
+    if(Add_credit_flag == "1"){
+      this.Show_credit_Btn = true;
+      console.log("value is 1 for Add credit");
+    }
+    else{
+      this.Show_credit_Btn = false;
+      console.log("value is 0 for Add credit");
+    }
   }
 
   toggleSidebar(): boolean {
@@ -109,15 +116,12 @@ export class HeaderComponent implements OnInit {
 
   startSearch() {
     this.searchService.onSearchSubmit().subscribe((data: { term: string, tag: string }) => {
-      console.info(`term: ${data.term}, from search: ${data.tag}`);
-      // sessionStorage.setItem('search',data.term);
       this.router.navigate(["pages/search",  {'data': data.term}]);
-     
-  });
+     });
 }
 
 GoToNeft(){
-  this.router.navigate(['pages/neft']);
+  this.router.navigate(['pages/wallet/add-credit']);
 }
 
 

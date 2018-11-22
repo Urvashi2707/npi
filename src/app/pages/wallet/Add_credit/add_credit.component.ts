@@ -3,10 +3,12 @@ import { DOCUMENT } from '@angular/common';
 import { QueueTableService } from '../../services/queue-table.service';
 import { ServerService } from '../../services/user.service';
 import { Router } from '@angular/router';
+import { SuccessComponent } from '../../user/success/success.component';
 import {  NgbDateStruct, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
 import 'style-loader!angular2-toaster/toaster.css';
 import { NgForm } from '@angular/forms';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-neft',
@@ -20,12 +22,12 @@ export class AddCreditComponent implements OnInit {
   Show_neft_card:boolean = false;
   model: NgbDateStruct;
   payment:any = {};
+  SvcId:string;
   Online_submitBtn:boolean = false;
   Neft_submitBtn:boolean = false;
 
   constructor(private spinner: NgxSpinnerService,
-    private ngbDateParserFormatter: NgbDateParserFormatter, 
-    private _detailsTable: QueueTableService, 
+    private modalService: NgbModal,
     private _data: ServerService, 
     private _tableService: QueueTableService, 
     private router: Router) {
@@ -39,10 +41,17 @@ export class AddCreditComponent implements OnInit {
   ngOnInit() {
     const date = new Date();
     this.model = {day:date.getUTCDate(),month:date.getUTCMonth() + 1,year: date.getUTCFullYear() };
+    if(sessionStorage.getItem('selectedsvc')){
+      this.SvcId = sessionStorage.getItem('selectedsvc');
+    }
+    else{
+      this.SvcId = JSON.parse(sessionStorage.getItem('globalsvcid'));
+    }
   }
 
   showNeftTable(){
     this.payment.amount = null;
+    this.Neft_submitBtn = false;
     if(document.getElementById("neft").className.match('btn1_red')) {
       document.getElementById("neft").className = 'btn1';
       }
@@ -57,6 +66,11 @@ export class AddCreditComponent implements OnInit {
   }
 
   GoToOnline_Gateway(){
+    this.payment.neft = null;
+    this.payment.neftId = null;
+    this.Online_submitBtn = false;
+    const today = new Date();
+    this.model = {day:today.getUTCDate(),month:today.getUTCMonth() + 1,year: today.getUTCFullYear() };
    if(document.getElementById("online_payment").className.match('btn1_red')) {
       document.getElementById("online_payment").className = 'btn1';
   }
@@ -77,8 +91,46 @@ export class AddCreditComponent implements OnInit {
   }
 
   neft_payment(f: NgForm){
-    console.log(f.value);
+    this.Neft_submitBtn = true;
+    console.log(f.value.dp.day + '-' + f.value.dp.month + '-' + f.value.dp.year);
+    const req_parameter = {
+        requesttype: 'approval_request_prepaid',
+        svcid: this.SvcId ,
+        amount: f.value.neft,
+        neftid: f.value.neft_id,
+        neft_date: f.value.dp.year + '-' + f.value.dp.month + '-' + f.value.dp.day
+    }
+    const UpReq = JSON.stringify(req_parameter);
+    this._data.webServiceCall(UpReq).subscribe(res => {
+      // this.Neft_submitBtn = false;
+      if(res[0].login === 0){
+        sessionStorage.removeItem('currentUser');
+        this.router.navigate(['/auth/login']);
+      }
+      else {
+        if(res[0].approval[0].insertid != '0'){
+          this.success("0");
+          const today = new Date();
+          this.model = {day:today.getUTCDate(),month:today.getUTCMonth() + 1,year: today.getUTCFullYear()};
+          this.payment.neft = null;
+          this.payment.neftId = null;
+        }
+        else{
+          this.success("1");
+          const today = new Date();
+          this.model = {day:today.getUTCDate(),month:today.getUTCMonth() + 1,year: today.getUTCFullYear()};
+          this.payment.neft = null;
+          this.payment.neftId = null;
+        }
+      }
+});
   }
  
+     //Success Modal
+     success(res:any) {
+      const activeModal = this.modalService.open(SuccessComponent, { size: 'lg', container: 'nb-layout' });
+      activeModal.componentInstance.modalHeader = 'Message';
+      activeModal.componentInstance.modalContent = res;
+    }
 
 }
