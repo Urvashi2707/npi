@@ -4,7 +4,9 @@ import { NbMenuService, NbSidebarService,NbSearchService } from '@nebular/theme'
 import { UserService } from '../../../@core/data/users.service';
 import { AnalyticsService } from '../../../@core/utils/analytics.service';
 import {ServerService} from '../../../pages/services/user.service';
-import {SearchComponent} from '../../../pages/search/search.component'
+import {ServicingService} from '../../../pages/services/addServicing.service';
+import {SearchComponent} from '../../../pages/search/search.component';
+import { Subscription } from 'rxjs';
 
 @Component({
   providers:[SearchComponent],
@@ -16,6 +18,7 @@ export class HeaderComponent implements OnInit {
 
   @Input() position = 'normal';
   //variables
+  subscription: Subscription;
   Credit:string;
   user: any;
   public name =sessionStorage.getItem('username');
@@ -59,6 +62,7 @@ export class HeaderComponent implements OnInit {
               private userService: UserService,
               private searchService : NbSearchService,
               private analyticsService: AnalyticsService,
+              private messageService: ServicingService,
               private router:Router,
               private _data : ServerService,
               private route: ActivatedRoute) {
@@ -80,6 +84,11 @@ export class HeaderComponent implements OnInit {
       this.Show_credit_Btn = false;
       console.log("value is 0 for Add credit");
     }
+    // this.subscription = this.messageService.getMessage().subscribe(message => { 
+    //   this.Credit = message.text;
+    //   console.log(this.Credit);
+
+    //  });
   }
 
   toggleSidebar(): boolean {

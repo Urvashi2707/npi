@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { QueueTableService } from '../../services/queue-table.service';
 import { ServerService } from '../../services/user.service';
+import { ServicingService } from '../../services/addServicing.service';
 import { Router } from '@angular/router';
 import { SuccessComponent } from '../../user/success/success.component';
 import {  NgbDateStruct, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
@@ -29,6 +30,7 @@ export class AddCreditComponent implements OnInit {
   constructor(private spinner: NgxSpinnerService,
     private modalService: NgbModal,
     private _data: ServerService, 
+    private messageService: ServicingService,
     private _tableService: QueueTableService, 
     private router: Router) {
       const el = document.getElementById('nb-global-spinner');
@@ -113,6 +115,8 @@ export class AddCreditComponent implements OnInit {
           this.model = {day:today.getUTCDate(),month:today.getUTCMonth() + 1,year: today.getUTCFullYear()};
           this.payment.neft = null;
           this.payment.neftId = null;
+          // send message to subscribers via observable subject
+            // this.messageService.sendMessage('8999');
         }
         else{
           this.success("1");
@@ -120,6 +124,7 @@ export class AddCreditComponent implements OnInit {
           this.model = {day:today.getUTCDate(),month:today.getUTCMonth() + 1,year: today.getUTCFullYear()};
           this.payment.neft = null;
           this.payment.neftId = null;
+          // this.messageService.sendMessage('8999');
         }
       }
 });

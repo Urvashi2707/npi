@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient,HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import 'rxjs/add/operator/map';
-import { Observable } from 'rxjs/Rx';
+import { Observable,Subject } from 'rxjs/Rx';
 import { environment } from '../../../environments/environment';
 
 
@@ -14,10 +14,9 @@ export class ServicingService {
   cityList2:any;
   result:any;
 
-  constructor(private http: HttpClient,private router: Router) {
-    var myArray = this.getCity().subscribe(data => this.result = data);
-    var myArray1 = this.getCity();
-   }
+  private subject = new Subject<any>();
+
+  constructor(private http: HttpClient,private router: Router) {}
 
    //Easy Auto
   private getSession_url :string = 'https://plsuat.europassistance.in:8000/api/eaiExt/getsession';
@@ -50,12 +49,22 @@ public opt={
 
 public opt1={
   headers: new HttpHeaders({'x-auth-token': sessionStorage.getItem('token'),'x-auth-user':sessionStorage.getItem('auth-user'),'Content-Type':  'application/json'})
-  
+}
+
+sendMessage(message: string) {
+  this.subject.next({ text: message });
+}
+
+clearMessage() {
+  this.subject.next();
+}
+
+getMessage(): Observable<any> {
+  return this.subject.asObservable();
 }
 
 session(){
   const reqpara1 = {}
-  console.log(this.opt);
     return this.http.post(this.getSession_url,reqpara1,this.opt)
 }
 
@@ -101,33 +110,11 @@ slot(reqpara){
   }
 
   logout(){
-    console.log(this.httpOptions);
     return this.http.post(this.logout_url,this.data1,this.httpOptions)
   }
 
   webServiceCall(reqpara){
     return this.http.post(this.url, reqpara, this.httpOptions);
-  }
-
-  getCity():Observable<any>{
-    const reqpara1 ={
-      requesttype: 'getcitylist',
-    }
-    const as1 = JSON.stringify(reqpara1)
-    return this.webServiceCall(as1).map
-      ((response: Response) => {
-        if (response[0].login === 0) {
-          sessionStorage.removeItem('currentUser');
-          this.router.navigate(['/auth/login']);
-        }
-        else {
-          this.cityList = response[0].citylist;
-          var newData = JSON.stringify(this.cityList)
-          let result = JSON.parse(newData);
-          console.log(response);
-          return response;
-      }
-      });
   }
 
 }
