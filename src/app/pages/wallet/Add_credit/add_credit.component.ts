@@ -102,7 +102,6 @@ export class AddCreditComponent implements OnInit {
     }
     const UpReq = JSON.stringify(req_parameter);
     this._data.webServiceCall(UpReq).subscribe(res => {
-      // this.Neft_submitBtn = false;
       if(res[0].login === 0){
         sessionStorage.removeItem('currentUser');
         this.router.navigate(['/auth/login']);
