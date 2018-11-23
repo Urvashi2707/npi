@@ -65,6 +65,12 @@ export class TransactionComponent implements OnInit {
     this.FilterCheck(1);
 }
 
+//sort function
+sort(key){
+  this.key = key;
+  this.reverse = !this.reverse;
+}
+
   FilterCheck(p:number) {
     console.log("Filter function called");
     this.spinner.show();
