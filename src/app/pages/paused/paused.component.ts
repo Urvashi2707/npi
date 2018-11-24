@@ -155,7 +155,7 @@ export class PausedComponent implements OnInit {
       servicetype: '7',
       starttime: this.StrtDateString,
       endtime: this.EndDateString,
-      ppagenumber: this.page,
+      pagenumber: this.page,
       svcid:this.SvcId
     }
     const PauseRq = JSON.stringify(PausedReq);
