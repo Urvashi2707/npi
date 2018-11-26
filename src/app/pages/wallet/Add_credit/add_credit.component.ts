@@ -89,7 +89,7 @@ export class AddCreditComponent implements OnInit {
   online_payment(f: NgForm){
     this.Online_submitBtn = true;
     var CurrentUser = sessionStorage.getItem('userId');
-     window.open('https://m.21north.in/svcpay/' + f.value.online_pay + '/1/' +CurrentUser,"_blank");
+     window.open('https://m.21north.in/svcpay/' + f.value.online_pay*100 + '/1/' +CurrentUser,"_blank");
   }
 
   neft_payment(f: NgForm){
