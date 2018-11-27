@@ -33,7 +33,7 @@
                 <div class="form-group">
                   <input type="number" id="online_pay" name="online_pay" class="form-control" style="text-transform: uppercase" required
                              [(ngModel)]="payment.amount" #on_pay="ngModel" step="0.01"
-                    maxlength="8" pattern="^\d{0,6}(\.\d{1,2})?$" step="0.01" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" onkeydown="javascript: return event.keyCode == 69 || event.keyCode == 189 ? false : true" keypress="floatCheck($event)">
+                    maxlength="8" pattern="^\d{0,6}(\.\d{1,2})?$" step="0.01" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" onkeydown="javascript: return event.keyCode == 69 || event.keyCode == 189 || event.keyCode == 16 ? false : true" keypress="floatCheck($event)">
                   <label class="form-control-placeholder" for="online_pay" id="online_pay">Enter Amount*</label>
                 </div>
               </div>
@@ -46,7 +46,7 @@
             </div>
             <div class="row">
               <div class="col-md-5 col-sm-5 col-lg-5">
-                <div style="font-size:11px;padding-bottom: 14px;padding-left: 3px">*1.8% of the total amount if payment method used is Netbanking</div>
+                <div style="font-size:11px;padding-bottom: 14px;padding-left: 3px">*1.8% of the total amount is charged when payment method used is Online Payment</div>
                 <div class="form-control-feedback" *ngIf="on_pay.errors && (on_pay.dirty || on_pay.touched)">
                   <p *ngIf="on_pay.errors.required" class="haserror">Amount is required</p>
                   <p *ngIf="!on_pay.errors.valid" class="haserror">6 digit with 2 digit after decimal is allowed</p>
