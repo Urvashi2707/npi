@@ -50,12 +50,17 @@ export class DashboardComponent implements OnInit{
   GroupAdmin:string;
   ShowAgreement:string;
   themeSubscription: any;
+  prepaid_amount:string;
   colorScheme = {
     domain: ['#ffa239', '#c8e6c9', '#81c784', '#4caf50','#ffe789']
   };
 
  
   ngOnInit() {
+    setInterval(() => {
+    //  console.log("5 sec timer");
+     this.GetDashboardData();
+  }, 5000);
     this.ShowAgreement = JSON.parse(sessionStorage.getItem('terms'));
     this.SvcAdmin = JSON.parse(sessionStorage.getItem('svcadmin'));
     this.GroupAdmin = JSON.parse(sessionStorage.getItem('groupadmin'));
@@ -171,9 +176,7 @@ export class DashboardComponent implements OnInit{
              this.router.navigate(['/auth/login']);
            }
            else{
-             console.log(res[0].cards.length)
              if(res[0].cards.length > 0){
-               console.log(res[0].cards[0]>0)
                 this.Cards=res[0].cards[0];
                 this.Rating = JSON.parse(this.Cards.cust_rating);
               }
@@ -201,9 +204,15 @@ export class DashboardComponent implements OnInit{
               this.ShowDropoffPie = false;
              }
              this.Notification=res[3].notification[0];
+             this.prepaid_amount = res[4].prepaid[0].pre_paid;
+            //  console.log(this.prepaid_amount,"credit amount");
+              this.service.sendMessage(this.prepaid_amount);
+              // this.service.sendMessage('8999');
            }
         });
    }
+
+
 
    //Open Modal For Service centre selection
    GetSvcList() {

@@ -19,6 +19,10 @@ const routes: Routes = [{
     component: NeftComponent,
   },
   {
+    path: 'account-statement/payment/success',
+    component: TransactionComponent,
+  },
+  {
     path: 'account-statement',
     component: TransactionComponent,
   }

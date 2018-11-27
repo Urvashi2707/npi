@@ -84,11 +84,10 @@ export class HeaderComponent implements OnInit {
       this.Show_credit_Btn = false;
       console.log("value is 0 for Add credit");
     }
-    // this.subscription = this.messageService.getMessage().subscribe(message => { 
-    //   this.Credit = message.text;
-    //   console.log(this.Credit);
-
-    //  });
+    this.subscription = this.messageService.getMessage().subscribe(message => { 
+      this.Credit = message.text;
+      console.log(this.Credit);
+     });
   }
 
   toggleSidebar(): boolean {

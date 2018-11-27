@@ -52,7 +52,7 @@ import { Ng2OrderModule } from 'ng2-order-pipe';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { UpcomingrsaComponent } from './upcomingrsa/upcomingrsa.component';
 import { CreReportsComponent } from './cre-reports/cre-reports.component';
-import { OnlinePayModalComponent } from './wallet/Add_credit/online-pay-modal/online-pay-modal.component';
+import { OnlinePaySuccessModalComponent } from './wallet/Add_credit/online-pay-modal/online-pay-modal.component';
 
 
 const PAGES_COMPONENTS = [
@@ -110,7 +110,7 @@ const PAGES_COMPONENTS = [
     searchPipe, 
     UpcomingrsaComponent,
     CreReportsComponent, 
-    OnlinePayModalComponent,
+    OnlinePaySuccessModalComponent,
 
   ],
   entryComponents: [
@@ -123,8 +123,8 @@ const PAGES_COMPONENTS = [
     SuccessComponent,
     ModalPickupComponent,
     ModalDropoffComponent,
-    ModalAdvComponent
-
+    ModalAdvComponent,
+    OnlinePaySuccessModalComponent
   ],
   providers: [
     ServicingService,

@@ -41,6 +41,7 @@ export class AddCreditComponent implements OnInit {
      }
 
   ngOnInit() {
+   
     const date = new Date();
     this.model = {day:date.getUTCDate(),month:date.getUTCMonth() + 1,year: date.getUTCFullYear() };
     if(sessionStorage.getItem('selectedsvc')){
@@ -66,6 +67,8 @@ export class AddCreditComponent implements OnInit {
         this.Show_neft_card = !this.Show_neft_card;
         this.Show_online_pay_card = false;
   }
+
+
 
   GoToOnline_Gateway(){
     this.payment.neft = null;
@@ -94,7 +97,7 @@ export class AddCreditComponent implements OnInit {
 
   neft_payment(f: NgForm){
     this.Neft_submitBtn = true;
-    console.log(f.value.dp.day + '-' + f.value.dp.month + '-' + f.value.dp.year);
+    // console.log(f.value.dp.day + '-' + f.value.dp.month + '-' + f.value.dp.year);
     const req_parameter = {
         requesttype: 'approval_request_prepaid',
         svcid: this.SvcId ,

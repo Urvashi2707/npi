@@ -4,7 +4,9 @@ import { ServerService } from '../../services/user.service';
 import { Router } from '@angular/router';
 import {  NgbDateStruct, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import 'style-loader!angular2-toaster/toaster.css';
+import {OnlinePaySuccessModalComponent} from '../Add_credit/online-pay-modal/online-pay-modal.component';
 
 @Component({
   selector: 'app-transaction',
@@ -33,8 +35,7 @@ export class TransactionComponent implements OnInit {
   InsuranceCheck:boolean = false;
 
   constructor(private spinner: NgxSpinnerService,
-              private ngbDateParserFormatter: NgbDateParserFormatter, 
-              private _detailsTable: QueueTableService, 
+              private modalService: NgbModal,
               private _data: ServerService, 
               private _tableService: QueueTableService, 
               private router: Router) { 
@@ -48,6 +49,12 @@ export class TransactionComponent implements OnInit {
   }
 
   ngOnInit() {
+    var curr_url = this._tableService.getCurrentUrl();
+    console.log(curr_url);
+    if(curr_url === '/pages/wallet/account-statement/payment/success'){
+      console.log('sucess full');
+      this.success();
+    }
     this.InsuranceUsr = JSON.parse(sessionStorage.getItem('insurance'));
     if(sessionStorage.getItem('selectedsvc')){
       this.SvcId = sessionStorage.getItem('selectedsvc');
@@ -70,6 +77,12 @@ sort(key){
   this.key = key;
   this.reverse = !this.reverse;
 }
+
+     //Success Modal
+     success() {
+      const activeModal = this.modalService.open(OnlinePaySuccessModalComponent, { size: 'lg', container: 'nb-layout' });
+      activeModal.componentInstance.modalHeader = 'Message';
+    }
 
   FilterCheck(p:number) {
     console.log("Filter function called");
