@@ -28,7 +28,7 @@ export class TransactionComponent implements OnInit {
   model1: NgbDateStruct;
   MessageNoData:string;
   DataPerPage:string;
-  key: string = 'queueid'; 
+  key: string = 'creationdatetime'; 
   reverse: boolean = false;
   SvcId:string;
   InsuranceUsr:string;

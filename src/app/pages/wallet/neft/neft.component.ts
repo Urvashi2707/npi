@@ -28,7 +28,7 @@ export class NeftComponent implements OnInit {
   model1: NgbDateStruct;
   MessageNoData:string;
   DataPerPage:string;
-  key: string = 'queueid'; 
+  key: string = 'creationdatetime'; 
   reverse: boolean = false;
   SvcId:string;
   InsuranceUsr:string;
@@ -75,6 +75,7 @@ export class NeftComponent implements OnInit {
   }
 
   FilterCheck(p:number) {
+    this.spinner.show();
     console.log("Filter function called");
     this.spinner.show();
     this.page = p - 1 ;

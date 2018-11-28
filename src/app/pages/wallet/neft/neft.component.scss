@@ -6,6 +6,16 @@ nb-card {
     transform: translate3d(0, 0, 0);
 }
 
+.search {
+    float: right;
+    margin-bottom: 5%;
+    margin-right: 4%;
+    border: 2px solid #e9ecef;
+    border-radius: 4px;
+    height: 60%;
+    width: 50%;
+}
+
 table,
 th,
 td {
@@ -22,8 +32,17 @@ td {
 tbody tr:hover {
     background-color: lightyellow;
 }
+.paginate{
+    text-align: center;
+    padding-top: 5%;
+}
+
 .sort-span {
     float: right;
+}
+.ErrorMessage{
+    padding: 8px;
+    font-weight: 500;
 }
 .NoData{
     border: 0px;
@@ -31,6 +50,7 @@ tbody tr:hover {
     margin-top: 25px;
     font-weight: 500;
     /* padding: 8px; */
+
 }
 @media only screen and (max-width: 420px) {
     .desktopView {
@@ -47,9 +67,8 @@ tbody tr:hover {
         box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
         transition: 0.3s;
         width: 100%;
-        padding: 8px 10px 8px 10px
+        padding: 8px 10px 8px 10px;
     }
-    
     .card:hover {
         box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
     }
@@ -60,56 +79,112 @@ tbody tr:hover {
     li{
         margin-bottom: 9%;
     }
-  .header{
-    font-size: .9rem;
-    padding-left: 1%;
-    font-weight: 700;
-  }
-  .headerRow{
-    min-height: 25px;
-    padding-top: 3%;
-  }
-  table,
-th,
-td {
-    border: 1px solid rgb(218, 223, 230);
-    border-collapse: collapse;
-    font-size:12px;
-}
-
-th,
-td {
-    padding:4px;
-}
-.right-inner-addon {
-    position: relative;
-}
-.right-inner-addon input {
-    padding: 1px;
-    font-size: 12px; 
-    border: 0px;  
-    // width: 7px;
-    opacity: 0;
-     outline: 0;
-      border: 0;
-      -webkit-transition: width 0.4s ease-in-out;
-      transition: width 0.4s ease-in-out;
-}
-.right-inner-addon input:focus {
-    width: 100%;
-    padding: 1px;
-    font-size: 12px;   
-    opacity: 1; 
-    outline: 0; 
-    border: 0;
-    border: 2px solid #ccc;
-}
-.right-inner-addon i {
-    position: absolute;
-    right: 0px;
-    padding: 5px 12px;
-    pointer-events: none;
-}
+    .QueueId{
+        font-weight: 900;
+        font-size: $mobileQueueIDFont;
+    }
+    .vehNumber{
+        float: right;
+        border: 1px solid black;
+        padding: 3px;
+        border-radius: 4px;
+       
+    }
+    .QueueStatus{
+        color:#FA870C;
+        font-weight: 700;
+    }
+    .Ind{
+        font-size: 7px;
+        color:#58a3d9;
+    }
+    .payment{
+        float: right;
+    }
+    .paymentStatus{
+        float: right;
+    }
+    .input-group{
+        max-height: 35px;
+        width: 100%;
+    }
+    .form-control{
+        font-size: 12px;
+    }
+    .input-group-append{
+        width: 20%;
+    }
+    .dateButton{ 
+        border-radius: 0px 5px 5px 0px;
+        font-size: 12px;
+        padding-top: 9px;
+    } 
+    .apply{
+        padding: 5px;
+        font-size: 12px;
+    }
+    .applyCol{
+        padding-left: 12%;
+    }
+    .applyRow{
+        padding-bottom: 5%;
+    }
+    .search{
+    float: left;
+    margin-bottom: 5%;
+    margin-right: 4%;
+    border: 2px solid #e9ecef;
+    border-radius: 4px;
+    height: 60%;
+    width: 64%;
+    height: 75%;
+    padding-left: 5%;
+    }
+    .header{
+        font-size: .9rem;
+        padding-left: 1%;
+        font-weight: 700;
+      }
+      .headerRow{
+        min-height: 25px;
+        padding-top: 3%;
+      }
+      .right-inner-addon {
+        position: relative;
+    }
+    .right-inner-addon input {
+        padding: 1px;
+        font-size: 12px; 
+        border: 0px;  
+        // width: 7px;
+        opacity: 0;
+         outline: 0;
+          border: 0;
+          -webkit-transition: width 0.4s ease-in-out;
+          transition: width 0.4s ease-in-out;
+    }
+    .right-inner-addon input:focus {
+        width: 100%;
+        padding: 1px;
+        font-size: 12px;   
+        opacity: 1; 
+        outline: 0; 
+        border: 0;
+        border: 2px solid #ccc;
+    }
+    .right-inner-addon i {
+        position: absolute;
+        right: 0px;
+        padding: 5px 12px;
+        pointer-events: none;
+    }
+    .title{
+        font-weight: 500;
+    }
+    .NoData{
+        text-align: center;
+        font-weight: 500;
+    }
 }
 
 @media only screen and (min-width: 450px) {
