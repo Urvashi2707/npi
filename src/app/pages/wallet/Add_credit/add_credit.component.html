@@ -33,7 +33,7 @@
                 <div class="form-group">
                   <input type="number" id="online_pay" name="online_pay" class="form-control" style="text-transform: uppercase" required
                              [(ngModel)]="payment.amount" #on_pay="ngModel" step="0.01"
-                    maxlength="8" pattern="^\d{0,6}(\.\d{1,2})?$" step="0.01" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" onkeydown="javascript: return event.keyCode == 69 || event.keyCode == 189 || event.keyCode == 16 ? false : true" keypress="floatCheck($event)">
+                    maxlength="9" pattern="^\d{0,6}(\.\d{1,2})?$" step="0.01" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" onkeydown="javascript: return event.keyCode == 69 || event.keyCode == 189 || event.keyCode == 16 ? false : true" keypress="floatCheck($event)">
                   <label class="form-control-placeholder" for="online_pay" id="online_pay">Enter Amount*</label>
                 </div>
               </div>
@@ -65,7 +65,7 @@
                 <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
                     <div class="form-group">
                         <div class="input-group">
-                            <input class="form-control" name="dp" [ngModel]="model"  placeholder="{{pastdate | date: 'yyyy-MM-dd'}}" ngbDatepicker #d2="ngbDatepicker">
+                            <input class="form-control" name="dp" [ngModel]="model"  placeholder="{{pastdate | date: 'yyyy-MM-dd'}}" ngbDatepicker #d2="ngbDatepicker" [readonly]="true">
                             <div class="input-group-append">
                                 <button class="btn btn-outline-secondary dateButton" (click)="d2.toggle()" type="button" style="height: 100%;border-radius: 0px;">
                               <span><i class="fa fa-calendar"></i></span>
@@ -73,12 +73,20 @@
                             </div>
                         </div>
                     </div>
+                    <div class="form-control-feedback" *ngIf="d2.errors && (d2.dirty || d2.touched)">
+                      <p *ngIf="d2.errors.required" class="haserror">Date is required</p>
+                      <p *ngIf="!d2.errors.valid" class="haserror">format should be yyyy-mm-dd</p>
+                    </div>
                 </div>
                 <div class="col-md-5 col-sm-5 col-lg-5">
                     <div class="form-group">
-                      <input type="number" id="neft" name="neft" class="form-control" style=" text-transform: uppercase" required
-                        [(ngModel)]="payment.neft" #neft_amt="ngModel" 
-                        maxlength="12" pattern="^\d{0,10}(\.\d{1,2})?$" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" onkeydown="javascript: return event.keyCode == 69 || event.keyCode == 189 ? false : true">
+                        <!-- <input type="number" id="online_pay" name="online_pay" class="form-control" style="text-transform: uppercase" required
+                        [(ngModel)]="payment.amount" #on_pay="ngModel" step="0.01"
+               maxlength="9" pattern="^\d{0,6}(\.\d{1,2})?$" step="0.01" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" onkeydown="javascript: return event.keyCode == 69 || event.keyCode == 189 || event.keyCode == 16 ? false : true">
+                     -->
+               <input type="number" id="neft" name="neft" class="form-control" style=" text-transform: uppercase" required
+                        [(ngModel)]="payment.neft" #neft_amt="ngModel" step="0.01" 
+                        maxlength="13" pattern="^\d{0,10}(\.\d{1,2})?$" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" onkeydown="javascript: return event.keyCode == 69 || event.keyCode == 189 ? false : true">
                       <label class="form-control-placeholder" for="neft" id="neft">Enter Amount*</label>
                     </div>
                     <div class="form-control-feedback" *ngIf="neft_amt.errors && (neft_amt.dirty || neft_amt.touched)">
