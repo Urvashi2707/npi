@@ -110,6 +110,7 @@ export class AddCreditComponent implements OnInit {
               console.log("this is razorpay respnse",Payresponse)
               const activeModal = a.modalService.open(OnlinePaySuccessModalComponent, { size: 'lg', container: 'nb-layout' });
               activeModal.componentInstance.modalHeader = 'Message';
+              f.reset();
           },
           "prefill": {
               "name": sessionStorage.getItem('username'),

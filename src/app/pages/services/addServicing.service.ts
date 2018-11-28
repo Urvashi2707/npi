@@ -51,8 +51,8 @@ public opt1={
   headers: new HttpHeaders({'x-auth-token': sessionStorage.getItem('token'),'x-auth-user':sessionStorage.getItem('auth-user'),'Content-Type':  'application/json'})
 }
 
-sendMessage(message: string) {
-  this.subject.next({ text: message });
+sendMessage(message: string,btn:string) {
+  this.subject.next({ text: message ,show_btn:btn});
 }
 
 clearMessage() {

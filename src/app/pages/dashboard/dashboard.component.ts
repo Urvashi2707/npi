@@ -51,6 +51,7 @@ export class DashboardComponent implements OnInit{
   ShowAgreement:string;
   themeSubscription: any;
   prepaid_amount:string;
+  show_add_credit:string;
   colorScheme = {
     domain: ['#ffa239', '#c8e6c9', '#81c784', '#4caf50','#ffe789']
   };
@@ -205,8 +206,9 @@ export class DashboardComponent implements OnInit{
              }
              this.Notification=res[3].notification[0];
              this.prepaid_amount = res[4].prepaid[0].pre_paid;
+             this.show_add_credit = res[4].prepaid[0].show_add_credit;
             //  console.log(this.prepaid_amount,"credit amount");
-              this.service.sendMessage(this.prepaid_amount);
+              this.service.sendMessage(this.prepaid_amount,this.show_add_credit);
               // this.service.sendMessage('8999');
            }
         });
