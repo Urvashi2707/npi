@@ -576,6 +576,14 @@ public getCity() {
           this.showToast('Message', 'Policy Message', 'Policy is valid');
         this.showstep2 = true;
         this.showstep3 = false;
+        // var policy_valid = {
+        //   vin: this.user.vin,
+        //   policyNumber:this.user.policy,
+        //   vehicleRegNumber:this.registrationNumber,
+        //   customerMobileNumber:this.user.mobile1,
+        //   typeofservice:1
+        // }
+        // this.ea_respondID = JSON.stringify(policy_valid);
         this.ea_respondID = "0";
         }
         else if (res['message'] === 'session not valid'){
@@ -648,7 +656,15 @@ public getCity() {
             this.spinner.hide();
             this.showToast('Message', 'Policy Message', 'Policy is valid');
           this.showstep3 = true;
-          this.ea_respondID = res['responseId'];
+          var policy_valid = {
+            vin: this.user.vin,
+            policyNumber:this.user.policy,
+            vehicleRegNumber:this.registrationNumber,
+            customerMobileNumber:this.user.mobile1,
+            typeofservice:1
+          }
+          this.ea_respondID = JSON.stringify(policy_valid);
+          // this.ea_respondID = res['responseId'];
           }
           else if (res['message'] === 'session not valid'){
             document.getElementById("eligibiltycheck2_btn").innerHTML = 'Next';

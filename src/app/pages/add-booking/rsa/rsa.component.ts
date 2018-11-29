@@ -608,7 +608,7 @@ export class RsaComponent implements OnInit {
           document.getElementById("eligibiltycheck1_btn").innerHTML = 'Next';
         this.showstep2 = true;
         this.disabledNext = true;
-        this.ea_respondID = res['responseId'];
+        this.ea_respondID = "0";
         }
         else if (res['message'] === 'session not valid'){
           document.getElementById("eligibiltycheck1_btn").innerHTML = 'Next';
@@ -793,7 +793,14 @@ export class RsaComponent implements OnInit {
               this.spinner.hide();
               this.showToast('Message', 'Policy Message', 'Policy is valid');
             this.showstep3 = true;
-            this.ea_respondID = res['responseId'];
+              var policy_valid = {
+                vin: this.user.vin,
+                policyNumber:this.user.policy,
+                vehicleRegNumber:this.registrationNumber,
+                customerMobileNumber:this.user.mobile1,
+                typeofservice:1
+              }
+              this.ea_respondID = JSON.stringify(policy_valid);
             }
             else if (res['message'] === 'session not valid'){
               document.getElementById("eligibiltycheck2_btn").innerHTML = 'Next';
