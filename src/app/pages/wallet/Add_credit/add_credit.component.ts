@@ -101,9 +101,9 @@ export class AddCreditComponent implements OnInit {
         console.log(OrderResponse);
         var a = this;
         let  Razoroptions = {
-          // "order_id": OrderResponse["order_id"],
+          "order_id": OrderResponse["order_id"],
           //TODO:remove hardcoding
-          "order_id" : "order_BRcBbnGfSo8SqI",
+          // "order_id" : "order_BRcBbnGfSo8SqI",
           "amount":10099,
           "key": "rzp_test_IPS9y1GrktP0Yz",
           "name": sessionStorage.getItem('username'),
