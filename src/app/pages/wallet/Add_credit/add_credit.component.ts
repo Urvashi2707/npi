@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ViewChild,ElementRef } from '@angular/core';
 import { HttpClient,HttpHeaders } from '@angular/common/http';
 import { QueueTableService } from '../../services/queue-table.service';
 import { ServerService } from '../../services/user.service';
@@ -30,6 +30,7 @@ export class AddCreditComponent implements OnInit {
   Online_submitBtn:boolean = false;
   Neft_submitBtn:boolean = false;
   some_url:string;
+  @ViewChild('myDiv') myDiv: ElementRef;
 
   constructor(private spinner: NgxSpinnerService,
     private modalService: NgbModal,
@@ -100,17 +101,33 @@ export class AddCreditComponent implements OnInit {
         console.log(OrderResponse);
         var a = this;
         let  Razoroptions = {
-          "order_id": OrderResponse["order_id"],
+          // "order_id": OrderResponse["order_id"],
+          //TODO:remove hardcoding
+          "order_id" : "order_BRcBbnGfSo8SqI",
           "amount":10099,
-          "key": "rzp_live_vuOTtBWpZ5CaQW",
+          "key": "rzp_test_IPS9y1GrktP0Yz",
           "name": sessionStorage.getItem('username'),
           "description": "wallet recharging",
           "image": "https:\/\/m.21north.in\/notify\/21N_logo.png",
           "handler": function (Payresponse){
               console.log("this is razorpay respnse",Payresponse)
-              const activeModal = a.modalService.open(OnlinePaySuccessModalComponent, { size: 'lg', container: 'nb-layout' });
-              activeModal.componentInstance.modalHeader = 'Message';
-              f.reset();
+               a.success_pay();
+               document.getElementById("nb_card").click();
+               f.reset();
+               //a.triggerFalseClick();
+              //var activeModal = function(){a.modalService.open(OnlinePaySuccessModalComponent, { size: 'lg', container: 'nb-layout' });
+              // activeModal.componentInstance.modalHeader = 'Message';};
+              // activeModal();
+              // if (typeof Payresponse.razorpay_payment_id == 'undefined' ||  Payresponse.razorpay_payment_id < 1) {
+              //    var redirect_url = '/you-owe-money.html';
+              //    f.reset();
+              // } else {
+              //   var redirect_url = '/pages/wallet/account-statement/payment/success';
+              //   const activeModal = a.modalService.open(OnlinePaySuccessModalComponent, { size: 'lg', container: 'nb-layout' });
+              // activeModal.componentInstance.modalHeader = 'Message';
+              //   f.reset();
+              // }
+              // location.href = redirect_url;
           },
           "prefill": {
               "name": sessionStorage.getItem('username'),
@@ -128,10 +145,16 @@ export class AddCreditComponent implements OnInit {
        });
   }
 
+  triggerFalseClick() {
+    let el: HTMLElement = this.myDiv.nativeElement as HTMLElement;
+    el.click();
+}
+
       //Success Modal
       success_pay() {
         const activeModal = this.modalService.open(OnlinePaySuccessModalComponent, { size: 'lg', container: 'nb-layout' });
         activeModal.componentInstance.modalHeader = 'Message';
+        console.log('i am called without click');
       }
 
   neft_payment(f: NgForm){
