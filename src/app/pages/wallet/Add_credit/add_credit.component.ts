@@ -105,7 +105,7 @@ export class AddCreditComponent implements OnInit {
           //TODO:remove hardcoding
           // "order_id" : "order_BRcBbnGfSo8SqI",
           "amount":10099,
-          "key": "rzp_test_IPS9y1GrktP0Yz",
+          "key": "rzp_live_vuOTtBWpZ5CaQW",
           "name": sessionStorage.getItem('username'),
           "description": "wallet recharging",
           "image": "https:\/\/m.21north.in\/notify\/21N_logo.png",
