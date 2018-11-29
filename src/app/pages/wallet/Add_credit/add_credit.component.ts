@@ -110,24 +110,9 @@ export class AddCreditComponent implements OnInit {
           "description": "wallet recharging",
           "image": "https:\/\/m.21north.in\/notify\/21N_logo.png",
           "handler": function (Payresponse){
-              console.log("this is razorpay respnse",Payresponse)
                a.success_pay();
                document.getElementById("nb_card").click();
                f.reset();
-               //a.triggerFalseClick();
-              //var activeModal = function(){a.modalService.open(OnlinePaySuccessModalComponent, { size: 'lg', container: 'nb-layout' });
-              // activeModal.componentInstance.modalHeader = 'Message';};
-              // activeModal();
-              // if (typeof Payresponse.razorpay_payment_id == 'undefined' ||  Payresponse.razorpay_payment_id < 1) {
-              //    var redirect_url = '/you-owe-money.html';
-              //    f.reset();
-              // } else {
-              //   var redirect_url = '/pages/wallet/account-statement/payment/success';
-              //   const activeModal = a.modalService.open(OnlinePaySuccessModalComponent, { size: 'lg', container: 'nb-layout' });
-              // activeModal.componentInstance.modalHeader = 'Message';
-              //   f.reset();
-              // }
-              // location.href = redirect_url;
           },
           "prefill": {
               "name": sessionStorage.getItem('username'),
