@@ -98,7 +98,7 @@ export class AddCreditComponent implements OnInit {
     this.Online_submitBtn = true;
     var CurrentUser = sessionStorage.getItem('userId');
       this.http.get('https://m.21north.in/notify/rptest/pay2.php?amount=' +f.value.online_pay*100 + '&id=1&customer_id=' +CurrentUser).subscribe( OrderResponse =>{
-        console.log(OrderResponse);
+        // console.log(OrderResponse);
         var a = this;
         let  Razoroptions = {
           "order_id": OrderResponse["order_id"],
