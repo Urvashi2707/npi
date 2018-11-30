@@ -22,7 +22,7 @@ declare var Razorpay: any;
 export class AddCreditComponent implements OnInit {
 
   //variables
-  Show_online_pay_card:boolean = false;
+  Show_online_pay_card:boolean = true;
   Show_neft_card:boolean = false;
   model: NgbDateStruct;
   payment:any = {};
