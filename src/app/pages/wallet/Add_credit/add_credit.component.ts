@@ -58,6 +58,7 @@ export class AddCreditComponent implements OnInit {
   }
 
   showNeftTable(){
+  
     this.payment.amount = null;
     this.Neft_submitBtn = false;
     if(document.getElementById("neft").className.match('btn1_red')) {
@@ -98,12 +99,10 @@ export class AddCreditComponent implements OnInit {
     this.Online_submitBtn = true;
     var CurrentUser = sessionStorage.getItem('userId');
       this.http.get('https://m.21north.in/notify/rptest/pay2.php?amount=' +f.value.online_pay*100 + '&id=1&customer_id=' +CurrentUser).subscribe( OrderResponse =>{
-        // console.log(OrderResponse);
         var a = this;
+        console.log(OrderResponse);
         let  Razoroptions = {
           "order_id": OrderResponse["order_id"],
-          //TODO:remove hardcoding
-          // "order_id" : "order_BRcBbnGfSo8SqI",
           "amount":10099,
           "key": "rzp_live_vuOTtBWpZ5CaQW",
           "name": sessionStorage.getItem('username'),
@@ -119,7 +118,8 @@ export class AddCreditComponent implements OnInit {
               "email": "test@test.com",
           },
           "notes": {
-              "address": "Hello World"
+            "shopping_order_id": OrderResponse["notes"]["merchant_order_id"],
+              // "address": "Hello World"
           },
           "theme": {
               "color": "black"
@@ -137,9 +137,26 @@ export class AddCreditComponent implements OnInit {
 
       //Success Modal
       success_pay() {
+        var credit = JSON.parse(sessionStorage.getItem('credit'));
+        var amount_added = this.payment.amount;
+        var updated_credit = Number(credit) + amount_added;
+        // console.log(updated_credit);
         const activeModal = this.modalService.open(OnlinePaySuccessModalComponent, { size: 'lg', container: 'nb-layout' });
         activeModal.componentInstance.modalHeader = 'Message';
-        console.log('i am called without click');
+        var b =this;
+        setTimeout (function(){
+          //  alert("Hello"); 
+           if(updated_credit > 10000){
+             console.log(updated_credit);
+             console.log(b.messageService);
+            b.messageService.sendMessage(updated_credit,"1");
+            console.log("<10000");
+          }
+          else{
+            b.messageService.sendMessage(updated_credit,"0");
+            console.log(">10000");
+          }
+          }, 5000);
       }
 
   neft_payment(f: NgForm){

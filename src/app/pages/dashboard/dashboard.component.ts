@@ -58,10 +58,10 @@ export class DashboardComponent implements OnInit{
 
  
   ngOnInit() {
-    setInterval(() => {
+    // setInterval(() => {
     //  console.log("5 sec timer");
      this.GetDashboardData();
-  }, 30000);
+  // }, 30000);
     this.ShowAgreement = JSON.parse(sessionStorage.getItem('terms'));
     this.SvcAdmin = JSON.parse(sessionStorage.getItem('svcadmin'));
     this.GroupAdmin = JSON.parse(sessionStorage.getItem('groupadmin'));

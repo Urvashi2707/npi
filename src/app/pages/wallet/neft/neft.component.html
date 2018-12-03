@@ -27,7 +27,7 @@
               </th>
             </thead>
             <tbody>
-              <tr *ngFor="let i of neft | orderBy: key : reverse | paginate: { id: 'server', itemsPerPage:DataPerPage, currentPage: page + 1, totalItems: RecordCount }; let j = index">
+              <tr *ngFor="let i of neft | paginate: { id: 'server', itemsPerPage:DataPerPage, currentPage: page + 1, totalItems: RecordCount }; let j = index">
                 <td>{{i.creationdatetime}}</td>
                 <td>{{i.reference_number}}</td>
                 <td>{{i.amount}}</td>

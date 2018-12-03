@@ -29,7 +29,7 @@ export class NeftComponent implements OnInit {
   MessageNoData:string;
   DataPerPage:string;
   key: string = 'creationdatetime'; 
-  reverse: boolean = false;
+  ascending = true;
   SvcId:string;
   InsuranceUsr:string;
   InsuranceCheck:boolean = false;
@@ -43,7 +43,6 @@ export class NeftComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit() {
-    console.log("ngOn",this.show_neft);
     const date = new Date();
       this.model = {day:date.getUTCDate(),month:date.getUTCMonth() + 1,year: date.getUTCFullYear() };
       this.EndDateString = this.model.year + '-' + this.model.month + '-' + this.model.day;
@@ -69,14 +68,29 @@ export class NeftComponent implements OnInit {
   }
 
   //sort function
-  sort(key){
-    this.key = key;
-    this.reverse = !this.reverse;
-  }
+  sort(key) {  
+    let arr = this.neft;
+    this.ascending = !this.ascending;
+    arr.sort(this.dynamicSort(key,this.ascending));
+}
+
+dynamicSort(property,sortDir) {
+    return function (a,b) {
+        if(sortDir == true){
+            var sortOrder = 1;
+            var result = (a[property].toLowerCase() < b[property].toLowerCase()) ? -1 : (a[property].toLowerCase() > b[property].toLowerCase()) ? 1 : 0;
+            return result * sortOrder;
+        }
+        else{
+            sortOrder = 2
+            var result = (a[property].toLowerCase() < b[property].toLowerCase()) ? 1 : (a[property].toLowerCase() > b[property].toLowerCase()) ? -1 : 0;
+            return result * sortOrder;
+        }
+    }
+}
 
   FilterCheck(p:number) {
     this.spinner.show();
-    console.log("Filter function called");
     this.spinner.show();
     this.page = p - 1 ;
     this.MessageNoData= "";
@@ -103,7 +117,6 @@ export class NeftComponent implements OnInit {
         this.neft = res[1].prepaid_approve;
         this.RecordCount = res[0].pagecount[0].record_count;
         this.DataPerPage = res[0].pagecount[0].pagelimit;
-        console.log(res);
         this.spinner.hide();
        }}
     });
