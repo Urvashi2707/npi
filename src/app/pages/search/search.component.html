@@ -126,7 +126,7 @@
                           <div class="row">
                                 <div class="col-7 col-sm-7 QueueStatus">{{r.queue_status}}</div>
                                 <div class="col-5 col-sm-5 buttonCol">
-                                  <button type="button" class="button" (click)="ShowUploadModal(i)" *ngIf="r.upload_button">{{r.upload_button}}</button>
+                                  <button type="button" class="button" (click)="ShowUploadModal(r)" *ngIf="r.upload_button">{{r.upload_button}}</button>
                                 </div>
                               </div>
                 </div>

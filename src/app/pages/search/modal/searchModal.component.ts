@@ -73,7 +73,7 @@ export class SearchModalComponent implements OnInit {
   toastsLimit = 5;
 
   ngOnInit() {
-    console.log(this.modalContent);
+    // console.log(this.modalContent);
     if(sessionStorage.getItem('selectedsvc')){
       this.svcid = sessionStorage.getItem('selectedsvc');
     }
@@ -112,7 +112,7 @@ export class SearchModalComponent implements OnInit {
     this.activeModal.close();
   }
  check(value: string,time:string) {
-    console.log(value);
+    // console.log(value);
     this.queuetime = value;
     this.modalContent.queue_time=time;
     
@@ -214,24 +214,24 @@ export class SearchModalComponent implements OnInit {
         }
         else {
           this.serviceadv = res[0].users
-          console.log(this.serviceadv);
+          // console.log(this.serviceadv);
           if(this.modalContent.hasOwnProperty('advName'))
           {
-            console.log(this.modalContent.advName);
+            // console.log(this.modalContent.advName);
             for (let i = 0; i < this.serviceadv.length; i++) {
               if (this.serviceadv[i].first_name === this.modalContent.advName) {
                 this.modalContent.service_advisor = this.serviceadv[i].id ;
-                console.log(this.modalContent.service_advisor)
+                // console.log(this.modalContent.service_advisor)
               }
             }
           }
           if(this.modalContent.hasOwnProperty('service_advisor'))
           {
-            console.log(this.modalContent.service_advisor);
+            // console.log(this.modalContent.service_advisor);
             for (let i = 0; i < this.serviceadv.length; i++) {
               if (this.serviceadv[i].first_name === this.modalContent.service_advisor) {
                 this.modalContent.service_advisor = this.serviceadv[i].id ;
-                console.log(this.modalContent.service_advisor)
+                // console.log(this.modalContent.service_advisor)
               }
             }
           }
