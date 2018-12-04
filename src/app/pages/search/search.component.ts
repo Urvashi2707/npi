@@ -62,6 +62,15 @@ export class SearchComponent implements OnInit {
     const activeModal = this.modalService.open(SearchModalComponent, { size: 'lg', container: 'nb-layout' });
     activeModal.componentInstance.modalHeader = res.upload_button;
     activeModal.componentInstance.modalContent = res;
+    activeModal.result.then(() => { 
+     var data1 = this.route.params.subscribe(params => {
+        if(params.hasOwnProperty('data')) {
+          this.GetSearchData();
+        }
+      })
+      this.GetSearchData();
+    }, () => {    
+    })
   }
 
   //Search Table Data API call
@@ -69,9 +78,7 @@ export class SearchComponent implements OnInit {
     var mobile = "";
     this.messageNodata = null;
     var data = this.route.params.subscribe(params => {
-      mobile = params.data; // (+) converts string 'id' to a number
-      // console.log(mobile);
-      // In a real app: dispatch action to load the details here.
+      mobile = params.data;
    });
    this.InsuranceUsr = JSON.parse(sessionStorage.getItem('insurance'));
     if(sessionStorage.getItem('selectedsvc')){
@@ -99,7 +106,7 @@ export class SearchComponent implements OnInit {
       this.service.webServiceCall(as1).subscribe
       (res => {
         if(!res[0]){
-          console.log("No Data");
+          // console.log("No Data");
           this.messageNodata = "No Data";
         }
      else if(res[0].login === 0){
@@ -108,7 +115,7 @@ export class SearchComponent implements OnInit {
       }
       else{
         this.report = res[0].vehqueues;
-        console.log(this.report);
+        // console.log(this.report);
         this.UploadBtn = this.report[0].upload_button,
         this.spinner.hide();
         this._tableService.DateFormat(this.report);
