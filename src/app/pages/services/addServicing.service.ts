@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient,HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import 'rxjs/add/operator/map';
-import { Observable,Subject } from 'rxjs/Rx';
+import { Observable,Subject,BehaviorSubject } from 'rxjs/Rx';
 import { environment } from '../../../environments/environment';
 
 
@@ -13,8 +13,10 @@ export class ServicingService {
   cityList:any = [];
   cityList2:any;
   result:any;
+  // var credit = JSON.parse(sessionStorage.getItem('credit'));
 
   private subject = new Subject<any>();
+  // private behaviorSubject = new BehaviorSubject<any>();
 
   constructor(private http: HttpClient,private router: Router) {}
 
@@ -52,6 +54,7 @@ public opt1={
 }
 
 sendMessage(message: string,btn:string) {
+  console.log(message);
   this.subject.next({ text: message ,show_btn:btn});
 }
 

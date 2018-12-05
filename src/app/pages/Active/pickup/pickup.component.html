@@ -83,7 +83,7 @@
             </th>
             <th (click)="sort('queue_status')">Status
               <span class="sort-span">
-                <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i>
+                <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse , 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i>
               </span>
             </th>
             <th *ngIf="InsuranceCheck" (click)="sort('svc_name')">SVC Name
@@ -94,26 +94,26 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let i of pickup  | orderBy: key : reverse |  filter:SearchData  | paginate: { id: 'server', itemsPerPage:DataPerPage, currentPage: page + 1, totalItems: RecordCount }; let j = index"
+          <tr *ngFor="let item of tableData  | orderBy: key : reverse |  filter:SearchData  | paginate: { id: 'server', itemsPerPage:DataPerPage, currentPage: page + 1, totalItems: RecordCount }; let j = index"
             (click)="openQDetails(i.queueid)">
-            <td>{{i.queueid}}</td>
+            <td>{{item.queueid}}</td>
             <td>
               <div style="display:inline-block">
                 <span>
-                  <img src="{{i.amb_url}}" class="AmbImg" (error)="img($event);">
+                  <img src="{{item.amb_url}}" class="AmbImg" (error)="img($event);">
                 </span>
               </div>
               <div style="display:inline-block">
-                <span>{{i.amb_name}}</span>
-                <p>{{i.amb_mobile}}</p>
+                <span>{{item.amb_name}}</span>
+                <p>{{item.amb_mobile}}</p>
               </div>
             </td>
-            <td>{{i.queue_time}}</td>
-            <td>{{i.cust_name}}</td>
-            <td>{{i.veh_number}}</td>
-            <td>{{i.cre_name}}</td>
-            <td>{{i.queue_status}}</td>
-            <td *ngIf="InsuranceCheck">{{i.svc_name}}</td>
+            <td>{{item.queue_time}}</td>
+            <td>{{item.cust_name}}</td>
+            <td>{{item.veh_number}}</td>
+            <td>{{item.cre_name}}</td>
+            <td>{{item.queue_status}}</td>
+            <td *ngIf="InsuranceCheck">{{item.svc_name}}</td>
           </tr>
         </tbody>
       </table>

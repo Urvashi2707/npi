@@ -33,6 +33,7 @@ export class TransactionComponent implements OnInit {
   SvcId:string;
   InsuranceUsr:string;
   InsuranceCheck:boolean = false;
+  sort_dir = false;
 
   constructor(private spinner: NgxSpinnerService,
               private modalService: NgbModal,
@@ -49,10 +50,11 @@ export class TransactionComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.sort_dir = false;
     var curr_url = this._tableService.getCurrentUrl();
-    console.log(curr_url);
+    // console.log(curr_url);
     if(curr_url === '/pages/wallet/account-statement/payment/success'){
-      console.log('sucess full');
+      // console.log('sucess full');
       this.success();
     }
     this.InsuranceUsr = JSON.parse(sessionStorage.getItem('insurance'));
@@ -73,10 +75,10 @@ export class TransactionComponent implements OnInit {
 }
 
 //sort function
-sort(key){
-  this.key = key;
-  this.reverse = !this.reverse;
-}
+// sort(key){
+//   this.key = key;
+//   this.reverse = !this.reverse;
+// }
 
      //Success Modal
      success() {
@@ -84,8 +86,58 @@ sort(key){
       activeModal.componentInstance.modalHeader = 'Message';
     }
 
+    sort_prepaid(key:any){
+      this.sort_dir = true;
+      this.reverse = !this.reverse;
+      let pre_paid = this.transaction;
+      for(var i = 0; i < pre_paid.length; i++){
+        for(var k in pre_paid[i]) {
+    
+            if (isNaN(pre_paid [i][k]) == false){
+              pre_paid[i][k] = parseInt(pre_paid[i][k]);
+                  }
+              }
+        }
+        // console.log("date",typeof(pre_paid[1]['creationdatetime']));
+        // console.log("debit",typeof(pre_paid[1]['debit']));
+        // console.log("credit",typeof(pre_paid[1]['credit']));
+        // console.log("balance",typeof(pre_paid[1]['balance']));
+        // console.log("type_of_transaction",typeof(pre_paid[1]['type_of_transaction']));
+        if(key == 'type_of_transaction' || key == 'creationdatetime'){
+          console.log('type_of_transaction || creationdatetime')
+          if(this.reverse == true){
+            pre_paid.sort(function(a, b) {
+              var titleA = a[key].toLowerCase(), titleB = b[key].toLowerCase();
+              if (titleA < titleB) return -1;
+              if (titleA > titleB) return 1;
+              return 0;
+          });
+          }
+          else{
+            pre_paid.sort(function(a, b) {
+              var titleA = a[key].toLowerCase(), titleB = b[key].toLowerCase();
+              if (titleA < titleB) return 1;
+              if (titleA > titleB) return -1;
+              return 0;
+          });
+          }
+        }
+        else{
+          if(this.reverse == true){
+            pre_paid.sort(function(a, b) {
+              return a[key] - b[key];
+          });
+          }
+          else{
+            pre_paid.sort(function(a, b) {
+              return b[key] - a[key];
+          });
+          }
+        }
+     } 
+
   FilterCheck(p:number) {
-    console.log("Filter function called");
+    // console.log("Filter function called");
     this.spinner.show();
     this.page = p - 1 ;
     this.MessageNoData= "";
@@ -112,7 +164,7 @@ sort(key){
         this.transaction = res[1].prepaid;
         this.RecordCount = res[0].pagecount[0].record_count;
         this.DataPerPage = res[0].pagecount[0].pagelimit;
-        console.log(res);
+        // console.log(res);
         this.spinner.hide();
        }}
     });

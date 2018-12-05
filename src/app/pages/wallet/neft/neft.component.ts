@@ -29,10 +29,11 @@ export class NeftComponent implements OnInit {
   MessageNoData:string;
   DataPerPage:string;
   key: string = 'creationdatetime'; 
-  ascending = true;
+  reverse = true;
   SvcId:string;
   InsuranceUsr:string;
   InsuranceCheck:boolean = false;
+  sort_dir = false;
 
 
   constructor(private spinner: NgxSpinnerService,
@@ -43,6 +44,7 @@ export class NeftComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit() {
+    this.sort_dir = false;
     const date = new Date();
       this.model = {day:date.getUTCDate(),month:date.getUTCMonth() + 1,year: date.getUTCFullYear() };
       this.EndDateString = this.model.year + '-' + this.model.month + '-' + this.model.day;
@@ -68,11 +70,11 @@ export class NeftComponent implements OnInit {
   }
 
   //sort function
-  sort(key) {  
-    let arr = this.neft;
-    this.ascending = !this.ascending;
-    arr.sort(this.dynamicSort(key,this.ascending));
-}
+//   sort(key) {  
+//     let arr = this.neft;
+//     this.ascending = !this.ascending;
+//     arr.sort(this.dynamicSort(key,this.ascending));
+// }
 
 dynamicSort(property,sortDir) {
     return function (a,b) {
@@ -88,6 +90,77 @@ dynamicSort(property,sortDir) {
         }
     }
 }
+
+sort(key:any){
+  this.sort_dir = true;
+  this.key = key;
+    this.reverse = !this.reverse;
+    let arr = this.neft;
+    for(var i = 0; i < arr.length; i++){
+      for(var k in arr[i]) {
+
+          if (isNaN(arr [i][k]) == false){
+            arr[i][k] = parseInt(arr[i][k]);
+                }
+            }
+      }
+      // console.log("date",typeof(arr[1]['creationdatetime']));
+      // console.log("amount",typeof(arr[1]['amount']));
+      // console.log("ref",typeof(arr[1]['reference_number']));
+      // console.log("app",typeof(arr[1]['isapproved']));
+      if(key == "amount" || key == "isapproved"){
+        // console.log("amount","isapproved","clicked");
+        if(this.reverse == true){
+          arr.sort(function(a, b) {
+            return a[key] - b[key];
+        });
+        }
+        else{
+          arr.sort(function(a, b) {
+            return b[key] - a[key];
+        });
+        }
+      }
+      else if(key == "reference_number"){
+        if(this.reverse == true){
+          arr.sort(function(a, b) {
+            var titleA = a[key], titleB = b[key];
+            if (titleA < titleB) return -1;
+            if (titleA > titleB) return 1;
+            return 0;
+        });
+        }
+        else{
+          arr.sort(function(a, b) {
+            var titleA = a[key], titleB = b[key];
+            if (titleA < titleB) return 1;
+            if (titleA > titleB) return -1;
+            return 0;
+        });
+        }
+      }
+      else{
+        if(this.reverse == true){
+          arr.sort(function(a, b) {
+            var titleA = a[key].toLowerCase(), titleB = b[key].toLowerCase();
+            if (titleA < titleB) return -1;
+            if (titleA > titleB) return 1;
+            return 0;
+        });
+        }
+        else{
+          arr.sort(function(a, b) {
+            var titleA = a[key].toLowerCase(), titleB = b[key].toLowerCase();
+            if (titleA < titleB) return 1;
+            if (titleA > titleB) return -1;
+            return 0;
+        });
+        }
+  //  console.log("ref","date","clicked");
+      }
+      }
+
+ 
 
   FilterCheck(p:number) {
     this.spinner.show();

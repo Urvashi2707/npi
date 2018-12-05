@@ -5,36 +5,37 @@
   <nb-card-body>
     <table width="100%">
       <thead>
-        <th (click)="sort('creationdatetime')">Date
+        <th (click)="sort_prepaid('creationdatetime')">Date
           <span class="sort-span">
             <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i>
           </span>
         </th>
-        <th (click)="sort('type_of_transaction')">Description
+        <th (click)="sort_prepaid('type_of_transaction')">Description
           <span class="sort-span">
             <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i>
           </span>
         </th>
-        <th (click)="sort('credit')">Credit Amount
+        <th (click)="sort_prepaid('credit')">Credit Amount
           <span class="sort-span">
             <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i>
           </span>
         </th>
-        <th (click)="sort('debit')">Debit Amount
+        <th (click)="sort_prepaid('debit')">Debit Amount
           <span class="sort-span">
             <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i>
           </span>
         </th>
-        <th (click)="sort('balance')">Balance
+        <th (click)="sort_prepaid('balance')">Balance
           <span class="sort-span">
             <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i>
           </span>
         </th>
       </thead>
       <tbody>
-        <tr *ngFor="let i of transaction | orderBy: key : reverse | paginate: { id: 'server', itemsPerPage:DataPerPage, currentPage: page + 1, totalItems: RecordCount }; let j = index">
+        <tr *ngFor="let i of transaction | paginate: { id: 'server', itemsPerPage:DataPerPage, currentPage: page + 1, totalItems: RecordCount }; let j = index">
           <td>{{i.creationdatetime}}</td>
           <td>{{i.type_of_transaction}}</td>
+          <!-- <td *ngIf="sort_dir == true">{{i.type_of_transaction}}</td> -->
           <td>{{i.credit}}</td>
           <td>{{i.debit}}</td>
           <td>{{i.balance}}</td>

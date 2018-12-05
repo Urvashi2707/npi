@@ -393,37 +393,15 @@ public setDrag: Boolean;
          }
   }
 
-  //  protected mapReady2(evt) {
-	// 	this.ma1 = evt;
-	// 	console.log(document.getElementById("pickUpMap"));
-	// 	console.log("thismap4", this.ma1);
-	// 	console.log('this.mappickup', this.mappickup);
-
-	// 	this.mappickup.centerChange.subscribe(map => {
-	// 		// console.log(map);
-	// 		let latpick = this.latPickup;
-	// 		let lngpick = this.lngPickup;
-			
-	// 		this.ma1.addListener('dragend', function(){
-	// 			console.log('enterder dragend');
-	// 			this.setCenter({
-	// 				latpick: map.lat,
-	// 				lngpick: map.lng
-	// 			});
-	// 		});
-	// 	});
-	// }
-
    mapReady(evt) {
-    console.log("map ready",evt);
+    // console.log("map ready",evt);
      this.ma1 = evt;
-     console.log("lat",this.ma1.center.lat());
+    //  console.log("lat",this.ma1.center.lat());
     }
 
     centerChange(ev) {
       var me = this;
-      console.log("centre change called");
-      // me.gMaps.setCenter({ lat:ev.lat,lng:ev.lng});
+      // console.log("centre change called");
     }
 
   sameAsPickup(){ }
@@ -462,7 +440,7 @@ public setDrag: Boolean;
   }
 
   updateLocClk(el) {
-    console.log(el);
+    // console.log(el);
   }
   
   markerDragEndd(ev,val) {
@@ -475,7 +453,7 @@ public setDrag: Boolean;
     geocoder.geocode({'location': latlng}, function(results, status) {
       if (status === 'OK') {
         if (results[0]) {
-          console.log(results[0].formatted_address);
+          // console.log(results[0].formatted_address);
           if(val == 3){
             me.pickupsearchplace.nativeElement.value = results[0].formatted_address;
             me.drag_pickup_add = results[0].formatted_address;
@@ -508,7 +486,7 @@ public setDrag: Boolean;
   }
 
   markerDragEnd(e){
-    console.log(e);
+    // console.log(e);
   }
 
 public getCity() {
@@ -638,7 +616,7 @@ public getCity() {
     const as01 = JSON.stringify(reqpara01);
     this.http.post('https://plsuat.europassistance.in:8000/api/eaiExt/checkFinalEligibility',reqpara01,this.opt1).subscribe(
         res => {
-          console.log(res);
+          // console.log(res);
           if (res['message'] === 'policy is not valid'){
             document.getElementById("eligibiltycheck2_btn").innerHTML = 'Next';
             this.spinner.hide();
@@ -824,14 +802,13 @@ public getCity() {
     else {
       this.pickup_drop = 1;
     }
-    
-    if(this.user.city){
+  if(this.user.city){
       var cityId = this.user.city;
-      console.log(cityId);
+      // console.log(cityId);
     }
     else{
       cityId = JSON.parse(sessionStorage.getItem('city_id'));
-      console.log(cityId);
+      // console.log(cityId);
     }
     if (Date) {
       const reqpara5 = {
@@ -862,11 +839,11 @@ public getCity() {
   doPickup() {
     this.googleMapDropoffFlag  = false;
     this.googleMapPickupFlag = false;
-    console.log(this.yourBoolean);
+    // console.log(this.yourBoolean);
     if(this.yourBoolean === 'onlypickup'){
         this.ifSameAsPickUp = false;
         this.dropOffOnly = false;
-        console.log('only pickup');
+        // console.log('only pickup');
     }
     else if(this.yourBoolean === 'servicing'){
       this.ifSameAsPickUp = false;
@@ -874,7 +851,7 @@ public getCity() {
     }
     else{
       this.ifSameAsPickUp = false;
-      console.log('pickup');
+      // console.log('pickup');
     }
     if (this.dateString.length > 0) {
       const reqpara10 = {
@@ -900,16 +877,16 @@ public getCity() {
   doDrop() {
     if(this.yourBoolean === 'onlypickup'){
       this.ifSameAsPickUp = false;
-      console.log('only pickup');
+      // console.log('only pickup');
   }
   else{
     this.ifSameAsPickUp = false;
-    console.log('pickup');
+    // console.log('pickup');
   }
     this.googleMapDropoffFlag  = false;
     this.googleMapPickupFlag = false;
     this.dropOffOnly = true;
-    console.log(this.dropOffOnly);
+    // console.log(this.dropOffOnly);
     if (this.dateString.length > 0) {
       const reqpara11 = {
         requesttype: 'getslots',
@@ -1005,9 +982,9 @@ public getCity() {
       ev.target.parentElement.classList.add('borderCls');
     }
     else{
-      console.log('Click');
+//       console.log('Click');
     }
-    console.log(x);
+    // console.log(x);
     if (x==x) {
       this.ifClicked = true;
     }
@@ -1016,11 +993,11 @@ public getCity() {
     this.googleMapPickupFlag = false;
     this.postaladdresspu = i.postal_address;
     this.googleaddresspu = i.google_address;
-    console.log("postal address",this.postaladdresspu);
+    // console.log("postal address",this.postaladdresspu);
     this.pickuplat = i.latitude;
     this.pickuplong = i.longitude;
     this.landmarkpu = i.land_mark;
-    console.log(this.landmarkpu);
+    // console.log(this.landmarkpu);
     this.addresspuprevious = i.address_id;
     for(var j = 0;j<this.addresstype.length;j++){
       if(this.addresstype[j].type_of_address === i.type_of_address){
@@ -1042,9 +1019,9 @@ SelectSavedDropoffAddress(i,x, ev){
     ev.target.parentElement.classList.add('borderCls');
   }
   else{
-    console.log('Dekh kr click kro');
+    // console.log('Dekh kr click kro');
   }
-  console.log(x);
+  // console.log(x);
   if (x==x) {
     this.ifClicked = true;
   }
@@ -1052,7 +1029,7 @@ SelectSavedDropoffAddress(i,x, ev){
   this.googleMapDropoffFlag = false;
   this.googleaddressdo = i.google_address;
   this.postaladdressdo = i.postal_address;
-  console.log("postal address",this.postaladdressdo);
+  // console.log("postal address",this.postaladdressdo);
   this.droplat = i.latitude;
   this.droplong = i.longitude;
   this.landmarkdo = i.land_mark;
@@ -1060,7 +1037,7 @@ SelectSavedDropoffAddress(i,x, ev){
   for(var k = 0;k <this.addresstype.length; k++){
     if(this.addresstype[k].type_of_address === i.type_of_address){
       this.addresstypedo = this.addresstype[k].id;
-      console.log(this.addresstypepu);
+      // console.log(this.addresstypepu);
     }
   }
 }
@@ -1211,7 +1188,7 @@ SelectSavedDropoffAddress(i,x, ev){
   }
 
   zoomChanged(ev){
-    console.log(ev);
+    // console.log(ev);
   }
 
   checkVehicleNum(ev) {
@@ -1235,6 +1212,9 @@ SelectSavedDropoffAddress(i,x, ev){
 
   onSubmit(f: NgForm) {
     this.BookingBtn = true;
+    var allow_booking = JSON.parse(sessionStorage.getItem('allow_booking'));
+    // console.log(allow_booking);
+    if(allow_booking == '1' || allow_booking == null){
     if(sessionStorage.getItem('pickup_add_drag')){
       this.googleaddresspu = sessionStorage.getItem('pickup_add_drag');
       this.googlepickuplat = JSON.parse(sessionStorage.getItem('pickup_lat_drag'));
@@ -1247,11 +1227,10 @@ SelectSavedDropoffAddress(i,x, ev){
     }
     this.disabled = true;
     if(this.showAddressDropDown){
-      console.log(this.googlemapShow)
+      // console.log(this.googlemapShow);
       if(this.googleMapDropoffFlag && this.googleMapPickupFlag){
-      
-        if(this.yourBoolean === "onlypickup"){
-          console.log("bothgoolgemap",this.yourBoolean);
+          if(this.yourBoolean === "onlypickup"){
+          // console.log("bothgoolgemap",this.yourBoolean);
           this.googleaddressdo = this.googleaddresspu;
           this.landmarkpu = f.value.pickulandmark;
           this.landmarkdo = f.value.pickulandmark;
@@ -1272,7 +1251,7 @@ SelectSavedDropoffAddress(i,x, ev){
           
         }
         else if(this.yourBoolean === "dropoff"){
-          console.log("bothgoolgemap",this.yourBoolean);
+          // console.log("bothgoolgemap",this.yourBoolean);
           this.googleaddresspu = this.googleaddressdo;
           this.landmarkpu = f.value.dropofflandmark;
           this.landmarkdo = f.value.dropofflandmark;
@@ -1293,8 +1272,8 @@ SelectSavedDropoffAddress(i,x, ev){
         }
         else{
           if(!this.ifSameAsPickUp){
-            console.log("bothgoolgemap sameas",this.yourBoolean);
-            console.log("pickupmap",this.yourBoolean);
+            // console.log("bothgoolgemap sameas",this.yourBoolean);
+            // console.log("pickupmap",this.yourBoolean);
             this.googleaddressdo = this.googleaddresspu;
             this.landmarkpu = f.value.pickulandmark;
             this.landmarkdo = f.value.pickulandmark;
@@ -1314,7 +1293,7 @@ SelectSavedDropoffAddress(i,x, ev){
             this.pickuplong = this.pickuplong.substring(0, 14);
           }
           else{
-            console.log("bothgoolgemap not",this.yourBoolean);
+            // console.log("bothgoolgemap not",this.yourBoolean);
             this.landmarkpu = f.value.pickulandmark;
             this.landmarkdo = f.value.dropofflandmark;
             this.pickuplat = this.googlepickuplat.toString();
@@ -1335,7 +1314,7 @@ SelectSavedDropoffAddress(i,x, ev){
         }
       }
       else if(this.googleMapPickupFlag && this.DropoffSelected){
-        console.log("PMDS",this.yourBoolean);
+        // console.log("PMDS",this.yourBoolean);
         if(this.yourBoolean === "onlypickup"){
           this.googleaddressdo = this.googleaddresspu;
           this.landmarkpu = f.value.pickulandmark;
@@ -1363,7 +1342,7 @@ SelectSavedDropoffAddress(i,x, ev){
         }
         else{
           if(!this.ifSameAsPickUp){
-            console.log("PMDS",this.yourBoolean);
+            // console.log("PMDS",this.yourBoolean);
             this.googleaddressdo = this.googleaddresspu;
             this.landmarkpu = f.value.pickulandmark;
             this.landmarkdo = f.value.pickulandmark;
@@ -1395,16 +1374,16 @@ SelectSavedDropoffAddress(i,x, ev){
         }
       }
       else if(this.googleMapDropoffFlag && this.pickupSelected){
-        console.log("DMPS",this.yourBoolean);
+        // console.log("DMPS",this.yourBoolean);
         if(this.yourBoolean === "onlypickup"){
-          console.log("DMPS",this.yourBoolean);
+          // console.log("DMPS",this.yourBoolean);
           this.postaladdressdo = this.postaladdresspu;
           this.droplat = this.pickuplat;
           this.droplong = this.pickuplong;
           this.landmarkdo = this.landmarkpu;
         }
         else if(this.yourBoolean === "dropoff"){
-          console.log("DMPS",this.yourBoolean);
+          // console.log("DMPS",this.yourBoolean);
           this.googleaddresspu = this.googleaddressdo;
           this.landmarkpu = f.value.dropofflandmark;
           this.landmarkdo = f.value.dropofflandmark;
@@ -1425,7 +1404,7 @@ SelectSavedDropoffAddress(i,x, ev){
         }
         else{
           if(!this.ifSameAsPickUp){
-            console.log("DMPS",this.yourBoolean);
+            // console.log("DMPS",this.yourBoolean);
             this.postaladdressdo = this.postaladdresspu;
             this.droplat = this.pickuplat;
             this.droplong = this.pickuplong;
@@ -1445,7 +1424,7 @@ SelectSavedDropoffAddress(i,x, ev){
       }
       else if(this.googleMapPickupFlag){
         if(this.yourBoolean === "onlypickup"){
-          console.log("pickupmap",this.yourBoolean);
+          // console.log("pickupmap",this.yourBoolean);
           this.googleaddressdo = this.googleaddresspu;
           this.landmarkpu = f.value.pickulandmark;
           this.landmarkdo = f.value.pickulandmark;
@@ -1465,7 +1444,7 @@ SelectSavedDropoffAddress(i,x, ev){
           this.pickuplong = this.pickuplong.substring(0, 14);
         }
         else if(this.yourBoolean === "dropoff"){
-          console.log("pickupmap",this.yourBoolean);
+          // console.log("pickupmap",this.yourBoolean);
           this.googleaddresspu = this.googleaddressdo;
           this.landmarkpu = f.value.dropofflandmark;
           this.landmarkdo = f.value.dropofflandmark;
@@ -1486,7 +1465,7 @@ SelectSavedDropoffAddress(i,x, ev){
         }
         else{
           if(!this.ifSameAsPickUp){
-            console.log("pickupmap",this.yourBoolean);
+            // console.log("pickupmap",this.yourBoolean);
             this.googleaddressdo = this.googleaddresspu;
             this.landmarkpu = f.value.pickulandmark;
             this.landmarkdo = f.value.pickulandmark;
@@ -1528,7 +1507,7 @@ SelectSavedDropoffAddress(i,x, ev){
         }
       else if(this.googleMapDropoffFlag){
         if(this.yourBoolean === "onlypickup"){
-          console.log("dropmap",this.yourBoolean);
+          // console.log("dropmap",this.yourBoolean);
           this.googleaddressdo = this.googleaddresspu;
           this.landmarkpu = f.value.pickulandmark;
           this.landmarkdo = f.value.pickulandmark;
@@ -1548,7 +1527,7 @@ SelectSavedDropoffAddress(i,x, ev){
           this.pickuplong = this.pickuplong.substring(0, 14);
         }
         else if(this.yourBoolean === "dropoff"){
-          console.log("dropmap",this.yourBoolean);
+          // console.log("dropmap",this.yourBoolean);
           this.googleaddresspu = this.googleaddressdo;
           this.landmarkpu = f.value.dropofflandmark;
           this.landmarkdo = f.value.dropofflandmark;
@@ -1569,7 +1548,7 @@ SelectSavedDropoffAddress(i,x, ev){
         }
         else{
           if(!this.ifSameAsPickUp){
-            console.log("pickupmap",this.yourBoolean);
+            // console.log("pickupmap",this.yourBoolean);
             this.googleaddressdo = this.googleaddresspu;
             this.landmarkpu = f.value.pickulandmark;
             this.landmarkdo = f.value.pickulandmark;
@@ -1636,11 +1615,11 @@ SelectSavedDropoffAddress(i,x, ev){
       }
      }
      else{
-       console.log("new number");
-       console.log("dropoffflaf",this.googleMapDropoffFlag);
-       console.log("pickupflag",this.googleMapPickupFlag)
+      //  console.log("new number");
+      //  console.log("dropoffflaf",this.googleMapDropoffFlag);
+      //  console.log("pickupflag",this.googleMapPickupFlag);
        if(this.yourBoolean === "onlypickup"){
-         console.log("new number only pickup");
+        //  console.log("new number only pickup");
         this.googleaddressdo = this.googleaddresspu;
         this.landmarkpu = f.value.pickupsearchplaceLandmark;
         this.landmarkdo = f.value.pickupsearchplaceLandmark;
@@ -1660,7 +1639,7 @@ SelectSavedDropoffAddress(i,x, ev){
         this.pickuplong = this.pickuplong.substring(0, 14);
       }
       else if(this.yourBoolean === "dropoff"){
-        console.log("new number only dropoff");
+        // console.log("new number only dropoff");
         this.googleaddresspu = this.googleaddressdo;
         this.landmarkpu = f.value.dropofflandmark;
         this.landmarkdo = f.value.dropofflandmark;
@@ -1681,7 +1660,7 @@ SelectSavedDropoffAddress(i,x, ev){
       }
       else{
         if(!this.ifSameAsPickUp){
-          console.log("new number same as");
+          // console.log("new number same as");
           this.googleaddressdo = this.googleaddresspu;
           this.landmarkpu = f.value.pickupsearchplaceLandmark;
           this.landmarkdo = f.value.pickupsearchplaceLandmark;
@@ -1799,21 +1778,20 @@ SelectSavedDropoffAddress(i,x, ev){
   
     if(this.slot_time != "0"){
       if(this.postaladdresspu || this.landmarkpu){
-        console.log("Pickup is selected");
+        // console.log("Pickup is selected");
       }
       else {
         this.showToast('alert', 'Message', 'Please select Pickup');
       }
       if(this.ifSameAsPickUp){
-        console.log("not same as selected");
+        // console.log("not same as selected");
         if(this.postaladdressdo || this.landmarkdo){
-          console.log("Drop off is selected");
+          // console.log("Drop off is selected");
         }
         else {
           this.showToast('alert', 'Message', 'Please select Drop off');
         }
       }
-    
     const reqpara6 = {
       requesttype: "createbookingv5",
       vehnumber: this.registrationNumber,
@@ -1856,12 +1834,20 @@ SelectSavedDropoffAddress(i,x, ev){
       if (data[0].login === 0) {
         sessionStorage.removeItem('currentUser');
         this.router.navigate(['/auth/login']);
-
       } else if(data[0].hasOwnProperty('queue')) {
         this.BookingBtn = false;
         this.message = data[0].queue,
+        console.log(this.message[0].allow_booking,this.message[0].prepaid_credits)
+        sessionStorage.setItem('allow_booking',this.message[0].allow_booking);
+        sessionStorage.setItem('credit',this.message[0].prepaid_credits)
           this.disabled = false;
           this.eligibiltycheck_final = false;
+          if(this.message[0].prepaid_credits <= "10000"){
+            this.ServicingService.sendMessage(this.message[0].prepaid_credits,"1");
+          }
+          else{
+            this.ServicingService.sendMessage(this.message[0].prepaid_credits,"0");
+          }
         this.showLargeModal(this.message[0], this.notes);
         this.slot_time = "0";
         this.show1 = false;
@@ -1892,7 +1878,7 @@ SelectSavedDropoffAddress(i,x, ev){
         this.googlemapShow = false;
         this.googleMapDropoffFlag = false;
         this.googleMapPickupFlag = false;
-        console.log()
+        // console.log()
         this.dropOffOnly = false;
         this.googleaddresspu = null;
         this.googleaddressdo = null;
@@ -1918,10 +1904,14 @@ SelectSavedDropoffAddress(i,x, ev){
         if (err.error instanceof Error) {}
         else {}
       }
-    
   }
   else {
     this.showToast('alert', 'Message', 'Please select Slot and date');
+    this.BookingBtn = false;
+  }
+}
+  else{
+    this.showToast('alert', 'Message', 'Credit Balance is low !!');
     this.BookingBtn = false;
   }
   }
