@@ -146,15 +146,15 @@ export class AddCreditComponent implements OnInit {
         var b =this;
         setTimeout (function(){
           //  alert("Hello"); 
-           if(updated_credit > 10000){
-             console.log(updated_credit);
-             console.log(b.messageService);
+           if(updated_credit < 10000){
+            //  console.log(updated_credit);
+            //  console.log(b.messageService);
             b.messageService.sendMessage(updated_credit,"1");
-            console.log("<10000");
+            // console.log("<10000");
           }
           else{
             b.messageService.sendMessage(updated_credit,"0");
-            console.log(">10000");
+            // console.log(">10000");
           }
           }, 5000);
       }

@@ -66,6 +66,28 @@ export class HeaderComponent implements OnInit {
               private router:Router,
               private _data : ServerService,
               private route: ActivatedRoute) {
+                var Add_credit_flag = sessionStorage.getItem('show_credit_btn');
+                if(Add_credit_flag == "1"){
+                  this.Show_credit_Btn = true;
+                  // console.log("value is 1 for Add credit");
+                }
+                else{
+                  this.Show_credit_Btn = false;
+                  // console.log("value is 0 for Add credit");
+                }
+                this.messageService.getMessage().subscribe(message => { 
+                  this.Credit = message.text;
+                  var show_btn = message.show_btn;
+                  console.log(this.Credit);
+                  if(show_btn == "1"){
+                    this.Show_credit_Btn = true;
+                    // console.log("value is 1 for Add credit");
+                  }
+                  else{
+                    this.Show_credit_Btn = false;
+                    // console.log("value is 0 for Add credit");
+                  }
+                 });
   }
 
   ngOnInit() {
@@ -75,28 +97,7 @@ export class HeaderComponent implements OnInit {
     this.getNotification();
     this.not = this.notifications[0].notifications;
     this.brandid = sessionStorage.getItem('brandid');
-    var Add_credit_flag = sessionStorage.getItem('show_credit_btn');
-    if(Add_credit_flag == "1"){
-      this.Show_credit_Btn = true;
-      // console.log("value is 1 for Add credit");
-    }
-    else{
-      this.Show_credit_Btn = false;
-      // console.log("value is 0 for Add credit");
-    }
-    this.subscription = this.messageService.getMessage().subscribe(message => { 
-      this.Credit = message.text;
-      var show_btn = message.show_btn;
-      console.log(this.Credit);
-      if(show_btn == "1"){
-        this.Show_credit_Btn = true;
-        // console.log("value is 1 for Add credit");
-      }
-      else{
-        this.Show_credit_Btn = false;
-        // console.log("value is 0 for Add credit");
-      }
-     });
+  
   }
 
   toggleSidebar(): boolean {

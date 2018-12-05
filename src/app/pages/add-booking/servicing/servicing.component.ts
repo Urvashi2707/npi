@@ -282,10 +282,20 @@ public setDrag: Boolean;
   }
 
   showLargeModal(res: any, notes: string) {
+    // var credit = JSON.parse(sessionStorage.getItem('credit'))
+    // if(credit <= "10000"){
+    //   this.ServicingService.sendMessage(credit,"1");
+    //   console.log(this.ServicingService.getMessage());
+    // }
+    // else{
+    //   this.ServicingService.sendMessage(credit,"0");
+    //   console.log(this.ServicingService.getMessage());
+    // }
     const activeModal = this.modalService.open(BookingDetails, { size: 'lg', container: 'nb-layout' });
     activeModal.componentInstance.modalHeader = 'Booking Details';
     activeModal.componentInstance.modalContent = res;
     activeModal.componentInstance.modalNotes = notes;
+   
   }
 
   showModal(Id:number) {

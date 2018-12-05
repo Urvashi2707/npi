@@ -4,8 +4,10 @@ import {HttpClient,HttpHeaders} from '@angular/common/http';
 import { HttpErrorResponse } from '@angular/common/http/src/response';
 import { ToasterService, ToasterConfig, Toast, BodyOutputType } from 'angular2-toaster';
 import 'style-loader!angular2-toaster/toaster.css';
-import {environment} from '../../../../../environments/environment'
+import {environment} from '../../../../../environments/environment';
+import { Subscription } from 'rxjs';
 import { ServicingService } from '../../../services/addServicing.service';
+
 @Component({
   selector: 'ngx-modal1',
   templateUrl: './BookingDetails.component.html',
@@ -32,24 +34,31 @@ export class BookingDetails implements OnInit {
   animationType = 'fade';
   timeout = 5000;
   toastsLimit = 5;
+  subscription: Subscription;
   uploade_file = environment.upload_file;
+  Credit:string;
 
   constructor(private service:ServicingService,private toasterService: ToasterService,private activeModal: NgbActiveModal,private httpService: HttpClient) { }
   ngOnInit() {
     // console.log(this.modalContent);
+    // this.subscription = this.service.getMessage().subscribe(message => { 
+    //   this.Credit = message.text;
+    //   var show_btn = message.show_btn;
+    //   console.log(this.Credit);
+    //  });
     this.modalContent.typeodservive = "Drop Off"
   }
   closeModal() {
     this.activeModal.close();
     var credit = JSON.parse(sessionStorage.getItem('credit'));
-      if(credit <= "10000"){
-        console.log("<=10000");
-        this.service.sendMessage("909090","1");
-      }
-      else{
-        console.log(">=10000");
-        this.service.sendMessage("909090","0");
-      }
+      // if(credit <= "10000"){
+      //   console.log("<=10000");
+      //   this.service.sendMessage("909090","1");
+      // }
+      // else{
+      //   console.log(">=10000");
+      //   this.service.sendMessage("909090","0");
+      // }
   }
   public httpOptions = {
     // headers: new HttpHeaders({'Content-Type':  'multipart/form-data'}),
