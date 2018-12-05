@@ -91,4 +91,8 @@
         color: #FF8400;
         font-weight: 600;
     }
+
+    .nb-theme-default nb-search-field .search input{
+        padding-top: 15% !important;
+    }
 }
