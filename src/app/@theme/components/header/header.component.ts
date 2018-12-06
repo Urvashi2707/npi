@@ -87,6 +87,8 @@ export class HeaderComponent implements OnInit {
                     this.Show_credit_Btn = false;
                     // console.log("value is 0 for Add credit");
                   }
+                  // err => console.log(err),
+                  // () => console.log('complete')
                  });
   }
 
