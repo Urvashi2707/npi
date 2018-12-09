@@ -67,6 +67,10 @@ export class HeaderComponent implements OnInit {
               private _data : ServerService,
               private route: ActivatedRoute) {
                 var Add_credit_flag = sessionStorage.getItem('show_credit_btn');
+                var credit = JSON.parse(sessionStorage.getItem('credit'));
+                if(credit != null){
+                  this.Credit = credit;
+                }
                 if(Add_credit_flag == "1"){
                   this.Show_credit_Btn = true;
                   // console.log("value is 1 for Add credit");

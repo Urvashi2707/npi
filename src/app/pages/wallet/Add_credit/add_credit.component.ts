@@ -139,7 +139,9 @@ export class AddCreditComponent implements OnInit {
       success_pay() {
         var credit = JSON.parse(sessionStorage.getItem('credit'));
         var amount_added = this.payment.amount;
-        var updated_credit = Number(credit) + amount_added;
+        var total_amt_debit = amount_added - (1.8/100 * amount_added);
+        console.log(total_amt_debit);
+        var updated_credit = Number(credit) + total_amt_debit;
         // console.log(updated_credit);
         const activeModal = this.modalService.open(OnlinePaySuccessModalComponent, { size: 'lg', container: 'nb-layout' });
         activeModal.componentInstance.modalHeader = 'Message';
@@ -149,11 +151,11 @@ export class AddCreditComponent implements OnInit {
            if(updated_credit < 10000){
             //  console.log(updated_credit);
             //  console.log(b.messageService);
-            b.messageService.sendMessage(updated_credit,"1");
+            b.messageService.sendMessage(updated_credit.toString(),"1");
             // console.log("<10000");
           }
           else{
-            b.messageService.sendMessage(updated_credit,"0");
+            b.messageService.sendMessage(updated_credit.toString(),"0");
             // console.log(">10000");
           }
           }, 5000);
