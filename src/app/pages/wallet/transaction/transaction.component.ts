@@ -94,15 +94,15 @@ export class TransactionComponent implements OnInit {
         for(var k in pre_paid[i]) {
     
             if (isNaN(pre_paid [i][k]) == false){
-              pre_paid[i][k] = parseInt(pre_paid[i][k]);
+              pre_paid[i][k] =  Math.abs(parseFloat(pre_paid[i][k]));
                   }
               }
         }
-        // console.log("date",typeof(pre_paid[1]['creationdatetime']));
-        // console.log("debit",typeof(pre_paid[1]['debit']));
-        // console.log("credit",typeof(pre_paid[1]['credit']));
-        // console.log("balance",typeof(pre_paid[1]['balance']));
-        // console.log("type_of_transaction",typeof(pre_paid[1]['type_of_transaction']));
+        console.log("date",typeof(pre_paid[1]['creationdatetime']));
+        console.log("debit",typeof(pre_paid[1]['debit']));
+        console.log("credit",typeof(pre_paid[1]['credit']));
+        console.log("balance",typeof(pre_paid[1]['balance']));
+        console.log("type_of_transaction",typeof(pre_paid[1]['type_of_transaction']));
         if(key == 'type_of_transaction' || key == 'creationdatetime'){
           console.log('type_of_transaction || creationdatetime')
           if(this.reverse == true){
@@ -164,7 +164,10 @@ export class TransactionComponent implements OnInit {
         this.transaction = res[1].prepaid;
         this.RecordCount = res[0].pagecount[0].record_count;
         this.DataPerPage = res[0].pagecount[0].pagelimit;
-        // console.log(res);
+        for(var i = 0; i < this.transaction.length; i++){
+          this.transaction[i].debit = Math.abs(Number(this.transaction[i].debit));
+        }
+        this.transaction.reverse();
         this.spinner.hide();
        }}
     });

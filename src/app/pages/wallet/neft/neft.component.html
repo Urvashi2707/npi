@@ -31,10 +31,7 @@
                 <td>{{i.creationdatetime}}</td>
                 <td>{{i.reference_number}}</td>
                 <td>{{i.amount}}</td>
-                <td *ngIf="i.isapproved === '0' && sort_dir == false" >Pending Approval</td>
-                <td *ngIf="i.isapproved === '1' && sort_dir == false" >Approved</td>
-                <td *ngIf="i.isapproved === 0 && sort_dir == true" >Pending Approval</td>
-                <td *ngIf="i.isapproved === 1 && sort_dir == true" >Approved</td>
+                <td>{{i.isapproved}}</td>
               </tr>
             </tbody>
           </table>

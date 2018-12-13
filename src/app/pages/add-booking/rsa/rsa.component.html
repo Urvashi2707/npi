@@ -159,6 +159,7 @@
                   <select id="salutation1" class="form-control" name="salutation1" [(ngModel)]="user.salutation" #salutation1="ngModel" required>
                     <option *ngFor="let s of salutation" [value]="s.type"> {{s.type}}</option>
                   </select>
+                  <label class="form-control-placeholder" for="salutation1">Title*</label>
                 </div>
                 <div class="form-group CusName">
                   <input type="text" id="Cus_name" class="form-control" required [(ngModel)]="cust_details.first_name" name="Cus_name" #Cus_name="ngModel"
@@ -177,7 +178,8 @@
               <div class="row">
                 <div class="col-md-8 col-lg-8 col-sm-8 col-xs-8">
                   <div class="form-group" style="display:inline-block;max-width: 16%;">
-                    <label for="countrycode" class="countryCodelabel">Country Code</label>
+                    <label for="countrycode" class="countryCodelabel" style="display: inline-block;margin-bottom: .1rem;
+                    font-size: 12px;">Country Code</label>
                     <label for="countrycode" style="font-size: 12px;padding-left: 2%;margin-bottom: 0px;" class="cCode">C.Code</label>
                     <input type="text" class="form-control" name="countrycode" OnlyNumber="true" [readonly]="true" value="+91" [(ngModel)]="countrycode1"
                       required #countrycode>
@@ -187,9 +189,9 @@
                       #mobile1="ngModel" pattern="^[0-9]{10}$">
                     <label class="form-control-placeholder" for="mobile1">Mobile Number*</label>
                   </div>
-                  <div style="display:inline-block;margin:3%">
-                    <button type="button" (click)="show1=!show1" class="addnumber">
-                      <i class="fa" [ngClass]="{'fa-plus': !show1, 'fa-minus': show1}" style="color:#ffa100" aria-hidden="true"></i>
+                  <div style="display:inline-block;margin:3%" *ngIf="!show1">
+                    <button type="button" (click)="showSecondMobile()"class="addnumber">
+                      <i class="fa fa-plus" style="color:#ffa100" aria-hidden="true"></i>
                     </button>
                   </div>
                   <div class="form-control-feedback" *ngIf="mobile1.errors && (mobile1.dirty || mobile1.touched)">
@@ -206,11 +208,16 @@
                       <input type="text" class="form-control" name="countrycode" OnlyNumber="true" [readonly]="true" value="+91" [(ngModel)]="countrycode1"
                         required #countrycode="ngModel">
                     </div>
-                    <div class="form-group" style="display:inline-block;min-width:58%;">
+                    <div class="form-group mobile1">
                       <input type="text" class="form-control" name="mobile2" maxlength="10" [(ngModel)]="cust_details.mobile2" OnlyNumber="true"
                         #mobile2="ngModel" pattern="^[0-9]{10}$">
                       <label class="form-control-placeholder" for="mobile2">Mobile2 Number*</label>
                     </div>
+                    <div style="display:inline-block;margin:3%">
+                        <button type="button" (click)="HideSecondMobile()" class="addnumber">
+                          <i class="fa fa-minus"  style="color:#ffa100" aria-hidden="true"></i>
+                        </button>
+                      </div>
                     <div class="form-control-feedback" *ngIf="mobile2.errors && (mobile2.dirty || mobile2.touched)">
                       <p *ngIf="!mobile2.errors.valid" class="haserror">mobile must contain digits only</p>
                     </div>
@@ -249,7 +256,7 @@
                   <div class="form-group">
                     <input type="text" id="custlatlong" class="form-control" name="custlatlong" [(ngModel)]="user.custlatlong" #custlatlong="ngModel"
                       pattern="^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?),\s*[-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)$">
-                    <label class="form-control-placeholder" for="droplatlong">BreakDown lat/long</label>
+                    <label class="form-control-placeholder" for="droplatlong">BreakDown lat,long</label>
                   </div>
                   <div class="form-control-feedback" *ngIf="custlatlong.errors && (custlatlong.dirty || custlatlong.touched)">
                     <p *ngIf="!custlatlong.errors.valid" class="haserror">format is wrong</p>

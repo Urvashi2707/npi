@@ -119,6 +119,7 @@ export class ChauffeurComponent implements OnInit {
   public globalsvcid:string;
   public selectedsvcid:string;
   isCloseButton = true;
+  show1 = false;
   config: ToasterConfig;
   position = 'toast-top-full-width';
   animationType = 'fade';
@@ -241,6 +242,14 @@ export class ChauffeurComponent implements OnInit {
     }, () => { 
       // console.log('Backdrop click')
     })
+  }
+
+  showSecondMobile(){
+    this.show1 = true;
+  }
+
+  HideSecondMobile(){
+    this.show1 = false;
   }
 
 

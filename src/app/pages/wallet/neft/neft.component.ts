@@ -100,7 +100,7 @@ sort(key:any){
       for(var k in arr[i]) {
 
           if (isNaN(arr [i][k]) == false){
-            arr[i][k] = parseInt(arr[i][k]);
+            arr[i][k] = parseFloat(arr[i][k]);
                 }
             }
       }
@@ -108,7 +108,7 @@ sort(key:any){
       // console.log("amount",typeof(arr[1]['amount']));
       // console.log("ref",typeof(arr[1]['reference_number']));
       // console.log("app",typeof(arr[1]['isapproved']));
-      if(key == "amount" || key == "isapproved"){
+      if(key == "amount"){
         // console.log("amount","isapproved","clicked");
         if(this.reverse == true){
           arr.sort(function(a, b) {
@@ -190,6 +190,7 @@ sort(key:any){
         this.neft = res[1].prepaid_approve;
         this.RecordCount = res[0].pagecount[0].record_count;
         this.DataPerPage = res[0].pagecount[0].pagelimit;
+        this.neft.reverse();
         this.spinner.hide();
        }}
     });

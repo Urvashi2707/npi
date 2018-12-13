@@ -19,7 +19,7 @@ export class HeaderComponent implements OnInit {
   @Input() position = 'normal';
   //variables
   subscription: Subscription;
-  Credit:string;
+  Credit:number;
   user: any;
   public name =sessionStorage.getItem('username');
   not:any[];
@@ -69,7 +69,7 @@ export class HeaderComponent implements OnInit {
                 var Add_credit_flag = sessionStorage.getItem('show_credit_btn');
                 var credit = JSON.parse(sessionStorage.getItem('credit'));
                 if(credit != null){
-                  this.Credit = credit;
+                  // this.Credit = parseFloat(Number(credit));
                 }
                 if(Add_credit_flag == "1"){
                   this.Show_credit_Btn = true;

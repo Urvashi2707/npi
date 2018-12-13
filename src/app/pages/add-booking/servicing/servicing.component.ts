@@ -1003,18 +1003,23 @@ public getCity() {
     this.googleMapPickupFlag = false;
     this.postaladdresspu = i.postal_address;
     this.googleaddresspu = i.google_address;
-    // console.log("postal address",this.postaladdresspu);
     this.pickuplat = i.latitude;
     this.pickuplong = i.longitude;
     this.landmarkpu = i.land_mark;
-    // console.log(this.landmarkpu);
     this.addresspuprevious = i.address_id;
     for(var j = 0;j<this.addresstype.length;j++){
       if(this.addresstype[j].type_of_address === i.type_of_address){
         this.addresstypepu = this.addresstype[j].id;
-        console.log(this.addresstypepu);
       }
     }
+  }
+
+  showSecondMobile(){
+    this.show1 = true;
+  }
+
+  HideSecondMobile(){
+    this.show1 = false;
   }
 
 SelectSavedDropoffAddress(i,x, ev){
@@ -1792,6 +1797,7 @@ SelectSavedDropoffAddress(i,x, ev){
       }
       else {
         this.showToast('alert', 'Message', 'Please select Pickup');
+        this.BookingBtn = false;
       }
       if(this.ifSameAsPickUp){
         // console.log("not same as selected");
@@ -1800,6 +1806,7 @@ SelectSavedDropoffAddress(i,x, ev){
         }
         else {
           this.showToast('alert', 'Message', 'Please select Drop off');
+          this.BookingBtn = false;
         }
       }
     const reqpara6 = {
@@ -1847,7 +1854,7 @@ SelectSavedDropoffAddress(i,x, ev){
       } else if(data[0].hasOwnProperty('queue')) {
         this.BookingBtn = false;
         this.message = data[0].queue,
-        console.log(this.message[0].allow_booking,this.message[0].prepaid_credits)
+        console.log(this.message[0].allow_booking,this.message[0].prepaid_credits);
         sessionStorage.setItem('allow_booking',this.message[0].allow_booking);
         sessionStorage.setItem('credit',this.message[0].prepaid_credits)
           this.disabled = false;

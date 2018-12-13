@@ -34,6 +34,7 @@ export class RsaComponent implements OnInit {
   public cityList: any = [];
   registrationNumber:string;
   queuetime:string;
+  show1 = false;
   eligibiltycheck_final:boolean;
   private serviceType: string[];
   private TowingTruck: string[];
@@ -503,6 +504,14 @@ export class RsaComponent implements OnInit {
          }
 
     });
+  }
+
+  showSecondMobile(){
+    this.show1 = true;
+  }
+
+  HideSecondMobile(){
+    this.show1 = false;
   }
 
   onSelectBrand(brandsId) {
