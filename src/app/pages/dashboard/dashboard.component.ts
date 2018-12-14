@@ -58,10 +58,11 @@ export class DashboardComponent implements OnInit{
 
  
   ngOnInit() {
-    // setInterval(() => {
-    //  console.log("5 sec timer");
+    setInterval(() => {
+      console.log("5 sec timer");
+     this.prepaid_credit_updation();
+     }, 30000);
      this.GetDashboardData();
-  // }, 30000);
     this.ShowAgreement = JSON.parse(sessionStorage.getItem('terms'));
     this.SvcAdmin = JSON.parse(sessionStorage.getItem('svcadmin'));
     this.GroupAdmin = JSON.parse(sessionStorage.getItem('groupadmin'));
@@ -291,7 +292,27 @@ GetSlotPerformanceDrop(){
            }
         });
       }
+
+      prepaid_credit_updation(){
+        const reqpara1 ={
+          requesttype: "prepaid_balance",
+          svcid: this.SvcId
+        }
+      const as1 = JSON.stringify(reqpara1)
+      this.service.webServiceCall(as1).subscribe
+        (res => {
+          if (res[0].login === 0) {
+            sessionStorage.removeItem('currentUser');
+            this.router.navigate(['/auth/login']);
+          }
+          else {
+            var credit = res[0].balance[0].prepaid_balance;
+            // var show_credit_btn = res[0].balance[0].prepaid_balance;
+            sessionStorage.setItem('credit',credit);
+            this.service.sendMessage(credit,"0");
+          }
+        });
 }
 
-
+}
 
