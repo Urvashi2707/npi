@@ -633,8 +633,8 @@
                  <div class="col-md-6 col-lg-6 col-sm-6">
                    <div class="form-group">
                      <div class="input-group">
-                       <input class="form-control" name="dp" [ngModel]="model" required [minDate]="startDate"
-                         placeholder="{{valuedate | date: 'yyyy-MM-dd'}}" (ngModelChange)="onSelectDate($event)"
+                       <input class="form-control" name="dp" [ngModel]="model" required 
+                         placeholder="{{valuedate | date: 'yyyy-MM-dd'}}" (ngModelChange)="onSelectDate($event)" [minDate]="startDate"
                          ngbDatepicker #d="ngbDatepicker">
                        <div class="input-group-append">
                          <button class="btn btn-outline-secondary dateButton" (click)="d.toggle()" type="button">

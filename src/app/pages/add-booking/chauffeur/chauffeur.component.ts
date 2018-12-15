@@ -897,6 +897,10 @@ markerDragEndd(ev,val) {
             else {
               if (res[0].slots.length == 0) {
                 this.showToast('default', 'No Slot', 'Sorry !! No Slot Unavailable ');
+                this.dateString = null;
+                this.slot_time = "0";
+                this.slothour = null;
+                this.showtime = false;
               }
               else {
                 this.slot = res[0].slots;

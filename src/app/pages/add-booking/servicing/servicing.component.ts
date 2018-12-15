@@ -746,11 +746,11 @@ public getCity() {
     
     if(this.user.city){
       var cityId = this.user.city;
-      console.log(cityId);
+      // console.log(cityId);
     }
     else{
       cityId = JSON.parse(sessionStorage.getItem('city_id'));
-      console.log(cityId);
+      // console.log(cityId);
     }
     if (Date) {
       const reqpara5 = {
@@ -769,6 +769,10 @@ public getCity() {
         else {
           if (res[0].slots.length == 0) {
             this.showToast('default', 'No Slot', 'Sorry !! No Slot Unavailable ');
+            this.dateString = null;
+            this.slot_time = "0";
+            this.slothour = null;
+            this.showtime = false;
           }
           else {
             this.slot = res[0].slots;
@@ -924,7 +928,7 @@ public getCity() {
       ev.target.parentElement.classList.add('borderCls');
     }
     else{
-      console.log('Click');
+//       console.log('Click');
     }
     console.log(x);
     if (x==x) {
@@ -961,9 +965,9 @@ SelectSavedDropoffAddress(i,x, ev){
     ev.target.parentElement.classList.add('borderCls');
   }
   else{
-    console.log('Dekh kr click kro');
+    // console.log('Dekh kr click kro');
   }
-  console.log(x);
+  // console.log(x);
   if (x==x) {
     this.ifClicked = true;
   }
@@ -971,7 +975,7 @@ SelectSavedDropoffAddress(i,x, ev){
   this.googleMapDropoffFlag = false;
   this.googleaddressdo = i.google_address;
   this.postaladdressdo = i.postal_address;
-  console.log("postal address",this.postaladdressdo);
+  // console.log("postal address",this.postaladdressdo);
   this.droplat = i.latitude;
   this.droplong = i.longitude;
   this.landmarkdo = i.land_mark;
@@ -979,7 +983,7 @@ SelectSavedDropoffAddress(i,x, ev){
   for(var k = 0;k <this.addresstype.length; k++){
     if(this.addresstype[k].type_of_address === i.type_of_address){
       this.addresstypedo = this.addresstype[k].id;
-      console.log(this.addresstypepu);
+      // console.log(this.addresstypepu);
     }
   }
 }
@@ -1718,18 +1722,20 @@ SelectSavedDropoffAddress(i,x, ev){
   
     if(this.slot_time != "0"){
       if(this.postaladdresspu || this.landmarkpu){
-        console.log("Pickup is selected");
+        // console.log("Pickup is selected");
       }
       else {
         this.showToast('alert', 'Message', 'Please select Pickup');
+        this.BookingBtn = false;
       }
       if(this.ifSameAsPickUp){
-        console.log("not same as selected");
+        // console.log("not same as selected");
         if(this.postaladdressdo || this.landmarkdo){
-          console.log("Drop off is selected");
+          // console.log("Drop off is selected");
         }
         else {
           this.showToast('alert', 'Message', 'Please select Drop off');
+          this.BookingBtn = false;
         }
       }
     

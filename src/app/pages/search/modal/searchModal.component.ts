@@ -152,6 +152,10 @@ export class SearchModalComponent implements OnInit {
       }
       else{
         if(res[0].slots.length == 0){
+          this.dateString = null;
+          this.slot_time = "0";
+          this.modalContent.queue_time = null;
+          // this.showtime = false;
         }
         else{
           this.slot = res[0].slots;
@@ -160,6 +164,27 @@ export class SearchModalComponent implements OnInit {
     });
     }
   }
+
+  // private showToast(type: string, title: string, body: string) {
+  //   this.config = new ToasterConfig({
+  //     positionClass: this.position,
+  //     timeout: this.timeout,
+  //     newestOnTop: this.isNewestOnTop,
+  //     tapToDismiss: this.isHideOnClick,
+  //     preventDuplicates: this.isDuplicatesPrevented,
+  //     animation: this.animationType,
+  //     limit: this.toastsLimit,
+  //   });
+  //   const toast: Toast = {
+  //     type: type,
+  //     title: title,
+  //     body: body,
+  //     timeout: this.timeout,
+  //     showCloseButton: this.isCloseButton,
+  //     bodyOutputType: BodyOutputType.TrustedHtml,
+  //   };
+  //   this.toasterService.popAsync(toast);
+  // }
 
     getFileDetails (e) {
       this.disable = false;
