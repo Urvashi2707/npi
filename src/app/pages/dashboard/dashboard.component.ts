@@ -307,9 +307,10 @@ GetSlotPerformanceDrop(){
           }
           else {
             var credit = res[0].balance[0].prepaid_balance;
-            // var show_credit_btn = res[0].balance[0].prepaid_balance;
+            var show_credit_btn = res[0].balance[0].show_add_credit;
+            // console.log(show_credit_btn);
             sessionStorage.setItem('credit',credit);
-            this.service.sendMessage(credit,"0");
+            this.service.sendMessage(credit,show_credit_btn);
           }
         });
 }
