@@ -856,6 +856,10 @@ markerDragEndd(ev,val) {
 
       //API call for slots
       getSlot(Date: string) {
+        this.dateString = null;
+        this.slot_time = "0";
+        this.slothour = null;
+        this.showtime = false;
         this.showtime = true;
         if(this.serviceType == '1'){
           this.pickup_drop = 6;
@@ -874,11 +878,11 @@ markerDragEndd(ev,val) {
         }
         if(this.user.city){
           var cityId = this.user.city;
-          console.log(cityId);
+          // console.log(cityId);
         }
         else{
           cityId = JSON.parse(sessionStorage.getItem('city_id'));
-          console.log(cityId);
+          // console.log(cityId);
         }
         if (Date) {
           const reqpara5 = {

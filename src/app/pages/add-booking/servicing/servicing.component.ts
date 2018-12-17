@@ -736,6 +736,10 @@ public getCity() {
   }
 
  getSlot(Date: string) {
+  this.dateString = null;
+  this.slot_time = "0";
+  this.slothour = null;
+  this.showtime = false;
     this.showtime = true;
     if (this.yourBoolean === 'servicing' || this.yourBoolean === 'onlypickup') {
       this.pickup_drop = 0;
@@ -1725,7 +1729,7 @@ SelectSavedDropoffAddress(i,x, ev){
         // console.log("Pickup is selected");
       }
       else {
-        this.showToast('alert', 'Message', 'Please select Pickup');
+        this.showToast('alert', 'Message', 'Please select Pickup Address');
         this.BookingBtn = false;
       }
       if(this.ifSameAsPickUp){
@@ -1734,7 +1738,7 @@ SelectSavedDropoffAddress(i,x, ev){
           // console.log("Drop off is selected");
         }
         else {
-          this.showToast('alert', 'Message', 'Please select Drop off');
+          this.showToast('alert', 'Message', 'Please select Drop off Address');
           this.BookingBtn = false;
         }
       }
