@@ -736,10 +736,11 @@ public getCity() {
   }
 
  getSlot(Date: string) {
-  this.dateString = null;
+   console.log(Date,"queue date");
+  // this.dateString = null;
   this.slot_time = "0";
   this.slothour = null;
-  this.showtime = false;
+  // this.showtime = false;
     this.showtime = true;
     if (this.yourBoolean === 'servicing' || this.yourBoolean === 'onlypickup') {
       this.pickup_drop = 0;
@@ -789,11 +790,11 @@ public getCity() {
   doPickup() {
     this.googleMapDropoffFlag  = false;
     this.googleMapPickupFlag = false;
-    console.log(this.yourBoolean);
+    // console.log(this.yourBoolean);
     if(this.yourBoolean === 'onlypickup'){
         this.ifSameAsPickUp = false;
         this.dropOffOnly = false;
-        console.log('only pickup');
+        // console.log('only pickup');
     }
     else if(this.yourBoolean === 'servicing'){
       this.ifSameAsPickUp = false;
@@ -801,7 +802,7 @@ public getCity() {
     }
     else{
       this.ifSameAsPickUp = false;
-      console.log('pickup');
+      // console.log('pickup');
     }
     if (this.dateString.length > 0) {
       const reqpara10 = {
@@ -827,16 +828,16 @@ public getCity() {
   doDrop() {
     if(this.yourBoolean === 'onlypickup'){
       this.ifSameAsPickUp = false;
-      console.log('only pickup');
+      // console.log('only pickup');
   }
   else{
     this.ifSameAsPickUp = false;
-    console.log('pickup');
+    // console.log('pickup');
   }
     this.googleMapDropoffFlag  = false;
     this.googleMapPickupFlag = false;
     this.dropOffOnly = true;
-    console.log(this.dropOffOnly);
+    // console.log(this.dropOffOnly);
     if (this.dateString.length > 0) {
       const reqpara11 = {
         requesttype: 'getslots',
@@ -875,6 +876,7 @@ public getCity() {
  }
 
   onSelectDate(date: NgbDateStruct) {
+    this.dateString = null;
     if (date != null) {
       this.model = date;
       this.dateString = this.ngbDateParserFormatter.format(date);

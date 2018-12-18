@@ -856,7 +856,7 @@ markerDragEndd(ev,val) {
 
       //API call for slots
       getSlot(Date: string) {
-        this.dateString = null;
+        // this.dateString = null;
         this.slot_time = "0";
         this.slothour = null;
         this.showtime = false;
@@ -915,7 +915,7 @@ markerDragEndd(ev,val) {
     }
 
     getinfowithMobile(){
-      console.log(this.cust_details.mobile)
+      // console.log(this.cust_details.mobile)
       const reqpara112 =
       {
         requesttype:'getcustinfo_mobilev3',

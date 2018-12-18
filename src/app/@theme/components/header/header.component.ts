@@ -73,7 +73,13 @@ export class HeaderComponent implements OnInit {
     this.getNotification();
     this.not = this.notifications[0].notifications;
     this.brandid = sessionStorage.getItem('brandid');
+    var classname = document.getElementsByClassName("nb-close-circled");
+    // <HTMLInputElement>document.getElementsByClassName("nb-close-circled").addEventListener('click', this.myFunc());
   }
+
+  // myFunc() {
+  //   document.getElementsByClassName("nb-close-circled").click();
+  // }
 
   toggleSidebar(): boolean {
     this.sidebarService.toggle(true, 'menu-sidebar');
