@@ -19,7 +19,7 @@ export class HeaderComponent implements OnInit {
   @Input() position = 'normal';
   //variables
   subscription: Subscription;
-  Credit:number;
+  Credit:number = 0;
   user: any;
   public name =sessionStorage.getItem('username');
   not:any[];
@@ -27,7 +27,7 @@ export class HeaderComponent implements OnInit {
   brandid:string;
   show = false;
   message:any;
-  Show_credit_Btn:boolean = false;
+  Show_credit_Btn:boolean = true;
   noNotification : boolean = false;
   notification : any = [];
   today: number = Date.now();
@@ -69,30 +69,26 @@ export class HeaderComponent implements OnInit {
                 var Add_credit_flag = sessionStorage.getItem('show_credit_btn');
                 var credit = JSON.parse(sessionStorage.getItem('credit'));
                 if(credit != null){
-                  // this.Credit = parseFloat(Number(credit));
+                  // var prepaid_balence = Number(credit);
+                  this.Credit = parseFloat(credit);
+                  console.log("credit12",this.Credit )
                 }
                 if(Add_credit_flag == "1"){
                   this.Show_credit_Btn = true;
-                  // console.log("value is 1 for Add credit");
+                  console.log("value is 1 for Add credit",this.Show_credit_Btn);
                 }
                 else{
                   this.Show_credit_Btn = false;
-                  // console.log("value is 0 for Add credit");
                 }
                 this.messageService.getMessage().subscribe(message => { 
                   this.Credit = message.text;
                   var show_btn = message.show_btn;
-                  console.log(this.Credit);
                   if(show_btn == "1"){
                     this.Show_credit_Btn = true;
-                    // console.log("value is 1 for Add credit");
                   }
                   else{
                     this.Show_credit_Btn = false;
-                    // console.log("value is 0 for Add credit");
                   }
-                  // err => console.log(err),
-                  // () => console.log('complete')
                  });
   }
 

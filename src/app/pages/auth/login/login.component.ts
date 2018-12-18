@@ -85,6 +85,7 @@ CloseAlert(){
                 sessionStorage.setItem('userId',(response[0].login[0].userid));
                 sessionStorage.setItem('show_credit_btn',(response[0].login[0].show_add_credit));
                 sessionStorage.setItem('User',value.mobile);
+                this.ServicingService.sendMessage(response[0].login[0].balance_credits,response[0].login[0].show_add_credit);
                 if(response[0].login[0].is_manufacturer == "1"){
                   this.router.navigate(['/trend']);
                 }

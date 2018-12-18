@@ -146,6 +146,7 @@ export class AddCreditComponent implements OnInit {
         const activeModal = this.modalService.open(OnlinePaySuccessModalComponent, { size: 'lg', container: 'nb-layout' });
         activeModal.componentInstance.modalHeader = 'Message';
         var b =this;
+        this.prepaid_credit_updation();
       }
 
   neft_payment(f: NgForm){
@@ -196,5 +197,30 @@ export class AddCreditComponent implements OnInit {
       activeModal.componentInstance.modalHeader = 'Message';
       activeModal.componentInstance.modalContent = res;
     }
+
+
+
+    prepaid_credit_updation(){
+      const reqpara1 ={
+        requesttype: "prepaid_balance",
+        svcid: this.SvcId
+      }
+    const as1 = JSON.stringify(reqpara1)
+    this.messageService.webServiceCall(as1).subscribe
+      (res => {
+        if (res[0].login === 0) {
+          sessionStorage.removeItem('currentUser');
+          this.router.navigate(['/auth/login']);
+        }
+        else {
+          var credit = res[0].balance[0].prepaid_balance;
+          var show_credit_btn = res[0].balance[0].show_add_credit;
+          // console.log(show_credit_btn);
+          sessionStorage.setItem('credit',credit);
+          this.messageService.sendMessage(credit,show_credit_btn);
+        }
+      });
+}
+
 
 }

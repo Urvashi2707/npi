@@ -59,9 +59,9 @@ export class DashboardComponent implements OnInit{
  
   ngOnInit() {
     setInterval(() => {
-      console.log("5 sec timer");
+      console.log("10 min timer");
      this.prepaid_credit_updation();
-     }, 30000);
+     }, 600000);
      this.GetDashboardData();
     this.ShowAgreement = JSON.parse(sessionStorage.getItem('terms'));
     this.SvcAdmin = JSON.parse(sessionStorage.getItem('svcadmin'));

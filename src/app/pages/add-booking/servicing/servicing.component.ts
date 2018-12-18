@@ -806,6 +806,10 @@ public getCity() {
 
  getSlot(Date: string) {
     this.showtime = true;
+    this.dateString = null;
+      this.slot_time = "0";
+      this.slothour = null;
+      this.showtime = false;
     if (this.yourBoolean === 'servicing' || this.yourBoolean === 'onlypickup') {
       this.pickup_drop = 0;
     }
@@ -837,6 +841,10 @@ public getCity() {
         else {
           if (res[0].slots.length == 0) {
             this.showToast('default', 'No Slot', 'Sorry !! No Slot Unavailable ');
+            this.dateString = null;
+            this.slot_time = "0";
+            this.slothour = null;
+            this.showtime = false;
           }
           else {
             this.slot = res[0].slots;

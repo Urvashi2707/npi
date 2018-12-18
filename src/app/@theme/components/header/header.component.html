@@ -8,7 +8,7 @@
 </div>
 <div class="credits" style="padding-top: 1.1%;">
     <span style="padding-right: 15%;padding-top:1%;">Credit</span>
-    <span style="padding-top:1%;padding-right: 13%" [ngStyle]="{'color': Show_credit_Btn === true ? 'red' : 'black'}">{{Credit}}</span>
+    <span style="padding-top:1%;padding-right: 13%" [ngStyle]="{'color': Show_credit_Btn === true ? 'red' : 'black'}">{{Credit || 0}}</span>
     <span *ngIf="Show_credit_Btn"><button style="background-color: orange;border-color: orange;border-radius: 50%;" (click)="GoToNeft()"><i class="fa fa-plus" style="color:#ffa100" aria-hidden="true" style="color: white;
         padding-top: 22%;"></i></button></span>
 </div>
