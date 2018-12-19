@@ -94,7 +94,7 @@ export class TransactionComponent implements OnInit {
         for(var k in pre_paid[i]) {
     
             if (isNaN(pre_paid [i][k]) == false){
-              pre_paid[i][k] =  Math.abs(parseFloat(pre_paid[i][k]));
+              pre_paid[i][k] =  parseFloat(pre_paid[i][k]);
                   }
               }
         }

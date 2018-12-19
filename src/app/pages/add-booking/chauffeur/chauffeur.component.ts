@@ -868,10 +868,10 @@ markerDragEndd(ev,val) {
 
       //API call for slots
       getSlot(Date: string) {
-        this.dateString = null;
+        // this.dateString = null;
         this.slot_time = "0";
         this.slothour = null;
-        this.showtime = false;
+        // this.showtime = false;
         this.showtime = true;
         if(this.serviceType == '1'){
           this.pickup_drop = 6;

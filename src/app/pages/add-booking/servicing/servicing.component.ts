@@ -806,10 +806,10 @@ public getCity() {
 
  getSlot(Date: string) {
     this.showtime = true;
-    this.dateString = null;
+    // this.dateString = null;
       this.slot_time = "0";
       this.slothour = null;
-      this.showtime = false;
+      // this.showtime = false;
     if (this.yourBoolean === 'servicing' || this.yourBoolean === 'onlypickup') {
       this.pickup_drop = 0;
     }
