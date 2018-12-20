@@ -138,15 +138,22 @@ export class AddCreditComponent implements OnInit {
       //Success Modal
       success_pay() {
         var credit = JSON.parse(sessionStorage.getItem('credit'));
-        // var amount_added = this.payment.amount;
-        // var total_amt_debit = amount_added - (1.8/100 * amount_added);
-        // console.log(total_amt_debit);
-        // var updated_credit = Number(credit) + total_amt_debit;
-        // console.log(updated_credit);
+        var pg_charges = Number(JSON.parse(sessionStorage.getItem('charges')))
+        var amount_added = this.payment.amount;
+        var total_amt_debit = amount_added - (pg_charges/100 * amount_added);
+        console.log(total_amt_debit);
+        var updated_credit = Number(credit) + total_amt_debit.toFixed(2);
+        console.log(updated_credit);
+        if(updated_credit <= '10000'){
+            this.messageService.sendMessage(updated_credit.toString(),"1");
+        }
+        else{
+             this.messageService.sendMessage(updated_credit.toString(),"0");
+        }
         const activeModal = this.modalService.open(OnlinePaySuccessModalComponent, { size: 'lg', container: 'nb-layout' });
         activeModal.componentInstance.modalHeader = 'Message';
         var b =this;
-        this.prepaid_credit_updation();
+        // this.prepaid_credit_updation();
       }
 
   neft_payment(f: NgForm){

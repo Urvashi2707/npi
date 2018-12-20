@@ -71,11 +71,11 @@ export class HeaderComponent implements OnInit {
                 if(credit != null){
                   // var prepaid_balence = Number(credit);
                   this.Credit = parseFloat(credit);
-                  console.log("credit12",this.Credit )
+                  // console.log("credit12",this.Credit )
                 }
                 if(Add_credit_flag == "1"){
                   this.Show_credit_Btn = true;
-                  console.log("value is 1 for Add credit",this.Show_credit_Btn);
+                  // console.log("value is 1 for Add credit",this.Show_credit_Btn);
                 }
                 else{
                   this.Show_credit_Btn = false;

@@ -94,7 +94,7 @@ export class TransactionComponent implements OnInit {
         for(var k in pre_paid[i]) {
     
             if (isNaN(pre_paid [i][k]) == false){
-              pre_paid[i][k] =  parseFloat(pre_paid[i][k]);
+              pre_paid[i][k] =  parseFloat(pre_paid[i][k]).toFixed(2);
                   }
               }
         }
@@ -165,7 +165,7 @@ export class TransactionComponent implements OnInit {
         this.RecordCount = res[0].pagecount[0].record_count;
         this.DataPerPage = res[0].pagecount[0].pagelimit;
         for(var i = 0; i < this.transaction.length; i++){
-          this.transaction[i].debit = Math.abs(Number(this.transaction[i].debit));
+          this.transaction[i].debit = Math.abs(Number(this.transaction[i].debit)).toFixed(2);
         }
         this.transaction.reverse();
         this.spinner.hide();
