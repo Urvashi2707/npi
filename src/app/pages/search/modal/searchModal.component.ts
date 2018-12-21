@@ -136,6 +136,9 @@ export class SearchModalComponent implements OnInit {
        return arrOfarr;
      }
   getSlot(Date:string){
+    this.modalContent.queue_time = null;
+    this.queuetime = null;
+    console.log(this.modalContent.queue_time);
       if(Date){
       const reqpara5 = {
         requesttype: 'getslotsv2',
@@ -267,99 +270,103 @@ export class SearchModalComponent implements OnInit {
     uploadFilesInv (f: NgForm) {
       this.uploadbtn = true;
       const frmData: FormData = new FormData();
-      if(this.dateString){
-        this.invoiceDate = this.dateString;
+      if(this.modalContent.queue_time === null){
+
       }
       else{
-        this.invoiceDate = this.modalContent.queue_date;
+        if(this.dateString){
+          this.invoiceDate = this.dateString;
+        }
+        else{
+          this.invoiceDate = this.modalContent.queue_date;
+        }
+        if(!this.queuetime){
+         this.queuetime = this.modalContent.queue_time
+        }
+        this.disable = true;
+        frmData.append('requesttype', this.requesttype);
+        frmData.append('queueid', this.modalContent.id);
+        frmData.append('dropoffdatetime', this.invoiceDate + " " + this.queuetime );
+        frmData.append('totalamount', this.modalContent.amt);
+        frmData.append('invoiceidvar', this.modalContent.invoiceid);
+        frmData.append('estorinvoice', this.inv);
+        frmData.append('notes',this.modalContent.notes);
+        frmData.append('advisor',this.modalContent.service_advisor);
+        for ( var i = 0; i < this.myFiles.length; i++)  { 
+          frmData.append('file' + i, this.myFiles[i]);
+        }
+        const us = JSON.stringify(frmData);
+        this.http.post(this.upload_file, frmData,this.httpOptions).subscribe(
+          data => {
+            this.sMsg = data as string;
+            if(data[0].queueupdate[0].queue_updated == 1)
+            {
+                this.visible = true;
+                this.showAnimation = '1';
+                this.uploadbtn = false;
+                this.getData();
+            }
+            else{
+              this.visible = true;
+              this.uploadbtn = false;
+              this.showAnimation = '0';
+            }
+          },
+          (err: HttpErrorResponse) => {
+          });
+      }
+
+    }
+
+  uploadFilesEst (f: NgForm) {
+    this.uploadbtn = true;
+    const frmData: FormData = new FormData();
+    if(this.modalContent.queue_time === null){
+
+    }
+    else{
+      if(this.dateString){
+        this.estDate = this.dateString;
+      }
+      else{
+        this.estDate = this.modalContent.queue_date;
       }
       if(!this.queuetime){
-       this.queuetime = this.modalContent.queue_time
-      }
+        this.queuetime = this.modalContent.queue_time
+       }
       this.disable = true;
       frmData.append('requesttype', this.requesttype);
       frmData.append('queueid', this.modalContent.id);
-      frmData.append('dropoffdatetime', this.invoiceDate + " " + this.queuetime );
+      frmData.append('dropoffdatetime', this.estDate + " " + this.queuetime);
       frmData.append('totalamount', this.modalContent.amt);
       frmData.append('invoiceidvar', this.modalContent.invoiceid);
-      frmData.append('estorinvoice', this.inv);
+      frmData.append('estorinvoice', this.est);
       frmData.append('notes',this.modalContent.notes);
       frmData.append('advisor',this.modalContent.service_advisor);
       for ( var i = 0; i < this.myFiles.length; i++)  { 
         frmData.append('file' + i, this.myFiles[i]);
       }
       const us = JSON.stringify(frmData);
-      console.log(us);
       this.http.post(this.upload_file, frmData,this.httpOptions).subscribe(
         data => {
           this.sMsg = data as string;
-          console.log (this.sMsg);
           if(data[0].queueupdate[0].queue_updated == 1)
           {
-              this.visible = true;
-              this.showAnimation = '1';
-              this.uploadbtn = false;
-              this.getData();
+            this.uploadbtn = false;
+            this.visible = true;
+            this.showAnimation = '1';
+            this.getData();
           }
           else{
-            this.visible = true;
             this.uploadbtn = false;
+            this.visible = true;
             this.showAnimation = '0';
           }
         },
         (err: HttpErrorResponse) => {
-          console.log (err.message);  
-        }
-      );
+        });
     }
-
-  uploadFilesEst (f: NgForm) {
-    this.uploadbtn = true;
-    const frmData: FormData = new FormData();
-    if(this.dateString){
-      this.estDate = this.dateString;
-    }
-    else{
-      this.estDate = this.modalContent.queue_date;
-    }
-    if(!this.queuetime){
-      this.queuetime = this.modalContent.queue_time
-     }
-    this.disable = true;
-    frmData.append('requesttype', this.requesttype);
-    frmData.append('queueid', this.modalContent.id);
-    frmData.append('dropoffdatetime', this.estDate + " " + this.queuetime);
-    frmData.append('totalamount', this.modalContent.amt);
-    frmData.append('invoiceidvar', this.modalContent.invoiceid);
-    frmData.append('estorinvoice', this.est);
-    frmData.append('notes',this.modalContent.notes);
-    frmData.append('advisor',this.modalContent.service_advisor);
-    for ( var i = 0; i < this.myFiles.length; i++)  { 
-      frmData.append('file' + i, this.myFiles[i]);
-    }
-    const us = JSON.stringify(frmData);
-    console.log(us);
-    this.http.post(this.upload_file, frmData,this.httpOptions).subscribe(
-      data => {
-        this.sMsg = data as string;
-        console.log (this.sMsg);
-        if(data[0].queueupdate[0].queue_updated == 1)
-        {
-          this.uploadbtn = false;
-          this.visible = true;
-          this.showAnimation = '1';
-          this.getData();
-        }
-        else{
-          this.uploadbtn = false;
-          this.visible = true;
-          this.showAnimation = '0';
-        }
-      },
-      (err: HttpErrorResponse) => {
-        console.log (err.message);
-      }
-    );
+  
   }
 
 getData(){
