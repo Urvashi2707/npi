@@ -5,6 +5,7 @@ import { ServicingService } from '../../services/addServicing.service';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import {NgbActiveModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+
 @Component({
   selector: 'app-modal-pickup',
   templateUrl: './modal-pickup.component.html',
@@ -27,6 +28,9 @@ export class ModalPickupComponent implements OnInit {
   public show = false;
   pickupdate:string;
   svcid:string;
+  show_slot:boolean;
+  show_error_message:boolean = false;
+
   constructor(private activeModal: NgbActiveModal,private router: Router, private fb: FormBuilder, private ngbDateParserFormatter: NgbDateParserFormatter, private ServicingService: ServicingService,) { 
     this.pickup_card_group = this.fb.group({
       QID: [{value: '', disable: false}]
@@ -35,21 +39,23 @@ export class ModalPickupComponent implements OnInit {
   model: NgbDateStruct;
   dateString: string;
   public slot: any = [];
+
   onSelectDate(date: NgbDateStruct) {
     if (date != null) {
       this.model = date;
       this.dateString = this.ngbDateParserFormatter.format(date);
-      console.log(this.dateString);
     }
-    
-    // this.showToast('default', 'Time', 'Please Select time');
     this.slot = [];
     this.getSlot(this.dateString);
   }
   public pickup_drop: number;
+
   getSlot(Date: string) {
+    this.show_error_message = false;
     this.pickup_drop = 0;
-      console.log(this.pickup_drop);
+    this.show = false;
+    this.slot_time = null;
+      // console.log(this.pickup_drop);
     if (Date) {
       const reqpara5 = {
         requesttype: 'getslotsv2',
@@ -66,12 +72,11 @@ export class ModalPickupComponent implements OnInit {
         }
         else {
           if (res[0].slots.length == 0) {
-            // this.showToast('default', 'No Slot', 'Sorry !! No Slot Unavailable ');
           }
           else {
+            this.show_slot = true;
             this.slot = res[0].slots;
-            // this.showToast('default', 'Select Slot', 'Please Select Slot');
-            console.log(this.slot);
+            // console.log(this.slot);
           }
         }
       });
@@ -80,10 +85,10 @@ export class ModalPickupComponent implements OnInit {
   
   public slot_time: string;
   check(value: string) {
-    console.log(value);
     this.slot_time = value;
     this.show=true;
   }
+
   closeModal() {
     this.activeModal.close();
   }
@@ -108,29 +113,23 @@ export class ModalPickupComponent implements OnInit {
 
   ngOnInit() {
     this.queueID = sessionStorage.getItem('QueueId');
-    console.log(this.modalContent);
     const now = new Date();
     this.model = { year: now.getFullYear(), month: now.getMonth() + 1, day: now.getDate() };
     this.startDate = this.model;
-    console.log(this.startDate);
     this.minDate = { year: now.getFullYear(), month: now.getMonth() + 1, day: now.getDate() - 1 };
-    console.log(this.minDate);
     this.maxDate = { year: now.getFullYear(), month: now.getMonth() + 1, day: now.getDate() + 15};
-    console.log(this.maxDate);
     if(sessionStorage.getItem('selectedsvc')){
-      // console.log(sessionStorage.getItem('selectedsvc'));
       this.svcid = sessionStorage.getItem('selectedsvc');
-      // console.log(this.svcid);
     }
     else{
       this.svcid = JSON.parse(sessionStorage.getItem('globalsvcid'));
-      // console.log(this.svcid);
     }
   }
 
   onSubmit(f: NgForm){
-    console.log(f.value);
-    console.log(this.dateString);
+    if(this.slot_time === null || this.dateString === null){
+      this.show_error_message = true;
+    }
     if(this.dateString){
       this.pickupdate = this.dateString + ' ' + this.slot_time
     }
@@ -148,21 +147,17 @@ export class ModalPickupComponent implements OnInit {
         svcid:this.svcid
       }
       const as2 = JSON.stringify(reqpara2);
-      console.log(as2);
       this.ServicingService.webServiceCall(as2).subscribe(data => {
         if (data[0].login === 0) {
           sessionStorage.removeItem('currentUser');
           this.router.navigate(['/auth/login']);
         } 
         else {
-          console.log(data);
           if(data[0].updatestatus[0].is_updated === "1"){
-            console.log("updated");
             this.visible = true;
             this.showAnimation = '1';
           }
           else{
-            console.log("not updated");
             this.visible = true;
             this.showAnimation = '0';
           }
@@ -180,13 +175,12 @@ export class ModalPickupComponent implements OnInit {
         svcid:this.svcid
       }
       const as2 = JSON.stringify(reqpara2);
-      console.log(as2);
       this.ServicingService.webServiceCall(as2).subscribe(data => {
         if (data[0].login === 0) {
           sessionStorage.removeItem('currentUser');
           this.router.navigate(['/auth/login']);
-        } else {
-          console.log(data);
+        } 
+        else {
           this.activeModal.close();
     }
   });

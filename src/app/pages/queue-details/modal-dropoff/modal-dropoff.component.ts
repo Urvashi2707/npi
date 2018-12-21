@@ -53,7 +53,8 @@ export class ModalDropoffComponent implements OnInit {
   timeout = 5000;
   toastsLimit = 5;
   type = 'default';
-  // showAnimation = '0';
+  show_slot:boolean;
+  show_error_message:boolean = false;
   public slot: any[];
   showSlot = '0';
 
@@ -61,15 +62,15 @@ export class ModalDropoffComponent implements OnInit {
 
   ngOnInit() {
     this.queueID = sessionStorage.getItem('QueueId');
-    console.log(this.modalContent);
+    // console.log(this.modalContent);
     const now = new Date();
     this.model = { year: now.getFullYear(), month: now.getMonth() + 1, day: now.getDate() };
     this.startDate = this.model;
-    console.log(this.startDate);
+    // console.log(this.startDate);
     this.minDate = { year: now.getFullYear(), month: now.getMonth() + 1, day: now.getDate() - 1 };
-    console.log(this.minDate);
+    // console.log(this.minDate);
     this.maxDate = { year: now.getFullYear(), month: now.getMonth() + 1, day: now.getDate() + 15};
-    console.log(this.maxDate);
+    // console.log(this.maxDate);
     if(sessionStorage.getItem('selectedsvc')){
       // console.log(sessionStorage.getItem('selectedsvc'));
       this.svcid = sessionStorage.getItem('selectedsvc');
@@ -87,34 +88,11 @@ export class ModalDropoffComponent implements OnInit {
     withCredentials: true
   };
 
-  private showToast(type: string, title: string, body: string) {
-    this.config = new ToasterConfig({
-      positionClass: this.position,
-      timeout: this.timeout,
-      newestOnTop: this.isNewestOnTop,
-      tapToDismiss: this.isHideOnClick,
-      preventDuplicates: this.isDuplicatesPrevented,
-      animation: this.animationType,
-      limit: this.toastsLimit,
-    });
-    const toast: Toast = {
-      type: type,
-      title: title,
-      body: body,
-      timeout: this.timeout,
-      showCloseButton: this.isCloseButton,
-      bodyOutputType: BodyOutputType.TrustedHtml,
-    };
-    this.toasterService.popAsync(toast);
-  }
-  // model: NgbDateStruct;
-  // dateString: string;
- 
   onSelectDate(date: NgbDateStruct) {
     if (date != null) {
       this.model = date;
       this.dateString = this.ngbDateParserFormatter.format(date);
-      console.log(this.dateString);
+      // console.log(this.dateString);
     }
     
     // this.showToast('default', 'Time', 'Please Select time');
@@ -123,8 +101,11 @@ export class ModalDropoffComponent implements OnInit {
   }
   public pickup_drop: number;
   getSlot(Date: string) {
+    this.show_error_message = false;
     this.pickup_drop = 0;
-      console.log(this.pickup_drop);
+    this.show = false;
+    this.slot_time = null;
+      // console.log(this.pickup_drop);
     if (Date) {
       const reqpara5 = {
         requesttype: 'getslotsv2',
@@ -141,12 +122,10 @@ export class ModalDropoffComponent implements OnInit {
         }
         else {
           if (res[0].slots.length == 0) {
-            // this.showToast('default', 'No Slot', 'Sorry !! No Slot Unavailable ');
           }
           else {
+            this.show_slot = true;
             this.slot = res[0].slots;
-            // this.showToast('default', 'Select Slot', 'Please Select Slot');
-            console.log(this.slot);
           }
         }
       });
@@ -155,7 +134,8 @@ export class ModalDropoffComponent implements OnInit {
 
 public slot_time: string;
 check(value: string) {
-  console.log(value);
+  // console.log(value);
+  this.show_error_message = false;
   this.slot_time = value;
   this.show=true;
 }
@@ -183,33 +163,41 @@ check(value: string) {
 
 
   onSubmit(f: NgForm){
-    console.log(f.value);
-    console.log(this.dateString);
-    if(this.dateString){
-      this.pickupdate = this.dateString + ' ' + this.slot_time
+    if(this.slot_time === null || this.dateString === null){
+      this.show_error_message = true;
     }
-    else {
-      this.pickupdate = this. modalContent.pu_time
+    else{
+      if(this.dateString){
+        this.pickupdate = this.dateString + ' ' + this.slot_time
+      }
+      else {
+        this.pickupdate = this. modalContent.pu_time;}
+        const reqpara2 = {
+          requesttype: 'updatedropoff',
+          queueid: this.queueID ,
+          doaddress:f.value.do_address,
+          dolat:f.value.dropofflat,
+          dolong:f.value.dropofflong,
+          doqueuetime:this.pickupdate,
+          svcid:this.svcid
+        }
+        const as2 = JSON.stringify(reqpara2);
+        this.ServicingService.webServiceCall(as2).subscribe(data => {
+          if (data[0].login === 0) {
+            sessionStorage.removeItem('currentUser');
+            this.router.navigate(['/auth/login']);
+          } else {
+            if(data[0].updatestatus[0].is_updated === "1"){
+              this.visible = true;
+              this.showAnimation = '1';
+            }
+            else{
+              this.visible = true;
+              this.showAnimation = '0';
+            }
+            // this.activeModal.close();
+      }
+    });
+      }
     }
-    const reqpara2 = {
-      requesttype: 'updatedropoff',
-      queueid: this.queueID ,
-      doaddress:f.value.do_address,
-      dolat:f.value.dropofflat,
-      dolong:f.value.dropofflong,
-      doqueuetime:this.pickupdate,
-      svcid:this.svcid
-    }
-    const as2 = JSON.stringify(reqpara2);
-    console.log(as2);
-    this.ServicingService.webServiceCall(as2).subscribe(data => {
-      if (data[0].login === 0) {
-        sessionStorage.removeItem('currentUser');
-        this.router.navigate(['/auth/login']);
-      } else {
-        console.log(data);
-        this.activeModal.close();
-  }
-});
-  }
 }
