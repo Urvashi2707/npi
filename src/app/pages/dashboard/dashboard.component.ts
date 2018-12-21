@@ -207,6 +207,7 @@ export class DashboardComponent implements OnInit{
              }
              this.Notification=res[3].notification[0];
              this.prepaid_amount = res[4].prepaid[0].pre_paid;
+             sessionStorage.setItem('credit', this.prepaid_amount );
              this.show_add_credit = res[4].prepaid[0].show_add_credit;
             //  console.log(this.prepaid_amount,"credit amount");
               this.service.sendMessage(this.prepaid_amount,this.show_add_credit);

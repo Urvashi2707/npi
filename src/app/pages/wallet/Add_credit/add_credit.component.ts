@@ -141,14 +141,18 @@ export class AddCreditComponent implements OnInit {
         var pg_charges = Number(JSON.parse(sessionStorage.getItem('charges')))
         var amount_added = this.payment.amount;
         var total_amt_debit = amount_added - (pg_charges/100 * amount_added);
-        console.log(total_amt_debit);
-        var updated_credit = Number(credit) + total_amt_debit.toFixed(2);
-        console.log(updated_credit);
-        if(updated_credit <= '10000'){
-            this.messageService.sendMessage(updated_credit.toString(),"1");
+        console.log(total_amt_debit,"total credit after charge");
+        var updated_credit = Number(credit) + total_amt_debit;
+        console.log(updated_credit,"final updation in header");
+        if(updated_credit <= 10000){
+          var up_c = updated_credit.toFixed(2);
+            this.messageService.sendMessage(up_c.toString(),"1");
+            console.log("below 10000");
         }
         else{
-             this.messageService.sendMessage(updated_credit.toString(),"0");
+          var up_c = updated_credit.toFixed(2);
+             this.messageService.sendMessage(up_c.toString(),"0");
+             console.log("Above 10000");
         }
         const activeModal = this.modalService.open(OnlinePaySuccessModalComponent, { size: 'lg', container: 'nb-layout' });
         activeModal.componentInstance.modalHeader = 'Message';

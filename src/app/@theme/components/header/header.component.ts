@@ -70,8 +70,9 @@ export class HeaderComponent implements OnInit {
                 var credit = JSON.parse(sessionStorage.getItem('credit'));
                 if(credit != null){
                   // var prepaid_balence = Number(credit);
-                  this.Credit = parseFloat(credit);
-                  // console.log("credit12",this.Credit )
+                  var balance = Number(credit)
+                  this.Credit = parseFloat(balance.toFixed(2));
+                  console.log("credit12",this.Credit )
                 }
                 if(Add_credit_flag == "1"){
                   this.Show_credit_Btn = true;
@@ -82,6 +83,7 @@ export class HeaderComponent implements OnInit {
                 }
                 this.messageService.getMessage().subscribe(message => { 
                   this.Credit = message.text;
+                  sessionStorage.setItem('credit',message.text);
                   var show_btn = message.show_btn;
                   if(show_btn == "1"){
                     this.Show_credit_Btn = true;
