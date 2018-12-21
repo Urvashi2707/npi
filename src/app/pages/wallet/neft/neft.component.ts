@@ -190,7 +190,7 @@ sort(key:any){
         this.neft = res[1].prepaid_approve;
         this.RecordCount = res[0].pagecount[0].record_count;
         this.DataPerPage = res[0].pagecount[0].pagelimit;
-        this.neft.reverse();
+        // this.neft.reverse();
         this.spinner.hide();
        }}
     });

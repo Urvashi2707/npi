@@ -167,7 +167,7 @@ export class TransactionComponent implements OnInit {
         for(var i = 0; i < this.transaction.length; i++){
           this.transaction[i].debit = Math.abs(Number(this.transaction[i].debit)).toFixed(2);
         }
-        this.transaction.reverse();
+        // this.transaction.reverse();
         this.spinner.hide();
        }}
     });
