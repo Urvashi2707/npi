@@ -150,6 +150,7 @@
             </table>
           </div>
         </div>
+        <div *ngIf="show_error_message"><span style="color:red">Please select slot</span></div>
         <button type="submit" class="btn btn-warning" style="margin:2%" [disabled]="uploadbtn">Submit</button>
       </ng-container>
       <!-- {{f.valid}} -->
@@ -277,6 +278,7 @@
             </table>
           </div>
         </div>
+        <div *ngIf="show_error_message"><span style="color:red">Please select slot</span></div>
         <button type="submit" class="btn btn-warning" style="margin:2%" [disabled]="uploadbtn">Submit</button>
       </ng-container>
       <!-- {{f.valid}} -->

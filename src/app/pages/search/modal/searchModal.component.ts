@@ -59,6 +59,7 @@ export class SearchModalComponent implements OnInit {
   public startDate;
   public minDate;
   public maxDate;
+  show_error_message = false;
   upload_file = environment.upload_file;
 
   //toaster variable
@@ -271,7 +272,8 @@ export class SearchModalComponent implements OnInit {
       this.uploadbtn = true;
       const frmData: FormData = new FormData();
       if(this.modalContent.queue_time === null){
-
+        this.show_error_message = true;
+        this.uploadbtn = false;
       }
       else{
         if(this.dateString){
@@ -281,7 +283,7 @@ export class SearchModalComponent implements OnInit {
           this.invoiceDate = this.modalContent.queue_date;
         }
         if(!this.queuetime){
-         this.queuetime = this.modalContent.queue_time
+         this.queuetime = this.modalContent.queue_time;
         }
         this.disable = true;
         frmData.append('requesttype', this.requesttype);
@@ -322,7 +324,8 @@ export class SearchModalComponent implements OnInit {
     this.uploadbtn = true;
     const frmData: FormData = new FormData();
     if(this.modalContent.queue_time === null){
-
+      this.show_error_message = true;
+      this.uploadbtn = false;
     }
     else{
       if(this.dateString){
@@ -378,8 +381,7 @@ getData(){
   }
     const as1 = JSON.stringify(reqpara1)
     this.ServicingService.webServiceCall(as1).subscribe
-(res => 
-  {
+(res => {
     if(res[0].login === 0){
       sessionStorage.removeItem('currentUser');
       this.router.navigate(['/auth/login']);
@@ -387,7 +389,7 @@ getData(){
     else{
       this.report = res[0].vehqueues;
       this.upload = this.report[0].upload_button,
-      console.log(this.upload),
+      console.log(this.upload);
       console.log(this.report);
     }}
 );}
