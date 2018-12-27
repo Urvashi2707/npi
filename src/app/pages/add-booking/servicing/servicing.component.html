@@ -129,6 +129,7 @@
                      #salutation1="ngModel" required>
                      <option *ngFor="let s of salutation" [value]="s.type"> {{s.type}}</option>
                    </select>
+                   <label class="form-control-placeholder" for="salutation1">Title*</label>
                  </div>
                  <div class="form-group CusFormGroup">
                    <input type="text" id="Cus_name" class="form-control" required [(ngModel)]="cust_details.first_name"
@@ -154,7 +155,7 @@
                    <div class="form-group" class="mobile1">
                      <input type="number" class="form-control" name="mobile1" maxlength="10" [(ngModel)]="cust_details.mobile"
                        required  #mobile1="ngModel" pattern="^[0-9]{10}$" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" onkeydown="javascript: return event.keyCode == 69 ? false : true">
-                     <label class="form-control-placeholder" for="mobile1">Mobile Number*</label>
+                     <label class="form-control-placeholder" for="mobile1" style="margin-top: 2.5%;">Mobile Number*</label>
                    </div>
                    <div class="addNumber">
                      <button type="button" (click)="show1=!show1" class="addnumber">
@@ -762,7 +763,7 @@
                      </div>
                  </div>
                </div>
-               <div class="row" style="padding-top: 2%;">
+               <!-- <div class="row" style="padding-top: 2%;">
                  <div class="col-md-6 col-lg-6 col-sm-6">
                    <div>
                      <label class="custom-control custom-checkbox">
@@ -773,7 +774,7 @@
                      </label>
                    </div>
                  </div>
-               </div>
+               </div> -->
                <div class="row">
                  <div class="col-md-12 col-lg-12 col-sm-12">
                    <div style="float:right">

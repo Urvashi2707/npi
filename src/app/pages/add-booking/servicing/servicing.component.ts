@@ -1778,7 +1778,7 @@ SelectSavedDropoffAddress(i,x, ev){
       selectedsvcid:this.svcid,
       cfeeclient:this.amt,
       notes:this.notes,
-      isconfirmed:this.isconfirm,
+      isconfirmed:"1",
       eavalidcode:this.ea_respondID,
       complaint:this.complaint_id
      };

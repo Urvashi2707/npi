@@ -547,6 +547,7 @@
                       #salutation1="ngModel" required>
                       <option *ngFor="let s of salutation" [value]="s.type"> {{s.type}}</option>
                     </select>
+                    <label class="form-control-placeholder" for="salutation1">Title*</label>
                   </div>
                   <div class="form-group CusName">
                     <input type="text" id="Cus_name" class="form-control" required [(ngModel)]="cust_details.first_name"
@@ -793,6 +794,7 @@
                       #salutation1="ngModel" required>
                       <option *ngFor="let s of salutation" [value]="s.type"> {{s.type}}</option>
                     </select>
+                    <label class="form-control-placeholder" for="salutation1">Title*</label>
                   </div>
                   <div class="form-group CusName">
                     <input type="text" id="Cus_name" class="form-control" required [(ngModel)]="cust_details.first_name"
