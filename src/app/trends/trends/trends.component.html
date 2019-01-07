@@ -25,7 +25,11 @@
             <thead>
               <th>SVC Name</th>
               <th>Relationship Manager</th>
+              <th>SVC Code</th>
+              <th>Dealer Code</th>
+              <th>Region Code</th>
               <th>Projected this month</th>
+           
               <th>Inception Date</th>
               <th>{{last_n_months[0]}}</th>
               <th>{{last_n_months[1]}}</th>
@@ -42,6 +46,9 @@
               <tr *ngFor="let item of List">
                 <td>{{item.svcname}}</td>
                 <td>{{item.implant_name}}</td>
+                <td>{{item.svc_code}}</td>
+                <td>{{item.region_code}}</td>
+                <td>{{item.dealer_code}}</td>
                 <td>{{item.projected}}</td>
                 <td>{{item.creation_date}}</td>
                 <td>{{item.this_month}}</td>
