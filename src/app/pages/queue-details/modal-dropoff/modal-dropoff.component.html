@@ -80,7 +80,7 @@
       </div>
       <div class="col-lg-6 col-md-6 col-sm-6 col-8" *ngIf="show" style="margin-left: 18%">
         <label>New Slot</label>
-        <input class="form-control" name="slot" [(ngModel)]="slot_time" />
+        <input class="form-control" name="slot" [(ngModel)]="slot_time" [readonly]="true" />
       </div>
       <table cellspacing="20" class="table table-condensed table-responsive slot"  *ngIf="show_slot">
         <tr>
