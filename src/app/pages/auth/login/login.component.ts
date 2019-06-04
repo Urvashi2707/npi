@@ -17,13 +17,13 @@ export class LoginComponent implements OnInit {
 
   constructor( private ServicingService: ServicingService,
               private router: Router,
-              private _cookieService:CookieService) { 
+              private _cookieService:CookieService) {
       if(_cookieService.get('mobile')){
         this.user.mobile=this._cookieService.get('mobile');
         this.user.password=this._cookieService.get('password');
     }
   }
-  
+
   ngOnInit() {}
 
   user:Ilogin={
@@ -83,13 +83,19 @@ CloseAlert(){
                 sessionStorage.setItem('insurance',JSON.stringify(response[0].login[0].is_insurance));
                 sessionStorage.setItem('username',(response[0].login[0].first_name));
                 sessionStorage.setItem('User',value.mobile);
-                if(response[0].login[0].is_manufacturer == "1"){
+                sessionStorage.setItem('loginCountryFlag', response[0].login[0].country_id);
+                if(response[0].login[0].is_manufacturer == "1") {
                   this.router.navigate(['/trend']);
                 }
                 else{
+                  if(response[0].login[0].brand_id > "1") {
+                    // this.router.navigate(['/trend']);
+                    console.log("brand_id is greater than 1");
+                    sessionStorage.setItem('multiBrand', response[0].login[0].brand_id);
+                  }
                   this.router.navigate(['/pages']);
                 }
-               }  
+               }
           else if (response[0].login[0].hasOwnProperty('failed')){
             this.showAlert = true;
         }
@@ -115,4 +121,3 @@ CloseAlert(){
  }
 }
 }
-
