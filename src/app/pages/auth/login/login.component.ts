@@ -88,10 +88,10 @@ CloseAlert(){
                   this.router.navigate(['/trend']);
                 }
                 else{
-                  if(response[0].login[0].brand_id > "1") {
+                  if(response[0].login[0].brand_count > "1") {
                     // this.router.navigate(['/trend']);
                     console.log("brand_id is greater than 1");
-                    sessionStorage.setItem('multiBrand', response[0].login[0].brand_id);
+                    sessionStorage.setItem('multiBrand', response[0].login[0].brand_count);
                   }
                   this.router.navigate(['/pages']);
                 }

@@ -1172,7 +1172,7 @@ export class ServicingComponent implements OnInit {
   checkVehicleNum(ev) {
     var mobile_length = (<HTMLInputElement>document.getElementById('mobile1')).value.length;
     var vehicle_reg_length = (<HTMLInputElement>document.getElementById('num')).value.length;
-    if (mobile_length == 10 && vehicle_reg_length > 5) {
+    if (mobile_length == this.maxLen && vehicle_reg_length > 5) {
       this.mobileLength = false;
     }
     else {
@@ -1180,7 +1180,7 @@ export class ServicingComponent implements OnInit {
     }
   }
   checkMobile(ev) {
-    if (this.registrationNumber == '' || this.registrationNumber == null || ev.target.value.length == 10) {
+    if (this.registrationNumber == '' || this.registrationNumber == null || ev.target.value.length == this.maxLen) {
       this.mobileLength = false;
     }
     else {

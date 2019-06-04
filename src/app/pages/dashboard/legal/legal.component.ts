@@ -18,8 +18,9 @@ export class LegalComponent implements OnInit {
   changedsvc:any;
   TodayDate:string;
   SvcName:string;
-  AcceptBtn = true;
+  acceptBtn: boolean = true;
   CityName:string;
+  public countryCode:string;
 
   constructor(private datePipe: DatePipe,
               private activeModal: NgbActiveModal,
@@ -39,36 +40,38 @@ export class LegalComponent implements OnInit {
     }
     this.SelectedSvcid = this.GlobalSvcid;
     this.SvcName = JSON.parse(sessionStorage.getItem('svcname'));
+
+    this.countryCode = sessionStorage.getItem('loginCountryFlag');
   }
 
   closeModal() {
     this.activeModal.close();
   }
 
-  //Called when checkbox is checked or unchecked of Agree Check 
-  AgreeTermsCheck(value){
-    if(value == true){
-      this.AcceptBtn = false;
+  //Called when checkbox is checked or unchecked of Agree Check
+  agreeTermsCheck(value) {
+    console.log("value ", value);
+    if(value == true) {
+      this.acceptBtn = false;
     }
     else{
-     this.AcceptBtn = true;
+     this.acceptBtn = true;
     }
     }
 
     //Calls when Checkbox is checked
-    AcceptTerms(){
-      const AgreeTermReq = 
+    acceptTerms() {
+      const AgreeTermReq =
       {
         requesttype: 'agreeterms',
         version:1
       }
       const TermReq = JSON.stringify(AgreeTermReq)
       this.servicing.webServiceCall(TermReq).subscribe(res =>{
-        this.AcceptBtn = true;
+        this.acceptBtn = true;
         sessionStorage.setItem('terms',"12")
         // this.ShowAgreement = JSON.parse(sessionStorage.getItem('terms'));
         this.activeModal.close();
       });
     }
 }
-
