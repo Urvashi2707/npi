@@ -39,6 +39,9 @@ export class ProfileComponent implements OnInit {
     if(sessionStorage.getItem('selectedsvc')){
       this.svcid = sessionStorage.getItem('selectedsvc');
       }
+      else{
+        this.svcid = JSON.parse(sessionStorage.getItem('globalsvcid'));
+      }
       if(sessionStorage.getItem('loginCountryFlag') === '2') {
         this.maxLen = '8';
         this.countrycode1 = "+65";
@@ -89,9 +92,10 @@ export class ProfileComponent implements OnInit {
   }
 
   getProfileInfo(){
+    console.log(this.svcid)
     const reqpara3 = {
       requesttype: 'getprofile',
-      svcid:this.svcid
+      svcid: this.svcid
     }
       const as3 = JSON.stringify(reqpara3);
       this._data.webServiceCall(as3).subscribe
