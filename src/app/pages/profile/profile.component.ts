@@ -32,12 +32,22 @@ export class ProfileComponent implements OnInit {
   timeout = 5000;
   toastsLimit = 5;
   public designation:any = [];
+  maxLen: any;
   constructor(private _data:ServerService,private toasterService: ToasterService,private service:ServicingService,private modalService: NgbModal,) { }
 
   ngOnInit() {
-    this.countrycode1 = "+91";
     if(sessionStorage.getItem('selectedsvc')){
       this.svcid = sessionStorage.getItem('selectedsvc');
+      }
+      if(sessionStorage.getItem('loginCountryFlag') === '2') {
+        this.maxLen = '8';
+        this.countrycode1 = "+65";
+        console.log("this.maxLen ", this.maxLen);
+      }
+      if(sessionStorage.getItem('loginCountryFlag') === '1') {
+        this.countrycode1 = "+91";
+        this.maxLen = '10';
+        console.log("this.maxLen ", this.maxLen);
       }
     else{
       this.svcid = JSON.parse(sessionStorage.getItem('globalsvcid'));
@@ -76,7 +86,7 @@ export class ProfileComponent implements OnInit {
     const activeModal = this.modalService.open(SuccessComponent, { size: 'lg', container: 'nb-layout' });
     activeModal.componentInstance.modalHeader = 'Message';
     activeModal.componentInstance.modalContent = res;
-  } 
+  }
 
   getProfileInfo(){
     const reqpara3 = {

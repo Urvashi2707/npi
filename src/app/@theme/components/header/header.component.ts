@@ -53,7 +53,7 @@ export class HeaderComponent implements OnInit {
                       }]
                     }]
 
-                  
+
   constructor(private sidebarService: NbSidebarService,
               private menuService: NbMenuService,
               private userService: UserService,
@@ -118,7 +118,7 @@ export class HeaderComponent implements OnInit {
       console.info(`term: ${data.term}, from search: ${data.tag}`);
       // sessionStorage.setItem('search',data.term);
       this.router.navigate(["pages/search",  {'data': data.term}]);
-     
+
   });
 }
 

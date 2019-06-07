@@ -84,6 +84,7 @@ CloseAlert(){
                 sessionStorage.setItem('username',(response[0].login[0].first_name));
                 sessionStorage.setItem('User',value.mobile);
                 sessionStorage.setItem('loginCountryFlag', response[0].login[0].country_id);
+                sessionStorage.setItem('loginCountryCodeFlag', response[0].login[0].country_code);
                 if(response[0].login[0].is_manufacturer == "1") {
                   this.router.navigate(['/trend']);
                 }

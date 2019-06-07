@@ -22,8 +22,8 @@
              </div>
              <div class="col-md-5 col-sm-5 col-lg-5">
                <div class="form-group">
-                 <input type="text" id="mobile1" name="mobile1" class="form-control" maxlength={{maxLen}} minlength={{maxLen}} [(ngModel)]="user.mobile1" (keyup)="checkMobile($event)"
-                 required #mobile1="ngModel"  oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" onkeydown="javascript: return event.keyCode == 69 ? false : true">
+                 <input type="number" id="mobile1" name="mobile1" class="form-control" maxlength={{maxLen}} minlength={{maxLen}} [(ngModel)]="user.mobile1" (keyup)="checkMobile($event)"
+                 required #mobile1="ngModel" pattern="^[0-9]{8,10}$" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" onkeydown="javascript: return event.keyCode == 69 ? false : true">
                  <label  class="form-control-placeholder" for="mobile1" id="mobile_label">Customer Mobile Number*</label>
                </div>
                <div class="form-control-feedback" *ngIf="mobile1.errors && (mobile1.dirty || mobile1.touched)">
@@ -149,12 +149,10 @@
                  <div class="col-md-8 col-lg-8 col-sm-8 col-xs-8 mob">
                    <div class="form-group" class="countryCode">
                      <label for="countrycode" class="countryCodelabel">Country Code</label>
-                     <input type="text" class="form-control" name="countrycode" OnlyNumber="true" [readonly]="true"
-                       value="+91" [(ngModel)]="countrycode1" required #countrycode>
+                     <input type="text" class="form-control" name="countrycode" OnlyNumber="true" [readonly]="true" value={{countrycode1}} [(ngModel)]="countrycode1" required #countrycode>
                    </div>
                    <div class="form-group" class="mobile1">
-                     <input type="number" class="form-control" name="mobile1" maxlength="10" [(ngModel)]="cust_details.mobile"
-                       required  #mobile1="ngModel" pattern="^[0-9]{10}$" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" onkeydown="javascript: return event.keyCode == 69 ? false : true">
+                     <input type="number" class="form-control" name="mobile1" maxlength={{maxLen}} [(ngModel)]="cust_details.mobile" required  #mobile1="ngModel" pattern="^[0-9]{8,10}$" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" onkeydown="javascript: return event.keyCode == 69 ? false : true">
                      <label class="form-control-placeholder" for="mobile1" style="margin-top: 2.5%;">Mobile Number*</label>
                    </div>
                    <div class="addNumber">
@@ -179,8 +177,7 @@
                          value="+91" [(ngModel)]="countrycode1" required #countrycode="ngModel">
                      </div>
                      <div class="form-group" style="display:inline-block;min-width:58%;">
-                       <input type="number" class="form-control" name="mobile2" maxlength="10" [(ngModel)]="cust_details.mobile2"
-                         #mobile2="ngModel" pattern="^[0-9]{10}$" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" onkeydown="javascript: return event.keyCode == 69 ? false : true">
+                       <input type="number" class="form-control" name="mobile2" maxlength={{maxLen}} [(ngModel)]="cust_details.mobile2" #mobile2="ngModel" pattern="^[0-9]{8,10}$" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" onkeydown="javascript: return event.keyCode == 69 ? false : true">
                        <label class="form-control-placeholder" for="mobile2">Mobile2 Number*</label>
                      </div>
                      <div class="form-control-feedback" *ngIf="mobile2.errors && (mobile2.dirty || mobile2.touched)">

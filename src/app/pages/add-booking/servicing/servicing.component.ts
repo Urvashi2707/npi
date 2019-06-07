@@ -252,7 +252,7 @@ export class ServicingComponent implements OnInit {
       this.svcid = JSON.parse(sessionStorage.getItem('globalsvcid'));
     }
     this.user.confirm = true;
-    this.countrycode1 = "+91";
+    this.countrycode1 = '+' + sessionStorage.getItem('loginCountryCodeFlag');
     this.getAllBrands();
     this.salutation = [
       { id: 1, type: 'Mr' },
@@ -688,6 +688,17 @@ export class ServicingComponent implements OnInit {
     this.amb = value;
   }
 
+  onSelectBrand(brandsId) {
+    this.selectedBrand = null;
+    for (let i = 0; i < this.brands.length; i++) {
+      if (this.brands[i].brand_id == brandsId) {
+        this.selectedBrand = this.brands[i].brand_id;
+      }
+    }
+    this.getModelds(this.selectedBrand);
+    // this.getVariants(this.selectedModel);
+  }
+
   onSelectModel(modelId) {
     for (let i = 0; i < this.Models.length; i++) {
       if (this.Models[i].model_id == modelId) {
@@ -894,16 +905,6 @@ export class ServicingComponent implements OnInit {
     this.registrationNumber = value.toUpperCase()
   }
 
-
-  onSelectBrand(brandsId) {
-    this.selectedBrand = null;
-    for (let i = 0; i < this.brands.length; i++) {
-      if (this.brands[i].brand_id == brandsId) {
-        this.selectedBrand = this.brands[i].brand_id;
-      }
-    }
-    this.getModelds(this.selectedBrand);
-  }
 
   onSelectDate(date: NgbDateStruct) {
     this.dateString = null;
@@ -1832,7 +1833,7 @@ export class ServicingComponent implements OnInit {
           this.slot = [];
           this.sameasvalue = true;
           f.reset();
-          this.countrycode1 = "+91";
+          this.countrycode1 = '+' + sessionStorage.getItem('loginCountryCodeFlag');;
           this.dateString = null;
           this.mobileLength = true;
           this.yourBoolean = 'servicing';

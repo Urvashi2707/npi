@@ -12,7 +12,7 @@ import { AddEmployee } from '../modal/AddEmployee/AddEmployee.component';
 import { ToasterService, ToasterConfig, Toast, BodyOutputType } from 'angular2-toaster';
 import 'style-loader!angular2-toaster/toaster.css';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { AgmCoreModule, MapsAPILoader } from '@agm/core'; 
+import { AgmCoreModule, MapsAPILoader } from '@agm/core';
 import {} from '@types/googlemaps';
 import { ThemeSettingsComponent } from '../../../@theme/components';
 declare var google: any;
@@ -65,7 +65,7 @@ export class ChauffeurComponent implements OnInit {
   cityList:any;
   private creName: string[];
   public pickup_drop:number;
-  public yourBoolean : string = 'onSpot' ; 
+  public yourBoolean : string = 'onSpot' ;
   user:any = {};
   queuetime:string;
   public message:any=[];
@@ -136,6 +136,7 @@ export class ChauffeurComponent implements OnInit {
   valuedate = new Date();
   countrycode1:string;
   insuranceFlag:boolean=false;
+  multiBrandFlag: boolean = false;
   testdrivecheck = false;
   latPickup:number;
   lngPickup:number;
@@ -146,6 +147,7 @@ export class ChauffeurComponent implements OnInit {
   a:number;
   b:number;
   lngDrop:number;
+  maxLen: any;
   public iconurl: String;
   drag_pickup_lat:number;
   drag_pickup_lng:number;
@@ -153,6 +155,7 @@ export class ChauffeurComponent implements OnInit {
   drag_drp_lng:number;
   drag_pickup_add:string = "0";
   drag_dropoff_add:string = "0";
+  checkCountry: boolean = false;
   @ViewChild('pickupsearchplace') pickupsearchplace:ElementRef;
   @ViewChild('pickupsearchplaceFill') pickupsearchplaceFill: ElementRef;
   @ViewChild('pickupsearchplaceLandmark') pickupsearchplaceLandmark: ElementRef;
@@ -177,7 +180,7 @@ export class ChauffeurComponent implements OnInit {
   @ViewChild('internaldropoff') internaldropoff:ElementRef;
   @ViewChild('internaldropoffsearchplaceFill') internaldropoffsearchplaceFill: ElementRef;
   @ViewChild('internaldropofflandmark') internaldropofflandmark: ElementRef;
-  
+
   constructor(public ngZone: NgZone,private spinner: NgxSpinnerService,private datePipe:DatePipe,private titlecasePipe:TitleCasePipe,private toasterService: ToasterService,private _data : ServerService,private router: Router,private ngbDateParserFormatter: NgbDateParserFormatter,private modalService: NgbModal) {
     this.cityList = [];
     this.getCity();
@@ -188,15 +191,29 @@ export class ChauffeurComponent implements OnInit {
     if(JSON.parse(sessionStorage.getItem('insurance')) == "1"){
       this.insuranceFlag = true;
     }
-    else{
-      this.insuranceFlag = false;
+    if(sessionStorage.getItem('multiBrand') > '1') {
+      this.multiBrandFlag = true;
     }
     if(sessionStorage.getItem('selectedsvc')){
       this.svcid = sessionStorage.getItem('selectedsvc');
     }
+    if(sessionStorage.getItem('loginCountryCodeFlag') === '65') {
+      this.checkCountry = true;
+    }
+    if(sessionStorage.getItem('loginCountryFlag') === '2') {
+      this.maxLen = '8';
+      console.log("this.maxLen ", this.maxLen);
+    }
+    if(sessionStorage.getItem('loginCountryFlag') === '1') {
+      this.maxLen = '10';
+      console.log("this.maxLen ", this.maxLen);
+    }
     else{
+      this.insuranceFlag = false;
       this.svcid = JSON.parse(sessionStorage.getItem('globalsvcid'));
     }
+    // else{
+    // }
     this.service_type  = [
       { id: 1, type: 'StockYard' },
       { id: 2, type: 'Test Drive' },
@@ -210,7 +227,7 @@ export class ChauffeurComponent implements OnInit {
       { id: 3, type: 'Ms' },
     ];
       this.user.salutation = 'Mr';
-      this.countrycode1 = "+91";
+      this.countrycode1 = '+' + sessionStorage.getItem('loginCountryCodeFlag');
       this.getBrands();
       this.getCoordinator();
       this.getSaleExceutive();
@@ -228,7 +245,7 @@ export class ChauffeurComponent implements OnInit {
     const activeModal = this.modalService.open(AddEmployee, { size: 'lg', container: 'nb-layout' });
     activeModal.componentInstance.modalHeader = 'Add Employee';
     activeModal.componentInstance.modalContent = Id;
-    activeModal.result.then(() => { 
+    activeModal.result.then(() => {
       this.spinner.show();
       if(Id == 4){
         this.getSaleExceutive();
@@ -260,7 +277,7 @@ export class ChauffeurComponent implements OnInit {
         });
    }
 
-   
+
 
    data(){
     (<HTMLInputElement>document.getElementById('num')).disabled = true;
@@ -347,7 +364,7 @@ centerChang(ev,value) {
   this.y = ev.lng;
   // stockyard
   if(value == 1){
-   
+
     sessionStorage.setItem('pickup_lat_drag',ev.lat);
     sessionStorage.setItem('pickup_lng_drag',ev.lng);
   }
@@ -665,7 +682,9 @@ markerDragEndd(ev,val) {
       }
       else{
         this.Coordinator = res[0].users
-            }
+      }
+      console.log("res[0].users ", res);
+      console.log("this.Coordinator ", this.Coordinator);
     });
   }
 
@@ -830,7 +849,7 @@ markerDragEndd(ev,val) {
             this.getSlot(this.dateString);
           }
 
-         //Assign Amb switch is checked 
+         //Assign Amb switch is checked
         checkAmb(value){
         this.amb = value;
       }
@@ -838,18 +857,18 @@ markerDragEndd(ev,val) {
       getDistanceFromLatLonInKm(lat1,lon1,lat2,lon2) {
         var R = 6371; // Radius of the earth in km
         var dLat = this.deg2rad(lat2-lat1);  // deg2rad below
-        var dLon = this.deg2rad(lon2-lon1); 
-        var a = 
+        var dLon = this.deg2rad(lon2-lon1);
+        var a =
           Math.sin(dLat/2) * Math.sin(dLat/2) +
-          Math.cos(this.deg2rad(lat1)) * Math.cos(this.deg2rad(lat2)) * 
+          Math.cos(this.deg2rad(lat1)) * Math.cos(this.deg2rad(lat2)) *
           Math.sin(dLon/2) * Math.sin(dLon/2)
-          ; 
-        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+          ;
+        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
         var d = R * c; // Distance in km
         // console.log(d);
         return d;
       }
-      
+
      deg2rad(deg) {
         return deg * (Math.PI/180)
       }
@@ -961,7 +980,7 @@ markerDragEndd(ev,val) {
                     this.user.address_typedu = this.addressDropoff.address_id;
                   }
                   else{
-  
+
                     this.user.dropofffdoor = null ;
                     this.user.dropoffstreet = null;
                     this.user.dropoffarea = null;
@@ -1001,8 +1020,8 @@ markerDragEndd(ev,val) {
         });
     }
 
-  
- 
+
+
 customerCheck(){
     const reqpara = {
         requesttype: 'getcustinfo_mobile',
@@ -1126,7 +1145,7 @@ customerCheck(){
       this.droplong = this.droplong.substring(0, 14);
       this.pickuplat = this.pickuplat.substring(0, 14);
       this.pickuplong = this.pickuplong.substring(0, 14);
-   
+
     }
     else if (this.pickup_drop == 5 || this.pickup_drop == 7){
       if(this.pickup_drop == 5){
@@ -1160,13 +1179,13 @@ customerCheck(){
           this.pickuplong = this.pickuplong.substring(0, 14);
       }
     }
-   
+
   if(f.value.mobile2){
       this.mobile2 = f.value.mobile2;
     }
   else {
     this.mobile2 = "0";
-  
+
   }
   if(f.value.Cus_name){
       this.cusName = f.value.Cus_name;
@@ -1181,7 +1200,7 @@ customerCheck(){
     }
   else {
     this.mobile1 = "0";
-   
+
   }
   if(f.value.email){
       this.cusEmail = f.value.email;
@@ -1205,7 +1224,7 @@ customerCheck(){
   if(this.slot_time){}
   else {
     this.slot_time = "0";
-  } 
+  }
   if(f.value.salesExe){
       this.saleexce= f.value.salesExe
   }
@@ -1227,7 +1246,7 @@ customerCheck(){
       this.queuetime =  this.datePipe.transform(this.today,"y-MM-dd HH:mm:ss");
     }
     if(this.slot_time != "0" || this.pickup_drop == 15 ){
-      
+
       if(result >= 0.100000 || this.pickup_drop != 4){
   const reqpara6 = {
     requesttype: "createbookingv5",
@@ -1265,10 +1284,10 @@ customerCheck(){
     isconfirmed:"0",
     eavalidcode:"0",
     complaint:["0"]
-  
+
   };
   const ua = JSON.stringify(reqpara6);
-  this._data.webServiceCall(ua).subscribe(data => { 
+  this._data.webServiceCall(ua).subscribe(data => {
     if(data[0].login === 0){
       sessionStorage.removeItem('currentUser');
       this.router.navigate(['/auth/login']);
@@ -1286,7 +1305,7 @@ customerCheck(){
         this.show3 = false;
         this.disabled =  true;
         this.showtime = false;
-        this.countrycode1 = "+91";
+        this.countrycode1 = '+' + sessionStorage.getItem('loginCountryCodeFlag');
         this.dateString = null;
         this.yourBoolean = 'servicing';
         this.user.salutation = 'Mr';
@@ -1300,7 +1319,7 @@ customerCheck(){
         sessionStorage.removeItem('dropoff_add_drag');
         sessionStorage.removeItem('dropoff_lat_drag');
         sessionStorage.removeItem('dropoff_lng_drag');
-        (<HTMLInputElement>document.getElementById('num')).disabled = false; 
+        (<HTMLInputElement>document.getElementById('num')).disabled = false;
          document.getElementById("num_label").classList.remove("disabled_label");
          document.getElementById("num_label").style.opacity = "0.5";
     }

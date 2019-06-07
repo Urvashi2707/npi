@@ -30,8 +30,9 @@ import 'style-loader!angular2-toaster/toaster.css';
       CheckSvcAdmin :boolean;
       CheckGrpAdmin :boolean;
       GroupAdmin:string;
-      key: string = 'id'; 
+      key: string = 'id';
       reverse: boolean = false;
+      maxLen: any;
 
       constructor(private modalService: NgbModal,
                     private _data:ServerService,
@@ -47,9 +48,18 @@ import 'style-loader!angular2-toaster/toaster.css';
           this.SvcID = JSON.parse(sessionStorage.getItem('globalsvcid'));
         }
         this. getUserType();
-        this.CountryCode="+91";
         if(this.InsuranceUsr == "1"){
           this.InsuranceCheck = true;
+        }
+        if(sessionStorage.getItem('loginCountryFlag') === '2') {
+          this.maxLen = '8';
+          this.CountryCode="+65";
+          console.log("this.maxLen ", this.maxLen);
+        }
+        if(sessionStorage.getItem('loginCountryFlag') === '1') {
+          this.maxLen = '10';
+          this.CountryCode="+91";
+          console.log("this.maxLen ", this.maxLen);
         }
        else{
         this.InsuranceCheck = false;
@@ -88,7 +98,7 @@ import 'style-loader!angular2-toaster/toaster.css';
         const activeModal = this.modalService.open(EditUserComponent, { size: 'lg', container: 'nb-layout' });
         activeModal.componentInstance.modalHeader = 'Edit Users';
         activeModal.componentInstance.modalContent = res;
-        activeModal.result.then(() => { 
+        activeModal.result.then(() => {
           console.log('When user closes');
           this.getUserList();
         }, () => { console.log('Backdrop click')})
@@ -100,7 +110,7 @@ import 'style-loader!angular2-toaster/toaster.css';
         activeModal.componentInstance.modalHeader = 'Message';
         activeModal.componentInstance.modalContent = res;
       }
-      
+
       //Delete User
       Delete(user,index){
         const reqpara1 = {
@@ -205,7 +215,7 @@ import 'style-loader!angular2-toaster/toaster.css';
           username: user1.first_name,
           mobilenumber: user1.mobilenumber,
           email:user1.email,
-       
+
           isenabled:1,
           permissionid:user1.permission_type,
         };
