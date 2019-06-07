@@ -22,12 +22,10 @@
               <div class="col-md-8 col-lg-8 col-sm-8 col-xs-8">
                 <div class="form-group" style="display:inline-block;max-width: 16%;">
                   <label for="countrycode" style="font-size: 12px;padding-left: 2%;margin-bottom: 0px;">Country Code</label>
-                  <input type="text" class="form-control" name="countrycode" OnlyNumber="true" [readonly]="true" value="+91" [(ngModel)]="countrycode1"
-                    required #countrycode>
+                  <input type="text" class="form-control" name="countrycode" OnlyNumber="true" [readonly]="true" value={{countrycode1}} [(ngModel)]="countrycode1" required #countrycode>
                 </div>
                 <div class="form-group" style="display:inline-block;min-width:45%;">
-                  <input type="text" class="form-control" name="mobile1" maxlength="10" [(ngModel)]="usr.mobile" required OnlyNumber="true"
-                    #mobile1="ngModel" pattern="^[0-9]{10}$">
+                  <input type="text" class="form-control" name="mobile1" maxlength={{maxLen}} [(ngModel)]="usr.mobile" required OnlyNumber="true" #mobile1="ngModel" pattern="^[0-9]{8,10}$">
                   <label class="form-control-placeholder" for="mobile1">Mobile Number*</label>
                 </div>
                 <div class="form-control-feedback" *ngIf="mobile1.errors && (mobile1.dirty || mobile1.touched)">

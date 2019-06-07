@@ -4,14 +4,14 @@
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
-  
+
   <div class="modal-body">
   <form novalidate #f="ngForm" (ngSubmit)="onSubmit(f)">
     <div style="width:100%;margin-left:auto;margin-right:auto">
-  
-  
-     
-  
+
+
+
+
   <!-- Employee Name -->
   <div class="row">
     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
@@ -30,33 +30,33 @@
        </div>
     </div>
   </div>
-   
-  
+
+
   <!-- Employee Mobile -->
-  
+
   <div class="container1">
     <div class="row">
       <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6">
         <div class="form-group" style="display:inline-block;min-width: 100%;">
-          <input type="number" class="form-control" maxlength="10" name="mobile1" [(ngModel)]="modalContent.mobilenumber" required #mobile1="ngModel" pattern="^[0-9]{10}$" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" onkeydown="javascript: return event.keyCode == 69 ? false : true">
+          <input type="number" class="form-control" maxlength={{maxLen}} name="mobile1" [(ngModel)]="modalContent.mobilenumber" required #mobile1="ngModel" pattern="^[0-9]{8,10}$" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" onkeydown="javascript: return event.keyCode == 69 ? false : true">
           <label class="form-control-placeholder" for="mobile1">Mobile Number*</label>
         </div>
         <div class="form-control-feedback" *ngIf="mobile1.errors && (mobile1.dirty || mobile1.touched)">
             <p *ngIf="mobile1.errors.required" class="haserror">mobile is required</p>
-            <p *ngIf="!mobile1.errors.valid" class="haserror">mobile must contain 10 digits only</p>
+            <p *ngIf="!mobile1.errors.valid" class="haserror">mobile must contain digits only</p>
         </div>
-  
+
         </div>
       </div>
   </div>
-  
+
   <div class="row">
     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
       <div class="form-group">
         <input type="text"class="form-control" id = "email" name="email" [(ngModel)]="modalContent.email" required #email="ngModel" pattern="^([a-zA-Z0-9_\.\-])+@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$">
         <label class="form-control-placeholder" for="email">Employee Email*</label>
       </div>
-      
+
       <div class="form-control-feedback" *ngIf="email.errors && (email.dirty || email.touched)">
           <p *ngIf="email.errors.required" class="haserror">Email is required</p>
           <p *ngIf="!email.errors.valid" class="haserror">Email must contain at least the @ character</p>
@@ -72,7 +72,7 @@
                 <input type="text"class="form-control" id = "permission" name="permission" [readonly]="true" value="Cre" [(ngModel)]="desingnation" required #permission="ngModel">
               </div>
         </div>
-        
+
         <div class="form-control-feedback" *ngIf="permission.errors && (permission.dirty || permission.touched)">
             <p *ngIf="permission.errors.required" class="haserror">Designation is required</p>
         </div>
@@ -87,13 +87,13 @@
                 <input type="text"class="form-control" id = "permission" name="permission" [readonly]="true" value="Service Advisor" [(ngModel)]="desingnation" required #permission="ngModel">
               </div>
         </div>
-        
+
         <div class="form-control-feedback" *ngIf="permission.errors && (permission.dirty || permission.touched)">
             <p *ngIf="permission.errors.required" class="haserror">Designation is required</p>
         </div>
       </div>
     </div>
-  
+
   <div class="row" *ngIf="modalContent == '3' ">
       <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
         <div class="form-group">
@@ -102,7 +102,7 @@
                 <input type="text"class="form-control" id = "permission" name="permission" [readonly]="true" value="Coordinator" [(ngModel)]="desingnation" required #permission="ngModel">
               </div>
         </div>
-        
+
         <div class="form-control-feedback" *ngIf="permission.errors && (permission.dirty || permission.touched)">
             <p *ngIf="permission.errors.required" class="haserror" >Designation is required</p>
         </div>
@@ -118,27 +118,26 @@
                   <input type="text"class="form-control" id = "permission" name="permission" [readonly]="true" value="Sales Executive" [(ngModel)]="desingnation" required #permission="ngModel">
                 </div>
           </div>
-          
+
           <div class="form-control-feedback" *ngIf="permission.errors && (permission.dirty || permission.touched)">
               <p *ngIf="permission.errors.required" class="haserror">Designation is required</p>
           </div>
         </div>
       </div>
-  
+
   <button type="submit" class="btn btn-primary" [disabled]="f.invalid">Add User </button>
   <!-- <button (click)="sendMessage()">Send Message</button> -->
-  
-  
-  
+
+
+
   </div>
-  
+
   </form>
   </div>
-<!--   
+<!--
   <div class="modal-footer">
       <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
         <hr/>
         <div ></div>
     </div>
   </div> -->
-  

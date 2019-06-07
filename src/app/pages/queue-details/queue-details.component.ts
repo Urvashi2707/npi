@@ -204,21 +204,21 @@ export class QueueDetailsComponent implements OnInit {
               this.Amt = this.estAmount;
               // console.log(this.Amt)
             }
-   
+
    const activeModal = this.modalService.open(SearchModalComponent, { size: 'lg', container: 'nb-layout' });
   this.datatopass = { queue_id:  sessionStorage.getItem('QueueId'),  queue_exists:  "0", type_of_service: '1',  queue_time:  this.dropSlotTime, service_status: this.service_status };
     this.dataForModal = { service_status: this.service_status,amt:this.Amt,advName:this.advInfo[0].adv_name, id: sessionStorage.getItem('QueueId'), queue_time: this.QueueTIme }
     console.log("urvashi urvi");
     activeModal.componentInstance.modalHeader = 'Upload File';
     activeModal.componentInstance.modalContent = this.dataForModal;
-    activeModal.result.then(() => { 
+    activeModal.result.then(() => {
       this.getQueueDetails();
-    }, () => {    
+    }, () => {
     })
   }
 
   showLargeModal(name: string) {
-  
+
     const activeModal = this.modalService.open(ModalQueueComponent, { size: 'lg', container: 'nb-layout' });
 
     activeModal.componentInstance.modalHeader = 'Cancel';
@@ -230,13 +230,13 @@ export class QueueDetailsComponent implements OnInit {
     const activeModal = this.modalService.open(ModalPickupComponent, { size: 'lg', container: 'nb-layout' });
     activeModal.componentInstance.modalHeader = 'Pickup Details';
     activeModal.componentInstance.modalContent = res;
-    activeModal.result.then(() => { 
+    activeModal.result.then(() => {
       // console.log('When user closes');
       var event = {
         "tabTitle":"Details"
       };
       this.tabChanged(event);
-    }, () => { 
+    }, () => {
       // console.log('Backdrop click')
     })
 
@@ -246,13 +246,13 @@ export class QueueDetailsComponent implements OnInit {
     const activeModal = this.modalService.open(ModalDropoffComponent, { size: 'lg', container: 'nb-layout' });
     activeModal.componentInstance.modalHeader = 'DropOff Details';
     activeModal.componentInstance.modalContent = res;
-    activeModal.result.then(() => { 
+    activeModal.result.then(() => {
       // console.log('When user closes');
       var event = {
         "tabTitle":"Details"
       };
       this.tabChanged(event);
-    }, () => { 
+    }, () => {
       // console.log('Backdrop click')
     })
 
@@ -261,7 +261,7 @@ export class QueueDetailsComponent implements OnInit {
     const activeModal = this.modalService.open(ModalAdvComponent, { size: 'lg', container: 'nb-layout' });
     activeModal.componentInstance.modalHeader = 'Select Advisor';
     activeModal.componentInstance.modalContent = res;
-    activeModal.result.then(() => { 
+    activeModal.result.then(() => {
       // console.log('When user closes');
       var event = {
         "tabTitle":"Details"
@@ -353,7 +353,7 @@ export class QueueDetailsComponent implements OnInit {
         if (check[0].hasOwnProperty('custinfo')) {
           const custInfo = check[0].custinfo;
           this.CustomerName = custInfo[0].cust_name;
-          this.CustomerNumber = custInfo[0].cust_country_code + " " + custInfo[0].cust_mobile;
+          this.CustomerNumber = '+' + custInfo[0].cust_country_code + " " + custInfo[0].cust_mobile;
           this.CustomerEmail = custInfo[0].cust_email;
           this.custInfo.custNo = custInfo[0].cust_mobile;
           sessionStorage.setItem('customerNo', custInfo[0].cust_mobile);
@@ -607,10 +607,10 @@ export class QueueDetailsComponent implements OnInit {
             let adv_number = this.creFormGroup.get('advNumber');
             adv_number.setValue(this.advInfo[0].adv_mobile);
           }
-           
+
           }
         }
-      
+
       if (objectlength > 9) {
         console.log("inside complaint");
         if (check[9].hasOwnProperty('complaints')) {
@@ -653,7 +653,7 @@ export class QueueDetailsComponent implements OnInit {
             // if (objectlength > 11) {
             //   if (check[11].hasOwnProperty('feedback')) {
             //     this.showFeedbackCards = "1";
-               
+
             //     if(check[11].feedback[0].hasOwnProperty('no_records'))
             //     {
             //       this.showFeedbackCards = "0";
@@ -669,7 +669,7 @@ export class QueueDetailsComponent implements OnInit {
       }
 
     });
-  
+
   }
 
   public beforeChange($event: NgbPanelChangeEvent) {

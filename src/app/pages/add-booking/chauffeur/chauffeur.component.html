@@ -47,7 +47,7 @@
             <div class="line">
               <span class="sectionHeader">Vehicle Details</span>
             </div>
-            <div class="row" *ngIf="insuranceFlag">
+            <div class="row" *ngIf="insuranceFlag || multiBrandFlag">
               <div class="col-md-6 col-lg-6 col-sm-6">
                 <div class="form-group">
                   <select name="brand" id="brand" class="form-control" (change)="onSelectBrand($event.target.value)"
@@ -124,14 +124,12 @@
                 <div class="form-group" style="display:inline-block;max-width: 16%;">
                   <label for="countrycode" style="font-size: 12px;padding-left: 2%;margin-bottom: 0px;margin-top: 1.0em;">Country
                     Code</label>
-                  <input type="text" class="form-control" name="countrycode" OnlyNumber="true" [readonly]="true" value="+91"
-                    [(ngModel)]="countrycode1" #countrycode="ngModel">
+                  <input type="text" class="form-control" name="countrycode" OnlyNumber="true" [readonly]="true" value="+91" [(ngModel)]="countrycode1" #countrycode="ngModel">
 
                 </div>
                 <div class="form-group CoordinatorMobile">
                   <label for="cormob" style="font-size: 12px;padding-left: 2%;margin-bottom: 0px;">Mobile Number*</label>
-                  <input type="text" [readonly]="true" id="cormob" class="form-control" name="cormob" [(ngModel)]="selectedCoordinator.mobile_number"
-                    #cormob="ngModel">
+                  <input type="text" [readonly]="true" id="cormob" class="form-control" name="cormob" [(ngModel)]="selectedCoordinator.mobile_number" #cormob="ngModel">
 
                 </div>
               </div>
@@ -145,10 +143,10 @@
                     <agm-map id="pickUpMap" [zoom]="zoom" [latitude]="latPickup" [longitude]="lngPickup" [streetViewControl]="false" [disableDefaultUI]=false [disableDoubleClickZoom]="true" ggestureHandling="cooperative" [mapDraggable]=true [scrollwheel]=false
                     (mapReady)=pickUpMapReady($event,1) (mapClick)="mapClk($event)" (centerChange)="centerChang($event,1)"  [usePanning]="true"
                     (dragEnd)="mapDragEnd($event)">
-                      <agm-marker [latitude]="x" [longitude]="y" 
+                      <agm-marker [latitude]="x" [longitude]="y"
                       [iconUrl] = "iconurl"
-                      [markerDraggable]=false 
-                      (markerClick)="updateLocClk($events)" 
+                      [markerDraggable]=false
+                      (markerClick)="updateLocClk($events)"
                       (dragEnd)="markerDragEndd($event,1)"
                       ></agm-marker>
                     </agm-map>
@@ -276,7 +274,7 @@
               <div style="padding-bottom: 2%;">
                 <span class="sectionHeader" style="padding-bottom: 2%;">Location Details</span>
               </div>
-             
+
               <div style="padding-bottom: 2%;">
                 <span style="font-weight: 400;">Pickup Location</span>
               </div>
@@ -286,27 +284,27 @@
                       <!-- <agm-map id="pickUpMap" [zoom]="zoom" [latitude]="latPickup" [longitude]="lngPickup" [disableDefaultUI]=false
                     (mapReady)=pickUpMapReady($event,1) (mapClick)="mapClk($event)" (centerChange)="centerChang($event)"  [usePanning]="true"
                     (dragEnd)="mapDragEnd($event)">
-                      <agm-marker [latitude]="x" [longitude]="y" 
+                      <agm-marker [latitude]="x" [longitude]="y"
                       [iconUrl] = "iconurl"
-                      [markerDraggable]=false 
-                      (markerClick)="updateLocClk($events)" 
+                      [markerDraggable]=false
+                      (markerClick)="updateLocClk($events)"
                       (dragEnd)="markerDragEndd($event,1)"
                       ></agm-marker>
                     </agm-map> -->
                         <agm-map id="pickUpMap" [zoom]="zoom" [latitude]="latPickup" [longitude]="lngPickup" [disableDefaultUI]=false
-                        (mapReady)=pickUpMapReady($event,2) (mapClick)="mapClk($event)" (centerChange)="centerChang($event,2)" 
+                        (mapReady)=pickUpMapReady($event,2) (mapClick)="mapClk($event)" (centerChange)="centerChang($event,2)"
                           (dragEnd)="mapDragEnd($event)" [streetViewControl]="false" [disableDoubleClickZoom]="true" ggestureHandling="cooperative" [mapDraggable]=true [scrollwheel]=false>
-                          <agm-marker [latitude]="x" [longitude]="y" 
+                          <agm-marker [latitude]="x" [longitude]="y"
                           [iconUrl] = "iconurl"
-                          [markerDraggable]=false 
-                          (markerClick)="updateLocClk($events)" 
+                          [markerDraggable]=false
+                          (markerClick)="updateLocClk($events)"
                           (dragEnd)="markerDragEndd($event,2)"
                           ></agm-marker>
                         </agm-map>
                       </div>
                 </div>
               </div>
-              
+
               <div class="row">
                 <div class="col-lg-6 col-sm-6 col-md-6">
                   <div class="form-group">
@@ -360,23 +358,23 @@
                       <div class="col-lg-6 col-sm-6 col-md-6">
                           <div class="pickup-map">
                             <agm-map id="pickUpMap" [zoom]="zoom" [latitude]="latDrop" [longitude]="lngDrop" [disableDefaultUI]=false
-                            (mapReady)=pickUpMapReady($event,3) (mapClick)="mapClk($event)" (centerChange)="centerChang($event,3)" 
+                            (mapReady)=pickUpMapReady($event,3) (mapClick)="mapClk($event)" (centerChange)="centerChang($event,3)"
                               (dragEnd)="mapDragEnd($event)" [streetViewControl]="false" [disableDefaultUI]=false [disableDoubleClickZoom]="true" ggestureHandling="cooperative" [mapDraggable]=true [scrollwheel]=false>
-                                <agm-marker [latitude]="a" [longitude]="b" 
+                                <agm-marker [latitude]="a" [longitude]="b"
                                 [iconUrl] = "iconurl"
-                                [markerDraggable]=false 
-                                (markerClick)="updateLocClk($events)" 
+                                [markerDraggable]=false
+                                (markerClick)="updateLocClk($events)"
                                 (dragEnd)="markerDragEndd($event,3)"
                                 ></agm-marker>
                               </agm-map>
                             </div>
                       </div>
                     </div>
-                  
+
              <div class="row">
                   <div class="col-lg-6 col-sm-6 col-md-6">
                     <div class="form-group">
-                      <input class="form-control noPlaceholder" ng-minlength="3" id="internaldropoff" #internaldropoff autocomplete="off" spellcheck="off" 
+                      <input class="form-control noPlaceholder" ng-minlength="3" id="internaldropoff" #internaldropoff autocomplete="off" spellcheck="off"
                         type="text" (onSelect)="setAddress($event,'dropoff')" google-place required/>
                       <label class="form-control-placeholder" for="internaldropoff">Search Places*</label>
                     </div>
@@ -503,8 +501,8 @@
                         value="+91" [(ngModel)]="countrycode1" #countrycode="ngModel">
                     </div>
                     <div class="form-group" style="display:inline-block;min-width: 58%;">
-                      <input type="text" class="form-control" name="mobile1" OnlyNumber="true" maxlength="10" (blur)="getinfowithMobile()"
-                        [(ngModel)]="cust_details.mobile" required #mobile1="ngModel" pattern="^[0-9]{10}$">
+                      <input type="text" class="form-control" name="mobile1" OnlyNumber="true" maxlength={{maxLen}} (blur)="getinfowithMobile()"
+                        [(ngModel)]="cust_details.mobile" required #mobile1="ngModel" pattern="^[0-9]{8,10}$">
                       <label class="form-control-placeholder" for="mobile1">Mobile Number*</label>
                     </div>
                     <div style="display:inline-block;margin:3%">
@@ -529,8 +527,7 @@
                           value="+91" [(ngModel)]="countrycode1" #countrycode="ngModel" pattern="^[0-9]{10}$">
                       </div>
                       <div class="form-group" style="display:inline-block;min-width: 58%;">
-                        <input type="text" class="form-control" name="mobile2" OnlyNumber="true" maxlength="10"
-                          [(ngModel)]="cust_details.mobile2" #mobile2="ngModel" pattern="^[0-9]{10}$">
+                        <input type="text" class="form-control" name="mobile2" OnlyNumber="true" maxlength={{maxLen}} [(ngModel)]="cust_details.mobile2" #mobile2="ngModel" pattern="^[0-9]{8,10}$">
                         <label class="form-control-placeholder" for="mobile2">Mobile Number*</label>
                       </div>
                       <div class="form-control-feedback" *ngIf="mobile2.errors && (mobile2.dirty || mobile2.touched)">
@@ -582,19 +579,19 @@
                     <div class="pickup-map">
                         <agm-map id="pickUpMap" [zoom]="zoom" [latitude]="latPickup" [longitude]="lngPickup" [disableDefaultUI]=false
                         [disableDefaultUI]=false [streetViewControl]="false" [disableDefaultUI]=false [disableDoubleClickZoom]="true" ggestureHandling="cooperative" [mapDraggable]=true [scrollwheel]=false
-                        (mapReady)=pickUpMapReady($event,4) (mapClick)="mapClk($event)" (centerChange)="centerChang($event,4)" 
+                        (mapReady)=pickUpMapReady($event,4) (mapClick)="mapClk($event)" (centerChange)="centerChang($event,4)"
                           (dragEnd)="mapDragEnd($event)">
-                          <agm-marker [latitude]="x" [longitude]="y" 
+                          <agm-marker [latitude]="x" [longitude]="y"
                           [iconUrl] = "iconurl"
-                          [markerDraggable]=falses 
-                          (markerClick)="updateLocClk($events)" 
+                          [markerDraggable]=falses
+                          (markerClick)="updateLocClk($events)"
                           (dragEnd)="markerDragEndd($event,4)"
                           ></agm-marker>
                         </agm-map>
                       </div>
                 </div>
               </div>
-             
+
               <div class="row">
                 <div class="col-lg-6 col-sm-6 col-md-6">
                   <div class="form-group">
@@ -751,7 +748,7 @@
                     </div>
                     <div class="form-group MobileInput" style="display:inline-block;min-width: 58%;">
                       <input type="text" class="form-control" name="mobile1" OnlyNumber="true" (blur)="getinfowithMobile()"
-                        maxlength="10" [(ngModel)]="cust_details.mobile" required #mobile1="ngModel" pattern="^[0-9]{10}$">
+                        maxlength={{maxLen}} [(ngModel)]="cust_details.mobile" required #mobile1="ngModel" pattern="^[0-9]{8,10}$">
                       <label class="form-control-placeholder" for="mobile1">Mobile Number*</label>
                     </div>
                     <div class="AddMobNum" style="display:inline-block;margin:3%">
@@ -776,8 +773,8 @@
                           value="+91" [(ngModel)]="countrycode1" #countrycode="ngModel">
                       </div>
                       <div class="form-group" style="display:inline-block;min-width: 58%;">
-                        <input type="text" class="form-control" name="mobile2" maxlength="10" [(ngModel)]="cust_details.mobile2"
-                          #mobile2="ngModel" OnlyNumber="true" pattern="^[0-9]{10}$">
+                        <input type="text" class="form-control" name="mobile2" maxlength={{maxLen}} [(ngModel)]="cust_details.mobile2"
+                          #mobile2="ngModel" OnlyNumber="true" pattern="^[0-9]{8,10}$">
                         <label class="form-control-placeholder" for="mobile2">Mobile Number</label>
                       </div>
                       <div class="form-control-feedback" *ngIf="mobile2.errors && (mobile2.dirty || mobile2.touched)">
@@ -829,21 +826,21 @@
                   <div class="pickup-map">  <!-- <agm-map id="pickUpMap" [zoom]="zoom" [latitude]="latPickup" [longitude]="lngPickup" [disableDefaultUI]=false
                     (mapReady)=pickUpMapReady($event,1) (mapClick)="mapClk($event)" (centerChange)="centerChang($event)"  [usePanning]="true"
                     (dragEnd)="mapDragEnd($event)">
-                      <agm-marker [latitude]="x" [longitude]="y" 
+                      <agm-marker [latitude]="x" [longitude]="y"
                       [iconUrl] = "iconurl"
-                      [markerDraggable]=false 
-                      (markerClick)="updateLocClk($events)" 
+                      [markerDraggable]=false
+                      (markerClick)="updateLocClk($events)"
                       (dragEnd)="markerDragEndd($event,1)"
                       ></agm-marker>
                     </agm-map> -->
                     <agm-map id="pickUpMap" [zoom]="zoom" [latitude]="latPickup" [longitude]="lngPickup" [disableDefaultUI]=false
                     [disableDefaultUI]=false [streetViewControl]="false"
-                    (mapReady)=pickUpMapReady($event,5) (mapClick)="mapClk($event)" (centerChange)="centerChang($event,5)" 
+                    (mapReady)=pickUpMapReady($event,5) (mapClick)="mapClk($event)" (centerChange)="centerChang($event,5)"
                       (dragEnd)="mapDragEnd($event)" [disableDoubleClickZoom]="true" ggestureHandling="cooperative" [mapDraggable]=true [scrollwheel]=false>
-                      <agm-marker [latitude]="x" [longitude]="y" 
+                      <agm-marker [latitude]="x" [longitude]="y"
                       [iconUrl] = "iconurl"
-                      [markerDraggable]=false 
-                      (markerClick)="updateLocClk($events)" 
+                      [markerDraggable]=false
+                      (markerClick)="updateLocClk($events)"
                       (dragEnd)="markerDragEndd($event,5)"
                       ></agm-marker>
                     </agm-map>
@@ -862,7 +859,7 @@
                   <div class="form-group">
                     <input class="form-control" #testpickupflatno="ngModel" name="testpickupflatno"  required autocomplete="off" spellcheck="off" type="text" [(ngModel)]="user.testpickupflatno" pattern="^[0-9a-zA-Z#,\-/_ .@]+$"  minlength="1" maxlength="10"/>
                     <label class="form-control-placeholder" for="testpickupflatno" >Flat No./House No.*</label>
-                  
+
                   </div>
                   <div class="form-control-feedback" *ngIf="testpickupflatno.errors && (testpickupflatno.dirty || testpickupflatno.touched)">
                       <p *ngIf="testpickupflatno.errors.required" class="haserror">Flat No./House No. is required</p>
@@ -876,7 +873,7 @@
                       <div class="form-group" >
                         <input class="form-control" #testpickupbuildingname="ngModel" name="testpickupbuildingname"  required autocomplete="off" spellcheck="off" type="text" [(ngModel)]="user.testpickupbuildingname" pattern="^[0-9a-zA-Z#,\-/_ .@]+$"  minlength="4" maxlength="100"/>
                         <label  class="form-control-placeholder" for="testpickupbuildingname" >Building name/Street name*</label>
-                      
+
                       </div>
                       <div class="form-control-feedback" *ngIf="testpickupflatno.errors && (testpickupbuildingname.dirty || testpickupbuildingname.touched)">
                           <p *ngIf="testpickupbuildingname.errors.required" class="haserror">Building name/Street name is required</p>
@@ -997,8 +994,7 @@
 
                     </div>
                     <div class="form-group" style="display:inline-block;min-width: 58%;">
-                      <input type="text" class="form-control" name="mobile1" OnlyNumber="true" maxlength="10" (blur)="getinfowithMobile()"
-                        [(ngModel)]="cust_details.mobile" required #mobile1="ngModel" pattern="^[0-9]{10}$">
+                      <input type="text" class="form-control" name="mobile1" OnlyNumber="true" maxlength={{maxLen}} (blur)="getinfowithMobile()" [(ngModel)]="cust_details.mobile" required #mobile1="ngModel" pattern="^[0-9]{8,10}$">
                       <label class="form-control-placeholder" for="mobile1">Mobile Number*</label>
                     </div>
                     <div style="display:inline-block;margin:3%">
@@ -1023,8 +1019,7 @@
                           value="+91" [(ngModel)]="countrycode1" #countrycode="ngModel" pattern="^[0-9]{10}$">
                       </div>
                       <div class="form-group " style="display:inline-block;min-width: 58%;">
-                        <input type="text" class="form-control" name="mobile2" OnlyNumber="true" maxlength="10"
-                          [(ngModel)]="cust_details.mobile2" #mobile2="ngModel" pattern="^[0-9]{10}$">
+                        <input type="text" class="form-control" name="mobile2" OnlyNumber="true" maxlength={{maxLen}} [(ngModel)]="cust_details.mobile2" #mobile2="ngModel" pattern="^[0-9]{8,10}$">
                         <label class="form-control-placeholder" for="mobile2">Mobile Number*</label>
                       </div>
                       <div class="form-control-feedback" *ngIf="mobile2.errors && (mobile2.dirty || mobile2.touched)">
@@ -1077,20 +1072,20 @@
                       <!-- <agm-map id="pickUpMap" [zoom]="zoom" [latitude]="latPickup" [longitude]="lngPickup" [disableDefaultUI]=false
                     (mapReady)=pickUpMapReady($event,1) (mapClick)="mapClk($event)" (centerChange)="centerChang($event)"  [usePanning]="true"
                     (dragEnd)="mapDragEnd($event)">
-                      <agm-marker [latitude]="x" [longitude]="y" 
+                      <agm-marker [latitude]="x" [longitude]="y"
                       [iconUrl] = "iconurl"
-                      [markerDraggable]=false 
-                      (markerClick)="updateLocClk($events)" 
+                      [markerDraggable]=false
+                      (markerClick)="updateLocClk($events)"
                       (dragEnd)="markerDragEndd($event,1)"
                       ></agm-marker>
                     </agm-map> -->
                     <agm-map id="pickUpMap" [zoom]="zoom" [latitude]="latPickup" [longitude]="lngPickup" [disableDefaultUI]=false
                     (mapReady)=pickUpMapReady($event,6) (mapClick)="mapClk($event)" (centerChange)="centerChang($event,6)" [streetViewControl]="false"
                       (dragEnd)="mapDragEnd($event)" [disableDoubleClickZoom]="true" ggestureHandling="cooperative" [mapDraggable]=true [scrollwheel]=false>
-                      <agm-marker [latitude]="x" [longitude]="y" 
+                      <agm-marker [latitude]="x" [longitude]="y"
                       [iconUrl] = "iconurl"
-                      [markerDraggable]=false 
-                      (markerClick)="updateLocClk($events)" 
+                      [markerDraggable]=false
+                      (markerClick)="updateLocClk($events)"
                       (dragEnd)="markerDragEndd($event,6)"></agm-marker>
                     </agm-map>
                   </div>

@@ -9,7 +9,7 @@ import {NgbModal,NgbActiveModal, ModalDismissReasons} from '@ng-bootstrap/ng-boo
   styleUrls: ['./AddEmployee.component.scss']
 })
 export class AddEmployee implements OnInit {
-
+  maxLen: any;
   constructor(private titlecasePipe:TitleCasePipe,private activeModal: NgbActiveModal,private _data:ServicingService) {
     // this.modalContent.permission="Coordinator";
    }
@@ -29,12 +29,20 @@ export class AddEmployee implements OnInit {
       this.svcid = sessionStorage.getItem('selectedsvc');
       // console.log(this.svcid);
     }
+    if(sessionStorage.getItem('loginCountryFlag') === '2') {
+      this.maxLen = '8';
+      console.log("this.maxLen ", this.maxLen);
+    }
+    if(sessionStorage.getItem('loginCountryFlag') === '1') {
+      this.maxLen = '10';
+      console.log("this.maxLen ", this.maxLen);
+    }
     else{
       this.svcid = JSON.parse(sessionStorage.getItem('globalsvcid'));
       // console.log(this.svcid);
 
     }
-    
+
     this.salutation = [
       { id: 1, type: 'Mr' },
       { id: 2, type: 'Mrs' },
@@ -55,7 +63,7 @@ export class AddEmployee implements OnInit {
     }
 
     this.sendMessage();
-    
+
   }
   closeModal() {
     this.activeModal.close();
@@ -64,7 +72,7 @@ export class AddEmployee implements OnInit {
   sendMessage() {
     this.messageEvent.emit(this.message)
   }
-  
+
 
   onSubmit(f: NgForm) {
     console.log(f.value.id);
@@ -113,7 +121,7 @@ export class AddEmployee implements OnInit {
       }
     }
 
-  
+
     const as3 = JSON.stringify(reqpara3);
     this._data.webServiceCall(as3).subscribe(res =>{
       console.log(res);
@@ -122,5 +130,3 @@ export class AddEmployee implements OnInit {
     });
        }
 }
-
-

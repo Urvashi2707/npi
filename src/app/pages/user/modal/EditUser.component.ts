@@ -25,7 +25,7 @@ export class EditUserComponent implements OnInit {
   Designation: any = [];
   userDisable:any;
   constructor(private titlecasePipe:TitleCasePipe,private activeModal: NgbActiveModal, private _data: ServerService) { }
-  
+
   ngOnInit() {
     if(sessionStorage.getItem('selectedsvc')){
       this.SvcId = sessionStorage.getItem('selectedsvc');
@@ -99,7 +99,7 @@ export class EditUserComponent implements OnInit {
       username: this.titlecasePipe.transform(f.value.name),
       mobilenumber: f.value.mobile1,
       email: f.value.email,
-      
+
       isenabled: 1,
       permissionid: f.value.permission
     };
@@ -110,13 +110,13 @@ export class EditUserComponent implements OnInit {
         console.log("message update");
         if(data[0].userupdate[0].update_status === "1"){
           console.log("update");
-          this.getUserList();
+          // this.getUserList();
           this.visible = true;
           this.showAnimation = '1';
         }
         else{
           console.log(" not update");
-          this.getUserList();
+          // this.getUserList();
           this.visible = true;
           this.showAnimation = '0';
         }
