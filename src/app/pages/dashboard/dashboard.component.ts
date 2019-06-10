@@ -53,6 +53,7 @@ export class DashboardComponent implements OnInit{
   themeSubscription: any;
   prepaid_amount:string;
   show_add_credit:string;
+  countryCodeFlag:string;
   colorScheme = {
     domain: ['#ffa239', '#c8e6c9', '#81c784', '#4caf50','#ffe789']
   };
@@ -73,7 +74,8 @@ export class DashboardComponent implements OnInit{
     if(this.GroupAdmin == "1"){
       this.CheckGrpAdmin = true;
     }
-
+    this.countryCodeFlag = sessionStorage.getItem('loginCountryCodeFlag');
+    console.log(this.countryCodeFlag,"this.countryCodeFlag")
     var date = new Date();
     var days = date.setDate(date.getDate() - 1);
     this.pastdate = this.datePipe.transform(days,"yyyy-MM-dd");

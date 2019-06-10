@@ -18,7 +18,8 @@
   <div class="col-xxxl-3 col-md-6 col-sm-12 col-12">
     <ngx-status-card title="Avg. Invoice Amount" type="primary">
       <div class="cardValue"  *ngIf="!Cards.average_inv_amount">0</div>
-      <div class="cardValue"  *ngIf="Cards.average_inv_amount">&#x20b9; {{Cards.average_inv_amount}}</div>
+      <div class="cardValue"  *ngIf="Cards.average_inv_amount && countryCodeFlag === '91'">&#x20b9; {{Cards.average_inv_amount}}</div>
+      <div class="cardValue"  *ngIf="Cards.average_inv_amount && countryCodeFlag === '65'">&#x24; {{Cards.average_inv_amount}}</div>
     </ngx-status-card>
   </div>
   <div class="col-xxxl-3 col-md-6 col-sm-12 col-12">
