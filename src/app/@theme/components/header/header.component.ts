@@ -1,11 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
-import {Router,ActivatedRoute} from '@angular/router';
+import { Router,ActivatedRoute } from '@angular/router';
 import { NbMenuService, NbSidebarService,NbSearchService } from '@nebular/theme';
 import { UserService } from '../../../@core/data/users.service';
 import { AnalyticsService } from '../../../@core/utils/analytics.service';
-import {ServerService} from '../../../pages/services/user.service';
-import { DatePipe } from '@angular/common';
-import {SearchComponent} from '../../../pages/search/search.component'
+import { ServerService } from '../../../pages/services/user.service';
+import { SearchComponent } from '../../../pages/search/search.component';
+import { Subscription } from 'rxjs';
+import { DataService } from '../../../pages/services/data.service';
 
 @Component({
   providers:[SearchComponent],
@@ -16,8 +17,10 @@ import {SearchComponent} from '../../../pages/search/search.component'
 export class HeaderComponent implements OnInit {
 
   @Input() position = 'normal';
+
   //variables
-  Credit:string;
+  subscription: Subscription;
+  Credit:number = 0;
   user: any;
   public name =sessionStorage.getItem('username');
   not:any[];
@@ -25,45 +28,47 @@ export class HeaderComponent implements OnInit {
   brandid:string;
   show = false;
   message:any;
+  Show_credit_Btn:boolean = true;
   noNotification : boolean = false;
   notification : any = [];
   today: number = Date.now();
   userMenu = [{ title: 'Profile' ,link: 'profile'}, { title: 'Log out',link: '/auth/logout'}];
-  notifications = [{"notifications":
-                      [{
-                        "id":"1",
-                        "release_date":"2018-05-21",
-                        "title":"This is the Title",
-                        "description":"This is a test Notification.",
-                        "is_viewed":"0"
-                      },
-                      {
-                        "id":"2",
-                        "release_date":"2018-05-25",
-                        "title":"This is the Title2",
-                        "description":"This is a test Notification2s.",
-                        "is_viewed":"0"
-                      },
-                      {
-                        "id":"3",
-                        "release_date":"2018-05-25",
-                        "title":"This is the Title3",
-                        "description":"This is a test Notification3.",
-                        "is_viewed":"0"
-                      }]
-                    }]
-
 
   constructor(private sidebarService: NbSidebarService,
               private menuService: NbMenuService,
               private userService: UserService,
               private searchService : NbSearchService,
-              private datePipe:DatePipe,
-              private comp:SearchComponent,
+              private DataService:DataService,
               private analyticsService: AnalyticsService,
               private router:Router,
               private _data : ServerService,
               private route: ActivatedRoute) {
+                this.DataService.getMessage().subscribe(message => { 
+                  this.Credit = message.text;
+                  sessionStorage.setItem('credit',message.text);
+                  var show_btn = message.show_btn;
+                  if(show_btn == "1"){
+                    this.Show_credit_Btn = true;
+                  }
+                  else{
+                    this.Show_credit_Btn = false;
+                  }
+                 });
+                //  var Add_credit_flag = sessionStorage.getItem('show_credit_btn');
+                //  var credit = JSON.parse(sessionStorage.getItem('credit'));
+                //  console.log(Add_credit_flag,credit,"Add_credit_flag");
+                //  if(credit != null){
+                //    var balance = Number(credit);
+                //    console.log(balance)
+                //    this.Credit = parseFloat(balance.toFixed(2));
+                //    console.log("credit12",this.Credit )
+                //  }
+                //  if(Add_credit_flag == "1"){
+                //    this.Show_credit_Btn = true;
+                //  }
+                //  else{
+                //    this.Show_credit_Btn = false;
+                //  }
   }
 
   ngOnInit() {
@@ -71,15 +76,9 @@ export class HeaderComponent implements OnInit {
       .subscribe((users: any) => this.user = users.nick);
       this.Credit = JSON.parse(sessionStorage.getItem('credit'));
     this.getNotification();
-    this.not = this.notifications[0].notifications;
     this.brandid = sessionStorage.getItem('brandid');
-    var classname = document.getElementsByClassName("nb-close-circled");
-    // <HTMLInputElement>document.getElementsByClassName("nb-close-circled").addEventListener('click', this.myFunc());
+  
   }
-
-  // myFunc() {
-  //   document.getElementsByClassName("nb-close-circled").click();
-  // }
 
   toggleSidebar(): boolean {
     this.sidebarService.toggle(true, 'menu-sidebar');
@@ -115,30 +114,28 @@ export class HeaderComponent implements OnInit {
 
   startSearch() {
     this.searchService.onSearchSubmit().subscribe((data: { term: string, tag: string }) => {
-      console.info(`term: ${data.term}, from search: ${data.tag}`);
-      // sessionStorage.setItem('search',data.term);
       this.router.navigate(["pages/search",  {'data': data.term}]);
+     });
+  }
 
-  });
-}
-
-
-getNotification(){
-  const reqpara3 = {
-    requesttype: 'getnotifications'
+  GoToNeft(){
+  this.router.navigate(['pages/wallet/add-credit']);
+  }
+  
+  getNotification(){
+    const reqpara3 = {
+      requesttype: 'getnotifications'
+        }
+    const as3 = JSON.stringify(reqpara3)
+    this._data.webServiceCall(as3).subscribe(res => {
+      if(res[0].login === 0){
+        sessionStorage.removeItem('currentUser');
+        this.router.navigate(['/auth/login']);
       }
-  const as3 = JSON.stringify(reqpara3)
-  this._data.webServiceCall(as3).subscribe(res => {
-    if(res[0].login === 0){
-      sessionStorage.removeItem('currentUser');
-      this.router.navigate(['/auth/login']);
-    }
-    else{
-      this.notification = res[0].notifications;
-      this.notificationCount = this.notification.length;
-    }
-   });
-}
-
-
+      else{
+        this.notification = res[0].notifications;
+        this.notificationCount = this.notification.length;
+      }
+    });
+  }
 }

@@ -32,7 +32,7 @@
              </div>
              <div class="col-md-2 col-sm-2 col-lg-2 NextRow">
                <div>
-                 <button type="button" class="btn btn-warning NextButton" [disabled]="mobileLength"
+                 <button type="button" class="btn btn-warning NextButton" [disabled]="mobileLength" id="eligibiltycheck1_btn"
                    (click)='eligibiltycheck1();'>Next</button>
                </div>
              </div>
@@ -59,7 +59,7 @@
                </div>
                <div class="col-md-2 col-sm-2 col-lg-2" style="display:inherit">
                  <div style="padding-right:29%;">
-                   <button type="button" class="btn btn-warning" [disabled]="!user.vin || !user.policy" (click)="eligibiltycheck2()">Next</button>
+                   <button type="button" class="btn btn-warning" [disabled]="!user.vin || !user.policy || eligibiltycheck_final" id="eligibiltycheck2_btn" (click)="eligibiltycheck2()">Next</button>
                  </div>
                  <div>
                    <button type="button" class="btn btn-warning" (click)="skip()">Skip</button>
@@ -155,9 +155,9 @@
                      <input type="number" class="form-control" name="mobile1" maxlength={{maxLen}} [(ngModel)]="cust_details.mobile" required  #mobile1="ngModel" pattern="^[0-9]{8,10}$" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" onkeydown="javascript: return event.keyCode == 69 ? false : true">
                      <label class="form-control-placeholder" for="mobile1" style="margin-top: 2.5%;">Mobile Number*</label>
                    </div>
-                   <div class="addNumber">
-                     <button type="button" (click)="show1=!show1" class="addnumber">
-                       <i class="fa" [ngClass]="{'fa-plus': !show1, 'fa-minus': show1}" style="color:#ffa100"
+                   <div class="addNumber" *ngIf="!show1">
+                     <button type="button" (click)="showSecondMobile()" class="addnumber">
+                       <i class="fa fa-plus" style="color:#ffa100"
                          aria-hidden="true"></i>
                      </button>
                    </div>
@@ -180,6 +180,12 @@
                        <input type="number" class="form-control" name="mobile2" maxlength={{maxLen}} [(ngModel)]="cust_details.mobile2" #mobile2="ngModel" pattern="^[0-9]{8,10}$" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" onkeydown="javascript: return event.keyCode == 69 ? false : true">
                        <label class="form-control-placeholder" for="mobile2">Mobile2 Number*</label>
                      </div>
+                     <div class="addNumber">
+                        <button type="button" (click)="HideSecondMobile()" class="addnumber">
+                          <i class="fa fa-minus" style="color:#ffa100"
+                            aria-hidden="true"></i>
+                        </button>
+                      </div>
                      <div class="form-control-feedback" *ngIf="mobile2.errors && (mobile2.dirty || mobile2.touched)">
                        <p *ngIf="!mobile2.errors.valid" class="haserror">mobile must contain digits only</p>
                      </div>
@@ -288,8 +294,9 @@
                      <div class="row">
                          <div class="col-lg-6 col-sm-6 col-md-6">
                              <div class="form-group">
-                               <input class="form-control" name="pickupbuildingname" #pickupbuildingname="ngModel" autocomplete="off" spellcheck="off" type="text"  required [(ngModel)]="user.pickupbuildingname" pattern="^[0-9a-zA-Z#,\-/_ .@]+$" minlength="4" maxlength="100"/>
+                               <input class="form-control" name="pickupbuildingname" #pickupbuildingname="ngModel" autocomplete="off" spellcheck="off" type="text" required [(ngModel)]="user.pickupbuildingname" pattern="^[0-9a-zA-Z#,\-/_ .@]+$" minlength="4" maxlength="100"/>
                                <label class="form-control-placeholder" for="pickupbuildingname">Building name/Street name*</label>
+                               <!-- <label class="form-control-placeholder" for="pickulandmark">Landmark*</label> -->
                              </div>
                              <div class="form-control-feedback" *ngIf="pickupbuildingname.errors && (pickupbuildingname.dirty || pickupbuildingname.touched)">
                                  <p *ngIf="pickupbuildingname.errors.required" class="haserror">Building Name/Street Name is required</p>

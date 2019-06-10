@@ -1,0 +1,47 @@
+<nb-card class="desktopView">
+    <nb-card-header>
+       NEFT Table
+    </nb-card-header>
+    <nb-card-body>
+        <table width="100%">
+            <thead>
+              <th (click)="sort('creationdatetime')">Date
+                <span class="sort-span">
+                  <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i>
+                </span>
+              </th>
+              <th (click)="sort('reference_number')">Description
+                <span class="sort-span">
+                  <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i>
+                </span>
+              </th>
+              <th (click)="sort('amount')">Amount
+                <span class="sort-span">
+                  <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i>
+                </span>
+              </th>
+              <th (click)="sort('isapproved')">Status
+                <span class="sort-span">
+                  <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i>
+                </span>
+              </th>
+            </thead>
+            <tbody>
+              <tr *ngFor="let i of neft | paginate: { id: 'server', itemsPerPage:DataPerPage, currentPage: page + 1, totalItems: RecordCount }; let j = index">
+                <td>{{i.creationdatetime}}</td>
+                <td>{{i.reference_number}}</td>
+                <td>{{i.amount}}</td>
+                <td>{{i.isapproved}}</td>
+              </tr>
+            </tbody>
+          </table>
+          <table class="NoData" *ngIf="MessageNoData">
+              {{MessageNoData}}
+            </table>
+            <ngx-spinner bdColor="rgba(51,51,51,0.09)" size="large" color="#ea5810" type="ball-clip-rotate-pulse"></ngx-spinner>
+            <div class="paginate">
+              <pagination-controls (pageChange)="FilterCheck($event)" id="server"></pagination-controls>
+            </div>
+    </nb-card-body>
+  </nb-card>
+  

@@ -6,6 +6,9 @@
 import { Component, OnInit ,isDevMode} from '@angular/core';
 import { AnalyticsService } from './@core/utils/analytics.service';
 import { NbMenuService, NbSidebarService,NbSearchService } from '@nebular/theme';
+import { ServicingService } from '../app/pages/services/addServicing.service';
+import { Router } from '@angular/router';
+
 @Component({
   selector: 'ngx-app',
   template: '<router-outlet></router-outlet>',
@@ -13,7 +16,10 @@ import { NbMenuService, NbSidebarService,NbSearchService } from '@nebular/theme'
 })
 export class AppComponent implements OnInit {
 
-  constructor(private analytics: AnalyticsService,private menuService: NbMenuService) {
+  Credit:string;
+  SvcId:string;
+
+  constructor(private router: Router,private analytics: AnalyticsService,private menuService: NbMenuService, private ServicingService: ServicingService) {
     if (isDevMode()) {
       console.log('👋 Development!');
     } else {
@@ -22,8 +28,16 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    if(sessionStorage.getItem('selectedsvc')){
+      this.SvcId = sessionStorage.getItem('selectedsvc');
+    }
+    else{
+      this.SvcId = JSON.parse(sessionStorage.getItem('globalsvcid'));
+    }
     this.analytics.trackPageViews();
+    
   }
 
-    
-}
+
+  }
+

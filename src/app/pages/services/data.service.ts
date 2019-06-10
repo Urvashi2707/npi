@@ -7,6 +7,8 @@ import { Router,NavigationEnd } from '@angular/router';
 @Injectable()
 export class DataService {
 
+  private subject = new Subject<any>();
+  
   private socketIndicator: Subject<boolean> = new BehaviorSubject<boolean>(null);
   public _issocketIndicator: Observable<boolean> = this.socketIndicator.asObservable();
 
@@ -23,6 +25,15 @@ export class DataService {
   public _customerNumber: Observable<any> = this.customerNumber.asObservable();
 
   constructor(private router: Router,private datePipe:DatePipe) {}
+
+  sendMessage(message: string,btn:string) {
+    console.log(message,btn);
+    this.subject.next({text: message ,show_btn:btn});
+  }
+
+  getMessage(): Observable<any> {
+    return this.subject.asObservable();
+  }
 
   setIndicator(socketIndicator){
     this.socketIndicator.next(socketIndicator);

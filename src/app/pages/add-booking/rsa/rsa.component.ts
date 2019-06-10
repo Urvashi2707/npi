@@ -30,9 +30,12 @@ export class RsaComponent implements OnInit {
   private cre: any = [];
   public serviceadv: any = [];
   cityID:string;
+  BookingBtn = false;
   public cityList: any = [];
   registrationNumber:string;
   queuetime:string;
+  show1 = false;
+  eligibiltycheck_final:boolean;
   private serviceType: string[];
   private TowingTruck: string[];
   private creName: string[];
@@ -105,14 +108,14 @@ export class RsaComponent implements OnInit {
 
   ngOnInit() {
     this.getCity();
-    console.log(sessionStorage.getItem('insurance'))
+    // console.log(sessionStorage.getItem('insurance'))
     if(JSON.parse(sessionStorage.getItem('insurance')) == "1"){
       this.insuranceFlag = true;
-      console.log(this.insuranceFlag , "flag")
+      // console.log(this.insuranceFlag , "flag")
     }
     else{
       this.insuranceFlag = false;
-      console.log(this.insuranceFlag , "flag")
+      // console.log(this.insuranceFlag , "flag")
     }
     if(sessionStorage.getItem('selectedsvc')){
       this.svcid = sessionStorage.getItem('selectedsvc');
@@ -233,7 +236,7 @@ export class RsaComponent implements OnInit {
         }
         else {
           this.cityList = res[0].citylist;
-          console.log(this.cityList);
+          // console.log(this.cityList);
         }
 
       }
@@ -263,7 +266,7 @@ export class RsaComponent implements OnInit {
   }
 
   GetSVCList1(brand,city){
-    console.log(this.selectedBrand);
+    // console.log(this.selectedBrand);
     var cityId = JSON.parse(sessionStorage.getItem('city_id'));
     const reqpara1 = {
            requesttype: 'getsvclist_city_brand',
@@ -290,18 +293,18 @@ export class RsaComponent implements OnInit {
             else{
               this.insurance_tied.push(res[0].svclist[i]);
               res[0].svclist[i].associated = "Insurance";
-              console.log(this.insurance_tied);
+              // console.log(this.insurance_tied);
             }
           
           }
-          console.log("insurance" , this.insurance_tied)
+          // console.log("insurance" , this.insurance_tied)
           }
         });
    }
 
    onCity(id){
-    console.log(this.user.city);
-    console.log(this.selectedBrand);
+    // console.log(this.user.city);
+    // console.log(this.selectedBrand);
     this.GetSVCList1(this.selectedBrand,this.user.city);
   }
 
@@ -482,7 +485,7 @@ export class RsaComponent implements OnInit {
   }
 
   getSvcList() {
-    console.log(this.selectedBrand)
+    // console.log(this.selectedBrand)
     const reqpara22 = {
       requesttype: 'getrsasvcentres',
       brandid: this.selectedBrand,
@@ -503,8 +506,16 @@ export class RsaComponent implements OnInit {
     });
   }
 
+  showSecondMobile(){
+    this.show1 = true;
+  }
+
+  HideSecondMobile(){
+    this.show1 = false;
+  }
+
   onSelectBrand(brandsId) {
-    console.log(brandsId);
+    // console.log(brandsId);
    this.selectedBrand = null;
    for (let i = 0; i < this.brands.length; i++) {
     if (this.brands[i].brand_id == brandsId) {
@@ -526,9 +537,9 @@ export class RsaComponent implements OnInit {
         this.router.navigate(['/auth/login']);
       }
       else {
-       console.log(res);
+      //  console.log(res);
        this.rsaType = res[0].rsasvc;
-       console.log(this.rsaType.length)
+      //  console.log(this.rsaType.length)
        for(var i = 0; i < res[0].rsasvc.length; i++ ){
         if(res[0].rsasvc[i].isonspot == '0'){
         this.TowingTypes.push(res[0].rsasvc[i]);
@@ -544,8 +555,8 @@ export class RsaComponent implements OnInit {
       
     }
       }
-      console.log(this.TowingTypes);
-      console.log(this.OnSpotTypes);
+      // console.log(this.TowingTypes);
+      // console.log(this.OnSpotTypes);
     });
   }
 
@@ -555,94 +566,114 @@ export class RsaComponent implements OnInit {
 
 
     service_type_selected(){
-      console.log("selected value");
+      // console.log("selected value");
       this.selected_service_type = true;
     }
 
 
 
   eligibiltycheck1(){
-    // (<HTMLInputElement>document.getElementById('mobile1')).disabled = true;
-    (<HTMLInputElement>document.getElementById('num')).disabled = true;
-    (<HTMLInputElement>document.getElementById('mobile1')).disabled = true;
-    (<HTMLInputElement>document.getElementById('towing')).disabled = true;
-    (<HTMLInputElement>document.getElementById('onspot')).disabled = true;
-    document.getElementById("num_label").classList.add("disabled_label");
-    document.getElementById("mobile_label").classList.add("disabled_label");
-    document.getElementById("num_label").style.opacity = "1";
-    document.getElementById("mobile_label").style.opacity = "1";
-    if(this.user.onSpotType){
+    this.disabledNext = true;
+    this.someFunction();
+    this.showstep3 = true;
+      if(this.user.onSpotType){
       this.servicetypeid = this.user.onSpotType;
     }
     else if (this.user.towingTruckType){
       this.servicetypeid = this.user.towingTruckType;
     }
-    this.spinner.show();
-    const reqpara0 =
-    {
-      customerMobileNumber:this.user.mobile1,
-      vehicleRegNumbe:this.registrationNumber,
-      typeofservice:this.servicetypeid
-    }
-    // console.log(reqpara0);
-    const as0 = JSON.stringify(reqpara0);
-    this.http.post('https://plsuat.europassistance.in:444/checkInitialEligibility',as0,this.opt1).subscribe(
-      res => {
-        // console.log(res['message']);
-        if (res['message'] === 'policy is not valid'){
-          this.spinner.hide();
-          this.someFunction();
-          this.showToast('Message', 'Policy Message', 'Policy is not valid');
-          this.showstep3 = true;
-          this.disabledNext = true;
-          this.ea_respondID = "0";
-        }
-        else if (res['message'] === 'policy is valid'){
-          this.spinner.hide();
-          this.someFunction();
-          this.showToast('Message', 'Policy Message', 'Policy is valid');
-        this.showstep2 = true;
-        this.disabledNext = true;
-        this.ea_respondID = res['responseId'];
-        }
-        else{
-          this.spinner.hide();
-          this.someFunction();
-          // this.showToast('Message', 'Policy Message', 'Something went wrong');
-          this.showstep3 = true;
-          this.disabledNext = true;
-          this.showstep3 = true;
-          this.ea_respondID = "0";
-        }
+    this.ea_respondID = "0";
+    // document.getElementById("eligibiltycheck1_btn").innerHTML = 'Processing..';
+    // // (<HTMLInputElement>document.getElementById('mobile1')).disabled = true;
+    // (<HTMLInputElement>document.getElementById('num')).disabled = true;
+    // (<HTMLInputElement>document.getElementById('mobile1')).disabled = true;
+    // (<HTMLInputElement>document.getElementById('towing')).disabled = true;
+    // (<HTMLInputElement>document.getElementById('onspot')).disabled = true;
+    // document.getElementById("num_label").classList.add("disabled_label");
+    // document.getElementById("mobile_label").classList.add("disabled_label");
+    // document.getElementById("num_label").style.opacity = "1";
+    // document.getElementById("mobile_label").style.opacity = "1";
+    // if(this.user.onSpotType){
+    //   this.servicetypeid = this.user.onSpotType;
+    // }
+    // else if (this.user.towingTruckType){
+    //   this.servicetypeid = this.user.towingTruckType;
+    // }
+    // this.spinner.show();
+    // const reqpara0 =
+    // {
+    //   customerMobileNumber:this.user.mobile1,
+    //   vehicleRegNumber:this.registrationNumber,
+    //   typeofservice:this.servicetypeid
+    // }
+    // // console.log(reqpara0);
+    // const as0 = JSON.stringify(reqpara0);
+    // this.http.post('https://plsuat.europassistance.in:8000/api/eaiExt/checkInitialEligibility',as0,this.opt1).subscribe(
+    //   res => {
+    //     // console.log(res['message']);
+    //     if (res['message'] === 'policy is not valid'){
+    //       this.spinner.hide();
+    //       this.someFunction();
+    //       this.showToast('Message', 'Policy Message', 'Policy is not valid');
+    //       document.getElementById("eligibiltycheck1_btn").innerHTML = 'Next';
+    //       this.showstep3 = true;
+    //       this.disabledNext = true;
+    //       this.ea_respondID = "0";
+    //     }
+    //     else if (res['message'] === 'policy is valid'){
+    //       this.spinner.hide();
+    //       this.someFunction();
+    //       this.showToast('Message', 'Policy Message', 'Policy is valid');
+    //       document.getElementById("eligibiltycheck1_btn").innerHTML = 'Next';
+    //     this.showstep2 = true;
+    //     this.disabledNext = true;
+    //     this.ea_respondID = "0";
+    //     }
+    //     else if (res['message'] === 'session not valid'){
+    //       document.getElementById("eligibiltycheck1_btn").innerHTML = 'Next';
+    //       this.spinner.hide();
+    //       this.showToast('Message', 'Policy Message', 'session not valid');
+    //       this.showstep3 = true;
+    //       this.ea_respondID = "0";
+    //     }
+    //     else{
+    //       document.getElementById("eligibiltycheck1_btn").innerHTML = 'Next';
+    //       this.spinner.hide();
+    //       this.someFunction();
+    //       this.showstep3 = true;
+    //       this.disabledNext = true;
+    //       this.showstep3 = true;
+    //       this.ea_respondID = "0";
+    //     }
         
-      },(err: HttpErrorResponse) => {
-        if (err.error instanceof Error) {
-          this.spinner.hide();
-          this.someFunction();
-          // this.showToast('Message', 'Policy Message', 'Something went wrong');
-          console.log("Client-side error occured.");
-          this.disabledNext = true;
-          this.showstep3 = true;
-          this.ea_respondID = "0";
-        }
-        else {
-          this.spinner.hide();
-          this.someFunction();
-          // this.showToast('Message', 'Policy Message', 'Something went wrong');
-          console.log("Server-side error occured.");
-          this.disabledNext = true;
-          this.showstep3 = true;
-          this.ea_respondID = "0";
-          this.showstep3 = true;
-        }
-      }
-    );
+    //   },(err: HttpErrorResponse) => {
+    //     if (err.error instanceof Error) {
+    //       this.spinner.hide();
+    //       this.someFunction();
+    //       // this.showToast('Message', 'Policy Message', 'Something went wrong');
+    //       // console.log("Client-side error occured.");
+    //       this.disabledNext = true;
+    //       this.showstep3 = true;
+    //       this.ea_respondID = "0";
+    //     }
+    //     else {
+    //       this.spinner.hide();
+    //       this.someFunction();
+    //       // this.showToast('Message', 'Policy Message', 'Something went wrong');
+    //       console.log("Server-side error occured.");
+    //       this.disabledNext = true;
+    //       this.showstep3 = true;
+    //       this.ea_respondID = "0";
+    //       this.showstep3 = true;
+    //     }
+    //   }
+    // );
     
     
   }
 
   some(value){
-    console.log(value);
+    // console.log(value);
     if(value == true){
       this.hideDropoff = false;
     this.showsvclist = true;
@@ -681,10 +712,10 @@ export class RsaComponent implements OnInit {
         this.cust_details = this.customer[1].custinfo[0];
        }
        this.carinfo = this.customer[4].carinfo[0];
-       console.log(this.carinfo);
+      //  console.log(this.carinfo);
        if(this.carinfo.hasOwnProperty('no_records')){
         this.selectedBrand  = sessionStorage.getItem('brandid');
-         console.log(this.selectedBrand )
+        //  console.log(this.selectedBrand )
          this.getModelds(this.selectedBrand );
       }
           else{
@@ -711,7 +742,7 @@ export class RsaComponent implements OnInit {
   activeModal.componentInstance.modalContent = res;
   activeModal.componentInstance.modalNotes = notes;
 }
-  eligibiltycheck2(){
+  eligibiltycheck21(){
     if(this.user.onSpotType){
       this.servicetypeid = this.user.onSpotType;
     }
@@ -727,26 +758,107 @@ export class RsaComponent implements OnInit {
       policynumber:this.user.policy,
       vinnumber:this.user.vin
     }
-    console.log(reqpara01);
+    // console.log(reqpara01);
     const as01 = JSON.stringify(reqpara01);
 
     this.ServicingService.Finalcheck(as01).subscribe(
 
       res => {
-        console.log(res[0].eligible);
-        console.log(res[0].eligible[0].eligible);
+        // console.log(res[0].eligible);
+        // console.log(res[0].eligible[0].eligible);
         const eligible = res[0].eligible[0].eligible;
         if(JSON.parse(eligible)){
-          console.log("true");
+          // console.log("true");
           this.showstep2 = true;
         }
         else{
-          console.log("false");
+          // console.log("false");
           this.showstep2 = true;
         }
       }
     )
   }
+
+
+  eligibiltycheck2(){
+    if(this.user.onSpotType){
+      this.servicetypeid = this.user.onSpotType;
+    }
+    else if (this.user.towingTruckType){
+      this.servicetypeid = this.user.towingTruckType;
+    }
+    this.eligibiltycheck_final = true;
+      document.getElementById("eligibiltycheck2_btn").innerHTML = 'Processing..';
+      const reqpara01 ={
+        customerMobileNumber:this.user.mobile1,
+        vehicleRegNumber:this.registrationNumber,
+        policyNumber:this.user.policy,
+        vin:this.user.vin,
+        typeofservice:this.servicetypeid,
+        }
+      const as01 = JSON.stringify(reqpara01);
+      this.http.post('https://plsuat.europassistance.in:8000/api/eaiExt/checkFinalEligibility',reqpara01,this.opt1).subscribe(
+          res => {
+            // console.log(res);
+            if (res['message'] === 'policy is not valid'){
+              document.getElementById("eligibiltycheck2_btn").innerHTML = 'Next';
+              this.spinner.hide();
+              this.showToast('Message', 'Policy Message', 'Policy is not valid');
+              this.showstep3 = true;
+              this.ea_respondID = "0";
+            }
+            else if (res['message'] === 'policy is valid'){
+              document.getElementById("eligibiltycheck2_btn").innerHTML = 'Next';
+              this.spinner.hide();
+              this.showToast('Message', 'Policy Message', 'Policy is valid');
+            this.showstep3 = true;
+              var policy_valid = {
+                vin: this.user.vin,
+                policyNumber:this.user.policy,
+                vehicleRegNumber:this.registrationNumber,
+                customerMobileNumber:this.user.mobile1,
+                typeofservice:1
+              }
+              this.ea_respondID = JSON.stringify(policy_valid);
+            }
+            else if (res['message'] === 'session not valid'){
+              document.getElementById("eligibiltycheck2_btn").innerHTML = 'Next';
+              this.spinner.hide();
+              this.showToast('Message', 'Policy Message', 'session not valid');
+              this.showstep3 = true;
+              this.ea_respondID = "0";
+            }
+            else if (res['message'] === 'policy got expired'){
+              document.getElementById("eligibiltycheck2_btn").innerHTML = 'Next';
+              this.spinner.hide();
+              this.showToast('Message', 'Policy Message', 'policy got expired');
+              this.showstep3 = true;
+              this.ea_respondID = "0";
+            }
+            else if (res['message'] === 'vehicle not found for the given policy details'){
+              document.getElementById("eligibiltycheck2_btn").innerHTML = 'Next';
+              this.spinner.hide();
+              this.showToast('Message', 'Policy Message', 'vehicle not found for the given policy details');
+              this.showstep3 = true;
+              this.ea_respondID = "0";
+            }
+            else{
+              this.spinner.hide();
+              document.getElementById("eligibiltycheck2_btn").innerHTML = 'Next';
+              this.showstep3 = true;
+              this.ea_respondID = "0";
+            }
+          },(err: HttpErrorResponse) => {
+            if (err.error instanceof Error) {
+              this.spinner.hide();
+              this.ea_respondID = "0";
+            }
+            else {
+              this.spinner.hide();
+              this.ea_respondID = "0";
+            }
+          });
+    }
 
   // getVariants(VariantId: number) {
   //   const reqpara3 = {
@@ -778,9 +890,12 @@ export class RsaComponent implements OnInit {
   // }
 
   onSubmit(f: NgForm) {
-    
+    this.BookingBtn = true;
     this.registrationNumber = f.value.num.toUpperCase();
-    console.log(f.value.svclist);
+    // console.log(f.value.svclist);
+    var allow_booking = JSON.parse(sessionStorage.getItem('allow_booking'));
+    console.log(allow_booking);
+    if(allow_booking == '1' || allow_booking == null){
     if(f.value.svclist){
       this.selectedBrand = f.value.svclist;
     }
@@ -882,7 +997,7 @@ export class RsaComponent implements OnInit {
   this.queuetime =  this.datePipe.transform(this.today,"y-MM-dd HH:mm:ss");
   if(this.insuranceFlag){
     this.reqpara = {
-      requesttype :'createbookingrsa_insurance',
+      requesttype :'createbookingrsa_insurancev2',
       vehnumber : this.registrationNumber,
       cityid:this.cityID,
       vehbrand:this.selectedBrand,
@@ -904,12 +1019,13 @@ export class RsaComponent implements OnInit {
       creid:"0",
       selectedsvcid:this.scv,
       cfeeclient:this.amt,
+      eavalidcode:this.ea_respondID,
       notes:this.notes
     };
   }
   else{
     this.reqpara = {
-      requesttype :'createbookingrsa',
+      requesttype :'createbookingrsav2',
       vehnumber : this.registrationNumber,
       vehbrand:this.selectedBrand,
       carmodelid:f.value.model,
@@ -930,20 +1046,31 @@ export class RsaComponent implements OnInit {
       creid:"0",
       selectedsvcid:this.scv,
       cfeeclient:this.amt,
+      eavalidcode:this.ea_respondID,
       notes:this.notes
     };
   }
     const rep1= JSON.stringify(this.reqpara);
-    console.log(rep1);
+    // console.log(rep1);
     this.ServicingService.webServiceCall(rep1).subscribe(data => {
       if (data[0].login === 0) {
         sessionStorage.removeItem('currentUser');
         this.router.navigate(['/auth/login']);
       } else {
         this.message = data[0].queue;
-        this.showLargeModal(this.message[0], this.notes);
+        this.BookingBtn = false;
+        this.showLargeModal(this.message[0],this.notes);
         this.slot_time = "0";
         f.reset();
+        console.log(this.message[0].allow_booking,this.message[0].prepaid_credits)
+        sessionStorage.setItem('allow_booking',this.message[0].allow_booking);
+        sessionStorage.setItem('credit',this.message[0].prepaid_credits)
+          if(this.message[0].prepaid_credits <= "10000"){
+            this.ServicingService.sendMessage(this.message[0].prepaid_credits,"1");
+          }
+          else{
+            this.ServicingService.sendMessage(this.message[0].prepaid_credits,"0");
+          }
         this.show3 = false;
         this.showstep2 = false;
         this.showstep3 = false;
@@ -955,6 +1082,7 @@ export class RsaComponent implements OnInit {
         this.yourBoolean = 'onSpot';
         this.user.confirm = true;
         this.datecheck = false;
+        this.eligibiltycheck_final = false;
         (<HTMLInputElement>document.getElementById('mobile1')).disabled = false; 
         (<HTMLInputElement>document.getElementById('num')).disabled = false; 
         document.getElementById("num_label").classList.remove("disabled_label");
@@ -978,5 +1106,11 @@ export class RsaComponent implements OnInit {
     }
   );
 }
+else{
+  this.showToast('alert', 'Message', 'Credit Balance is low !!');
+  this.BookingBtn = false;
+}
+  }
+
 }
 

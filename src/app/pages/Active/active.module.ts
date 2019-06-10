@@ -14,6 +14,7 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { Ng2OrderModule } from 'ng2-order-pipe'; 
 import {NgxPaginationModule} from 'ngx-pagination';
 import { NgxSpinnerModule } from 'ngx-spinner';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -22,11 +23,9 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     ThemeModule.forRoot(),
     NgxPaginationModule,
     NgxSpinnerModule,
-    
     Ng2SearchPipeModule,
     Ng2OrderModule
-
-  ],
+],
   declarations: [
     PickupComponent, 
     ActiveComponent, 

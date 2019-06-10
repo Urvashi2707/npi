@@ -37,8 +37,6 @@ export class CancelledComponent implements OnInit {
 
       var prev_url = this._tableService.getPreviousUrl();
       var curr_url = this._tableService.getCurrentUrl();
-      console.log("cons",prev_url);
-      console.log("cons",curr_url);
       if(curr_url === '/pages/queue-details' && prev_url === '/pages/cancelled'){
         console.log("inside if previous url");
       }

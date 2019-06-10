@@ -1,0 +1,123 @@
+
+<nb-card class="desktopView" #myDiv id="nb_card">
+  <nb-card-header>
+     Choose Transaction Mode
+  </nb-card-header>
+  <nb-card-body>
+      <div class="row">
+          <div class="col-sm-6">
+            <div class="form-group">
+              <nb-card item-width="143px">
+                <nb-card-header style="font-weight: 400;" id="online_payment" (click)="GoToOnline_Gateway();" class="btn1_red">
+                 Online Payment
+                </nb-card-header>
+              </nb-card>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group">
+              <nb-card item-width="143px">
+                <nb-card-header style="font-weight: 400;"  id="neft" (click)="showNeftTable();">
+                  NEFT
+                </nb-card-header>
+              </nb-card>
+            </div>
+          </div>
+        </div>
+  </nb-card-body>
+</nb-card>
+<nb-card class="desktopView" *ngIf="Show_online_pay_card">
+    <nb-card-body>
+      <form ngNativeValidate #online_Form="ngForm" (ngSubmit)="online_payment(online_Form)">
+          <div class="row">
+              <div class="col-md-5 col-sm-5 col-lg-5">
+                <div class="form-group">
+                  <input type="number" id="online_pay" name="online_pay" class="form-control" style="text-transform: uppercase" required
+                             [(ngModel)]="payment.amount" #on_pay="ngModel" step="0.01"
+                    maxlength="9" pattern="^\d{0,6}(\.\d{1,2})?$" step="0.01" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" onkeydown="javascript: return event.keyCode == 69 || event.keyCode == 189 || event.keyCode == 16 ? false : true" keypress="floatCheck($event)">
+                  <label class="form-control-placeholder" for="online_pay" id="online_pay">Enter Amount*</label>
+                </div>
+              </div>
+              <div class="col-md-2 col-sm-2 col-lg-2 NextRow">
+                <div>
+                  <button type="submit" class="btn btn-warning NextButton" [disabled]="!payment.amount || online_Form.invalid" id="on_payBtn"
+                     style="margin-top: 16%;">Submit</button>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-5 col-sm-5 col-lg-5">
+                <div style="font-size:11px;padding-bottom: 14px;padding-left: 3px">*Payment Gateway Charges will be Applicable.</div>
+                <div class="form-control-feedback" *ngIf="on_pay.errors && (on_pay.dirty || on_pay.touched)">
+                  <p *ngIf="on_pay.errors.required" class="haserror">Amount is required</p>
+                  <p *ngIf="!on_pay.errors.valid" class="haserror">6 digit with 2 digit after decimal is allowed</p>
+                </div>
+              </div>
+            </div>
+      </form>
+    </nb-card-body>
+  </nb-card>
+
+  <nb-card class="desktopView" *ngIf="Show_neft_card">
+      <nb-card-body>
+        <form ngNativeValidate #f="ngForm" (ngSubmit)="neft_payment(f)">
+            <div class="row">
+                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input class="form-control" name="dp" [ngModel]="model"  placeholder="{{pastdate | date: 'yyyy-MM-dd'}}" ngbDatepicker #d2="ngbDatepicker" [readonly]="true">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary dateButton" (click)="d2.toggle()" type="button" style="height: 100%;border-radius: 0px;">
+                              <span><i class="fa fa-calendar"></i></span>
+                            </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-control-feedback" *ngIf="d2.errors && (d2.dirty || d2.touched)">
+                      <p *ngIf="d2.errors.required" class="haserror">Date is required</p>
+                      <p *ngIf="!d2.errors.valid" class="haserror">format should be yyyy-mm-dd</p>
+                    </div>
+                </div>
+                <div class="col-md-5 col-sm-5 col-lg-5">
+                    <div class="form-group">
+                        <!-- <input type="number" id="online_pay" name="online_pay" class="form-control" style="text-transform: uppercase" required
+                        [(ngModel)]="payment.amount" #on_pay="ngModel" step="0.01"
+               maxlength="9" pattern="^\d{0,6}(\.\d{1,2})?$" step="0.01" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" onkeydown="javascript: return event.keyCode == 69 || event.keyCode == 189 || event.keyCode == 16 ? false : true">
+                     -->
+               <input type="number" id="neft" name="neft" class="form-control" style=" text-transform: uppercase" required
+                        [(ngModel)]="payment.neft" #neft_amt="ngModel" step="0.01" 
+                        maxlength="13" pattern="^\d{0,10}(\.\d{1,2})?$" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" onkeydown="javascript: return event.keyCode == 69 || event.keyCode == 189 ? false : true">
+                      <label class="form-control-placeholder" for="neft" id="neft">Enter Amount*</label>
+                    </div>
+                    <div class="form-control-feedback" *ngIf="neft_amt.errors && (neft_amt.dirty || neft_amt.touched)">
+                      <p *ngIf="neft_amt.errors.required" class="haserror">Amount is required</p>
+                      <p *ngIf="!neft_amt.errors.valid" class="haserror">10 digit with 2 digit after decimal is allowed</p>
+                    </div>
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col-md-5 col-sm-5 col-lg-5">
+                      <div class="form-group">
+                        <input type="text" id="neft_id" name="neft_id" class="form-control" style=" text-transform: uppercase" required
+                          [(ngModel)]="payment.neftId" #neftId="ngModel" 
+                          maxlength="15" pattern="^[0-9a-zA-Z#,\-/_ .@]+$">
+                        <label class="form-control-placeholder" for="neft_id" id="neft_id">Enter NEFT Id*</label>
+                      </div>
+                      <div class="form-control-feedback" *ngIf="neftId.errors && (neftId.dirty || neftId.touched)">
+                        <p *ngIf="neftId.errors.required" class="haserror">NEFT Id is required</p>
+                        <p *ngIf="!neftId.errors.valid" class="haserror">\$^*'}'`;> these characters are not accepted</p>
+                      </div>
+                    </div>
+                    <div class="col-md-3 col-sm-3 col-lg-3" style="margin-right: 4%;"></div>
+                  <div class="col-md-2 col-sm-2 col-lg-2 NextRow">
+                      <div>
+                        <button type="submit" class="btn btn-warning NextButton" [disabled]="Neft_submitBtn || !payment.neftId || !payment.neft || f.invalid" id="neftBtn"
+                           style="margin-top: 16%;">Submit</button>
+                      </div>
+                    </div>
+              </div>
+        </form>
+       </nb-card-body>
+    </nb-card>
+    
+

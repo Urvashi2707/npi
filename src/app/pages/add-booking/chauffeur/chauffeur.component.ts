@@ -2,6 +2,7 @@ import { Component, OnInit,ViewChild, ElementRef, NgZone  } from '@angular/core'
 import {ServerService } from '../../services/user.service';
 import { TitleCasePipe } from '@angular/common';
 import {HttpErrorResponse}from '@angular/common/http';
+import { ServicingService } from '../../services/addServicing.service';
 import {NgForm} from '@angular/forms';
 import { NgbDateStruct, NgbDateParserFormatter} from '@ng-bootstrap/ng-bootstrap';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -118,6 +119,7 @@ export class ChauffeurComponent implements OnInit {
   public globalsvcid:string;
   public selectedsvcid:string;
   isCloseButton = true;
+  show1 = false;
   config: ToasterConfig;
   position = 'toast-top-full-width';
   animationType = 'fade';
@@ -180,8 +182,8 @@ export class ChauffeurComponent implements OnInit {
   @ViewChild('internaldropoff') internaldropoff:ElementRef;
   @ViewChild('internaldropoffsearchplaceFill') internaldropoffsearchplaceFill: ElementRef;
   @ViewChild('internaldropofflandmark') internaldropofflandmark: ElementRef;
-
-  constructor(public ngZone: NgZone,private spinner: NgxSpinnerService,private datePipe:DatePipe,private titlecasePipe:TitleCasePipe,private toasterService: ToasterService,private _data : ServerService,private router: Router,private ngbDateParserFormatter: NgbDateParserFormatter,private modalService: NgbModal) {
+  
+  constructor(private service:ServicingService,public ngZone: NgZone,private spinner: NgxSpinnerService,private datePipe:DatePipe,private titlecasePipe:TitleCasePipe,private toasterService: ToasterService,private _data : ServerService,private router: Router,private ngbDateParserFormatter: NgbDateParserFormatter,private modalService: NgbModal) {
     this.cityList = [];
     this.getCity();
     this.iconurl = './../../../assets/images/image.png';
@@ -253,8 +255,18 @@ export class ChauffeurComponent implements OnInit {
       else if (Id == 3){
         this.getCoordinator();
       }
-      console.log('When user closes');
-    }, () => { console.log('Backdrop click')})
+      // console.log('When user closes');
+    }, () => { 
+      // console.log('Backdrop click')
+    })
+  }
+
+  showSecondMobile(){
+    this.show1 = true;
+  }
+
+  HideSecondMobile(){
+    this.show1 = false;
   }
 
 
@@ -291,11 +303,11 @@ export class ChauffeurComponent implements OnInit {
     this.show = true;
     this.disableNext = true;
     var defaultBrand = JSON.parse(sessionStorage.getItem('brandid'));
-    console.log(defaultBrand);
+    // console.log(defaultBrand);
      for(let i = 0; i < this.brands.length;i ++){
                if(this.brands[i].brand_id == defaultBrand){
                  this.selectedBrand = this.brands[i].brand_id;
-                 console.log(this.selectedBrand);
+                //  console.log(this.selectedBrand);
                }
              }
              this.getModelds(this.selectedBrand);
@@ -354,7 +366,7 @@ export class ChauffeurComponent implements OnInit {
  }
 
  mapClk(ev) {
-  console.log('clicked map');
+  // console.log('clicked map');
   // console.log(ev);
 }
 
@@ -372,7 +384,7 @@ centerChang(ev,value) {
  else if (value == 2){
   this.x = ev.lat;
   this.y = ev.lng;
-  console.log("internal movement pickup",ev)
+  // console.log("internal movement pickup",ev)
   sessionStorage.setItem('pickup_lat_drag',ev.lat);
   sessionStorage.setItem('pickup_lng_drag',ev.lng);
  }
@@ -380,7 +392,7 @@ centerChang(ev,value) {
  else if (value == 3){
   this.a = ev.lat;
   this.b = ev.lng;
-  console.log("internal movement dropoff",ev)
+  // console.log("internal movement dropoff",ev)
   sessionStorage.setItem('dropoff_lat_drag',ev.lat);
   sessionStorage.setItem('dropoff_lng_drag',ev.lng);
  }
@@ -411,7 +423,7 @@ centerChang(ev,value) {
   var value = val;
   this.latPickup = map1.center.lat();
   this.lngPickup = map1.center.lng();
-  console.log(this.latPickup,this.lngPickup,"map ready")
+  // console.log(this.latPickup,this.lngPickup,"map ready")
   map1.addListener("dragend", function (e, val) {
     this.latPickup = map1.center.lat();
     this.lngPickup = map1.center.lng();
@@ -523,7 +535,7 @@ centerChang(ev,value) {
 }
 
 markerDragEndd(ev,val) {
-  console.log("marker draggable called");
+  // console.log("marker draggable called");
   let input = ev.coords.lat + ',' + ev.coords.lng;
   var latlngStr = input.split(',', 2);
   var latlng = {lat: parseFloat(latlngStr[0]), lng: parseFloat(latlngStr[1])
@@ -533,7 +545,7 @@ markerDragEndd(ev,val) {
   geocoder.geocode({'location': latlng}, function(results, status) {
     if (status === 'OK') {
       if (results[0]) {
-        console.log(results[0].formatted_address);
+        // console.log(results[0].formatted_address);
         if(val == 1){
           me.pickupsearchplace.nativeElement.value = results[0].formatted_address;
           sessionStorage.setItem('pickup_add_drag',results[0].formatted_address);
@@ -581,7 +593,7 @@ markerDragEndd(ev,val) {
 
  //Brand selection
    onSelectBrand(brandsId) {
-     console.log(brandsId);
+    //  console.log(brandsId);
     this.selectedBrand = null;
     for (let i = 0; i < this.brands.length; i++) {
      if (this.brands[i].brand_id == brandsId) {
@@ -625,8 +637,8 @@ markerDragEndd(ev,val) {
         this.router.navigate(['/auth/login']);
       }
       else{
-        this.Variant=res[0].models,
-        console.log(this.Variant);
+        this.Variant=res[0].models;
+        // console.log(this.Variant);
         if(this.Variant.length === 0){
           this.dontShowVariant = true;
         }
@@ -662,7 +674,7 @@ markerDragEndd(ev,val) {
       }
       else{
         this.SaleExceutive = res[0].users
-        console.log(this.SaleExceutive);
+        // console.log(this.SaleExceutive);
        }
     });
   }
@@ -705,8 +717,8 @@ markerDragEndd(ev,val) {
         else{
             this.Models = res[0].models;
             this.getVariants(this.Models[0].model_id)
-            console.log(this.Models);
-            console.log('model length' + this.Models.length);
+            // console.log(this.Models);
+            // console.log('model length' + this.Models.length);
             if(this.Models.length === 0){
               this.dontShowModel = true;
             }
@@ -714,12 +726,12 @@ markerDragEndd(ev,val) {
               this.dontShowModel = false;
             }
             if(this.Models.length === 1){
-              console.log("model length is 1");
+              // console.log("model length is 1");
               var model_id = this.Models[0].model_id;
               this.getVariants(model_id);
             }
             else{
-              console.log("model length is more than 1");
+              // console.log("model length is more than 1");
             }
         }
        });
@@ -789,9 +801,9 @@ markerDragEndd(ev,val) {
               this.router.navigate(['/auth/login']);
             }
             else{
-              console.log(res);
+              // console.log(res);
               this.CityList = res[0].citylist;
-              console.log(this.CityList);
+              // console.log(this.CityList);
             }
            });
         }
@@ -878,7 +890,7 @@ markerDragEndd(ev,val) {
         // this.dateString = null;
         this.slot_time = "0";
         this.slothour = null;
-        this.showtime = false;
+        // this.showtime = false;
         this.showtime = true;
         if(this.serviceType == '1'){
           this.pickup_drop = 6;
@@ -921,9 +933,9 @@ markerDragEndd(ev,val) {
               if (res[0].slots.length == 0) {
                 this.showToast('default', 'No Slot', 'Sorry !! No Slot Unavailable ');
                 this.dateString = null;
-                this.slot_time = "0";
-                this.slothour = null;
-                this.showtime = false;
+        this.slot_time = "0";
+        this.slothour = null;
+        this.showtime = false;
               }
               else {
                 this.slot = res[0].slots;
@@ -934,7 +946,7 @@ markerDragEndd(ev,val) {
     }
 
     getinfowithMobile(){
-      // console.log(this.cust_details.mobile)
+      // console.log(this.cust_details.mobile);
       const reqpara112 =
       {
         requesttype:'getcustinfo_mobilev3',
@@ -989,14 +1001,14 @@ markerDragEndd(ev,val) {
                     this.user.droplatlong = null;
                     this.user.address_typedu = null;
                   }
-              console.log(this.addressDropoff);
+              // console.log(this.addressDropoff);
             }
        }
        this.carinfo = this.customer[4].carinfo[0];
-       console.log( this.carinfo);
+      //  console.log( this.carinfo);
        if(this.carinfo.hasOwnProperty('no_records')){
          this.selectedBrand  = sessionStorage.getItem('brandid');
-          console.log(this.selectedBrand )
+          // console.log(this.selectedBrand )
           this.getModelds(this.selectedBrand );
        }
        else{
@@ -1012,10 +1024,10 @@ markerDragEndd(ev,val) {
         }},
         (err: HttpErrorResponse) => {
           if (err.error instanceof Error) {
-            console.log("Client-side error occured.");
+            // console.log("Client-side error occured.");
           }
           else {
-            console.log("Server-side error occured.");
+            // console.log("Server-side error occured.");
           }
         });
     }
@@ -1051,10 +1063,10 @@ customerCheck(){
       },
        (err: HttpErrorResponse) => {
          if (err.error instanceof Error) {
-             console.log("Client-side error occured.");
+            //  console.log("Client-side error occured.");
            }
          else {
-           console.log("Server-side error occured.");
+          //  console.log("Server-side error occured.");
            }
        });
       this.show = true;
@@ -1062,7 +1074,10 @@ customerCheck(){
 
   onSubmit(f: NgForm) {
     this.BookingBtn = false;
-    console.log(f.value);
+    // console.log(f.value);
+    var allow_booking = JSON.parse(sessionStorage.getItem('allow_booking'));
+    // console.log(allow_booking);
+    if(allow_booking == '1' || allow_booking == null){
     if(sessionStorage.getItem('pickup_add_drag')){
       this.googleaddresspu = sessionStorage.getItem('pickup_add_drag');
       this.googlepickuplat = JSON.parse(sessionStorage.getItem('pickup_lat_drag'));
@@ -1131,7 +1146,7 @@ customerCheck(){
       }
     }
     else if (this.pickup_drop == 4){
-      console.log(this.googlepickuplat,this.googlepickuplong,this.googledropofflat,this.googledropofflong,"im")
+      // console.log(this.googlepickuplat,this.googlepickuplong,this.googledropofflat,this.googledropofflong,"im")
       var result = this.getDistanceFromLatLonInKm(this.googlepickuplat,this.googlepickuplong,this.googledropofflat,this.googledropofflong);
       this.postaladdresspu = f.value.internalpickupflatno + ' ' + f.value.internalpickupbilding;
       this.postaladdressdo = f.value.internaldropoffflatno + ' ' + f.value.internaldropoffbuildingname;
@@ -1163,7 +1178,7 @@ customerCheck(){
           this.pickuplong = this.pickuplong.substring(0, 14);
       }
       else{
-          console.log("same as test");
+          // console.log("same as test");
           this.googleaddressdo = this.googleaddresspu;
           this.postaladdressdo = f.value.testpickupflatno + ' ' + f.value.testpickupbuildingname;
           this.postaladdresspu = f.value.testpickupflatno + ' ' + f.value.testpickupbuildingname;
@@ -1302,6 +1317,17 @@ customerCheck(){
         f.reset();
         this.show = false;
         this.sameasvalue = false;
+        console.log(this.message[0].allow_booking,this.message[0].prepaid_credits)
+        sessionStorage.setItem('allow_booking',this.message[0].allow_booking);
+        sessionStorage.setItem('credit',this.message[0].prepaid_credits)
+          if(this.message[0].prepaid_credits <= "10000"){
+            console.log("<=10000");
+            this.service.sendMessage(this.message[0].prepaid_credits ,"1");
+          }
+          else{
+            console.log(">=10000");
+            this.service.sendMessage(this.message[0].prepaid_credits ,"0");
+          }
         this.show3 = false;
         this.disabled =  true;
         this.showtime = false;
@@ -1326,11 +1352,11 @@ customerCheck(){
  },
   (err: HttpErrorResponse) =>{
   if (err.error instanceof Error) {
-    console.log("Client-side error occured.");
+    // console.log("Client-side error occured.");
     this.BookingBtn = true;
   }
 else {
-  console.log("Server-side error occured.");
+  // console.log("Server-side error occured.");
   this.BookingBtn = true;
   }
 });
@@ -1342,8 +1368,12 @@ else{
     }
     else{
       this.showToast('alert', 'Message', 'Please select Slot and date');
-      this.BookingBtn = true;
+      this.BookingBtn = false;
     }
-};
+}else{
+  this.showToast('alert', 'Message', 'Credit Balance is low !!');
+  this.BookingBtn = false;
+}
+  }
 
 }

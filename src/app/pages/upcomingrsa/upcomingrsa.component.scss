@@ -178,10 +178,15 @@ tbody tr:hover {
         pointer-events: none;
     }
 }
-
+@media only screen and (min-width: 450px)  {
+    .mobileView {
+        display: none;
+    }
+}
 @media only screen and (min-width: 1050px) {
     .mobileView {
         display: none;
     }
+
    
 }

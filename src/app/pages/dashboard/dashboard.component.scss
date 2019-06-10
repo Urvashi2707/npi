@@ -110,3 +110,41 @@ ngx-temperature{
 }
 }
 
+@media only screen and (device-width: 768px) {
+    /* For general iPad layouts */
+    .cardHeight{
+        height: 50px;
+    }
+    .CustomerRatingText{
+        font-size:1rem;
+        float:left;
+        margin-top: 3%;
+    }
+    .cardValue{
+        font-size:1.4rem;
+        padding-right:33%;
+    }
+    .CustRating{
+        nb-card {
+            height: 61px;
+        }
+    }
+    .star {
+        position: relative;
+        display: inline-block;
+        font-size: .8rem;
+        color: #d3d3d3;
+    }
+    .RatingCard{
+        padding-top: 0px;
+    }
+  }
+  
+  @media only screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:portrait) {
+    /* For portrait layouts only */
+  }
+  
+  @media only screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:landscape) {
+    /* For landscape layouts only */
+  }
+

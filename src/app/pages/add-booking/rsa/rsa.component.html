@@ -65,7 +65,7 @@
          
           <div class="col-md-2 col-sm-2 col-lg-2">
             <div class="NextButton">
-              <button type="button" class="btn btn-warning" (click)='eligibiltycheck1()' [disabled]="!registrationNumber || !user.mobile1 || disabledNext || !selected_service_type">Next</button>
+              <button type="button" class="btn btn-warning" id="eligibiltycheck1_btn" (click)='eligibiltycheck1()' [disabled]="!registrationNumber || !user.mobile1 || disabledNext || !selected_service_type">Next</button>
             </div>
           </div>
         </div>
@@ -92,7 +92,7 @@
               </div>
               <div class="col-md-2 col-sm-2 col-lg-2" style="display:inherit">
                 <div style="padding-right:29%;">
-                  <button type="button" class="btn btn-warning" [disabled]="!user.vin || !user.policy" (click)="eligibiltycheck2()">Next</button>
+                  <button type="button" class="btn btn-warning" [disabled]="!user.vin || !user.policy || eligibiltycheck_final" id="eligibiltycheck2_btn" (click)="eligibiltycheck2()">Next</button>
                 </div>
                 <div>
                   <button type="button" class="btn btn-warning" (click)="skip()">Skip</button>
@@ -178,7 +178,8 @@
               <div class="row">
                 <div class="col-md-8 col-lg-8 col-sm-8 col-xs-8">
                   <div class="form-group" style="display:inline-block;max-width: 16%;">
-                    <label for="countrycode" class="countryCodelabel">Country Code</label>
+                    <label for="countrycode" class="countryCodelabel" style="display: inline-block;margin-bottom: .1rem;
+                    font-size: 12px;">Country Code</label>
                     <label for="countrycode" style="font-size: 12px;padding-left: 2%;margin-bottom: 0px;" class="cCode">C.Code</label>
                     <input type="text" class="form-control" name="countrycode" OnlyNumber="true" [readonly]="true" value="+91" [(ngModel)]="countrycode1"
                       required #countrycode>
@@ -188,9 +189,9 @@
                       #mobile1="ngModel" pattern="^[0-9]{10}$">
                     <label class="form-control-placeholder" for="mobile1">Mobile Number*</label>
                   </div>
-                  <div style="display:inline-block;margin:3%">
-                    <button type="button" (click)="show1=!show1" class="addnumber">
-                      <i class="fa" [ngClass]="{'fa-plus': !show1, 'fa-minus': show1}" style="color:#ffa100" aria-hidden="true"></i>
+                  <div style="display:inline-block;margin:3%" *ngIf="!show1">
+                    <button type="button" (click)="showSecondMobile()"class="addnumber">
+                      <i class="fa fa-plus" style="color:#ffa100" aria-hidden="true"></i>
                     </button>
                   </div>
                   <div class="form-control-feedback" *ngIf="mobile1.errors && (mobile1.dirty || mobile1.touched)">
@@ -207,11 +208,16 @@
                       <input type="text" class="form-control" name="countrycode" OnlyNumber="true" [readonly]="true" value="+91" [(ngModel)]="countrycode1"
                         required #countrycode="ngModel">
                     </div>
-                    <div class="form-group" style="display:inline-block;min-width:58%;">
+                    <div class="form-group mobile1">
                       <input type="text" class="form-control" name="mobile2" maxlength="10" [(ngModel)]="cust_details.mobile2" OnlyNumber="true"
                         #mobile2="ngModel" pattern="^[0-9]{10}$">
                       <label class="form-control-placeholder" for="mobile2">Mobile2 Number*</label>
                     </div>
+                    <div style="display:inline-block;margin:3%">
+                        <button type="button" (click)="HideSecondMobile()" class="addnumber">
+                          <i class="fa fa-minus"  style="color:#ffa100" aria-hidden="true"></i>
+                        </button>
+                      </div>
                     <div class="form-control-feedback" *ngIf="mobile2.errors && (mobile2.dirty || mobile2.touched)">
                       <p *ngIf="!mobile2.errors.valid" class="haserror">mobile must contain digits only</p>
                     </div>
@@ -374,7 +380,7 @@
               <div class="row">
                 <div class="col-md-12 col-lg-12 col-sm-12">
                   <div style="float:right">
-                    <button type="submit" class="btn btn-primary">Schedule</button>
+                    <button type="submit" class="btn btn-primary" [disabled]="BookingBtn">Schedule</button>
                   </div>
                 </div>
               </div>

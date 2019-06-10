@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient,HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import 'rxjs/add/operator/map';
-import { Observable } from 'rxjs/Rx';
+import { Observable,Subject,BehaviorSubject } from 'rxjs/Rx';
 import { environment } from '../../../environments/environment';
 
 
@@ -13,14 +13,15 @@ export class ServicingService {
   cityList:any = [];
   cityList2:any;
   result:any;
+  // var credit = JSON.parse(sessionStorage.getItem('credit'));
 
-  constructor(private http: HttpClient,private router: Router) {
-    var myArray = this.getCity().subscribe(data => this.result = data);
-    var myArray1 = this.getCity();
-   }
+  private subject = new Subject<any>();
+  // private behaviorSubject = new BehaviorSubject<any>();
+
+  constructor(private http: HttpClient,private router: Router) {}
 
    //Easy Auto
-  private getSession_url :string = 'http://plsuat.europassistance.in:444/getSession';
+  private getSession_url :string = 'https://plsuat.europassistance.in:8000/api/eaiExt/getsession';
   private Ea_check1_url:string = 'http://plsuat.europassistance.in:444/checkInitialEligibility';
   private Ea_check2_url:string = 'http://plsuat.europassistance.in:444/checkFinalEligibility';
   public destroySession_url = 'http://plsuat.europassistance.in:444/destroysession';
@@ -44,17 +45,30 @@ public options = {
 }
 
 public opt={
-  headers: new HttpHeaders().set('x-auth-token', JSON.stringify(localStorage.getItem('token'))),
+  headers: new HttpHeaders({'Content-Type':'application/json','x-auth-token':'pass123','x-auth-user':'21NorthUser01'})
   
 }
 
 public opt1={
   headers: new HttpHeaders({'x-auth-token': sessionStorage.getItem('token'),'x-auth-user':sessionStorage.getItem('auth-user'),'Content-Type':  'application/json'})
-  
+}
+
+sendMessage(message: string,btn:string) {
+  console.log(message,btn);
+  this.subject.next({text: message ,show_btn:btn});
+}
+
+clearMessage() {
+  this.subject.next();
+}
+
+getMessage(): Observable<any> {
+  return this.subject.asObservable();
 }
 
 session(){
-    return this.http.post(this.getSession_url,this.options)
+  const reqpara1 = {}
+    return this.http.post(this.getSession_url,reqpara1,this.opt)
 }
 
 ForgotPassword(reqpara){
@@ -67,11 +81,9 @@ Login(reqpara){
 
 setter(Data){
 this.data = Data;
-console.log(this.data);
 }
 
 getter(): string{
-  console.log(this.data);
   return this.data;
 }
 
@@ -84,7 +96,6 @@ Finalcheck(reqpara){
 }
 
 destroySession(){
-  console.log(this.opt1);
   const reqpara = {}
   return this.http.post(this.destroySession_url,reqpara,this.opt1 )
 }
@@ -98,39 +109,15 @@ slot(reqpara){
 }
 
   getSession(){
-    return this.http.post(this.getSession_url,this.options)
+    return this.http.post(this.getSession_url,this.opt)
   }
 
   logout(){
-    console.log(this.httpOptions);
-    
     return this.http.post(this.logout_url,this.data1,this.httpOptions)
   }
 
   webServiceCall(reqpara){
     return this.http.post(this.url, reqpara, this.httpOptions);
-  }
-
-  getCity():Observable<any>{
-    const reqpara1 ={
-      requesttype: 'getcitylist',
-    }
-    const as1 = JSON.stringify(reqpara1)
-    return this.webServiceCall(as1).map
-      ((response: Response) => {
-        if (response[0].login === 0) {
-          sessionStorage.removeItem('currentUser');
-          this.router.navigate(['/auth/login']);
-        }
-        else {
-          this.cityList = response[0].citylist;
-          var newData = JSON.stringify(this.cityList)
-          let result = JSON.parse(newData);
-          console.log(response);
-          return response;
-
-        }
-      });
   }
 
 }

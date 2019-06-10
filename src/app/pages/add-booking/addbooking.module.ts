@@ -49,7 +49,7 @@ import { GooglePlacesDirective } from '../../pages/google-place.directive';
 
   ],
   providers: [
-    ServicingService,
+    // ServicingService,
     ChauffeurService,
     ToasterService,
     NgbActiveModal,

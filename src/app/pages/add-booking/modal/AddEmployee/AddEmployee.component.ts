@@ -22,8 +22,10 @@ export class AddEmployee implements OnInit {
   desingnation:string;
   public svcid:string;
   public salutation:any;
+  showResult:boolean = false;
+  successMsg:boolean;
   ngOnInit() {
-    console.log(this. modalContent);
+    // console.log(this. modalContent);
     if(sessionStorage.getItem('selectedsvc')){
       // console.log(sessionStorage.getItem('selectedsvc'));
       this.svcid = sessionStorage.getItem('selectedsvc');
@@ -75,9 +77,9 @@ export class AddEmployee implements OnInit {
 
 
   onSubmit(f: NgForm) {
-    console.log(f.value.id);
+    // console.log(f.value.id);
     if(this.modalContent == 4 ){
-      console.log(this.modalContent);
+      // console.log(this.modalContent);
       var reqpara3 = {
         requesttype:'createuser',
         servicecentreid:JSON.parse(this.svcid),
@@ -88,7 +90,7 @@ export class AddEmployee implements OnInit {
       }
     }
     else if (this.modalContent == 3 ){
-      console.log(this.modalContent);
+      // console.log(this.modalContent);
       var reqpara3 = {
         requesttype:'createuser',
         servicecentreid:JSON.parse(this.svcid),
@@ -99,7 +101,7 @@ export class AddEmployee implements OnInit {
       }
     }
     else if (this.modalContent == 2 ){
-      console.log(this.modalContent);
+      // console.log(this.modalContent);
       var reqpara3 = {
         requesttype:'createuser',
         servicecentreid:JSON.parse(this.svcid),
@@ -110,7 +112,7 @@ export class AddEmployee implements OnInit {
       }
     }
     else {
-      console.log(this.modalContent);
+      // console.log(this.modalContent);
       var reqpara3 = {
         requesttype:'createuser',
         servicecentreid:JSON.parse(this.svcid),
@@ -120,13 +122,19 @@ export class AddEmployee implements OnInit {
         email:f.value.email
       }
     }
-
-
     const as3 = JSON.stringify(reqpara3);
     this._data.webServiceCall(as3).subscribe(res =>{
-      console.log(res);
+      // console.log(res);
+      if(res[0].userexists[0].does_exist === "0"){
+        this.successMsg = true;
+        this.showResult = true;
+      }
+      else{
+        this.successMsg = false;
+        this.showResult = true;
+      }
       f.reset();
-      this.activeModal.close();
+      // this.activeModal.close();
     });
        }
 }

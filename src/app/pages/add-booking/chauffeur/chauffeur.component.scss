@@ -437,9 +437,7 @@ fieldset {
 }
 .CoordinatorName{
   display:inline-block;
-
   min-width:81%
-
 }
 .dateButton{
   height: 97%;
@@ -523,3 +521,18 @@ input::placeholder {
   border-top: 1px solid #e9ecef;
 }
  }
+ @media only screen and (device-width: 768px) {
+  /* For general iPad layouts */
+  .CoordinatorName{
+    display:inline-block;
+    min-width:82%
+  }
+}
+
+@media only screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:portrait) {
+  /* For portrait layouts only */
+}
+
+@media only screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:landscape) {
+  /* For landscape layouts only */
+}

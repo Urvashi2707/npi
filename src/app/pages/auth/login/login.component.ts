@@ -4,6 +4,7 @@ import {Ilogin} from '../user';
 import { ServicingService } from '../../services/addServicing.service';
 import {HttpHeaders,HttpErrorResponse} from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
+import { DataService } from '../../services/data.service';
 
 @Component({
   selector: 'app-login',
@@ -17,6 +18,7 @@ export class LoginComponent implements OnInit {
 
   constructor( private ServicingService: ServicingService,
               private router: Router,
+              private dataService:DataService,
               private _cookieService:CookieService) {
       if(_cookieService.get('mobile')){
         this.user.mobile=this._cookieService.get('mobile');
@@ -82,10 +84,18 @@ CloseAlert(){
                 sessionStorage.setItem('brandid',response[0].login[0].brand_id);
                 sessionStorage.setItem('insurance',JSON.stringify(response[0].login[0].is_insurance));
                 sessionStorage.setItem('username',(response[0].login[0].first_name));
+                sessionStorage.setItem('userId',(response[0].login[0].userid));
+                sessionStorage.setItem('show_credit_btn',(response[0].login[0].show_add_credit));
+                sessionStorage.setItem('allow_booking',(response[0].login[0].allow_booking))
+                console.log(response[0].login[0].balance_credits,"balance");
+                sessionStorage.setItem('charges',(response[0].login[0].pg_charge));
                 sessionStorage.setItem('User',value.mobile);
+                console.log(response[0].login[0].balance_credits,response[0],response[0].login[0].show_add_credit)
+                this.ServicingService.sendMessage(response[0].login[0].balance_credits,response[0].login[0].show_add_credit);
+                this.dataService.sendMessage(response[0].login[0].balance_credits,response[0].login[0].show_add_credit);
                 sessionStorage.setItem('loginCountryFlag', response[0].login[0].country_id);
                 sessionStorage.setItem('loginCountryCodeFlag', response[0].login[0].country_code);
-                if(response[0].login[0].is_manufacturer == "1") {
+                if(response[0].login[0].is_manufacturer == "1"){
                   this.router.navigate(['/trend']);
                 }
                 else{

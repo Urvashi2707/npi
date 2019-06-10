@@ -35,6 +35,7 @@ export class ServicingComponent implements OnInit {
   private Variant: any = [];
   private cre: any = [];
   private Slot: any = [];
+  eligibiltycheck_final:boolean;
   private Complaints: string[];
   private service_advisor: string[];
   private creName: string[];
@@ -294,10 +295,20 @@ export class ServicingComponent implements OnInit {
   }
 
   showLargeModal(res: any, notes: string) {
+    // var credit = JSON.parse(sessionStorage.getItem('credit'))
+    // if(credit <= "10000"){
+    //   this.ServicingService.sendMessage(credit,"1");
+    //   console.log(this.ServicingService.getMessage());
+    // }
+    // else{
+    //   this.ServicingService.sendMessage(credit,"0");
+    //   console.log(this.ServicingService.getMessage());
+    // }
     const activeModal = this.modalService.open(BookingDetails, { size: 'lg', container: 'nb-layout' });
     activeModal.componentInstance.modalHeader = 'Booking Details';
     activeModal.componentInstance.modalContent = res;
     activeModal.componentInstance.modalNotes = notes;
+   
   }
 
   showModal(Id: number) {
@@ -388,60 +399,38 @@ export class ServicingComponent implements OnInit {
 
   centerChang(ev, value) {
     this.LatLngObj = ev;
-    // pickup
-    if (value == 3) {
-      this.x = ev.lat;
-      this.y = ev.lng;
-      console.log("pickup", ev)
-      sessionStorage.setItem('pickup_lat_drag', ev.lat);
-      sessionStorage.setItem('pickup_lng_drag', ev.lng);
+           // pickup
+           if(value == 3){
+            this.x = ev.lat;
+            this.y = ev.lng;
+            // console.log("pickup",ev)
+            sessionStorage.setItem('pickup_lat_drag',ev.lat);
+            sessionStorage.setItem('pickup_lng_drag',ev.lng);
+          }
+          // drop off
+         else if (value == 4){
+          this.a = ev.lat;
+          this.b = ev.lng;
+          // console.log("dropff",ev)
+          sessionStorage.setItem('dropoff_lat_drag',ev.lat);
+          sessionStorage.setItem('dropoff_lng_drag',ev.lng);
+         }
+  }
+
+   mapReady(evt) {
+    // console.log("map ready",evt);
+     this.ma1 = evt;
+    //  console.log("lat",this.ma1.center.lat());
     }
-    // drop off
-    else if (value == 4) {
-      this.a = ev.lat;
-      this.b = ev.lng;
-      console.log("dropff", ev)
-      sessionStorage.setItem('dropoff_lat_drag', ev.lat);
-      sessionStorage.setItem('dropoff_lng_drag', ev.lng);
+
+    centerChange(ev) {
+      var me = this;
+      // console.log("centre change called");
     }
-  }
 
-  //  protected mapReady2(evt) {
-  // 	this.ma1 = evt;
-  // 	console.log(document.getElementById("pickUpMap"));
-  // 	console.log("thismap4", this.ma1);
-  // 	console.log('this.mappickup', this.mappickup);
+  sameAsPickup(){ }
 
-  // 	this.mappickup.centerChange.subscribe(map => {
-  // 		// console.log(map);
-  // 		let latpick = this.latPickup;
-  // 		let lngpick = this.lngPickup;
-
-  // 		this.ma1.addListener('dragend', function(){
-  // 			console.log('enterder dragend');
-  // 			this.setCenter({
-  // 				latpick: map.lat,
-  // 				lngpick: map.lng
-  // 			});
-  // 		});
-  // 	});
-  // }
-
-  mapReady(evt) {
-    console.log("map ready", evt);
-    this.ma1 = evt;
-    console.log("lat", this.ma1.center.lat());
-  }
-
-  centerChange(ev) {
-    var me = this;
-    console.log("centre change called");
-    // me.gMaps.setCenter({ lat:ev.lat,lng:ev.lng});
-  }
-
-  sameAsPickup() { }
-
-  sameAsPickUpAdd(e) {
+  sameAsPickUpAdd(e){
     this.dropOffOnly = false;
     this.ifSameAsPickUp = !this.ifSameAsPickUp;
   }
@@ -475,7 +464,7 @@ export class ServicingComponent implements OnInit {
   }
 
   updateLocClk(el) {
-    console.log(el);
+    // console.log(el);
   }
 
   markerDragEndd(ev, val) {
@@ -489,8 +478,8 @@ export class ServicingComponent implements OnInit {
     geocoder.geocode({ 'location': latlng }, function(results, status) {
       if (status === 'OK') {
         if (results[0]) {
-          console.log(results[0].formatted_address);
-          if (val == 3) {
+          // console.log(results[0].formatted_address);
+          if(val == 3){
             me.pickupsearchplace.nativeElement.value = results[0].formatted_address;
             me.drag_pickup_add = results[0].formatted_address;
             sessionStorage.setItem('pickup_add_drag', results[0].formatted_address);
@@ -521,8 +510,8 @@ export class ServicingComponent implements OnInit {
     this.GetSVCList(this.selectedBrand, this.user.city);
   }
 
-  markerDragEnd(e) {
-    console.log(e);
+  markerDragEnd(e){
+    // console.log(e);
   }
 
   public getCity() {
@@ -553,65 +542,84 @@ export class ServicingComponent implements OnInit {
     }
   }
 
-  eligibiltycheck1() {
-    this.spinner.show();
-    (<HTMLInputElement>document.getElementById('mobile1')).disabled = true;
-    (<HTMLInputElement>document.getElementById('num')).disabled = true;
-    document.getElementById("num_label").classList.add("disabled_label");
-    document.getElementById("num_label").style.opacity = "1";
-    document.getElementById("mobile_label").classList.add("disabled_label");
-    document.getElementById("mobile_label").style.opacity = "1";
-    const reqpara0 = {
-      customerMobileNumber: this.user.mobile1,
-      vehicleRegNumbe: this.registrationNumber,
-      typeofservice: 1
-    }
-    const as0 = JSON.stringify(reqpara0);
-    this.http.post('https://plsuat.europassistance.in:444/checkInitialEligibility', as0, this.opt1).subscribe(
-      res => {
-        if (res['message'] === 'policy is not valid') {
-          this.spinner.hide();
-          this.getinfowithMobile();
-          this.disableNext = true;
-          this.mobileLength = true;
-          this.showToast('Message', 'Policy Message', 'Policy is not valid');
-          this.showstep3 = true;
-          this.ea_respondID = "0";
-        }
-        else if (res['message'] === 'policy is valid') {
-          this.spinner.hide();
-          this.getinfowithMobile();
-          this.disableNext = true;
-          this.mobileLength = true;
-          this.showToast('Message', 'Policy Message', 'Policy is valid');
-          this.showstep2 = true;
-          this.ea_respondID = res['responseId'];
-        }
-        else {
-          this.spinner.hide();
-          this.getinfowithMobile();
-          this.showstep3 = true;
-          this.disableNext = true;
-          this.mobileLength = true;
-          this.ea_respondID = "0";
-        }
-      }, (err: HttpErrorResponse) => {
-        if (err.error instanceof Error) {
-          this.spinner.hide();
-          this.getinfowithMobile();
-          this.disableNext = true;
-          this.mobileLength = true;
-          this.ea_respondID = "0";
-        }
-        else {
-          this.spinner.hide();
-          this.getinfowithMobile();
-          this.disableNext = true;
-          this.mobileLength = true;
-          this.ea_respondID = "0";
-        }
-      });
+  eligibiltycheck1(){
+    this.getinfowithMobile();
+    this.ea_respondID = "0";
     this.getCity();
+    // this.spinner.show();
+  //   this.mobileLength = true;
+  //   document.getElementById("eligibiltycheck1_btn").innerHTML = 'Processing..';
+  //   (<HTMLInputElement>document.getElementById('mobile1')).disabled = true;
+  //   (<HTMLInputElement>document.getElementById('num')).disabled = true;
+  //   document.getElementById("num_label").classList.add("disabled_label");
+  //   document.getElementById("num_label").style.opacity = "1";
+  //   document.getElementById("mobile_label").classList.add("disabled_label");
+  //   document.getElementById("mobile_label").style.opacity = "1";
+  //  const reqpara0 = {
+  //     customerMobileNumber:this.user.mobile1,
+  //     vehicleRegNumber:this.registrationNumber,
+  //     typeofservice:1
+  //   }
+  //   const as0 = JSON.stringify(reqpara0);
+  //   this.http.post('https://plsuat.europassistance.in:8000/api/eaiExt/checkInitialEligibility',reqpara0,this.opt1).subscribe(
+  //     res => {
+  //       if (res['message'] === 'policy is not valid'){
+  //         document.getElementById("eligibiltycheck1_btn").innerHTML = 'Next';
+  //         this.spinner.hide();
+  //         this.getinfowithMobile();
+  //         this.disableNext = true;
+  //         this.mobileLength = true;
+  //         this.showToast('Message', 'Policy Message', 'Policy is not valid');
+  //         this.showstep3 = true;
+  //         this.ea_respondID = "0";
+  //       }
+  //       else if (res['message'] === 'policy is valid'){
+  //         document.getElementById("eligibiltycheck1_btn").innerHTML = 'Next';
+  //         this.spinner.hide();
+  //         this.getinfowithMobile();
+  //         this.disableNext = true;
+  //         this.mobileLength = true;
+  //         this.showToast('Message', 'Policy Message', 'Policy is valid');
+  //       this.showstep2 = true;
+  //       this.showstep3 = false;
+  //       this.ea_respondID = "0";
+  //       }
+  //       else if (res['message'] === 'session not valid'){
+  //         document.getElementById("eligibiltycheck1_btn").innerHTML = 'Next';
+  //         this.spinner.hide();
+  //         this.getinfowithMobile();
+  //         this.disableNext = true;
+  //         this.mobileLength = true;
+  //         this.showToast('Message', 'Policy Message', 'session not valid');
+  //         this.showstep3 = true;
+  //         this.ea_respondID = "0";
+  //       }
+  //       else{
+  //         this.spinner.hide();
+  //         document.getElementById("eligibiltycheck1_btn").innerHTML = 'Next';
+  //         this.getinfowithMobile();
+  //         this.showstep3 = true;
+  //         this.disableNext = true;
+  //         this.mobileLength = true;
+  //         this.ea_respondID = "0";
+  //       }
+  //     },(err: HttpErrorResponse) => {
+  //       if (err.error instanceof Error) {
+  //         this.spinner.hide();
+  //         this.getinfowithMobile();
+  //         this.disableNext = true;
+  //         this.mobileLength = true;
+  //         this.ea_respondID = "0";
+  //       }
+  //       else {
+  //         this.spinner.hide();
+  //         this.getinfowithMobile();
+  //         this.disableNext = true;
+  //         this.mobileLength = true;
+  //         this.ea_respondID = "0";
+  //       }
+  //     });
+  //     this.getCity();
   }
 
   skip() {
@@ -620,18 +628,79 @@ export class ServicingComponent implements OnInit {
   }
 
 
-  eligibiltycheck2() {
-    const reqpara01 = {
-      customerMobileNumber: this.user.mobile1,
-      vehicleRegNumber: this.registrationNumber,
-      policyNumber: this.user.policy,
-      vin: this.user.vin,
-      typeofservice: 1,
-    }
+  eligibiltycheck2(){
+  this.eligibiltycheck_final = true;
+    document.getElementById("eligibiltycheck2_btn").innerHTML = 'Processing..';
+    const reqpara01 ={
+      customerMobileNumber:this.user.mobile1,
+      vehicleRegNumber:this.registrationNumber,
+      policyNumber:this.user.policy,
+      vin:this.user.vin,
+      typeofservice:1,
+      }
     const as01 = JSON.stringify(reqpara01);
-    this.http.post('https://plsuat.europassistance.in:444/checkFinalEligibility', as01, this.opt1).subscribe(
-      res => {
-      });
+    this.http.post('https://plsuat.europassistance.in:8000/api/eaiExt/checkFinalEligibility',reqpara01,this.opt1).subscribe(
+        res => {
+          // console.log(res);
+          if (res['message'] === 'policy is not valid'){
+            document.getElementById("eligibiltycheck2_btn").innerHTML = 'Next';
+            this.spinner.hide();
+            this.showToast('Message', 'Policy Message', 'Policy is not valid');
+            this.showstep3 = true;
+            this.ea_respondID = "0";
+          }
+          else if (res['message'] === 'policy is valid'){
+            document.getElementById("eligibiltycheck2_btn").innerHTML = 'Next';
+            this.spinner.hide();
+            this.showToast('Message', 'Policy Message', 'Policy is valid');
+          this.showstep3 = true;
+          var policy_valid = {
+            vin: this.user.vin,
+            policyNumber:this.user.policy,
+            vehicleRegNumber:this.registrationNumber,
+            customerMobileNumber:this.user.mobile1,
+            typeofservice:1
+          }
+          this.ea_respondID = JSON.stringify(policy_valid);
+          // this.ea_respondID = res['responseId'];
+          }
+          else if (res['message'] === 'session not valid'){
+            document.getElementById("eligibiltycheck2_btn").innerHTML = 'Next';
+            this.spinner.hide();
+            this.showToast('Message', 'Policy Message', 'session not valid');
+            this.showstep3 = true;
+            this.ea_respondID = "0";
+          }
+          else if (res['message'] === 'policy got expired'){
+            document.getElementById("eligibiltycheck2_btn").innerHTML = 'Next';
+            this.spinner.hide();
+            this.showToast('Message', 'Policy Message', 'policy got expired');
+            this.showstep3 = true;
+            this.ea_respondID = "0";
+          }
+          else if (res['message'] === 'vehicle not found for the given policy details'){
+            document.getElementById("eligibiltycheck2_btn").innerHTML = 'Next';
+            this.spinner.hide();
+            this.showToast('Message', 'Policy Message', 'vehicle not found for the given policy details');
+            this.showstep3 = true;
+            this.ea_respondID = "0";
+          }
+          else{
+            this.spinner.hide();
+            document.getElementById("eligibiltycheck2_btn").innerHTML = 'Next';
+            this.showstep3 = true;
+            this.ea_respondID = "0";
+          }
+        },(err: HttpErrorResponse) => {
+          if (err.error instanceof Error) {
+            this.spinner.hide();
+            this.ea_respondID = "0";
+          }
+          else {
+            this.spinner.hide();
+            this.ea_respondID = "0";
+          }
+        });
   }
 
   getAllBrands() {
@@ -783,20 +852,23 @@ export class ServicingComponent implements OnInit {
     this.slothour = null;
     // this.showtime = false;
     this.showtime = true;
+    // this.dateString = null;
+      this.slot_time = "0";
+      this.slothour = null;
+      // this.showtime = false;
     if (this.yourBoolean === 'servicing' || this.yourBoolean === 'onlypickup') {
       this.pickup_drop = 0;
     }
     else {
       this.pickup_drop = 1;
     }
-
-    if (this.user.city) {
+   if(this.user.city){
       var cityId = this.user.city;
-      // console.log(cityId);
+      console.log(cityId);
     }
     else {
       cityId = JSON.parse(sessionStorage.getItem('city_id'));
-      // console.log(cityId);
+      console.log(cityId);
     }
     if (Date) {
       const reqpara5 = {
@@ -832,10 +904,10 @@ export class ServicingComponent implements OnInit {
     this.googleMapDropoffFlag = false;
     this.googleMapPickupFlag = false;
     // console.log(this.yourBoolean);
-    if (this.yourBoolean === 'onlypickup') {
-      this.ifSameAsPickUp = false;
-      this.dropOffOnly = false;
-      // console.log('only pickup');
+    if(this.yourBoolean === 'onlypickup'){
+        this.ifSameAsPickUp = false;
+        this.dropOffOnly = false;
+        // console.log('only pickup');
     }
     else if (this.yourBoolean === 'servicing') {
       this.ifSameAsPickUp = false;
@@ -870,12 +942,12 @@ export class ServicingComponent implements OnInit {
     if (this.yourBoolean === 'onlypickup') {
       this.ifSameAsPickUp = false;
       // console.log('only pickup');
-    }
-    else {
-      this.ifSameAsPickUp = false;
-      // console.log('pickup');
-    }
-    this.googleMapDropoffFlag = false;
+  }
+  else{
+    this.ifSameAsPickUp = false;
+    // console.log('pickup');
+  }
+    this.googleMapDropoffFlag  = false;
     this.googleMapPickupFlag = false;
     this.dropOffOnly = true;
     // console.log(this.dropOffOnly);
@@ -952,73 +1024,82 @@ export class ServicingComponent implements OnInit {
     }
   }
 
-  SelectSavedPickupAddress(i, x, ev) {
-    if (ev.target.classList.contains('savedAddBtn'))     {
-            this.removeActiveBorder(ev.target, x);
-            ev.target.classList.add('borderCls');
-        }
-        else if (ev.target.parentElement.classList.contains('savedAddBtn'))     {
-            this.removeActiveBorder(ev.target.parentElement, x);
-            ev.target.parentElement.classList.add('borderCls');
-        }
-        else {
-      //       console.log('Click');
-        }
-    console.log(x);
-        if (x == x) {
-            this.ifClicked = true;
-        }
+  SelectSavedPickupAddress(i,x, ev){
+    if(ev.target.classList.contains('savedAddBtn'))
+    {
+      this.removeActiveBorder(ev.target,x);
+      ev.target.classList.add('borderCls');
+    }
+    else if(ev.target.parentElement.classList.contains('savedAddBtn'))
+    {
+      this.removeActiveBorder(ev.target.parentElement,x);
+      ev.target.parentElement.classList.add('borderCls');
+    }
+    else{
+//       console.log('Click');
+    }
+    // console.log(x);
+    if (x==x) {
+      this.ifClicked = true;
+    }
     this.ifClicked = true;
     this.pickupSelected = true;
     this.googleMapPickupFlag = false;
     this.postaladdresspu = i.postal_address;
     this.googleaddresspu = i.google_address;
-    console.log("postal address", this.postaladdresspu);
     this.pickuplat = i.latitude;
     this.pickuplong = i.longitude;
     this.landmarkpu = i.land_mark;
-    console.log(this.landmarkpu);
     this.addresspuprevious = i.address_id;
     for (var j = 0; j < this.addresstype.length; j++) {
       if (this.addresstype[j].type_of_address === i.type_of_address) {
         this.addresstypepu = this.addresstype[j].id;
-        console.log(this.addresstypepu);
       }
     }
   }
 
-  SelectSavedDropoffAddress(i, x, ev) {
-    if (ev.target.classList.contains('savedAddBtn')) {
-      this.removeActiveBorder(ev.target, x);
-      ev.target.classList.add('borderCls');
-    }
-    else if (ev.target.parentElement.classList.contains('savedAddBtn')) {
-      this.removeActiveBorder(ev.target.parentElement, x);
-      ev.target.parentElement.classList.add('borderCls');
-    }
-    else {
-      // console.log('Dekh kr click kro');
-    }
-    // console.log(x);
-    if (x == x) {
-      this.ifClicked = true;
-    }
-    this.DropoffSelected = true;
-    this.googleMapDropoffFlag = false;
-    this.googleaddressdo = i.google_address;
-    this.postaladdressdo = i.postal_address;
-    // console.log("postal address",this.postaladdressdo);
-    this.droplat = i.latitude;
-    this.droplong = i.longitude;
-    this.landmarkdo = i.land_mark;
-    this.addressdoprevious = i.address_id;
-    for (var k = 0; k < this.addresstype.length; k++) {
-      if (this.addresstype[k].type_of_address === i.type_of_address) {
-        this.addresstypedo = this.addresstype[k].id;
-        // console.log(this.addresstypepu);
-      }
+  showSecondMobile(){
+    this.show1 = true;
+  }
+
+  HideSecondMobile(){
+    this.show1 = false;
+  }
+
+SelectSavedDropoffAddress(i,x, ev){
+  if(ev.target.classList.contains('savedAddBtn'))
+  {
+    this.removeActiveBorder(ev.target,x);
+    ev.target.classList.add('borderCls');
+  }
+  else if(ev.target.parentElement.classList.contains('savedAddBtn'))
+  {
+    this.removeActiveBorder(ev.target.parentElement,x);
+    ev.target.parentElement.classList.add('borderCls');
+  }
+  else{
+    // console.log('Dekh kr click kro');
+  }
+  // console.log(x);
+  if (x==x) {
+    this.ifClicked = true;
+  }
+  this.DropoffSelected = true;
+  this.googleMapDropoffFlag = false;
+  this.googleaddressdo = i.google_address;
+  this.postaladdressdo = i.postal_address;
+  // console.log("postal address",this.postaladdressdo);
+  this.droplat = i.latitude;
+  this.droplong = i.longitude;
+  this.landmarkdo = i.land_mark;
+  this.addressdoprevious = i.address_id;
+  for(var k = 0;k <this.addresstype.length; k++){
+    if(this.addresstype[k].type_of_address === i.type_of_address){
+      this.addresstypedo = this.addresstype[k].id;
+      // console.log(this.addresstypepu);
     }
   }
+}
 
   getinfowithMobile() {
     const reqpara112 = {
@@ -1034,8 +1115,8 @@ export class ServicingComponent implements OnInit {
         this.router.navigate(['/auth/login']);
       }
       else {
-        this.customer = data;
         this.showstep3 = true;
+        this.customer = data;
         if (this.customer[1].custinfo[0].hasOwnProperty('no_records')) {
           this.cust_details.mobile = this.user.mobile1,
             this.showAddress = true;
@@ -1166,8 +1247,8 @@ export class ServicingComponent implements OnInit {
     });
   }
 
-  zoomChanged(ev) {
-    console.log(ev);
+  zoomChanged(ev){
+    // console.log(ev);
   }
 
   checkVehicleNum(ev) {
@@ -1191,7 +1272,17 @@ export class ServicingComponent implements OnInit {
 
   onSubmit(f: NgForm) {
     this.BookingBtn = true;
-    if (sessionStorage.getItem('pickup_add_drag')) {
+    var allow_booking = JSON.parse(sessionStorage.getItem('allow_booking'));
+    if(this.user.city){
+      this.cityID = this.user.city;
+    }
+    else {
+      this.cityID  = JSON.parse(sessionStorage.getItem('city_id'));
+      console.log(this.cityID );
+    }
+    if(allow_booking == '1' || allow_booking == null){
+      console.log("coming in if codition of allow booking");
+    if(sessionStorage.getItem('pickup_add_drag')){
       this.googleaddresspu = sessionStorage.getItem('pickup_add_drag');
       this.googlepickuplat = JSON.parse(sessionStorage.getItem('pickup_lat_drag'));
       this.googlepickuplong = JSON.parse(sessionStorage.getItem('pickup_lng_drag'));
@@ -1202,12 +1293,9 @@ export class ServicingComponent implements OnInit {
       this.googledropofflong = JSON.parse(sessionStorage.getItem('dropoff_lng_drag'));
     }
     this.disabled = true;
-    if (this.showAddressDropDown) {
-      console.log(this.googlemapShow)
-      if (this.googleMapDropoffFlag && this.googleMapPickupFlag) {
-
-        if (this.yourBoolean === "onlypickup") {
-          console.log("bothgoolgemap", this.yourBoolean);
+    if(this.showAddressDropDown){
+      if(this.googleMapDropoffFlag && this.googleMapPickupFlag){
+          if(this.yourBoolean === "onlypickup"){
           this.googleaddressdo = this.googleaddresspu;
           this.landmarkpu = f.value.pickulandmark;
           this.landmarkdo = f.value.pickulandmark;
@@ -1227,8 +1315,7 @@ export class ServicingComponent implements OnInit {
           this.pickuplong = this.pickuplong.substring(0, 14);
 
         }
-        else if (this.yourBoolean === "dropoff") {
-          console.log("bothgoolgemap", this.yourBoolean);
+        else if(this.yourBoolean === "dropoff"){
           this.googleaddresspu = this.googleaddressdo;
           this.landmarkpu = f.value.dropofflandmark;
           this.landmarkdo = f.value.dropofflandmark;
@@ -1247,10 +1334,8 @@ export class ServicingComponent implements OnInit {
           this.pickuplat = this.pickuplat.substring(0, 14);
           this.pickuplong = this.pickuplong.substring(0, 14);
         }
-        else {
-          if (!this.ifSameAsPickUp) {
-            console.log("bothgoolgemap sameas", this.yourBoolean);
-            console.log("pickupmap", this.yourBoolean);
+        else{
+          if(!this.ifSameAsPickUp){
             this.googleaddressdo = this.googleaddresspu;
             this.landmarkpu = f.value.pickulandmark;
             this.landmarkdo = f.value.pickulandmark;
@@ -1269,8 +1354,7 @@ export class ServicingComponent implements OnInit {
             this.pickuplat = this.pickuplat.substring(0, 14);
             this.pickuplong = this.pickuplong.substring(0, 14);
           }
-          else {
-            console.log("bothgoolgemap not", this.yourBoolean);
+          else{
             this.landmarkpu = f.value.pickulandmark;
             this.landmarkdo = f.value.dropofflandmark;
             this.pickuplat = this.googlepickuplat.toString();
@@ -1290,9 +1374,8 @@ export class ServicingComponent implements OnInit {
           }
         }
       }
-      else if (this.googleMapPickupFlag && this.DropoffSelected) {
-        console.log("PMDS", this.yourBoolean);
-        if (this.yourBoolean === "onlypickup") {
+      else if(this.googleMapPickupFlag && this.DropoffSelected){
+        if(this.yourBoolean === "onlypickup"){
           this.googleaddressdo = this.googleaddresspu;
           this.landmarkpu = f.value.pickulandmark;
           this.landmarkdo = f.value.pickulandmark;
@@ -1317,9 +1400,8 @@ export class ServicingComponent implements OnInit {
           this.pickuplat = this.droplat;
           this.pickuplong = this.droplong;
         }
-        else {
-          if (!this.ifSameAsPickUp) {
-            console.log("PMDS", this.yourBoolean);
+        else{
+          if(!this.ifSameAsPickUp){
             this.googleaddressdo = this.googleaddresspu;
             this.landmarkpu = f.value.pickulandmark;
             this.landmarkdo = f.value.pickulandmark;
@@ -1350,17 +1432,14 @@ export class ServicingComponent implements OnInit {
           }
         }
       }
-      else if (this.googleMapDropoffFlag && this.pickupSelected) {
-        console.log("DMPS", this.yourBoolean);
-        if (this.yourBoolean === "onlypickup") {
-          console.log("DMPS", this.yourBoolean);
+      else if(this.googleMapDropoffFlag && this.pickupSelected){
+        if(this.yourBoolean === "onlypickup"){
           this.postaladdressdo = this.postaladdresspu;
           this.droplat = this.pickuplat;
           this.droplong = this.pickuplong;
           this.landmarkdo = this.landmarkpu;
         }
-        else if (this.yourBoolean === "dropoff") {
-          console.log("DMPS", this.yourBoolean);
+        else if(this.yourBoolean === "dropoff"){
           this.googleaddresspu = this.googleaddressdo;
           this.landmarkpu = f.value.dropofflandmark;
           this.landmarkdo = f.value.dropofflandmark;
@@ -1379,9 +1458,8 @@ export class ServicingComponent implements OnInit {
           this.pickuplat = this.pickuplat.substring(0, 14);
           this.pickuplong = this.pickuplong.substring(0, 14);
         }
-        else {
-          if (!this.ifSameAsPickUp) {
-            console.log("DMPS", this.yourBoolean);
+        else{
+          if(!this.ifSameAsPickUp){
             this.postaladdressdo = this.postaladdresspu;
             this.droplat = this.pickuplat;
             this.droplong = this.pickuplong;
@@ -1399,9 +1477,8 @@ export class ServicingComponent implements OnInit {
           }
         }
       }
-      else if (this.googleMapPickupFlag) {
-        if (this.yourBoolean === "onlypickup") {
-          console.log("pickupmap", this.yourBoolean);
+      else if(this.googleMapPickupFlag){
+        if(this.yourBoolean === "onlypickup"){
           this.googleaddressdo = this.googleaddresspu;
           this.landmarkpu = f.value.pickulandmark;
           this.landmarkdo = f.value.pickulandmark;
@@ -1420,8 +1497,7 @@ export class ServicingComponent implements OnInit {
           this.pickuplat = this.pickuplat.substring(0, 14);
           this.pickuplong = this.pickuplong.substring(0, 14);
         }
-        else if (this.yourBoolean === "dropoff") {
-          console.log("pickupmap", this.yourBoolean);
+        else if(this.yourBoolean === "dropoff"){
           this.googleaddresspu = this.googleaddressdo;
           this.landmarkpu = f.value.dropofflandmark;
           this.landmarkdo = f.value.dropofflandmark;
@@ -1440,9 +1516,8 @@ export class ServicingComponent implements OnInit {
           this.pickuplat = this.pickuplat.substring(0, 14);
           this.pickuplong = this.pickuplong.substring(0, 14);
         }
-        else {
-          if (!this.ifSameAsPickUp) {
-            console.log("pickupmap", this.yourBoolean);
+        else{
+          if(!this.ifSameAsPickUp){
             this.googleaddressdo = this.googleaddresspu;
             this.landmarkpu = f.value.pickulandmark;
             this.landmarkdo = f.value.pickulandmark;
@@ -1481,10 +1556,9 @@ export class ServicingComponent implements OnInit {
             this.pickuplong = this.pickuplong.substring(0, 14);
           }
         }
-      }
-      else if (this.googleMapDropoffFlag) {
-        if (this.yourBoolean === "onlypickup") {
-          console.log("dropmap", this.yourBoolean);
+        }
+      else if(this.googleMapDropoffFlag){
+        if(this.yourBoolean === "onlypickup"){
           this.googleaddressdo = this.googleaddresspu;
           this.landmarkpu = f.value.pickulandmark;
           this.landmarkdo = f.value.pickulandmark;
@@ -1503,8 +1577,7 @@ export class ServicingComponent implements OnInit {
           this.pickuplat = this.pickuplat.substring(0, 14);
           this.pickuplong = this.pickuplong.substring(0, 14);
         }
-        else if (this.yourBoolean === "dropoff") {
-          console.log("dropmap", this.yourBoolean);
+        else if(this.yourBoolean === "dropoff"){
           this.googleaddresspu = this.googleaddressdo;
           this.landmarkpu = f.value.dropofflandmark;
           this.landmarkdo = f.value.dropofflandmark;
@@ -1523,9 +1596,8 @@ export class ServicingComponent implements OnInit {
           this.pickuplat = this.pickuplat.substring(0, 14);
           this.pickuplong = this.pickuplong.substring(0, 14);
         }
-        else {
-          if (!this.ifSameAsPickUp) {
-            console.log("pickupmap", this.yourBoolean);
+        else{
+          if(!this.ifSameAsPickUp){
             this.googleaddressdo = this.googleaddresspu;
             this.landmarkpu = f.value.pickulandmark;
             this.landmarkdo = f.value.pickulandmark;
@@ -1590,13 +1662,13 @@ export class ServicingComponent implements OnInit {
           }
         }
       }
-    }
-    else {
-      console.log("new number");
-      console.log("dropoffflaf", this.googleMapDropoffFlag);
-      console.log("pickupflag", this.googleMapPickupFlag)
-      if (this.yourBoolean === "onlypickup") {
-        console.log("new number only pickup");
+     }
+     else{
+      //  console.log("new number");
+      //  console.log("dropoffflaf",this.googleMapDropoffFlag);
+      //  console.log("pickupflag",this.googleMapPickupFlag);
+       if(this.yourBoolean === "onlypickup"){
+        //  console.log("new number only pickup");
         this.googleaddressdo = this.googleaddresspu;
         this.landmarkpu = f.value.pickupsearchplaceLandmark;
         this.landmarkdo = f.value.pickupsearchplaceLandmark;
@@ -1615,8 +1687,8 @@ export class ServicingComponent implements OnInit {
         this.pickuplat = this.pickuplat.substring(0, 14);
         this.pickuplong = this.pickuplong.substring(0, 14);
       }
-      else if (this.yourBoolean === "dropoff") {
-        console.log("new number only dropoff");
+      else if(this.yourBoolean === "dropoff"){
+        // console.log("new number only dropoff");
         this.googleaddresspu = this.googleaddressdo;
         this.landmarkpu = f.value.dropofflandmark;
         this.landmarkdo = f.value.dropofflandmark;
@@ -1635,9 +1707,9 @@ export class ServicingComponent implements OnInit {
         this.pickuplat = this.pickuplat.substring(0, 14);
         this.pickuplong = this.pickuplong.substring(0, 14);
       }
-      else {
-        if (!this.ifSameAsPickUp) {
-          console.log("new number same as");
+      else{
+        if(!this.ifSameAsPickUp){
+          // console.log("new number same as");
           this.googleaddressdo = this.googleaddresspu;
           this.landmarkpu = f.value.pickupsearchplaceLandmark;
           this.landmarkdo = f.value.pickupsearchplaceLandmark;
@@ -1735,7 +1807,7 @@ export class ServicingComponent implements OnInit {
     else {
       this.advisorId = "0";
     }
-    if (this.selectedItems === null) {
+    if (this.selectedItems.length === 0) {
       this.complaint_id = ["0"];
     }
     else if (this.selectedItems.length > 0) {
@@ -1743,144 +1815,142 @@ export class ServicingComponent implements OnInit {
         this.complaint_id.push(this.selectedItems[i].id);
       }
     }
-    else {
-      this.complaint_id = ["0"];
-    }
-    if (this.user.city) {
-      this.cityID = this.user.city;
-    }
-    else {
-      this.cityID = JSON.parse(sessionStorage.getItem('city_id'));
-    }
-
-    if (this.slot_time != "0") {
-      if (this.postaladdresspu || this.landmarkpu) {
-        // console.log("Pickup is selected");
+    if(this.slot_time != "0"){
+      if(this.postaladdresspu || this.landmarkpu){
       }
       else {
-        this.showToast('alert', 'Message', 'Please select Pickup Address');
+        this.showToast('alert', 'Message', 'Please select Pickup');
         this.BookingBtn = false;
       }
-      if (this.ifSameAsPickUp) {
-        // console.log("not same as selected");
-        if (this.postaladdressdo || this.landmarkdo) {
-          // console.log("Drop off is selected");
+      if(this.ifSameAsPickUp){
+        if(this.postaladdressdo || this.landmarkdo){
         }
         else {
-          this.showToast('alert', 'Message', 'Please select Drop off Address');
+          this.showToast('alert', 'Message', 'Please select Drop off');
           this.BookingBtn = false;
         }
       }
-
-      const reqpara6 = {
-        requesttype: "createbookingv5",
-        vehnumber: this.registrationNumber,
-        city: this.cityID,
-        vehbrand: this.selectedBrand,
-        carmodelid: f.value.model,
-        carsubmodelid: f.value.variant,
-        customername: f.value.salutation1 + '.' + this.titlecasePipe.transform(f.value.Cus_name),
-        customermobile1: f.value.mobile1,
-        customermobile2: this.mobile2,
-        customeremail: f.value.email,
-        queuetime: this.dateString + ' ' + this.slot_time,
-        addresspuprevious: this.addresspuprevious,
-        googleaddresspu: this.googleaddresspu,
-        postaladdresspu: this.postaladdresspu,
-        landmarkpu: this.landmarkpu,
-        addresstypepu: this.addresstypepu,
-        pickuplat: this.pickuplat,
-        pickuplong: this.pickuplong,
-        addressdoprevious: this.addressdoprevious,
-        googleaddressdo: this.googleaddressdo,
-        postaladdressdo: this.postaladdressdo,
-        landmarkdo: this.landmarkdo,
-        addresstypedo: this.addresstypedo,
-        droplat: this.droplat,
-        droplong: this.droplong,
-        servicetype: this.pickup_drop,
-        advisorid: this.advisorId,
-        creid: f.value.creName,
-        assignambassador: this.amb,
-        selectedsvcid: this.svcid,
-        cfeeclient: this.amt,
-        notes: this.notes,
-        isconfirmed: "1",
-        eavalidcode: this.ea_respondID,
-        complaint: this.complaint_id
-      };
-      const ua = JSON.stringify(reqpara6);
-      this.ServicingService.webServiceCall(ua).subscribe(data => {
-        if (data[0].login === 0) {
-          sessionStorage.removeItem('currentUser');
-          this.router.navigate(['/auth/login']);
-
-        } else if (data[0].hasOwnProperty('queue')) {
-          this.BookingBtn = false;
-          this.message = data[0].queue,
-            this.disabled = false;
-          this.showLargeModal(this.message[0], this.notes);
-          this.slot_time = "0";
-          this.show1 = false;
-          this.show2 = false;
-          this.show3 = false;
-          this.showstep2 = false;
-          this.showstep3 = false;
-          this.showAddressDropDown = false;
-          this.showAddress = false;
-          this.pickup_drop = 0;
-          this.counter = 0;
-          this.slot = [];
-          this.sameasvalue = true;
-          f.reset();
-          this.countrycode1 = '+' + sessionStorage.getItem('loginCountryCodeFlag');;
-          this.dateString = null;
-          this.mobileLength = true;
-          this.yourBoolean = 'servicing';
-          this.user.salutation = 'Mr';
-          this.user.confirm = true;
-          this.editAddress = false;
-          this.complaint_id = [];
-          this.datecheck = false;
-          this.showtime = false;
-          this.disableNext = false;
-          this.user.mobile1 = null;
-          this.ifSameAsPickUp = false;
-          this.googlemapShow = false;
-          this.googleMapDropoffFlag = false;
-          this.googleMapPickupFlag = false;
-          console.log()
-          this.dropOffOnly = false;
-          this.googleaddresspu = null;
-          this.googleaddressdo = null;
-          sessionStorage.removeItem('pickup_add_drag');
-          sessionStorage.removeItem('pickup_lat_drag');
-          sessionStorage.removeItem('pickup_lng_drag');
-          sessionStorage.removeItem('dropoff_add_drag');
-          sessionStorage.removeItem('dropoff_lat_drag');
-          sessionStorage.removeItem('dropoff_lng_drag');
-          (<HTMLInputElement>document.getElementById('mobile1')).disabled = false;
-          (<HTMLInputElement>document.getElementById('num')).disabled = false;
-          document.getElementById("num_label").classList.remove("disabled_label");
-          document.getElementById("num_label").style.opacity = "0.5";
-          document.getElementById("mobile_label").classList.remove("disabled_label");
-          document.getElementById("mobile_label").style.opacity = "0.5";
-        }
-        else if (data[0].hasOwnProperty('error')) {
-          this.showToast('alert', 'Alert', 'Sorry !! Something went wrong');
-          this.BookingBtn = false;
-        }
-      }),
-        (err: HttpErrorResponse) => {
-          if (err.error instanceof Error) { }
-          else { }
-        }
-
-    }
-    else {
-      this.showToast('alert', 'Message', 'Please select Slot and date');
-      this.BookingBtn = false;
-    }
+    const reqpara6 = {
+      requesttype: "createbookingv5",
+      vehnumber: this.registrationNumber,
+      city: this.cityID,
+      vehbrand: this.selectedBrand,
+      carmodelid: f.value.model,
+      carsubmodelid: f.value.variant,
+      customername: f.value.salutation1 +'.'+this.titlecasePipe.transform(f.value.Cus_name),
+      customermobile1: f.value.mobile1,
+      customermobile2: this.mobile2,
+      customeremail: f.value.email,
+      queuetime: this.dateString + ' ' + this.slot_time,
+      addresspuprevious:this.addresspuprevious,
+      googleaddresspu: this.googleaddresspu,
+      postaladdresspu: this.postaladdresspu,
+      landmarkpu: this.landmarkpu,
+      addresstypepu: this.addresstypepu,
+      pickuplat: this.pickuplat,
+      pickuplong: this.pickuplong,
+      addressdoprevious:this.addressdoprevious,
+      googleaddressdo: this.googleaddressdo,
+      postaladdressdo: this.postaladdressdo,
+      landmarkdo: this.landmarkdo,
+      addresstypedo:this.addresstypedo,
+      droplat: this.droplat,
+      droplong: this.droplong,
+      servicetype:this.pickup_drop,
+      advisorid:this.advisorId,
+      creid:f.value.creName,
+      assignambassador:this.amb,
+      selectedsvcid:this.svcid,
+      cfeeclient:this.amt,
+      notes:this.notes,
+      isconfirmed:"1",
+      eavalidcode:this.ea_respondID,
+      complaint:this.complaint_id
+     };
+     const ua = JSON.stringify(reqpara6);
+    this.ServicingService.webServiceCall(ua).subscribe(data => {
+      if (data[0].login === 0) {
+        sessionStorage.removeItem('currentUser');
+        this.router.navigate(['/auth/login']);
+      } else if(data[0].hasOwnProperty('queue')) {
+        this.BookingBtn = false;
+        this.message = data[0].queue,
+        console.log(this.message[0].allow_booking,this.message[0].prepaid_credits);
+        sessionStorage.setItem('allow_booking',this.message[0].allow_booking);
+        sessionStorage.setItem('credit',this.message[0].prepaid_credits)
+          this.disabled = false;
+          this.eligibiltycheck_final = false;
+          if(this.message[0].prepaid_credits <= "10000"){
+            this.ServicingService.sendMessage(this.message[0].prepaid_credits,"1");
+          }
+          else{
+            this.ServicingService.sendMessage(this.message[0].prepaid_credits,"0");
+          }
+        this.showLargeModal(this.message[0], this.notes);
+        this.slot_time = "0";
+        this.show1 = false;
+        this.show2 = false;
+        this.show3 = false;
+        this.showstep2 = false;
+        this.showstep3 = false;
+        this.showAddressDropDown = false;
+        this.showAddress = false;
+        this.pickup_drop = 0;
+        this.counter = 0;
+        this.slot = [];
+        this.sameasvalue = true;
+        f.reset();
+        this.countrycode1 = "+91";
+        this.dateString = null;
+        this.mobileLength = true;
+        this.yourBoolean = 'servicing';
+        this.user.salutation = 'Mr';
+        this.user.confirm = true;
+        this.editAddress = false;
+        this.complaint_id = [];
+        this.datecheck = false;
+        this.showtime = false;
+        this.disableNext = false;
+        this.user.mobile1 = null;
+        this.ifSameAsPickUp = false;
+        this.googlemapShow = false;
+        this.googleMapDropoffFlag = false;
+        this.googleMapPickupFlag = false;
+        this.dropOffOnly = false;
+        this.googleaddresspu = null;
+        this.googleaddressdo = null;
+        sessionStorage.removeItem('pickup_add_drag');
+        sessionStorage.removeItem('pickup_lat_drag');
+        sessionStorage.removeItem('pickup_lng_drag');
+        sessionStorage.removeItem('dropoff_add_drag');
+        sessionStorage.removeItem('dropoff_lat_drag');
+        sessionStorage.removeItem('dropoff_lng_drag');
+        (<HTMLInputElement>document.getElementById('mobile1')).disabled = false;
+        (<HTMLInputElement>document.getElementById('num')).disabled = false;   
+         document.getElementById("num_label").classList.remove("disabled_label");
+         document.getElementById("num_label").style.opacity = "0.5";
+         document.getElementById("mobile_label").classList.remove("disabled_label");
+         document.getElementById("mobile_label").style.opacity = "0.5";
+      }
+      else if(data[0].hasOwnProperty('error')){
+        this.showToast('alert', 'Alert', 'Sorry !! Something went wrong');
+        this.BookingBtn = false;
+      }
+    }),
+      (err: HttpErrorResponse) => {
+        if (err.error instanceof Error) {}
+        else {}
+      }
+  }
+  else {
+    this.showToast('alert', 'Message', 'Please select Slot and date');
+    this.BookingBtn = false;
+  }
+}
+  else{
+    this.showToast('alert', 'Message', 'Credit Balance is low !!');
+    this.BookingBtn = false;
+  }
   }
 
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {Router} from '@angular/router';
-import {ServicingService } from '../services/addServicing.service';
+import { Router } from '@angular/router';
+import { ServicingService } from '../services/addServicing.service';
+import { DataService } from '../services/data.service';
 import { DatePipe } from '@angular/common';
 import { NbThemeService } from '@nebular/theme';
 import { NgbModal} from '@ng-bootstrap/ng-bootstrap';
@@ -50,12 +51,19 @@ export class DashboardComponent implements OnInit{
   GroupAdmin:string;
   ShowAgreement:string;
   themeSubscription: any;
+  prepaid_amount:string;
+  show_add_credit:string;
   colorScheme = {
     domain: ['#ffa239', '#c8e6c9', '#81c784', '#4caf50','#ffe789']
   };
 
  
   ngOnInit() {
+    setInterval(() => {
+      console.log("10 min timer");
+     this.prepaid_credit_updation();
+     }, 600000);
+     this.GetDashboardData();
     this.ShowAgreement = JSON.parse(sessionStorage.getItem('terms'));
     this.SvcAdmin = JSON.parse(sessionStorage.getItem('svcadmin'));
     this.GroupAdmin = JSON.parse(sessionStorage.getItem('groupadmin'));
@@ -116,6 +124,7 @@ export class DashboardComponent implements OnInit{
 
   constructor(private datePipe: DatePipe,
     private router:Router,
+    private DataService:DataService,
     private service:ServicingService,
     private modalService: NgbModal,
     private theme: NbThemeService){
@@ -171,9 +180,7 @@ export class DashboardComponent implements OnInit{
              this.router.navigate(['/auth/login']);
            }
            else{
-             console.log(res[0].cards.length)
              if(res[0].cards.length > 0){
-               console.log(res[0].cards[0]>0)
                 this.Cards=res[0].cards[0];
                 this.Rating = JSON.parse(this.Cards.cust_rating);
               }
@@ -201,9 +208,15 @@ export class DashboardComponent implements OnInit{
               this.ShowDropoffPie = false;
              }
              this.Notification=res[3].notification[0];
+             this.prepaid_amount = res[4].prepaid[0].pre_paid;
+            //  console.log(this.prepaid_amount,"credit amount");
+              this.service.sendMessage(this.prepaid_amount,this.show_add_credit);
+              // this.service.sendMessage('8999');
            }
         });
    }
+
+
 
    //Open Modal For Service centre selection
    GetSvcList() {
@@ -280,7 +293,28 @@ GetSlotPerformanceDrop(){
            }
         });
       }
+
+      prepaid_credit_updation(){
+        const reqpara1 ={
+          requesttype: "prepaid_balance",
+          svcid: this.SvcId
+        }
+      const as1 = JSON.stringify(reqpara1)
+      this.service.webServiceCall(as1).subscribe
+        (res => {
+          if (res[0].login === 0) {
+            sessionStorage.removeItem('currentUser');
+            this.router.navigate(['/auth/login']);
+          }
+          else {
+            var credit = res[0].balance[0].prepaid_balance;
+            var show_credit_btn = res[0].balance[0].show_add_credit;
+            // console.log(show_credit_btn);
+            sessionStorage.setItem('credit',credit);
+            this.DataService.sendMessage(credit,show_credit_btn);
+          }
+        });
 }
 
-
+}
 

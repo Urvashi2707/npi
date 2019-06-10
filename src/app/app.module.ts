@@ -27,6 +27,8 @@ import {TrendsComponent} from './trends/trends/trends.component';
 import {NavbarComponent} from './trends/navbar/navbar.component';
 import { TestserviceService } from './testservice.service';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { DataService } from '../app/pages/services/data.service';
+import { DatePipe } from '@angular/common';
 
 
 
@@ -114,7 +116,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
   bootstrap: [AppComponent],
 
   providers: [
-    { provide: APP_BASE_HREF, useValue: '/' }, ServerService,CookieService, TestserviceService,ServicingService
+    { provide: APP_BASE_HREF, useValue: '/' }, ServerService,CookieService, TestserviceService,ServicingService,DataService,DatePipe
   ]
 })
 export class AppModule {
