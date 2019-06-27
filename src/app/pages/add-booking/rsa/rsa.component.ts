@@ -892,13 +892,13 @@ export class RsaComponent implements OnInit {
   onSubmit(f: NgForm) {
     this.BookingBtn = true;
     this.registrationNumber = f.value.num.toUpperCase();
-    // console.log(f.value.svclist);
+    console.log(f.value);
     var allow_booking = JSON.parse(sessionStorage.getItem('allow_booking'));
     console.log(allow_booking);
     if(allow_booking == '1' || allow_booking == null){
-    if(f.value.svclist){
-      this.selectedBrand = f.value.svclist;
-    }
+    // if(f.value.svclist){
+    //   this.svc = f.value.svclist;
+    // }
     if (f.value.mobile2) {
       this.mobile2 = f.value.mobile2;
     }
@@ -961,11 +961,23 @@ export class RsaComponent implements OnInit {
     else {
       this.amt = "0";
     }
+    if(this.insuranceFlag){
+      if(f.value.svc1){
+        this.scv = this.user.svc1;
+        console.log("coming here svc1",this.scv);
+      }
+      else if(f.value.svclist){
+        this.scv = f.value.svclist;
+        console.log("coming here svclist",this.scv);
+      }
+      else{
+        this.scv = this.svcid;
+        console.log("else")
+      }
+    }
     if(f.value.svc1){
       this.scv = this.user.svc1;
-    }
-    else{
-      this.scv = this.svcid;
+      console.log("coming here svc1",this.scv);
     }
     if(f.value.serviceType){
       this.servicetypeid = f.value.serviceType;

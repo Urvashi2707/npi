@@ -31,6 +31,9 @@ export class AddEmployee implements OnInit {
       this.svcid = sessionStorage.getItem('selectedsvc');
       // console.log(this.svcid);
     }
+    else{
+      this.svcid = JSON.parse(sessionStorage.getItem('globalsvcid'));
+    }
     if(sessionStorage.getItem('loginCountryFlag') === '2') {
       this.maxLen = '8';
       console.log("this.maxLen ", this.maxLen);
@@ -40,7 +43,7 @@ export class AddEmployee implements OnInit {
       console.log("this.maxLen ", this.maxLen);
     }
     else{
-      this.svcid = JSON.parse(sessionStorage.getItem('globalsvcid'));
+      // this.svcid = JSON.parse(sessionStorage.getItem('globalsvcid'));
       // console.log(this.svcid);
 
     }

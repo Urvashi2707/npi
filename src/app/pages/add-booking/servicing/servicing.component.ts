@@ -1751,7 +1751,7 @@ SelectSavedDropoffAddress(i,x, ev){
     }
 
     if (f.value.svclist) {
-      this.selectedBrand = f.value.svclist;
+      this.svcid = f.value.svclist;
     }
     this.registrationNumber = f.value.num.toUpperCase();
     if (f.value.confirm) {
@@ -1807,13 +1807,18 @@ SelectSavedDropoffAddress(i,x, ev){
     else {
       this.advisorId = "0";
     }
-    if (this.selectedItems.length === 0) {
-      this.complaint_id = ["0"];
-    }
-    else if (this.selectedItems.length > 0) {
-      for (var i = 0; i < this.selectedItems.length; i++) {
-        this.complaint_id.push(this.selectedItems[i].id);
+    if(this.selectedItems != null){
+      if (this.selectedItems.length === 0)  {
+        this.complaint_id = ["0"];
       }
+      else if (this.selectedItems.length > 0) {
+        for (var i = 0; i < this.selectedItems.length; i++) {
+          this.complaint_id.push(this.selectedItems[i].id);
+        }
+      }
+    }
+    else{
+      this.complaint_id = ["0"];
     }
     if(this.slot_time != "0"){
       if(this.postaladdresspu || this.landmarkpu){

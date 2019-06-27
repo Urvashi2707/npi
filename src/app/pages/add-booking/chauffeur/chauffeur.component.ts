@@ -199,6 +199,10 @@ export class ChauffeurComponent implements OnInit {
     if(sessionStorage.getItem('selectedsvc')){
       this.svcid = sessionStorage.getItem('selectedsvc');
     }
+    else{
+      // this.insuranceFlag = false;
+      this.svcid = JSON.parse(sessionStorage.getItem('globalsvcid'));
+    }
     if(sessionStorage.getItem('loginCountryCodeFlag') === '65') {
       this.checkCountry = true;
     }
@@ -211,8 +215,8 @@ export class ChauffeurComponent implements OnInit {
       console.log("this.maxLen ", this.maxLen);
     }
     else{
-      this.insuranceFlag = false;
-      this.svcid = JSON.parse(sessionStorage.getItem('globalsvcid'));
+      // this.insuranceFlag = false;
+      // this.svcid = JSON.parse(sessionStorage.getItem('globalsvcid'));
     }
     // else{
     // }
@@ -1094,6 +1098,9 @@ customerCheck(){
     }
     else{
       this.cityid = 0
+    }
+    if (f.value.svclist) {
+      this.svcid = f.value.svclist;
     }
     if(this.user.time){
       this.slot_time = this.user.time + ':00'
