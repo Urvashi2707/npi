@@ -415,7 +415,7 @@
                   </div>
                 </div>
               <span class="sectionHeader">Slot Details</span>
-              <div class="row" *ngIf="insuranceFlag">
+              <!-- <div class="row" *ngIf="insuranceFlag">
                 <div class="col-md-6 col-lg-6 col-sm-6">
                   <div class="form-group">
                     <select name="city" id="city" class="form-control" [(ngModel)]="user.city" required #city="ngModel"
@@ -432,14 +432,12 @@
                   <div class="form-group">
                     <select id="svclist" class="form-control" name="svclist" [(ngModel)]="user.svc" #svclist="ngModel"
                       required>
-                      <!-- <optgroup label="{{i.associated}}" *ngFor="let i of svcList;let j = index;"> -->
                         <option *ngFor="let i of svcList;let j = index;" [value]="i.id">{{i.name}}</option>
-                      <!-- </optgroup> -->
                     </select>
                     <label class="form-control-placeholder" for="svclist">Service Centre List*</label>
                   </div>
                 </div>
-              </div>
+              </div> -->
               <div class="row" style="margin-bottom: 2%;">
                 <div class="col-md-6 col-lg-6 col-sm-6">
                   <div class="form-group">

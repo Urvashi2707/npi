@@ -140,13 +140,23 @@ export class SearchModalComponent implements OnInit {
     this.modalContent.queue_time = null;
     this.queuetime = null;
     console.log(this.modalContent.queue_time);
+     var cityId = JSON.parse(sessionStorage.getItem('city_id'));
+      console.log(cityId);
+
       if(Date){
-      const reqpara5 = {
-        requesttype: 'getslotsv2',
-        reqdate:Date,
-        pickup_drop:1,
-        type_service:1,
-        svcid:this.globalsvcid
+      // const reqpara5 = {
+      //   requesttype: 'getslotsv2',
+      //   reqdate:Date,
+      //   pickup_drop:1,
+      //   type_service:1,
+      //   svcid:this.globalsvcid
+      //   }
+        const reqpara5 = {
+          requesttype: 'getslotsv2city',
+          reqdate: Date,
+          pickup_drop:1,
+          type_service:1,
+          cityid: cityId
         }
     const as5 = JSON.stringify(reqpara5)
     this.ServicingService.webServiceCall(as5).subscribe(res => { 
