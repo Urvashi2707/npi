@@ -399,8 +399,11 @@ export class QueueDetailsComponent implements OnInit {
           if (this.pickupInfo[0].on_time) {
             if (this.pickupInfo[0].on_time == '0') {
               this.pickOnTimeImage = this.failimg;
-            } else {
+            } else if(this.pickupInfo[0].on_time == '1'){
               this.pickOnTimeImage = this.successImg;
+            }
+            else{
+              this.pickOnTimeImage = null;
             }
           }
         }
@@ -453,8 +456,11 @@ export class QueueDetailsComponent implements OnInit {
               if (this.dropInfo[0].on_time == '0') {
                 this.dropOffOnTimeImage = this.failimg;
               }
-              else {
+              else if(this.dropInfo[0].on_time == '1'){
                 this.dropOffOnTimeImage = this.successImg;
+              }
+              else{
+                this.dropOffOnTimeImage = null;
               }
             }
           }

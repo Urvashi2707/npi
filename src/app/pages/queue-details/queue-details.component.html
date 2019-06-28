@@ -140,7 +140,7 @@
                                                     <input type="text" class="form-control" formControlName="ambName" placeholder="Ambassador Name"> -->
                         </div>
 
-                        <div class="finput-group input-group-fill-only">
+                        <div class="finput-group input-group-fill-only" *ngIf = "pickOnTimeImage">
                           <div class="row">
                             <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
                               <label class="labels" for="exampleInputPassword1">On Time</label>
@@ -271,7 +271,7 @@
                                                     <input type="texxt" class="form-control" fromControlName="dropAmbName" id="dropAmbName" placeholder="Ambassador Name"> -->
                         </div>
 
-                        <div class="finput-group input-group-fill-only">
+                        <div class="finput-group input-group-fill-only" *ngIf = "dropOffOnTimeImage">
                           <div class="row">
                             <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
                               <label class="labels" for="exampleInputPassword1">On Time</label>
