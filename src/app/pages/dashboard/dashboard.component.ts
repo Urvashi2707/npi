@@ -64,7 +64,6 @@ export class DashboardComponent implements OnInit{
       console.log("10 min timer");
      this.prepaid_credit_updation();
      }, 600000);
-     this.GetDashboardData();
     this.ShowAgreement = JSON.parse(sessionStorage.getItem('terms'));
     this.SvcAdmin = JSON.parse(sessionStorage.getItem('svcadmin'));
     this.GroupAdmin = JSON.parse(sessionStorage.getItem('groupadmin'));
@@ -85,6 +84,7 @@ export class DashboardComponent implements OnInit{
     else{
       this.SvcId = JSON.parse(sessionStorage.getItem('globalsvcid'));
     }
+    this.SvcId = JSON.parse(sessionStorage.getItem('globalsvcid'));
     if(sessionStorage.getItem('changedsvc')){
         this.VisibleHeader = true;
         this.ChangedSvc = sessionStorage.getItem('changedsvc');
@@ -170,6 +170,7 @@ export class DashboardComponent implements OnInit{
 
   //GetDashBoardData
   GetDashboardData(){
+    console.log("sjhgdfsdjhf-----------------------")
     const DashReq = {
            requesttype: 'dashboard',
            svcid:this.SvcId
