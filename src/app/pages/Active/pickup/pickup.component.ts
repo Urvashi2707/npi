@@ -192,6 +192,7 @@ img(event){
        }
        else{
         this.pickup = res[1].activepickup;
+        console.log(this.pickup)
         this.RecordCount = res[0].pagecount[0].record_count;
         this.DataPerPage = res[0].pagecount[0].pagelimit;
         this.spinner.hide();

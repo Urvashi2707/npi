@@ -94,7 +94,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let item of tableData  | orderBy: key : reverse |  filter:SearchData  | paginate: { id: 'server', itemsPerPage:DataPerPage, currentPage: page + 1, totalItems: RecordCount }; let j = index"
+          <tr *ngFor="let item of pickup  | orderBy: key : reverse |  filter:SearchData  | paginate: { id: 'server', itemsPerPage:DataPerPage, currentPage: page + 1, totalItems: RecordCount }; let j = index"
             (click)="openQDetails(i.queueid)">
             <td>{{item.queueid}}</td>
             <td>
