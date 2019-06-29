@@ -21,7 +21,7 @@ export class ServicingService {
   constructor(private http: HttpClient,private router: Router) {}
 
    //Easy Auto
-  private getSession_url :string = 'https://plsuat.europassistance.in:8000/api/eaiExt/getsession';
+  private getSession_url :string = 'https://plsuat.europassistance.in/api/eaiExt/getsession';
   private Ea_check1_url:string = 'http://plsuat.europassistance.in:444/checkInitialEligibility';
   private Ea_check2_url:string = 'http://plsuat.europassistance.in:444/checkFinalEligibility';
   public destroySession_url = 'http://plsuat.europassistance.in:444/destroysession';

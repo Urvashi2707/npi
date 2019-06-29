@@ -543,83 +543,85 @@ export class ServicingComponent implements OnInit {
   }
 
   eligibiltycheck1(){
-    this.getinfowithMobile();
     this.ea_respondID = "0";
-    this.getCity();
-    // this.spinner.show();
-  //   this.mobileLength = true;
-  //   document.getElementById("eligibiltycheck1_btn").innerHTML = 'Processing..';
-  //   (<HTMLInputElement>document.getElementById('mobile1')).disabled = true;
-  //   (<HTMLInputElement>document.getElementById('num')).disabled = true;
-  //   document.getElementById("num_label").classList.add("disabled_label");
-  //   document.getElementById("num_label").style.opacity = "1";
-  //   document.getElementById("mobile_label").classList.add("disabled_label");
-  //   document.getElementById("mobile_label").style.opacity = "1";
-  //  const reqpara0 = {
-  //     customerMobileNumber:this.user.mobile1,
-  //     vehicleRegNumber:this.registrationNumber,
-  //     typeofservice:1
-  //   }
-  //   const as0 = JSON.stringify(reqpara0);
-  //   this.http.post('https://plsuat.europassistance.in:8000/api/eaiExt/checkInitialEligibility',reqpara0,this.opt1).subscribe(
-  //     res => {
-  //       if (res['message'] === 'policy is not valid'){
-  //         document.getElementById("eligibiltycheck1_btn").innerHTML = 'Next';
-  //         this.spinner.hide();
-  //         this.getinfowithMobile();
-  //         this.disableNext = true;
-  //         this.mobileLength = true;
-  //         this.showToast('Message', 'Policy Message', 'Policy is not valid');
-  //         this.showstep3 = true;
-  //         this.ea_respondID = "0";
-  //       }
-  //       else if (res['message'] === 'policy is valid'){
-  //         document.getElementById("eligibiltycheck1_btn").innerHTML = 'Next';
-  //         this.spinner.hide();
-  //         this.getinfowithMobile();
-  //         this.disableNext = true;
-  //         this.mobileLength = true;
-  //         this.showToast('Message', 'Policy Message', 'Policy is valid');
-  //       this.showstep2 = true;
-  //       this.showstep3 = false;
-  //       this.ea_respondID = "0";
-  //       }
-  //       else if (res['message'] === 'session not valid'){
-  //         document.getElementById("eligibiltycheck1_btn").innerHTML = 'Next';
-  //         this.spinner.hide();
-  //         this.getinfowithMobile();
-  //         this.disableNext = true;
-  //         this.mobileLength = true;
-  //         this.showToast('Message', 'Policy Message', 'session not valid');
-  //         this.showstep3 = true;
-  //         this.ea_respondID = "0";
-  //       }
-  //       else{
-  //         this.spinner.hide();
-  //         document.getElementById("eligibiltycheck1_btn").innerHTML = 'Next';
-  //         this.getinfowithMobile();
-  //         this.showstep3 = true;
-  //         this.disableNext = true;
-  //         this.mobileLength = true;
-  //         this.ea_respondID = "0";
-  //       }
-  //     },(err: HttpErrorResponse) => {
-  //       if (err.error instanceof Error) {
-  //         this.spinner.hide();
-  //         this.getinfowithMobile();
-  //         this.disableNext = true;
-  //         this.mobileLength = true;
-  //         this.ea_respondID = "0";
-  //       }
-  //       else {
-  //         this.spinner.hide();
-  //         this.getinfowithMobile();
-  //         this.disableNext = true;
-  //         this.mobileLength = true;
-  //         this.ea_respondID = "0";
-  //       }
-  //     });
-  //     this.getCity();
+    this.spinner.show();
+    this.mobileLength = true;
+    console.log("hitting the api eligibiltycheck1------------------------")
+    document.getElementById("eligibiltycheck1_btn").innerHTML = 'Processing..';
+    (<HTMLInputElement>document.getElementById('mobile1')).disabled = true;
+    (<HTMLInputElement>document.getElementById('num')).disabled = true;
+    document.getElementById("num_label").classList.add("disabled_label");
+    document.getElementById("num_label").style.opacity = "1";
+    document.getElementById("mobile_label").classList.add("disabled_label");
+    document.getElementById("mobile_label").style.opacity = "1";
+   const reqpara0 = {
+      customerMobileNumber:this.user.mobile1,
+      vehicleRegNumber:this.registrationNumber,
+      typeofservice:1
+    }
+    const as0 = JSON.stringify(reqpara0);
+    console.log("hitting the api")
+    // this.http.post('https://plsuat.europassistance.in:8000/api/eaiExt/checkInitialEligibility',reqpara0,this.opt1).subscribe(
+    //   res => {
+    //     console.log("inside api res")
+    //     document.getElementById("eligibiltycheck1_btn").innerHTML = 'Next';
+    //     if (res['message'] === 'policy is not valid'){
+    //       document.getElementById("eligibiltycheck1_btn").innerHTML = 'Next';
+    //       this.spinner.hide();
+    //       this.getinfowithMobile();
+    //       this.disableNext = true;
+    //       this.mobileLength = true;
+    //       this.showToast('Message', 'Policy Message', 'Policy is not valid');
+    //       this.showstep3 = true;
+    //       this.ea_respondID = "0";
+    //     }
+    //     else if (res['message'] === 'policy is valid'){
+    //       document.getElementById("eligibiltycheck1_btn").innerHTML = 'Next';
+    //       this.spinner.hide();
+    //       this.getinfowithMobile();
+    //       this.disableNext = true;
+    //       this.mobileLength = true;
+    //       this.showToast('Message', 'Policy Message', 'Policy is valid');
+    //       this.showstep2 = true;
+    //       this.showstep3 = false;
+    //       this.ea_respondID = "0";
+    //     }
+    //     else if (res['message'] === 'session not valid'){
+    //       document.getElementById("eligibiltycheck1_btn").innerHTML = 'Next';
+    //       this.spinner.hide();
+    //       this.getinfowithMobile();
+    //       this.disableNext = true;
+    //       this.mobileLength = true;
+    //       this.showToast('Message', 'Policy Message', 'session not valid');
+    //       this.showstep3 = true;
+    //       this.ea_respondID = "0";
+    //     }
+    //     else{
+    //       this.spinner.hide();
+    //       document.getElementById("eligibiltycheck1_btn").innerHTML = 'Next';
+    //       this.getinfowithMobile();
+    //       this.showstep3 = true;
+    //       this.disableNext = true;
+    //       this.mobileLength = true;
+    //       this.ea_respondID = "0";
+    //     }
+    //   },(err: HttpErrorResponse) => {
+    //     if (err.error instanceof Error) {
+    //       this.spinner.hide();
+    //       this.getinfowithMobile();
+    //       this.disableNext = true;
+    //       this.mobileLength = true;
+    //       this.ea_respondID = "0";
+    //     }
+    //     else {
+    //       this.spinner.hide();
+    //       this.getinfowithMobile();
+    //       this.disableNext = true;
+    //       this.mobileLength = true;
+    //       this.ea_respondID = "0";
+    //     }
+    //   });
+      this.getCity();
   }
 
   skip() {
