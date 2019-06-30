@@ -121,13 +121,17 @@ export class PickupComponent implements OnInit {
       this.SvcId = JSON.parse(sessionStorage.getItem('globalsvcid'));
     }
     this.GlobalSvcId = JSON.parse(sessionStorage.getItem('globalsvcid'));
-    this.FilterCheck(1);
+   
+    console.log(this.InsuranceUsr);
     if(this.InsuranceUsr == "1"){
+      console.log("coming here");
       this.InsuranceCheck = true;
     }
     else{
       this.InsuranceCheck = false;
      }
+     console.log(this.InsuranceCheck)
+     this.FilterCheck(1);
   }
 
   //sort
@@ -172,6 +176,7 @@ img(event){
     this.spinner.show();
     this.page = p - 1 ;
     var reqpara3;
+    console.log(this.InsuranceCheck,"dfgdfgdf")
     if(this.InsuranceCheck){
       reqpara3 = {
         requesttype: 'getqueueinfonewfpi',

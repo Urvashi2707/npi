@@ -108,13 +108,14 @@ export class MishapsComponent implements OnInit {
       this.svcid = JSON.parse(sessionStorage.getItem('globalsvcid'));
     }
     this.globalsvcid = JSON.parse(sessionStorage.getItem('globalsvcid'));
-    this.FilterCheck(1);
+   
     if(this.InsuranceUsr == "1"){
       this.InsuranceCheck = true;
     }
     else{
       this.InsuranceCheck = false;
      }
+     this.FilterCheck(1);
   }
   sort(key){
     this.key = key;

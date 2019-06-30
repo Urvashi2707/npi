@@ -1871,33 +1871,43 @@ SelectSavedDropoffAddress(i,x, ev){
       vehnumber: this.registrationNumber,
       city: this.cityID,
       vehbrand: this.selectedBrand,
+
       carmodelid: f.value.model,
       carsubmodelid: f.value.variant,
       customername: f.value.salutation1 +'.'+this.titlecasePipe.transform(f.value.Cus_name),
+
       customermobile1: f.value.mobile1,
       customermobile2: this.mobile2,
       customeremail: f.value.email,
+
       queuetime: this.dateString + ' ' + this.slot_time,
       addresspuprevious:this.addresspuprevious,
       googleaddresspu: this.googleaddresspu,
+
       postaladdresspu: this.postaladdresspu,
       landmarkpu: this.landmarkpu,
       addresstypepu: this.addresstypepu,
+
       pickuplat: this.pickuplat,
       pickuplong: this.pickuplong,
       addressdoprevious:this.addressdoprevious,
+
       googleaddressdo: this.googleaddressdo,
       postaladdressdo: this.postaladdressdo,
       landmarkdo: this.landmarkdo,
+
       addresstypedo:this.addresstypedo,
       droplat: this.droplat,
       droplong: this.droplong,
+
       servicetype:this.pickup_drop,
       advisorid:this.advisorId,
       creid:f.value.creName,
+
       assignambassador:this.amb,
       selectedsvcid:this.svcid,
       cfeeclient:this.amt,
+      
       notes:this.notes,
       isconfirmed:"1",
       eavalidcode:this.ea_respondID,
