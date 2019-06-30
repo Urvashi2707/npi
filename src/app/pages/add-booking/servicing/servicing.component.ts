@@ -546,8 +546,6 @@ export class ServicingComponent implements OnInit {
     this.ea_respondID = "0";
     this.spinner.show();
     this.mobileLength = true;
-    console.log("hitting the api eligibiltycheck1------------------------")
-    document.getElementById("eligibiltycheck1_btn").innerHTML = 'Processing..';
     (<HTMLInputElement>document.getElementById('mobile1')).disabled = true;
     (<HTMLInputElement>document.getElementById('num')).disabled = true;
     document.getElementById("num_label").classList.add("disabled_label");
