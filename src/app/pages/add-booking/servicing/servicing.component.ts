@@ -561,66 +561,66 @@ export class ServicingComponent implements OnInit {
     }
     const as0 = JSON.stringify(reqpara0);
     console.log("hitting the api")
-    // this.http.post('https://plsuat.europassistance.in:8000/api/eaiExt/checkInitialEligibility',reqpara0,this.opt1).subscribe(
-    //   res => {
-    //     console.log("inside api res")
-    //     document.getElementById("eligibiltycheck1_btn").innerHTML = 'Next';
-    //     if (res['message'] === 'policy is not valid'){
-    //       document.getElementById("eligibiltycheck1_btn").innerHTML = 'Next';
-    //       this.spinner.hide();
-    //       this.getinfowithMobile();
-    //       this.disableNext = true;
-    //       this.mobileLength = true;
-    //       this.showToast('Message', 'Policy Message', 'Policy is not valid');
-    //       this.showstep3 = true;
-    //       this.ea_respondID = "0";
-    //     }
-    //     else if (res['message'] === 'policy is valid'){
-    //       document.getElementById("eligibiltycheck1_btn").innerHTML = 'Next';
-    //       this.spinner.hide();
-    //       this.getinfowithMobile();
-    //       this.disableNext = true;
-    //       this.mobileLength = true;
-    //       this.showToast('Message', 'Policy Message', 'Policy is valid');
-    //       this.showstep2 = true;
-    //       this.showstep3 = false;
-    //       this.ea_respondID = "0";
-    //     }
-    //     else if (res['message'] === 'session not valid'){
-    //       document.getElementById("eligibiltycheck1_btn").innerHTML = 'Next';
-    //       this.spinner.hide();
-    //       this.getinfowithMobile();
-    //       this.disableNext = true;
-    //       this.mobileLength = true;
-    //       this.showToast('Message', 'Policy Message', 'session not valid');
-    //       this.showstep3 = true;
-    //       this.ea_respondID = "0";
-    //     }
-    //     else{
-    //       this.spinner.hide();
-    //       document.getElementById("eligibiltycheck1_btn").innerHTML = 'Next';
-    //       this.getinfowithMobile();
-    //       this.showstep3 = true;
-    //       this.disableNext = true;
-    //       this.mobileLength = true;
-    //       this.ea_respondID = "0";
-    //     }
-    //   },(err: HttpErrorResponse) => {
-    //     if (err.error instanceof Error) {
-    //       this.spinner.hide();
-    //       this.getinfowithMobile();
-    //       this.disableNext = true;
-    //       this.mobileLength = true;
-    //       this.ea_respondID = "0";
-    //     }
-    //     else {
-    //       this.spinner.hide();
-    //       this.getinfowithMobile();
-    //       this.disableNext = true;
-    //       this.mobileLength = true;
-    //       this.ea_respondID = "0";
-    //     }
-    //   });
+    this.http.post('https://plsuat.europassistance.in:8000/api/eaiExt/checkInitialEligibility',reqpara0,this.opt1).subscribe(
+      res => {
+        console.log("inside api res")
+        document.getElementById("eligibiltycheck1_btn").innerHTML = 'Next';
+        if (res['message'] === 'policy is not valid'){
+          document.getElementById("eligibiltycheck1_btn").innerHTML = 'Next';
+          this.spinner.hide();
+          this.getinfowithMobile();
+          this.disableNext = true;
+          this.mobileLength = true;
+          this.showToast('Message', 'Policy Message', 'Policy is not valid');
+          this.showstep3 = true;
+          this.ea_respondID = "0";
+        }
+        else if (res['message'] === 'policy is valid'){
+          document.getElementById("eligibiltycheck1_btn").innerHTML = 'Next';
+          this.spinner.hide();
+          this.getinfowithMobile();
+          this.disableNext = true;
+          this.mobileLength = true;
+          this.showToast('Message', 'Policy Message', 'Policy is valid');
+          this.showstep2 = true;
+          this.showstep3 = false;
+          this.ea_respondID = "0";
+        }
+        else if (res['message'] === 'session not valid'){
+          document.getElementById("eligibiltycheck1_btn").innerHTML = 'Next';
+          this.spinner.hide();
+          this.getinfowithMobile();
+          this.disableNext = true;
+          this.mobileLength = true;
+          this.showToast('Message', 'Policy Message', 'session not valid');
+          this.showstep3 = true;
+          this.ea_respondID = "0";
+        }
+        else{
+          this.spinner.hide();
+          document.getElementById("eligibiltycheck1_btn").innerHTML = 'Next';
+          this.getinfowithMobile();
+          this.showstep3 = true;
+          this.disableNext = true;
+          this.mobileLength = true;
+          this.ea_respondID = "0";
+        }
+      },(err: HttpErrorResponse) => {
+        if (err.error instanceof Error) {
+          this.spinner.hide();
+          this.getinfowithMobile();
+          this.disableNext = true;
+          this.mobileLength = true;
+          this.ea_respondID = "0";
+        }
+        else {
+          this.spinner.hide();
+          this.getinfowithMobile();
+          this.disableNext = true;
+          this.mobileLength = true;
+          this.ea_respondID = "0";
+        }
+      });
       this.getCity();
   }
 
@@ -629,6 +629,36 @@ export class ServicingComponent implements OnInit {
     this.showstep3 = true;
   }
 
+  eligibiltycheck21(){
+    const reqpara01 =
+    {
+      requesttype: 'geteligibilitychecksteptwo',
+      customerMobileNumber:this.user.mobile1,
+      vehicleRegNumber:this.registrationNumber,
+      typeofservice:1,
+      policynumber:this.user.policy,
+      vinnumber:this.user.vin
+    }
+    // console.log(reqpara01);
+    const as01 = JSON.stringify(reqpara01);
+
+    this.ServicingService.Finalcheck(as01).subscribe(
+
+      res => {
+        // console.log(res[0].eligible);
+        // console.log(res[0].eligible[0].eligible);
+        const eligible = res[0].eligible[0].eligible;
+        if(JSON.parse(eligible)){
+          // console.log("true");
+          this.showstep2 = true;
+        }
+        else{
+          // console.log("false");
+          this.showstep2 = true;
+        }
+      }
+    )
+  }
 
   eligibiltycheck2(){
   this.eligibiltycheck_final = true;
