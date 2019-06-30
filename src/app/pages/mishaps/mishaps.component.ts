@@ -147,14 +147,28 @@ export class MishapsComponent implements OnInit {
     this.spinner.show();
     this.p = p - 1 ;
     this.message = "";
-    const reqpara3 = {
-      requesttype: 'getqueueinfonew',
-      servicetype: '10',
-      starttime: this.dateString1,
-      endtime: this.dateString,
-      pagenumber: '0',
-      svcid:this.svcid
+    var reqpara3
+    if(this.InsuranceCheck){
+       reqpara3 = {
+        requesttype: 'getqueueinfonewfpi',
+        servicetype: '10',
+        starttime: this.dateString1,
+        endtime: this.dateString,
+        pagenumber: '0',
+        svcid:this.svcid
+      }
     }
+    else{
+       reqpara3 = {
+        requesttype: 'getqueueinfonew',
+        servicetype: '10',
+        starttime: this.dateString1,
+        endtime: this.dateString,
+        pagenumber: '0',
+        svcid:this.svcid
+      }
+    }
+  
     const as3 = JSON.stringify(reqpara3);
     this._data.webServiceCall(as3).subscribe(res => {
       if(res[0].pagecount[0].hasOwnProperty('noqueues')){

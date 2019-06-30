@@ -170,14 +170,28 @@ dataForUpload: any;
       this.spinner.show();
       this.page = p - 1 ;
       this.MessageNoData = null;
-      const UpcmReqpara = {
-        requesttype: 'getqueueinfonew',
-        servicetype: '16',
-        starttime: this.StrtDateString,
-        endtime: this.EndDateString,
-        pagenumber: this.page,
-        svcid:this.SvcId
+      var UpcmReqpara;
+      if(this.InsuranceCheck){
+        UpcmReqpara = {
+          requesttype: 'getqueueinfonewfpi',
+          servicetype: '16',
+          starttime: this.StrtDateString,
+          endtime: this.EndDateString,
+          pagenumber: this.page,
+          svcid:this.SvcId
+        }
       }
+      else{
+         UpcmReqpara = {
+          requesttype: 'getqueueinfonew',
+          servicetype: '16',
+          starttime: this.StrtDateString,
+          endtime: this.EndDateString,
+          pagenumber: this.page,
+          svcid:this.SvcId
+        }
+      }
+
       const UpReq = JSON.stringify(UpcmReqpara);
       this._data.webServiceCall(UpReq).subscribe(res => {
         if(res[0].login === 0){

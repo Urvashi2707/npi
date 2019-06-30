@@ -28,6 +28,8 @@ export class ChauffeurComponent implements OnInit {
   MessageNoData:string;
   GlobalSvcId:string;
   SvcId:string;
+  InsuranceUsr:string;
+  InsuranceCheck:boolean = false;
 
   constructor(private spinner: NgxSpinnerService,
                 private ngbDateParserFormatter: NgbDateParserFormatter,
@@ -118,6 +120,13 @@ export class ChauffeurComponent implements OnInit {
     else{
       this.SvcId = JSON.parse(sessionStorage.getItem('globalsvcid'));
     }
+    this.InsuranceUsr = JSON.parse(sessionStorage.getItem('insurance'));
+    if(this.InsuranceUsr == "1"){
+      this.InsuranceCheck = true;
+    }
+    else{
+      this.InsuranceCheck = false;
+     }
     this.GlobalSvcId = JSON.parse(sessionStorage.getItem('globalsvcid'));
     this.FilterCheck(1);
   }
@@ -168,15 +177,28 @@ export class ChauffeurComponent implements OnInit {
     this.MessageNoData = null;
     this.spinner.show();
     this.page = p - 1 ;
-    const ChaufReq = {
-      requesttype: 'getqueueinfonew',
-      servicetype: '5',
-      starttime: this.StartDateString,
-      endtime: this.EndDateString,
-      pagenumber:this.page,
-      svcid:this.SvcId 
+    var AtCentreReq;
+    if(this.InsuranceCheck){
+       AtCentreReq = {
+        requesttype: 'getqueueinfonewfpi',
+        servicetype: '5',
+        starttime: this.StartDateString,
+        endtime: this.EndDateString,
+        pagenumber:this.page,
+        svcid:this.SvcId 
+      }
     }
-    const ActiveChauf = JSON.stringify(ChaufReq);
+    else{
+       AtCentreReq = {
+        requesttype: 'getqueueinfonew',
+        servicetype: '5',
+        starttime: this.StartDateString,
+        endtime: this.EndDateString,
+        pagenumber:this.page,
+        svcid:this.SvcId 
+      }
+    }
+    const ActiveChauf = JSON.stringify(AtCentreReq);
     this._data.webServiceCall(ActiveChauf).subscribe(res => {
       console.log(res);
       if(res[0].login === 0){

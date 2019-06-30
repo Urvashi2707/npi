@@ -171,13 +171,26 @@ img(event){
     this.MessageNoData=" ";
     this.spinner.show();
     this.page = p - 1 ;
-    const reqpara3 = {
-      requesttype: 'getqueueinfonew',
-      servicetype: '0',
-      starttime: this.StartDateString,
-      endtime: this.EndDateString,
-      pagenumber:this.page,
-      svcid:this.SvcId 
+    var reqpara3;
+    if(this.InsuranceCheck){
+      reqpara3 = {
+        requesttype: 'getqueueinfonewfpi',
+        servicetype: '0',
+        starttime: this.StartDateString,
+        endtime: this.EndDateString,
+        pagenumber:this.page,
+        svcid:this.SvcId 
+      }
+    }
+    else{
+       reqpara3 = {
+        requesttype: 'getqueueinfonew',
+        servicetype: '0',
+        starttime: this.StartDateString,
+        endtime: this.EndDateString,
+        pagenumber:this.page,
+        svcid:this.SvcId 
+      }
     }
     const as3 = JSON.stringify(reqpara3);
     this._data.webServiceCall(as3).subscribe(res => {

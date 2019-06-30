@@ -187,13 +187,26 @@ export class AtCentreComponent implements OnInit {
     this.MessageNoData = null;
     this.spinner.show();
     this.page = p - 1 ;
-     const AtCentreReq = {
-      requesttype: 'getqueueinfonew',
-      servicetype: '1',
-      starttime: this.StrtDateString,
-      endtime: this.EndDateString,
-      pagenumber: this.page,
-      svcid:this.SvcId 
+    var AtCentreReq;
+    if(this.InsuranceCheck){
+       AtCentreReq = {
+        requesttype: 'getqueueinfonewfpi',
+        servicetype: '1',
+        starttime: this.StrtDateString,
+        endtime: this.EndDateString,
+        pagenumber: this.page,
+        svcid:this.SvcId
+      }
+    }
+    else{
+       AtCentreReq = {
+        requesttype: 'getqueueinfonew',
+        servicetype: '1',
+        starttime: this.StrtDateString,
+        endtime: this.EndDateString,
+        pagenumber: this.page,
+        svcid:this.SvcId 
+      }
     }
     const ReqAtCentre = JSON.stringify(AtCentreReq);
     this._data.webServiceCall(ReqAtCentre).subscribe(res => {

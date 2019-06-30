@@ -168,15 +168,28 @@ window.onbeforeunload = function(e) {
     this.spinner.show();
     this.page = p - 1 ;
     this.MessageNoData = null;
-    const UpcmReqpara = {
-      requesttype: 'getqueueinfonew',
-      servicetype: '6',
-      starttime: this.StrtDateString,
-      endtime: this.EndDateString,
-      pagenumber: this.page,
-      svcid:this.SvcId
+    var NotCheckedInReq
+    if(this.InsuranceCheck){
+       NotCheckedInReq = {
+         requesttype: 'getqueueinfonewfpi',
+         servicetype: '6',
+         starttime: this.StrtDateString,
+         endtime: this.EndDateString,
+         pagenumber: this.page,
+         svcid:this.SvcId
+       }
     }
-    const UpReq = JSON.stringify(UpcmReqpara);
+    else{
+       NotCheckedInReq = {
+        requesttype: 'getqueueinfonew',
+        servicetype: '6',
+        starttime: this.StrtDateString,
+        endtime: this.EndDateString,
+        pagenumber: this.page,
+        svcid:this.SvcId
+      }
+    }
+    const UpReq = JSON.stringify(NotCheckedInReq);
     this._data.webServiceCall(UpReq).subscribe(res => {
       if(res[0].login === 0){
         sessionStorage.removeItem('currentUser');

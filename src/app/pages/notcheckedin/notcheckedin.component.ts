@@ -112,14 +112,27 @@ export class NotcheckedinComponent implements OnInit {
     this.spinner.show();
     this.page = p - 1 ;
    this.MessageNoData = null;
-    const NotCheckedInReq = {
-      requesttype: 'getqueueinfonew',
-      servicetype:14,
-      starttime: this.StartDateString,
-      endtime: this.EndDateString,
-      pagenumber: this.page,
-      svcid:this.SvcId
-    }
+   var NotCheckedInReq
+   if(this.InsuranceCheck){
+      NotCheckedInReq = {
+        requesttype: 'getqueueinfonewfpi',
+        servicetype:14,
+        starttime: this.StartDateString,
+        endtime: this.EndDateString,
+        pagenumber: this.page,
+        svcid:this.SvcId
+      }
+   }
+   else{
+      NotCheckedInReq = {
+        requesttype: 'getqueueinfonew',
+        servicetype:14,
+        starttime: this.StartDateString,
+        endtime: this.EndDateString,
+        pagenumber: this.page,
+        svcid:this.SvcId
+      }
+   }
       const Req = JSON.stringify(NotCheckedInReq)
       this.service.webServiceCall(Req).subscribe
   (res =>{

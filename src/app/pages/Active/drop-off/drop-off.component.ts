@@ -170,14 +170,28 @@ img(event){
     this.MessageNoData = null ;
     this.spinner.show();
     this.p = p - 1 ;
-    const DropReq = {
-      requesttype: 'getqueueinfonew',
-      servicetype: '3',
-      starttime: this.StartDateString,
-      endtime: this.EndDateString,
-      pagenumber: this.p,
-      svcid:this.SvcId 
+    var DropReq;
+    if(this.InsuranceCheck){
+       DropReq = {
+        requesttype: 'getqueueinfonewfpi',
+        servicetype: '3',
+        starttime: this.StartDateString,
+        endtime: this.EndDateString,
+        pagenumber: this.p,
+        svcid:this.SvcId 
+      }
     }
+    else{
+       DropReq = {
+        requesttype: 'getqueueinfonew',
+        servicetype: '3',
+        starttime: this.StartDateString,
+        endtime: this.EndDateString,
+        pagenumber: this.p,
+        svcid:this.SvcId 
+      }
+    }
+
     const DropOffReq = JSON.stringify(DropReq);
     this._data.webServiceCall(DropOffReq).subscribe(res => {
       if(res[0].login === 0){

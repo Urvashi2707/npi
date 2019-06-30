@@ -159,14 +159,28 @@ export class CancelledComponent implements OnInit {
     this.spinner.show();
     this.page = p - 1 ;
     this.MessageNoData= null;
-    const CancelledReq = {
-      requesttype: 'getqueueinfonew',
-      servicetype: '8',
-      starttime: this.StartDateString,
-      endtime: this.EndDateString,
-      pagenumber: this.page,
-      svcid:this.SvcId
+    var CancelledReq
+    if(this.InsuranceCheck){
+       CancelledReq = {
+        requesttype: 'getqueueinfonewfpi',
+        servicetype: '8',
+        starttime: this.StartDateString,
+        endtime: this.EndDateString,
+        pagenumber: this.page,
+        svcid:this.SvcId
+      }
     }
+    else{
+       CancelledReq = {
+        requesttype: 'getqueueinfonew',
+        servicetype: '8',
+        starttime: this.StartDateString,
+        endtime: this.EndDateString,
+        pagenumber: this.page,
+        svcid:this.SvcId
+      }
+    }
+
     const CanReq = JSON.stringify(CancelledReq);
     this._data.webServiceCall(CanReq).subscribe(res => {
       console.log(res);
