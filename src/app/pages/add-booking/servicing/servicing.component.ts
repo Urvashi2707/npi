@@ -554,6 +554,7 @@ export class ServicingComponent implements OnInit {
     document.getElementById("num_label").style.opacity = "1";
     document.getElementById("mobile_label").classList.add("disabled_label");
     document.getElementById("mobile_label").style.opacity = "1";
+    document.getElementById("eligibiltycheck1_btn").innerHTML = 'Next';
    const reqpara0 = {
       customerMobileNumber:this.user.mobile1,
       vehicleRegNumber:this.registrationNumber,
