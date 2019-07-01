@@ -121,9 +121,9 @@ export class SearchModalComponent implements OnInit {
     buildArr(theArr: any[]){
       var arrOfarr = [];
       if(theArr.length > 0){
-       for(var i = 0; i < theArr.length ; i+=4) {
+       for(var i = 0; i < theArr.length ; i+=3) {
          var row = [];
-         for(var x = 0; x < 4; x++) {
+         for(var x = 0; x < 3; x++) {
            var value = theArr[i + x];
              if (!value) {
                  break;

@@ -381,6 +381,24 @@ export const MENU_INSURANCESUSR: NbMenuItem[] = [
     link: '/pages/reports'
 
   },
+  {
+    title: 'Wallet',
+    icon: 'nb-tables',
+    children: [
+      {
+        title: 'Add Credit',
+        link: '/pages/wallet/add-credit',
+      },
+      {
+        title: 'Account Statement',
+        link: '/pages/wallet/account-statement',
+      },
+      {
+        title: 'Pending Approval',
+        link: '/pages/wallet/pending-approval',
+      }
+    ],
+  },
   // {
   //   title: 'Unconfirmed',
   //   icon: 'nb-tables',

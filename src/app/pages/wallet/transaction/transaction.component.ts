@@ -141,14 +141,28 @@ export class TransactionComponent implements OnInit {
     this.spinner.show();
     this.page = p - 1 ;
     this.MessageNoData= "";
-    const ComReq = {
-      requesttype: 'getqueueinfonew',
-      servicetype: '17',
-      starttime: this.StrtDateString,
-      endtime: this.EndDateString,
-      pagenumber: this.page,
-      svcid:this.SvcId
+    var ComReq;
+    if(this.InsuranceCheck){
+        ComReq = {
+        requesttype: 'getqueueinfonewfpi',
+        servicetype: '17',
+        starttime: this.StrtDateString,
+        endtime: this.EndDateString,
+        pagenumber: this.page,
+        svcid:this.SvcId
+      }
     }
+    else{
+        ComReq = {
+        requesttype: 'getqueueinfonew',
+        servicetype: '17',
+        starttime: this.StrtDateString,
+        endtime: this.EndDateString,
+        pagenumber: this.page,
+        svcid:this.SvcId
+      }
+    }
+
     const ComRq = JSON.stringify(ComReq);
     this._data.webServiceCall(ComRq).subscribe(res => {
       if(res[0].login === 0){
