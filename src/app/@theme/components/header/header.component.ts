@@ -32,6 +32,7 @@ export class HeaderComponent implements OnInit {
   noNotification : boolean = false;
   notification : any = [];
   today: number = Date.now();
+  InsuranceCheck:boolean;
   userMenu = [{ title: 'Profile' ,link: 'profile'}, { title: 'Log out',link: '/auth/logout'}];
 
   constructor(private sidebarService: NbSidebarService,
@@ -69,6 +70,14 @@ export class HeaderComponent implements OnInit {
                 //  else{
                 //    this.Show_credit_Btn = false;
                 //  }
+                var InsuranceUsr = JSON.parse(sessionStorage.getItem('insurance'));
+                if(InsuranceUsr == "1"){
+                  this.InsuranceCheck = true;
+                }
+                else{
+                  this.InsuranceCheck = false;
+                 }
+                 console.log(this.InsuranceCheck,"InsuranceCheck")
   }
 
   ngOnInit() {

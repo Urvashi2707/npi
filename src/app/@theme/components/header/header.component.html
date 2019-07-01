@@ -6,7 +6,7 @@
         <div class="logo" (click)="goToHome()" *ngIf="brandid != '19' && brandid != '27'"><img src="/assets/images/logo.png" class="img-responsive"></div>
     </div>
 </div>
-<div class="credits">
+<div class="credits" *ngIf="!InsuranceCheck">
     <span style="padding-right: 15%;padding-top:1%;">Credit</span>
     <span style="padding-top:1%;padding-right: 13%" [ngStyle]="{'color': Show_credit_Btn === true ? 'red' : 'black'}">{{Credit || 0}}</span>
     <span *ngIf="Show_credit_Btn"><button style="background-color: orange;border-color: orange;border-radius: 50%;" (click)="GoToNeft()"><i class="fa fa-plus" style="color:#ffa100" aria-hidden="true" style="color: white;

@@ -402,38 +402,38 @@ export const MENU_INSURANCESUSR: NbMenuItem[] = [
     icon: 'nb-locked',
     link: '/pages/completed',
   },
-  {
-    title: 'Payment-Gateway',
-    icon: 'nb-tables',
-    children: [
-      {
-        title: 'Add Booking',
-        link: '/pages/payment-gateway/Add Booking',
-      },
-      {
-        title: 'Transactions',
-        link: '/pages/payment-gateway/Transactions',
-      }
-    ],
-  },
-  {
-    title: 'Wallet',
-    icon: 'nb-tables',
-    children: [
-      {
-        title: 'Add Credit',
-        link: '/pages/wallet/add-credit',
-      },
-      {
-        title: 'Account Statement',
-        link: '/pages/wallet/account-statement',
-      },
-      {
-        title: 'Pending Approval',
-        link: '/pages/wallet/pending-approval',
-      }
-    ],
-  },
+  // {
+  //   title: 'Payment-Gateway',
+  //   icon: 'nb-tables',
+  //   children: [
+  //     {
+  //       title: 'Add Booking',
+  //       link: '/pages/payment-gateway/Add Booking',
+  //     },
+  //     {
+  //       title: 'Transactions',
+  //       link: '/pages/payment-gateway/Transactions',
+  //     }
+  //   ],
+  // },
+  // {
+  //   title: 'Wallet',
+  //   icon: 'nb-tables',
+  //   children: [
+  //     {
+  //       title: 'Add Credit',
+  //       link: '/pages/wallet/add-credit',
+  //     },
+  //     {
+  //       title: 'Account Statement',
+  //       link: '/pages/wallet/account-statement',
+  //     },
+  //     {
+  //       title: 'Pending Approval',
+  //       link: '/pages/wallet/pending-approval',
+  //     }
+  //   ],
+  // },
   {
     title: 'Reports',
     icon: 'nb-tables',
