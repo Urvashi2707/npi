@@ -69,12 +69,23 @@ export class NeftComponent implements OnInit {
     this.FilterCheck(1);
   }
 
-  //sort function
-//   sort(key) {  
-//     let arr = this.neft;
-//     this.ascending = !this.ascending;
-//     arr.sort(this.dynamicSort(key,this.ascending));
-// }
+//On select of startDate
+onSelectStartDate(date: NgbDateStruct){
+  if (date != null) {
+          this.model1 = date;
+          this.StrtDateString = this.ngbDateParserFormatter.format(date);
+          localStorage.setItem('up_startDate',JSON.stringify(this.model1));
+      }
+    }
+
+    //On select of End Date
+onSelectEndDate(date: NgbDateStruct){
+  if (date != null) {
+          this.model = date;
+          this.EndDateString = this.ngbDateParserFormatter.format(date);
+          localStorage.setItem('up_endDate',JSON.stringify(this.model));
+      }
+     }
 
 dynamicSort(property,sortDir) {
     return function (a,b) {

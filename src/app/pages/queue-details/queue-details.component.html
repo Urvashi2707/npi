@@ -277,12 +277,12 @@
                               <label class="labels" for="exampleInputPassword1">On Time</label>
                             </div>
                             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-                              <img *ngIf="on_time == 1; else second" src={{dropOffOnTimeImage}} width="30px" height="30px"
+                              <img  src={{dropOffOnTimeImage}} width="30px" height="30px"
                                 style="margin-top:0.5em" id="dropOnTime" />
-                              <ng-template #second>
+                              <!-- <ng-template #second>
                                 <img *ngIf="on_time == 1; else second" src={{dropOffOnTimeImage}} width="30px" height="30px"
                                   style="margin-top:0.5em" id="dropOnTime" />
-                              </ng-template>
+                              </ng-template> -->
                             </div>
                           </div>
                           <!-- <label for="exampleInputPassword1">On Time</label>

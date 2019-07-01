@@ -300,6 +300,16 @@ import 'style-loader!angular2-toaster/toaster.css';
             this.success("1");
             f.controls.name.reset();
             f.reset();
+            if(sessionStorage.getItem('loginCountryFlag') === '2') {
+              this.maxLen = '8';
+              this.CountryCode="+65";
+              console.log("this.maxLen ", this.maxLen);
+            }
+            if(sessionStorage.getItem('loginCountryFlag') === '1') {
+              this.maxLen = '10';
+              this.CountryCode="+91";
+              console.log("this.maxLen ", this.maxLen);
+            }
           }
           });
           }
