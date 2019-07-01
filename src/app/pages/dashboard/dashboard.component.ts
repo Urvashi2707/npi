@@ -212,7 +212,7 @@ export class DashboardComponent implements OnInit{
              }
              this.Notification=res[3].notification[0];
              this.prepaid_amount = res[4].prepaid[0].pre_paid;
-            //  console.log(this.prepaid_amount,"credit amount");
+             sessionStorage.setItem('allow_booking',(res[4].prepaid[0].allow_booking))
               this.service.sendMessage(this.prepaid_amount,this.show_add_credit);
               // this.service.sendMessage('8999');
            }
