@@ -1,0 +1,114 @@
+<nb-card class="desktopView">
+    <nb-card-header>
+        Transactions
+    </nb-card-header>
+    <nb-card-body>
+        <div class="row">
+            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+              <div class="form-group">
+                <div class="input-group">
+                  <input class="form-control" name="dp" [ngModel]="model1" (ngModelChange)="onSelectStartDate($event)" ngbDatepicker #d1="ngbDatepicker">
+                  <div class="input-group-append">
+                    <button class="btn btn-outline-secondary dateButton" (click)="d1.toggle()" type="button" style="height: 100%;border-radius: 0px;">
+                      <span>
+                        <i class="fa fa-calendar"></i>
+                      </span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+              <div class="form-group">
+                <div class="input-group">
+                  <input class="form-control" name="dp" [ngModel]="model" (ngModelChange)="onSelectEndDate($event)" ngbDatepicker #d="ngbDatepicker">
+                  <div class="input-group-append">
+                    <button class="btn btn-outline-secondary dateButton" (click)="d.toggle()" type="button" style="height: 100%;border-radius: 0px;">
+                      <span>
+                        <i class="fa fa-calendar"></i>
+                      </span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+              <div class="form-group">
+                <select id="status" class="form-control" name="status" [(ngModel)]="user.status" #servicetype="ngModel" required (change)="service_status_changed($event.target.value)">
+                  <option *ngFor="let stat of status" [value]="stat.id"> {{stat.type}}</option>
+                </select>
+                <label class="form-control-placeholder" for="serviceType">Payment Status</label>
+              </div>
+            </div>
+            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
+              <button type="button" class="btn btn-primary" (click)="FilterCheck(1)" style="margin-top: 41%;
+              ">Apply</button>
+            </div>
+          </div>
+          <div class="row" style="padding-bottom: 3%;">
+              <div class="col-md-6 col-lg-6 col-sm-6">
+            </div>
+              <div class="col-md-6 col-lg-6 col-sm-6">
+                <input type="text" class="search" [(ngModel)]="SearchData" placeholder="search">
+              </div>
+            </div>
+      <table width="100%">
+        <thead>
+          <th (click)="sort('creationdatetime')">Date
+            <span class="sort-span">
+              <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i>
+            </span>
+          </th>
+          <th (click)="sort('first_name')">Customer Name
+            <span class="sort-span">
+              <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i>
+            </span>
+          </th>
+          <th (click)="sort('mobile')">Customer Contact Number
+            <span class="sort-span">
+              <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i>
+            </span>
+          </th>
+          <th (click)="sort('veh_number')">Vehicle Number
+            <span class="sort-span">
+              <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i>
+            </span>
+          </th>
+          <th (click)="sort('amount')">Amount
+              <span class="sort-span">
+                <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i>
+              </span>
+            </th>
+          <th (click)="sort('status')">Status
+            <span class="sort-span">
+              <i class="fa" [ngClass]="{'fa-long-arrow-down':!reverse, 'fa-long-arrow-up':reverse}" style="color:#ffa100" aria-hidden="true"></i>
+            </span>
+          </th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let i of tableData | filter:SearchData | paginate: { id: 'server', itemsPerPage:DataPerPage, currentPage: page + 1, totalItems: RecordCount }; let j = index">
+            <td>{{i.creationdatetime}}</td>
+            <td>{{i.first_name}}</td>
+            <!-- <td *ngIf="sort_dir == true">{{i.type_of_transaction}}</td> -->
+            <td>{{i.mobile}}</td>
+            <td>{{i.veh_number}}</td>
+            <td>{{i.amount}}</td>
+            <td>{{i.status}}
+              <span *ngIf="i.status === 'Pending'" style="padding-left: 6%;">
+                <button type="button" (click)="sendPaymentLink(i.mobile,i.queueid)" style="background-color: orange;
+                border-color: orange;
+                color: white;">Resend Link</button></span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <table class="NoData" *ngIf="MessageNoData">
+          {{MessageNoData}}
+        </table>
+        
+        <ngx-spinner bdColor="rgba(51,51,51,0.09)" size="large" color="#ea5810" type="ball-clip-rotate-pulse"></ngx-spinner>
+        <div class="paginate">
+          <pagination-controls (pageChange)="FilterCheck($event)" id="server"></pagination-controls>
+        </div>
+    </nb-card-body>
+  </nb-card>

@@ -111,6 +111,20 @@ export const MENU_ITEMSADM: NbMenuItem[] = [
     hidden:false
 },
 {
+  title: 'Payment-Gateway',
+  icon: 'nb-tables',
+  children: [
+    {
+      title: 'Add Booking',
+      link: '/pages/payment-gateway/Add Booking',
+    },
+    {
+      title: 'Transactions',
+      link: '/pages/payment-gateway/Transactions',
+    }
+  ],
+},
+{
   title: 'Wallet',
   icon: 'nb-tables',
   children: [
@@ -128,11 +142,11 @@ export const MENU_ITEMSADM: NbMenuItem[] = [
     }
   ],
 },
-  // {
-  //   title: 'Unconfirmed',
-  //   icon: 'nb-tables',
-  //   link: '/pages/unconfirmed',
-  // },
+  {
+    title: 'Unconfirmed',
+    icon: 'nb-tables',
+    link: '/pages/unconfirmed',
+  },
   {
     title: 'CRE Reports',
     icon: 'nb-tables',
@@ -255,8 +269,21 @@ export const MENU_ITEMSUSR: NbMenuItem[] = [
     icon: 'nb-tables',
     link: '/pages/payment',
     hidden:true
-
-  },
+},
+{
+  title: 'Payment-Gateway',
+  icon: 'nb-tables',
+  children: [
+    {
+      title: 'Add Booking',
+      link: '/pages/payment-gateway/Add Booking',
+    },
+    {
+      title: 'Transactions',
+      link: '/pages/payment-gateway/Transactions',
+    }
+  ],
+},
   {
     title: 'Wallet',
     icon: 'nb-tables',
@@ -275,11 +302,11 @@ export const MENU_ITEMSUSR: NbMenuItem[] = [
       }
     ],
   },
-  // {
-  //   title: 'Unconfirmed',
-  //   icon: 'nb-tables',
-  //   link: '/pages/unconfirmed',
-  // },
+  {
+    title: 'Unconfirmed',
+    icon: 'nb-tables',
+    link: '/pages/unconfirmed',
+  },
   {
     title: 'Cre Reports',
     icon: 'nb-tables',
@@ -382,32 +409,13 @@ export const MENU_INSURANCESUSR: NbMenuItem[] = [
 
   },
   {
-    title: 'Wallet',
+    title: 'Unconfirmed',
     icon: 'nb-tables',
-    children: [
-      {
-        title: 'Add Credit',
-        link: '/pages/wallet/add-credit',
-      },
-      {
-        title: 'Account Statement',
-        link: '/pages/wallet/account-statement',
-      },
-      {
-        title: 'Pending Approval',
-        link: '/pages/wallet/pending-approval',
-      }
-    ],
+    link: '/pages/unconfirmed',
   },
-  // {
-  //   title: 'Unconfirmed',
-  //   icon: 'nb-tables',
-  //   link: '/pages/unconfirmed',
-  // },
   {
     title: 'Escalation Matrix',
     icon: 'nb-tables',
     link: '/pages/matrix',
   }
 ];
-

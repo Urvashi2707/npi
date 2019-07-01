@@ -45,6 +45,10 @@ const routes: Routes = [{
     loadChildren: './wallet/wallet.module#WalletModule',
   },
   {
+    path: 'payment-gateway',
+    loadChildren: './payment-gateway/payment-gateway.module#PaymentGatewayModule',
+  },
+  {
     path: 'upcoming',
     component: UpcomingComponent,
   },
@@ -121,3 +125,4 @@ component: UserComponent,
 })
 export class PagesRoutingModule {
 }
+

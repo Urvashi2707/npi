@@ -1,0 +1,235 @@
+<div class="row">
+  <div class="col-md-12 col-lg-12 col-sm-12">
+    <nb-card class="nb-icons">
+      <nb-card-header>
+        Add Booking
+      </nb-card-header>
+      <nb-card-body>
+        <form ngNativeValidate #f="ngForm" (ngSubmit)="onSubmit(f)">
+          <div>
+            <div class="line">
+              <span class="sectionHeader">Customer Details</span>
+            </div>
+            <div class="row">
+              <div class="col-md-8 col-lg-8 col-sm-8 col-xs-8">
+                <div class="form-group" style="display:inline-block;min-width:15%;">
+                  <select id="salutation1" class="form-control" name="salutation1" [(ngModel)]="cust_details.salutation"
+                    #salutation1="ngModel" required>
+                    <option *ngFor="let s of salutation" [value]="s.type"> {{s.type}}</option>
+                  </select>
+                  <label class="form-control-placeholder" for="salutation1">Title*</label>
+                </div>
+                <div class="form-group CusFormGroup">
+                  <input type="text" id="Cus_name" class="form-control" required [(ngModel)]="cust_details.first_name"
+                    name="Cus_name" #Cus_name="ngModel" style="text-transform: capitalize;" pattern="^[0-9a-zA-Z#,\-/_ .@]+$">
+                  <label class="form-control-placeholder" for="Cus_name">Customer Name*</label>
+                </div>
+              </div>
+              <div class="col-md-6 col-lg-6 col-sm-6">
+                <div class="form-control-feedback" *ngIf="Cus_name.errors && (Cus_name.dirty || Cus_name.touched)">
+                  <p *ngIf="Cus_name.errors.required" class="haserror">Customer Name is required</p>
+                  <p *ngIf="!Cus_name.errors.valid" class="haserror">\$^*'}'`;> these characters are not accepted</p>
+                </div>
+              </div>
+            </div>
+            <div class="container1">
+              <div class="row">
+                <div class="col-md-8 col-lg-8 col-sm-8 col-xs-8 mob">
+                  <div class="form-group" class="countryCode">
+                    <label for="countrycode" class="countryCodelabel">Country Code</label>
+                    <input type="text" class="form-control" name="countrycode" OnlyNumber="true" [readonly]="true"
+                      value="+91" [(ngModel)]="countrycode1" required #countrycode>
+                  </div>
+                  <div class="form-group" class="mobile1">
+                    <input type="number" class="form-control" name="mobile1" maxlength="10" [(ngModel)]="cust_details.mobile"
+                      required #mobile1="ngModel" pattern="^[0-9]{10}$" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                      onkeydown="javascript: return event.keyCode == 69 ? false : true" (keyup)="checkMobile($event)">
+                    <label class="form-control-placeholder" for="mobile1" style="margin-top: 17px;">Mobile Number*</label>
+                  </div>
+                  <div class="form-control-feedback" *ngIf="mobile1.errors && (mobile1.dirty || mobile1.touched)">
+                    <p *ngIf="mobile1.errors.required" class="haserror">mobile is required</p>
+                    <p *ngIf="!mobile1.errors.valid" class="haserror">mobile must contain 10 digits only</p>
+                  </div>
+                  <!-- <div><span>Mobile number should be </span></div> -->
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 col-lg-6 col-sm-6">
+                <div class="form-group">
+                  <input type="text" id="email" class="form-control" name="email" [(ngModel)]="cust_details.email"
+                    #email="ngModel" required pattern="^([a-zA-Z0-9_\.\-])+@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$"
+                    style="text-transform: lowercase;">
+                  <label class="form-control-placeholder" for="email">Email Id*</label>
+                </div>
+              </div>
+              <div class="col-md-6 col-lg-6 col-sm-6">
+                <div class="form-control-feedback" *ngIf="email.errors && (email.dirty || email.touched)">
+                  <p *ngIf="email.errors.required" class="haserror">Email is required</p>
+                  <p *ngIf="!email.errors.valid" class="haserror">Email must contain at least the @ character</p>
+                </div>
+              </div>
+            </div>
+            <div class="line">
+              <span class="sectionHeader">Vehicle Details</span>
+            </div>
+            <div class="row">
+              <div class="col-md-6 col-sm-6 col-lg-6">
+                <div class="form-group">
+                  <input type="text" id="num" name="num" class="form-control" style=" text-transform: uppercase"
+                    required  [(ngModel)]="vehicle_details.number" #num="ngModel"
+                    maxlength="15" pattern="^[0-9a-zA-Z#,\-/_ .@]+$" onkeydown="javascript: return event.keyCode == 32 ? false : true">
+                  <label class="form-control-placeholder" for="num" id="num_label">Registration Number*</label>
+                </div>
+                <div class="form-control-feedback" *ngIf="num.errors && (num.dirty || num.touched)">
+                  <p *ngIf="num.errors.required" class="haserror">Registration Number is required</p>
+                  <p *ngIf="!num.errors.valid" class="haserror">\$^*'}'`;> these characters are not accepted</p>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 col-lg-6 col-sm-6">
+                <div class="form-group">
+                  <select name="brand" id="brand" class="form-control" (change)="onSelectBrand($event.target.value)"
+                    [(ngModel)]="vehicle_details.brand" #brand="ngModel" required>
+                    <option *ngFor="let b of allbrand_list" [value]="b.brand_id"> {{b.brand_name}}</option>
+                  </select>
+                  <label class="form-control-placeholder" for="brand">Vehicle Brand*</label>
+                </div>
+              </div>
+              <div class="col-md-6 col-lg-6 col-sm-6">
+                <div class="form-control-feedback" *ngIf="brand.errors && (brand.dirty || brand.touched)">
+                  <p *ngIf="brand.errors.required" class="haserror">Brand is required</p>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 col-lg-6 col-sm-6">
+                <div class="form-group">
+                  <select name="model" id="model" class="form-control" (change)="onSelectModel($event.value)"
+                    [(ngModel)]="vehicle_details.model" #model="ngModel" required>
+                    <option *ngFor="let ma of models_list" [value]="ma.model_id"> {{ma.model_name}}</option>
+                  </select>
+                  <label class="form-control-placeholder" for="model">Vehicle Model*</label>
+                </div>
+              </div>
+              <div class="col-md-6 col-lg-6 col-sm-6">
+                <div class="form-control-feedback" *ngIf="model.errors && (model.dirty || model.touched)">
+                  <p *ngIf="model.errors.required" class="haserror">Model is required</p>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 col-lg-6 col-sm-6">
+                <div class="form-group">
+                  <select name="variant" id="variant" class="form-control" [(ngModel)]="vehicle_details.variant"
+                    #variant="ngModel" required>
+                    <option *ngFor="let va of variant_list" [value]="va.variant_id"> {{va.variant_name}}</option>
+                  </select>
+                  <label class="form-control-placeholder" for="ServiceAdvisor">Vehicle Variant*</label>
+                </div>
+              </div>
+              <div class="col-md-6 col-lg-6 col-sm-6">
+                <div class="form-control-feedback" *ngIf="variant.errors && (variant.dirty || variant.touched)">
+                  <p *ngIf="variant.errors.required" class="haserror">Variant is required</p>
+                </div>
+              </div>
+            </div>
+            <div class="line" style="padding-bottom: 2%;">
+              <span class="sectionHeader">Service Advisor/ General Manager Dropdown List</span>
+            </div>
+            <div class="row">
+              <div class="col-md-7 col-lg-7 col-sm-7 col-12 AddUserCre">
+                <div class="form-group" class="AddUserRow">
+                  <select name="ServiceAdvisor" id="ServiceAdvisor" class="form-control" name="ServiceAdvisor"
+                    [(ngModel)]="service_details.service_advisor" #ServiceAdvisor="ngModel" required>
+                    <option *ngFor="let sa of user_list" [value]="sa.id"> {{sa.first_name}} - {{sa.mobilenumber}}</option>
+                  </select>
+                  <label class="form-control-placeholder" for="ServiceAdvisor">Service Advisor*</label>
+                </div>
+              </div>
+            </div>
+            <div class="line" style="padding-top: 2%;">
+              <span class="sectionHeader">Amount details</span>
+            </div>
+            <div class="row">
+              <div class="col-md-6 col-sm-6 col-lg-6">
+                <div class="form-group">
+                  <input type="number" id="amt" name="amt" class="form-control" [(ngModel)]="amt_details.amt" required
+                    #amt="ngModel" maxlength="9" pattern="^\d{0,6}(\.\d{1,2})?$" step="0.01" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" onkeydown="javascript: return event.keyCode == 69 || event.keyCode == 189 || event.keyCode == 16 ? false : true">
+                  <label class="form-control-placeholder" for="amt">Invoice Amount</label>
+                </div>
+                <div class="form-control-feedback" *ngIf="amt.errors && (amt.dirty || amt.touched)">
+                  <p *ngIf="amt.errors.required" class="haserror">Invoice Amount is required</p>
+                  <p *ngIf="!amt.errors.valid" class="haserror">6 digit with 2 digit after decimal is allowed</p>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 col-sm-6 col-lg-6">
+                <div class="form-group">
+                  <input type="text" id="description" name="description" class="form-control" [(ngModel)]="amt_details.description"
+                    required #description="ngModel" pattern="^[0-9a-zA-Z#,\-/_ .@]+$">
+                  <label class="form-control-placeholder" for="description">Description</label>
+                </div>
+                <div class="form-control-feedback" *ngIf="description.errors && (description.dirty || description.touched)">
+                  <p *ngIf="!description.errors.valid" class="haserror">\$^*'}'`;> these characters are not accepted</p>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 col-sm-6 col-lg-6">
+                <div class="form-group">
+                  <input type="text" id="inv" name="inv" class="form-control" [(ngModel)]="amt_details.invoice" #inv="ngModel"
+                    pattern="^[0-9a-zA-Z#,\-/_ .@]+$">
+                  <label class="form-control-placeholder" for="inv">Invoice Number</label>
+                </div>
+                <div class="form-control-feedback" *ngIf="inv.errors && (inv.dirty || inv.touched)">
+                  <p *ngIf="!inv.errors.valid" class="haserror">\$^*'}'`;> these characters are not accepted</p>
+                </div>
+              </div>
+            </div>
+            <ng-container>
+              <div class="row">
+                <div class="col-md-6 col-lg-6 col-sm-6 col-12">
+                  <label class="fileContainer">
+                      <i class="fa fa-paperclip" style="font-size: 22px;"></i>
+                    <input type="file" id="file" multiple style="margin-bottom: 5%;" required (change)="getFileDetails($event)"
+                      multiple accept="image/jpg,application/pdf,image/jpeg,image/png">
+                  </label>
+                </div>
+              </div>
+              <div>
+                <label class="note">Maximium Number of file Upload is 3</label>
+              </div>
+              <div class="row">
+                <div class="col-md-12 col-lg-12 col-sm-12 col-12">
+                  <table width="57%">
+                    <tr *ngFor="let file of myFiles" class="photoTable">
+                      <td style="margin-right: 9%;padding: 1%;">{{file.name}}</td>
+                      <td>
+                        <button (click)=removefile(file) style="background-color: white;border-color: orange;">
+                          <i class="fa fa-remove" aria-hidden="true" style="color:#ffa100"></i>
+                        </button>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+            </ng-container>
+            <div *ngIf="file_error_msg"> <span style="color:red;font-size:13px">Mobile Number should be of 10 digits</span></div>
+            <div class="row">
+              <div class="col-md-12 col-lg-12 col-sm-12">
+                <div style="float:right">
+                  <button type="submit" class="btn btn-primary"  [disabled]="BtnDisable">Schedule</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </nb-card-body>
+      <nb-card-footer>
+      </nb-card-footer>
+    </nb-card>
+  </div>
+  <ngx-spinner bdColor="rgba(51,51,51,0.09)" size="large" color="#ea5810" type="ball-clip-rotate-pulse"></ngx-spinner>
