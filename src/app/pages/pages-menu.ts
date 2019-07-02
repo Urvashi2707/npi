@@ -451,3 +451,4 @@ export const MENU_INSURANCESUSR: NbMenuItem[] = [
     link: '/pages/matrix',
   }
 ];
+

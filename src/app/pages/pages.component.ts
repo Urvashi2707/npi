@@ -25,9 +25,15 @@ export class PagesComponent {
       this.menu = MENU_ITEMSADM;
       console.log("GrpAdmin")
       }
-    else if (InsuAdmin == "1" && GrpAdmin == "1"){
+    else if (InsuAdmin == "1" && GrpAdmin == "1"  && SvcAdmin == "0"){
       this.menu = MENU_INSURANCESUSR;
       console.log("Insurance Menu");
+    }
+    else if(InsuAdmin == "1" && SvcAdmin == "1" && GrpAdmin == "0"){
+      this.menu = MENU_INSURANCESUSR;
+    }
+    else if(InsuAdmin == "1" && SvcAdmin == "0" && GrpAdmin == "0"){
+      this.menu = MENU_INSURANCESUSR;
     }
     else {
       this.menu = MENU_ITEMSUSR;
