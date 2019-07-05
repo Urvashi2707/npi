@@ -948,12 +948,27 @@ export class ServicingComponent implements OnInit {
       this.ifSameAsPickUp = false;
       // console.log('pickup');
     }
+    if (this.yourBoolean === 'servicing' || this.yourBoolean === 'onlypickup') {
+      this.pickup_drop = 0;
+    }
+    else {
+      this.pickup_drop = 1;
+    }
+   if(this.user.city){
+      var cityId = this.user.city;
+      console.log(cityId);
+    }
+    else {
+      cityId = JSON.parse(sessionStorage.getItem('city_id'));
+      console.log(cityId);
+    }
     if (this.dateString.length > 0) {
       const reqpara10 = {
-        requesttype: 'getslots',
+        requesttype: 'getslotsv2city',
         reqdate: this.dateString,
         pickup_drop: 0,
-        svcid: this.svcid
+        type_service: this.pickup_drop,
+        cityid: cityId
       }
       const as10 = JSON.stringify(reqpara10)
       this.ServicingService.webServiceCall(as10).subscribe(res => {
@@ -981,15 +996,29 @@ export class ServicingComponent implements OnInit {
     this.googleMapDropoffFlag  = false;
     this.googleMapPickupFlag = false;
     this.dropOffOnly = true;
-    // console.log(this.dropOffOnly);
+    if (this.yourBoolean === 'servicing' || this.yourBoolean === 'onlypickup') {
+      this.pickup_drop = 0;
+    }
+    else {
+      this.pickup_drop = 1;
+    }
+   if(this.user.city){
+      var cityId = this.user.city;
+      console.log(cityId);
+    }
+    else {
+      cityId = JSON.parse(sessionStorage.getItem('city_id'));
+      console.log(cityId);
+    }
     if (this.dateString.length > 0) {
-      const reqpara11 = {
-        requesttype: 'getslots',
+      const reqpara10 = {
+        requesttype: 'getslotsv2city',
         reqdate: this.dateString,
-        pickup_drop: 1,
-        svcid: this.svcid
+        pickup_drop: 0,
+        type_service: this.pickup_drop,
+        cityid: cityId
       }
-      const as11 = JSON.stringify(reqpara11)
+      const as11 = JSON.stringify(reqpara10)
       this.ServicingService.webServiceCall(as11).subscribe(res => {
         if (res[0].login === 0) {
           sessionStorage.removeItem('currentUser');

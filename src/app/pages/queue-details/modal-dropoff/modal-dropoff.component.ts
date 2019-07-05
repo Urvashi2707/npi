@@ -105,14 +105,14 @@ export class ModalDropoffComponent implements OnInit {
     this.pickup_drop = 0;
     this.show = false;
     this.slot_time = null;
-      // console.log(this.pickup_drop);
+    var cityId = JSON.parse(sessionStorage.getItem('city_id'));
     if (Date) {
       const reqpara5 = {
-        requesttype: 'getslotsv2',
+        requesttype: 'getslotsv2city',
         reqdate: Date,
-        pickup_drop: this.pickup_drop,
-        type_service:0,
-        svcid:this.svcid
+        pickup_drop: 1,
+        type_service: 1,
+        cityid: cityId
       }
       const as5 = JSON.stringify(reqpara5)
       this.ServicingService.webServiceCall(as5).subscribe(res => {
@@ -148,7 +148,7 @@ check(value: string) {
     if (theArr.length > 0) {
       for (var i = 0; i < theArr.length; i += 4) {
         var row = [];
-        for (var x = 0; x < 6; x++) {
+        for (var x = 0; x < 4; x++) {
           var value = theArr[i + x];
           if (!value) {
             break;

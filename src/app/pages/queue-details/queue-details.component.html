@@ -84,9 +84,7 @@
                   <span>
                     <i class="fa fa-caret-down"></i>
                   </span>
-                  <!-- <button (click)="clicked($event)">Cool</button> -->
                   <h6>Pickup</h6>
-
                 </div>
               </ng-template>
               <ng-template ngbPanelContent>
@@ -111,8 +109,6 @@
                               </span>
                             </div>
                           </div>
-                          <!-- <label for="exampleInputEmail1">Address</label>
-                                                    <input type="text" class="form-control" formControlName="pickupAddress" name="pickupAddress" placeholder="Pickup Address"> -->
                         </div>
                         <div class="finput-group input-group-fill-only">
                           <div class="row">
@@ -123,8 +119,6 @@
                               <input type="text" class="form-control" formControlName="pickup_slot" placeholder="Pickup Slot">
                             </div>
                           </div>
-                          <!-- <label for="exampleInputPassword1">Slot</label>
-                                                    <input type="text" class="form-control" formControlName="pickup_slot" placeholder="Pickup Slot"> -->
                         </div>
                         <div class="finput-group input-group-fill-only">
                           <div class="row">
@@ -135,11 +129,7 @@
                               <input type="text" class="form-control" formControlName="puambName" placeholder="Ambassador Name">
                             </div>
                           </div>
-
-                          <!-- <label for="exampleInputPassword1">Ambassador Name</label>
-                                                    <input type="text" class="form-control" formControlName="ambName" placeholder="Ambassador Name"> -->
                         </div>
-
                         <div class="finput-group input-group-fill-only" *ngIf = "pickOnTimeImage">
                           <div class="row">
                             <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
@@ -149,25 +139,14 @@
                               <img src={{pickOnTimeImage}} width="30px" height="30px" style="margin-top:0.5em">
                             </div>
                           </div>
-                          <!-- <label for="exampleInputPassword1">On Time</label>
-                                                    <img src={{pickOnTimeImage}} width="30px" height="30px"> -->
                         </div>
-
                       </form>
-
-                      <!-- <p> -->
-
-                      <!-- <nb-card class=".col-xs" class=".space">
-                                                    <nb-card-header>Handed To</nb-card-header>
-                                                    <nb-card-body> -->
                       <div class="row">
                         <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3" class="handed" style="font-size: 20px;margin-top:0.5em;margin-bottom:0.5em;margin-left: .7rem;">
                           <strong>Handed To :</strong>
                         </div>
                       </div>
                       <form [formGroup]="pickupHandedToForm">
-                        <!-- <div class="row"> -->
-
                         <div class="finput-group input-group-fill-only">
                           <div class="row">
                             <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
@@ -177,11 +156,7 @@
                               <input type="text" class="form-control" formControlName="hand_to_name" placeholder="Name">
                             </div>
                           </div>
-                          <!-- <label for="exampleInputPassword1">Name</label>
-                                                                    <input type="text" class="form-control" formControlName="hand_to_name" placeholder="Name"> -->
-
                         </div>
-
                         <div class="finput-group input-group-fill-only">
                           <div class="row">
                             <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
@@ -191,15 +166,9 @@
                               <input type="text" class="form-control" formControlName="handed_to_number" placeholder="Number">
                             </div>
                           </div>
-                          <!-- <label for="exampleInputPassword1">Number</label>
-                                                                    <input type="text" class="form-control" formControlName="handed_to_number" placeholder="Number"> -->
+                                  <input type="text" class="form-control" formControlName="handed_to_number" placeholder="Number"> -->
                         </div>
-
-                        <!-- </div> -->
                       </form>
-                      <!-- </nb-card-body>
-                                                </nb-card> -->
-                      <!-- </p> -->
                     </div>
                     <div *ngIf="sysClicked==7">
                       <button class="btn btn-warning" (click)="cancelBooking()">Cancel</button>
@@ -239,11 +208,7 @@
                               </span>
                             </div>
                           </div>
-                          <!-- <label for="exampleInputEmail1">Address</label>
-                                                    <input type="text" class="form-control" formControlName="dropAddress" id="dropAddress" placeholder="Drop-off Address"> -->
                         </div>
-
-
                         <div class="finput-group input-group-fill-only">
                           <div class="row">
                             <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
@@ -254,8 +219,6 @@
                                 placeholder="Drop-off Slot">
                             </div>
                           </div>
-                          <!-- <label for="exampleInputPassword1">Slot</label>
-                                                    <input type="text" class="form-control" formControlName="dropSlot" id="dropSlot" placeholder="Drop-off Slot"> -->
                         </div>
                         <div class="finput-group input-group-fill-only">
                           <div class="row">
@@ -267,10 +230,7 @@
                                 placeholder="Ambassador Name" readonly="true">
                             </div>
                           </div>
-                          <!-- <label for="exampleInputPassword1">Ambassador Name</label>
-                                                    <input type="texxt" class="form-control" fromControlName="dropAmbName" id="dropAmbName" placeholder="Ambassador Name"> -->
                         </div>
-
                         <div class="finput-group input-group-fill-only" *ngIf = "dropOffOnTimeImage">
                           <div class="row">
                             <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
@@ -279,16 +239,9 @@
                             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
                               <img  src={{dropOffOnTimeImage}} width="30px" height="30px"
                                 style="margin-top:0.5em" id="dropOnTime" />
-                              <!-- <ng-template #second>
-                                <img *ngIf="on_time == 1; else second" src={{dropOffOnTimeImage}} width="30px" height="30px"
-                                  style="margin-top:0.5em" id="dropOnTime" />
-                              </ng-template> -->
                             </div>
                           </div>
-                          <!-- <label for="exampleInputPassword1">On Time</label>
-                                                    <img src={{dropOffOnTimeImage}} width="20px" height="20px" id="dropOnTime" /> -->
                         </div>
-
                         <div class="finput-group input-group-fill-only">
                           <div class="row">
                             <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
@@ -298,10 +251,7 @@
                               <input type="text" class="form-control" formControlName="amount" id="amount" placeholder="Amount">
                             </div>
                           </div>
-                          <!-- <label for="exampleInputPassword1">Amount</label>
-                                                    <input type="text" class="form-control" formControlName="amount" id="amount" placeholder="Amount"> -->
                         </div>
-
                         <div class="finput-group input-group-fill-only">
                           <div class="row">
                             <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
@@ -312,23 +262,14 @@
                                 placeholder="Payment Type">
                             </div>
                           </div>
-                          <!-- <label for="exampleInputPassword1">Payment Type</label>
-                                                    <input type="text" class="form-control" formControlName="payment_type" id="paymentType" placeholder="Payment Type"> -->
                         </div>
-
                       </form>
-
-                      <!-- <p>
-                                                <nb-card class=".col-xs" class=".space">
-                                                    <nb-card-header>Handed To</nb-card-header>
-                                                    <nb-card-body> -->
                       <div class="row">
                         <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3" style="font-size: 20px;margin-top:0.5em;margin-bottom:0.5em">
                           <strong>Handed To :</strong>
                         </div>
                       </div>
                       <form [formGroup]="dropHandedToForm">
-                        <!-- <div class="row"> -->
                         <div class="finput-group input-group-fill-only">
                           <div class="row">
                             <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
@@ -339,12 +280,7 @@
                                 placeholder="Name">
                             </div>
                           </div>
-                          <!-- <label for="exampleInputPassword1">Name</label>
-
-                                                                    <input type="text" class="form-control" formControlName="dropHandoverName" id="dropHandoverName" placeholder="Name"> -->
-
                         </div>
-
                         <div class="finput-group input-group-fill-only">
                           <div class="row">
                             <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
@@ -355,14 +291,8 @@
                                 placeholder="Number">
                             </div>
                           </div>
-                          <!-- <label for="exampleInputPassword1">Number</label>
-                                                                    <input type="text" class="form-control" formControlName="dropHandoverNumber" id="dropHandoverNumber" placeholder="Number"> -->
                         </div>
-                        <!-- </div> -->
                       </form>
-                      <!-- </nb-card-body> -->
-                      <!-- </nb-card>
-                                            </p> -->
                     </div>
                   </nb-card-body>
                 </nb-card>
@@ -399,10 +329,7 @@
                               </span>
                             </div>
                           </div>
-                          <!-- <label for="exampleInputEmail1">CRE Name</label>
-                                                    <input type="text" class="form-control" formControlName="creName" id="creName" placeholder="CRE Name"> -->
                         </div>
-
                         <div class="finput-group input-group-fill-only">
                           <div class="row">
                             <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
@@ -413,10 +340,7 @@
                                 placeholder="CRE Number">
                             </div>
                           </div>
-                          <!-- <label for="exampleInputEmail1">CRE Number</label>
-                                                    <input type="text" class="form-control" formControlName="creNumber" id="creNumber" placeholder="CRE Number"> -->
                         </div>
-
                         <div class="finput-group input-group-fill-only">
                           <div class="row">
                             <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
@@ -427,10 +351,7 @@
                                 placeholder="Advisor Name">
                             </div>
                           </div>
-                          <!-- <label for="exampleInputEmail1">Advisor Name</label>
-                                                    <input type="text" class="form-control" formControlName="advName" id="advisorName" placeholder="Advisor Name"> -->
                         </div>
-
                         <div class="finput-group input-group-fill-only">
                           <div class="row">
                             <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
@@ -441,8 +362,6 @@
                                 placeholder="Advisor Number">
                             </div>
                           </div>
-                          <!-- <label for="exampleInputEmail1">Advisor Number</label>
-                                                    <input type="text" class="form-control" formControlName="advNumber" id="advisorNumber" placeholder="Advisor Number"> -->
                         </div>
                       </form>
                     </nb-card-body>
@@ -450,7 +369,6 @@
                 </div>
               </ng-template>
             </ngb-panel>
-
             <ngb-panel *ngIf="showAmbCard == '1'" id="preventchange-4">
               <ng-template ngbPanelTitle>
                 <div class="row">
@@ -477,10 +395,7 @@
                                     placeholder="Ambassador Name">
                                 </div>
                               </div>
-                              <!-- <label for="exampleInputEmail1">Name</label>
-                                                            <input type="text" class="form-control" formControlName="ambassadorName" id="ambName" placeholder="Ambassador Name"> -->
                             </div>
-
                             <div class="finput-group input-group-fill-only">
                               <div class="row">
                                 <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
@@ -491,8 +406,6 @@
                                     placeholder="Ambasssador Number">
                                 </div>
                               </div>
-                              <!-- <label for="exampleInputEmail1">Number</label>
-                                                            <input type="text" class="form-control" formControlName="ambassadorNumber" id="ambNumber" placeholder="Ambasssador Number"> -->
                             </div>
                           </div>
                           <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
@@ -503,23 +416,14 @@
                           <div class="row">
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-2">
                               <div style="padding-top: 5%;">
-                                <!-- <img src='nb-location' width="20px" height="20px"> -->
                                 <a href={{link}} target="_blank" style="margin-left:2%;font-size: 1.5em;">
                                   <i class="fa fa-map-marker" aria-hidden="true"></i>
                                 </a>
-                                <!-- <iframe height="300px" width="100%" src={{link}} name="iframe_a"></iframe> -->
                                 <a href={{link}} target="_blank" style="margin-left:7%">View location</a>
                               </div>
-
                             </div>
                           </div>
                         </div>
-
-                        <!-- <nb-card>
-                                                    <nb-card-body>
-
-                                                    </nb-card-body>
-                                                </nb-card> -->
                       </form>
                     </nb-card-body>
                   </nb-card>
@@ -727,10 +631,7 @@
                                 placeholder="Pickup Address">
                             </div>
                           </div>
-                          <!-- <label for="exampleInputEmail1">Pickup Address</label>
-                                                    <input type="text" class="form-control" formControlName="pick_add" name="chauffeurPickupAddress" placeholder="Pickup Address"> -->
                         </div>
-
                         <div class="finput-group input-group-fill-only">
                           <div class="row">
                             <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
@@ -741,11 +642,7 @@
                                 placeholder="Slot Time" disabled>
                             </div>
                           </div>
-                          <!-- <label for="exampleInputEmail1">Slot</label>
-                                                    <input type="text" class="form-control" formControlName="slot" name="chauffeurSlot" placeholder="Slot Time" disabled> -->
-
                         </div>
-
                         <div class="finput-group input-group-fill-only">
                           <div class="row">
                             <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
@@ -756,10 +653,7 @@
                                 placeholder="Chauffeur Name" disabled>
                             </div>
                           </div>
-                          <!-- <label for="exampleInputEmail1">Chauffeur Name</label>
-                                                    <input type="text" class="form-control" formControlName="chauffeur_name" name="chauffeur" placeholder="Chauffeur Name" disabled> -->
                         </div>
-
                         <div class="finput-group input-group-fill-only">
                           <div class="row">
                             <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
@@ -771,7 +665,6 @@
                             </div>
                           </div>
                         </div>
-
                         <div class="finput-group input-group-fill-only">
                           <div class="row">
                             <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
@@ -839,7 +732,6 @@
                 </div>
               </ng-template>
             </ngb-panel>
-
             <ngb-panel *ngIf="showNotesCard == '1'" id="preventchange-6">
               <ng-template ngbPanelTitle>
                 <div class="row">
@@ -855,7 +747,6 @@
                     <nb-card-body>
                       <form [formGroup]="notesFormGroup">
                         <div class="input-group">
-                          <!-- <textarea rows="5" names="notes" formControlName="notesData" placeholder="21North" class="form-control"></textarea> -->
                           <input type="text" class="form-control" formControlName="notesData" names="notesData"
                             placeholder="No Data" [readonly]="true">
                         </div>
@@ -865,8 +756,6 @@
                 </div>
               </ng-template>
             </ngb-panel>
-
-
             <ngb-panel *ngIf="showNewFeedbackCards == '1'" id="preventchange-8">
               <ng-template ngbPanelTitle>
                 <div class="row">
