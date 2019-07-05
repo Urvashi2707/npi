@@ -97,7 +97,7 @@ export class ModalPickupComponent implements OnInit {
   buildArr(theArr: any[]) {
     var arrOfarr = [];
     if (theArr.length > 0) {
-      for (var i = 0; i < theArr.length; i += 3) {
+      for (var i = 0; i < theArr.length; i += 4) {
         var row = [];
         for (var x = 0; x < 4; x++) {
           var value = theArr[i + x];

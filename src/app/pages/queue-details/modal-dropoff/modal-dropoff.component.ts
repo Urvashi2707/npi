@@ -143,7 +143,7 @@ check(value: string) {
     this.activeModal.close();
   }
 
-  buildArr(theArr: any) {
+  buildArr(theArr: any[]) {
     var arrOfarr = [];
     if (theArr.length > 0) {
       for (var i = 0; i < theArr.length; i += 4) {

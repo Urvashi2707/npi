@@ -83,9 +83,9 @@
         <label>New Slot</label>
         <input class="form-control" name="slot" [(ngModel)]="slot_time" />
       </div>
-      <table cellspacing="20" class="table table-condensed table-responsive slot"  *ngIf="show_slot">
-        <tr>
-          <td *ngFor="let s of slot" class="timeRow">
+      <table cellspacing="20" class="table table-condensed table-responsive slot"  *ngIf="show_slot" style="margin-left: 20%;">
+        <tr *ngFor="let row of buildArr(slot);let i = index">
+          <td *ngFor="let s of row" class="timeRow">
             <a (click)=check(s.slothour) class="timeAnchor">
               <span>{{s.time_format}}</span>
             </a>
