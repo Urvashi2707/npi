@@ -372,6 +372,10 @@ export const MENU_INSURANCESUSR: NbMenuItem[] = [
         link: '/pages/Active/drop-off',
       },
       {
+        title: 'Chauffeur',
+        link: '/pages/Active/chauffeur',
+      },
+      {
         title: 'RSA',
         link: '/pages/Active/rsa',
       }
