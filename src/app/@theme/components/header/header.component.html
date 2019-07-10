@@ -3,7 +3,9 @@
         <a (click)="toggleSidebar()" href="#" class="navigation"><i class="nb-menu"></i></a>
         <div class="logo" (click)="goToHome()" *ngIf="brandid === '19'"><img src="/assets/images/Hyundai1.jpeg"  style="height: 44px;" class="img-responsive" ></div>
         <div class="logo" (click)="goToHome()" *ngIf="brandid === '27'"><img src="/assets/images/Mahindra-logo.png"  style="height: 44px;" class="img-responsive" ></div>
-        <div class="logo" (click)="goToHome()" *ngIf="brandid != '19' && brandid != '27'"><img src="/assets/images/logo.png" class="img-responsive"></div>
+        <div class="logo" (click)="goToHome()" *ngIf="brandid === '47'"><img src="/assets/images/royal-enfield.png"  style="height: 68px;" class="img-responsive" ></div>
+        <div class="logo" (click)="goToHome()" *ngIf="brandid === '43'"><img src="/assets/images/toyota.png"  style="height: 52px;" class="img-responsive" ></div>
+        <div class="logo" (click)="goToHome()" *ngIf="brandid != '19' && brandid != '27' && brandid != '47' && brandid != '43'"><img src="/assets/images/logo.png" class="img-responsive"></div>
     </div>
 </div>
 <div class="credits" *ngIf="!InsuranceCheck">

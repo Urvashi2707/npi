@@ -1014,7 +1014,7 @@ export class ServicingComponent implements OnInit {
       const reqpara10 = {
         requesttype: 'getslotsv2city',
         reqdate: this.dateString,
-        pickup_drop: 0,
+        pickup_drop: this.pickup_drop,
         type_service: this.pickup_drop,
         cityid: cityId
       }
