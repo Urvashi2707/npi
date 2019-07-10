@@ -48,7 +48,8 @@ export class QueueDetailsComponent implements OnInit {
   showChauffeurCard: String = '0';
   showComplaintsCard: String = '1';
   feedbackRating:number;
-
+  pickupFeedback: any = [];
+  rsaFeedback: any = [];
   ProfileLink: String = "https://profile.actionsprout.com/default.jpeg";
   EditLink: String = "http://cdn.mysitemyway.com/icons-watermarks/simple-light-gray/bfa/bfa_edit/bfa_edit_simple-light-gray_512x512.png";
   SaveImageLink: String = "https://d30y9cdsu7xlg0.cloudfront.net/png/22557-200.png";
@@ -61,7 +62,7 @@ export class QueueDetailsComponent implements OnInit {
   invoice_link: string = "";
   service_status: string = '0';
   is_edit: boolean = true;
-
+  serviceTypeID:string;
   CustomerName: String = "Customer Name";
   CustomerNumber: String = "Customer Number";
   CustomerEmail: String = "xyz@21north.in";
@@ -367,6 +368,7 @@ export class QueueDetailsComponent implements OnInit {
           if(this.pickupInfo[0].hasOwnProperty('type_service')){
             // console.log("inside typeofserviceif");
             this.type_of_service = JSON.parse(this.pickupInfo[0].type_service);
+            console.log(this.type_of_service,"this.type_of_service")
            this.servicestatus = JSON.parse(this.pickupInfo[0].active);
           }
           if (this.pickupInfo[0].hasOwnProperty('pu_address')) {
@@ -652,6 +654,7 @@ export class QueueDetailsComponent implements OnInit {
           // console.log("show new feedback");
           this.showNewFeedbackCards = "1";
           this.feedback = check[10].newfeedback;
+          // this.feedback = this.feedback.splice()  
           if(check[10].newfeedback[0].hasOwnProperty('no_records'))
           {
             // console.log("no new feedback");
