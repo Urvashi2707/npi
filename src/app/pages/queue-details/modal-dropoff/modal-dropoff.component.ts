@@ -80,7 +80,7 @@ export class ModalDropoffComponent implements OnInit {
       this.svcid = JSON.parse(sessionStorage.getItem('globalsvcid'));
       // console.log(this.svcid);
     }
-   
+   console.log(this.modalContent)
   }
 
   public httpOptions = {
@@ -105,13 +105,26 @@ export class ModalDropoffComponent implements OnInit {
     this.pickup_drop = 0;
     this.show = false;
     this.slot_time = null;
+    var serviceType ;
+    var pickupDrop;
+    console.log(this.modalContent.serviceType);
+    if(this.modalContent.serviceType != '1'){
+      serviceType = this.modalContent.serviceType;
+      pickupDrop = "0";
+      console.log("coming in if");
+    }
+    else{
+      serviceType = '1';
+      pickupDrop = "1";
+      console.log("coming in else");
+    }
     var cityId = JSON.parse(sessionStorage.getItem('city_id'));
     if (Date) {
       const reqpara5 = {
         requesttype: 'getslotsv2city',
         reqdate: Date,
-        pickup_drop: 1,
-        type_service: 1,
+        pickup_drop: pickupDrop,
+        type_service: serviceType,
         cityid: cityId
       }
       const as5 = JSON.stringify(reqpara5)

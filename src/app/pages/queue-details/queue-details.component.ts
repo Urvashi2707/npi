@@ -195,8 +195,6 @@ export class QueueDetailsComponent implements OnInit {
   on_time: any = "1";
 
   showUploadModal(name: string) {
-    console.log(this.service_status);
-    console.log(this.advInfo[0].adv_name);
     if(this.InvAmt != "0"){
               this.Amt = this.InvAmt;
               // console.log(this.Amt)
@@ -244,6 +242,7 @@ export class QueueDetailsComponent implements OnInit {
   }
   showdropoffModal(res:any){
     res.service = "dropoff";
+    res.serviceType = this.type_of_service;
     const activeModal = this.modalService.open(ModalDropoffComponent, { size: 'lg', container: 'nb-layout' });
     activeModal.componentInstance.modalHeader = 'DropOff Details';
     activeModal.componentInstance.modalContent = res;

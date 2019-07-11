@@ -36,6 +36,7 @@ export class ModalPickupComponent implements OnInit {
     this.pickup_card_group = this.fb.group({
       QID: [{value: '', disable: false}]
     })
+    
   }
   model: NgbDateStruct;
   dateString: string;
@@ -56,13 +57,20 @@ export class ModalPickupComponent implements OnInit {
     this.pickup_drop = 0;
     this.show = false;
     this.slot_time = null;
+    var serviceType ;
+    if(this.modalContent.type_service != '1'){
+      serviceType = this.modalContent.type_service;
+    }
+    else{
+      serviceType = '0';
+    }
     var cityId = JSON.parse(sessionStorage.getItem('city_id'));
     if (Date) {
       const reqpara5 = {
         requesttype: 'getslotsv2city',
         reqdate: Date,
-        pickup_drop: 0,
-        type_service: 0,
+        pickup_drop: "0",
+        type_service: serviceType,
         cityid: cityId
       }
       const as5 = JSON.stringify(reqpara5)
@@ -125,6 +133,7 @@ export class ModalPickupComponent implements OnInit {
     else{
       this.svcid = JSON.parse(sessionStorage.getItem('globalsvcid'));
     }
+    console.log(this.modalContent)
   }
 
   onSubmit(f: NgForm){
