@@ -142,11 +142,11 @@ export const MENU_ITEMSADM: NbMenuItem[] = [
     }
   ],
 },
-  {
-    title: 'Unconfirmed',
-    icon: 'nb-tables',
-    link: '/pages/unconfirmed',
-  },
+  // {
+  //   title: 'Unconfirmed',
+  //   icon: 'nb-tables',
+  //   link: '/pages/unconfirmed',
+  // },
   {
     title: 'CRE Reports',
     icon: 'nb-tables',
@@ -302,11 +302,11 @@ export const MENU_ITEMSUSR: NbMenuItem[] = [
       }
     ],
   },
-  {
-    title: 'Unconfirmed',
-    icon: 'nb-tables',
-    link: '/pages/unconfirmed',
-  },
+  // {
+  //   title: 'Unconfirmed',
+  //   icon: 'nb-tables',
+  //   link: '/pages/unconfirmed',
+  // },
   {
     title: 'Cre Reports',
     icon: 'nb-tables',
@@ -444,11 +444,11 @@ export const MENU_INSURANCESUSR: NbMenuItem[] = [
     link: '/pages/reports'
 
   },
-  {
-    title: 'Unconfirmed',
-    icon: 'nb-tables',
-    link: '/pages/unconfirmed',
-  },
+  // {
+  //   title: 'Unconfirmed',
+  //   icon: 'nb-tables',
+  //   link: '/pages/unconfirmed',
+  // },
   {
     title: 'Escalation Matrix',
     icon: 'nb-tables',
