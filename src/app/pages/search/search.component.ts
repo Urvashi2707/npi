@@ -50,10 +50,16 @@ export class SearchComponent implements OnInit {
   }
 
   //Open Queue Detail Page
-  openQDetails(indexId: any){
+  openQDetails(obj: any){
+    console.log(obj,"obj");
     sessionStorage.removeItem('clickedOn');
-    sessionStorage.setItem('QueueId',indexId)
-    this._tableService.queueID = indexId;
+      // if(obj.queue_status === "Servicing Scheduled"){
+      //   console.log("coming here")
+      //   sessionStorage.removeItem('clickedOn');
+      //   sessionStorage.setItem('clickedOn', '7')
+      // }
+    sessionStorage.setItem('QueueId',obj.id)
+    this._tableService.queueID = obj.id;
     this.router.navigate(['/pages/queue-details']);
   }
 
@@ -115,7 +121,6 @@ export class SearchComponent implements OnInit {
       }
       else{
         this.report = res[0].vehqueues;
-        // console.log(this.report);
         this.UploadBtn = this.report[0].upload_button,
         this.spinner.hide();
         this._tableService.DateFormat(this.report);

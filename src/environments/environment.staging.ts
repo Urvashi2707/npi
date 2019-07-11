@@ -16,9 +16,9 @@ export const environment = {
     slot_graph:"/notify/svcgraphslot.php",
     upload_file:"/notify/uploadfile.php",
 
-    // Mainurl:"https://m.21north.in/notify/svcwebservice.php",
-    // logout_url:"https://m.21north.in/notify/logout.php",
-    // graph:"https://m.21north.in/notify/svcgraph.php",
-    // slot_graph:"https://m.21north.in/notify/svcgraphslot.php",
-    // upload_file:"/notify/uploadfile.php",
+    // Mainurl:"dev-partner.21north.in",
+    // logout_url:"dev-partner.21north.in/logout.php",
+    // graph:"dev-partner.21north.in/svcgraph.php",
+    // slot_graph:"dev-partner.21north.in/svcgraphslot.php",
+    // upload_file:"dev-partner.21north.in/uploadfile.php",
   };

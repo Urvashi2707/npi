@@ -49,13 +49,13 @@
                                 <th *ngIf="UploadBtn">Upload</th>
                             </tr>
                             <tr *ngFor="let r of report  | orderBy: key : reverse | filter : searchText" >
-                                <td (click)="openQDetails(r.id)">{{r.id}}</td>
-                                <td (click)="openQDetails(r.id)">{{r.veh_number}}</td>
-                                <td (click)="openQDetails(r.id)">{{r.queue_date}}</td>
-                                <td (click)="openQDetails(r.id)">{{r.queue_time}}</td>
-                                <td (click)="openQDetails(r.id)">{{r.cust_name}}</td>
-                                <td (click)="openQDetails(r.id)">{{r.cust_number}}</td>
-                                <td (click)="openQDetails(r.id)">{{r.queue_status}}</td>
+                                <td (click)="openQDetails(r)">{{r.id}}</td>
+                                <td (click)="openQDetails(r)">{{r.veh_number}}</td>
+                                <td (click)="openQDetails(r)">{{r.queue_date}}</td>
+                                <td (click)="openQDetails(r)">{{r.queue_time}}</td>
+                                <td (click)="openQDetails(r)">{{r.cust_name}}</td>
+                                <td (click)="openQDetails(r)">{{r.cust_number}}</td>
+                                <td (click)="openQDetails(r)">{{r.queue_status}}</td>
                                 <!-- <td *ngIf="InsuranceCheck">{{i.svc_name}}</td> -->
                                 <td *ngIf="r.upload_button"><button class="upload-button"  (click)="ShowUploadModal(r,page+1)">{{r.upload_button}}</button></td>
 

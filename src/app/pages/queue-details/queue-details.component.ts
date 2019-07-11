@@ -155,7 +155,7 @@ export class QueueDetailsComponent implements OnInit {
   ngOnInit() {
     this.brandid = sessionStorage.getItem('brandid');
     this.sysClicked = sessionStorage.getItem('clickedOn');
-    // console.log(this.sysClicked);
+    console.log(this.sysClicked);
     this.QueueID = sessionStorage.getItem('QueueId');
   }
   sendPaymentLink() {
